@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "",
+  "version": "0.5.0",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -23,8 +23,8 @@
       "react": "*"
     }
   },
-  "config":{
-    "port": 8003
+  "config": {
+    "port": 8008
   },
   "scripts": {
     "build": "rc-tools run build",
@@ -46,10 +46,13 @@
     "rc-server": "~2.1.2",
     "rc-tools": "2.x",
     "react": "~0.13.0",
-    "node-dev":"2.x"
+    "node-dev": "2.x"
   },
   "precommit": [
     "lint",
     "less"
-  ]
+  ],
+  "dependencies": {
+    "rc-util": "^2.0.2"
+  }
 }

@@ -29,7 +29,7 @@ tree ui component for react
 
 ## Screenshots
 
-<img src="http://gtms02.alicdn.com/tps/i2/TB1luFKHXXXXXb3XXXXl4OqLpXX-574-596.png" width="288"/>
+<img src="https://tfsimg.alipay.com/images/T1rO0fXb4fXXXXXXXX.png" width="288"/>
 
 
 ## Feature
@@ -37,7 +37,7 @@ tree ui component for react
 * support ie8,ie8+,chrome,firefox,safari
 
 ### Keyboard
-
+- KeyDown/KeyUp
 
 
 ## install
@@ -50,6 +50,7 @@ tree ui component for react
 var Rctree = require('rc-tree');
 var React = require('react');
 React.render(<Rctree />, container);
+```
 
 ## API
 
@@ -70,6 +71,30 @@ React.render(<Rctree />, container);
           <td>String</td>
           <td></td>
           <td>additional css class of root dom node</td>
+        </tr>
+        <tr>
+          <td>expanded</td>
+          <td>bool</td>
+          <td></td>
+          <td>whether expand the tree node</td>
+        </tr>
+        <tr>
+          <td>icon</td>
+          <td>bool</td>
+          <td></td>
+          <td>custom icon</td>
+        </tr>
+        <tr>
+          <td>onSelect</td>
+          <td>function</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>function</td>
+          <td></td>
+          <td></td>
         </tr>
     </tbody>
 </table>
