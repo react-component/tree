@@ -36,8 +36,12 @@ tree ui component for react
 
 * support ie8,ie8+,chrome,firefox,safari
 
-### Keyboard
-- KeyDown/KeyUp
+
+## Example
+
+http://localhost:8008/examples/
+
+online example: http://react-component.github.io/tree/build/examples/
 
 
 ## install
@@ -79,19 +83,19 @@ React.render(<Rctree />, container);
           <td>whether expand the tree node</td>
         </tr>
         <tr>
-          <td>icon</td>
-          <td>bool</td>
+          <td>iconEle</td>
+          <td>react node</td>
           <td></td>
           <td>custom icon</td>
         </tr>
         <tr>
-          <td>onSelect</td>
-          <td>function</td>
+          <td>checkable</td>
+          <td>bool</td>
           <td></td>
-          <td></td>
+          <td>whether support check all</td>
         </tr>
         <tr>
-          <td></td>
+          <td>onSelect </td>
           <td>function</td>
           <td></td>
           <td></td>
@@ -99,18 +103,17 @@ React.render(<Rctree />, container);
     </tbody>
 </table>
 
+
+### Keyboard
+- KeyDown/KeyUp
+
+
 ## Development
 
 ```
 npm install
 npm start
 ```
-
-## Example
-
-http://localhost:8003/examples/
-
-online example: http://react-component.github.io/tree/build/examples/
 
 ## Test Case
 
