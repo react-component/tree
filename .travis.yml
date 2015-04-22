@@ -10,5 +10,10 @@ before_script:
 - phantomjs --version
 script:
 - npm test
-- npm run-script browser-test
-- npm run-script browser-test-cover
+- npm run browser-test
+- npm run browser-test-cover
+- npm run saucelabs
+env:
+  global:
+  - secure: GNfm+vqR2uIrikZs4wNYqWCp2StdmdMq9LbXHkS/FVYW1ZToeDpWjYj42ZlIXm6EUQTs2rR6/uRA4SACogMnr/rJXE6pDceiLpAxoWG0UlHQm4crGe4aR+R+oOf1FH+jyxTTInempKWtMJQeYW5yvyYNxn5eYO6bzqq9XRuuf68=
+  - secure: JeMcf6F+Z7I+Q6gAEujsP4EbI4grmj+Bn0Gou4A3MmWJFrzEb6y7RZVt1+yZKZgNnZWgxlTUpCDz1pNpgZG+hK8fO8var/Ij1dzOxNWDluK+tcrXsgHxgD87Fv5nl/VmyB0Bs5Z6eOkhDThikVhuSk8UeqJMXncZvoYvCf1Lvzo=
