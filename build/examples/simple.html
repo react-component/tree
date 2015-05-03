@@ -190,7 +190,7 @@ var Tree = require('rc-tree');
 var TreeNode = Tree.TreeNode;
 
 function handleSelect(selected, c) {
-  console.log( selected, c );
+  console.log( selected, c.getDOMNode() );
 }
 
 var demo = (
@@ -205,10 +205,10 @@ var demo = (
           <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
 
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>

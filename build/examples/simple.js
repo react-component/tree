@@ -17,7 +17,7 @@ webpackJsonp([0,1],[
 	var TreeNode = Tree.TreeNode;
 
 	function handleSelect(selected, c) {
-	  console.log( selected, c );
+	  console.log( selected, c.getDOMNode() );
 	}
 
 	var demo = (
@@ -32,10 +32,10 @@ webpackJsonp([0,1],[
 	          React.createElement(TreeNode, null, "leaf ")
 	        )
 	      ), 
+	      React.createElement(TreeNode, null, "leaf "), 
 	      React.createElement(TreeNode, null, 
 	        React.createElement(TreeNode, null, "leaf ")
-	      ), 
-	      React.createElement(TreeNode, null, "leaf ")
+	      )
 	    )
 
 	  )
@@ -89,7 +89,7 @@ webpackJsonp([0,1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
-	exports.push([module.id, ".rc-tree {\n  list-style: none;\n}\n.rc-tree .rc-tree-selected {\n  background-color: lightsalmon;\n}\n.rc-tree-treenode-switcher {\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  width: 18px;\n  height: 18px;\n}\n.rc-tree-iconEle,\n.rc-tree-treenode-switcher {\n  display: inline-block;\n  position: relative;\n  width: 21px;\n  height: 16px;\n}\n.rc-tree-iconEle:before,\n.rc-tree-treenode-switcher:before {\n  position: absolute;\n  top: -3px;\n  left: 1px;\n}\n.rc-tree-icon__open:before {\n  content: '\\2649';\n}\n.rc-tree-icon__close:before {\n  content: '\\2648';\n}\n.rc-tree-switcher__open:before {\n  content: '-';\n  top: -1px;\n}\n.rc-tree-switcher__close:before {\n  content: '+';\n  top: -1px;\n}\n", ""]);
+	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  line-height: 14px;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.line {\n  background: url("+__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./img/line_conn.gif\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))+") 0 0 repeat-y;\n}\n.rc-tree li a {\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  background-color: transparent;\n  text-decoration: none;\n  vertical-align: top;\n  display: inline-block;\n}\n.rc-tree li span {\n  line-height: 16px;\n  margin-right: 2px;\n}\n.rc-tree li span.button {\n  line-height: 0;\n  margin: 0;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url("+__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./img/zTreeStandard.png\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))+");\n}\n.rc-tree li span.button.chk {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px 0 0;\n  cursor: auto;\n}\n.rc-tree li span.button.chk.checkbox_false_full {\n  background-position: 0 0;\n}\n.rc-tree li span.button.chk.checkbox_false_full_focus {\n  background-position: 0 -14px;\n}\n.rc-tree li span.button.chk.checkbox_false_part {\n  background-position: 0 -28px;\n}\n.rc-tree li span.button.chk.checkbox_false_part_focus {\n  background-position: 0 -42px;\n}\n.rc-tree li span.button.chk.checkbox_false_disable {\n  background-position: 0 -56px;\n}\n.rc-tree li span.button.chk.checkbox_true_full {\n  background-position: -14px 0;\n}\n.rc-tree li span.button.chk.checkbox_true_full_focus {\n  background-position: -14px -14px;\n}\n.rc-tree li span.button.chk.checkbox_true_part {\n  background-position: -14px -28px;\n}\n.rc-tree li span.button.chk.checkbox_true_part_focus {\n  background-position: -14px -42px;\n}\n.rc-tree li span.button.chk.checkbox_true_disable {\n  background-position: -14px -56px;\n}\n.rc-tree-selected {\n  background-color: #FFE6B0;\n  border: 1px #FFB951 solid;\n  opacity: 0.8;\n}\n.rc-tree-treenode-switcher {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n.rc-tree-switcher__open {\n  background-position: -92px 0;\n}\n.rc-tree-switcher__close {\n  background-position: -74px 0;\n}\n", ""]);
 
 /***/ },
 /* 6 */
@@ -97,7 +97,7 @@ webpackJsonp([0,1],[
 
 	/** @jsx React.DOM */
 	var React = __webpack_require__(2);
-	var rcUtil = __webpack_require__(10);
+	var rcUtil = __webpack_require__(12);
 	var joinClasses = rcUtil.joinClasses;
 	var classSet = rcUtil.classSet;
 	var createChainedFunction = rcUtil.createChainedFunction;
@@ -107,19 +107,31 @@ webpackJsonp([0,1],[
 	  propTypes: {
 	    focusable: React.PropTypes.bool,
 	    expanded: React.PropTypes.bool,
+	    showLine: React.PropTypes.bool,
 	    checkable: React.PropTypes.bool,
 	    onSelect: React.PropTypes.func
 	  },
 	  getDefaultProps:function() {
 	    return {
 	      prefixCls: 'rc-tree',
-	      expanded: true
+	      expanded: true,
+	      showLine: true
 	    };
+	  },
+
+	  statics: {
+	    trees: []
+	  },
+	  
+	  handleChecked: function (isChk, c, e) {
+	    if (this.props.onChecked) {
+	      this.props.onChecked(isChk, c, e);
+	    }
 	  },
 
 	  handleSelect: function (isSel, c, e) {
 	    if (this.props.onSelect) {
-	      this.props.onSelect(isSel, c, e)
+	      this.props.onSelect(isSel, c, e);
 	    }
 	  },
 
@@ -164,12 +176,17 @@ webpackJsonp([0,1],[
 	      )
 	    );
 	  },
-	  renderTreeNode: function (child) {
+	  renderTreeNode: function (child, index) {
 	    var props = this.props;
 	    var cloneProps = {
+	      _level: props._level || 0,
+	      _pos: (props._pos || 0) + '-' + index,
 	      prefixCls: props.prefixCls,
+	      showLine: props.showLine,
 	      checkable: props.checkable,
-	      selected: props.selected,
+	      _checked: props._checked,
+	      onChecked: this.handleChecked,
+	      //selected: props.selected,
 	      onSelect: createChainedFunction(child.props.onSelect, this.handleSelect)
 	    };
 	    return React.cloneElement(child, cloneProps);
@@ -184,17 +201,16 @@ webpackJsonp([0,1],[
 
 	/** @jsx React.DOM */
 	var React = __webpack_require__(2);
-	var rcUtil = __webpack_require__(10);
+	var rcUtil = __webpack_require__(12);
 	var joinClasses = rcUtil.joinClasses;
 	var classSet = rcUtil.classSet;
-	var createChainedFunction = rcUtil.createChainedFunction;
+	//var createChainedFunction = rcUtil.createChainedFunction;
 	//var KeyCode = rcUtil.KeyCode;
 
 	var Tree = __webpack_require__(6);
 
 	var TreeNode = React.createClass({displayName: "TreeNode",
 	  propTypes: {
-	    checkable: React.PropTypes.bool,
 	    selected: React.PropTypes.bool,
 	    iconEle: React.PropTypes.node,
 	    onSelect: React.PropTypes.func
@@ -202,25 +218,23 @@ webpackJsonp([0,1],[
 	  getDefaultProps:function() {
 	    return {
 	      title: '---',
-	      expanded: true,
-	      selected: false,
-	      checked: false
+	      expanded: true
 	    };
 	  },
 	  getInitialState: function () {
 	    return {
 	      expanded: this.props.expanded,
-	      selected: this.props.selected,
-	      checked: this.props.checked
+	      selected: this.props.selected || false,
+	      checkPart: false,
+	      checked: this.props._checked || false
 	    };
 	  },
 
 	  componentWillReceiveProps:function(nextProps) {
-	    var sta = {
-	      selected: nextProps.selected,
-	      checked: nextProps.selected
-	    };
-	    this.setState(sta);
+	    this.setState({
+	      //selected: nextProps.selected,
+	      checked: nextProps._checked
+	    });
 	  },
 
 	  switchExpandedState: function (newState, onStateChangeComplete) {
@@ -243,17 +257,34 @@ webpackJsonp([0,1],[
 	      selected: !this.state.selected
 	    });
 	    if (this.props.onSelect) {
-	      this.props.onSelect(!this.state.selected, this)
+	      this.props.onSelect(!this.state.selected, this);
 	    }
 	  },
 
 	  handleChecked: function () {
 	    var checked = !this.state.checked;
 	    this.setState({
-	      checked: checked,
-	      selected: checked
+	      //selected: checked,
+	      checked: checked
+	    });
+	    Tree.trees.forEach(function (c) {
+	      var _pos = this.props._pos;
+	      var cPos = c.props._pos;
+	      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
+	        //c.checkPart()
+	      }
+	    }, this);
+	    if (this.props.onChecked) {
+	      this.props.onChecked(checked, this);
+	    }
+	  },
+
+	  checkPart: function () {
+	    this.setState({
+	      checkPart: true
 	    });
 	  },
+
 	  render: function () {
 	    var props = this.props;
 	    var state = this.state;
@@ -262,28 +293,33 @@ webpackJsonp([0,1],[
 	    var switchCls = state.expanded ? 'open' : 'close';
 
 	    var switcherCls = {};
+	    switcherCls.button = true;
 	    switcherCls[prefixCls + '-treenode-switcher'] = true;
 	    switcherCls[prefixCls + '-switcher__' + switchCls] = true;
 
-	    var switcherProps = {
-	      className: joinClasses(props.className, classSet(switcherCls)),
-	      onClick: this.handleExpandedState
-	    };
+	    var checkbox = null;
+	    var checkboxCls = {};
+	    if (props.checkable) {
+	      checkboxCls.button = true;
+	      checkboxCls.chk = true;
+	      if (state.checkPart) {
+	        checkboxCls.checkbox_true_part = true;
+	      } else if (state.checked) {
+	        checkboxCls.checkbox_true_full = true;
+	      } else {
+	        checkboxCls.checkbox_false_full = true;
+	      }
+	      checkbox = React.createElement("span", {className: classSet(checkboxCls), onClick: this.handleChecked});
+	    }
 
 	    var iconEleCls = {};
+	    iconEleCls.button = true;
 	    iconEleCls[prefixCls + '-iconEle'] = true;
 	    iconEleCls[prefixCls + '-icon__' + switchCls] = true;
 
-	    // can replace with checkbox
 	    var userIconEle = null;
 	    if (props.iconEle && React.isValidElement(props.iconEle)) {
 	      userIconEle = props.iconEle;
-	    }
-	    var iconEleProps = {
-	      className: classSet(iconEleCls)
-	    };
-	    if (props.checkable) {
-	      iconEleProps.onClick = this.handleChecked;
 	    }
 
 	    var content = props.title;
@@ -294,51 +330,54 @@ webpackJsonp([0,1],[
 	    }
 
 	    return (
-	      React.createElement("li", null, 
-	        React.createElement("span", React.__spread({},  switcherProps)), 
-	        React.createElement("a", {title: content}, 
-	          React.createElement("span", React.__spread({},  iconEleProps), userIconEle), 
-	          React.createElement("span", {className: state.selected ? prefixCls + '-selected' : '', 
-	                onClick: this.handleSelect}, content)
+	      React.createElement("li", {className: 'level' + props._level}, 
+	        React.createElement("span", {className: joinClasses(props.className, classSet(switcherCls)), 
+	              onClick: this.handleExpandedState}), 
+	        checkbox, 
+	        React.createElement("a", {title: content, 
+	           className: state.selected ? prefixCls + '-selected' : '', 
+	           onClick: this.handleSelect}, 
+	          React.createElement("span", {className: classSet(iconEleCls)}, userIconEle), 
+	          React.createElement("span", null, content)
 	        ), 
 	        newChildren
 	      )
 	    );
 	  },
-	  //renderChildren(children) {
-	  //  var childrenCount = React.Children.count(children);
-	  //  if (childrenCount === 1 && children.type === Tree) {
-	  //    this._cache = React.cloneElement(children, {
-	  //      expanded: this.state.expanded,
-	  //      selected: this.state.checked,
-	  //      checked: this.state.checked,
-	  //      onSelect: this.props.onSelect
-	  //    });
-	  //  } else {
-	  //    this._cache = children;
-	  //  }
-	  //  return this._cache;
-	  //},
 	  renderChildren:function(children) {
 	    var newChildren = null;
 	    if (children.type === TreeNode || Array.isArray(children) &&
 	        children.every(function (item) {
-	          return item.type === TreeNode
+	          return item.type === TreeNode;
 	        })) {
+
+	      var cls = {};
+	      cls[this.props.prefixCls + '-child-tree'] = true;
+	      if (this.props.showLine) {
+	        cls.line = true;
+	      }
+
 	      var treeProps = {
-	        className: this.props.prefixCls + '-child-tree',
+	        _level: this.props._level + 1,
+	        _pos: this.props._pos,
+	        className: classSet(cls),
 	        expanded: this.state.expanded,
-	        selected: this.state.checked,
-	        checked: this.state.checked,
-	        checkable: this.props.checkable,
+	        //selected: this.state.checked,
+	        _checked: this.state.checked,
+	        checkable: this.props.checkable, //只是为了传递根节点上的checkable设置,是否有更好做法?
+	        onChecked: this.props.onChecked,
 	        onSelect: this.props.onSelect
 	      };
-	      newChildren = React.createElement(Tree, React.__spread({},  treeProps), children)
+	      newChildren = this.newChildren = React.createElement(Tree, React.__spread({},  treeProps), children);
 	    } else {
 	      newChildren = children;
 	    }
 
 	    return newChildren;
+	  },
+	  componentDidMount: function () {
+	    //console.log( this.newChildren );
+	    this.newChildren && Tree.trees.push(this);
 	  }
 	});
 
@@ -562,29 +601,31 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 10 */
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
-	  guid: __webpack_require__(11),
-	  classSet: __webpack_require__(12),
-	  joinClasses: __webpack_require__(13),
-	  KeyCode: __webpack_require__(14),
-	  PureRenderMixin: __webpack_require__(15),
-	  shallowEqual: __webpack_require__(16),
-	  createChainedFunction: __webpack_require__(17),
+	  guid: __webpack_require__(13),
+	  classSet: __webpack_require__(14),
+	  joinClasses: __webpack_require__(15),
+	  KeyCode: __webpack_require__(16),
+	  PureRenderMixin: __webpack_require__(17),
+	  shallowEqual: __webpack_require__(18),
+	  createChainedFunction: __webpack_require__(19),
 	  Dom: {
-	    addEventListener: __webpack_require__(18),
-	    contains: __webpack_require__(19)
+	    addEventListener: __webpack_require__(20),
+	    contains: __webpack_require__(21)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(20)
+	    toArray: __webpack_require__(22)
 	  }
 	};
 
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var seed = 0;
@@ -594,7 +635,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -639,7 +680,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -686,7 +727,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1213,7 +1254,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1229,7 +1270,7 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	var shallowEqual = __webpack_require__(16);
+	var shallowEqual = __webpack_require__(18);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -1266,7 +1307,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1314,7 +1355,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1341,7 +1382,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (target, eventType, callback) {
@@ -1364,7 +1405,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (root, node) {
@@ -1380,7 +1421,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
