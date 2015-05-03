@@ -29,7 +29,7 @@ tree ui component for react
 
 ## Screenshots
 
-<img src="https://tfsimg.alipay.com/images/T1rO0fXb4fXXXXXXXX.png" width="288"/>
+<img src="https://t.alipayobjects.com/images/T15BpfXn8nXXXXXXXX.png" width="288"/>
 
 
 ## Feature
@@ -84,15 +84,21 @@ React.render(<Rctree />, container);
         </tr>
         <tr>
           <td>iconEle</td>
-          <td>react node</td>
+          <td>react node or null</td>
           <td></td>
           <td>custom icon</td>
+        </tr>
+        <tr>
+          <td>showLine</td>
+          <td>bool</td>
+          <td>true</td>
+          <td>whether show line</td>
         </tr>
         <tr>
           <td>checkable</td>
           <td>bool</td>
           <td></td>
-          <td>whether support check all</td>
+          <td>whether support checked</td>
         </tr>
         <tr>
           <td>onSelect </td>

@@ -6,7 +6,7 @@ var Tree = require('rc-tree');
 var TreeNode = Tree.TreeNode;
 
 function handleSelect(selected, c) {
-  console.log( selected, c );
+  console.log( selected, c.getDOMNode() );
 }
 
 var demo = (
@@ -21,10 +21,10 @@ var demo = (
           <TreeNode>leaf </TreeNode>
         </TreeNode>
       </TreeNode>
+      <TreeNode>leaf </TreeNode>
       <TreeNode>
         <TreeNode>leaf </TreeNode>
       </TreeNode>
-      <TreeNode>leaf </TreeNode>
     </Tree>
 
   </div>
