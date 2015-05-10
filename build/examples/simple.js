@@ -28,7 +28,9 @@ webpackJsonp([0,1],[
 	      React.createElement(TreeNode, {title: "parent 1", expanded: false, onSelect: handleSelect}, 
 	        React.createElement(TreeNode, null, "leaf "), 
 	        React.createElement(TreeNode, {title: "parent 1-1"}, 
-	          React.createElement(TreeNode, null, "leaf "), 
+	          React.createElement(TreeNode, null, 
+	            React.createElement(TreeNode, null, "leaf ")
+	          ), 
 	          React.createElement(TreeNode, null, "leaf ")
 	        )
 	      ), 
@@ -89,7 +91,7 @@ webpackJsonp([0,1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
-	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  line-height: 14px;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.line {\n  background: url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n}\n.rc-tree li a {\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  background-color: transparent;\n  text-decoration: none;\n  vertical-align: top;\n  display: inline-block;\n}\n.rc-tree li span {\n  line-height: 16px;\n  margin-right: 2px;\n}\n.rc-tree li span.button {\n  line-height: 0;\n  margin: 0;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.button.chk {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px 0 0;\n  cursor: auto;\n}\n.rc-tree li span.button.chk.checkbox_false_full {\n  background-position: 0 0;\n}\n.rc-tree li span.button.chk.checkbox_false_full_focus {\n  background-position: 0 -14px;\n}\n.rc-tree li span.button.chk.checkbox_false_part {\n  background-position: 0 -28px;\n}\n.rc-tree li span.button.chk.checkbox_false_part_focus {\n  background-position: 0 -42px;\n}\n.rc-tree li span.button.chk.checkbox_false_disable {\n  background-position: 0 -56px;\n}\n.rc-tree li span.button.chk.checkbox_true_full {\n  background-position: -14px 0;\n}\n.rc-tree li span.button.chk.checkbox_true_full_focus {\n  background-position: -14px -14px;\n}\n.rc-tree li span.button.chk.checkbox_true_part {\n  background-position: -14px -28px;\n}\n.rc-tree li span.button.chk.checkbox_true_part_focus {\n  background-position: -14px -42px;\n}\n.rc-tree li span.button.chk.checkbox_true_disable {\n  background-position: -14px -56px;\n}\n.rc-tree-selected {\n  background-color: #FFE6B0;\n  border: 1px #FFB951 solid;\n  opacity: 0.8;\n}\n.rc-tree-treenode-switcher {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n.rc-tree-switcher__open {\n  background-position: -92px 0;\n}\n.rc-tree-switcher__close {\n  background-position: -74px 0;\n}\n", ""]);
+	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  line-height: 14px;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.line {\n  background: url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n}\n.rc-tree li a {\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  background-color: transparent;\n  text-decoration: none;\n  vertical-align: top;\n  display: inline-block;\n}\n.rc-tree li span {\n  line-height: 16px;\n  margin-right: 2px;\n}\n.rc-tree li span.button {\n  line-height: 0;\n  margin: 0;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.button.roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.button.roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.button.center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.button.center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.button.bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.button.bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.button.center_docu {\n  background-position: -56px -18px;\n}\n.rc-tree li span.button.bottom_docu {\n  background-position: -56px -36px;\n}\n.rc-tree li span.button.chk {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px 0 0;\n  cursor: auto;\n}\n.rc-tree li span.button.chk.checkbox_false_full {\n  background-position: 0 0;\n}\n.rc-tree li span.button.chk.checkbox_false_full_focus {\n  background-position: 0 -14px;\n}\n.rc-tree li span.button.chk.checkbox_false_part {\n  background-position: 0 -28px;\n}\n.rc-tree li span.button.chk.checkbox_false_part_focus {\n  background-position: 0 -42px;\n}\n.rc-tree li span.button.chk.checkbox_false_disable {\n  background-position: 0 -56px;\n}\n.rc-tree li span.button.chk.checkbox_true_full {\n  background-position: -14px 0;\n}\n.rc-tree li span.button.chk.checkbox_true_full_focus {\n  background-position: -14px -14px;\n}\n.rc-tree li span.button.chk.checkbox_true_part {\n  background-position: -14px -28px;\n}\n.rc-tree li span.button.chk.checkbox_true_part_focus {\n  background-position: -14px -42px;\n}\n.rc-tree li span.button.chk.checkbox_true_disable {\n  background-position: -14px -56px;\n}\n.rc-tree-selected {\n  background-color: #FFE6B0;\n  border: 1px #FFB951 solid;\n  opacity: 0.8;\n}\n.rc-tree-treenode-switcher {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", ""]);
 
 /***/ },
 /* 6 */
@@ -168,6 +170,7 @@ webpackJsonp([0,1],[
 	    }
 
 	    //this.newChildren = rcUtil.Children.toArray(props.children).map(this.renderTreeNode, this);
+	    this.childrenLength = React.Children.count(props.children);
 	    this.newChildren = React.Children.map(props.children, this.renderTreeNode, this);
 
 	    return (
@@ -181,6 +184,9 @@ webpackJsonp([0,1],[
 	    var cloneProps = {
 	      _level: props._level || 0,
 	      _pos: (props._pos || 0) + '-' + index,
+	      _isChildTree: props._isChildTree || false,
+	      _index: index,
+	      _len: this.childrenLength,
 	      prefixCls: props.prefixCls,
 	      showLine: props.showLine,
 	      checkable: props.checkable,
@@ -189,6 +195,15 @@ webpackJsonp([0,1],[
 	      //selected: props.selected,
 	      onSelect: createChainedFunction(child.props.onSelect, this.handleSelect)
 	    };
+
+	    //if (index === 0) {
+	    //  cloneProps._firstChild = true;
+	    //} else if (index === arr.length - 1) {
+	    //  cloneProps._lastChild = true;
+	    //} else {
+	    //  cloneProps._centerChild = true;
+	    //}
+
 	    return React.cloneElement(child, cloneProps);
 	  }
 	});
@@ -263,20 +278,36 @@ webpackJsonp([0,1],[
 
 	  handleChecked: function () {
 	    var checked = !this.state.checked;
+	    //var self = this;
 	    this.setState({
 	      //selected: checked,
 	      checked: checked
 	    });
-	    Tree.trees.forEach(function (c) {
-	      var _pos = this.props._pos;
-	      var cPos = c.props._pos;
-	      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
-	        //c.checkPart()
-	      }
-	    }, this);
+
 	    if (this.props.onChecked) {
 	      this.props.onChecked(checked, this);
 	    }
+	  },
+
+	  componentDidUpdate: function () {
+	    //console.log( this.state.checked );
+	    if (this.newChildren) {
+	      Tree.trees.push(this);
+	    }
+
+	    Tree.trees.forEach(function (c) {
+	      //console.log( c.getDOMNode() );
+	      var _pos = this.props._pos;
+	      var cPos = c.props._pos;
+	      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
+	        //console.log( c.props._checked, c.state.checked );
+	        rcUtil.Children.toArray(c.props.children).forEach(function (c) {
+	          console.log(c);
+	          //console.log( c.props._checked, c.state.checked );
+	        });
+	        //c.checkPart();
+	      }
+	    }, this);
 	  },
 
 	  checkPart: function () {
@@ -285,37 +316,62 @@ webpackJsonp([0,1],[
 	    });
 	  },
 
+	  shouldComponentUpdate: function(nextProps, nextState) {
+	    //return nextState.checkPart === this.state.checkPart;
+	    if (this.refs.checkbox && nextState.checkPart) {
+	      var cls = this.refs.checkbox.getDOMNode().className;
+	      this.refs.checkbox.getDOMNode().className = cls + ' checkbox_true_part';
+	      return false;
+	    }
+	    return true;
+	  },
+
 	  render: function () {
 	    var props = this.props;
 	    var state = this.state;
 
 	    var prefixCls = props.prefixCls;
-	    var switchCls = state.expanded ? 'open' : 'close';
+	    var switchState = state.expanded ? 'open' : 'close';
 
 	    var switcherCls = {};
 	    switcherCls.button = true;
 	    switcherCls[prefixCls + '-treenode-switcher'] = true;
-	    switcherCls[prefixCls + '-switcher__' + switchCls] = true;
+	    switcherCls[prefixCls + '-switcher__' + switchState] = true;
+	    if (props._isChildTree && props._index === 0) {
+	      if (props._len !== 1) {
+	        switcherCls['center_' + switchState] = true;
+	      } else {
+	        switcherCls['bottom_' + switchState] = true;
+	      }
+	    } else if (props._index === 0) {
+	      switcherCls['roots_' + switchState] = true;
+	    } else if (props._index === props._len - 1) {
+	      switcherCls['bottom_' + switchState] = true;
+	    } else {
+	      switcherCls['center_' + switchState] = true;
+	    }
 
 	    var checkbox = null;
 	    var checkboxCls = {};
 	    if (props.checkable) {
 	      checkboxCls.button = true;
 	      checkboxCls.chk = true;
+	      /* jshint ignore:start */
 	      if (state.checkPart) {
-	        checkboxCls.checkbox_true_part = true;
+	        //checkboxCls.checkbox_true_part = true;
 	      } else if (state.checked) {
 	        checkboxCls.checkbox_true_full = true;
 	      } else {
 	        checkboxCls.checkbox_false_full = true;
 	      }
-	      checkbox = React.createElement("span", {className: classSet(checkboxCls), onClick: this.handleChecked});
+	      /* jshint ignore:end */
+	      checkbox = React.createElement("span", {ref: "checkbox", className: classSet(checkboxCls), onClick: this.handleChecked});
 	    }
 
 	    var iconEleCls = {};
 	    iconEleCls.button = true;
 	    iconEleCls[prefixCls + '-iconEle'] = true;
-	    iconEleCls[prefixCls + '-icon__' + switchCls] = true;
+	    iconEleCls[prefixCls + '-icon__' + switchState] = true;
 
 	    var userIconEle = null;
 	    if (props.iconEle && React.isValidElement(props.iconEle)) {
@@ -330,7 +386,7 @@ webpackJsonp([0,1],[
 	    }
 
 	    return (
-	      React.createElement("li", {className: 'level' + props._level}, 
+	      React.createElement("li", {className: joinClasses('level' + props._level, 'pos-' + props._pos)}, 
 	        React.createElement("span", {className: joinClasses(props.className, classSet(switcherCls)), 
 	              onClick: this.handleExpandedState}), 
 	        checkbox, 
@@ -353,13 +409,14 @@ webpackJsonp([0,1],[
 
 	      var cls = {};
 	      cls[this.props.prefixCls + '-child-tree'] = true;
-	      if (this.props.showLine) {
+	      if (this.props.showLine && this.props._index !== this.props._len - 1) {
 	        cls.line = true;
 	      }
 
 	      var treeProps = {
 	        _level: this.props._level + 1,
 	        _pos: this.props._pos,
+	        _isChildTree: true,
 	        className: classSet(cls),
 	        expanded: this.state.expanded,
 	        //selected: this.state.checked,
@@ -377,7 +434,9 @@ webpackJsonp([0,1],[
 	  },
 	  componentDidMount: function () {
 	    //console.log( this.newChildren );
-	    this.newChildren && Tree.trees.push(this);
+	    //if (this.newChildren) {
+	    //  Tree.trees.push(this);
+	    //}
 	  }
 	});
 
