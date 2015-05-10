@@ -17,7 +17,9 @@ var demo = (
       <TreeNode title="parent 1" expanded={false} onSelect={handleSelect}>
         <TreeNode>leaf </TreeNode>
         <TreeNode title="parent 1-1">
-          <TreeNode>leaf </TreeNode>
+          <TreeNode>
+            <TreeNode>leaf </TreeNode>
+          </TreeNode>
           <TreeNode>leaf </TreeNode>
         </TreeNode>
       </TreeNode>
