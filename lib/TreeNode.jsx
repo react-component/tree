@@ -62,20 +62,36 @@ var TreeNode = React.createClass({
 
   handleChecked: function () {
     var checked = !this.state.checked;
+    //var self = this;
     this.setState({
       //selected: checked,
       checked: checked
     });
-    Tree.trees.forEach(function (c) {
-      var _pos = this.props._pos;
-      var cPos = c.props._pos;
-      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
-        //c.checkPart()
-      }
-    }, this);
+
     if (this.props.onChecked) {
       this.props.onChecked(checked, this);
     }
+  },
+
+  componentDidUpdate: function () {
+    //console.log( this.state.checked );
+    if (this.newChildren) {
+      Tree.trees.push(this);
+    }
+
+    Tree.trees.forEach(function (c) {
+      //console.log( c.getDOMNode() );
+      var _pos = this.props._pos;
+      var cPos = c.props._pos;
+      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
+        //console.log( c.props._checked, c.state.checked );
+        rcUtil.Children.toArray(c.props.children).forEach(function (c) {
+          console.log(c);
+          //console.log( c.props._checked, c.state.checked );
+        });
+        //c.checkPart();
+      }
+    }, this);
   },
 
   checkPart: function () {
@@ -84,17 +100,40 @@ var TreeNode = React.createClass({
     });
   },
 
+  shouldComponentUpdate: function(nextProps, nextState) {
+    //return nextState.checkPart === this.state.checkPart;
+    if (this.refs.checkbox && nextState.checkPart) {
+      var cls = this.refs.checkbox.getDOMNode().className;
+      this.refs.checkbox.getDOMNode().className = cls + ' checkbox_true_part';
+      return false;
+    }
+    return true;
+  },
+
   render: function () {
     var props = this.props;
     var state = this.state;
 
     var prefixCls = props.prefixCls;
-    var switchCls = state.expanded ? 'open' : 'close';
+    var switchState = state.expanded ? 'open' : 'close';
 
     var switcherCls = {};
     switcherCls.button = true;
     switcherCls[prefixCls + '-treenode-switcher'] = true;
-    switcherCls[prefixCls + '-switcher__' + switchCls] = true;
+    switcherCls[prefixCls + '-switcher__' + switchState] = true;
+    if (props._isChildTree && props._index === 0) {
+      if (props._len !== 1) {
+        switcherCls['center_' + switchState] = true;
+      } else {
+        switcherCls['bottom_' + switchState] = true;
+      }
+    } else if (props._index === 0) {
+      switcherCls['roots_' + switchState] = true;
+    } else if (props._index === props._len - 1) {
+      switcherCls['bottom_' + switchState] = true;
+    } else {
+      switcherCls['center_' + switchState] = true;
+    }
 
     var checkbox = null;
     var checkboxCls = {};
@@ -103,20 +142,20 @@ var TreeNode = React.createClass({
       checkboxCls.chk = true;
       /* jshint ignore:start */
       if (state.checkPart) {
-        checkboxCls.checkbox_true_part = true;
+        //checkboxCls.checkbox_true_part = true;
       } else if (state.checked) {
         checkboxCls.checkbox_true_full = true;
       } else {
         checkboxCls.checkbox_false_full = true;
       }
       /* jshint ignore:end */
-      checkbox = <span className={classSet(checkboxCls)} onClick={this.handleChecked}></span>;
+      checkbox = <span ref="checkbox" className={classSet(checkboxCls)} onClick={this.handleChecked}></span>;
     }
 
     var iconEleCls = {};
     iconEleCls.button = true;
     iconEleCls[prefixCls + '-iconEle'] = true;
-    iconEleCls[prefixCls + '-icon__' + switchCls] = true;
+    iconEleCls[prefixCls + '-icon__' + switchState] = true;
 
     var userIconEle = null;
     if (props.iconEle && React.isValidElement(props.iconEle)) {
@@ -131,7 +170,7 @@ var TreeNode = React.createClass({
     }
 
     return (
-      <li className={'level' + props._level}>
+      <li className={joinClasses('level' + props._level, 'pos-' + props._pos)}>
         <span className={joinClasses(props.className, classSet(switcherCls))}
               onClick={this.handleExpandedState}></span>
         {checkbox}
@@ -154,13 +193,14 @@ var TreeNode = React.createClass({
 
       var cls = {};
       cls[this.props.prefixCls + '-child-tree'] = true;
-      if (this.props.showLine) {
+      if (this.props.showLine && this.props._index !== this.props._len - 1) {
         cls.line = true;
       }
 
       var treeProps = {
         _level: this.props._level + 1,
         _pos: this.props._pos,
+        _isChildTree: true,
         className: classSet(cls),
         expanded: this.state.expanded,
         //selected: this.state.checked,
@@ -178,9 +218,9 @@ var TreeNode = React.createClass({
   },
   componentDidMount: function () {
     //console.log( this.newChildren );
-    if (this.newChildren) {
-      Tree.trees.push(this);
-    }
+    //if (this.newChildren) {
+    //  Tree.trees.push(this);
+    //}
   }
 });
 
