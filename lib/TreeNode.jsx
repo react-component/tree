@@ -62,11 +62,48 @@ var TreeNode = React.createClass({
 
   handleChecked: function () {
     var checked = !this.state.checked;
-    //var self = this;
-    this.setState({
-      //selected: checked,
-      checked: checked
-    });
+    var self = this;
+    //this.setState({
+    //  //selected: checked,
+    //  checked: checked
+    //});
+    setSt();
+    function setSt() {
+      self.setState({
+        //selected: checked,
+        checked: checked
+      });
+    }
+
+    Tree.trees.forEach(function (c) {
+      //console.log( c.getDOMNode() );
+      var _pos = this.props._pos;
+      var cPos = c.props._pos;
+      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
+        //console.log( c.props._checked, c.state.checked );
+        var childArr = rcUtil.Children.toArray(c.props.children);
+        //childArr.forEach(function (c) {
+        //  console.log(c.props.refs);
+        //  //console.log( c.props._checked, c.state.checked );
+        //});
+        var i = 0, len = childArr.length, checkedNumbers = checked ? 1 : 0;
+        for (; i < len; i++) {
+          var __pos = cPos + '-' + i;
+          if (Tree.treeNodesState[__pos] && !(__pos === _pos && !checked)) {
+            checkedNumbers++;
+          }
+        }
+        /**
+        if (checkedNumbers === 0) {
+          c.checkNone(setSt);
+        } else if (checkedNumbers === len) {
+          c.checkAll(setSt);
+        } else {
+          c.checkPart(setSt);
+        }
+         */
+      }
+    }, this);
 
     if (this.props.onChecked) {
       this.props.onChecked(checked, this);
@@ -76,28 +113,37 @@ var TreeNode = React.createClass({
   componentDidUpdate: function () {
     //console.log( this.state.checked );
     if (this.newChildren) {
+      for (var i = 0; i < Tree.trees.length; i++) {
+        var obj = Tree.trees[i];
+        if (obj.props._pos === this.props._pos) {
+          Tree.trees.splice(i--, 1);
+        }
+      }
       Tree.trees.push(this);
     }
-
-    Tree.trees.forEach(function (c) {
-      //console.log( c.getDOMNode() );
-      var _pos = this.props._pos;
-      var cPos = c.props._pos;
-      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
-        //console.log( c.props._checked, c.state.checked );
-        rcUtil.Children.toArray(c.props.children).forEach(function (c) {
-          console.log(c);
-          //console.log( c.props._checked, c.state.checked );
-        });
-        //c.checkPart();
-      }
-    }, this);
+    //add treeNodes checked state
+    Tree.treeNodesState[this.props._pos] = this.state.checked;
   },
 
-  checkPart: function () {
+  checkPart: function (onStateChangeComplete) {
     this.setState({
+      //checked: false,
       checkPart: true
-    });
+    }, onStateChangeComplete);
+  },
+
+  checkAll: function (onStateChangeComplete) {
+    this.setState({
+      checkPart: false,
+      checked: true
+    }, onStateChangeComplete);
+  },
+
+  checkNone: function (onStateChangeComplete) {
+    this.setState({
+      checkPart: false,
+      checked: false
+    }, onStateChangeComplete);
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -108,6 +154,7 @@ var TreeNode = React.createClass({
       return false;
     }
     return true;
+    //return false;
   },
 
   render: function () {
@@ -142,7 +189,7 @@ var TreeNode = React.createClass({
       checkboxCls.chk = true;
       /* jshint ignore:start */
       if (state.checkPart) {
-        //checkboxCls.checkbox_true_part = true;
+        checkboxCls.checkbox_true_part = true;
       } else if (state.checked) {
         checkboxCls.checkbox_true_full = true;
       } else {

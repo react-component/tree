@@ -23,6 +23,7 @@ var Tree = React.createClass({
   },
 
   statics: {
+    treeNodesState: {},
     trees: []
   },
   
@@ -82,9 +83,10 @@ var Tree = React.createClass({
   },
   renderTreeNode: function (child, index) {
     var props = this.props;
+    var pos = (props._pos || 0) + '-' + index;
     var cloneProps = {
       _level: props._level || 0,
-      _pos: (props._pos || 0) + '-' + index,
+      _pos: pos,
       _isChildTree: props._isChildTree || false,
       _index: index,
       _len: this.childrenLength,
