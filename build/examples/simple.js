@@ -2,48 +2,29 @@ webpackJsonp([0,1],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(10);
 
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/** @jsx React.DOM */
-	// use jsx to render html, do not modify simple.html
-	__webpack_require__(4);
-	var React = __webpack_require__(2);
-	var Tree = __webpack_require__(3);
-	var TreeNode = Tree.TreeNode;
-
-	function handleSelect(selected, c) {
-	  console.log( selected, c.getDOMNode() );
-	}
-
-	var demo = (
-	  React.createElement("div", null, 
-	    React.createElement("h2", null, "简单tree"), 
-
-	    React.createElement(Tree, {className: "myCls", onSelect: handleSelect, checkable: true}, 
-	      React.createElement(TreeNode, {title: "parent 1", expanded: false, onSelect: handleSelect}, 
-	        React.createElement(TreeNode, null, "leaf "), 
-	        React.createElement(TreeNode, {title: "parent 1-1"}, 
-	          React.createElement(TreeNode, null, 
-	            React.createElement(TreeNode, null, "leaf ")
-	          ), 
-	          React.createElement(TreeNode, null, "leaf ")
-	        )
-	      ), 
-	      React.createElement(TreeNode, null, "leaf "), 
-	      React.createElement(TreeNode, null, 
-	        React.createElement(TreeNode, null, "leaf ")
-	      )
-	    )
-
-	  )
-	)
-
-	React.render(demo, document.getElementById('__react-content'));
+	module.exports = {
+	  guid: __webpack_require__(12),
+	  classSet: __webpack_require__(13),
+	  joinClasses: __webpack_require__(14),
+	  KeyCode: __webpack_require__(15),
+	  PureRenderMixin: __webpack_require__(16),
+	  shallowEqual: __webpack_require__(11),
+	  createChainedFunction: __webpack_require__(17),
+	  Dom: {
+	    addEventListener: __webpack_require__(18),
+	    contains: __webpack_require__(19)
+	  },
+	  Children: {
+	    toArray: __webpack_require__(20)
+	  }
+	};
 
 
 /***/ },
@@ -59,7 +40,7 @@ webpackJsonp([0,1],[
 	
 	var Tree = __webpack_require__(6);
 	Tree.TreeNode = __webpack_require__(7);
-
+	
 	module.exports = Tree;
 
 
@@ -68,7 +49,7 @@ webpackJsonp([0,1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
 	var content = __webpack_require__(5);
 	if(typeof content === 'string') content = [[module.id, content, '']];
@@ -99,12 +80,12 @@ webpackJsonp([0,1],[
 
 	/** @jsx React.DOM */
 	var React = __webpack_require__(2);
-	var rcUtil = __webpack_require__(10);
+	var rcUtil = __webpack_require__(1);
 	var joinClasses = rcUtil.joinClasses;
 	var classSet = rcUtil.classSet;
 	var createChainedFunction = rcUtil.createChainedFunction;
 	//var KeyCode = rcUtil.KeyCode;
-
+	
 	var Tree = React.createClass({displayName: "Tree",
 	  propTypes: {
 	    focusable: React.PropTypes.bool,
@@ -120,8 +101,9 @@ webpackJsonp([0,1],[
 	      showLine: true
 	    };
 	  },
-
+	
 	  statics: {
+	    treeNodesState: {},
 	    trees: []
 	  },
 	  
@@ -130,27 +112,27 @@ webpackJsonp([0,1],[
 	      this.props.onChecked(isChk, c, e);
 	    }
 	  },
-
+	
 	  handleSelect: function (isSel, c, e) {
 	    if (this.props.onSelect) {
 	      this.props.onSelect(isSel, c, e);
 	    }
 	  },
-
+	
 	  // all keyboard events callbacks run from here at first
 	  // todo
 	  handleKeyDown: function (e) {
 	    e.preventDefault();
 	  },
-
+	
 	  render: function () {
 	    var props = this.props;
 	    //var state = this.state;
-
+	
 	    var classes = {};
 	    var prefixCls = props.prefixCls;
 	    classes[prefixCls] = true;
-
+	
 	    var domProps = {
 	      className: joinClasses(props.className, classSet(classes)),
 	      style: props.expanded ? {display: 'block'} : {display: 'none'},
@@ -168,11 +150,11 @@ webpackJsonp([0,1],[
 	      domProps.tabIndex = '0';
 	      domProps.onKeyDown = this.handleKeyDown;
 	    }
-
+	
 	    //this.newChildren = rcUtil.Children.toArray(props.children).map(this.renderTreeNode, this);
 	    this.childrenLength = React.Children.count(props.children);
 	    this.newChildren = React.Children.map(props.children, this.renderTreeNode, this);
-
+	
 	    return (
 	      React.createElement("ul", React.__spread({},  domProps), 
 	        this.newChildren
@@ -181,9 +163,10 @@ webpackJsonp([0,1],[
 	  },
 	  renderTreeNode: function (child, index) {
 	    var props = this.props;
+	    var pos = (props._pos || 0) + '-' + index;
 	    var cloneProps = {
 	      _level: props._level || 0,
-	      _pos: (props._pos || 0) + '-' + index,
+	      _pos: pos,
 	      _isChildTree: props._isChildTree || false,
 	      _index: index,
 	      _len: this.childrenLength,
@@ -195,7 +178,7 @@ webpackJsonp([0,1],[
 	      //selected: props.selected,
 	      onSelect: createChainedFunction(child.props.onSelect, this.handleSelect)
 	    };
-
+	
 	    //if (index === 0) {
 	    //  cloneProps._firstChild = true;
 	    //} else if (index === arr.length - 1) {
@@ -203,11 +186,11 @@ webpackJsonp([0,1],[
 	    //} else {
 	    //  cloneProps._centerChild = true;
 	    //}
-
+	
 	    return React.cloneElement(child, cloneProps);
 	  }
 	});
-
+	
 	module.exports = Tree;
 
 /***/ },
@@ -216,14 +199,14 @@ webpackJsonp([0,1],[
 
 	/** @jsx React.DOM */
 	var React = __webpack_require__(2);
-	var rcUtil = __webpack_require__(10);
+	var rcUtil = __webpack_require__(1);
 	var joinClasses = rcUtil.joinClasses;
 	var classSet = rcUtil.classSet;
 	//var createChainedFunction = rcUtil.createChainedFunction;
 	//var KeyCode = rcUtil.KeyCode;
-
+	
 	var Tree = __webpack_require__(6);
-
+	
 	var TreeNode = React.createClass({displayName: "TreeNode",
 	  propTypes: {
 	    selected: React.PropTypes.bool,
@@ -244,29 +227,29 @@ webpackJsonp([0,1],[
 	      checked: this.props._checked || false
 	    };
 	  },
-
+	
 	  componentWillReceiveProps:function(nextProps) {
 	    this.setState({
 	      //selected: nextProps.selected,
 	      checked: nextProps._checked
 	    });
 	  },
-
+	
 	  switchExpandedState: function (newState, onStateChangeComplete) {
 	    this.setState({
 	      expanded: newState
 	    }, onStateChangeComplete);
 	  },
-
+	
 	  // keyboard event support
 	  handleKeyDown: function (e) {
 	    e.preventDefault();
 	  },
-
+	
 	  handleExpandedState: function () {
 	    this.switchExpandedState(!this.state.expanded);
 	  },
-
+	
 	  handleSelect: function () {
 	    this.setState({
 	      selected: !this.state.selected
@@ -275,47 +258,93 @@ webpackJsonp([0,1],[
 	      this.props.onSelect(!this.state.selected, this);
 	    }
 	  },
-
+	
 	  handleChecked: function () {
 	    var checked = !this.state.checked;
-	    //var self = this;
-	    this.setState({
-	      //selected: checked,
-	      checked: checked
-	    });
-
-	    if (this.props.onChecked) {
-	      this.props.onChecked(checked, this);
+	    var self = this;
+	    //this.setState({
+	    //  //selected: checked,
+	    //  checked: checked
+	    //});
+	    setSt();
+	    function setSt() {
+	      self.setState({
+	        //selected: checked,
+	        checked: checked
+	      });
 	    }
-	  },
-
-	  componentDidUpdate: function () {
-	    //console.log( this.state.checked );
-	    if (this.newChildren) {
-	      Tree.trees.push(this);
-	    }
-
+	
 	    Tree.trees.forEach(function (c) {
 	      //console.log( c.getDOMNode() );
 	      var _pos = this.props._pos;
 	      var cPos = c.props._pos;
 	      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
 	        //console.log( c.props._checked, c.state.checked );
-	        rcUtil.Children.toArray(c.props.children).forEach(function (c) {
-	          console.log(c);
-	          //console.log( c.props._checked, c.state.checked );
-	        });
-	        //c.checkPart();
+	        var childArr = rcUtil.Children.toArray(c.props.children);
+	        //childArr.forEach(function (c) {
+	        //  console.log(c.props.refs);
+	        //  //console.log( c.props._checked, c.state.checked );
+	        //});
+	        var i = 0, len = childArr.length, checkedNumbers = checked ? 1 : 0;
+	        for (; i < len; i++) {
+	          var __pos = cPos + '-' + i;
+	          if (Tree.treeNodesState[__pos] && !(__pos === _pos && !checked)) {
+	            checkedNumbers++;
+	          }
+	        }
+	        /**
+	        if (checkedNumbers === 0) {
+	          c.checkNone(setSt);
+	        } else if (checkedNumbers === len) {
+	          c.checkAll(setSt);
+	        } else {
+	          c.checkPart(setSt);
+	        }
+	         */
 	      }
 	    }, this);
+	
+	    if (this.props.onChecked) {
+	      this.props.onChecked(checked, this);
+	    }
 	  },
-
-	  checkPart: function () {
+	
+	  componentDidUpdate: function () {
+	    //console.log( this.state.checked );
+	    if (this.newChildren) {
+	      for (var i = 0; i < Tree.trees.length; i++) {
+	        var obj = Tree.trees[i];
+	        if (obj.props._pos === this.props._pos) {
+	          Tree.trees.splice(i--, 1);
+	        }
+	      }
+	      Tree.trees.push(this);
+	    }
+	    //add treeNodes checked state
+	    Tree.treeNodesState[this.props._pos] = this.state.checked;
+	  },
+	
+	  checkPart: function (onStateChangeComplete) {
 	    this.setState({
+	      //checked: false,
 	      checkPart: true
-	    });
+	    }, onStateChangeComplete);
 	  },
-
+	
+	  checkAll: function (onStateChangeComplete) {
+	    this.setState({
+	      checkPart: false,
+	      checked: true
+	    }, onStateChangeComplete);
+	  },
+	
+	  checkNone: function (onStateChangeComplete) {
+	    this.setState({
+	      checkPart: false,
+	      checked: false
+	    }, onStateChangeComplete);
+	  },
+	
 	  shouldComponentUpdate: function(nextProps, nextState) {
 	    //return nextState.checkPart === this.state.checkPart;
 	    if (this.refs.checkbox && nextState.checkPart) {
@@ -324,15 +353,16 @@ webpackJsonp([0,1],[
 	      return false;
 	    }
 	    return true;
+	    //return false;
 	  },
-
+	
 	  render: function () {
 	    var props = this.props;
 	    var state = this.state;
-
+	
 	    var prefixCls = props.prefixCls;
 	    var switchState = state.expanded ? 'open' : 'close';
-
+	
 	    var switcherCls = {};
 	    switcherCls.button = true;
 	    switcherCls[prefixCls + '-treenode-switcher'] = true;
@@ -350,7 +380,7 @@ webpackJsonp([0,1],[
 	    } else {
 	      switcherCls['center_' + switchState] = true;
 	    }
-
+	
 	    var checkbox = null;
 	    var checkboxCls = {};
 	    if (props.checkable) {
@@ -358,7 +388,7 @@ webpackJsonp([0,1],[
 	      checkboxCls.chk = true;
 	      /* jshint ignore:start */
 	      if (state.checkPart) {
-	        //checkboxCls.checkbox_true_part = true;
+	        checkboxCls.checkbox_true_part = true;
 	      } else if (state.checked) {
 	        checkboxCls.checkbox_true_full = true;
 	      } else {
@@ -367,24 +397,24 @@ webpackJsonp([0,1],[
 	      /* jshint ignore:end */
 	      checkbox = React.createElement("span", {ref: "checkbox", className: classSet(checkboxCls), onClick: this.handleChecked});
 	    }
-
+	
 	    var iconEleCls = {};
 	    iconEleCls.button = true;
 	    iconEleCls[prefixCls + '-iconEle'] = true;
 	    iconEleCls[prefixCls + '-icon__' + switchState] = true;
-
+	
 	    var userIconEle = null;
 	    if (props.iconEle && React.isValidElement(props.iconEle)) {
 	      userIconEle = props.iconEle;
 	    }
-
+	
 	    var content = props.title;
 	    var newChildren = this.renderChildren(props.children);
 	    if (newChildren === props.children) {
 	      content = newChildren;
 	      newChildren = null;
 	    }
-
+	
 	    return (
 	      React.createElement("li", {className: joinClasses('level' + props._level, 'pos-' + props._pos)}, 
 	        React.createElement("span", {className: joinClasses(props.className, classSet(switcherCls)), 
@@ -406,13 +436,13 @@ webpackJsonp([0,1],[
 	        children.every(function (item) {
 	          return item.type === TreeNode;
 	        })) {
-
+	
 	      var cls = {};
 	      cls[this.props.prefixCls + '-child-tree'] = true;
 	      if (this.props.showLine && this.props._index !== this.props._len - 1) {
 	        cls.line = true;
 	      }
-
+	
 	      var treeProps = {
 	        _level: this.props._level + 1,
 	        _pos: this.props._pos,
@@ -429,7 +459,7 @@ webpackJsonp([0,1],[
 	    } else {
 	      newChildren = children;
 	    }
-
+	
 	    return newChildren;
 	  },
 	  componentDidMount: function () {
@@ -439,7 +469,7 @@ webpackJsonp([0,1],[
 	    //}
 	  }
 	});
-
+	
 	module.exports = TreeNode;
 
 /***/ },
@@ -466,20 +496,20 @@ webpackJsonp([0,1],[
 		}),
 		singletonElement = null,
 		singletonCounter = 0;
-
+	
 	module.exports = function(list, options) {
 		if(false) {
 			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
 		}
-
+	
 		options = options || {};
 		// Force single-tag solution on IE9, which has a hard limit on the # of <style>
 		// tags it will allow on a page
 		if (typeof options.singleton === "undefined") options.singleton = isIE9();
-
+	
 		var styles = listToStyles(list);
 		addStylesToDom(styles, options);
-
+	
 		return function update(newList) {
 			var mayRemove = [];
 			for(var i = 0; i < styles.length; i++) {
@@ -502,7 +532,7 @@ webpackJsonp([0,1],[
 			}
 		};
 	}
-
+	
 	function addStylesToDom(styles, options) {
 		for(var i = 0; i < styles.length; i++) {
 			var item = styles[i];
@@ -524,7 +554,7 @@ webpackJsonp([0,1],[
 			}
 		}
 	}
-
+	
 	function listToStyles(list) {
 		var styles = [];
 		var newStyles = {};
@@ -542,7 +572,7 @@ webpackJsonp([0,1],[
 		}
 		return styles;
 	}
-
+	
 	function createStyleElement() {
 		var styleElement = document.createElement("style");
 		var head = getHeadElement();
@@ -550,10 +580,10 @@ webpackJsonp([0,1],[
 		head.appendChild(styleElement);
 		return styleElement;
 	}
-
+	
 	function addStyle(obj, options) {
 		var styleElement, update, remove;
-
+	
 		if (options.singleton) {
 			var styleIndex = singletonCounter++;
 			styleElement = singletonElement || (singletonElement = createStyleElement());
@@ -566,9 +596,9 @@ webpackJsonp([0,1],[
 				styleElement.parentNode.removeChild(styleElement);
 			};
 		}
-
+	
 		update(obj);
-
+	
 		return function updateStyle(newObj) {
 			if(newObj) {
 				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
@@ -579,7 +609,7 @@ webpackJsonp([0,1],[
 			}
 		};
 	}
-
+	
 	function replaceText(source, id, replacement) {
 		var boundaries = ["/** >>" + id + " **/", "/** " + id + "<< **/"];
 		var start = source.lastIndexOf(boundaries[0]);
@@ -593,10 +623,10 @@ webpackJsonp([0,1],[
 			return source + wrappedReplacement;
 		}
 	}
-
+	
 	function applyToSingletonTag(styleElement, index, remove, obj) {
 		var css = remove ? "" : obj.css;
-
+	
 		if(styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = replaceText(styleElement.styleSheet.cssText, index, css);
 		} else {
@@ -610,23 +640,23 @@ webpackJsonp([0,1],[
 			}
 		}
 	}
-
+	
 	function applyToTag(styleElement, obj) {
 		var css = obj.css;
 		var media = obj.media;
 		var sourceMap = obj.sourceMap;
-
+	
 		if(sourceMap && typeof btoa === "function") {
 			try {
 				css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(JSON.stringify(sourceMap)) + " */";
 				css = "@import url(\"data:text/css;base64," + btoa(css) + "\")";
 			} catch(e) {}
 		}
-
+	
 		if(media) {
 			styleElement.setAttribute("media", media)
 		}
-
+	
 		if(styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = css;
 		} else {
@@ -663,26 +693,95 @@ webpackJsonp([0,1],[
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = {
-	  guid: __webpack_require__(11),
-	  classSet: __webpack_require__(12),
-	  joinClasses: __webpack_require__(13),
-	  KeyCode: __webpack_require__(14),
-	  PureRenderMixin: __webpack_require__(15),
-	  shallowEqual: __webpack_require__(16),
-	  createChainedFunction: __webpack_require__(17),
-	  Dom: {
-	    addEventListener: __webpack_require__(18),
-	    contains: __webpack_require__(19)
-	  },
-	  Children: {
-	    toArray: __webpack_require__(20)
-	  }
-	};
+	/** @jsx React.DOM */
+	// use jsx to render html, do not modify simple.html
+	__webpack_require__(4);
+	var React = __webpack_require__(2);
+	var Tree = __webpack_require__(3);
+	var TreeNode = Tree.TreeNode;
+	
+	function handleSelect(selected, c) {
+	  console.log( selected, c.getDOMNode() );
+	}
+	
+	var demo = (
+	  React.createElement("div", null, 
+	    React.createElement("h2", null, "简单tree"), 
+	
+	    React.createElement(Tree, {className: "myCls", onSelect: handleSelect, checkable: true}, 
+	      React.createElement(TreeNode, {title: "parent 1", expanded: false, onSelect: handleSelect}, 
+	        React.createElement(TreeNode, null, "leaf "), 
+	        React.createElement(TreeNode, {title: "parent 1-1"}, 
+	          React.createElement(TreeNode, {title: "parent 2-1"}, 
+	            React.createElement(TreeNode, null, "leaf "), 
+	            React.createElement(TreeNode, null, "leaf ")
+	          ), 
+	          React.createElement(TreeNode, null, "leaf "), 
+	          React.createElement(TreeNode, null, "leaf ")
+	        )
+	      ), 
+	      React.createElement(TreeNode, null, "leaf "), 
+	      React.createElement(TreeNode, null, 
+	        React.createElement(TreeNode, null, "leaf ")
+	      )
+	    )
+	
+	  )
+	)
+	
+	React.render(demo, document.getElementById('__react-content'));
 
 
 /***/ },
 /* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule shallowEqual
+	 */
+	
+	"use strict";
+	
+	/**
+	 * Performs equality by iterating through keys on an object and returning
+	 * false when any key has values which are not strictly equal between
+	 * objA and objB. Returns true when the values of all keys are strictly equal.
+	 *
+	 * @return {boolean}
+	 */
+	function shallowEqual(objA, objB) {
+	  if (objA === objB) {
+	    return true;
+	  }
+	  var key;
+	  // Test for A's keys different from B.
+	  for (key in objA) {
+	    if (objA.hasOwnProperty(key) &&
+	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
+	      return false;
+	    }
+	  }
+	  // Test for B's keys missing from A.
+	  for (key in objB) {
+	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
+	      return false;
+	    }
+	  }
+	  return true;
+	}
+	
+	module.exports = shallowEqual;
+
+
+/***/ },
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var seed = 0;
@@ -692,7 +791,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -707,7 +806,7 @@ webpackJsonp([0,1],[
 	 * An additional grant of patent rights can be found here:
 	 * https://github.com/facebook/react/blob/v0.12.0/PATENTS
 	 */
-
+	
 	/**
 	 * This function is used to mark string literals representing CSS class names
 	 * so that they can be transformed statically. This allows for modularization
@@ -732,12 +831,12 @@ webpackJsonp([0,1],[
 	    return Array.prototype.join.call(arguments, ' ');
 	  }
 	}
-
+	
 	module.exports = cx;
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -752,9 +851,9 @@ webpackJsonp([0,1],[
 	 * An additional grant of patent rights can be found here:
 	 * https://github.com/facebook/react/blob/v0.12.0/PATENTS
 	 */
-
+	
 	"use strict";
-
+	
 	/**
 	 * Combines multiple className strings into one.
 	 * http://jsperf.com/joinclasses-args-vs-array
@@ -762,7 +861,7 @@ webpackJsonp([0,1],[
 	 * @param {...?string} classes
 	 * @return {string}
 	 */
-
+	
 	function joinClasses(className /*, ... */ ) {
 	  if (!className) {
 	    className = '';
@@ -779,12 +878,12 @@ webpackJsonp([0,1],[
 	  }
 	  return className;
 	}
-
+	
 	module.exports = joinClasses;
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -792,7 +891,7 @@ webpackJsonp([0,1],[
 	 * some key-codes definition and utils from closure-library
 	 * @author yiminghe@gmail.com
 	 */
-
+	
 	var KeyCode = {
 	  /**
 	   * MAC_ENTER
@@ -1215,7 +1314,7 @@ webpackJsonp([0,1],[
 	   */
 	  WIN_IME: 229
 	};
-
+	
 	/*
 	 whether text and modified key is entered at the same time.
 	 */
@@ -1226,7 +1325,7 @@ webpackJsonp([0,1],[
 	    keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
 	    return false;
 	  }
-
+	
 	  // The following keys are quite harmless, even in combination with
 	  // CTRL, ALT or SHIFT.
 	  switch (keyCode) {
@@ -1258,7 +1357,7 @@ webpackJsonp([0,1],[
 	      return true;
 	  }
 	};
-
+	
 	/*
 	 whether character is entered.
 	 */
@@ -1267,22 +1366,22 @@ webpackJsonp([0,1],[
 	    keyCode <= KeyCode.NINE) {
 	    return true;
 	  }
-
+	
 	  if (keyCode >= KeyCode.NUM_ZERO &&
 	    keyCode <= KeyCode.NUM_MULTIPLY) {
 	    return true;
 	  }
-
+	
 	  if (keyCode >= KeyCode.A &&
 	    keyCode <= KeyCode.Z) {
 	    return true;
 	  }
-
+	
 	  // Safari sends zero key code for non-latin characters.
 	  if (window.navigation.userAgent.indexOf('WebKit') !== -1 && keyCode === 0) {
 	    return true;
 	  }
-
+	
 	  switch (keyCode) {
 	    case KeyCode.SPACE:
 	    case KeyCode.QUESTION_MARK:
@@ -1306,12 +1405,12 @@ webpackJsonp([0,1],[
 	      return false;
 	  }
 	};
-
+	
 	module.exports = KeyCode;
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1324,11 +1423,11 @@ webpackJsonp([0,1],[
 	 *
 	* @providesModule ReactComponentWithPureRenderMixin
 	*/
-
+	
 	"use strict";
-
-	var shallowEqual = __webpack_require__(16);
-
+	
+	var shallowEqual = __webpack_require__(11);
+	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
 	 * same result given the same props and state, provide this Mixin for a
@@ -1359,56 +1458,8 @@ webpackJsonp([0,1],[
 	           !shallowEqual(this.state, nextState);
 	  }
 	};
-
+	
 	module.exports = ReactComponentWithPureRenderMixin;
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule shallowEqual
-	 */
-
-	"use strict";
-
-	/**
-	 * Performs equality by iterating through keys on an object and returning
-	 * false when any key has values which are not strictly equal between
-	 * objA and objB. Returns true when the values of all keys are strictly equal.
-	 *
-	 * @return {boolean}
-	 */
-	function shallowEqual(objA, objB) {
-	  if (objA === objB) {
-	    return true;
-	  }
-	  var key;
-	  // Test for A's keys different from B.
-	  for (key in objA) {
-	    if (objA.hasOwnProperty(key) &&
-	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
-	      return false;
-	    }
-	  }
-	  // Test for B's keys missing from A.
-	  for (key in objB) {
-	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
-	      return false;
-	    }
-	  }
-	  return true;
-	}
-
-	module.exports = shallowEqual;
 
 
 /***/ },
@@ -1425,7 +1476,7 @@ webpackJsonp([0,1],[
 	 */
 	function createChainedFunction() {
 	  var args = arguments;
-
+	
 	  return function chainedFunction() {
 	    for (var i = 0; i < args.length; i++) {
 	      if (args[i] && args[i].apply) {
@@ -1434,7 +1485,7 @@ webpackJsonp([0,1],[
 	    }
 	  };
 	}
-
+	
 	module.exports = createChainedFunction;
 
 
@@ -1472,7 +1523,7 @@ webpackJsonp([0,1],[
 	    }
 	    node = node.parentNode;
 	  }
-
+	
 	  return false;
 	};
 
@@ -1482,7 +1533,7 @@ webpackJsonp([0,1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
-
+	
 	module.exports = function (children) {
 	  var ret = [];
 	  React.Children.forEach(children, function (c) {
@@ -1494,3 +1545,4 @@ webpackJsonp([0,1],[
 
 /***/ }
 ]);
+//# sourceMappingURL=simple.js.map
