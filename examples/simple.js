@@ -11,7 +11,7 @@ function handleSelect(selected, c) {
 
 var demo = (
   <div>
-    <h2>简单tree</h2>
+    <h2>tree</h2>
 
     <Tree className="myCls" onSelect={handleSelect} checkable={true}>
       <TreeNode title="parent 1" expanded={false} onSelect={handleSelect}>

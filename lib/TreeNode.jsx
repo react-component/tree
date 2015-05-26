@@ -61,49 +61,81 @@ var TreeNode = React.createClass({
   },
 
   handleChecked: function () {
-    var checked = !this.state.checked;
-    var self = this;
-    //this.setState({
-    //  //selected: checked,
-    //  checked: checked
-    //});
-    setSt();
-    function setSt() {
-      self.setState({
-        //selected: checked,
-        checked: checked
-      });
+    if (this.state.checkPart) {
+      return;
     }
 
-    Tree.trees.forEach(function (c) {
-      //console.log( c.getDOMNode() );
-      var _pos = this.props._pos;
+    var checked = !this.state.checked;
+    var nSt = {
+      checkPart: false,
+      checked: checked
+    };
+    this.setState(nSt);
+
+    var _pos = this.props._pos;
+
+    var sortedTree = Tree.trees.sort(function (a, b) {
+      return b.props._pos.length - a.props._pos.length;
+    });
+
+    sortedTree.forEach(function (c) {
       var cPos = c.props._pos;
-      if (_pos.length > cPos.length && _pos.indexOf(cPos) === 0){
-        //console.log( c.props._checked, c.state.checked );
-        var childArr = rcUtil.Children.toArray(c.props.children);
-        //childArr.forEach(function (c) {
-        //  console.log(c.props.refs);
-        //  //console.log( c.props._checked, c.state.checked );
-        //});
-        var i = 0, len = childArr.length, checkedNumbers = checked ? 1 : 0;
-        for (; i < len; i++) {
-          var __pos = cPos + '-' + i;
-          if (Tree.treeNodesState[__pos] && !(__pos === _pos && !checked)) {
+      if (_pos.indexOf(cPos) === 0 && _pos !== cPos) {
+        var childArr = rcUtil.Children.toArray(c.props.children),
+            len = childArr.length;
+
+        var checkedNumbers = 0;
+
+        //先计算已经选中的节点数
+        for (var i = 0; i < len; i++) {
+          var checkSt = Tree.treeNodesState[cPos + '-' + i];
+          if (checkSt.checked) {
             checkedNumbers++;
+          } else if (checkSt.checkPart) {
+            checkedNumbers += 0.5;
           }
         }
-        /**
-        if (checkedNumbers === 0) {
-          c.checkNone(setSt);
-        } else if (checkedNumbers === len) {
-          c.checkAll(setSt);
-        } else {
-          c.checkPart(setSt);
+
+        //点击节点的 直接父级
+        if (_pos.length - cPos.length <= 2) {
+          if (checked) {
+            //如果原来是半选
+            if (Tree.treeNodesState[_pos].checkPart) {
+              checkedNumbers += 0.5;
+            } else {
+              checkedNumbers++;
+            }
+          } else {
+            checkedNumbers--;
+          }
         }
-         */
+
+        var newSt;
+        if (checkedNumbers === 0) {
+          //都不选
+          newSt = {
+            checkPart: false,
+            checked: false
+          };
+        } else if (checkedNumbers === len) {
+          //全选
+          newSt = {
+            checkPart: false,
+            checked: true
+          };
+        } else {
+          //部分选择
+          newSt = {
+            checkPart: true,
+            checked: false
+          };
+        }
+        c.setState(newSt);
+        Tree.treeNodesState[cPos] = newSt;
       }
-    }, this);
+    });
+
+    Tree.treeNodesState[_pos] = nSt;
 
     if (this.props.onChecked) {
       this.props.onChecked(checked, this);
@@ -111,7 +143,6 @@ var TreeNode = React.createClass({
   },
 
   componentDidUpdate: function () {
-    //console.log( this.state.checked );
     if (this.newChildren) {
       for (var i = 0; i < Tree.trees.length; i++) {
         var obj = Tree.trees[i];
@@ -122,39 +153,27 @@ var TreeNode = React.createClass({
       Tree.trees.push(this);
     }
     //add treeNodes checked state
-    Tree.treeNodesState[this.props._pos] = this.state.checked;
-  },
-
-  checkPart: function (onStateChangeComplete) {
-    this.setState({
-      //checked: false,
-      checkPart: true
-    }, onStateChangeComplete);
-  },
-
-  checkAll: function (onStateChangeComplete) {
-    this.setState({
-      checkPart: false,
-      checked: true
-    }, onStateChangeComplete);
-  },
-
-  checkNone: function (onStateChangeComplete) {
-    this.setState({
-      checkPart: false,
-      checked: false
-    }, onStateChangeComplete);
+    Tree.treeNodesState[this.props._pos] = {
+      checked: this.state.checked ,
+      checkPart: this.state.checkPart
+    };
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    //return nextState.checkPart === this.state.checkPart;
-    if (this.refs.checkbox && nextState.checkPart) {
-      var cls = this.refs.checkbox.getDOMNode().className;
-      this.refs.checkbox.getDOMNode().className = cls + ' checkbox_true_part';
-      return false;
+    var checkbox = this.refs.checkbox;
+    if (checkbox) {
+      var cls = checkbox.getDOMNode().className;
+      var checkSt = Tree.treeNodesState[this.props._pos] || {};
+      checkSt.checkPart = nextState.checkPart;
+      checkSt.checked = nextState.checked;
+      if (nextState.checkPart) {
+        checkbox.getDOMNode().className = cls + ' checkbox_true_part';
+        return false;
+      } else {
+        checkbox.getDOMNode().className = cls.replace(/checkbox_true_part/g, '');
+      }
     }
     return true;
-    //return false;
   },
 
   render: function () {
