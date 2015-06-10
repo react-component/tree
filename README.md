@@ -41,7 +41,7 @@ tree ui component for react
 
 http://localhost:8008/examples/
 
-online example: http://react-component.github.io/tree/build/examples/
+online example: http://react-component.github.io/tree/examples/
 
 
 ## install

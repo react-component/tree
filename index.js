@@ -1,5 +1,5 @@
 
-var Tree = require('./lib/Tree');
-Tree.TreeNode = require('./lib/TreeNode');
+var Tree = require('./src/Tree');
+Tree.TreeNode = require('./src/TreeNode');
 
 module.exports = Tree;
