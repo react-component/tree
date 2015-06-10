@@ -1,3 +1,5 @@
+'use strict';
+
 var React = require('react');
 var rcUtil = require('rc-util');
 var joinClasses = rcUtil.joinClasses;
@@ -22,10 +24,9 @@ var Tree = React.createClass({
   },
 
   statics: {
-    treeNodesState: {},
+    treeNodesState: { },
     trees: []
   },
-  
   handleChecked: function (isChk, c, e) {
     if (this.props.onChecked) {
       this.props.onChecked(isChk, c, e);
@@ -55,7 +56,7 @@ var Tree = React.createClass({
     var domProps = {
       className: joinClasses(props.className, classSet(classes)),
       style: props.expanded ? {display: 'block'} : {display: 'none'},
-      role: "tree-node",
+      role: 'tree-node',
       'aria-activedescendant': '',
       'aria-labelledby': '',
       'aria-expanded': props.expanded ? 'true' : 'false',

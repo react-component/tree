@@ -1,3 +1,5 @@
+'use strict';
+
 var React = require('react');
 var rcUtil = require('rc-util');
 var joinClasses = rcUtil.joinClasses;
@@ -153,7 +155,7 @@ var TreeNode = React.createClass({
     }
     //add treeNodes checked state
     Tree.treeNodesState[this.props._pos] = {
-      checked: this.state.checked ,
+      checked: this.state.checked,
       checkPart: this.state.checkPart
     };
   },
