@@ -1,9 +1,8 @@
 'use strict';
-// use jsx to render html, do not modify simple.html
-require('rc-tree/assets/index.css');
-var React = require('react');
-var Tree = require('rc-tree');
-var TreeNode = Tree.TreeNode;
+
+import 'rc-tree/assets/index.css';
+import React from 'react';
+import Tree, {TreeNode} from 'rc-tree';
 
 function handleSelect(selected, c) {
   console.log( selected, c.getDOMNode() );

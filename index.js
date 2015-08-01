@@ -1,5 +1,3 @@
+'use strict';
 
-var Tree = require('./src/Tree');
-Tree.TreeNode = require('./src/TreeNode');
-
-module.exports = Tree;
+module.exports = require('./src/');

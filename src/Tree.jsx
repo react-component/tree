@@ -1,51 +1,37 @@
 'use strict';
 
-var React = require('react');
-var rcUtil = require('rc-util');
-var joinClasses = rcUtil.joinClasses;
-var classSet = rcUtil.classSet;
-var createChainedFunction = rcUtil.createChainedFunction;
-//var KeyCode = rcUtil.KeyCode;
+import React from 'react';
+import {joinClasses, classSet, createChainedFunction, KeyCode} from 'rc-util';
 
-var Tree = React.createClass({
-  propTypes: {
-    focusable: React.PropTypes.bool,
-    expanded: React.PropTypes.bool,
-    showLine: React.PropTypes.bool,
-    checkable: React.PropTypes.bool,
-    onSelect: React.PropTypes.func
-  },
-  getDefaultProps() {
+class Tree extends React.Component {
+  constructor(props) {
+    super(props);
+    ['handleKeyDown', 'handleChecked'].forEach((m)=> {
+      this[m] = this[m].bind(this);
+    });
+  }
+  static statics() {
     return {
-      prefixCls: 'rc-tree',
-      expanded: true,
-      showLine: true
+      treeNodesState: { },
+      trees: []
     };
-  },
-
-  statics: {
-    treeNodesState: { },
-    trees: []
-  },
-  handleChecked: function (isChk, c, e) {
+  }
+  handleChecked(isChk, c, e) {
     if (this.props.onChecked) {
       this.props.onChecked(isChk, c, e);
     }
-  },
-
-  handleSelect: function (isSel, c, e) {
+  }
+  handleSelect(isSel, c, e) {
     if (this.props.onSelect) {
       this.props.onSelect(isSel, c, e);
     }
-  },
-
+  }
   // all keyboard events callbacks run from here at first
-  // todo
-  handleKeyDown: function (e) {
+  handleKeyDown(e) {
+    console.log(KeyCode);
     e.preventDefault();
-  },
-
-  render: function () {
+  }
+  render() {
     var props = this.props;
     //var state = this.state;
 
@@ -80,8 +66,8 @@ var Tree = React.createClass({
         {this.newChildren}
       </ul>
     );
-  },
-  renderTreeNode: function (child, index) {
+  }
+  renderTreeNode(child, index) {
     var props = this.props;
     var pos = (props._pos || 0) + '-' + index;
     var cloneProps = {
@@ -98,17 +84,22 @@ var Tree = React.createClass({
       //selected: props.selected,
       onSelect: createChainedFunction(child.props.onSelect, this.handleSelect)
     };
-
-    //if (index === 0) {
-    //  cloneProps._firstChild = true;
-    //} else if (index === arr.length - 1) {
-    //  cloneProps._lastChild = true;
-    //} else {
-    //  cloneProps._centerChild = true;
-    //}
-
     return React.cloneElement(child, cloneProps);
   }
-});
+}
 
-module.exports = Tree;
+Tree.propTypes = {
+  focusable: React.PropTypes.bool,
+  expanded: React.PropTypes.bool,
+  showLine: React.PropTypes.bool,
+  checkable: React.PropTypes.bool,
+  onSelect: React.PropTypes.func
+};
+
+Tree.defaultProps = {
+  prefixCls: 'rc-tree',
+  expanded: true,
+  showLine: true
+};
+
+export default Tree;

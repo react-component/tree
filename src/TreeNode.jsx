@@ -1,67 +1,56 @@
 'use strict';
 
-var React = require('react');
-var rcUtil = require('rc-util');
-var joinClasses = rcUtil.joinClasses;
-var classSet = rcUtil.classSet;
-//var createChainedFunction = rcUtil.createChainedFunction;
-//var KeyCode = rcUtil.KeyCode;
+import React from 'react';
+import rcUtil, {joinClasses, classSet} from 'rc-util';
+import Tree from './Tree';
 
-var Tree = require('./Tree');
+Tree.statics = Tree.statics();
 
-var TreeNode = React.createClass({
-  propTypes: {
-    selected: React.PropTypes.bool,
-    iconEle: React.PropTypes.node,
-    onSelect: React.PropTypes.func
-  },
-  getDefaultProps() {
-    return {
-      title: '---',
-      expanded: true
-    };
-  },
-  getInitialState: function () {
-    return {
+class TreeNode extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       expanded: this.props.expanded,
       selected: this.props.selected || false,
       checkPart: false,
       checked: this.props._checked || false
     };
-  },
-
+    ['handleExpandedState', 'handleSelect', 'handleChecked'].forEach((m)=> {
+      this[m] = this[m].bind(this);
+    });
+  }
   componentWillReceiveProps(nextProps) {
     this.setState({
       //selected: nextProps.selected,
       checked: nextProps._checked
     });
-  },
+  }
 
-  switchExpandedState: function (newState, onStateChangeComplete) {
+  switchExpandedState (newState, onStateChangeComplete) {
     this.setState({
       expanded: newState
     }, onStateChangeComplete);
-  },
+  }
 
   // keyboard event support
-  handleKeyDown: function (e) {
+  handleKeyDown (e) {
     e.preventDefault();
-  },
+  }
 
-  handleExpandedState: function () {
+  handleExpandedState () {
     this.switchExpandedState(!this.state.expanded);
-  },
+  }
 
-  handleSelect: function () {
+  handleSelect () {
     this.setState({
       selected: !this.state.selected
     });
     if (this.props.onSelect) {
       this.props.onSelect(!this.state.selected, this);
     }
-  },
+  }
 
-  handleChecked: function () {
+  handleChecked () {
     if (this.state.checkPart) {
       return;
     }
@@ -75,7 +64,7 @@ var TreeNode = React.createClass({
 
     var _pos = this.props._pos;
 
-    var sortedTree = Tree.trees.sort(function (a, b) {
+    var sortedTree = Tree.statics.trees.sort(function (a, b) {
       return b.props._pos.length - a.props._pos.length;
     });
 
@@ -89,7 +78,7 @@ var TreeNode = React.createClass({
 
         //先计算已经选中的节点数
         for (var i = 0; i < len; i++) {
-          var checkSt = Tree.treeNodesState[cPos + '-' + i];
+          var checkSt = Tree.statics.treeNodesState[cPos + '-' + i];
           if (checkSt.checked) {
             checkedNumbers++;
           } else if (checkSt.checkPart) {
@@ -101,7 +90,7 @@ var TreeNode = React.createClass({
         if (_pos.length - cPos.length <= 2) {
           if (checked) {
             //如果原来是半选
-            if (Tree.treeNodesState[_pos].checkPart) {
+            if (Tree.statics.treeNodesState[_pos].checkPart) {
               checkedNumbers += 0.5;
             } else {
               checkedNumbers++;
@@ -132,39 +121,39 @@ var TreeNode = React.createClass({
           };
         }
         c.setState(newSt);
-        Tree.treeNodesState[cPos] = newSt;
+        Tree.statics.treeNodesState[cPos] = newSt;
       }
     });
 
-    Tree.treeNodesState[_pos] = nSt;
+    Tree.statics.treeNodesState[_pos] = nSt;
 
     if (this.props.onChecked) {
       this.props.onChecked(checked, this);
     }
-  },
+  }
 
-  componentDidUpdate: function () {
+  componentDidUpdate () {
     if (this.newChildren) {
-      for (var i = 0; i < Tree.trees.length; i++) {
-        var obj = Tree.trees[i];
+      for (var i = 0; i < Tree.statics.trees.length; i++) {
+        var obj = Tree.statics.trees[i];
         if (obj.props._pos === this.props._pos) {
-          Tree.trees.splice(i--, 1);
+          Tree.statics.trees.splice(i--, 1);
         }
       }
-      Tree.trees.push(this);
+      Tree.statics.trees.push(this);
     }
     //add treeNodes checked state
-    Tree.treeNodesState[this.props._pos] = {
+    Tree.statics.treeNodesState[this.props._pos] = {
       checked: this.state.checked,
       checkPart: this.state.checkPart
     };
-  },
+  }
 
-  shouldComponentUpdate: function(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     var checkbox = this.refs.checkbox;
     if (checkbox) {
       var cls = checkbox.getDOMNode().className;
-      var checkSt = Tree.treeNodesState[this.props._pos] || {};
+      var checkSt = Tree.statics.treeNodesState[this.props._pos] || {};
       checkSt.checkPart = nextState.checkPart;
       checkSt.checked = nextState.checked;
       if (nextState.checkPart) {
@@ -175,9 +164,9 @@ var TreeNode = React.createClass({
       }
     }
     return true;
-  },
+  }
 
-  render: function () {
+  render () {
     var props = this.props;
     var state = this.state;
 
@@ -250,7 +239,7 @@ var TreeNode = React.createClass({
         {newChildren}
       </li>
     );
-  },
+  }
   renderChildren(children) {
     var newChildren = null;
     if (children.type === TreeNode || Array.isArray(children) &&
@@ -282,13 +271,22 @@ var TreeNode = React.createClass({
     }
 
     return newChildren;
-  },
-  componentDidMount: function () {
+  }
+  componentDidMount() {
     //console.log( this.newChildren );
     //if (this.newChildren) {
-    //  Tree.trees.push(this);
+    //  Tree.statics.trees.push(this);
     //}
   }
-});
+}
+TreeNode.propTypes = {
+  selected: React.PropTypes.bool,
+  iconEle: React.PropTypes.node,
+  onSelect: React.PropTypes.func
+};
+TreeNode.defaultProps = {
+  title: '---',
+  expanded: true
+};
 
-module.exports = TreeNode;
+export default TreeNode;
