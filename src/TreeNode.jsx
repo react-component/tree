@@ -10,10 +10,10 @@ class TreeNode extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: this.props.expanded,
-      selected: this.props.selected || false,
-      checkPart: false,
-      checked: this.props._checked || false
+      expanded: props.expanded,
+      selected: props.selected || false,
+      checkPart: props._checkPart || false,
+      checked: props._checked || false
     };
     ['handleExpandedState', 'handleSelect', 'handleChecked'].forEach((m)=> {
       this[m] = this[m].bind(this);
@@ -22,26 +22,27 @@ class TreeNode extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       //selected: nextProps.selected,
+      checkPart: nextProps._checkPart,
       checked: nextProps._checked
     });
   }
 
-  switchExpandedState (newState, onStateChangeComplete) {
+  switchExpandedState(newState, onStateChangeComplete) {
     this.setState({
       expanded: newState
     }, onStateChangeComplete);
   }
 
   // keyboard event support
-  handleKeyDown (e) {
+  handleKeyDown(e) {
     e.preventDefault();
   }
 
-  handleExpandedState () {
+  handleExpandedState() {
     this.switchExpandedState(!this.state.expanded);
   }
 
-  handleSelect () {
+  handleSelect() {
     this.setState({
       selected: !this.state.selected
     });
@@ -50,19 +51,21 @@ class TreeNode extends React.Component {
     }
   }
 
-  handleChecked () {
+  handleChecked() {
+    var _pos = this.props._pos;
+    var checked = !this.state.checked;
+
     if (this.state.checkPart) {
-      return;
+      // return;
+      checked = false;
     }
 
-    var checked = !this.state.checked;
     var nSt = {
       checkPart: false,
       checked: checked
     };
-    this.setState(nSt);
 
-    var _pos = this.props._pos;
+    this.setState(nSt);
 
     var sortedTree = Tree.statics.trees.sort(function (a, b) {
       return b.props._pos.length - a.props._pos.length;
@@ -88,20 +91,23 @@ class TreeNode extends React.Component {
 
         //点击节点的 直接父级
         if (_pos.length - cPos.length <= 2) {
-          if (checked) {
-            //如果原来是半选
-            if (Tree.statics.treeNodesState[_pos].checkPart) {
+          //如果原来是半选
+          if (Tree.statics.treeNodesState[_pos].checkPart) {
+            // checked ? checkedNumbers += 0.5 : checkedNumbers -= 0.5;
+            if (checked) {
               checkedNumbers += 0.5;
             } else {
-              checkedNumbers++;
+              checkedNumbers -= 0.5;
             }
+          } else if (checked) {
+            checkedNumbers++;
           } else {
             checkedNumbers--;
           }
         }
 
         var newSt;
-        if (checkedNumbers === 0) {
+        if (checkedNumbers <= 0) {
           //都不选
           newSt = {
             checkPart: false,
@@ -132,7 +138,7 @@ class TreeNode extends React.Component {
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     if (this.newChildren) {
       for (var i = 0; i < Tree.statics.trees.length; i++) {
         var obj = Tree.statics.trees[i];
@@ -157,7 +163,7 @@ class TreeNode extends React.Component {
       checkSt.checkPart = nextState.checkPart;
       checkSt.checked = nextState.checked;
       if (nextState.checkPart) {
-        checkbox.getDOMNode().className = cls + ' checkbox_true_part';
+        checkbox.getDOMNode().className = cls.indexOf('checkbox_true_part') > -1 ? cls : cls + ' checkbox_true_part';
         return false;
       } else {
         checkbox.getDOMNode().className = cls.replace(/checkbox_true_part/g, '');
@@ -166,7 +172,7 @@ class TreeNode extends React.Component {
     return true;
   }
 
-  render () {
+  render() {
     var props = this.props;
     var state = this.state;
 
@@ -230,7 +236,7 @@ class TreeNode extends React.Component {
         <span className={joinClasses(props.className, classSet(switcherCls))}
               onClick={this.handleExpandedState}></span>
         {checkbox}
-        <a title={content}
+        <a ref="selectHandle" title={content}
            className={state.selected ? prefixCls + '-selected' : ''}
            onClick={this.handleSelect}>
           <span className={classSet(iconEleCls)}>{userIconEle}</span>
@@ -261,6 +267,7 @@ class TreeNode extends React.Component {
         expanded: this.state.expanded,
         //selected: this.state.checked,
         _checked: this.state.checked,
+        _checkPart: this.state.checkPart,
         checkable: this.props.checkable, //只是为了传递根节点上的checkable设置,是否有更好做法?
         onChecked: this.props.onChecked,
         onSelect: this.props.onSelect

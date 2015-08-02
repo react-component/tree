@@ -5,7 +5,7 @@ import React from 'react';
 import Tree, {TreeNode} from 'rc-tree';
 
 function handleSelect(selected, c) {
-  console.log( selected, c.getDOMNode() );
+  console.log( selected, c );
 }
 
 var demo = (
@@ -13,7 +13,7 @@ var demo = (
     <h2>tree</h2>
 
     <Tree className="myCls" onSelect={handleSelect} checkable={true}>
-      <TreeNode title="parent 1" expanded={false} onSelect={handleSelect}>
+      <TreeNode title="parent 1" expanded={false}>
         <TreeNode>leaf </TreeNode>
         <TreeNode title="parent 1-1">
           <TreeNode title="parent 2-1">

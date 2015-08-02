@@ -1,12 +1,12 @@
 'use strict';
 
 import React from 'react';
-import {joinClasses, classSet, createChainedFunction, KeyCode} from 'rc-util';
+import {classSet, KeyCode} from 'rc-util';
 
 class Tree extends React.Component {
   constructor(props) {
     super(props);
-    ['handleKeyDown', 'handleChecked'].forEach((m)=> {
+    ['handleKeyDown', 'handleChecked', 'handleSelect'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
   }
@@ -33,14 +33,9 @@ class Tree extends React.Component {
   }
   render() {
     var props = this.props;
-    //var state = this.state;
-
-    var classes = {};
-    var prefixCls = props.prefixCls;
-    classes[prefixCls] = true;
 
     var domProps = {
-      className: joinClasses(props.className, classSet(classes)),
+      className: classSet(props.className, props.prefixCls),
       style: props.expanded ? {display: 'block'} : {display: 'none'},
       role: 'tree-node',
       'aria-activedescendant': '',
@@ -56,13 +51,11 @@ class Tree extends React.Component {
       domProps.tabIndex = '0';
       domProps.onKeyDown = this.handleKeyDown;
     }
-
-    //this.newChildren = rcUtil.Children.toArray(props.children).map(this.renderTreeNode, this);
     this.childrenLength = React.Children.count(props.children);
     this.newChildren = React.Children.map(props.children, this.renderTreeNode, this);
 
     return (
-      <ul {...domProps}>
+      <ul {...domProps} ref="tree">
         {this.newChildren}
       </ul>
     );
@@ -71,6 +64,7 @@ class Tree extends React.Component {
     var props = this.props;
     var pos = (props._pos || 0) + '-' + index;
     var cloneProps = {
+      ref: 'treeNode',
       _level: props._level || 0,
       _pos: pos,
       _isChildTree: props._isChildTree || false,
@@ -80,9 +74,9 @@ class Tree extends React.Component {
       showLine: props.showLine,
       checkable: props.checkable,
       _checked: props._checked,
+      _checkPart: props._checkPart,
       onChecked: this.handleChecked,
-      //selected: props.selected,
-      onSelect: createChainedFunction(child.props.onSelect, this.handleSelect)
+      onSelect: this.handleSelect
     };
     return React.cloneElement(child, cloneProps);
   }
