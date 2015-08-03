@@ -38,7 +38,7 @@ tree ui component for react
 
 ## Example
 
-http://localhost:8008/examples/
+http://localhost:8018/examples/
 
 online example: http://react-component.github.io/tree/examples/
 
@@ -50,63 +50,36 @@ online example: http://react-component.github.io/tree/examples/
 ## Usage
 
 ```js
-var Rctree = require('rc-tree');
 var React = require('react');
-React.render(<Rctree />, container);
+var Tree = require('rc-tree');
+var TreeNode = Tree.TreeNode;
+React.render(
+  <Tree>
+    <TreeNode>leaf </TreeNode>
+    <TreeNode>leaf </TreeNode>
+  <Tree/>, container);
 ```
 
 ## API
 
-### props
+### Tree props
 
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th style="width: 50px;">default</th>
-        <th>description</th>
-    </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>className</td>
-          <td>String</td>
-          <td></td>
-          <td>additional css class of root dom node</td>
-        </tr>
-        <tr>
-          <td>expanded</td>
-          <td>bool</td>
-          <td></td>
-          <td>whether expand the tree node</td>
-        </tr>
-        <tr>
-          <td>iconEle</td>
-          <td>react node or null</td>
-          <td></td>
-          <td>custom icon</td>
-        </tr>
-        <tr>
-          <td>showLine</td>
-          <td>bool</td>
-          <td>true</td>
-          <td>whether show line</td>
-        </tr>
-        <tr>
-          <td>checkable</td>
-          <td>bool</td>
-          <td></td>
-          <td>whether support checked</td>
-        </tr>
-        <tr>
-          <td>onSelect </td>
-          <td>function</td>
-          <td></td>
-          <td></td>
-        </tr>
-    </tbody>
-</table>
+| name     | description    | type     | default      |
+|----------|----------------|----------|--------------|
+|className | additional css class of root dom node | String | '' |
+|prefixCls | prefix class | String | '' |
+|showLine | whether show line | bool | true |
+|checkable | whether support checked | bool | false |
+|onSelect | click the TreeNode to fire(auto switch selected state)  | function | - |
+
+### TreeNode props
+
+| name     | description    | type     | default      |
+|----------|----------------|----------|--------------|
+|className | additional class to treeNode | String | '' |
+|title | tree/subTree's title | String | '---' |
+|defaultExpanded | whether default expand the tree node | bool | false |
+|expanded | whether expand the tree node | bool | false |
 
 
 ### Keyboard

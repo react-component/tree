@@ -10,7 +10,7 @@ class TreeNode extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: props.expanded,
+      expanded: props.expandAll || props.expanded || props.defaultExpanded,
       selected: props.selected || false,
       checkPart: props._checkPart || false,
       checked: props._checked || false
@@ -56,7 +56,6 @@ class TreeNode extends React.Component {
     var checked = !this.state.checked;
 
     if (this.state.checkPart) {
-      // return;
       checked = false;
     }
 
@@ -183,7 +182,9 @@ class TreeNode extends React.Component {
     switcherCls.button = true;
     switcherCls[prefixCls + '-treenode-switcher'] = true;
     switcherCls[prefixCls + '-switcher__' + switchState] = true;
-    if (props._isChildTree && props._index === 0) {
+    if (!props.showLine) {
+      switcherCls['noline_' + switchState] = true;
+    } else if (props._isChildTree && props._index === 0) {
       if (props._len !== 1) {
         switcherCls['center_' + switchState] = true;
       } else {
@@ -214,15 +215,11 @@ class TreeNode extends React.Component {
       checkbox = <span ref="checkbox" className={classSet(checkboxCls)} onClick={this.handleChecked}></span>;
     }
 
-    var iconEleCls = {};
-    iconEleCls.button = true;
-    iconEleCls[prefixCls + '-iconEle'] = true;
-    iconEleCls[prefixCls + '-icon__' + switchState] = true;
-
-    var userIconEle = null;
-    if (props.iconEle && React.isValidElement(props.iconEle)) {
-      userIconEle = props.iconEle;
-    }
+    var iconEleCls = {
+      button: true,
+      [prefixCls + '-iconEle']: true,
+      [prefixCls + '-icon__' + switchState]: true
+    };
 
     var content = props.title;
     var newChildren = this.renderChildren(props.children);
@@ -232,15 +229,15 @@ class TreeNode extends React.Component {
     }
 
     return (
-      <li className={joinClasses('level' + props._level, 'pos-' + props._pos)}>
-        <span className={joinClasses(props.className, classSet(switcherCls))}
+      <li className={joinClasses(props.className, 'level' + props._level, 'pos-' + props._pos)}>
+        <span className={classSet(switcherCls)}
               onClick={this.handleExpandedState}></span>
         {checkbox}
         <a ref="selectHandle" title={content}
            className={state.selected ? prefixCls + '-selected' : ''}
            onClick={this.handleSelect}>
-          <span className={classSet(iconEleCls)}>{userIconEle}</span>
-          <span>{content}</span>
+          <span className={classSet(iconEleCls)}></span>
+          <span className="title">{content}</span>
         </a>
         {newChildren}
       </li>
@@ -263,11 +260,13 @@ class TreeNode extends React.Component {
         _level: this.props._level + 1,
         _pos: this.props._pos,
         _isChildTree: true,
-        className: classSet(cls),
-        expanded: this.state.expanded,
-        //selected: this.state.checked,
         _checked: this.state.checked,
         _checkPart: this.state.checkPart,
+        className: classSet(cls),
+        showLine: this.props.showLine,
+        expanded: this.state.expanded,
+        expandAll: this.props.expandAll,
+        //selected: this.state.checked,
         checkable: this.props.checkable, //只是为了传递根节点上的checkable设置,是否有更好做法?
         onChecked: this.props.onChecked,
         onSelect: this.props.onSelect
@@ -288,12 +287,13 @@ class TreeNode extends React.Component {
 }
 TreeNode.propTypes = {
   selected: React.PropTypes.bool,
-  iconEle: React.PropTypes.node,
-  onSelect: React.PropTypes.func
+  defaultExpanded: React.PropTypes.bool,
+  expanded: React.PropTypes.bool
 };
 TreeNode.defaultProps = {
   title: '---',
-  expanded: true
+  defaultExpanded: false,
+  expanded: false
 };
 
 export default TreeNode;

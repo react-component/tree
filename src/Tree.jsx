@@ -33,10 +33,9 @@ class Tree extends React.Component {
   }
   render() {
     var props = this.props;
-
     var domProps = {
       className: classSet(props.className, props.prefixCls),
-      style: props.expanded ? {display: 'block'} : {display: 'none'},
+      onKeyDown: this.handleKeyDown,
       role: 'tree-node',
       'aria-activedescendant': '',
       'aria-labelledby': '',
@@ -44,12 +43,8 @@ class Tree extends React.Component {
       'aria-selected': props.selected ? 'true' : 'false',
       'aria-level': ''
     };
-    if (props.id) {
-      domProps.id = props.id;
-    }
-    if (props.focusable) {
-      domProps.tabIndex = '0';
-      domProps.onKeyDown = this.handleKeyDown;
+    if (props._isChildTree) {
+      domProps.style = props.expanded ? {display: 'block'} : {display: 'none'};
     }
     this.childrenLength = React.Children.count(props.children);
     this.newChildren = React.Children.map(props.children, this.renderTreeNode, this);
@@ -70,11 +65,12 @@ class Tree extends React.Component {
       _isChildTree: props._isChildTree || false,
       _index: index,
       _len: this.childrenLength,
-      prefixCls: props.prefixCls,
-      showLine: props.showLine,
-      checkable: props.checkable,
       _checked: props._checked,
       _checkPart: props._checkPart,
+      prefixCls: props.prefixCls,
+      showLine: props.showLine,
+      expandAll: props.expandAll,
+      checkable: props.checkable,
       onChecked: this.handleChecked,
       onSelect: this.handleSelect
     };
@@ -83,17 +79,19 @@ class Tree extends React.Component {
 }
 
 Tree.propTypes = {
-  focusable: React.PropTypes.bool,
-  expanded: React.PropTypes.bool,
-  showLine: React.PropTypes.bool,
+  prefixCls: React.PropTypes.string,
   checkable: React.PropTypes.bool,
+  showLine: React.PropTypes.bool,
+  expandAll: React.PropTypes.bool,
+  onChecked: React.PropTypes.func,
   onSelect: React.PropTypes.func
 };
 
 Tree.defaultProps = {
   prefixCls: 'rc-tree',
-  expanded: true,
-  showLine: true
+  checkable: false,
+  showLine: true,
+  expandAll: false
 };
 
 export default Tree;
