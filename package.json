@@ -9,7 +9,7 @@
     "tree"
   ],
   "main":"lib/index",
-  "files":["assets","lib"],
+  "files":["assets/*.css","lib"],
   "homepage": "http://github.com/react-component/tree",
   "author": "hualei5280@gmail.com",
   "repository": {
