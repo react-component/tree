@@ -154,6 +154,10 @@ class TreeNode extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.componentDidUpdate();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     var checkbox = this.refs.checkbox;
     if (checkbox) {
@@ -277,12 +281,6 @@ class TreeNode extends React.Component {
     }
 
     return newChildren;
-  }
-  componentDidMount() {
-    //console.log( this.newChildren );
-    //if (this.newChildren) {
-    //  Tree.statics.trees.push(this);
-    //}
   }
 }
 TreeNode.propTypes = {

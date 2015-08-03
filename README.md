@@ -70,7 +70,9 @@ React.render(
 |prefixCls | prefix class | String | '' |
 |showLine | whether show line | bool | true |
 |checkable | whether support checked | bool | false |
+|expandAll | expand all treeNodes | bool | false |
 |onSelect | click the TreeNode to fire(auto switch selected state)  | function | - |
+|onChecked | click the TreeNode to checked(auto switch checked state)  | function | - |
 
 ### TreeNode props
 
@@ -78,8 +80,8 @@ React.render(
 |----------|----------------|----------|--------------|
 |className | additional class to treeNode | String | '' |
 |title | tree/subTree's title | String | '---' |
-|defaultExpanded | whether default expand the tree node | bool | false |
-|expanded | whether expand the tree node | bool | false |
+|defaultExpanded | whether default expand the treeNode | bool | false |
+|expanded | whether expand the treeNode, it's controlled | bool | false |
 
 
 ### Keyboard
