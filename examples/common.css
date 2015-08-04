@@ -64,16 +64,16 @@
 .rc-tree li span.button.bottom_close {
   background-position: -74px -36px;
 }
-.rc-tree li span.button.center_docu {
-  background-position: -56px -18px;
+.rc-tree li span.button.noline_open {
+  background-position: -92px -72px;
 }
-.rc-tree li span.button.bottom_docu {
-  background-position: -56px -36px;
+.rc-tree li span.button.noline_close {
+  background-position: -74px -72px;
 }
 .rc-tree li span.button.chk {
   width: 13px;
   height: 13px;
-  margin: 0 3px 0 0;
+  margin: 0 3px;
   cursor: auto;
 }
 .rc-tree li span.button.chk.checkbox_false_full {
@@ -127,4 +127,4 @@
   vertical-align: top;
 }
 
-/*# sourceMappingURL=simple.css.map*/
+/*# sourceMappingURL=common.css.map*/
