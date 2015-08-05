@@ -1,6 +1,6 @@
 'use strict';
 
-import 'rc-tree/assets/index.css';
+import 'rc-tree/assets/index.less';
 import React from 'react';
 import Tree, {TreeNode} from 'rc-tree';
 
