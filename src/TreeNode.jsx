@@ -240,7 +240,7 @@ class TreeNode extends React.Component {
         <a ref="selectHandle" title={content}
            className={state.selected ? prefixCls + '-selected' : ''}
            onClick={this.handleSelect}>
-          <span className={classSet(iconEleCls)}></span>
+          {props.showIcon ? <span className={classSet(iconEleCls)}></span> : null}
           <span className="title">{content}</span>
         </a>
         {newChildren}
@@ -268,6 +268,7 @@ class TreeNode extends React.Component {
         _checkPart: this.state.checkPart,
         className: classSet(cls),
         showLine: this.props.showLine,
+        showIcon: this.props.showIcon,
         expanded: this.state.expanded,
         expandAll: this.props.expandAll,
         //selected: this.state.checked,

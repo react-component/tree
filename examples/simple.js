@@ -12,7 +12,7 @@ var demo = (
   <div>
     <h2>simple</h2>
 
-    <Tree onSelect={handleSelect}>
+    <Tree onSelect={handleSelect} expandAll={true} showIcon={false}>
       <TreeNode title="parent 1">
         <TreeNode>leaf </TreeNode>
         <TreeNode title="parent 1-1">

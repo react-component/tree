@@ -69,6 +69,7 @@ class Tree extends React.Component {
       _checkPart: props._checkPart,
       prefixCls: props.prefixCls,
       showLine: props.showLine,
+      showIcon: props.showIcon,
       expandAll: props.expandAll,
       checkable: props.checkable,
       onChecked: this.handleChecked,
@@ -82,6 +83,7 @@ Tree.propTypes = {
   prefixCls: React.PropTypes.string,
   checkable: React.PropTypes.bool,
   showLine: React.PropTypes.bool,
+  showIcon: React.PropTypes.bool,
   expandAll: React.PropTypes.bool,
   onChecked: React.PropTypes.func,
   onSelect: React.PropTypes.func
@@ -91,6 +93,7 @@ Tree.defaultProps = {
   prefixCls: 'rc-tree',
   checkable: false,
   showLine: true,
+  showIcon: true,
   expandAll: false
 };
 

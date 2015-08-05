@@ -69,10 +69,11 @@ React.render(
 |className | additional css class of root dom node | String | '' |
 |prefixCls | prefix class | String | '' |
 |showLine | whether show line | bool | true |
+|showIcon | whether show icon | bool | true |
 |checkable | whether support checked | bool | false |
 |expandAll | expand all treeNodes | bool | false |
 |onSelect | click the TreeNode to fire(auto switch selected state)  | function | - |
-|onChecked | click the TreeNode to checked(auto switch checked state)  | function | - |
+|onChecked | click the TreeNode's checkbox to checked(auto switch checked state)  | function | - |
 
 ### TreeNode props
 
