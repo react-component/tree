@@ -77,6 +77,7 @@ class TreeNode extends React.Component {
         _checked: this.state.checked,
         _checkPart: this.state.checkPart,
         className: classSet(cls),
+        prefixCls: this.props.prefixCls,
         showLine: this.props.showLine,
         showIcon: this.props.showIcon,
         expanded: this.state.expanded,
