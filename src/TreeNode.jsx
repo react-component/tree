@@ -187,7 +187,7 @@ class TreeNode extends React.Component {
   }
   handleChecked() {
     const _pos = this.props._pos;
-    const checked = !this.state.checked;
+    let checked = !this.state.checked;
 
     if (this.state.checkPart) {
       checked = false;
@@ -273,9 +273,9 @@ class TreeNode extends React.Component {
 }
 TreeNode.propTypes = {
   _pos: React.PropTypes.string,
-  _index: React.PropTypes.string,
-  _len: React.PropTypes.string,
-  _level: React.PropTypes.string,
+  _index: React.PropTypes.number,
+  _len: React.PropTypes.number,
+  _level: React.PropTypes.number,
   prefixCls: React.PropTypes.string,
   showLine: React.PropTypes.bool,
   showIcon: React.PropTypes.bool,
