@@ -39,7 +39,7 @@ webpackJsonp([1],{
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { onSelect: handleSelect },
+	    { onSelect: handleSelect, expandAll: true, showIcon: false },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
 	      { title: 'parent 1' },
