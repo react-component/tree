@@ -240,30 +240,36 @@
         </div>
         <div class="example" id="__react-content"></div>
         <script src="common.js?nowrap"></script>
-        <script src="simple.js?nowrap"></script>
-        <div class="highlight"><pre><code><span class="hljs-pi">'use strict'</span>;
+        <script src="checkbox-custom.js?nowrap"></script>
+        <div class="highlight"><pre><code>'use strict';
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
+import 'rc-tree/assets/index.css';
+import React from 'react';
+import Tree, {TreeNode} from 'rc-tree';
 
-<span class="hljs-keyword">var</span> demo = (
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>simple<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+function handleChecked(checked, c) {
+  console.log('checked: ', checked, c );
+}
 
-    <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"myCls"</span> <span class="hljs-attribute">expandAll</span>=<span class="hljs-value">{true}</span> <span class="hljs-attribute">showIcon</span>=<span class="hljs-value">{false}</span> <span class="hljs-attribute">showLine</span>=<span class="hljs-value">{false}</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1"</span>&gt;</span>
+var demo = (
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>checkbox<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">expandAll</span>=<span class="hljs-value">{true}</span> <span class="hljs-attribute">checkable</span>=<span class="hljs-value">{true}</span> <span class="hljs-attribute">onChecked</span>=<span class="hljs-value">{handleChecked}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">checkbox</span>=<span class="hljs-value">{&lt;input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">defaultChecked</span>=<span class="hljs-value">{true}</span> /&gt;</span>}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>child1 <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1"</span> <span class="hljs-attribute">checkbox</span>=<span class="hljs-value">{&lt;input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">defaultChecked</span>=<span class="hljs-value">{false}</span> /&gt;</span>}&gt;
           <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-)</span>
 
-React.render(demo, <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'__react-content'</span>));
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+)
+
+React.render(demo, document.getElementById('__react-content'));
 </code></pre></div>
     </div>
     <a href="http://github.com/react-component/tree"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>

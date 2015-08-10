@@ -1,14 +1,14 @@
-webpackJsonp([4],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(26);
+	module.exports = __webpack_require__(24);
 
 
 /***/ },
 
-/***/ 26:
+/***/ 24:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31,14 +31,14 @@ webpackJsonp([4],{
 	  _react2['default'].createElement(
 	    'h2',
 	    null,
-	    'simple'
+	    'expanded'
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { className: 'myCls', expandAll: true, showIcon: false, showLine: false },
+	    { className: 'myCls' },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
-	      { title: 'parent 1' },
+	      { title: 'parent 1', expanded: true },
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
 	        null,
@@ -46,7 +46,30 @@ webpackJsonp([4],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
-	        { title: 'parent 1-1' },
+	        { title: 'parent 1-1', defaultExpanded: true },
+	        _react2['default'].createElement(
+	          _rcTree.TreeNode,
+	          null,
+	          'leaf '
+	        ),
+	        _react2['default'].createElement(
+	          _rcTree.TreeNode,
+	          null,
+	          _react2['default'].createElement(
+	            _rcTree.TreeNode,
+	            null,
+	            'leaf '
+	          ),
+	          _react2['default'].createElement(
+	            _rcTree.TreeNode,
+	            null,
+	            'leaf '
+	          )
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        _rcTree.TreeNode,
+	        { title: 'parent 1-2', defaultExpanded: false },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          null,
@@ -67,4 +90,4 @@ webpackJsonp([4],{
 /***/ }
 
 });
-//# sourceMappingURL=simple.js.map
+//# sourceMappingURL=expanded.js.map

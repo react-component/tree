@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-tree@0.12.1 - tree ui component for react</title>
+  <title>rc-tree@0.13.0 - tree ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-tree@0.12.1</h1>
+  <h1>rc-tree@0.13.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -745,7 +745,13 @@
   <div class="examples-body">
     <ul>
       
+      <li><a href="examples/checkbox-custom.html">checkbox-custom</a></li>
+      
       <li><a href="examples/checkbox.html">checkbox</a></li>
+      
+      <li><a href="examples/expanded.html">expanded</a></li>
+      
+      <li><a href="examples/select.html">select</a></li>
       
       <li><a href="examples/simple.html">simple</a></li>
       
@@ -827,14 +833,26 @@ React.render(
 <td>false</td>
 </tr>
 <tr>
-<td>onSelect</td>
-<td>click the TreeNode to fire(auto switch selected state)</td>
+<td>onChecked</td>
+<td>click the treeNode&#39;s checkbox to checked(auto switch checked state)</td>
 <td>function</td>
 <td>-</td>
 </tr>
 <tr>
-<td>onChecked</td>
-<td>click the TreeNode&#39;s checkbox to checked(auto switch checked state)</td>
+<td>selectedKeys</td>
+<td>selected treeNodes</td>
+<td>String[]</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>defaultSelectedKeys</td>
+<td>default selected treeNodes</td>
+<td>String[]</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>onSelect</td>
+<td>click the treeNode to fire(auto switch selected state)</td>
 <td>function</td>
 <td>-</td>
 </tr>
@@ -857,10 +875,34 @@ React.render(
 <td>&#39;&#39;</td>
 </tr>
 <tr>
+<td>disabled</td>
+<td>whether disabled the treeNode</td>
+<td>bool</td>
+<td>false</td>
+</tr>
+<tr>
 <td>title</td>
 <td>tree/subTree&#39;s title</td>
 <td>String</td>
 <td>&#39;---&#39;</td>
+</tr>
+<tr>
+<td>defaultChecked</td>
+<td>set checked state(require tree props checkable)</td>
+<td>bool</td>
+<td>false</td>
+</tr>
+<tr>
+<td>checked</td>
+<td>set checked state(require tree props checkable)</td>
+<td>bool</td>
+<td>false</td>
+</tr>
+<tr>
+<td>checkbox</td>
+<td>can use custom checkbox element(require tree props checkable)</td>
+<td>element</td>
+<td>-</td>
 </tr>
 <tr>
 <td>defaultExpanded</td>
@@ -873,6 +915,12 @@ React.render(
 <td>whether expand the treeNode, it&#39;s controlled</td>
 <td>bool</td>
 <td>false</td>
+</tr>
+<tr>
+<td>key</td>
+<td>it&#39;s used with tree props&#39;s selectedKeys or  defaultSelectedKeys</td>
+<td>String</td>
+<td>treeNode&#39;s pos</td>
 </tr>
 </tbody>
 </table>

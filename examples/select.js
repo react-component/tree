@@ -1,12 +1,14 @@
-webpackJsonp([0],[
-/* 0 */
+webpackJsonp([3],{
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(25);
 
 
 /***/ },
-/* 1 */
+
+/***/ 25:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23,8 +25,8 @@ webpackJsonp([0],[
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	function handleChecked(checked, c) {
-	  console.log('checked: ', checked, c);
+	function handleSelect(selected, c, selectedKeys) {
+	  console.log('selected: ', selected, c, selectedKeys);
 	}
 	
 	var demo = _react2['default'].createElement(
@@ -33,89 +35,68 @@ webpackJsonp([0],[
 	  _react2['default'].createElement(
 	    'h2',
 	    null,
-	    'checkbox'
+	    'select'
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { expandAll: true, checkable: true, onChecked: handleChecked },
+	    { expandAll: true, onSelect: handleSelect, defaultSelectedKeys: ['p1', 'p22'] },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
-	      { title: 'parent 1' },
+	      { title: 'parent 1', key: 'p1' },
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
-	        { title: 'child1', defaultChecked: true },
-	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          null,
-	          'child11 '
-	        ),
-	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          null,
-	          'child12 '
-	        )
+	        { key: 'p10' },
+	        'leaf '
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
-	        { title: 'child2' },
+	        { title: 'parent 1-1', key: 'p11', disabled: true },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
-	          { title: 'child21' },
+	          { title: 'parent 2-1', key: 'p21' },
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
 	            null,
-	            'child211 '
+	            'leaf '
 	          ),
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
 	            null,
-	            'child212 '
+	            'leaf '
 	          )
 	        ),
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
-	          { checked: true },
-	          'child22 '
+	          { key: 'p22' },
+	          'leaf'
 	        ),
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
-	          { checked: true },
-	          'child23 '
+	          null,
+	          'leaf '
 	        )
 	      )
 	    ),
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
-	      { title: 'parent 2' },
+	      null,
+	      'leaf '
+	    ),
+	    _react2['default'].createElement(
+	      _rcTree.TreeNode,
+	      null,
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
-	        { checked: true },
-	        'child2 '
+	        null,
+	        'leaf '
 	      )
 	    )
 	  )
 	);
 	
 	_react2['default'].render(demo, document.getElementById('__react-content'));
-	/*
-	<Tree expandAll={true} checkable={true} onChecked={handleChecked} checked={false}>
-	 <TreeNode title="parent 1" checked={false}>
-	   <TreeNode>leaf </TreeNode>
-	   <TreeNode title="parent 1-1" checked={true}>
-	     <TreeNode title="parent 2-1">
-	       <TreeNode>leaf </TreeNode>
-	       <TreeNode>leaf </TreeNode>
-	     </TreeNode>
-	     <TreeNode>leaf </TreeNode>
-	     <TreeNode>leaf </TreeNode>
-	   </TreeNode>
-	 </TreeNode>
-	 <TreeNode>
-	   <TreeNode>leaf </TreeNode>
-	 </TreeNode>
-	</Tree>
-	*/
 
 /***/ }
-]);
-//# sourceMappingURL=checkbox.js.map
+
+});
+//# sourceMappingURL=select.js.map

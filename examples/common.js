@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		2:0
+/******/ 		5:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"checkbox","1":"simple"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"checkbox","1":"checkbox-custom","2":"expanded","3":"select","4":"simple"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -95,26 +95,267 @@
 /* 0 */,
 /* 1 */,
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// removed by extract-text-webpack-plugin
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(3);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(5)(content, {});
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		module.hot.accept("!!/private/tmp/tree/node_modules/rc-tools/node_modules/css-loader/index.js?sourceMap!/private/tmp/tree/node_modules/rc-tools/node_modules/less-loader/index.js?sourceMap!/private/tmp/tree/assets/index.less", function() {
+			var newContent = require("!!/private/tmp/tree/node_modules/rc-tools/node_modules/css-loader/index.js?sourceMap!/private/tmp/tree/node_modules/rc-tools/node_modules/less-loader/index.js?sourceMap!/private/tmp/tree/assets/index.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li a {\n  display: inline-block;\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  text-decoration: none;\n  vertical-align: top;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.rc-tree-line {\n  background: url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n}\n.rc-tree li span {\n  line-height: 16px;\n  margin-right: 2px;\n}\n.rc-tree li span.rc-tree-button {\n  line-height: 0;\n  margin: 0;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled {\n  background: #fff;\n  position: relative;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled:after {\n  content: '-';\n  position: absolute;\n  top: 8px;\n  left: 6px;\n  color: gray;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_open {\n  background-position: -92px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_close {\n  background-position: -74px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk-disabled {\n  background-position: 0 -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_full {\n  background-position: 0 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_full_focus {\n  background-position: 0 -14px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_part {\n  background-position: 0 -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_part_focus {\n  background-position: 0 -42px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_disable {\n  background-position: 0 -56px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_full {\n  background-position: -14px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_full_focus {\n  background-position: -14px -14px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_part {\n  background-position: -14px -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_part_focus {\n  background-position: -14px -42px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_disable {\n  background-position: -14px -56px;\n}\n.rc-tree-treenode-disabled > span,\n.rc-tree-treenode-disabled > a {\n  color: gray;\n}\n.rc-tree-selected {\n  background-color: #FFE6B0;\n  border: 1px #FFB951 solid;\n  opacity: 0.8;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", "", {"version":3,"sources":["index.less"],"names":[],"mappings":"AAEA,CAAC;EACC,SAAA;EAAU,YAAA;;AADZ,CAAC,OAEC;EACE,UAAA;EAAa,SAAA;EACb,gBAAA;EAAmB,mBAAA;EAAsB,UAAA;;AAJ7C,CAAC,OAEC,GAGE;EACE,qBAAA;EACA,oBAAA;EAAqB,SAAA;EACrB,eAAA;EAAgB,YAAA;EAChB,qBAAA;EAAsB,mBAAA;;AAT5B,CAAC,OAEC,GASE;EACG,SAAA;EAAU,mBAAA;;AACV,CAbN,OAEC,GASE,GAEI,CAAC,OAAgB;EAChB,uFAAA;;AAdT,CAAC,OAEC,GAeE;EACE,iBAAA;EAAkB,iBAAA;;AAClB,CAnBL,OAEC,GAeE,KAEG,CAAC,OAAgB;EAChB,cAAA;EAAe,SAAA;EAAU,WAAA;EAAY,YAAA;EACrC,qBAAA;EAAuB,sBAAA;EACvB,cAAA;EAAe,eAAA;EAAgB,aAAA;EAC/B,6BAAA;EAA8B,4BAAA;EAA6B,6BAAA;EAC3D,sBAAqB,4DAArB;;AAEE,CA1BT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SACf;EACC,gBAAA;EAAkB,kBAAA;;AAClB,CA5BX,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SACf,SAEE;EAAO,SAAS,GAAT;EAAc,kBAAA;EAAoB,QAAA;EAAU,SAAA;EAAW,WAAA;;AAEjE,CA9BT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAKf,CAAC,OAAgB;EAAc,4BAAA;;AAChC,CA/BT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAMf,CAAC,OAAgB;EAAc,4BAAA;;AAChC,CAhCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAOf,CAAC,OAAgB;EAAc,gCAAA;;AAChC,CAjCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAQf,CAAC,OAAgB;EAAe,gCAAA;;AACjC,CAlCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SASf,CAAC,OAAgB;EAAc,gCAAA;;AAChC,CAnCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAUf,CAAC,OAAgB;EAAe,gCAAA;;AACjC,CApCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAWf,CAAC,OAAgB;EAAc,gCAAA;;AAChC,CArCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAYf,CAAC,OAAgB;EAAe,gCAAA;;AAEnC,CAvCP,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB;EAChB,WAAA;EAAc,YAAA;EAAc,aAAA;;AAC5B,CAzCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAEf;EACC,4BAAA;;AAEF,CA5CT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAKf,CAAC,OAAgB;EAAsB,wBAAA;;AACxC,CA7CT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAMf,CAAC,OAAgB;EAA4B,4BAAA;;AAC9C,CA9CT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAOf,CAAC,OAAgB;EAAsB,4BAAA;;AACxC,CA/CT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAQf,CAAC,OAAgB;EAA4B,4BAAA;;AAC9C,CAhDT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IASf,CAAC,OAAgB;EAAyB,4BAAA;;AAC3C,CAjDT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAUf,CAAC,OAAgB;EAAqB,4BAAA;;AACvC,CAlDT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAWf,CAAC,OAAgB;EAA2B,gCAAA;;AAC7C,CAnDT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAYf,CAAC,OAAgB;EAAqB,gCAAA;;AACvC,CApDT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAaf,CAAC,OAAgB;EAA2B,gCAAA;;AAC7C,CArDT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,IAcf,CAAC,OAAgB;EAAwB,gCAAA;;AAKlD,CA1DD,OA0DE,kBACC;AADF,CA1DD,OA0DE,kBACQ;EACL,WAAA;;AAGJ,CA/DD,OA+DE;EACC,yBAAA;EACA,yBAAA;EAA0B,YAAA;;AAE5B,CAnED,OAmEE;EACC,iBAAA;EACA,iCAAA;EACA,mBAAA;;AAEF,CAxED,OAwEE;EACC,iBAAA;EACA,6BAAA;EACA,mBAAA","sourcesContent":["@treePrefixCls: rc-tree;\n\n.@{treePrefixCls} {\n  margin:0; padding:5px;\n  li {\n    padding: 0;  margin: 0;\n    list-style: none;  white-space: nowrap;  outline: 0;\n    a {\n      display: inline-block;\n      padding:1px 3px 0 0; margin:0;\n      cursor:pointer; height:17px;\n      text-decoration:none; vertical-align:top;\n    }\n    ul {\n       margin:0; padding:0 0 0 18px;\n       &.@{treePrefixCls}-line{\n         background:url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n       }\n    }\n    span {\n      line-height:16px; margin-right:2px;\n      &.@{treePrefixCls}-button {\n        line-height:0; margin:0; width:16px; height:16px;\n        display: inline-block; vertical-align:middle;\n        border:0 none; cursor: pointer;outline:none;\n        background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;\n        background-image:url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n        &.@{treePrefixCls}-switcher {\n          &-disabled {\n            background: #fff; position: relative;\n            &:after{content: '-'; position: absolute; top: 8px; left: 6px; color: gray;}\n          }\n          &.@{treePrefixCls}-roots_open { background-position: -92px 0}\n          &.@{treePrefixCls}-roots_close{ background-position:-74px 0}\n          &.@{treePrefixCls}-center_open{ background-position:-92px -18px}\n          &.@{treePrefixCls}-center_close{ background-position:-74px -18px}\n          &.@{treePrefixCls}-bottom_open{ background-position:-92px -36px}\n          &.@{treePrefixCls}-bottom_close{ background-position:-74px -36px}\n          &.@{treePrefixCls}-noline_open{ background-position:-92px -72px}\n          &.@{treePrefixCls}-noline_close{ background-position:-74px -72px}\n        }\n        &.@{treePrefixCls}-chk {\n          width: 13px;  height: 13px; margin: 0 3px;\n          &-disabled {\n            background-position: 0 -28px;\n          }\n          &.@{treePrefixCls}-checkbox_false_full {background-position:0 0}\n          &.@{treePrefixCls}-checkbox_false_full_focus {background-position:0 -14px}\n          &.@{treePrefixCls}-checkbox_false_part {background-position:0 -28px}\n          &.@{treePrefixCls}-checkbox_false_part_focus {background-position:0 -42px}\n          &.@{treePrefixCls}-checkbox_false_disable {background-position:0 -56px}\n          &.@{treePrefixCls}-checkbox_true_full {background-position:-14px 0}\n          &.@{treePrefixCls}-checkbox_true_full_focus {background-position:-14px -14px}\n          &.@{treePrefixCls}-checkbox_true_part {background-position:-14px -28px}\n          &.@{treePrefixCls}-checkbox_true_part_focus {background-position:-14px -42px}\n          &.@{treePrefixCls}-checkbox_true_disable {background-position:-14px -56px}\n        }\n      }\n    }\n  }\n  &-treenode-disabled {\n    >span, >a {\n      color: gray;\n    }\n  }\n  &-selected{\n    background-color:#FFE6B0;\n    border:1px #FFB951 solid; opacity:0.8;\n  }\n  &-icon__open {\n    margin-right: 2px;\n    background-position: -110px -16px;\n    vertical-align: top;\n  }\n  &-icon__close {\n    margin-right: 2px;\n    background-position: -110px 0;\n    vertical-align: top;\n  }\n}\n"]}]);
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = function() {
+		var list = [];
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+		return list;
+	}
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isIE9 = memoize(function() {
+			return /msie 9\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0;
+	
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+	
+		options = options || {};
+		// Force single-tag solution on IE9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isIE9();
+	
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+	
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+	
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+	
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+	
+	function createStyleElement() {
+		var styleElement = document.createElement("style");
+		var head = getHeadElement();
+		styleElement.type = "text/css";
+		head.appendChild(styleElement);
+		return styleElement;
+	}
+	
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+	
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement());
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else {
+			styleElement = createStyleElement();
+			update = applyToTag.bind(null, styleElement);
+			remove = function () {
+				styleElement.parentNode.removeChild(styleElement);
+			};
+		}
+	
+		update(obj);
+	
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+	
+	function replaceText(source, id, replacement) {
+		var boundaries = ["/** >>" + id + " **/", "/** " + id + "<< **/"];
+		var start = source.lastIndexOf(boundaries[0]);
+		var wrappedReplacement = replacement
+			? (boundaries[0] + replacement + boundaries[1])
+			: "";
+		if (source.lastIndexOf(boundaries[0]) >= 0) {
+			var end = source.lastIndexOf(boundaries[1]) + boundaries[1].length;
+			return source.slice(0, start) + wrappedReplacement + source.slice(end);
+		} else {
+			return source + wrappedReplacement;
+		}
+	}
+	
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(styleElement.styleSheet.cssText, index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+	
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+	
+		if(sourceMap && typeof btoa === "function") {
+			try {
+				css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(JSON.stringify(sourceMap)) + " */";
+				css = "@import url(\"data:text/css;base64," + btoa(css) + "\")";
+			} catch(e) {}
+		}
+	
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 4 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(5);
+	module.exports = __webpack_require__(8);
 
 /***/ },
-/* 5 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -125,11 +366,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _Tree = __webpack_require__(6);
+	var _Tree = __webpack_require__(9);
 	
 	var _Tree2 = _interopRequireDefault(_Tree);
 	
-	var _TreeNode = __webpack_require__(19);
+	var _TreeNode = __webpack_require__(22);
 	
 	var _TreeNode2 = _interopRequireDefault(_TreeNode);
 	
@@ -139,7 +380,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -160,11 +401,20 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _react = __webpack_require__(3);
+	var _react = __webpack_require__(6);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcUtil = __webpack_require__(7);
+	var _rcUtil = __webpack_require__(10);
+	
+	// import TreeNode from './TreeNode';
+	
+	var id = 1;
+	function uuid() {
+	  return id++;
+	}
+	
+	var rootTrees = {};
 	
 	var Tree = (function (_React$Component) {
 	  _inherits(Tree, _React$Component);
@@ -173,8 +423,7 @@
 	    key: 'statics',
 	    value: function statics() {
 	      return {
-	        treeNodesState: {},
-	        trees: []
+	        rootTrees: rootTrees
 	      };
 	    }
 	  }]);
@@ -188,6 +437,33 @@
 	    ['handleKeyDown', 'handleChecked', 'handleSelect'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
+	
+	    // get root tree, run one time
+	    if (!props._childTreeNode && !props._childTree) {
+	      // console.log('root tree', this);
+	      this._rootTreeId = uuid();
+	      var rootConfig = {
+	        prefixCls: props.prefixCls,
+	        showLine: props.showLine,
+	        showIcon: props.showIcon,
+	        expandAll: props.expandAll,
+	        checkable: props.checkable,
+	        defaultSelectedKeys: props.defaultSelectedKeys,
+	        selectedKeys: props.selectedKeys,
+	        onChecked: this.handleChecked,
+	        onSelect: this.handleSelect
+	      };
+	      rootTrees[this._rootTreeId] = {
+	        _rootTreeId: this._rootTreeId,
+	        rootConfig: rootConfig,
+	        treeNodesState: {},
+	        trees: [],
+	        selectedKeys: props.selectedKeys.length && props.selectedKeys || props.defaultSelectedKeys
+	      };
+	    }
+	    // if (props._childTree) {
+	    //   console.log('child tree', this);
+	    // }
 	  }
 	
 	  _createClass(Tree, [{
@@ -195,23 +471,25 @@
 	    value: function renderTreeNode(child, index) {
 	      var props = this.props;
 	      var pos = (props._pos || 0) + '-' + index;
+	      var _rootTreeId = this._rootTreeId || props._rootTreeId;
 	      var cloneProps = {
 	        ref: 'treeNode',
-	        _level: props._level || 0,
+	        _rootTreeId: _rootTreeId,
+	        _key: child.key || pos,
 	        _pos: pos,
-	        _isChildTree: props._isChildTree || false,
+	        _level: props._level || 0,
 	        _index: index,
 	        _len: this.childrenLength,
-	        _checked: props._checked,
-	        _checkPart: props._checkPart,
-	        prefixCls: props.prefixCls,
-	        showLine: props.showLine,
-	        showIcon: props.showIcon,
-	        expandAll: props.expandAll,
-	        checkable: props.checkable,
-	        onChecked: this.handleChecked,
-	        onSelect: this.handleSelect
+	        checked: child.props.checked || props.checked,
+	        checkPart: props.checkPart
 	      };
+	      Object.keys(rootTrees[_rootTreeId].rootConfig).forEach(function (item) {
+	        cloneProps[item] = rootTrees[_rootTreeId].rootConfig[item];
+	      });
+	
+	      if (rootTrees[_rootTreeId].selectedKeys.indexOf(child.key) > -1) {
+	        cloneProps.selected = true;
+	      }
 	      return _react2['default'].cloneElement(child, cloneProps);
 	    }
 	  }, {
@@ -228,9 +506,19 @@
 	        'aria-selected': props.selected ? 'true' : 'false',
 	        'aria-level': ''
 	      };
-	      if (props._isChildTree) {
+	      if (props._childTree) {
 	        domProps.style = props.expanded ? { display: 'block' } : { display: 'none' };
 	      }
+	
+	      if (!props._childTreeNode && !props._childTree) {
+	        this._obj = {};
+	        this.handleChildren(props.children);
+	        // console.log(this._obj);
+	        this.handleObj(this._obj);
+	        // console.log(this._obj);
+	        rootTrees[this._rootTreeId].treeNodesState = this._obj;
+	      }
+	
 	      this.childrenLength = _react2['default'].Children.count(props.children);
 	      this.newChildren = _react2['default'].Children.map(props.children, this.renderTreeNode, this);
 	
@@ -241,17 +529,104 @@
 	      );
 	    }
 	  }, {
+	    key: 'handleObj',
+	    value: function handleObj(obj, unCheckEvent, pos) {
+	      if (unCheckEvent) {
+	        Object.keys(obj).forEach(function (i) {
+	          if (i.indexOf(pos) === 0) {
+	            obj[i].checked = false;
+	            obj[i].checkPart = false;
+	          }
+	        });
+	        // return;
+	      } else if (pos) {
+	          Object.keys(obj).forEach(function (i) {
+	            if (i.indexOf(pos) === 0) {
+	              obj[i].checked = true;
+	              obj[i].checkPart = false;
+	            }
+	          });
+	        }
+	      var checkedArr = Object.keys(obj).filter(function (key) {
+	        return obj[key].checked;
+	      });
+	      // console.log(checkedArr);
+	      // todo 过滤掉checkedArr中的重复项
+	      checkedArr.forEach(function (key) {
+	        var keyLen = key.length;
+	        var loop = function loop(len) {
+	          if (len <= 3) {
+	            Object.keys(obj).forEach(function (i) {
+	              if (i.indexOf(key) === 0) {
+	                obj[i].checked = true;
+	                obj[i].checkPart = false;
+	              }
+	            });
+	            return;
+	          }
+	          var lenIndex = 0;
+	          var chkIndex = 0;
+	          Object.keys(obj).forEach(function (i) {
+	            if (i.length === len && i.substring(0, len - 2) === key.substring(0, len - 2)) {
+	              lenIndex++;
+	              if (obj[i].checked) {
+	                chkIndex++;
+	              }
+	            } else if (i.length > len && i.indexOf(key) === 0) {
+	              obj[i].checked = true;
+	            }
+	          });
+	          // 子项全选，向上递归
+	          var parent = obj[key.substring(0, len - 2)];
+	          if (chkIndex === lenIndex) {
+	            parent.checked = true;
+	            loop(len - 2);
+	          } else {
+	            parent.checkPart = true;
+	            loop(len - 2, true);
+	          }
+	        };
+	        loop(keyLen);
+	      });
+	    }
+	  }, {
+	    key: 'handleChildren',
+	    value: function handleChildren(children, level) {
+	      var _this2 = this;
+	
+	      _react2['default'].Children.forEach(children, function (child, index) {
+	        var pos = (level || 0) + '-' + index;
+	        // console.log(child.props.checkbox);
+	        var props = child.props;
+	        if (child.props.checkbox) {
+	          props = child.props.checkbox.props;
+	        }
+	        _this2._obj[pos] = {
+	          checkPart: child.props.checkPart || false,
+	          checked: props.checked || props.defaultChecked || false
+	        };
+	        var childChildren = child.props.children;
+	        if (childChildren && typeof childChildren.type === 'function' && typeof childChildren.type.TreeNode === 'function') {
+	          childChildren = [childChildren];
+	        }
+	        if (Array.isArray(childChildren)) {
+	          return _this2.handleChildren(childChildren, pos);
+	        }
+	        return null;
+	      });
+	    }
+	  }, {
 	    key: 'handleChecked',
-	    value: function handleChecked(isChk, c, e) {
+	    value: function handleChecked(isChk, c) {
 	      if (this.props.onChecked) {
-	        this.props.onChecked(isChk, c, e);
+	        this.props.onChecked(isChk, c);
 	      }
 	    }
 	  }, {
 	    key: 'handleSelect',
-	    value: function handleSelect(isSel, c, e) {
+	    value: function handleSelect(isSel, c, selectedKeys) {
 	      if (this.props.onSelect) {
-	        this.props.onSelect(isSel, c, e);
+	        this.props.onSelect(isSel, c, selectedKeys);
 	      }
 	    }
 	
@@ -273,7 +648,9 @@
 	  showIcon: _react2['default'].PropTypes.bool,
 	  expandAll: _react2['default'].PropTypes.bool,
 	  onChecked: _react2['default'].PropTypes.func,
-	  onSelect: _react2['default'].PropTypes.func
+	  onSelect: _react2['default'].PropTypes.func,
+	  defaultSelectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
+	  selectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string)
 	};
 	
 	Tree.defaultProps = {
@@ -281,37 +658,39 @@
 	  checkable: false,
 	  showLine: true,
 	  showIcon: true,
-	  expandAll: false
+	  expandAll: false,
+	  defaultSelectedKeys: [],
+	  selectedKeys: []
 	};
 	
 	exports['default'] = Tree;
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
-	  guid: __webpack_require__(8),
-	  classSet: __webpack_require__(9),
-	  joinClasses: __webpack_require__(10),
-	  KeyCode: __webpack_require__(11),
-	  PureRenderMixin: __webpack_require__(12),
-	  shallowEqual: __webpack_require__(13),
-	  createChainedFunction: __webpack_require__(14),
+	  guid: __webpack_require__(11),
+	  classSet: __webpack_require__(12),
+	  joinClasses: __webpack_require__(13),
+	  KeyCode: __webpack_require__(14),
+	  PureRenderMixin: __webpack_require__(15),
+	  shallowEqual: __webpack_require__(16),
+	  createChainedFunction: __webpack_require__(17),
 	  Dom: {
-	    addEventListener: __webpack_require__(15),
-	    contains: __webpack_require__(16)
+	    addEventListener: __webpack_require__(18),
+	    contains: __webpack_require__(19)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(17),
-	    mapSelf: __webpack_require__(18)
+	    toArray: __webpack_require__(20),
+	    mapSelf: __webpack_require__(21)
 	  }
 	};
 
 
 /***/ },
-/* 8 */
+/* 11 */
 /***/ function(module, exports) {
 
 	var seed = 0;
@@ -321,7 +700,7 @@
 
 
 /***/ },
-/* 9 */
+/* 12 */
 /***/ function(module, exports) {
 
 	/**
@@ -366,7 +745,7 @@
 
 
 /***/ },
-/* 10 */
+/* 13 */
 /***/ function(module, exports) {
 
 	/**
@@ -413,7 +792,7 @@
 
 
 /***/ },
-/* 11 */
+/* 14 */
 /***/ function(module, exports) {
 
 	/**
@@ -940,7 +1319,7 @@
 
 
 /***/ },
-/* 12 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -956,7 +1335,7 @@
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(13);
+	var shallowEqual = __webpack_require__(16);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -993,7 +1372,7 @@
 
 
 /***/ },
-/* 13 */
+/* 16 */
 /***/ function(module, exports) {
 
 	/**
@@ -1041,7 +1420,7 @@
 
 
 /***/ },
-/* 14 */
+/* 17 */
 /***/ function(module, exports) {
 
 	/**
@@ -1068,7 +1447,7 @@
 
 
 /***/ },
-/* 15 */
+/* 18 */
 /***/ function(module, exports) {
 
 	module.exports = function (target, eventType, callback) {
@@ -1091,7 +1470,7 @@
 
 
 /***/ },
-/* 16 */
+/* 19 */
 /***/ function(module, exports) {
 
 	module.exports = function (root, node) {
@@ -1107,10 +1486,10 @@
 
 
 /***/ },
-/* 17 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(3);
+	var React = __webpack_require__(6);
 	
 	module.exports = function (children) {
 	  var ret = [];
@@ -1122,10 +1501,10 @@
 
 
 /***/ },
-/* 18 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(3);
+	var React = __webpack_require__(6);
 	
 	function mirror(o) {
 	  return o;
@@ -1138,7 +1517,7 @@
 
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1159,22 +1538,22 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _react = __webpack_require__(3);
+	var _react = __webpack_require__(6);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcUtil = __webpack_require__(7);
+	var _rcUtil = __webpack_require__(10);
 	
 	var _rcUtil2 = _interopRequireDefault(_rcUtil);
 	
-	var _Tree = __webpack_require__(6);
+	var _Tree2 = __webpack_require__(9);
 	
-	var _Tree2 = _interopRequireDefault(_Tree);
+	var _Tree3 = _interopRequireDefault(_Tree2);
 	
-	_Tree2['default'].statics = _Tree2['default'].statics();
+	var rootTrees = _Tree3['default'].statics().rootTrees;
 	
-	var TreeNode = (function (_React$Component) {
-	  _inherits(TreeNode, _React$Component);
+	var TreeNode = (function (_Tree) {
+	  _inherits(TreeNode, _Tree);
 	
 	  function TreeNode(props) {
 	    var _this = this;
@@ -1182,13 +1561,16 @@
 	    _classCallCheck(this, TreeNode);
 	
 	    _get(Object.getPrototypeOf(TreeNode.prototype), 'constructor', this).call(this, props);
+	    var tnState = rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos];
 	    this.state = {
 	      expanded: props.expandAll || props.expanded || props.defaultExpanded,
 	      selected: props.selected || false,
-	      checkPart: props._checkPart || false,
-	      checked: props._checked || false
+	      // checkPart: props.checkPart || false,
+	      // checked: props.checked || false,
+	      checkPart: tnState.checkPart || false,
+	      checked: tnState.checked || false
 	    };
-	    ['handleExpandedState', 'handleSelect', 'handleChecked'].forEach(function (m) {
+	    ['handleExpandedState'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	  }
@@ -1197,30 +1579,34 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.componentDidUpdate();
+	      // console.log(rootTrees[this.props._rootTreeId].treeNodesState);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
+	    value: function componentWillReceiveProps() {
+	      var tnState = rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos];
 	      this.setState({
-	        // selected: nextProps.selected,
-	        checkPart: nextProps._checkPart,
-	        checked: nextProps._checked
+	        // checkPart: nextProps.checkPart,
+	        // checked: nextProps.checked,
+	        checkPart: tnState.checkPart,
+	        checked: tnState.checked
 	      });
 	    }
 	  }, {
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate(nextProps, nextState) {
 	      var checkbox = this.refs.checkbox;
-	      if (checkbox) {
+	      if (checkbox && this.state.checkPart !== nextState.checkPart) {
 	        var cls = checkbox.getDOMNode().className;
-	        var checkSt = _Tree2['default'].statics.treeNodesState[this.props._pos] || {};
+	        var checkSt = rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos] || {};
 	        checkSt.checkPart = nextState.checkPart;
 	        checkSt.checked = nextState.checked;
+	        var checkPartCls = this.props.prefixCls + '-checkbox_true_part';
 	        if (nextState.checkPart) {
-	          checkbox.getDOMNode().className = cls.indexOf('checkbox_true_part') > -1 ? cls : cls + ' checkbox_true_part';
+	          checkbox.getDOMNode().className = cls.indexOf(checkPartCls) > -1 ? cls : cls + ' ' + checkPartCls;
 	          return false;
 	        }
-	        checkbox.getDOMNode().className = cls.replace(/checkbox_true_part/g, '');
+	        checkbox.getDOMNode().className = cls.replace(new RegExp(checkPartCls, 'g'), '');
 	      }
 	      return true;
 	    }
@@ -1228,138 +1614,168 @@
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
 	      if (this.newChildren) {
-	        for (var i = 0; i < _Tree2['default'].statics.trees.length; i++) {
-	          var obj = _Tree2['default'].statics.trees[i];
-	          if (obj.props._pos === this.props._pos) {
-	            _Tree2['default'].statics.trees.splice(i--, 1);
+	        var trees = rootTrees[this.props._rootTreeId].trees;
+	        for (var i = 0; i < trees.length; i++) {
+	          if (trees[i].props._pos === this.props._pos) {
+	            trees.splice(i--, 1);
 	          }
 	        }
-	        _Tree2['default'].statics.trees.push(this);
+	        trees.push(this);
 	      }
 	      // add treeNodes checked state
-	      _Tree2['default'].statics.treeNodesState[this.props._pos] = {
-	        checked: this.state.checked,
-	        checkPart: this.state.checkPart
+	      var tnState = rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos];
+	      rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos] = {
+	        // checked: this.state.checked,
+	        // checkPart: this.state.checkPart,
+	        checkPart: tnState.checkPart,
+	        checked: tnState.checked
 	      };
 	    }
 	  }, {
+	    key: 'renderSwitcher',
+	    value: function renderSwitcher(props, prefixCls, switchState) {
+	      var _switcherCls;
+	
+	      var switcherCls = (_switcherCls = {}, _defineProperty(_switcherCls, prefixCls + '-button', true), _defineProperty(_switcherCls, prefixCls + '-switcher', true), _switcherCls);
+	      if (props.disabled) {
+	        switcherCls[prefixCls + '-switcher-disabled'] = true;
+	        return _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(switcherCls) });
+	      }
+	
+	      if (!props.showLine) {
+	        switcherCls[prefixCls + '-noline_' + switchState] = true;
+	      } else if (props._isChildTree && props._index === 0) {
+	        if (props._len !== 1) {
+	          switcherCls[prefixCls + '-center_' + switchState] = true;
+	        } else {
+	          switcherCls[prefixCls + '-bottom_' + switchState] = true;
+	        }
+	      } else if (props._index === 0) {
+	        switcherCls[prefixCls + '-roots_' + switchState] = true;
+	      } else if (props._index === props._len - 1) {
+	        switcherCls[prefixCls + '-bottom_' + switchState] = true;
+	      } else {
+	        switcherCls[prefixCls + '-center_' + switchState] = true;
+	      }
+	      return _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(switcherCls), onClick: this.handleExpandedState });
+	    }
+	  }, {
+	    key: 'renderCheckbox',
+	    value: function renderCheckbox(props, prefixCls, state) {
+	      var _checkboxCls;
+	
+	      var checkboxCls = (_checkboxCls = {}, _defineProperty(_checkboxCls, prefixCls + '-button', true), _defineProperty(_checkboxCls, prefixCls + '-chk', true), _checkboxCls);
+	      if (!props.checkable) {
+	        return null;
+	      }
+	      if (props.disabled) {
+	        checkboxCls[prefixCls + '-chk-disabled'] = true;
+	        return _react2['default'].createElement('span', { ref: 'checkbox', className: (0, _rcUtil.classSet)(checkboxCls) });
+	      }
+	      if (state.checkPart) {
+	        checkboxCls[prefixCls + '-checkbox_true_part'] = true;
+	      } else if (state.checked) {
+	        checkboxCls[prefixCls + '-checkbox_true_full'] = true;
+	      } else {
+	        checkboxCls[prefixCls + '-checkbox_false_full'] = true;
+	      }
+	      // console.log(props.checkbox.props);
+	      if (props.checkbox) {
+	        props.checkbox.props.checked = state.checked;
+	      }
+	      return _react2['default'].createElement(
+	        'span',
+	        { ref: 'checkbox', className: (0, _rcUtil.classSet)(checkboxCls), onClick: this.handleChecked },
+	        props.checkbox ? props.checkbox : null
+	      );
+	    }
+	  }, {
 	    key: 'renderChildren',
-	    value: function renderChildren(children) {
+	    value: function renderChildren(props, children) {
 	      var newChildren = null;
-	      if (children.type === TreeNode || Array.isArray(children) && children.every(function chEvery(item) {
+	      if (children.type === TreeNode || Array.isArray(children) && children.every(function (item) {
 	        return item.type === TreeNode;
 	      })) {
 	        var cls = {};
-	        cls[this.props.prefixCls + '-child-tree'] = true;
-	        if (this.props.showLine && this.props._index !== this.props._len - 1) {
-	          cls.line = true;
+	        cls[props.prefixCls + '-child-tree'] = true;
+	        if (props.showLine && props._index !== props._len - 1) {
+	          cls[props.prefixCls + '-line'] = true;
 	        }
 	
 	        var treeProps = {
-	          _level: this.props._level + 1,
-	          _pos: this.props._pos,
-	          _isChildTree: true,
-	          _checked: this.state.checked,
-	          _checkPart: this.state.checkPart,
+	          _rootTreeId: props._rootTreeId,
+	          _pos: props._pos,
+	          _level: props._level + 1,
+	          _childTree: true,
+	          checked: this.state.checked,
+	          checkPart: this.state.checkPart,
 	          className: (0, _rcUtil.classSet)(cls),
-	          prefixCls: this.props.prefixCls,
-	          showLine: this.props.showLine,
-	          showIcon: this.props.showIcon,
-	          expanded: this.state.expanded,
-	          expandAll: this.props.expandAll,
-	          // selected: this.state.checked,
-	          checkable: this.props.checkable, // 只是为了传递根节点上的checkable设置,是否有更好做法?
-	          onChecked: this.props.onChecked,
-	          onSelect: this.props.onSelect
+	          expanded: this.state.expanded
 	        };
 	        newChildren = this.newChildren = _react2['default'].createElement(
-	          _Tree2['default'],
+	          _Tree3['default'],
 	          treeProps,
 	          children
 	        );
 	      } else {
 	        newChildren = children;
 	      }
-	
 	      return newChildren;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _iconEleCls;
+	      var _iconEleCls,
+	          _this2 = this;
 	
 	      var props = this.props;
 	      var state = this.state;
-	
 	      var prefixCls = props.prefixCls;
 	      var switchState = state.expanded ? 'open' : 'close';
 	
-	      var switcherCls = {};
-	      switcherCls.button = true;
-	      switcherCls[prefixCls + '-treenode-switcher'] = true;
-	      switcherCls[prefixCls + '-switcher__' + switchState] = true;
-	      if (!props.showLine) {
-	        switcherCls['noline_' + switchState] = true;
-	      } else if (props._isChildTree && props._index === 0) {
-	        if (props._len !== 1) {
-	          switcherCls['center_' + switchState] = true;
-	        } else {
-	          switcherCls['bottom_' + switchState] = true;
-	        }
-	      } else if (props._index === 0) {
-	        switcherCls['roots_' + switchState] = true;
-	      } else if (props._index === props._len - 1) {
-	        switcherCls['bottom_' + switchState] = true;
-	      } else {
-	        switcherCls['center_' + switchState] = true;
-	      }
-	
-	      var checkbox = null;
-	      var checkboxCls = {};
-	      if (props.checkable) {
-	        checkboxCls.button = true;
-	        checkboxCls.chk = true;
-	        /* jshint ignore:start */
-	        if (state.checkPart) {
-	          checkboxCls.checkbox_true_part = true;
-	        } else if (state.checked) {
-	          checkboxCls.checkbox_true_full = true;
-	        } else {
-	          checkboxCls.checkbox_false_full = true;
-	        }
-	        /* jshint ignore:end */
-	        checkbox = _react2['default'].createElement('span', { ref: 'checkbox', className: (0, _rcUtil.classSet)(checkboxCls), onClick: this.handleChecked });
-	      }
-	
-	      var iconEleCls = (_iconEleCls = {
-	        button: true
-	      }, _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon__' + switchState, true), _iconEleCls);
+	      var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-button', true), _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon__' + switchState, true), _iconEleCls);
 	
 	      var content = props.title;
-	      var newChildren = this.renderChildren(props.children);
+	      var newChildren = this.renderChildren(props, props.children);
 	      if (newChildren === props.children) {
 	        content = newChildren;
 	        newChildren = null;
 	      }
 	
-	      return _react2['default'].createElement(
-	        'li',
-	        { className: (0, _rcUtil.joinClasses)(props.className, 'level' + props._level, 'pos-' + props._pos) },
-	        _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(switcherCls),
-	          onClick: this.handleExpandedState }),
-	        checkbox,
-	        _react2['default'].createElement(
+	      var selectHandle = function selectHandle() {
+	        var icon = props.showIcon ? _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(iconEleCls) }) : null;
+	        if (props.disabled) {
+	          return _react2['default'].createElement(
+	            'a',
+	            { ref: 'selectHandle', title: content },
+	            icon,
+	            _react2['default'].createElement(
+	              'span',
+	              { className: 'title' },
+	              content
+	            )
+	          );
+	        }
+	        return _react2['default'].createElement(
 	          'a',
 	          { ref: 'selectHandle', title: content,
 	            className: state.selected ? prefixCls + '-selected' : '',
-	            onClick: this.handleSelect },
-	          props.showIcon ? _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(iconEleCls) }) : null,
+	            onClick: _this2.handleSelect },
+	          icon,
 	          _react2['default'].createElement(
 	            'span',
 	            { className: 'title' },
 	            content
 	          )
-	        ),
+	        );
+	      };
+	
+	      return _react2['default'].createElement(
+	        'li',
+	        { className: (0, _rcUtil.joinClasses)(props.className, 'level-' + props._level, 'pos-' + props._pos, props.disabled ? prefixCls + '-treenode-disabled' : '') },
+	        this.renderSwitcher(props, prefixCls, switchState),
+	        this.renderCheckbox(props, prefixCls, state),
+	        selectHandle(),
 	        newChildren
 	      );
 	    }
@@ -1370,13 +1786,6 @@
 	        expanded: newState
 	      }, onStateChangeComplete);
 	    }
-	
-	    // keyboard event support
-	  }, {
-	    key: 'handleKeyDown',
-	    value: function handleKeyDown(e) {
-	      e.preventDefault();
-	    }
 	  }, {
 	    key: 'handleExpandedState',
 	    value: function handleExpandedState() {
@@ -1385,17 +1794,29 @@
 	  }, {
 	    key: 'handleSelect',
 	    value: function handleSelect() {
+	      var selected = !this.state.selected;
+	      var arr = rootTrees[this.props._rootTreeId].selectedKeys;
+	      var index = arr.indexOf(this.props._key);
+	      if (selected) {
+	        if (index < 0) {
+	          arr.push(this.props._key);
+	        }
+	      } else {
+	        if (index > -1) {
+	          arr.splice(index, 1);
+	        }
+	      }
 	      this.setState({
-	        selected: !this.state.selected
+	        selected: selected
 	      });
 	      if (this.props.onSelect) {
-	        this.props.onSelect(!this.state.selected, this);
+	        this.props.onSelect(selected, this, arr);
 	      }
 	    }
 	  }, {
 	    key: 'handleChecked',
 	    value: function handleChecked() {
-	      var _pos = this.props._pos;
+	      var props = this.props;
 	      var checked = !this.state.checked;
 	
 	      if (this.state.checkPart) {
@@ -1406,35 +1827,47 @@
 	        checkPart: false,
 	        checked: checked
 	      };
-	
 	      this.setState(nSt);
+	      this.newTNState(props, checked);
+	      rootTrees[props._rootTreeId].treeNodesState[props._pos] = nSt;
+	      // console.log(rootTrees[props._rootTreeId].treeNodesState);
+	      _get(Object.getPrototypeOf(TreeNode.prototype), 'handleObj', this).call(this, rootTrees[props._rootTreeId].treeNodesState, !checked, props._pos);
+	      // console.log(rootTrees[props._rootTreeId].treeNodesState);
 	
-	      var sortedTree = _Tree2['default'].statics.trees.sort(function sortTree(a, b) {
+	      if (props.onChecked) {
+	        props.onChecked(checked, this);
+	      }
+	    }
+	
+	    // set parent treeNodes's state
+	  }, {
+	    key: 'newTNState',
+	    value: function newTNState(props, checked) {
+	      var _this3 = this;
+	
+	      var _pos = props._pos;
+	      rootTrees[this.props._rootTreeId].trees.sort(function (a, b) {
 	        return b.props._pos.length - a.props._pos.length;
-	      });
-	
-	      sortedTree.forEach(function forofTree(c) {
+	      }).forEach(function (c) {
 	        var cPos = c.props._pos;
 	        if (_pos.indexOf(cPos) === 0 && _pos !== cPos) {
 	          var childArr = _rcUtil2['default'].Children.toArray(c.props.children);
 	          var len = childArr.length;
-	
 	          var checkedNumbers = 0;
-	
 	          // 先计算已经选中的节点数
+	          // console.log(this);
 	          for (var i = 0; i < len; i++) {
-	            var checkSt = _Tree2['default'].statics.treeNodesState[cPos + '-' + i];
+	            var checkSt = rootTrees[_this3.props._rootTreeId].treeNodesState[cPos + '-' + i];
 	            if (checkSt.checked) {
 	              checkedNumbers++;
 	            } else if (checkSt.checkPart) {
 	              checkedNumbers += 0.5;
 	            }
 	          }
-	
 	          // 点击节点的 直接父级
 	          if (_pos.length - cPos.length <= 2) {
 	            // 如果原来是半选
-	            if (_Tree2['default'].statics.treeNodesState[_pos].checkPart) {
+	            if (rootTrees[_this3.props._rootTreeId].treeNodesState[_pos].checkPart) {
 	              // checked ? checkedNumbers += 0.5 : checkedNumbers -= 0.5;
 	              if (checked) {
 	                checkedNumbers += 0.5;
@@ -1469,38 +1902,36 @@
 	            };
 	          }
 	          c.setState(newSt);
-	          _Tree2['default'].statics.treeNodesState[cPos] = newSt;
+	          rootTrees[_this3.props._rootTreeId].treeNodesState[cPos] = newSt;
 	        }
 	      });
+	    }
 	
-	      _Tree2['default'].statics.treeNodesState[_pos] = nSt;
-	
-	      if (this.props.onChecked) {
-	        this.props.onChecked(checked, this);
-	      }
+	    // keyboard event support
+	  }, {
+	    key: 'handleKeyDown',
+	    value: function handleKeyDown(e) {
+	      e.preventDefault();
 	    }
 	  }]);
 	
 	  return TreeNode;
-	})(_react2['default'].Component);
+	})(_Tree3['default']);
 	
 	TreeNode.propTypes = {
+	  _rootTreeId: _react2['default'].PropTypes.number,
 	  _pos: _react2['default'].PropTypes.string,
 	  _index: _react2['default'].PropTypes.number,
 	  _len: _react2['default'].PropTypes.number,
 	  _level: _react2['default'].PropTypes.number,
+	  _key: _react2['default'].PropTypes.string,
 	  prefixCls: _react2['default'].PropTypes.string,
-	  showLine: _react2['default'].PropTypes.bool,
-	  showIcon: _react2['default'].PropTypes.bool,
-	  expandAll: _react2['default'].PropTypes.bool,
-	  defaultExpanded: _react2['default'].PropTypes.bool,
 	  expanded: _react2['default'].PropTypes.bool,
 	  selected: _react2['default'].PropTypes.bool,
-	  checkable: _react2['default'].PropTypes.bool,
-	  onSelect: _react2['default'].PropTypes.func,
-	  onChecked: _react2['default'].PropTypes.func
+	  onSelect: _react2['default'].PropTypes.func
 	};
 	TreeNode.defaultProps = {
+	  _childTreeNode: true,
 	  title: '---',
 	  defaultExpanded: false,
 	  expanded: false

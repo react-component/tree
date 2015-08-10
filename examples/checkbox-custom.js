@@ -1,14 +1,14 @@
-webpackJsonp([4],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(26);
+	module.exports = __webpack_require__(23);
 
 
 /***/ },
 
-/***/ 26:
+/***/ 23:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25,28 +25,32 @@ webpackJsonp([4],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
+	function handleChecked(checked, c) {
+	  console.log('checked: ', checked, c);
+	}
+	
 	var demo = _react2['default'].createElement(
 	  'div',
 	  null,
 	  _react2['default'].createElement(
 	    'h2',
 	    null,
-	    'simple'
+	    'checkbox'
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { className: 'myCls', expandAll: true, showIcon: false, showLine: false },
+	    { expandAll: true, checkable: true, onChecked: handleChecked },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
-	      { title: 'parent 1' },
+	      { title: 'parent 1', checkbox: _react2['default'].createElement('input', { type: 'checkbox', defaultChecked: true }) },
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
 	        null,
-	        'leaf '
+	        'child1 '
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
-	        { title: 'parent 1-1' },
+	        { title: 'parent 1-1', checkbox: _react2['default'].createElement('input', { type: 'checkbox', defaultChecked: false }) },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          null,
@@ -58,6 +62,11 @@ webpackJsonp([4],{
 	          'leaf '
 	        )
 	      )
+	    ),
+	    _react2['default'].createElement(
+	      _rcTree.TreeNode,
+	      null,
+	      'leaf '
 	    )
 	  )
 	);
@@ -67,4 +76,4 @@ webpackJsonp([4],{
 /***/ }
 
 });
-//# sourceMappingURL=simple.js.map
+//# sourceMappingURL=checkbox-custom.js.map
