@@ -72,17 +72,24 @@ React.render(
 |showIcon | whether show icon | bool | true |
 |checkable | whether support checked | bool | false |
 |expandAll | expand all treeNodes | bool | false |
-|onSelect | click the TreeNode to fire(auto switch selected state)  | function | - |
-|onChecked | click the TreeNode's checkbox to checked(auto switch checked state)  | function | - |
+|onChecked | click the treeNode's checkbox to checked(auto switch checked state)  | function | - |
+|selectedKeys | selected treeNodes | String[] | [] |
+|defaultSelectedKeys | default selected treeNodes | String[] | [] |
+|onSelect | click the treeNode to fire(auto switch selected state)  | function | - |
 
 ### TreeNode props
 
 | name     | description    | type     | default      |
 |----------|----------------|----------|--------------|
 |className | additional class to treeNode | String | '' |
+|disabled | whether disabled the treeNode | bool | false |
 |title | tree/subTree's title | String | '---' |
+|defaultChecked | set checked state(require tree props checkable) | bool | false |
+|checked | set checked state(require tree props checkable) | bool | false |
+|checkbox | can use custom checkbox element(require tree props checkable) | element | - |
 |defaultExpanded | whether default expand the treeNode | bool | false |
 |expanded | whether expand the treeNode, it's controlled | bool | false |
+|key | it's used with tree props's selectedKeys or  defaultSelectedKeys | String | treeNode's pos |
 
 
 ### Keyboard

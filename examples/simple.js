@@ -4,15 +4,11 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import Tree, {TreeNode} from 'rc-tree';
 
-function handleSelect(selected, c) {
-  console.log( selected, c );
-}
-
 var demo = (
   <div>
     <h2>simple</h2>
 
-    <Tree onSelect={handleSelect} expandAll={true} showIcon={false}>
+    <Tree className="myCls" expandAll={true} showIcon={false} showLine={false}>
       <TreeNode title="parent 1">
         <TreeNode>leaf </TreeNode>
         <TreeNode title="parent 1-1">
@@ -21,7 +17,6 @@ var demo = (
         </TreeNode>
       </TreeNode>
     </Tree>
-
   </div>
 )
 
