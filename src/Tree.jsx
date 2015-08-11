@@ -3,9 +3,23 @@ import {classSet} from 'rc-util';
 // import TreeNode from './TreeNode';
 
 let id = 1;
-function uuid() {
+const uuid = () => {
   return id++;
-}
+};
+
+// ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
+const filterMin = (arr) => {
+  const a = [];
+  arr.forEach((item) => {
+    const b = a.filter((i) => {
+      return item.indexOf(i) === 0;
+    });
+    if (!b.length) {
+      a.push(item);
+    }
+  });
+  return a;
+};
 
 const rootTrees = {};
 
@@ -37,7 +51,7 @@ class Tree extends React.Component {
         onSelect: this.handleSelect,
       };
       rootTrees[this._rootTreeId] = {
-        _rootTreeId: this._rootTreeId,
+        _rootTree: this,
         rootConfig: rootConfig,
         treeNodesState: {},
         trees: [],
@@ -88,13 +102,13 @@ class Tree extends React.Component {
       domProps.style = props.expanded ? {display: 'block'} : {display: 'none'};
     }
 
-    if (!props._childTreeNode && !props._childTree) {
-      this._obj = {};
-      this.handleChildren(props.children);
-      // console.log(this._obj);
-      this.handleObj(this._obj);
+    if (!this._finishInit && !props._childTreeNode && !props._childTree) {
+      this.handleChildren(props.children, this._obj = {}, this._propsCheckedArray = []);
+      this._propsCheckedArray = filterMin(this._propsCheckedArray);
+      this.handleCheckState(this._obj, this._propsCheckedArray);
       // console.log(this._obj);
       rootTrees[this._rootTreeId].treeNodesState = this._obj;
+      this._finishInit = true;
     }
 
     this.childrenLength = React.Children.count(props.children);
@@ -106,66 +120,63 @@ class Tree extends React.Component {
       </ul>
     );
   }
-  handleObj(obj, unCheckEvent, pos) {
-    if (unCheckEvent) {
-      Object.keys(obj).forEach((i) => {
-        if (i.indexOf(pos) === 0) {
-          obj[i].checked = false;
-          obj[i].checkPart = false;
-        }
-      });
-      // return;
-    } else if (pos) {
-      Object.keys(obj).forEach((i) => {
-        if (i.indexOf(pos) === 0) {
-          obj[i].checked = true;
-          obj[i].checkPart = false;
-        }
-      });
+  handleCheckState(obj, checkedArr, unCheckEvent) {
+    let evt = false;
+    if (typeof unCheckEvent === 'boolean') {
+      evt = true;
     }
-    const checkedArr = Object.keys(obj).filter((key) => {
-      return obj[key].checked;
-    });
-    // console.log(checkedArr);
-    // todo 过滤掉checkedArr中的重复项
-    checkedArr.forEach((key) => {
-      const keyLen = key.length;
-      const loop = (len) => {
-        if (len <= 3) {
-          Object.keys(obj).forEach((i) => {
-            if (i.indexOf(key) === 0) {
+    checkedArr.forEach((_pos) => {
+      Object.keys(obj).forEach((i) => {
+        if (i.length > _pos.length && i.indexOf(_pos) === 0) {
+          obj[i].checkPart = false;
+          if (evt) {
+            if (unCheckEvent) {
+              obj[i].checked = false;
+            } else {
               obj[i].checked = true;
-              obj[i].checkPart = false;
             }
-          });
-          return;
-        }
-        let lenIndex = 0;
-        let chkIndex = 0;
-        Object.keys(obj).forEach((i) => {
-          if (i.length === len && i.substring(0, len - 2) === key.substring(0, len - 2)) {
-            lenIndex++;
-            if (obj[i].checked) {
-              chkIndex++;
-            }
-          } else if (i.length > len && i.indexOf(key) === 0) {
+          } else {
             obj[i].checked = true;
           }
+        }
+      });
+      const loop = (__pos) => {
+        const _posLen = __pos.length;
+        if (_posLen <= 3) {
+          return;
+        }
+        let sibling = 0;
+        let siblingChecked = 0;
+        const parentPos = __pos.substring(0, _posLen - 2);
+        Object.keys(obj).forEach((i) => {
+          if (i.length === _posLen && i.substring(0, _posLen - 2) === parentPos) {
+            sibling++;
+            if (obj[i].checked) {
+              siblingChecked++;
+            } else if (obj[i].checkPart) {
+              siblingChecked += 0.5;
+            }
+          }
         });
-        // 子项全选，向上递归
-        const parent = obj[key.substring(0, len - 2)];
-        if (chkIndex === lenIndex) {
+        const parent = obj[parentPos];
+        // sibling 不会等于0
+        // 全不选 - 全选 - 半选
+        if (siblingChecked === 0) {
+          parent.checked = false;
+          parent.checkPart = false;
+        } else if (siblingChecked === sibling) {
           parent.checked = true;
-          loop(len - 2);
+          parent.checkPart = false;
         } else {
           parent.checkPart = true;
-          loop(len - 2, true);
+          parent.checked = false;
         }
+        loop(parentPos);
       };
-      loop(keyLen);
+      loop(_pos);
     });
   }
-  handleChildren(children, level) {
+  handleChildren(children, _obj, _propsCheckedArray, level) {
     React.Children.forEach(children, (child, index) => {
       const pos = (level || 0) + '-' + index;
       // console.log(child.props.checkbox);
@@ -173,16 +184,19 @@ class Tree extends React.Component {
       if (child.props.checkbox) {
         props = child.props.checkbox.props;
       }
-      this._obj[pos] = {
+      _obj[pos] = {
         checkPart: child.props.checkPart || false,
         checked: props.checked || props.defaultChecked || false,
       };
+      if (_obj[pos].checked) {
+        _propsCheckedArray.push(pos);
+      }
       let childChildren = child.props.children;
       if (childChildren && typeof childChildren.type === 'function' && typeof childChildren.type.TreeNode === 'function') {
         childChildren = [childChildren];
       }
       if (Array.isArray(childChildren)) {
-        return this.handleChildren(childChildren, pos);
+        return this.handleChildren(childChildren, _obj, _propsCheckedArray, pos);
       }
       return null;
     });
