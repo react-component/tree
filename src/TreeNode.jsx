@@ -76,7 +76,12 @@ class TreeNode extends Tree {
     }
     // console.log(props.checkbox.props);
     if (props.checkbox) {
-      props.checkbox.props.checked = state.checked;
+      checkboxCls[`${prefixCls}-checkbox-custom`] = true;
+      React.cloneElement(props.checkbox, {
+        checked: state.checked,
+        // defaultChecked: state.checked,
+      });
+      // props.checkbox.props.checked = state.checked;
     }
     return (<span ref="checkbox" className={classSet(checkboxCls)} onClick={this.handleChecked}>
       {props.checkbox ? props.checkbox : null}

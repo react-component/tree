@@ -13,9 +13,9 @@ var demo = (
     <h2>checkbox</h2>
 
     <Tree expandAll={true} checkable={true} onChecked={handleChecked}>
-      <TreeNode title="parent 1" checkbox={<input type="checkbox" defaultChecked={true} />}>
+      <TreeNode title="parent 1" checkbox={<input type="checkbox" checked={true} />}>
         <TreeNode>child1 </TreeNode>
-        <TreeNode title="parent 1-1" checkbox={<input type="checkbox" defaultChecked={false} />}>
+        <TreeNode title="parent 1-1" checkbox={<input type="checkbox" checked={true} />}>
           <TreeNode>leaf </TreeNode>
           <TreeNode>leaf </TreeNode>
         </TreeNode>
