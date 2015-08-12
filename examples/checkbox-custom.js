@@ -42,7 +42,7 @@ webpackJsonp([1],{
 	    { expandAll: true, checkable: true, onChecked: handleChecked },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
-	      { title: 'parent 1', checkbox: _react2['default'].createElement('input', { type: 'checkbox', defaultChecked: true }) },
+	      { title: 'parent 1', checkbox: _react2['default'].createElement('input', { type: 'checkbox', checked: true }) },
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
 	        null,
@@ -50,7 +50,7 @@ webpackJsonp([1],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
-	        { title: 'parent 1-1', checkbox: _react2['default'].createElement('input', { type: 'checkbox', defaultChecked: false }) },
+	        { title: 'parent 1-1', checkbox: _react2['default'].createElement('input', { type: 'checkbox', checked: true }) },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          null,

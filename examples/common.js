@@ -107,8 +107,8 @@
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
-		module.hot.accept("!!/private/tmp/tree/node_modules/rc-tools/node_modules/css-loader/index.js?sourceMap!/private/tmp/tree/node_modules/rc-tools/node_modules/less-loader/index.js?sourceMap!/private/tmp/tree/assets/index.less", function() {
-			var newContent = require("!!/private/tmp/tree/node_modules/rc-tools/node_modules/css-loader/index.js?sourceMap!/private/tmp/tree/node_modules/rc-tools/node_modules/less-loader/index.js?sourceMap!/private/tmp/tree/assets/index.less");
+		module.hot.accept("!!/Users/hua/my/react/c/tree/node_modules/rc-tools/node_modules/css-loader/index.js?sourceMap!/Users/hua/my/react/c/tree/node_modules/rc-tools/node_modules/less-loader/index.js?sourceMap!/Users/hua/my/react/c/tree/assets/index.less", function() {
+			var newContent = require("!!/Users/hua/my/react/c/tree/node_modules/rc-tools/node_modules/css-loader/index.js?sourceMap!/Users/hua/my/react/c/tree/node_modules/rc-tools/node_modules/less-loader/index.js?sourceMap!/Users/hua/my/react/c/tree/assets/index.less");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -121,7 +121,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
-	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li a {\n  display: inline-block;\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  text-decoration: none;\n  vertical-align: top;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.rc-tree-line {\n  background: url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n}\n.rc-tree li span {\n  line-height: 16px;\n  margin-right: 2px;\n}\n.rc-tree li span.rc-tree-button {\n  line-height: 0;\n  margin: 0;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled {\n  background: #fff;\n  position: relative;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled:after {\n  content: '-';\n  position: absolute;\n  top: 8px;\n  left: 6px;\n  color: gray;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_open {\n  background-position: -92px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_close {\n  background-position: -74px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk-disabled {\n  background-position: 0 -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_full {\n  background-position: 0 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_full_focus {\n  background-position: 0 -14px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_part {\n  background-position: 0 -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_part_focus {\n  background-position: 0 -42px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_disable {\n  background-position: 0 -56px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_full {\n  background-position: -14px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_full_focus {\n  background-position: -14px -14px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_part {\n  background-position: -14px -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_part_focus {\n  background-position: -14px -42px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_disable {\n  background-position: -14px -56px;\n}\n.rc-tree-treenode-disabled > span,\n.rc-tree-treenode-disabled > a {\n  color: gray;\n}\n.rc-tree-selected {\n  background-color: #FFE6B0;\n  border: 1px #FFB951 solid;\n  opacity: 0.8;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", "", {"version":3,"sources":["index.less"],"names":[],"mappings":"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","sourcesContent":["@treePrefixCls: rc-tree;\n\n.@{treePrefixCls} {\n  margin:0; padding:5px;\n  li {\n    padding: 0;  margin: 0;\n    list-style: none;  white-space: nowrap;  outline: 0;\n    a {\n      display: inline-block;\n      padding:1px 3px 0 0; margin:0;\n      cursor:pointer; height:17px;\n      text-decoration:none; vertical-align:top;\n    }\n    ul {\n       margin:0; padding:0 0 0 18px;\n       &.@{treePrefixCls}-line{\n         background:url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n       }\n    }\n    span {\n      line-height:16px; margin-right:2px;\n      &.@{treePrefixCls}-button {\n        line-height:0; margin:0; width:16px; height:16px;\n        display: inline-block; vertical-align:middle;\n        border:0 none; cursor: pointer;outline:none;\n        background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;\n        background-image:url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n        &.@{treePrefixCls}-switcher {\n          &-disabled {\n            background: #fff; position: relative;\n            &:after{content: '-'; position: absolute; top: 8px; left: 6px; color: gray;}\n          }\n          &.@{treePrefixCls}-roots_open { background-position: -92px 0}\n          &.@{treePrefixCls}-roots_close{ background-position:-74px 0}\n          &.@{treePrefixCls}-center_open{ background-position:-92px -18px}\n          &.@{treePrefixCls}-center_close{ background-position:-74px -18px}\n          &.@{treePrefixCls}-bottom_open{ background-position:-92px -36px}\n          &.@{treePrefixCls}-bottom_close{ background-position:-74px -36px}\n          &.@{treePrefixCls}-noline_open{ background-position:-92px -72px}\n          &.@{treePrefixCls}-noline_close{ background-position:-74px -72px}\n        }\n        &.@{treePrefixCls}-chk {\n          width: 13px;  height: 13px; margin: 0 3px;\n          &-disabled {\n            background-position: 0 -28px;\n          }\n          &.@{treePrefixCls}-checkbox_false_full {background-position:0 0}\n          &.@{treePrefixCls}-checkbox_false_full_focus {background-position:0 -14px}\n          &.@{treePrefixCls}-checkbox_false_part {background-position:0 -28px}\n          &.@{treePrefixCls}-checkbox_false_part_focus {background-position:0 -42px}\n          &.@{treePrefixCls}-checkbox_false_disable {background-position:0 -56px}\n          &.@{treePrefixCls}-checkbox_true_full {background-position:-14px 0}\n          &.@{treePrefixCls}-checkbox_true_full_focus {background-position:-14px -14px}\n          &.@{treePrefixCls}-checkbox_true_part {background-position:-14px -28px}\n          &.@{treePrefixCls}-checkbox_true_part_focus {background-position:-14px -42px}\n          &.@{treePrefixCls}-checkbox_true_disable {background-position:-14px -56px}\n        }\n      }\n    }\n  }\n  &-treenode-disabled {\n    >span, >a {\n      color: gray;\n    }\n  }\n  &-selected{\n    background-color:#FFE6B0;\n    border:1px #FFB951 solid; opacity:0.8;\n  }\n  &-icon__open {\n    margin-right: 2px;\n    background-position: -110px -16px;\n    vertical-align: top;\n  }\n  &-icon__close {\n    margin-right: 2px;\n    background-position: -110px 0;\n    vertical-align: top;\n  }\n}\n"]}]);
+	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.rc-tree-line {\n  background: url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n}\n.rc-tree li a {\n  display: inline-block;\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  text-decoration: none;\n  vertical-align: top;\n}\n.rc-tree li span {\n  line-height: 16px;\n  margin-right: 2px;\n}\n.rc-tree li span.rc-tree-button {\n  line-height: 0;\n  margin: 0;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled {\n  background: #fff;\n  position: relative;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled:after {\n  content: '-';\n  position: absolute;\n  top: 8px;\n  left: 6px;\n  color: gray;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_open {\n  background-position: -92px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_close {\n  background-position: -74px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk-disabled {\n  background-position: 0 -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox-custom {\n  background: transparent;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_full {\n  background-position: 0 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_full_focus {\n  background-position: 0 -14px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_part {\n  background-position: 0 -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_part_focus {\n  background-position: 0 -42px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_disable {\n  background-position: 0 -56px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_full {\n  background-position: -14px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_full_focus {\n  background-position: -14px -14px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_part {\n  background-position: -14px -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_part_focus {\n  background-position: -14px -42px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_disable {\n  background-position: -14px -56px;\n}\n.rc-tree-treenode-disabled > span,\n.rc-tree-treenode-disabled > a {\n  color: gray;\n}\n.rc-tree-selected {\n  background-color: #FFE6B0;\n  border: 1px #FFB951 solid;\n  opacity: 0.8;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", "", {"version":3,"sources":["index.less"],"names":[],"mappings":"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","sourcesContent":["@treePrefixCls: rc-tree;\n\n.@{treePrefixCls} {\n  margin:0; padding:5px;\n  li {\n    padding: 0;  margin: 0;\n    list-style: none;  white-space: nowrap;  outline: 0;\n    ul {\n       margin:0; padding:0 0 0 18px;\n       &.@{treePrefixCls}-line{\n         background:url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n       }\n    }\n    a {\n      display: inline-block;\n      padding:1px 3px 0 0; margin:0;\n      cursor:pointer; height:17px;\n      text-decoration:none; vertical-align:top;\n    }\n    span {\n      line-height:16px; margin-right:2px;\n      &.@{treePrefixCls}-button {\n        line-height:0; margin:0; width:16px; height:16px;\n        display: inline-block; vertical-align:middle;\n        border:0 none; cursor: pointer;outline:none;\n        background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;\n        background-image:url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n        &.@{treePrefixCls}-switcher {\n          &-disabled {\n            background: #fff; position: relative;\n            &:after{content: '-'; position: absolute; top: 8px; left: 6px; color: gray;}\n          }\n          &.@{treePrefixCls}-roots_open { background-position: -92px 0}\n          &.@{treePrefixCls}-roots_close{ background-position:-74px 0}\n          &.@{treePrefixCls}-center_open{ background-position:-92px -18px}\n          &.@{treePrefixCls}-center_close{ background-position:-74px -18px}\n          &.@{treePrefixCls}-bottom_open{ background-position:-92px -36px}\n          &.@{treePrefixCls}-bottom_close{ background-position:-74px -36px}\n          &.@{treePrefixCls}-noline_open{ background-position:-92px -72px}\n          &.@{treePrefixCls}-noline_close{ background-position:-74px -72px}\n        }\n        &.@{treePrefixCls}-chk {\n          width: 13px;  height: 13px; margin: 0 3px;\n          &-disabled {\n            background-position: 0 -28px;\n          }\n          &.@{treePrefixCls}-checkbox-custom {\n            background: transparent;\n          }\n          &.@{treePrefixCls}-checkbox_false_full {background-position:0 0}\n          &.@{treePrefixCls}-checkbox_false_full_focus {background-position:0 -14px}\n          &.@{treePrefixCls}-checkbox_false_part {background-position:0 -28px}\n          &.@{treePrefixCls}-checkbox_false_part_focus {background-position:0 -42px}\n          &.@{treePrefixCls}-checkbox_false_disable {background-position:0 -56px}\n          &.@{treePrefixCls}-checkbox_true_full {background-position:-14px 0}\n          &.@{treePrefixCls}-checkbox_true_full_focus {background-position:-14px -14px}\n          &.@{treePrefixCls}-checkbox_true_part {background-position:-14px -28px}\n          &.@{treePrefixCls}-checkbox_true_part_focus {background-position:-14px -42px}\n          &.@{treePrefixCls}-checkbox_true_disable {background-position:-14px -56px}\n        }\n      }\n    }\n  }\n  &-treenode-disabled {\n    >span, >a {\n      color: gray;\n    }\n  }\n  &-selected{\n    background-color:#FFE6B0;\n    border:1px #FFB951 solid; opacity:0.8;\n  }\n  &-icon__open {\n    margin-right: 2px;\n    background-position: -110px -16px;\n    vertical-align: top;\n  }\n  &-icon__close {\n    margin-right: 2px;\n    background-position: -110px 0;\n    vertical-align: top;\n  }\n}\n"]}]);
 
 /***/ },
 /* 4 */
@@ -410,9 +410,23 @@
 	// import TreeNode from './TreeNode';
 	
 	var id = 1;
-	function uuid() {
+	var uuid = function uuid() {
 	  return id++;
-	}
+	};
+	
+	// ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
+	var filterMin = function filterMin(arr) {
+	  var a = [];
+	  arr.forEach(function (item) {
+	    var b = a.filter(function (i) {
+	      return item.indexOf(i) === 0;
+	    });
+	    if (!b.length) {
+	      a.push(item);
+	    }
+	  });
+	  return a;
+	};
 	
 	var rootTrees = {};
 	
@@ -454,7 +468,7 @@
 	        onSelect: this.handleSelect
 	      };
 	      rootTrees[this._rootTreeId] = {
-	        _rootTreeId: this._rootTreeId,
+	        _rootTree: this,
 	        rootConfig: rootConfig,
 	        treeNodesState: {},
 	        trees: [],
@@ -510,13 +524,13 @@
 	        domProps.style = props.expanded ? { display: 'block' } : { display: 'none' };
 	      }
 	
-	      if (!props._childTreeNode && !props._childTree) {
-	        this._obj = {};
-	        this.handleChildren(props.children);
-	        // console.log(this._obj);
-	        this.handleObj(this._obj);
+	      if (!this._finishInit && !props._childTreeNode && !props._childTree) {
+	        this.handleChildren(props.children, this._obj = {}, this._propsCheckedArray = []);
+	        this._propsCheckedArray = filterMin(this._propsCheckedArray);
+	        this.handleCheckState(this._obj, this._propsCheckedArray);
 	        // console.log(this._obj);
 	        rootTrees[this._rootTreeId].treeNodesState = this._obj;
+	        this._finishInit = true;
 	      }
 	
 	      this.childrenLength = _react2['default'].Children.count(props.children);
@@ -529,69 +543,66 @@
 	      );
 	    }
 	  }, {
-	    key: 'handleObj',
-	    value: function handleObj(obj, unCheckEvent, pos) {
-	      if (unCheckEvent) {
+	    key: 'handleCheckState',
+	    value: function handleCheckState(obj, checkedArr, unCheckEvent) {
+	      var evt = false;
+	      if (typeof unCheckEvent === 'boolean') {
+	        evt = true;
+	      }
+	      checkedArr.forEach(function (_pos) {
 	        Object.keys(obj).forEach(function (i) {
-	          if (i.indexOf(pos) === 0) {
-	            obj[i].checked = false;
+	          if (i.length > _pos.length && i.indexOf(_pos) === 0) {
 	            obj[i].checkPart = false;
+	            if (evt) {
+	              if (unCheckEvent) {
+	                obj[i].checked = false;
+	              } else {
+	                obj[i].checked = true;
+	              }
+	            } else {
+	              obj[i].checked = true;
+	            }
 	          }
 	        });
-	        // return;
-	      } else if (pos) {
-	          Object.keys(obj).forEach(function (i) {
-	            if (i.indexOf(pos) === 0) {
-	              obj[i].checked = true;
-	              obj[i].checkPart = false;
-	            }
-	          });
-	        }
-	      var checkedArr = Object.keys(obj).filter(function (key) {
-	        return obj[key].checked;
-	      });
-	      // console.log(checkedArr);
-	      // todo 过滤掉checkedArr中的重复项
-	      checkedArr.forEach(function (key) {
-	        var keyLen = key.length;
-	        var loop = function loop(len) {
-	          if (len <= 3) {
-	            Object.keys(obj).forEach(function (i) {
-	              if (i.indexOf(key) === 0) {
-	                obj[i].checked = true;
-	                obj[i].checkPart = false;
-	              }
-	            });
+	        var loop = function loop(__pos) {
+	          var _posLen = __pos.length;
+	          if (_posLen <= 3) {
 	            return;
 	          }
-	          var lenIndex = 0;
-	          var chkIndex = 0;
+	          var sibling = 0;
+	          var siblingChecked = 0;
+	          var parentPos = __pos.substring(0, _posLen - 2);
 	          Object.keys(obj).forEach(function (i) {
-	            if (i.length === len && i.substring(0, len - 2) === key.substring(0, len - 2)) {
-	              lenIndex++;
+	            if (i.length === _posLen && i.substring(0, _posLen - 2) === parentPos) {
+	              sibling++;
 	              if (obj[i].checked) {
-	                chkIndex++;
+	                siblingChecked++;
+	              } else if (obj[i].checkPart) {
+	                siblingChecked += 0.5;
 	              }
-	            } else if (i.length > len && i.indexOf(key) === 0) {
-	              obj[i].checked = true;
 	            }
 	          });
-	          // 子项全选，向上递归
-	          var parent = obj[key.substring(0, len - 2)];
-	          if (chkIndex === lenIndex) {
+	          var parent = obj[parentPos];
+	          // sibling 不会等于0
+	          // 全不选 - 全选 - 半选
+	          if (siblingChecked === 0) {
+	            parent.checked = false;
+	            parent.checkPart = false;
+	          } else if (siblingChecked === sibling) {
 	            parent.checked = true;
-	            loop(len - 2);
+	            parent.checkPart = false;
 	          } else {
 	            parent.checkPart = true;
-	            loop(len - 2, true);
+	            parent.checked = false;
 	          }
+	          loop(parentPos);
 	        };
-	        loop(keyLen);
+	        loop(_pos);
 	      });
 	    }
 	  }, {
 	    key: 'handleChildren',
-	    value: function handleChildren(children, level) {
+	    value: function handleChildren(children, _obj, _propsCheckedArray, level) {
 	      var _this2 = this;
 	
 	      _react2['default'].Children.forEach(children, function (child, index) {
@@ -601,16 +612,19 @@
 	        if (child.props.checkbox) {
 	          props = child.props.checkbox.props;
 	        }
-	        _this2._obj[pos] = {
+	        _obj[pos] = {
 	          checkPart: child.props.checkPart || false,
 	          checked: props.checked || props.defaultChecked || false
 	        };
+	        if (_obj[pos].checked) {
+	          _propsCheckedArray.push(pos);
+	        }
 	        var childChildren = child.props.children;
 	        if (childChildren && typeof childChildren.type === 'function' && typeof childChildren.type.TreeNode === 'function') {
 	          childChildren = [childChildren];
 	        }
 	        if (Array.isArray(childChildren)) {
-	          return _this2.handleChildren(childChildren, pos);
+	          return _this2.handleChildren(childChildren, _obj, _propsCheckedArray, pos);
 	        }
 	        return null;
 	      });
@@ -1544,8 +1558,6 @@
 	
 	var _rcUtil = __webpack_require__(10);
 	
-	var _rcUtil2 = _interopRequireDefault(_rcUtil);
-	
 	var _Tree2 = __webpack_require__(9);
 	
 	var _Tree3 = _interopRequireDefault(_Tree2);
@@ -1561,12 +1573,10 @@
 	    _classCallCheck(this, TreeNode);
 	
 	    _get(Object.getPrototypeOf(TreeNode.prototype), 'constructor', this).call(this, props);
-	    var tnState = rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos];
+	    var tnState = this.getTreeNodesState();
 	    this.state = {
 	      expanded: props.expandAll || props.expanded || props.defaultExpanded,
 	      selected: props.selected || false,
-	      // checkPart: props.checkPart || false,
-	      // checked: props.checked || false,
 	      checkPart: tnState.checkPart || false,
 	      checked: tnState.checked || false
 	    };
@@ -1576,60 +1586,18 @@
 	  }
 	
 	  _createClass(TreeNode, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.componentDidUpdate();
-	      // console.log(rootTrees[this.props._rootTreeId].treeNodesState);
-	    }
-	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps() {
-	      var tnState = rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos];
+	      var tnState = this.getTreeNodesState();
 	      this.setState({
-	        // checkPart: nextProps.checkPart,
-	        // checked: nextProps.checked,
 	        checkPart: tnState.checkPart,
 	        checked: tnState.checked
 	      });
 	    }
 	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      var checkbox = this.refs.checkbox;
-	      if (checkbox && this.state.checkPart !== nextState.checkPart) {
-	        var cls = checkbox.getDOMNode().className;
-	        var checkSt = rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos] || {};
-	        checkSt.checkPart = nextState.checkPart;
-	        checkSt.checked = nextState.checked;
-	        var checkPartCls = this.props.prefixCls + '-checkbox_true_part';
-	        if (nextState.checkPart) {
-	          checkbox.getDOMNode().className = cls.indexOf(checkPartCls) > -1 ? cls : cls + ' ' + checkPartCls;
-	          return false;
-	        }
-	        checkbox.getDOMNode().className = cls.replace(new RegExp(checkPartCls, 'g'), '');
-	      }
-	      return true;
-	    }
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      if (this.newChildren) {
-	        var trees = rootTrees[this.props._rootTreeId].trees;
-	        for (var i = 0; i < trees.length; i++) {
-	          if (trees[i].props._pos === this.props._pos) {
-	            trees.splice(i--, 1);
-	          }
-	        }
-	        trees.push(this);
-	      }
-	      // add treeNodes checked state
-	      var tnState = rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos];
-	      rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos] = {
-	        // checked: this.state.checked,
-	        // checkPart: this.state.checkPart,
-	        checkPart: tnState.checkPart,
-	        checked: tnState.checked
-	      };
+	    key: 'getTreeNodesState',
+	    value: function getTreeNodesState() {
+	      return rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos];
 	    }
 	  }, {
 	    key: 'renderSwitcher',
@@ -1681,8 +1649,13 @@
 	      }
 	      // console.log(props.checkbox.props);
 	      if (props.checkbox) {
-	        props.checkbox.props.checked = state.checked;
+	        checkboxCls[prefixCls + '-checkbox-custom'] = true;
+	        _react2['default'].cloneElement(props.checkbox, {
+	          checked: state.checked
+	        });
+	        // props.checkbox.props.checked = state.checked;
 	      }
+	      // defaultChecked: state.checked,
 	      return _react2['default'].createElement(
 	        'span',
 	        { ref: 'checkbox', className: (0, _rcUtil.classSet)(checkboxCls), onClick: this.handleChecked },
@@ -1780,16 +1753,11 @@
 	      );
 	    }
 	  }, {
-	    key: 'switchExpandedState',
-	    value: function switchExpandedState(newState, onStateChangeComplete) {
-	      this.setState({
-	        expanded: newState
-	      }, onStateChangeComplete);
-	    }
-	  }, {
 	    key: 'handleExpandedState',
 	    value: function handleExpandedState() {
-	      this.switchExpandedState(!this.state.expanded);
+	      this.setState({
+	        expanded: !this.state.expanded
+	      });
 	    }
 	  }, {
 	    key: 'handleSelect',
@@ -1820,91 +1788,24 @@
 	      var checked = !this.state.checked;
 	
 	      if (this.state.checkPart) {
-	        checked = false;
+	        checked = true;
 	      }
 	
 	      var nSt = {
 	        checkPart: false,
 	        checked: checked
 	      };
-	      this.setState(nSt);
-	      this.newTNState(props, checked);
+	
 	      rootTrees[props._rootTreeId].treeNodesState[props._pos] = nSt;
+	      _get(Object.getPrototypeOf(TreeNode.prototype), 'handleCheckState', this).call(this, rootTrees[props._rootTreeId].treeNodesState, [props._pos], !checked);
 	      // console.log(rootTrees[props._rootTreeId].treeNodesState);
-	      _get(Object.getPrototypeOf(TreeNode.prototype), 'handleObj', this).call(this, rootTrees[props._rootTreeId].treeNodesState, !checked, props._pos);
-	      // console.log(rootTrees[props._rootTreeId].treeNodesState);
+	      // this.setState(nSt);
+	      // 从rootTree更新
+	      rootTrees[props._rootTreeId]._rootTree.forceUpdate();
 	
 	      if (props.onChecked) {
 	        props.onChecked(checked, this);
 	      }
-	    }
-	
-	    // set parent treeNodes's state
-	  }, {
-	    key: 'newTNState',
-	    value: function newTNState(props, checked) {
-	      var _this3 = this;
-	
-	      var _pos = props._pos;
-	      rootTrees[this.props._rootTreeId].trees.sort(function (a, b) {
-	        return b.props._pos.length - a.props._pos.length;
-	      }).forEach(function (c) {
-	        var cPos = c.props._pos;
-	        if (_pos.indexOf(cPos) === 0 && _pos !== cPos) {
-	          var childArr = _rcUtil2['default'].Children.toArray(c.props.children);
-	          var len = childArr.length;
-	          var checkedNumbers = 0;
-	          // 先计算已经选中的节点数
-	          // console.log(this);
-	          for (var i = 0; i < len; i++) {
-	            var checkSt = rootTrees[_this3.props._rootTreeId].treeNodesState[cPos + '-' + i];
-	            if (checkSt.checked) {
-	              checkedNumbers++;
-	            } else if (checkSt.checkPart) {
-	              checkedNumbers += 0.5;
-	            }
-	          }
-	          // 点击节点的 直接父级
-	          if (_pos.length - cPos.length <= 2) {
-	            // 如果原来是半选
-	            if (rootTrees[_this3.props._rootTreeId].treeNodesState[_pos].checkPart) {
-	              // checked ? checkedNumbers += 0.5 : checkedNumbers -= 0.5;
-	              if (checked) {
-	                checkedNumbers += 0.5;
-	              } else {
-	                checkedNumbers -= 0.5;
-	              }
-	            } else if (checked) {
-	              checkedNumbers++;
-	            } else {
-	              checkedNumbers--;
-	            }
-	          }
-	
-	          var newSt = undefined;
-	          if (checkedNumbers <= 0) {
-	            // 都不选
-	            newSt = {
-	              checkPart: false,
-	              checked: false
-	            };
-	          } else if (checkedNumbers === len) {
-	            // 全选
-	            newSt = {
-	              checkPart: false,
-	              checked: true
-	            };
-	          } else {
-	            // 部分选择
-	            newSt = {
-	              checkPart: true,
-	              checked: false
-	            };
-	          }
-	          c.setState(newSt);
-	          rootTrees[_this3.props._rootTreeId].treeNodesState[cPos] = newSt;
-	        }
-	      });
 	    }
 	
 	    // keyboard event support
