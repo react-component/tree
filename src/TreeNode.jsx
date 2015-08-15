@@ -116,7 +116,7 @@ class TreeNode extends React.Component {
       const icon = props.showIcon ? <span className={classSet(iconEleCls)}></span> : null;
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
       const domProps = {};
-      if (!props.disabled) {
+      if (!props.disabled && props.checkable) {
         domProps.onClick = this.handleChecked;
       }
       return (
