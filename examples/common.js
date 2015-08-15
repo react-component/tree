@@ -1703,7 +1703,7 @@
 	          content
 	        );
 	        var domProps = {};
-	        if (!props.disabled) {
+	        if (!props.disabled && props.checkable) {
 	          domProps.onClick = _this2.handleChecked;
 	        }
 	        return _react2['default'].createElement(
