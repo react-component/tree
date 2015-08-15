@@ -1,14 +1,14 @@
-webpackJsonp([4],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(26);
+	module.exports = __webpack_require__(24);
 
 
 /***/ },
 
-/***/ 26:
+/***/ 24:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35,14 +35,23 @@ webpackJsonp([4],{
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { className: 'myCls', expandAll: true, showIcon: false, showLine: false },
+	    { className: 'myCls', defaultExpandAll: true, showIcon: false, showLine: true },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
 	      { title: 'parent 1' },
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
-	        null,
-	        'leaf '
+	        { title: 'parent 1-0' },
+	        _react2['default'].createElement(
+	          _rcTree.TreeNode,
+	          null,
+	          'leaf '
+	        ),
+	        _react2['default'].createElement(
+	          _rcTree.TreeNode,
+	          null,
+	          'leaf '
+	        )
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,

@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		5:0
+/******/ 		3:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"checkbox","1":"checkbox-custom","2":"expanded","3":"select","4":"simple"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"checked","1":"expanded","2":"simple"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -121,7 +121,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
-	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.rc-tree-line {\n  background: url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n}\n.rc-tree li a {\n  display: inline-block;\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  text-decoration: none;\n  vertical-align: top;\n}\n.rc-tree li span {\n  line-height: 16px;\n  margin-right: 2px;\n}\n.rc-tree li span.rc-tree-button {\n  line-height: 0;\n  margin: 0;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled {\n  background: #fff;\n  position: relative;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled:after {\n  content: '-';\n  position: absolute;\n  top: 8px;\n  left: 6px;\n  color: gray;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_open {\n  background-position: -92px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_close {\n  background-position: -74px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk-disabled {\n  background-position: 0 -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox-custom {\n  background: transparent;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_full {\n  background-position: 0 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_full_focus {\n  background-position: 0 -14px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_part {\n  background-position: 0 -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_part_focus {\n  background-position: 0 -42px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_false_disable {\n  background-position: 0 -56px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_full {\n  background-position: -14px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_full_focus {\n  background-position: -14px -14px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_part {\n  background-position: -14px -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_part_focus {\n  background-position: -14px -42px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-chk.rc-tree-checkbox_true_disable {\n  background-position: -14px -56px;\n}\n.rc-tree-treenode-disabled > span,\n.rc-tree-treenode-disabled > a {\n  color: gray;\n}\n.rc-tree-selected {\n  background-color: #FFE6B0;\n  border: 1px #FFB951 solid;\n  opacity: 0.8;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", "", {"version":3,"sources":["index.less"],"names":[],"mappings":"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","sourcesContent":["@treePrefixCls: rc-tree;\n\n.@{treePrefixCls} {\n  margin:0; padding:5px;\n  li {\n    padding: 0;  margin: 0;\n    list-style: none;  white-space: nowrap;  outline: 0;\n    ul {\n       margin:0; padding:0 0 0 18px;\n       &.@{treePrefixCls}-line{\n         background:url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n       }\n    }\n    a {\n      display: inline-block;\n      padding:1px 3px 0 0; margin:0;\n      cursor:pointer; height:17px;\n      text-decoration:none; vertical-align:top;\n    }\n    span {\n      line-height:16px; margin-right:2px;\n      &.@{treePrefixCls}-button {\n        line-height:0; margin:0; width:16px; height:16px;\n        display: inline-block; vertical-align:middle;\n        border:0 none; cursor: pointer;outline:none;\n        background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;\n        background-image:url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n        &.@{treePrefixCls}-switcher {\n          &-disabled {\n            background: #fff; position: relative;\n            &:after{content: '-'; position: absolute; top: 8px; left: 6px; color: gray;}\n          }\n          &.@{treePrefixCls}-roots_open { background-position: -92px 0}\n          &.@{treePrefixCls}-roots_close{ background-position:-74px 0}\n          &.@{treePrefixCls}-center_open{ background-position:-92px -18px}\n          &.@{treePrefixCls}-center_close{ background-position:-74px -18px}\n          &.@{treePrefixCls}-bottom_open{ background-position:-92px -36px}\n          &.@{treePrefixCls}-bottom_close{ background-position:-74px -36px}\n          &.@{treePrefixCls}-noline_open{ background-position:-92px -72px}\n          &.@{treePrefixCls}-noline_close{ background-position:-74px -72px}\n        }\n        &.@{treePrefixCls}-chk {\n          width: 13px;  height: 13px; margin: 0 3px;\n          &-disabled {\n            background-position: 0 -28px;\n          }\n          &.@{treePrefixCls}-checkbox-custom {\n            background: transparent;\n          }\n          &.@{treePrefixCls}-checkbox_false_full {background-position:0 0}\n          &.@{treePrefixCls}-checkbox_false_full_focus {background-position:0 -14px}\n          &.@{treePrefixCls}-checkbox_false_part {background-position:0 -28px}\n          &.@{treePrefixCls}-checkbox_false_part_focus {background-position:0 -42px}\n          &.@{treePrefixCls}-checkbox_false_disable {background-position:0 -56px}\n          &.@{treePrefixCls}-checkbox_true_full {background-position:-14px 0}\n          &.@{treePrefixCls}-checkbox_true_full_focus {background-position:-14px -14px}\n          &.@{treePrefixCls}-checkbox_true_part {background-position:-14px -28px}\n          &.@{treePrefixCls}-checkbox_true_part_focus {background-position:-14px -42px}\n          &.@{treePrefixCls}-checkbox_true_disable {background-position:-14px -56px}\n        }\n      }\n    }\n  }\n  &-treenode-disabled {\n    >span, >a {\n      color: gray;\n    }\n  }\n  &-selected{\n    background-color:#FFE6B0;\n    border:1px #FFB951 solid; opacity:0.8;\n  }\n  &-icon__open {\n    margin-right: 2px;\n    background-position: -110px -16px;\n    vertical-align: top;\n  }\n  &-icon__close {\n    margin-right: 2px;\n    background-position: -110px 0;\n    vertical-align: top;\n  }\n}\n"]}]);
+	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.rc-tree-line {\n  background: url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n}\n.rc-tree li a {\n  display: inline-block;\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  text-decoration: none;\n  vertical-align: top;\n}\n.rc-tree li span {\n  line-height: 16px;\n  margin-right: 2px;\n}\n.rc-tree li span.rc-tree-button {\n  line-height: 0;\n  margin: 0;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled {\n  background: #fff;\n  position: relative;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher-disabled:after {\n  content: '-';\n  position: absolute;\n  top: 8px;\n  left: 6px;\n  color: gray;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_open {\n  background-position: -92px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-switcher.rc-tree-noline_close {\n  background-position: -74px -72px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-checkbox {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px;\n  background-position: 0 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-checkbox.rc-tree-checkbox-checked {\n  background-position: -14px 0;\n}\n.rc-tree li span.rc-tree-button.rc-tree-checkbox.rc-tree-checkbox-indeterminate {\n  background-position: -14px -28px;\n}\n.rc-tree li span.rc-tree-button.rc-tree-checkbox-disabled {\n  background-position: 0 -28px !important;\n}\n.rc-tree-treenode-disabled > span,\n.rc-tree-treenode-disabled > a {\n  color: gray;\n}\n.rc-tree-selected {\n  background-color: #FFE6B0;\n  border: 1px #FFB951 solid;\n  opacity: 0.8;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", "", {"version":3,"sources":["index.less"],"names":[],"mappings":"AAEA,CAAC;EACC,SAAA;EAAU,YAAA;;AADZ,CAAC,OAEC;EACE,UAAA;EAAa,SAAA;EACb,gBAAA;EAAmB,mBAAA;EAAsB,UAAA;;AAJ7C,CAAC,OAEC,GAGE;EACG,SAAA;EAAU,mBAAA;;AACV,CAPN,OAEC,GAGE,GAEI,CAAC,OAAgB;EAChB,uFAAA;;AART,CAAC,OAEC,GASE;EACE,qBAAA;EACA,oBAAA;EAAqB,SAAA;EACrB,eAAA;EAAgB,YAAA;EAChB,qBAAA;EAAsB,mBAAA;;AAf5B,CAAC,OAEC,GAeE;EACE,iBAAA;EAAkB,iBAAA;;AAClB,CAnBL,OAEC,GAeE,KAEG,CAAC,OAAgB;EAChB,cAAA;EAAe,SAAA;EAAU,WAAA;EAAY,YAAA;EACrC,qBAAA;EAAuB,sBAAA;EACvB,cAAA;EAAe,eAAA;EAAgB,aAAA;EAC/B,6BAAA;EAA8B,4BAAA;EAA6B,6BAAA;EAC3D,sBAAqB,4DAArB;;AAEE,CA1BT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SACf;EACC,gBAAA;EAAkB,kBAAA;;AAClB,CA5BX,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SACf,SAEE;EAAO,SAAS,GAAT;EAAc,kBAAA;EAAoB,QAAA;EAAU,SAAA;EAAW,WAAA;;AAEjE,CA9BT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAKf,CAAC,OAAgB;EAAc,4BAAA;;AAChC,CA/BT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAMf,CAAC,OAAgB;EAAc,4BAAA;;AAChC,CAhCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAOf,CAAC,OAAgB;EAAc,gCAAA;;AAChC,CAjCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAQf,CAAC,OAAgB;EAAe,gCAAA;;AACjC,CAlCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SASf,CAAC,OAAgB;EAAc,gCAAA;;AAChC,CAnCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAUf,CAAC,OAAgB;EAAe,gCAAA;;AACjC,CApCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAWf,CAAC,OAAgB;EAAc,gCAAA;;AAChC,CArCT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAMf,CAAC,OAAgB,SAYf,CAAC,OAAgB;EAAe,gCAAA;;AAEnC,CAvCP,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB;EAChB,WAAA;EAAc,YAAA;EAAc,aAAA;EAC5B,wBAAA;;AACA,CA1CT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,SAGf,CAAC,OAAgB;EAAmB,4BAAA;;AACrC,CA3CT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,SAIf,CAAC,OAAgB;EAAyB,gCAAA;;AAC3C,CA5CT,OAEC,GAeE,KAEG,CAAC,OAAgB,OAoBf,CAAC,OAAgB,SAKf;EACC,4BAAA;;AAMV,CAnDD,OAmDE,kBACC;AADF,CAnDD,OAmDE,kBACQ;EACL,WAAA;;AAGJ,CAxDD,OAwDE;EACC,yBAAA;EACA,yBAAA;EAA0B,YAAA;;AAE5B,CA5DD,OA4DE;EACC,iBAAA;EACA,iCAAA;EACA,mBAAA;;AAEF,CAjED,OAiEE;EACC,iBAAA;EACA,6BAAA;EACA,mBAAA","sourcesContent":["@treePrefixCls: rc-tree;\n\n.@{treePrefixCls} {\n  margin:0; padding:5px;\n  li {\n    padding: 0;  margin: 0;\n    list-style: none;  white-space: nowrap;  outline: 0;\n    ul {\n       margin:0; padding:0 0 0 18px;\n       &.@{treePrefixCls}-line{\n         background:url(https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif) 0 0 repeat-y;\n       }\n    }\n    a {\n      display: inline-block;\n      padding:1px 3px 0 0; margin:0;\n      cursor:pointer; height:17px;\n      text-decoration:none; vertical-align:top;\n    }\n    span {\n      line-height:16px; margin-right:2px;\n      &.@{treePrefixCls}-button {\n        line-height:0; margin:0; width:16px; height:16px;\n        display: inline-block; vertical-align:middle;\n        border:0 none; cursor: pointer;outline:none;\n        background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;\n        background-image:url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n        &.@{treePrefixCls}-switcher {\n          &-disabled {\n            background: #fff; position: relative;\n            &:after{content: '-'; position: absolute; top: 8px; left: 6px; color: gray;}\n          }\n          &.@{treePrefixCls}-roots_open { background-position: -92px 0}\n          &.@{treePrefixCls}-roots_close{ background-position:-74px 0}\n          &.@{treePrefixCls}-center_open{ background-position:-92px -18px}\n          &.@{treePrefixCls}-center_close{ background-position:-74px -18px}\n          &.@{treePrefixCls}-bottom_open{ background-position:-92px -36px}\n          &.@{treePrefixCls}-bottom_close{ background-position:-74px -36px}\n          &.@{treePrefixCls}-noline_open{ background-position:-92px -72px}\n          &.@{treePrefixCls}-noline_close{ background-position:-74px -72px}\n        }\n        &.@{treePrefixCls}-checkbox {\n          width: 13px;  height: 13px; margin: 0 3px;\n          background-position:0 0;\n          &.@{treePrefixCls}-checkbox-checked {background-position:-14px 0}\n          &.@{treePrefixCls}-checkbox-indeterminate {background-position:-14px -28px}\n          &-disabled {\n            background-position: 0 -28px!important;\n          }\n        }\n      }\n    }\n  }\n  &-treenode-disabled {\n    >span, >a {\n      color: gray;\n    }\n  }\n  &-selected{\n    background-color:#FFE6B0;\n    border:1px #FFB951 solid; opacity:0.8;\n  }\n  &-icon__open {\n    margin-right: 2px;\n    background-position: -110px -16px;\n    vertical-align: top;\n  }\n  &-icon__close {\n    margin-right: 2px;\n    background-position: -110px 0;\n    vertical-align: top;\n  }\n}\n"]}]);
 
 /***/ },
 /* 4 */
@@ -393,7 +393,7 @@
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -407,14 +407,7 @@
 	
 	var _rcUtil = __webpack_require__(10);
 	
-	// import TreeNode from './TreeNode';
-	
-	var id = 1;
-	var uuid = function uuid() {
-	  return id++;
-	};
-	
-	// ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
+	// sorted array ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
 	var filterMin = function filterMin(arr) {
 	  var a = [];
 	  arr.forEach(function (item) {
@@ -428,19 +421,8 @@
 	  return a;
 	};
 	
-	var rootTrees = {};
-	
 	var Tree = (function (_React$Component) {
 	  _inherits(Tree, _React$Component);
-	
-	  _createClass(Tree, null, [{
-	    key: 'statics',
-	    value: function statics() {
-	      return {
-	        rootTrees: rootTrees
-	      };
-	    }
-	  }]);
 	
 	  function Tree(props) {
 	    var _this = this;
@@ -448,99 +430,115 @@
 	    _classCallCheck(this, Tree);
 	
 	    _get(Object.getPrototypeOf(Tree.prototype), 'constructor', this).call(this, props);
-	    ['handleKeyDown', 'handleChecked', 'handleSelect'].forEach(function (m) {
+	    ['handleKeyDown', 'handleChecked'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
-	
-	    // get root tree, run one time
-	    if (!props._childTreeNode && !props._childTree) {
-	      // console.log('root tree', this);
-	      this._rootTreeId = uuid();
-	      var rootConfig = {
-	        prefixCls: props.prefixCls,
-	        showLine: props.showLine,
-	        showIcon: props.showIcon,
-	        expandAll: props.expandAll,
-	        checkable: props.checkable,
-	        defaultSelectedKeys: props.defaultSelectedKeys,
-	        selectedKeys: props.selectedKeys,
-	        onChecked: this.handleChecked,
-	        onSelect: this.handleSelect
-	      };
-	      rootTrees[this._rootTreeId] = {
-	        _rootTree: this,
-	        rootConfig: rootConfig,
-	        treeNodesState: {},
-	        trees: [],
-	        selectedKeys: props.selectedKeys.length && props.selectedKeys || props.defaultSelectedKeys
-	      };
-	    }
-	    // if (props._childTree) {
-	    //   console.log('child tree', this);
-	    // }
+	    var expandedKeys = props.defaultExpandedKeys;
+	    var checkedKeys = props.defaultCheckedKeys;
+	    this.defaultExpandAll = props.defaultExpandAll;
+	    this.state = {
+	      expandedKeys: expandedKeys,
+	      checkedKeys: checkedKeys
+	    };
 	  }
 	
 	  _createClass(Tree, [{
+	    key: 'getCheckKeys',
+	    value: function getCheckKeys() {
+	      var _this2 = this;
+	
+	      var checkPartKeys = [];
+	      var checkedKeys = [];
+	      Object.keys(this.treeNodesChkStates).forEach(function (item) {
+	        var itemObj = _this2.treeNodesChkStates[item];
+	        if (itemObj.checked) {
+	          checkedKeys.push(itemObj.key);
+	        } else if (itemObj.checkPart) {
+	          checkPartKeys.push(itemObj.key);
+	        }
+	      });
+	      return {
+	        checkPartKeys: checkPartKeys, checkedKeys: checkedKeys
+	      };
+	    }
+	  }, {
 	    key: 'renderTreeNode',
 	    value: function renderTreeNode(child, index) {
+	      var level = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+	
+	      var key = child.key || level + '-' + index;
+	      var state = this.state;
 	      var props = this.props;
-	      var pos = (props._pos || 0) + '-' + index;
-	      var _rootTreeId = this._rootTreeId || props._rootTreeId;
 	      var cloneProps = {
 	        ref: 'treeNode',
-	        _rootTreeId: _rootTreeId,
-	        _key: child.key || pos,
-	        _pos: pos,
-	        _level: props._level || 0,
-	        _index: index,
-	        _len: this.childrenLength,
-	        checked: child.props.checked || props.checked,
-	        checkPart: props.checkPart
+	        root: this,
+	        eventKey: key,
+	        pos: level + '-' + index,
+	        prefixCls: props.prefixCls,
+	        showLine: props.showLine,
+	        showIcon: props.showIcon,
+	        checkable: props.checkable,
+	        expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
+	        checked: this.checkedKeys.indexOf(key) !== -1,
+	        checkPart: this.checkPartKeys.indexOf(key) !== -1
 	      };
-	      Object.keys(rootTrees[_rootTreeId].rootConfig).forEach(function (item) {
-	        cloneProps[item] = rootTrees[_rootTreeId].rootConfig[item];
-	      });
-	
-	      if (rootTrees[_rootTreeId].selectedKeys.indexOf(child.key) > -1) {
-	        cloneProps.selected = true;
-	      }
 	      return _react2['default'].cloneElement(child, cloneProps);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
 	      var props = this.props;
 	      var domProps = {
 	        className: (0, _rcUtil.classSet)(props.className, props.prefixCls),
-	        onKeyDown: this.handleKeyDown,
-	        role: 'tree-node',
-	        'aria-activedescendant': '',
-	        'aria-labelledby': '',
-	        'aria-expanded': props.expanded ? 'true' : 'false',
-	        'aria-selected': props.selected ? 'true' : 'false',
-	        'aria-level': ''
+	        role: 'tree-node'
 	      };
-	      if (props._childTree) {
-	        domProps.style = props.expanded ? { display: 'block' } : { display: 'none' };
+	      if (props.focusable) {
+	        domProps.tabIndex = '0';
+	        domProps.onKeyDown = this.handleKeyDown;
 	      }
-	
-	      if (!this._finishInit && !props._childTreeNode && !props._childTree) {
-	        this.handleChildren(props.children, this._obj = {}, this._propsCheckedArray = []);
-	        this._propsCheckedArray = filterMin(this._propsCheckedArray);
-	        this.handleCheckState(this._obj, this._propsCheckedArray);
-	        // console.log(this._obj);
-	        rootTrees[this._rootTreeId].treeNodesState = this._obj;
-	        this._finishInit = true;
-	      }
-	
-	      this.childrenLength = _react2['default'].Children.count(props.children);
+	      var checkedKeys = this.state.checkedKeys;
+	      var checkedPos = [];
+	      this.treeNodesChkStates = {};
+	      this.loopAllChildren(props.children, function (item, index, pos) {
+	        var key = item.key || pos;
+	        var checked = false;
+	        if (checkedKeys.indexOf(key) !== -1) {
+	          checked = true;
+	          checkedPos.push(pos);
+	        }
+	        _this3.treeNodesChkStates[pos] = {
+	          key: key,
+	          checked: checked,
+	          checkPart: false
+	        };
+	      });
+	      this.handleCheckState(this.treeNodesChkStates, filterMin(checkedPos.sort()));
+	      var checkKeys = this.getCheckKeys();
+	      this.checkPartKeys = checkKeys.checkPartKeys;
+	      this.checkedKeys = checkKeys.checkedKeys;
 	      this.newChildren = _react2['default'].Children.map(props.children, this.renderTreeNode, this);
-	
 	      return _react2['default'].createElement(
 	        'ul',
 	        _extends({}, domProps, { ref: 'tree' }),
 	        this.newChildren
 	      );
+	    }
+	  }, {
+	    key: 'loopAllChildren',
+	    value: function loopAllChildren(childs, callback) {
+	      var loop = function loop(children, level) {
+	        _react2['default'].Children.forEach(children, function (item, index) {
+	          var pos = level + '-' + index;
+	          var newChildren = item.props.children;
+	          if (Array.isArray(newChildren)) {
+	            loop(newChildren, pos);
+	          }
+	          callback(item, index, pos);
+	        });
+	      };
+	      loop(childs, 0);
 	    }
 	  }, {
 	    key: 'handleCheckState',
@@ -601,47 +599,61 @@
 	      });
 	    }
 	  }, {
-	    key: 'handleChildren',
-	    value: function handleChildren(children, _obj, _propsCheckedArray, level) {
-	      var _this2 = this;
-	
-	      _react2['default'].Children.forEach(children, function (child, index) {
-	        var pos = (level || 0) + '-' + index;
-	        // console.log(child.props.checkbox);
-	        var props = child.props;
-	        if (child.props.checkbox) {
-	          props = child.props.checkbox.props;
-	        }
-	        _obj[pos] = {
-	          checkPart: child.props.checkPart || false,
-	          checked: props.checked || props.defaultChecked || false
-	        };
-	        if (_obj[pos].checked) {
-	          _propsCheckedArray.push(pos);
-	        }
-	        var childChildren = child.props.children;
-	        if (childChildren && typeof childChildren.type === 'function' && typeof childChildren.type.TreeNode === 'function') {
-	          childChildren = [childChildren];
-	        }
-	        if (Array.isArray(childChildren)) {
-	          return _this2.handleChildren(childChildren, _obj, _propsCheckedArray, pos);
-	        }
-	        return null;
-	      });
-	    }
-	  }, {
 	    key: 'handleChecked',
-	    value: function handleChecked(isChk, c) {
-	      if (this.props.onChecked) {
-	        this.props.onChecked(isChk, c);
+	    value: function handleChecked(treeNode) {
+	      var _this4 = this;
+	
+	      var tnProps = treeNode.props;
+	      var checked = !tnProps.checked;
+	      if (tnProps.checkPart) {
+	        checked = true;
+	      }
+	      var pos = undefined;
+	      Object.keys(this.treeNodesChkStates).forEach(function (item) {
+	        var itemObj = _this4.treeNodesChkStates[item];
+	        if (itemObj.key === (treeNode.key || tnProps.eventKey)) {
+	          pos = item;
+	          itemObj.checked = checked;
+	          itemObj.checkPart = false;
+	        }
+	      });
+	      this.handleCheckState(this.treeNodesChkStates, [pos], !checked);
+	      var checkKeys = this.getCheckKeys();
+	      this.checkPartKeys = checkKeys.checkPartKeys;
+	      this.setState({
+	        checkedKeys: checkKeys.checkedKeys
+	      });
+	      if (this.props.onCheck) {
+	        this.props.onCheck(checked, treeNode, checkKeys.checkedKeys);
 	      }
 	    }
 	  }, {
-	    key: 'handleSelect',
-	    value: function handleSelect(isSel, c, selectedKeys) {
-	      if (this.props.onSelect) {
-	        this.props.onSelect(isSel, c, selectedKeys);
+	    key: 'handleExpanded',
+	    value: function handleExpanded(treeNode) {
+	      var thisProps = this.props;
+	      var tnProps = treeNode.props;
+	      var expandedKeys = this.state.expandedKeys.concat([]);
+	      var expanded = !tnProps.expanded;
+	      if (this.defaultExpandAll) {
+	        this.loopAllChildren(thisProps.children, function (item, index, pos) {
+	          var key = item.key || pos;
+	          if (expandedKeys.indexOf(key) === -1) {
+	            expandedKeys.push(key);
+	          }
+	        });
+	        this.defaultExpandAll = false;
 	      }
+	      var index = expandedKeys.indexOf(tnProps.eventKey);
+	      if (expanded) {
+	        if (index === -1) {
+	          expandedKeys.push(tnProps.eventKey);
+	        }
+	      } else {
+	        expandedKeys.splice(index, 1);
+	      }
+	      this.setState({
+	        expandedKeys: expandedKeys
+	      });
 	    }
 	
 	    // all keyboard events callbacks run from here at first
@@ -660,21 +672,20 @@
 	  checkable: _react2['default'].PropTypes.bool,
 	  showLine: _react2['default'].PropTypes.bool,
 	  showIcon: _react2['default'].PropTypes.bool,
-	  expandAll: _react2['default'].PropTypes.bool,
-	  onChecked: _react2['default'].PropTypes.func,
-	  onSelect: _react2['default'].PropTypes.func,
-	  defaultSelectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
-	  selectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string)
+	  defaultExpandAll: _react2['default'].PropTypes.bool,
+	  defaultExpandedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
+	  defaultCheckedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
+	  onCheck: _react2['default'].PropTypes.func
 	};
 	
 	Tree.defaultProps = {
 	  prefixCls: 'rc-tree',
 	  checkable: false,
-	  showLine: true,
+	  showLine: false,
 	  showIcon: true,
-	  expandAll: false,
-	  defaultSelectedKeys: [],
-	  selectedKeys: []
+	  defaultExpandAll: false,
+	  defaultExpandedKeys: [],
+	  defaultCheckedKeys: []
 	};
 	
 	exports['default'] = Tree;
@@ -1540,6 +1551,8 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -1558,14 +1571,8 @@
 	
 	var _rcUtil = __webpack_require__(10);
 	
-	var _Tree2 = __webpack_require__(9);
-	
-	var _Tree3 = _interopRequireDefault(_Tree2);
-	
-	var rootTrees = _Tree3['default'].statics().rootTrees;
-	
-	var TreeNode = (function (_Tree) {
-	  _inherits(TreeNode, _Tree);
+	var TreeNode = (function (_React$Component) {
+	  _inherits(TreeNode, _React$Component);
 	
 	  function TreeNode(props) {
 	    var _this = this;
@@ -1573,122 +1580,95 @@
 	    _classCallCheck(this, TreeNode);
 	
 	    _get(Object.getPrototypeOf(TreeNode.prototype), 'constructor', this).call(this, props);
-	    var tnState = this.getTreeNodesState();
-	    this.state = {
-	      expanded: props.expandAll || props.expanded || props.defaultExpanded,
-	      selected: props.selected || false,
-	      checkPart: tnState.checkPart || false,
-	      checked: tnState.checked || false
-	    };
-	    ['handleExpandedState'].forEach(function (m) {
+	    ['handleExpanded', 'handleChecked'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	  }
 	
 	  _createClass(TreeNode, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps() {
-	      var tnState = this.getTreeNodesState();
-	      this.setState({
-	        checkPart: tnState.checkPart,
-	        checked: tnState.checked
+	    key: 'getPosition',
+	    value: function getPosition(pos) {
+	      var obj = {
+	        last: false,
+	        center: false
+	      };
+	      var siblings = Object.keys(this.props.root.treeNodesChkStates).filter(function (item) {
+	        var len = pos.length;
+	        return len === item.length && pos.substring(0, len - 2) === item.substring(0, len - 2);
 	      });
-	    }
-	  }, {
-	    key: 'getTreeNodesState',
-	    value: function getTreeNodesState() {
-	      return rootTrees[this.props._rootTreeId].treeNodesState[this.props._pos];
+	      var sLen = siblings.length;
+	      var posIndex = Number(pos.substr(-1, 1));
+	      if (sLen === 1 || posIndex === sLen - 1) {
+	        obj.last = true;
+	      } else {
+	        obj.center = true;
+	      }
+	      return obj;
 	    }
 	  }, {
 	    key: 'renderSwitcher',
-	    value: function renderSwitcher(props, prefixCls, switchState) {
+	    value: function renderSwitcher(props, expandedState) {
 	      var _switcherCls;
 	
+	      var prefixCls = props.prefixCls;
 	      var switcherCls = (_switcherCls = {}, _defineProperty(_switcherCls, prefixCls + '-button', true), _defineProperty(_switcherCls, prefixCls + '-switcher', true), _switcherCls);
 	      if (props.disabled) {
 	        switcherCls[prefixCls + '-switcher-disabled'] = true;
 	        return _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(switcherCls) });
 	      }
 	
+	      var posObj = this.getPosition(props.pos);
+	
 	      if (!props.showLine) {
-	        switcherCls[prefixCls + '-noline_' + switchState] = true;
-	      } else if (props._isChildTree && props._index === 0) {
-	        if (props._len !== 1) {
-	          switcherCls[prefixCls + '-center_' + switchState] = true;
-	        } else {
-	          switcherCls[prefixCls + '-bottom_' + switchState] = true;
-	        }
-	      } else if (props._index === 0) {
-	        switcherCls[prefixCls + '-roots_' + switchState] = true;
-	      } else if (props._index === props._len - 1) {
-	        switcherCls[prefixCls + '-bottom_' + switchState] = true;
+	        switcherCls[prefixCls + '-noline_' + expandedState] = true;
+	      } else if (props.pos === '0-0') {
+	        switcherCls[prefixCls + '-roots_' + expandedState] = true;
 	      } else {
-	        switcherCls[prefixCls + '-center_' + switchState] = true;
+	        switcherCls[prefixCls + '-center_' + expandedState] = posObj.center;
+	        switcherCls[prefixCls + '-bottom_' + expandedState] = posObj.last;
 	      }
-	      return _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(switcherCls), onClick: this.handleExpandedState });
+	      return _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(switcherCls), onClick: this.handleExpanded });
 	    }
 	  }, {
 	    key: 'renderCheckbox',
-	    value: function renderCheckbox(props, prefixCls, state) {
+	    value: function renderCheckbox(props) {
 	      var _checkboxCls;
 	
-	      var checkboxCls = (_checkboxCls = {}, _defineProperty(_checkboxCls, prefixCls + '-button', true), _defineProperty(_checkboxCls, prefixCls + '-chk', true), _checkboxCls);
+	      var prefixCls = props.prefixCls;
+	      var checkboxCls = (_checkboxCls = {}, _defineProperty(_checkboxCls, prefixCls + '-button', true), _defineProperty(_checkboxCls, prefixCls + '-checkbox', true), _checkboxCls);
 	      if (!props.checkable) {
 	        return null;
 	      }
 	      if (props.disabled) {
-	        checkboxCls[prefixCls + '-chk-disabled'] = true;
-	        return _react2['default'].createElement('span', { ref: 'checkbox', className: (0, _rcUtil.classSet)(checkboxCls) });
+	        checkboxCls[prefixCls + '-checkbox-disabled'] = true;
 	      }
-	      if (state.checkPart) {
-	        checkboxCls[prefixCls + '-checkbox_true_part'] = true;
-	      } else if (state.checked) {
-	        checkboxCls[prefixCls + '-checkbox_true_full'] = true;
-	      } else {
-	        checkboxCls[prefixCls + '-checkbox_false_full'] = true;
+	      if (props.checkPart) {
+	        checkboxCls[prefixCls + '-checkbox-indeterminate'] = true;
+	      } else if (props.checked) {
+	        checkboxCls[prefixCls + '-checkbox-checked'] = true;
 	      }
-	      // console.log(props.checkbox.props);
-	      if (props.checkbox) {
-	        checkboxCls[prefixCls + '-checkbox-custom'] = true;
-	        _react2['default'].cloneElement(props.checkbox, {
-	          checked: state.checked
-	        });
-	        // props.checkbox.props.checked = state.checked;
-	      }
-	      // defaultChecked: state.checked,
-	      return _react2['default'].createElement(
-	        'span',
-	        { ref: 'checkbox', className: (0, _rcUtil.classSet)(checkboxCls), onClick: this.handleChecked },
-	        props.checkbox ? props.checkbox : null
-	      );
+	      return _react2['default'].createElement('span', { ref: 'checkbox', className: (0, _rcUtil.classSet)(checkboxCls) });
 	    }
 	  }, {
 	    key: 'renderChildren',
-	    value: function renderChildren(props, children) {
+	    value: function renderChildren(props) {
 	      var newChildren = null;
+	      var children = props.children;
 	      if (children.type === TreeNode || Array.isArray(children) && children.every(function (item) {
 	        return item.type === TreeNode;
 	      })) {
+	        var style = props.expanded ? { display: 'block' } : { display: 'none' };
 	        var cls = {};
 	        cls[props.prefixCls + '-child-tree'] = true;
-	        if (props.showLine && props._index !== props._len - 1) {
-	          cls[props.prefixCls + '-line'] = true;
+	        if (props.showLine) {
+	          cls[props.prefixCls + '-line'] = this.getPosition(props.pos).center;
 	        }
-	
-	        var treeProps = {
-	          _rootTreeId: props._rootTreeId,
-	          _pos: props._pos,
-	          _level: props._level + 1,
-	          _childTree: true,
-	          checked: this.state.checked,
-	          checkPart: this.state.checkPart,
-	          className: (0, _rcUtil.classSet)(cls),
-	          expanded: this.state.expanded
-	        };
 	        newChildren = this.newChildren = _react2['default'].createElement(
-	          _Tree3['default'],
-	          treeProps,
-	          children
+	          'ul',
+	          { className: (0, _rcUtil.classSet)(cls), style: style },
+	          _react2['default'].Children.map(children, function (item, index) {
+	            return props.root.renderTreeNode(item, index, props.pos);
+	          }, props.root)
 	        );
 	      } else {
 	        newChildren = children;
@@ -1702,14 +1682,14 @@
 	          _this2 = this;
 	
 	      var props = this.props;
-	      var state = this.state;
 	      var prefixCls = props.prefixCls;
-	      var switchState = state.expanded ? 'open' : 'close';
+	      // const expandedState = (props.defaultExpandAll || props.expanded) ? 'open' : 'close';
+	      var expandedState = props.expanded ? 'open' : 'close';
 	
-	      var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-button', true), _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon__' + switchState, true), _iconEleCls);
+	      var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-button', true), _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon__' + expandedState, true), _iconEleCls);
 	
 	      var content = props.title;
-	      var newChildren = this.renderChildren(props, props.children);
+	      var newChildren = this.renderChildren(props);
 	      if (newChildren === props.children) {
 	        content = newChildren;
 	        newChildren = null;
@@ -1717,95 +1697,41 @@
 	
 	      var selectHandle = function selectHandle() {
 	        var icon = props.showIcon ? _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(iconEleCls) }) : null;
-	        if (props.disabled) {
-	          return _react2['default'].createElement(
-	            'a',
-	            { ref: 'selectHandle', title: content },
-	            icon,
-	            _react2['default'].createElement(
-	              'span',
-	              { className: 'title' },
-	              content
-	            )
-	          );
+	        var title = _react2['default'].createElement(
+	          'span',
+	          { className: prefixCls + '-title' },
+	          content
+	        );
+	        var domProps = {};
+	        if (!props.disabled) {
+	          domProps.onClick = _this2.handleChecked;
 	        }
 	        return _react2['default'].createElement(
 	          'a',
-	          { ref: 'selectHandle', title: content,
-	            className: state.selected ? prefixCls + '-selected' : '',
-	            onClick: _this2.handleSelect },
+	          _extends({ ref: 'selectHandle', title: content }, domProps),
+	          _this2.renderCheckbox(props),
 	          icon,
-	          _react2['default'].createElement(
-	            'span',
-	            { className: 'title' },
-	            content
-	          )
+	          title
 	        );
 	      };
 	
 	      return _react2['default'].createElement(
 	        'li',
-	        { className: (0, _rcUtil.joinClasses)(props.className, 'level-' + props._level, 'pos-' + props._pos, props.disabled ? prefixCls + '-treenode-disabled' : '') },
-	        this.renderSwitcher(props, prefixCls, switchState),
-	        this.renderCheckbox(props, prefixCls, state),
+	        { className: (0, _rcUtil.joinClasses)(props.className, props.disabled ? prefixCls + '-treenode-disabled' : '') },
+	        this.renderSwitcher(props, expandedState),
 	        selectHandle(),
 	        newChildren
 	      );
 	    }
 	  }, {
-	    key: 'handleExpandedState',
-	    value: function handleExpandedState() {
-	      this.setState({
-	        expanded: !this.state.expanded
-	      });
-	    }
-	  }, {
-	    key: 'handleSelect',
-	    value: function handleSelect() {
-	      var selected = !this.state.selected;
-	      var arr = rootTrees[this.props._rootTreeId].selectedKeys;
-	      var index = arr.indexOf(this.props._key);
-	      if (selected) {
-	        if (index < 0) {
-	          arr.push(this.props._key);
-	        }
-	      } else {
-	        if (index > -1) {
-	          arr.splice(index, 1);
-	        }
-	      }
-	      this.setState({
-	        selected: selected
-	      });
-	      if (this.props.onSelect) {
-	        this.props.onSelect(selected, this, arr);
-	      }
+	    key: 'handleExpanded',
+	    value: function handleExpanded() {
+	      this.props.root.handleExpanded(this);
 	    }
 	  }, {
 	    key: 'handleChecked',
 	    value: function handleChecked() {
-	      var props = this.props;
-	      var checked = !this.state.checked;
-	
-	      if (this.state.checkPart) {
-	        checked = true;
-	      }
-	
-	      var nSt = {
-	        checkPart: false,
-	        checked: checked
-	      };
-	
-	      rootTrees[props._rootTreeId].treeNodesState[props._pos] = nSt;
-	      _get(Object.getPrototypeOf(TreeNode.prototype), 'handleCheckState', this).call(this, rootTrees[props._rootTreeId].treeNodesState, [props._pos], !checked);
-	      // console.log(rootTrees[props._rootTreeId].treeNodesState);
-	      // this.setState(nSt);
-	      // 从rootTree更新
-	      rootTrees[props._rootTreeId]._rootTree.forceUpdate();
-	
-	      if (props.onChecked) {
-	        props.onChecked(checked, this);
-	      }
+	      this.props.root.handleChecked(this);
 	    }
 	
 	    // keyboard event support
@@ -1817,25 +1743,16 @@
 	  }]);
 	
 	  return TreeNode;
-	})(_Tree3['default']);
+	})(_react2['default'].Component);
 	
 	TreeNode.propTypes = {
-	  _rootTreeId: _react2['default'].PropTypes.number,
-	  _pos: _react2['default'].PropTypes.string,
-	  _index: _react2['default'].PropTypes.number,
-	  _len: _react2['default'].PropTypes.number,
-	  _level: _react2['default'].PropTypes.number,
-	  _key: _react2['default'].PropTypes.string,
 	  prefixCls: _react2['default'].PropTypes.string,
 	  expanded: _react2['default'].PropTypes.bool,
-	  selected: _react2['default'].PropTypes.bool,
+	  root: _react2['default'].PropTypes.object,
 	  onSelect: _react2['default'].PropTypes.func
 	};
 	TreeNode.defaultProps = {
-	  _childTreeNode: true,
-	  title: '---',
-	  defaultExpanded: false,
-	  expanded: false
+	  title: '---'
 	};
 	
 	exports['default'] = TreeNode;
