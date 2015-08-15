@@ -1,13 +1,7 @@
 import React from 'react';
 import {classSet} from 'rc-util';
-// import TreeNode from './TreeNode';
 
-let id = 1;
-const uuid = () => {
-  return id++;
-};
-
-// ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
+// sorted array ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
 const filterMin = (arr) => {
   const a = [];
   arr.forEach((item) => {
@@ -21,104 +15,103 @@ const filterMin = (arr) => {
   return a;
 };
 
-const rootTrees = {};
-
 class Tree extends React.Component {
-  static statics() {
-    return {
-      rootTrees: rootTrees,
-    };
-  }
   constructor(props) {
     super(props);
-    ['handleKeyDown', 'handleChecked', 'handleSelect'].forEach((m)=> {
+    ['handleKeyDown', 'handleChecked'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
-
-    // get root tree, run one time
-    if (!props._childTreeNode && !props._childTree) {
-      // console.log('root tree', this);
-      this._rootTreeId = uuid();
-      const rootConfig = {
-        prefixCls: props.prefixCls,
-        showLine: props.showLine,
-        showIcon: props.showIcon,
-        expandAll: props.expandAll,
-        checkable: props.checkable,
-        defaultSelectedKeys: props.defaultSelectedKeys,
-        selectedKeys: props.selectedKeys,
-        onChecked: this.handleChecked,
-        onSelect: this.handleSelect,
-      };
-      rootTrees[this._rootTreeId] = {
-        _rootTree: this,
-        rootConfig: rootConfig,
-        treeNodesState: {},
-        trees: [],
-        selectedKeys: props.selectedKeys.length && props.selectedKeys || props.defaultSelectedKeys,
-      };
-    }
-    // if (props._childTree) {
-    //   console.log('child tree', this);
-    // }
+    const expandedKeys = props.defaultExpandedKeys;
+    const checkedKeys = props.defaultCheckedKeys;
+    this.defaultExpandAll = props.defaultExpandAll;
+    this.state = {
+      expandedKeys,
+      checkedKeys,
+    };
   }
-  renderTreeNode(child, index) {
+  getCheckKeys() {
+    const checkPartKeys = [];
+    const checkedKeys = [];
+    Object.keys(this.treeNodesChkStates).forEach((item) => {
+      const itemObj = this.treeNodesChkStates[item];
+      if (itemObj.checked) {
+        checkedKeys.push(itemObj.key);
+      }else if (itemObj.checkPart) {
+        checkPartKeys.push(itemObj.key);
+      }
+    });
+    return {
+      checkPartKeys, checkedKeys,
+    };
+  }
+  renderTreeNode(child, index, level = 0) {
+    const key = child.key || `${level}-${index}`;
+    const state = this.state;
     const props = this.props;
-    const pos = (props._pos || 0) + '-' + index;
-    const _rootTreeId = this._rootTreeId || props._rootTreeId;
     const cloneProps = {
       ref: 'treeNode',
-      _rootTreeId: _rootTreeId,
-      _key: child.key || pos,
-      _pos: pos,
-      _level: props._level || 0,
-      _index: index,
-      _len: this.childrenLength,
-      checked: child.props.checked || props.checked,
-      checkPart: props.checkPart,
+      root: this,
+      eventKey: key,
+      pos: `${level}-${index}`,
+      prefixCls: props.prefixCls,
+      showLine: props.showLine,
+      showIcon: props.showIcon,
+      checkable: props.checkable,
+      expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
+      checked: this.checkedKeys.indexOf(key) !== -1,
+      checkPart: this.checkPartKeys.indexOf(key) !== -1,
     };
-    Object.keys(rootTrees[_rootTreeId].rootConfig).forEach((item) => {
-      cloneProps[item] = rootTrees[_rootTreeId].rootConfig[item];
-    });
-
-    if (rootTrees[_rootTreeId].selectedKeys.indexOf(child.key) > -1) {
-      cloneProps.selected = true;
-    }
     return React.cloneElement(child, cloneProps);
   }
   render() {
     const props = this.props;
     const domProps = {
       className: classSet(props.className, props.prefixCls),
-      onKeyDown: this.handleKeyDown,
       role: 'tree-node',
-      'aria-activedescendant': '',
-      'aria-labelledby': '',
-      'aria-expanded': props.expanded ? 'true' : 'false',
-      'aria-selected': props.selected ? 'true' : 'false',
-      'aria-level': '',
     };
-    if (props._childTree) {
-      domProps.style = props.expanded ? {display: 'block'} : {display: 'none'};
+    if (props.focusable) {
+      domProps.tabIndex = '0';
+      domProps.onKeyDown = this.handleKeyDown;
     }
-
-    if (!this._finishInit && !props._childTreeNode && !props._childTree) {
-      this.handleChildren(props.children, this._obj = {}, this._propsCheckedArray = []);
-      this._propsCheckedArray = filterMin(this._propsCheckedArray);
-      this.handleCheckState(this._obj, this._propsCheckedArray);
-      // console.log(this._obj);
-      rootTrees[this._rootTreeId].treeNodesState = this._obj;
-      this._finishInit = true;
-    }
-
-    this.childrenLength = React.Children.count(props.children);
+    const checkedKeys = this.state.checkedKeys;
+    const checkedPos = [];
+    this.treeNodesChkStates = {};
+    this.loopAllChildren(props.children, (item, index, pos) => {
+      const key = item.key || pos;
+      let checked = false;
+      if (checkedKeys.indexOf(key) !== -1) {
+        checked = true;
+        checkedPos.push(pos);
+      }
+      this.treeNodesChkStates[pos] = {
+        key: key,
+        checked: checked,
+        checkPart: false,
+      };
+    });
+    this.handleCheckState(this.treeNodesChkStates, filterMin(checkedPos.sort()));
+    const checkKeys = this.getCheckKeys();
+    this.checkPartKeys = checkKeys.checkPartKeys;
+    this.checkedKeys = checkKeys.checkedKeys;
     this.newChildren = React.Children.map(props.children, this.renderTreeNode, this);
-
     return (
       <ul {...domProps} ref="tree">
         {this.newChildren}
       </ul>
     );
+  }
+  loopAllChildren(childs, callback) {
+    const loop = (children, level) => {
+      React.Children.forEach(children, (item, index) => {
+        const pos = `${level}-${index}`;
+        const newChildren = item.props.children;
+        if (Array.isArray(newChildren)) {
+          loop(newChildren, pos);
+        }
+        callback(item, index, pos);
+      });
+    };
+    loop(childs, 0);
   }
   handleCheckState(obj, checkedArr, unCheckEvent) {
     let evt = false;
@@ -176,40 +169,56 @@ class Tree extends React.Component {
       loop(_pos);
     });
   }
-  handleChildren(children, _obj, _propsCheckedArray, level) {
-    React.Children.forEach(children, (child, index) => {
-      const pos = (level || 0) + '-' + index;
-      // console.log(child.props.checkbox);
-      let props = child.props;
-      if (child.props.checkbox) {
-        props = child.props.checkbox.props;
+  handleChecked(treeNode) {
+    const tnProps = treeNode.props;
+    let checked = !tnProps.checked;
+    if (tnProps.checkPart) {
+      checked = true;
+    }
+    let pos;
+    Object.keys(this.treeNodesChkStates).forEach((item) => {
+      const itemObj = this.treeNodesChkStates[item];
+      if (itemObj.key === (treeNode.key || tnProps.eventKey)) {
+        pos = item;
+        itemObj.checked = checked;
+        itemObj.checkPart = false;
       }
-      _obj[pos] = {
-        checkPart: child.props.checkPart || false,
-        checked: props.checked || props.defaultChecked || false,
-      };
-      if (_obj[pos].checked) {
-        _propsCheckedArray.push(pos);
-      }
-      let childChildren = child.props.children;
-      if (childChildren && typeof childChildren.type === 'function' && typeof childChildren.type.TreeNode === 'function') {
-        childChildren = [childChildren];
-      }
-      if (Array.isArray(childChildren)) {
-        return this.handleChildren(childChildren, _obj, _propsCheckedArray, pos);
-      }
-      return null;
     });
-  }
-  handleChecked(isChk, c) {
-    if (this.props.onChecked) {
-      this.props.onChecked(isChk, c);
+    this.handleCheckState(this.treeNodesChkStates, [pos], !checked);
+    const checkKeys = this.getCheckKeys();
+    this.checkPartKeys = checkKeys.checkPartKeys;
+    this.setState({
+      checkedKeys: checkKeys.checkedKeys,
+    });
+    if (this.props.onCheck) {
+      this.props.onCheck(checked, treeNode, checkKeys.checkedKeys);
     }
   }
-  handleSelect(isSel, c, selectedKeys) {
-    if (this.props.onSelect) {
-      this.props.onSelect(isSel, c, selectedKeys);
+  handleExpanded(treeNode) {
+    const thisProps = this.props;
+    const tnProps = treeNode.props;
+    const expandedKeys = this.state.expandedKeys.concat([]);
+    const expanded = !tnProps.expanded;
+    if (this.defaultExpandAll) {
+      this.loopAllChildren(thisProps.children, (item, index, pos) => {
+        const key = item.key || pos;
+        if (expandedKeys.indexOf(key) === -1) {
+          expandedKeys.push(key);
+        }
+      });
+      this.defaultExpandAll = false;
     }
+    const index = expandedKeys.indexOf(tnProps.eventKey);
+    if (expanded) {
+      if (index === -1) {
+        expandedKeys.push(tnProps.eventKey);
+      }
+    } else {
+      expandedKeys.splice(index, 1);
+    }
+    this.setState({
+      expandedKeys: expandedKeys,
+    });
   }
   // all keyboard events callbacks run from here at first
   handleKeyDown(e) {
@@ -222,21 +231,20 @@ Tree.propTypes = {
   checkable: React.PropTypes.bool,
   showLine: React.PropTypes.bool,
   showIcon: React.PropTypes.bool,
-  expandAll: React.PropTypes.bool,
-  onChecked: React.PropTypes.func,
-  onSelect: React.PropTypes.func,
-  defaultSelectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
-  selectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
+  defaultExpandAll: React.PropTypes.bool,
+  defaultExpandedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
+  defaultCheckedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
+  onCheck: React.PropTypes.func,
 };
 
 Tree.defaultProps = {
   prefixCls: 'rc-tree',
   checkable: false,
-  showLine: true,
+  showLine: false,
   showIcon: true,
-  expandAll: false,
-  defaultSelectedKeys: [],
-  selectedKeys: [],
+  defaultExpandAll: false,
+  defaultExpandedKeys: [],
+  defaultCheckedKeys: [],
 };
 
 export default Tree;

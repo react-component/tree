@@ -7,22 +7,18 @@ import Tree, {TreeNode} from 'rc-tree';
 var demo = (
   <div>
     <h2>expanded</h2>
-
-    <Tree className="myCls">
-      <TreeNode title="parent 1" expanded={true}>
-        <TreeNode>leaf </TreeNode>
-        <TreeNode title="parent 1-1" defaultExpanded={true}>
-          <TreeNode>leaf </TreeNode>
-          <TreeNode>
+    <Tree defaultExpandedKeys={['p1', 'p11']}>
+      <TreeNode title="parent 1" key="p1">
+        <TreeNode key="p10">leaf </TreeNode>
+        <TreeNode title="parent 1-1" key="p11">
+          <TreeNode title="parent 2-1" key="p21">
             <TreeNode>leaf </TreeNode>
             <TreeNode>leaf </TreeNode>
           </TreeNode>
-        </TreeNode>
-        <TreeNode title="parent 1-2" defaultExpanded={false}>
-          <TreeNode>leaf </TreeNode>
-          <TreeNode>leaf </TreeNode>
+          <TreeNode key="p22">leaf</TreeNode>
         </TreeNode>
       </TreeNode>
+      <TreeNode key="p12">leaf</TreeNode>
     </Tree>
 
   </div>
