@@ -228,7 +228,10 @@ class Tree extends React.Component {
 
 Tree.propTypes = {
   prefixCls: React.PropTypes.string,
-  checkable: React.PropTypes.bool,
+  checkable: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.node,
+  ]),
   showLine: React.PropTypes.bool,
   showIcon: React.PropTypes.bool,
   defaultExpandAll: React.PropTypes.bool,

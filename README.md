@@ -70,7 +70,7 @@ React.render(
 |prefixCls | prefix class | String | '' |
 |showLine | whether show line | bool | true |
 |showIcon | whether show icon | bool | true |
-|checkable | whether support checked | bool | false |
+|checkable | whether support checked | bool/React Node | false |
 |defaultExpandAll | expand all treeNodes | bool | false |
 |defaultExpandedKeys | expand specific treeNodes | String[] | false |
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
