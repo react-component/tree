@@ -29,7 +29,6 @@ class TreeNode extends React.Component {
   renderSwitcher(props, expandedState) {
     const prefixCls = props.prefixCls;
     const switcherCls = {
-      [`${prefixCls}-button`]: true,
       [`${prefixCls}-switcher`]: true,
     };
     if (props.disabled) {
@@ -52,7 +51,6 @@ class TreeNode extends React.Component {
   renderCheckbox(props) {
     const prefixCls = props.prefixCls;
     const checkboxCls = {
-      [`${prefixCls}-button`]: true,
       [`${prefixCls}-checkbox`]: true,
     };
     if (!props.checkable) {
@@ -104,7 +102,6 @@ class TreeNode extends React.Component {
     const expandedState = props.expanded ? 'open' : 'close';
 
     const iconEleCls = {
-      [`${prefixCls}-button`]: true,
       [`${prefixCls}-iconEle`]: true,
       [`${prefixCls}-icon__${expandedState}`]: true,
     };

@@ -18,35 +18,36 @@
       text-decoration:none; vertical-align:top;
     }
     span {
-      line-height:16px; margin-right:2px;
-      &.@{treePrefixCls}-button {
-        line-height:0; margin:0; width:16px; height:16px;
+      &.@{treePrefixCls}-switcher,
+      &.@{treePrefixCls}-checkbox,
+      &.@{treePrefixCls}-iconEle {
+        line-height:16px; margin-right:2px; width:16px; height:16px;
         display: inline-block; vertical-align:middle;
         border:0 none; cursor: pointer;outline:none;
         background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
         background-image:url("https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png");
-        &.@{treePrefixCls}-switcher {
-          &-disabled {
-            background: #fff; position: relative;
-            &:after{content: '-'; position: absolute; top: 8px; left: 6px; color: gray;}
-          }
-          &.@{treePrefixCls}-roots_open { background-position: -92px 0}
-          &.@{treePrefixCls}-roots_close{ background-position:-74px 0}
-          &.@{treePrefixCls}-center_open{ background-position:-92px -18px}
-          &.@{treePrefixCls}-center_close{ background-position:-74px -18px}
-          &.@{treePrefixCls}-bottom_open{ background-position:-92px -36px}
-          &.@{treePrefixCls}-bottom_close{ background-position:-74px -36px}
-          &.@{treePrefixCls}-noline_open{ background-position:-92px -72px}
-          &.@{treePrefixCls}-noline_close{ background-position:-74px -72px}
+      }
+      &.@{treePrefixCls}-switcher {
+        &-disabled {
+          background: #fff; position: relative;
+          &:after{content: '-'; position: absolute; top: 8px; left: 6px; color: gray;}
         }
-        &.@{treePrefixCls}-checkbox {
-          width: 13px;  height: 13px; margin: 0 3px;
-          background-position:0 0;
-          &.@{treePrefixCls}-checkbox-checked {background-position:-14px 0}
-          &.@{treePrefixCls}-checkbox-indeterminate {background-position:-14px -28px}
-          &-disabled {
-            background-position: 0 -28px!important;
-          }
+        &.@{treePrefixCls}-roots_open { background-position: -92px 0}
+        &.@{treePrefixCls}-roots_close{ background-position:-74px 0}
+        &.@{treePrefixCls}-center_open{ background-position:-92px -18px}
+        &.@{treePrefixCls}-center_close{ background-position:-74px -18px}
+        &.@{treePrefixCls}-bottom_open{ background-position:-92px -36px}
+        &.@{treePrefixCls}-bottom_close{ background-position:-74px -36px}
+        &.@{treePrefixCls}-noline_open{ background-position:-92px -72px}
+        &.@{treePrefixCls}-noline_close{ background-position:-74px -72px}
+      }
+      &.@{treePrefixCls}-checkbox {
+        width: 13px;  height: 13px; margin: 0 3px;
+        background-position:0 0;
+        &.@{treePrefixCls}-checkbox-checked {background-position:-14px 0}
+        &.@{treePrefixCls}-checkbox-indeterminate {background-position:-14px -28px}
+        &-disabled {
+          background-position: 0 -28px!important;
         }
       }
     }
