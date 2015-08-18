@@ -23,8 +23,8 @@ webpackJsonp([0],[
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	function handleChecked(checked, c, checkedKeys) {
-	  console.log('checked: ', checked, c);
+	function handleCheck(info) {
+	  console.log('check: ', info);
 	}
 	var demo = _react2['default'].createElement(
 	  'div',
@@ -36,8 +36,8 @@ webpackJsonp([0],[
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { defaultExpandAll: true, checkable: true,
-	      onCheck: handleChecked, defaultCheckedKeys: ['p1', 'p22'] },
+	    { defaultExpandAll: true, checkable: true, multiple: true,
+	      onCheck: handleCheck, defaultCheckedKeys: ['p1', 'p22'] },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
 	      { title: 'parent 1', key: 'p1' },
