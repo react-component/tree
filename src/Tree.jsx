@@ -24,7 +24,7 @@ class Tree extends React.Component {
     const expandedKeys = props.defaultExpandedKeys;
     const checkedKeys = props.defaultCheckedKeys;
     this.defaultExpandAll = props.defaultExpandAll;
-    const selectedKeys = props.multiple ? [...props.defaultCheckedKeys] : [props.defaultCheckedKeys[0]];
+    const selectedKeys = props.multiple ? [...props.defaultSelectedKeys] : [props.defaultSelectedKeys[0]];
     this.state = {
       expandedKeys,
       checkedKeys,
@@ -203,7 +203,6 @@ class Tree extends React.Component {
     }
   }
   handleSelect(treeNode) {
-    // should use defaultSelectedKeys
     const props = this.props;
     const selectedKeys = [...this.state.selectedKeys];
     const eventKey = treeNode.props.eventKey;
@@ -222,8 +221,8 @@ class Tree extends React.Component {
     this.setState({
       selectedKeys: selectedKeys,
     });
-    if (props.onCheck) {
-      props.onCheck({
+    if (props.onSelect) {
+      props.onSelect({
         event: 'select',
         selected: selected,
         node: treeNode,
@@ -274,7 +273,9 @@ Tree.propTypes = {
   defaultExpandAll: React.PropTypes.bool,
   defaultExpandedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
   defaultCheckedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
+  defaultSelectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
   onCheck: React.PropTypes.func,
+  onSelect: React.PropTypes.func,
 };
 
 Tree.defaultProps = {
@@ -286,6 +287,7 @@ Tree.defaultProps = {
   defaultExpandAll: false,
   defaultExpandedKeys: [],
   defaultCheckedKeys: [],
+  defaultSelectedKeys: [],
 };
 
 export default Tree;

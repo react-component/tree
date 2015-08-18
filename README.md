@@ -75,7 +75,9 @@ React.render(
 |defaultExpandAll | expand all treeNodes | bool | false |
 |defaultExpandedKeys | expand specific treeNodes | String[] | false |
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
+|defaultSelectedKeys | default selected treeNodes | String[] | [] |
 |onCheck | click the treeNode to fire | function(e:{checked:bool,node,checkedKeys}) | - |
+|onSelect | click the treeNode to fire | function(e:{checked:bool,node,checkedKeys}) | - |
 
 ### TreeNode props
 

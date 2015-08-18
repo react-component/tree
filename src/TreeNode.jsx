@@ -120,7 +120,10 @@ class TreeNode extends React.Component {
           domProps.className = `${prefixCls}-selected`;
         }
         domProps.onClick = () => {
-          this.handleCheck(true);
+          this.handleSelect();
+          if (props.checkable) {
+            this.handleCheck();
+          }
         };
       }
       return (
@@ -139,10 +142,7 @@ class TreeNode extends React.Component {
       </li>
     );
   }
-  handleCheck(sel) {
-    if (sel) {
-      this.handleSelect(this);
-    }
+  handleCheck() {
     this.props.root.handleCheck(this);
   }
   handleSelect() {

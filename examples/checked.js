@@ -10,7 +10,7 @@ function handleCheck(info) {
 var demo = (
   <div>
     <h2>checked</h2>
-    <Tree defaultExpandAll={true} checkable={true} multiple={true}
+    <Tree defaultExpandAll={true} checkable={true}
         onCheck={handleCheck} defaultCheckedKeys={['p1', 'p22']}>
       <TreeNode title="parent 1" key="p1" >
         <TreeNode key="p10">leaf </TreeNode>
