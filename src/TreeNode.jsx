@@ -4,7 +4,7 @@ import {joinClasses, classSet} from 'rc-util';
 class TreeNode extends React.Component {
   constructor(props) {
     super(props);
-    ['handleExpanded', 'handleChecked'].forEach((m)=> {
+    ['handleExpand', 'handleCheck'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
   }
@@ -46,29 +46,27 @@ class TreeNode extends React.Component {
       switcherCls[`${prefixCls}-center_${expandedState}`] = posObj.center;
       switcherCls[`${prefixCls}-bottom_${expandedState}`] = posObj.last;
     }
-    return <span className={classSet(switcherCls)} onClick={this.handleExpanded}></span>;
+    return <span className={classSet(switcherCls)} onClick={this.handleExpand}></span>;
   }
   renderCheckbox(props) {
     const prefixCls = props.prefixCls;
     const checkboxCls = {
       [`${prefixCls}-checkbox`]: true,
     };
-    if (!props.checkable) {
-      return null;
-    }
-    if (props.disabled) {
-      checkboxCls[`${prefixCls}-checkbox-disabled`] = true;
-    }
     if (props.checkPart) {
       checkboxCls[`${prefixCls}-checkbox-indeterminate`] = true;
     } else if (props.checked) {
       checkboxCls[`${prefixCls}-checkbox-checked`] = true;
     }
     let customEle = null;
-    if (props.checkable && typeof props.checkable !== 'boolean') {
+    if (typeof props.checkable !== 'boolean') {
       customEle = props.checkable;
     }
-    return (<span ref="checkbox" className={classSet(checkboxCls)}>{customEle}</span>);
+    if (props.disabled) {
+      checkboxCls[`${prefixCls}-checkbox-disabled`] = true;
+      return <span ref="checkbox" className={classSet(checkboxCls)}>{customEle}</span>;
+    }
+    return (<span ref="checkbox" className={classSet(checkboxCls)}  onClick={this.handleCheck}>{customEle}</span>);
   }
   renderChildren(props) {
     let newChildren = null;
@@ -117,12 +115,17 @@ class TreeNode extends React.Component {
       const icon = props.showIcon ? <span className={classSet(iconEleCls)}></span> : null;
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
       const domProps = {};
-      if (!props.disabled && props.checkable) {
-        domProps.onClick = this.handleChecked;
+      if (!props.disabled) {
+        if (props.selected) {
+          domProps.className = `${prefixCls}-selected`;
+        }
+        domProps.onClick = () => {
+          this.handleCheck(true);
+        };
       }
       return (
         <a ref="selectHandle" title={content} {...domProps}>
-          {this.renderCheckbox(props)}{icon}{title}
+          {icon}{title}
         </a>
       );
     };
@@ -130,16 +133,23 @@ class TreeNode extends React.Component {
     return (
       <li className={joinClasses(props.className, props.disabled ? `${prefixCls}-treenode-disabled` : '')}>
         {this.renderSwitcher(props, expandedState)}
+        {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}
         {newChildren}
       </li>
     );
   }
-  handleExpanded() {
-    this.props.root.handleExpanded(this);
+  handleCheck(sel) {
+    if (sel) {
+      this.handleSelect(this);
+    }
+    this.props.root.handleCheck(this);
   }
-  handleChecked() {
-    this.props.root.handleChecked(this);
+  handleSelect() {
+    this.props.root.handleSelect(this);
+  }
+  handleExpand() {
+    this.props.root.handleExpand(this);
   }
   // keyboard event support
   handleKeyDown(e) {

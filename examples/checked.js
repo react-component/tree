@@ -4,14 +4,14 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import Tree, {TreeNode} from 'rc-tree';
 
-function handleChecked(checked, c, checkedKeys) {
-  console.log('checked: ', checked, c );
+function handleCheck(info) {
+  console.log('check: ', info);
 }
 var demo = (
   <div>
     <h2>checked</h2>
-    <Tree defaultExpandAll={true} checkable={true}
-        onCheck={handleChecked} defaultCheckedKeys={['p1', 'p22']}>
+    <Tree defaultExpandAll={true} checkable={true} multiple={true}
+        onCheck={handleCheck} defaultCheckedKeys={['p1', 'p22']}>
       <TreeNode title="parent 1" key="p1" >
         <TreeNode key="p10">leaf </TreeNode>
         <TreeNode title="parent 1-1" key="p11">

@@ -18,15 +18,17 @@ const filterMin = (arr) => {
 class Tree extends React.Component {
   constructor(props) {
     super(props);
-    ['handleKeyDown', 'handleChecked'].forEach((m)=> {
+    ['handleKeyDown', 'handleCheck'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
     const expandedKeys = props.defaultExpandedKeys;
     const checkedKeys = props.defaultCheckedKeys;
     this.defaultExpandAll = props.defaultExpandAll;
+    const selectedKeys = props.multiple ? [...props.defaultCheckedKeys] : [props.defaultCheckedKeys[0]];
     this.state = {
       expandedKeys,
       checkedKeys,
+      selectedKeys,
     };
   }
   getCheckKeys() {
@@ -58,6 +60,7 @@ class Tree extends React.Component {
       showIcon: props.showIcon,
       checkable: props.checkable,
       expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
+      selected: state.selectedKeys.indexOf(key) !== -1,
       checked: this.checkedKeys.indexOf(key) !== -1,
       checkPart: this.checkPartKeys.indexOf(key) !== -1,
     };
@@ -169,7 +172,7 @@ class Tree extends React.Component {
       loop(_pos);
     });
   }
-  handleChecked(treeNode) {
+  handleCheck(treeNode) {
     const tnProps = treeNode.props;
     let checked = !tnProps.checked;
     if (tnProps.checkPart) {
@@ -191,10 +194,44 @@ class Tree extends React.Component {
       checkedKeys: checkKeys.checkedKeys,
     });
     if (this.props.onCheck) {
-      this.props.onCheck(checked, treeNode, checkKeys.checkedKeys);
+      this.props.onCheck({
+        event: 'check',
+        checked: checked,
+        node: treeNode,
+        checkedKeys: checkKeys.checkedKeys,
+      });
     }
   }
-  handleExpanded(treeNode) {
+  handleSelect(treeNode) {
+    // should use defaultSelectedKeys
+    const props = this.props;
+    const selectedKeys = [...this.state.selectedKeys];
+    const eventKey = treeNode.props.eventKey;
+    const index = selectedKeys.indexOf(eventKey);
+    let selected;
+    if (index !== -1) {
+      selected = false;
+      selectedKeys.splice(index, 1);
+    } else {
+      selected = true;
+      if (!props.multiple) {
+        selectedKeys.length = 0;
+      }
+      selectedKeys.push(eventKey);
+    }
+    this.setState({
+      selectedKeys: selectedKeys,
+    });
+    if (props.onCheck) {
+      props.onCheck({
+        event: 'select',
+        selected: selected,
+        node: treeNode,
+        selectedKeys: selectedKeys,
+      });
+    }
+  }
+  handleExpand(treeNode) {
     const thisProps = this.props;
     const tnProps = treeNode.props;
     const expandedKeys = this.state.expandedKeys.concat([]);
@@ -242,6 +279,7 @@ Tree.propTypes = {
 
 Tree.defaultProps = {
   prefixCls: 'rc-tree',
+  multiple: false,
   checkable: false,
   showLine: false,
   showIcon: true,
