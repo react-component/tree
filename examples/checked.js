@@ -36,7 +36,7 @@ webpackJsonp([0],[
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { defaultExpandAll: true, checkable: true, multiple: true,
+	    { defaultExpandAll: true, checkable: true,
 	      onCheck: handleCheck, defaultCheckedKeys: ['p1', 'p22'] },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,

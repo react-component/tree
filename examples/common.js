@@ -438,7 +438,7 @@
 	    var expandedKeys = props.defaultExpandedKeys;
 	    var checkedKeys = props.defaultCheckedKeys;
 	    this.defaultExpandAll = props.defaultExpandAll;
-	    var selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultCheckedKeys)) : [props.defaultCheckedKeys[0]];
+	    var selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
 	    this.state = {
 	      expandedKeys: expandedKeys,
 	      checkedKeys: checkedKeys,
@@ -640,7 +640,6 @@
 	  }, {
 	    key: 'handleSelect',
 	    value: function handleSelect(treeNode) {
-	      // should use defaultSelectedKeys
 	      var props = this.props;
 	      var selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
 	      var eventKey = treeNode.props.eventKey;
@@ -659,8 +658,8 @@
 	      this.setState({
 	        selectedKeys: selectedKeys
 	      });
-	      if (props.onCheck) {
-	        props.onCheck({
+	      if (props.onSelect) {
+	        props.onSelect({
 	          event: 'select',
 	          selected: selected,
 	          node: treeNode,
@@ -716,7 +715,9 @@
 	  defaultExpandAll: _react2['default'].PropTypes.bool,
 	  defaultExpandedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
 	  defaultCheckedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
-	  onCheck: _react2['default'].PropTypes.func
+	  defaultSelectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
+	  onCheck: _react2['default'].PropTypes.func,
+	  onSelect: _react2['default'].PropTypes.func
 	};
 	
 	Tree.defaultProps = {
@@ -727,7 +728,8 @@
 	  showIcon: true,
 	  defaultExpandAll: false,
 	  defaultExpandedKeys: [],
-	  defaultCheckedKeys: []
+	  defaultCheckedKeys: [],
+	  defaultSelectedKeys: []
 	};
 	
 	exports['default'] = Tree;
@@ -1756,7 +1758,10 @@
 	            domProps.className = prefixCls + '-selected';
 	          }
 	          domProps.onClick = function () {
-	            _this2.handleCheck(true);
+	            _this2.handleSelect();
+	            if (props.checkable) {
+	              _this2.handleCheck();
+	            }
 	          };
 	        }
 	        return _react2['default'].createElement(
@@ -1778,10 +1783,7 @@
 	    }
 	  }, {
 	    key: 'handleCheck',
-	    value: function handleCheck(sel) {
-	      if (sel) {
-	        this.handleSelect(this);
-	      }
+	    value: function handleCheck() {
 	      this.props.root.handleCheck(this);
 	    }
 	  }, {

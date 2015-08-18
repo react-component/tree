@@ -25,6 +25,10 @@ webpackJsonp([2],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
+	function handleSelect(info) {
+	  console.log('selected', info);
+	}
+	
 	var demo = _react2['default'].createElement(
 	  'div',
 	  null,
@@ -35,13 +39,14 @@ webpackJsonp([2],{
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { className: 'myCls', defaultExpandAll: true, showIcon: false, showLine: true },
+	    { className: 'myCls', onSelect: handleSelect, defaultSelectedKeys: ['0-1', '0-1-1'], multiple: true,
+	      defaultExpandAll: true, showIcon: false, showLine: true },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
-	      { title: 'parent 1' },
+	      { title: 'parent 1', key: '0-1' },
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
-	        { title: 'parent 1-0' },
+	        { title: 'parent 1-0', key: '0-1-1' },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          null,
