@@ -76,8 +76,8 @@ React.render(
 |defaultExpandedKeys | expand specific treeNodes | String[] | false |
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
-|onCheck | click the treeNode to fire | function(e:{checked:bool,node,checkedKeys}) | - |
-|onSelect | click the treeNode to fire | function(e:{checked:bool,node,checkedKeys}) | - |
+|onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event}) | - |
+|onSelect | click the treeNode to fire | function(e:{selected:bool,node,checkedKeys,event}) | - |
 
 ### TreeNode props
 
@@ -86,7 +86,7 @@ React.render(
 |className | additional class to treeNode | String | '' |
 |disabled | whether disabled the treeNode | bool | false |
 |title | tree/subTree's title | String | '---' |
-|key | it's used with tree props's defaultExpandedKeys or defaultCheckedKeys | String | treeNode's pos |
+|key | it's used with tree props's defaultExpandedKeys/defaultCheckedKeys/defaultSelectedKeys | String | treeNode's position |
 
 
 ## Development
