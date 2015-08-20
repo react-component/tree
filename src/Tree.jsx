@@ -46,6 +46,15 @@ class Tree extends React.Component {
       checkPartKeys, checkedKeys,
     };
   }
+  getOpenTransitionName() {
+    const props = this.props;
+    let transitionName = props.openTransitionName;
+    const animationName = props.openAnimation;
+    if (!transitionName && typeof animationName === 'string') {
+      transitionName = `${props.prefixCls}-open-${animationName}`;
+    }
+    return transitionName;
+  }
   renderTreeNode(child, index, level = 0) {
     const key = child.key || `${level}-${index}`;
     const state = this.state;
@@ -63,6 +72,8 @@ class Tree extends React.Component {
       selected: state.selectedKeys.indexOf(key) !== -1,
       checked: this.checkedKeys.indexOf(key) !== -1,
       checkPart: this.checkPartKeys.indexOf(key) !== -1,
+      openTransitionName: this.getOpenTransitionName(),
+      openAnimation: props.openAnimation,
     };
     return React.cloneElement(child, cloneProps);
   }
@@ -276,6 +287,8 @@ Tree.propTypes = {
   defaultSelectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
   onCheck: React.PropTypes.func,
   onSelect: React.PropTypes.func,
+  openTransitionName: React.PropTypes.string,
+  openAnimation: React.PropTypes.oneOfType(React.PropTypes.string, React.PropTypes.object),
 };
 
 Tree.defaultProps = {

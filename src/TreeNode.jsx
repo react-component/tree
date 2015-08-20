@@ -1,5 +1,8 @@
 import React from 'react';
 import {joinClasses, classSet} from 'rc-util';
+import Animate from 'rc-animate';
+
+const defaultTitle = '---';
 
 class TreeNode extends React.Component {
   constructor(props) {
@@ -69,34 +72,43 @@ class TreeNode extends React.Component {
     return (<span ref="checkbox" className={classSet(checkboxCls)}  onClick={this.handleCheck}>{customEle}</span>);
   }
   renderChildren(props) {
-    let newChildren = null;
     const children = props.children;
+    let newChildren = children;
     if (children.type === TreeNode || Array.isArray(children) &&
         children.every((item) => {
           return item.type === TreeNode;
         })) {
-      const style = props.expanded ? {display: 'block'} : {display: 'none'};
-      const cls = {};
-      cls[`${props.prefixCls}-child-tree`] = true;
+      const cls = {
+        [`${props.prefixCls}-child-tree`]: true,
+        [`${props.prefixCls}-child-tree-open`]: props.expanded,
+      };
       if (props.showLine) {
         cls[`${props.prefixCls}-line`] = this.getPosition(props.pos).center;
       }
+      const animProps = {};
+      if (props.openTransitionName) {
+        animProps.transitionName = props.openTransitionName;
+      } else if (typeof props.openAnimation === 'object') {
+        animProps.animation = props.openAnimation;
+      }
       newChildren = this.newChildren = (
-        <ul className={classSet(cls)} style={style}>
-          {React.Children.map(children, (item, index) => {
-            return props.root.renderTreeNode(item, index, props.pos);
-          }, props.root)}
-        </ul>
+        <Animate {...animProps}
+        showProp="expanded"
+        component=""
+        animateMount={true}>
+          <ul className={classSet(cls)} expanded={props.expanded}>
+            {React.Children.map(children, (item, index) => {
+              return props.root.renderTreeNode(item, index, props.pos);
+            }, props.root)}
+          </ul>
+        </Animate>
       );
-    } else {
-      newChildren = children;
     }
     return newChildren;
   }
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
-    // const expandedState = (props.defaultExpandAll || props.expanded) ? 'open' : 'close';
     const expandedState = props.expanded ? 'open' : 'close';
 
     const iconEleCls = {
@@ -104,11 +116,14 @@ class TreeNode extends React.Component {
       [`${prefixCls}-icon__${expandedState}`]: true,
     };
 
-    let content = props.title;
+    let canRenderSwitcher = true;
+    // let content = props.title;
+    const content = props.title;
     let newChildren = this.renderChildren(props);
     if (newChildren === props.children) {
-      content = newChildren;
+      // content = newChildren;
       newChildren = null;
+      canRenderSwitcher = false;
     }
 
     const selectHandle = () => {
@@ -135,7 +150,7 @@ class TreeNode extends React.Component {
 
     return (
       <li className={joinClasses(props.className, props.disabled ? `${prefixCls}-treenode-disabled` : '')}>
-        {this.renderSwitcher(props, expandedState)}
+        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : <span className={`${prefixCls}-switcher-noop`}></span>}
         {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}
         {newChildren}
@@ -163,7 +178,7 @@ TreeNode.propTypes = {
   onSelect: React.PropTypes.func,
 };
 TreeNode.defaultProps = {
-  title: '---',
+  title: defaultTitle,
 };
 
 export default TreeNode;

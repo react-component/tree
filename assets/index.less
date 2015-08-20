@@ -25,6 +25,7 @@
       vertical-align: top;
     }
     span {
+      &.@{treePrefixCls}-switcher-noop,
       &.@{treePrefixCls}-switcher,
       &.@{treePrefixCls}-checkbox,
       &.@{treePrefixCls}-iconEle {
@@ -41,6 +42,9 @@
         background-repeat: no-repeat;
         background-attachment: scroll;
         background-image: url("https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png");
+      }
+      &.@{treePrefixCls}-switcher-noop {
+        background-image: none;
       }
       &.@{treePrefixCls}-switcher {
         &-disabled {
@@ -94,6 +98,12 @@
           background-position: 0 -28px!important;
         }
       }
+    }
+  }
+  &-child-tree {
+    display: none;
+    &-open {
+      display: block;
     }
   }
   &-treenode-disabled {
