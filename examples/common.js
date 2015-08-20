@@ -121,7 +121,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
-	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.rc-tree-line {\n  background: url(\"https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif\") 0 0 repeat-y;\n}\n.rc-tree li a {\n  display: inline-block;\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  text-decoration: none;\n  vertical-align: top;\n}\n.rc-tree li span.rc-tree-switcher,\n.rc-tree li span.rc-tree-checkbox,\n.rc-tree li span.rc-tree-iconEle {\n  line-height: 16px;\n  margin-right: 2px;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.rc-tree-switcher-disabled {\n  background: #fff;\n  position: relative;\n}\n.rc-tree li span.rc-tree-switcher-disabled:after {\n  content: '-';\n  position: absolute;\n  top: 8px;\n  left: 6px;\n  color: gray;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-noline_open {\n  background-position: -92px -72px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-noline_close {\n  background-position: -74px -72px;\n}\n.rc-tree li span.rc-tree-checkbox {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px;\n  background-position: 0 0;\n}\n.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-checked {\n  background-position: -14px 0;\n}\n.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-indeterminate {\n  background-position: -14px -28px;\n}\n.rc-tree li span.rc-tree-checkbox-disabled {\n  background-position: 0 -28px !important;\n}\n.rc-tree-treenode-disabled > span,\n.rc-tree-treenode-disabled > a {\n  color: gray;\n}\n.rc-tree-selected {\n  background-color: #ffe6b0;\n  border: 1px #ffb951 solid;\n  opacity: 0.8;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", "", {"version":3,"sources":["index.less"],"names":[],"mappings":"AACA,CAAC;EACC,SAAA;EACA,YAAA;;AAFF,CAAC,OAGC;EACE,UAAA;EACA,SAAA;EACA,gBAAA;EACA,mBAAA;EACA,UAAA;;AARJ,CAAC,OAGC,GAME;EACE,SAAA;EACA,mBAAA;;AACA,CAZL,OAGC,GAME,GAGG,CAAC,OAAgB;EAChB,gBAAgB,yEAAhB;;AAbR,CAAC,OAGC,GAaE;EACE,qBAAA;EACA,oBAAA;EACA,SAAA;EACA,eAAA;EACA,YAAA;EACA,qBAAA;EACA,mBAAA;;AAGA,CA1BL,OAGC,GAsBE,KACG,CAAC,OAAgB;AAClB,CA3BL,OAGC,GAsBE,KAEG,CAAC,OAAgB;AAClB,CA5BL,OAGC,GAsBE,KAGG,CAAC,OAAgB;EAChB,iBAAA;EACA,iBAAA;EACA,WAAA;EACA,YAAA;EACA,qBAAA;EACA,sBAAA;EACA,cAAA;EACA,eAAA;EACA,aAAA;EACA,6BAAA;EACA,4BAAA;EACA,6BAAA;EACA,sBAAsB,4DAAtB;;AAGA,CA5CP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SACf;EACC,gBAAA;EACA,kBAAA;;AACA,CA/CT,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SACf,SAGE;EACC,SAAS,GAAT;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,WAAA;;AAGJ,CAvDP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SAYf,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CA1DP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SAef,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CA7DP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SAkBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CAhEP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SAqBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CAnEP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SAwBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CAtEP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SA2Bf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CAzEP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SA8Bf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CA5EP,OAGC,GAsBE,KAkBG,CAAC,OAAgB,SAiCf,CAAC,OAAgB;EAChB,gCAAA;;AAGJ,CAhFL,OAGC,GAsBE,KAuDG,CAAC,OAAgB;EAChB,WAAA;EACA,YAAA;EACA,aAAA;EACA,wBAAA;;AACA,CArFP,OAGC,GAsBE,KAuDG,CAAC,OAAgB,SAKf,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CAxFP,OAGC,GAsBE,KAuDG,CAAC,OAAgB,SAQf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CA3FP,OAGC,GAsBE,KAuDG,CAAC,OAAgB,SAWf;EACC,4BAAA;;AAKR,CAjGD,OAiGE,kBACC;AADF,CAjGD,OAiGE,kBAEC;EACE,WAAA;;AAGJ,CAvGD,OAuGE;EACC,yBAAA;EACA,yBAAA;EACA,YAAA;;AAEF,CA5GD,OA4GE;EACC,iBAAA;EACA,iCAAA;EACA,mBAAA;;AAEF,CAjHD,OAiHE;EACC,iBAAA;EACA,6BAAA;EACA,mBAAA","sourcesContent":["@treePrefixCls: rc-tree;\n.@{treePrefixCls} {\n  margin: 0;\n  padding: 5px;\n  li {\n    padding: 0;\n    margin: 0;\n    list-style: none;\n    white-space: nowrap;\n    outline: 0;\n    ul {\n      margin: 0;\n      padding: 0 0 0 18px;\n      &.@{treePrefixCls}-line {\n        background: url(\"https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif\") 0 0 repeat-y;\n      }\n    }\n    a {\n      display: inline-block;\n      padding: 1px 3px 0 0;\n      margin: 0;\n      cursor: pointer;\n      height: 17px;\n      text-decoration: none;\n      vertical-align: top;\n    }\n    span {\n      &.@{treePrefixCls}-switcher,\n      &.@{treePrefixCls}-checkbox,\n      &.@{treePrefixCls}-iconEle {\n        line-height: 16px;\n        margin-right: 2px;\n        width: 16px;\n        height: 16px;\n        display: inline-block;\n        vertical-align: middle;\n        border: 0 none;\n        cursor: pointer;\n        outline: none;\n        background-color: transparent;\n        background-repeat: no-repeat;\n        background-attachment: scroll;\n        background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n      }\n      &.@{treePrefixCls}-switcher {\n        &-disabled {\n          background: #fff;\n          position: relative;\n          &:after {\n            content: '-';\n            position: absolute;\n            top: 8px;\n            left: 6px;\n            color: gray;\n          }\n        }\n        &.@{treePrefixCls}-roots_open {\n          background-position: -92px 0;\n        }\n        &.@{treePrefixCls}-roots_close {\n          background-position: -74px 0;\n        }\n        &.@{treePrefixCls}-center_open {\n          background-position: -92px -18px;\n        }\n        &.@{treePrefixCls}-center_close {\n          background-position: -74px -18px;\n        }\n        &.@{treePrefixCls}-bottom_open {\n          background-position: -92px -36px;\n        }\n        &.@{treePrefixCls}-bottom_close {\n          background-position: -74px -36px;\n        }\n        &.@{treePrefixCls}-noline_open {\n          background-position: -92px -72px;\n        }\n        &.@{treePrefixCls}-noline_close {\n          background-position: -74px -72px;\n        }\n      }\n      &.@{treePrefixCls}-checkbox {\n        width: 13px;\n        height: 13px;\n        margin: 0 3px;\n        background-position: 0 0;\n        &.@{treePrefixCls}-checkbox-checked {\n          background-position: -14px 0;\n        }\n        &.@{treePrefixCls}-checkbox-indeterminate {\n          background-position: -14px -28px;\n        }\n        &-disabled {\n          background-position: 0 -28px!important;\n        }\n      }\n    }\n  }\n  &-treenode-disabled {\n    >span,\n    >a {\n      color: gray;\n    }\n  }\n  &-selected {\n    background-color: #ffe6b0;\n    border: 1px #ffb951 solid;\n    opacity: 0.8;\n  }\n  &-icon__open {\n    margin-right: 2px;\n    background-position: -110px -16px;\n    vertical-align: top;\n  }\n  &-icon__close {\n    margin-right: 2px;\n    background-position: -110px 0;\n    vertical-align: top;\n  }\n}\n"]}]);
+	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.rc-tree-line {\n  background: url(\"https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif\") 0 0 repeat-y;\n}\n.rc-tree li a {\n  display: inline-block;\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  text-decoration: none;\n  vertical-align: top;\n}\n.rc-tree li span.rc-tree-switcher-noop,\n.rc-tree li span.rc-tree-switcher,\n.rc-tree li span.rc-tree-checkbox,\n.rc-tree li span.rc-tree-iconEle {\n  line-height: 16px;\n  margin-right: 2px;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.rc-tree-switcher-noop {\n  background-image: none;\n}\n.rc-tree li span.rc-tree-switcher-disabled {\n  background: #fff;\n  position: relative;\n}\n.rc-tree li span.rc-tree-switcher-disabled:after {\n  content: '-';\n  position: absolute;\n  top: 8px;\n  left: 6px;\n  color: gray;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-noline_open {\n  background-position: -92px -72px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-noline_close {\n  background-position: -74px -72px;\n}\n.rc-tree li span.rc-tree-checkbox {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px;\n  background-position: 0 0;\n}\n.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-checked {\n  background-position: -14px 0;\n}\n.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-indeterminate {\n  background-position: -14px -28px;\n}\n.rc-tree li span.rc-tree-checkbox-disabled {\n  background-position: 0 -28px !important;\n}\n.rc-tree-child-tree {\n  display: none;\n}\n.rc-tree-child-tree-open {\n  display: block;\n}\n.rc-tree-treenode-disabled > span,\n.rc-tree-treenode-disabled > a {\n  color: gray;\n}\n.rc-tree-selected {\n  background-color: #ffe6b0;\n  border: 1px #ffb951 solid;\n  opacity: 0.8;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", "", {"version":3,"sources":["index.less"],"names":[],"mappings":"AACA,CAAC;EACC,SAAA;EACA,YAAA;;AAFF,CAAC,OAGC;EACE,UAAA;EACA,SAAA;EACA,gBAAA;EACA,mBAAA;EACA,UAAA;;AARJ,CAAC,OAGC,GAME;EACE,SAAA;EACA,mBAAA;;AACA,CAZL,OAGC,GAME,GAGG,CAAC,OAAgB;EAChB,gBAAgB,yEAAhB;;AAbR,CAAC,OAGC,GAaE;EACE,qBAAA;EACA,oBAAA;EACA,SAAA;EACA,eAAA;EACA,YAAA;EACA,qBAAA;EACA,mBAAA;;AAGA,CA1BL,OAGC,GAsBE,KACG,CAAC,OAAgB;AAClB,CA3BL,OAGC,GAsBE,KAEG,CAAC,OAAgB;AAClB,CA5BL,OAGC,GAsBE,KAGG,CAAC,OAAgB;AAClB,CA7BL,OAGC,GAsBE,KAIG,CAAC,OAAgB;EAChB,iBAAA;EACA,iBAAA;EACA,WAAA;EACA,YAAA;EACA,qBAAA;EACA,sBAAA;EACA,cAAA;EACA,eAAA;EACA,aAAA;EACA,6BAAA;EACA,4BAAA;EACA,6BAAA;EACA,sBAAsB,4DAAtB;;AAEF,CA5CL,OAGC,GAsBE,KAmBG,CAAC,OAAgB;EAChB,sBAAA;;AAGA,CAhDP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SACf;EACC,gBAAA;EACA,kBAAA;;AACA,CAnDT,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SACf,SAGE;EACC,SAAS,GAAT;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,WAAA;;AAGJ,CA3DP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAYf,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CA9DP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAef,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CAjEP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAkBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CApEP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAqBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CAvEP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAwBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CA1EP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SA2Bf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CA7EP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SA8Bf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CAhFP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAiCf,CAAC,OAAgB;EAChB,gCAAA;;AAGJ,CApFL,OAGC,GAsBE,KA2DG,CAAC,OAAgB;EAChB,WAAA;EACA,YAAA;EACA,aAAA;EACA,wBAAA;;AACA,CAzFP,OAGC,GAsBE,KA2DG,CAAC,OAAgB,SAKf,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CA5FP,OAGC,GAsBE,KA2DG,CAAC,OAAgB,SAQf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CA/FP,OAGC,GAsBE,KA2DG,CAAC,OAAgB,SAWf;EACC,4BAAA;;AAKR,CArGD,OAqGE;EACC,aAAA;;AACA,CAvGH,OAqGE,WAEE;EACC,cAAA;;AAGJ,CA3GD,OA2GE,kBACC;AADF,CA3GD,OA2GE,kBAEC;EACE,WAAA;;AAGJ,CAjHD,OAiHE;EACC,yBAAA;EACA,yBAAA;EACA,YAAA;;AAEF,CAtHD,OAsHE;EACC,iBAAA;EACA,iCAAA;EACA,mBAAA;;AAEF,CA3HD,OA2HE;EACC,iBAAA;EACA,6BAAA;EACA,mBAAA","sourcesContent":["@treePrefixCls: rc-tree;\n.@{treePrefixCls} {\n  margin: 0;\n  padding: 5px;\n  li {\n    padding: 0;\n    margin: 0;\n    list-style: none;\n    white-space: nowrap;\n    outline: 0;\n    ul {\n      margin: 0;\n      padding: 0 0 0 18px;\n      &.@{treePrefixCls}-line {\n        background: url(\"https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif\") 0 0 repeat-y;\n      }\n    }\n    a {\n      display: inline-block;\n      padding: 1px 3px 0 0;\n      margin: 0;\n      cursor: pointer;\n      height: 17px;\n      text-decoration: none;\n      vertical-align: top;\n    }\n    span {\n      &.@{treePrefixCls}-switcher-noop,\n      &.@{treePrefixCls}-switcher,\n      &.@{treePrefixCls}-checkbox,\n      &.@{treePrefixCls}-iconEle {\n        line-height: 16px;\n        margin-right: 2px;\n        width: 16px;\n        height: 16px;\n        display: inline-block;\n        vertical-align: middle;\n        border: 0 none;\n        cursor: pointer;\n        outline: none;\n        background-color: transparent;\n        background-repeat: no-repeat;\n        background-attachment: scroll;\n        background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n      }\n      &.@{treePrefixCls}-switcher-noop {\n        background-image: none;\n      }\n      &.@{treePrefixCls}-switcher {\n        &-disabled {\n          background: #fff;\n          position: relative;\n          &:after {\n            content: '-';\n            position: absolute;\n            top: 8px;\n            left: 6px;\n            color: gray;\n          }\n        }\n        &.@{treePrefixCls}-roots_open {\n          background-position: -92px 0;\n        }\n        &.@{treePrefixCls}-roots_close {\n          background-position: -74px 0;\n        }\n        &.@{treePrefixCls}-center_open {\n          background-position: -92px -18px;\n        }\n        &.@{treePrefixCls}-center_close {\n          background-position: -74px -18px;\n        }\n        &.@{treePrefixCls}-bottom_open {\n          background-position: -92px -36px;\n        }\n        &.@{treePrefixCls}-bottom_close {\n          background-position: -74px -36px;\n        }\n        &.@{treePrefixCls}-noline_open {\n          background-position: -92px -72px;\n        }\n        &.@{treePrefixCls}-noline_close {\n          background-position: -74px -72px;\n        }\n      }\n      &.@{treePrefixCls}-checkbox {\n        width: 13px;\n        height: 13px;\n        margin: 0 3px;\n        background-position: 0 0;\n        &.@{treePrefixCls}-checkbox-checked {\n          background-position: -14px 0;\n        }\n        &.@{treePrefixCls}-checkbox-indeterminate {\n          background-position: -14px -28px;\n        }\n        &-disabled {\n          background-position: 0 -28px!important;\n        }\n      }\n    }\n  }\n  &-child-tree {\n    display: none;\n    &-open {\n      display: block;\n    }\n  }\n  &-treenode-disabled {\n    >span,\n    >a {\n      color: gray;\n    }\n  }\n  &-selected {\n    background-color: #ffe6b0;\n    border: 1px #ffb951 solid;\n    opacity: 0.8;\n  }\n  &-icon__open {\n    margin-right: 2px;\n    background-position: -110px -16px;\n    vertical-align: top;\n  }\n  &-icon__close {\n    margin-right: 2px;\n    background-position: -110px 0;\n    vertical-align: top;\n  }\n}\n"]}]);
 
 /***/ },
 /* 4 */
@@ -466,6 +466,17 @@
 	      };
 	    }
 	  }, {
+	    key: 'getOpenTransitionName',
+	    value: function getOpenTransitionName() {
+	      var props = this.props;
+	      var transitionName = props.openTransitionName;
+	      var animationName = props.openAnimation;
+	      if (!transitionName && typeof animationName === 'string') {
+	        transitionName = props.prefixCls + '-open-' + animationName;
+	      }
+	      return transitionName;
+	    }
+	  }, {
 	    key: 'renderTreeNode',
 	    value: function renderTreeNode(child, index) {
 	      var level = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
@@ -485,7 +496,9 @@
 	        expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
 	        selected: state.selectedKeys.indexOf(key) !== -1,
 	        checked: this.checkedKeys.indexOf(key) !== -1,
-	        checkPart: this.checkPartKeys.indexOf(key) !== -1
+	        checkPart: this.checkPartKeys.indexOf(key) !== -1,
+	        openTransitionName: this.getOpenTransitionName(),
+	        openAnimation: props.openAnimation
 	      };
 	      return _react2['default'].cloneElement(child, cloneProps);
 	    }
@@ -717,7 +730,9 @@
 	  defaultCheckedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
 	  defaultSelectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
 	  onCheck: _react2['default'].PropTypes.func,
-	  onSelect: _react2['default'].PropTypes.func
+	  onSelect: _react2['default'].PropTypes.func,
+	  openTransitionName: _react2['default'].PropTypes.string,
+	  openAnimation: _react2['default'].PropTypes.oneOfType(_react2['default'].PropTypes.string, _react2['default'].PropTypes.object)
 	};
 	
 	Tree.defaultProps = {
@@ -1615,6 +1630,12 @@
 	
 	var _rcUtil = __webpack_require__(10);
 	
+	var _rcAnimate = __webpack_require__(23);
+	
+	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+	
+	var defaultTitle = '---';
+	
 	var TreeNode = (function (_React$Component) {
 	  _inherits(TreeNode, _React$Component);
 	
@@ -1702,26 +1723,37 @@
 	  }, {
 	    key: 'renderChildren',
 	    value: function renderChildren(props) {
-	      var newChildren = null;
 	      var children = props.children;
+	      var newChildren = children;
 	      if (children.type === TreeNode || Array.isArray(children) && children.every(function (item) {
 	        return item.type === TreeNode;
 	      })) {
-	        var style = props.expanded ? { display: 'block' } : { display: 'none' };
-	        var cls = {};
-	        cls[props.prefixCls + '-child-tree'] = true;
+	        var _cls;
+	
+	        var cls = (_cls = {}, _defineProperty(_cls, props.prefixCls + '-child-tree', true), _defineProperty(_cls, props.prefixCls + '-child-tree-open', props.expanded), _cls);
 	        if (props.showLine) {
 	          cls[props.prefixCls + '-line'] = this.getPosition(props.pos).center;
 	        }
+	        var animProps = {};
+	        if (props.openTransitionName) {
+	          animProps.transitionName = props.openTransitionName;
+	        } else if (typeof props.openAnimation === 'object') {
+	          animProps.animation = props.openAnimation;
+	        }
 	        newChildren = this.newChildren = _react2['default'].createElement(
-	          'ul',
-	          { className: (0, _rcUtil.classSet)(cls), style: style },
-	          _react2['default'].Children.map(children, function (item, index) {
-	            return props.root.renderTreeNode(item, index, props.pos);
-	          }, props.root)
+	          _rcAnimate2['default'],
+	          _extends({}, animProps, {
+	            showProp: 'expanded',
+	            component: '',
+	            animateMount: true }),
+	          _react2['default'].createElement(
+	            'ul',
+	            { className: (0, _rcUtil.classSet)(cls), expanded: props.expanded },
+	            _react2['default'].Children.map(children, function (item, index) {
+	              return props.root.renderTreeNode(item, index, props.pos);
+	            }, props.root)
+	          )
 	        );
-	      } else {
-	        newChildren = children;
 	      }
 	      return newChildren;
 	    }
@@ -1733,16 +1765,18 @@
 	
 	      var props = this.props;
 	      var prefixCls = props.prefixCls;
-	      // const expandedState = (props.defaultExpandAll || props.expanded) ? 'open' : 'close';
 	      var expandedState = props.expanded ? 'open' : 'close';
 	
 	      var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon__' + expandedState, true), _iconEleCls);
 	
+	      var canRenderSwitcher = true;
+	      // let content = props.title;
 	      var content = props.title;
 	      var newChildren = this.renderChildren(props);
 	      if (newChildren === props.children) {
-	        content = newChildren;
+	        // content = newChildren;
 	        newChildren = null;
+	        canRenderSwitcher = false;
 	      }
 	
 	      var selectHandle = function selectHandle() {
@@ -1775,7 +1809,7 @@
 	      return _react2['default'].createElement(
 	        'li',
 	        { className: (0, _rcUtil.joinClasses)(props.className, props.disabled ? prefixCls + '-treenode-disabled' : '') },
-	        this.renderSwitcher(props, expandedState),
+	        canRenderSwitcher ? this.renderSwitcher(props, expandedState) : _react2['default'].createElement('span', { className: prefixCls + '-switcher-noop' }),
 	        props.checkable ? this.renderCheckbox(props) : null,
 	        selectHandle(),
 	        newChildren
@@ -1815,11 +1849,763 @@
 	  onSelect: _react2['default'].PropTypes.func
 	};
 	TreeNode.defaultProps = {
-	  title: '---'
+	  title: defaultTitle
 	};
 	
 	exports['default'] = TreeNode;
 	module.exports = exports['default'];
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// export this package's api
+	'use strict';
+	
+	module.exports = __webpack_require__(24);
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ChildrenUtils = __webpack_require__(25);
+	
+	var _ChildrenUtils2 = _interopRequireDefault(_ChildrenUtils);
+	
+	var _AnimateChild = __webpack_require__(26);
+	
+	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
+	
+	var defaultKey = 'rc_animate_' + Date.now();
+	
+	function getChildrenFromProps(props) {
+	  var children = props.children;
+	  if (_react2['default'].isValidElement(children)) {
+	    if (!children.key) {
+	      return _react2['default'].cloneElement(children, {
+	        key: defaultKey
+	      });
+	    }
+	  }
+	  return children;
+	}
+	
+	var Animate = _react2['default'].createClass({
+	  displayName: 'Animate',
+	
+	  protoTypes: {
+	    component: _react2['default'].PropTypes.any,
+	    animation: _react2['default'].PropTypes.object,
+	    transitionName: _react2['default'].PropTypes.string,
+	    transitionEnter: _react2['default'].PropTypes.bool,
+	    transitionLeave: _react2['default'].PropTypes.bool,
+	    onEnd: _react2['default'].PropTypes.func,
+	    showProp: _react2['default'].PropTypes.bool,
+	    animateMount: _react2['default'].PropTypes.bool
+	  },
+	
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      animation: {},
+	      component: 'span',
+	      transitionEnter: true,
+	      transitionLeave: true,
+	      enter: true,
+	      animateMount: false,
+	      onEnd: function onEnd() {}
+	    };
+	  },
+	
+	  getInitialState: function getInitialState() {
+	    this.currentlyAnimatingKeys = {};
+	    this.keysToEnter = [];
+	    this.keysToLeave = [];
+	    return {
+	      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props))
+	    };
+	  },
+	
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var _this = this;
+	
+	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
+	    var props = this.props;
+	    var showProp = props.showProp;
+	    var exclusive = props.exclusive;
+	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
+	    // last props children if exclusive
+	    // exclusive needs immediate response
+	    var currentChildren = this.state.children;
+	    var newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
+	
+	    if (showProp && !exclusive) {
+	      newChildren = newChildren.map(function (c) {
+	        if (!c.props[showProp] && (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp)) {
+	          c = _react2['default'].cloneElement(c, _defineProperty({}, showProp, true));
+	        }
+	        return c;
+	      });
+	    }
+	
+	    this.setState({
+	      children: newChildren
+	    });
+	
+	    // exclusive needs immediate response
+	    if (exclusive) {
+	      Object.keys(currentlyAnimatingKeys).forEach(function (key) {
+	        _this.stop(key);
+	      });
+	      currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    }
+	
+	    nextChildren.forEach(function (c) {
+	      var key = c.key;
+	      if (currentlyAnimatingKeys[key]) {
+	        return;
+	      }
+	      var hasPrev = (0, _ChildrenUtils.inChildren)(currentChildren, c);
+	      if (showProp) {
+	        if (hasPrev) {
+	          var showInNow = (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp);
+	          var showInNext = c.props[showProp];
+	          if (!showInNow && showInNext) {
+	            _this.keysToEnter.push(key);
+	          }
+	        }
+	      } else if (!hasPrev) {
+	        _this.keysToEnter.push(key);
+	      }
+	    });
+	
+	    currentChildren.forEach(function (c) {
+	      var key = c.key;
+	      if (currentlyAnimatingKeys[key]) {
+	        return;
+	      }
+	      var hasNext = (0, _ChildrenUtils.inChildren)(nextChildren, c);
+	      if (showProp) {
+	        if (hasNext) {
+	          var showInNext = (0, _ChildrenUtils.isShownInChildren)(nextChildren, c, showProp);
+	          var showInNow = c.props[showProp];
+	          if (!showInNext && showInNow) {
+	            _this.keysToLeave.push(key);
+	          }
+	        }
+	      } else if (!hasNext) {
+	        _this.keysToLeave.push(key);
+	      }
+	    });
+	  },
+	
+	  performEnter: function performEnter(key) {
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillEnter(this._handleDoneEntering.bind(this, key));
+	    }
+	  },
+	
+	  _handleDoneEntering: function _handleDoneEntering(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props));
+	    if (!this.isValidChildByKey(currentChildren, key)) {
+	      // exclusive will not need this
+	      this.performLeave(key);
+	    } else {
+	      this.props.onEnd(key, true);
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
+	        this.setState({
+	          children: currentChildren
+	        });
+	      }
+	    }
+	  },
+	
+	  performLeave: function performLeave(key) {
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillLeave(this._handleDoneLeaving.bind(this, key));
+	    }
+	  },
+	
+	  isValidChildByKey: function isValidChildByKey(currentChildren, key) {
+	    var showProp = this.props.showProp;
+	    if (showProp) {
+	      return (0, _ChildrenUtils.isShownInChildrenByKey)(currentChildren, key, showProp);
+	    } else {
+	      return (0, _ChildrenUtils.inChildrenByKey)(currentChildren, key);
+	    }
+	  },
+	
+	  _handleDoneLeaving: function _handleDoneLeaving(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props));
+	    // in case state change is too fast
+	    if (this.isValidChildByKey(currentChildren, key)) {
+	      this.performEnter(key);
+	    } else {
+	      this.props.onEnd(key, false);
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
+	        this.setState({
+	          children: currentChildren
+	        });
+	      }
+	    }
+	  },
+	
+	  stop: function stop(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var component = this.refs[key];
+	    if (component) {
+	      component.stop();
+	    }
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.animateMount) {
+	      this.state.children.map(function (c) {
+	        return c.key;
+	      }).forEach(this.performEnter);
+	    }
+	  },
+	
+	  componentDidUpdate: function componentDidUpdate() {
+	    var keysToEnter = this.keysToEnter;
+	    this.keysToEnter = [];
+	    keysToEnter.forEach(this.performEnter);
+	    var keysToLeave = this.keysToLeave;
+	    this.keysToLeave = [];
+	    keysToLeave.forEach(this.performLeave);
+	  },
+	
+	  render: function render() {
+	    var props = this.props;
+	    var children = this.state.children.map(function (child) {
+	      if (!child.key) {
+	        throw new Error('must set key for <rc-animate> children');
+	      }
+	      return _react2['default'].createElement(
+	        _AnimateChild2['default'],
+	        {
+	          key: child.key,
+	          ref: child.key,
+	          animation: props.animation,
+	          transitionName: props.transitionName,
+	          transitionEnter: props.transitionEnter,
+	          transitionLeave: props.transitionLeave },
+	        child
+	      );
+	    });
+	    var Component = props.component;
+	    if (Component) {
+	      return _react2['default'].createElement(
+	        Component,
+	        this.props,
+	        children
+	      );
+	    } else {
+	      return children[0] || null;
+	    }
+	  }
+	});
+	
+	exports['default'] = Animate;
+	module.exports = exports['default'];
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function inChildren(children, child) {
+	  var found = 0;
+	  children.forEach(function (c) {
+	    if (found) {
+	      return;
+	    }
+	    found = c.key === child.key;
+	  });
+	  return found;
+	}
+	
+	exports['default'] = {
+	  inChildren: inChildren,
+	
+	  toArrayChildren: function toArrayChildren(children) {
+	    var ret = [];
+	    _react2['default'].Children.forEach(children, function (c) {
+	      ret.push(c);
+	    });
+	    return ret;
+	  },
+	
+	  isShownInChildren: function isShownInChildren(children, child, showProp) {
+	    var found = 0;
+	    children.forEach(function (c) {
+	      if (found) {
+	        return;
+	      }
+	      found = c.key === child.key && c.props[showProp];
+	    });
+	    return found;
+	  },
+	
+	  inChildrenByKey: function inChildrenByKey(children, key) {
+	    var found = 0;
+	    if (children) {
+	      children.forEach(function (c) {
+	        if (found) {
+	          return;
+	        }
+	        found = c.key === key;
+	      });
+	    }
+	    return found;
+	  },
+	
+	  isShownInChildrenByKey: function isShownInChildrenByKey(children, key, showProp) {
+	    var found = 0;
+	    if (children) {
+	      children.forEach(function (c) {
+	        if (found) {
+	          return;
+	        }
+	        found = c.key === key && c.props[showProp];
+	      });
+	    }
+	    return found;
+	  },
+	
+	  isSameChildren: function isSameChildren(c1, c2) {
+	    var same = c1.length === c2.length;
+	    if (same) {
+	      c1.forEach(function (c, i) {
+	        if (c !== c2[i]) {
+	          same = false;
+	        }
+	      });
+	    }
+	    return same;
+	  },
+	
+	  mergeChildren: function mergeChildren(prev, next) {
+	    var ret = [];
+	
+	    // For each key of `next`, the list of keys to insert before that key in
+	    // the combined list
+	    var nextChildrenPending = {};
+	    var pendingChildren = [];
+	    prev.forEach(function (c) {
+	      if (inChildren(next, c)) {
+	        if (pendingChildren.length) {
+	          nextChildrenPending[c.key] = pendingChildren;
+	          pendingChildren = [];
+	        }
+	      } else {
+	        pendingChildren.push(c);
+	      }
+	    });
+	
+	    next.forEach(function (c) {
+	      if (nextChildrenPending.hasOwnProperty(c.key)) {
+	        ret = ret.concat(nextChildrenPending[c.key]);
+	      }
+	      ret.push(c);
+	    });
+	
+	    ret = ret.concat(pendingChildren);
+	
+	    return ret;
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _cssAnimation = __webpack_require__(27);
+	
+	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
+	
+	var transitionMap = {
+	  enter: 'transitionEnter',
+	  leave: 'transitionLeave'
+	};
+	
+	var AnimateChild = _react2['default'].createClass({
+	  displayName: 'AnimateChild',
+	
+	  transition: function transition(animationType, finishCallback) {
+	    var _this = this;
+	
+	    var node = _react2['default'].findDOMNode(this);
+	    var props = this.props;
+	    var transitionName = props.transitionName;
+	    this.stop();
+	    var end = function end() {
+	      _this.stopper = null;
+	      finishCallback();
+	    };
+	    if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
+	      this.stopper = (0, _cssAnimation2['default'])(node, transitionName + '-' + animationType, end);
+	    } else {
+	      this.stopper = props.animation[animationType](node, end);
+	    }
+	  },
+	
+	  stop: function stop() {
+	    if (this.stopper) {
+	      this.stopper.stop();
+	      this.stopper = null;
+	    }
+	  },
+	
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.stop();
+	  },
+	
+	  componentWillEnter: function componentWillEnter(done) {
+	    var props = this.props;
+	    if (props.transitionEnter && props.transitionName || props.animation.enter) {
+	      this.transition('enter', done);
+	    } else {
+	      done();
+	    }
+	  },
+	
+	  componentWillLeave: function componentWillLeave(done) {
+	    var props = this.props;
+	    if (props.transitionLeave && props.transitionName || props.animation.leave) {
+	      this.transition('leave', done);
+	    } else {
+	      done();
+	    }
+	  },
+	
+	  render: function render() {
+	    return this.props.children;
+	  }
+	});
+	
+	exports['default'] = AnimateChild;
+	module.exports = exports['default'];
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Event = __webpack_require__(28);
+	var Css = __webpack_require__(29);
+	var isCssAnimationSupported = Event.endEvents.length !== 0;
+	
+	function getDuration(node, name) {
+	  var style = window.getComputedStyle(node);
+	  var prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
+	  var ret = '';
+	  for (var i = 0; i < prefixes.length; i++) {
+	    ret = style.getPropertyValue(prefixes[i] + name);
+	    if (ret) {
+	      break;
+	    }
+	  }
+	  return ret;
+	}
+	
+	function fixBrowserByTimeout(node) {
+	  if (isCssAnimationSupported) {
+	    var transitionDuration = parseFloat(getDuration(node, 'transition-duration')) || 0;
+	    var animationDuration = parseFloat(getDuration(node, 'animation-duration')) || 0;
+	    var time = Math.max(transitionDuration, animationDuration);
+	    // sometimes, browser bug
+	    node.rcEndAnimTimeout = setTimeout(function () {
+	      node.rcEndAnimTimeout = null;
+	      if (node.rcEndListener) {
+	        node.rcEndListener();
+	      }
+	    }, time * 1000 + 200);
+	  }
+	}
+	
+	function clearBrowserBugTimeout(node) {
+	  if (node.rcEndAnimTimeout) {
+	    clearTimeout(node.rcEndAnimTimeout);
+	    node.rcEndAnimTimeout = null;
+	  }
+	}
+	
+	var cssAnimation = function cssAnimation(node, transitionName, callback) {
+	  var className = transitionName;
+	  var activeClassName = className + '-active';
+	
+	  if (node.rcEndListener) {
+	    node.rcEndListener();
+	  }
+	
+	  node.rcEndListener = function (e) {
+	    if (e && e.target !== node) {
+	      return;
+	    }
+	
+	    if (node.rcAnimTimeout) {
+	      clearTimeout(node.rcAnimTimeout);
+	      node.rcAnimTimeout = null;
+	    }
+	
+	    clearBrowserBugTimeout(node);
+	
+	    Css.removeClass(node, className);
+	    Css.removeClass(node, activeClassName);
+	
+	    Event.removeEndEventListener(node, node.rcEndListener);
+	    node.rcEndListener = null;
+	
+	    // Usually this optional callback is used for informing an owner of
+	    // a leave animation and telling it to remove the child.
+	    if (callback) {
+	      callback();
+	    }
+	  };
+	
+	  Event.addEndEventListener(node, node.rcEndListener);
+	
+	  Css.addClass(node, className);
+	
+	  node.rcAnimTimeout = setTimeout(function () {
+	    node.rcAnimTimeout = null;
+	    Css.addClass(node, activeClassName);
+	    fixBrowserByTimeout(node);
+	  }, 0);
+	
+	  return {
+	    stop: function stop() {
+	      if (node.rcEndListener) {
+	        node.rcEndListener();
+	      }
+	    }
+	  };
+	};
+	
+	cssAnimation.style = function (node, style, callback) {
+	  if (node.rcEndListener) {
+	    node.rcEndListener();
+	  }
+	
+	  node.rcEndListener = function (e) {
+	    if (e && e.target !== node) {
+	      return;
+	    }
+	
+	    if (node.rcAnimTimeout) {
+	      clearTimeout(node.rcAnimTimeout);
+	      node.rcAnimTimeout = null;
+	    }
+	
+	    clearBrowserBugTimeout(node);
+	
+	    Event.removeEndEventListener(node, node.rcEndListener);
+	    node.rcEndListener = null;
+	
+	    // Usually this optional callback is used for informing an owner of
+	    // a leave animation and telling it to remove the child.
+	    if (callback) {
+	      callback();
+	    }
+	  };
+	
+	  Event.addEndEventListener(node, node.rcEndListener);
+	
+	  node.rcAnimTimeout = setTimeout(function () {
+	    for (var s in style) {
+	      if (style.hasOwnProperty(s)) {
+	        node.style[s] = style[s];
+	      }
+	    }
+	    node.rcAnimTimeout = null;
+	    fixBrowserByTimeout(node);
+	  }, 0);
+	};
+	
+	cssAnimation.setTransition = function (node, p, value) {
+	  var property = p;
+	  var v = value;
+	  if (value === undefined) {
+	    v = property;
+	    property = '';
+	  }
+	  property = property || '';
+	  ['Webkit', 'Moz', 'O',
+	  // ms is special .... !
+	  'ms'].forEach(function (prefix) {
+	    node.style[prefix + 'Transition' + property] = v;
+	  });
+	};
+	
+	cssAnimation.addClass = Css.addClass;
+	cssAnimation.removeClass = Css.removeClass;
+	cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
+	
+	module.exports = cssAnimation;
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var EVENT_NAME_MAP = {
+	  transitionend: {
+	    transition: 'transitionend',
+	    WebkitTransition: 'webkitTransitionEnd',
+	    MozTransition: 'mozTransitionEnd',
+	    OTransition: 'oTransitionEnd',
+	    msTransition: 'MSTransitionEnd'
+	  },
+	
+	  animationend: {
+	    animation: 'animationend',
+	    WebkitAnimation: 'webkitAnimationEnd',
+	    MozAnimation: 'mozAnimationEnd',
+	    OAnimation: 'oAnimationEnd',
+	    msAnimation: 'MSAnimationEnd'
+	  }
+	};
+	
+	var endEvents = [];
+	
+	function detectEvents() {
+	  var testEl = document.createElement('div');
+	  var style = testEl.style;
+	
+	  if (!('AnimationEvent' in window)) {
+	    delete EVENT_NAME_MAP.animationend.animation;
+	  }
+	
+	  if (!('TransitionEvent' in window)) {
+	    delete EVENT_NAME_MAP.transitionend.transition;
+	  }
+	
+	  for (var baseEventName in EVENT_NAME_MAP) {
+	    if (EVENT_NAME_MAP.hasOwnProperty(baseEventName)) {
+	      var baseEvents = EVENT_NAME_MAP[baseEventName];
+	      for (var styleName in baseEvents) {
+	        if (styleName in style) {
+	          endEvents.push(baseEvents[styleName]);
+	          break;
+	        }
+	      }
+	    }
+	  }
+	}
+	
+	if (typeof window !== 'undefined') {
+	  detectEvents();
+	}
+	
+	function addEventListener(node, eventName, eventListener) {
+	  node.addEventListener(eventName, eventListener, false);
+	}
+	
+	function removeEventListener(node, eventName, eventListener) {
+	  node.removeEventListener(eventName, eventListener, false);
+	}
+	
+	var TransitionEvents = {
+	  addEndEventListener: function addEndEventListener(node, eventListener) {
+	    if (endEvents.length === 0) {
+	      window.setTimeout(eventListener, 0);
+	      return;
+	    }
+	    endEvents.forEach(function (endEvent) {
+	      addEventListener(node, endEvent, eventListener);
+	    });
+	  },
+	
+	  endEvents: endEvents,
+	
+	  removeEndEventListener: function removeEndEventListener(node, eventListener) {
+	    if (endEvents.length === 0) {
+	      return;
+	    }
+	    endEvents.forEach(function (endEvent) {
+	      removeEventListener(node, endEvent, eventListener);
+	    });
+	  }
+	};
+	
+	module.exports = TransitionEvents;
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var SPACE = ' ';
+	var RE_CLASS = /[\n\t\r]/g;
+	
+	function norm(elemClass) {
+	  return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
+	}
+	
+	module.exports = {
+	  addClass: function addClass(elem, className) {
+	    elem.className += ' ' + className;
+	  },
+	
+	  removeClass: function removeClass(elem, n) {
+	    var elemClass = elem.className.trim();
+	    var className = norm(elemClass);
+	    var needle = n.trim();
+	    needle = SPACE + needle + SPACE;
+	    // 一个 cls 有可能多次出现：'link link2 link link3 link'
+	    while (className.indexOf(needle) >= 0) {
+	      className = className.replace(needle, SPACE);
+	    }
+	    elem.className = className.trim();
+	  }
+	};
 
 /***/ }
 /******/ ]);
