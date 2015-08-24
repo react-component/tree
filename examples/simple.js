@@ -15,12 +15,11 @@ var demo = (
       defaultExpandAll={true} showIcon={false} showLine={true}>
       <TreeNode title="parent 1" key="0-1">
         <TreeNode title="parent 1-0" key="0-1-1">
-          <TreeNode>leaf </TreeNode>
-          <TreeNode>leaf </TreeNode>
+          <TreeNode title="leaf" />
+          <TreeNode title="leaf" />
         </TreeNode>
         <TreeNode title="parent 1-1">
-          <TreeNode>leaf </TreeNode>
-          <TreeNode>leaf </TreeNode>
+          <TreeNode title="leaf" />
         </TreeNode>
       </TreeNode>
     </Tree>

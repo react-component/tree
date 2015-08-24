@@ -74,6 +74,9 @@ class TreeNode extends React.Component {
   renderChildren(props) {
     const children = props.children;
     let newChildren = children;
+    if (!children) {
+      return children;
+    }
     if (children.type === TreeNode || Array.isArray(children) &&
         children.every((item) => {
           return item.type === TreeNode;
