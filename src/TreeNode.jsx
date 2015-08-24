@@ -135,7 +135,7 @@ class TreeNode extends React.Component {
       const domProps = {};
       if (!props.disabled) {
         if (props.selected) {
-          domProps.className = `${prefixCls}-selected`;
+          domProps.className = `${prefixCls}-node-selected`;
         }
         domProps.onClick = () => {
           this.handleSelect();
