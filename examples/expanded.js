@@ -39,39 +39,18 @@ webpackJsonp([1],{
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
 	      { title: 'parent 1', key: 'p1' },
-	      _react2['default'].createElement(
-	        _rcTree.TreeNode,
-	        { key: 'p10' },
-	        'leaf '
-	      ),
+	      _react2['default'].createElement(_rcTree.TreeNode, { key: 'p10', title: 'leaf' }),
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
 	        { title: 'parent 1-1', key: 'p11' },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          { title: 'parent 2-1', key: 'p21' },
-	          _react2['default'].createElement(
-	            _rcTree.TreeNode,
-	            null,
-	            'leaf '
-	          ),
-	          _react2['default'].createElement(
-	            _rcTree.TreeNode,
-	            null,
-	            'leaf '
-	          )
+	          _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' }),
+	          _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
 	        ),
-	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          { key: 'p22' },
-	          'leaf'
-	        )
+	        _react2['default'].createElement(_rcTree.TreeNode, { key: 'p22', title: 'leaf' })
 	      )
-	    ),
-	    _react2['default'].createElement(
-	      _rcTree.TreeNode,
-	      { key: 'p12' },
-	      'leaf'
 	    )
 	  )
 	);

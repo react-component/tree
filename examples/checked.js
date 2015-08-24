@@ -43,7 +43,7 @@ webpackJsonp([0],{
 	        done();
 	      }
 	    }
-	
+	    node.style.display = 'none';
 	    (0, _velocityAnimate2['default'])(node, 'slideDown', {
 	      duration: 300,
 	      complete: complete
@@ -88,11 +88,7 @@ webpackJsonp([0],{
 	  _react2['default'].createElement(
 	    _rcTree.TreeNode,
 	    { title: 'parent 1', key: 'p1' },
-	    _react2['default'].createElement(
-	      _rcTree.TreeNode,
-	      { key: 'p10' },
-	      'leaf '
-	    ),
+	    _react2['default'].createElement(_rcTree.TreeNode, { key: 'p10', title: 'leaf' }),
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
 	      { title: 'parent 1-1', key: 'p11' },
@@ -102,53 +98,18 @@ webpackJsonp([0],{
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          null,
-	          _react2['default'].createElement(
+	          'test'
+	        ),
+	        _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
 	            'span',
 	            null,
 	            'sss'
-	          )
-	        ),
-	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          null,
-	          'leaf '
-	        )
+	          ) })
 	      ),
-	      _react2['default'].createElement(
-	        _rcTree.TreeNode,
-	        { key: 'p22' },
-	        'leaf'
-	      )
+	      _react2['default'].createElement(_rcTree.TreeNode, { key: 'p22', title: 'leaf' })
 	    )
 	  ),
-	  _react2['default'].createElement(
-	    _rcTree.TreeNode,
-	    { key: 'p12' },
-	    'leaf'
-	  ),
-	  _react2['default'].createElement(
-	    _rcTree.TreeNode,
-	    null,
-	    _react2['default'].createElement(
-	      _rcTree.TreeNode,
-	      null,
-	      _react2['default'].createElement(
-	        _rcTree.TreeNode,
-	        null,
-	        'leaf '
-	      ),
-	      _react2['default'].createElement(
-	        _rcTree.TreeNode,
-	        null,
-	        'leaf '
-	      )
-	    ),
-	    _react2['default'].createElement(
-	      _rcTree.TreeNode,
-	      null,
-	      'leaf '
-	    )
-	  )
+	  _react2['default'].createElement(_rcTree.TreeNode, { key: 'p12', title: 'leaf' })
 	);
 	
 	var demo = _react2['default'].createElement(

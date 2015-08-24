@@ -47,30 +47,13 @@ webpackJsonp([2],{
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
 	        { title: 'parent 1-0', key: '0-1-1' },
-	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          null,
-	          'leaf '
-	        ),
-	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          null,
-	          'leaf '
-	        )
+	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' }),
+	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
 	        { title: 'parent 1-1' },
-	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          null,
-	          'leaf '
-	        ),
-	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          null,
-	          'leaf '
-	        )
+	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
 	      )
 	    )
 	  )

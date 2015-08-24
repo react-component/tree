@@ -1725,6 +1725,9 @@
 	    value: function renderChildren(props) {
 	      var children = props.children;
 	      var newChildren = children;
+	      if (!children) {
+	        return children;
+	      }
 	      if (children.type === TreeNode || Array.isArray(children) && children.every(function (item) {
 	        return item.type === TreeNode;
 	      })) {

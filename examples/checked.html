@@ -235,7 +235,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-tree@0.15.0</h1>
+            <h1>rc-tree@0.15.1</h1>
             <p>tree ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
@@ -262,7 +262,7 @@
         done();
       }
     }
-
+    node.style.display=<span class="hljs-string">'none'</span>;
     velocity(node, <span class="hljs-string">'slideDown'</span>, {
       duration: <span class="hljs-number">300</span>,
       complete: complete
@@ -304,23 +304,16 @@
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandAll</span>=<span class="hljs-value">{true}</span> <span class="hljs-attribute">checkable</span>=<span class="hljs-value">{true}</span>
       <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{handleCheck}</span> <span class="hljs-attribute">defaultCheckedKeys</span>=<span class="hljs-value">{['p1',</span> '<span class="hljs-attribute">p22</span>']}&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p1"</span> &gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p10"</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p10"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> /&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p11"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 2-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p21"</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>sss<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{&lt;span</span>&gt;</span>sss<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>} /&gt;
         <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p22"</span>&gt;</span>leaf<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p22"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p12"</span>&gt;</span>leaf<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>leaf <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p12"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
 )</span>;
 
