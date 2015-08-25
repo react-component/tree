@@ -79,10 +79,6 @@ class TreeNode extends React.Component {
   renderChildren(props) {
     const renderFirst = this.renderFirst;
     this.renderFirst = 1;
-    this.haveRendered = this.haveRendered || props.expanded;
-    if (!this.haveRendered) {
-      return null;
-    }
     let transitionAppear = true;
     if (!renderFirst && props.expanded) {
       transitionAppear = false;
@@ -142,7 +138,7 @@ class TreeNode extends React.Component {
     // let content = props.title;
     const content = props.title;
     let newChildren = this.renderChildren(props);
-    if (newChildren === props.children) {
+    if (!newChildren || newChildren === props.children) {
       // content = newChildren;
       newChildren = null;
       canRenderSwitcher = false;
@@ -165,15 +161,14 @@ class TreeNode extends React.Component {
       }
       return (
         <a ref="selectHandle" title={content} {...domProps}>
-          {icon} {title}
+          {icon}{title}
         </a>
       );
     };
 
     return (
       <li className={joinClasses(props.className, props.disabled ? `${prefixCls}-treenode-disabled` : '')}>
-        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) :
-          <span className={`${prefixCls}-switcher-noop`}></span>}
+        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : <span className={`${prefixCls}-switcher-noop`}></span>}
         {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}
         {newChildren}
