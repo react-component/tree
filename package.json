@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "0.15.2",
+  "version": "0.15.3",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -46,6 +46,7 @@
     "velocity-animate": "^1.2.2"
   },
   "dependencies": {
+    "object-assign": "3.x",
     "rc-animate": "1.x",
     "rc-util": "2.x"
   },

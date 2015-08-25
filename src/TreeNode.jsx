@@ -1,6 +1,7 @@
 import React from 'react';
 import {joinClasses, classSet} from 'rc-util';
 import Animate from 'rc-animate';
+import assign from 'object-assign';
 
 const defaultTitle = '---';
 
@@ -11,6 +12,7 @@ class TreeNode extends React.Component {
       this[m] = this[m].bind(this);
     });
   }
+
   getPosition(pos) {
     const obj = {
       last: false,
@@ -22,13 +24,14 @@ class TreeNode extends React.Component {
     });
     const sLen = siblings.length;
     const posIndex = Number(pos.substr(-1, 1));
-    if (sLen === 1 ||  posIndex === sLen - 1) {
+    if (sLen === 1 || posIndex === sLen - 1) {
       obj.last = true;
     } else {
       obj.center = true;
     }
     return obj;
   }
+
   renderSwitcher(props, expandedState) {
     const prefixCls = props.prefixCls;
     const switcherCls = {
@@ -51,6 +54,7 @@ class TreeNode extends React.Component {
     }
     return <span className={classSet(switcherCls)} onClick={this.handleExpand}></span>;
   }
+
   renderCheckbox(props) {
     const prefixCls = props.prefixCls;
     const checkboxCls = {
@@ -69,18 +73,29 @@ class TreeNode extends React.Component {
       checkboxCls[`${prefixCls}-checkbox-disabled`] = true;
       return <span ref="checkbox" className={classSet(checkboxCls)}>{customEle}</span>;
     }
-    return (<span ref="checkbox" className={classSet(checkboxCls)}  onClick={this.handleCheck}>{customEle}</span>);
+    return (<span ref="checkbox" className={classSet(checkboxCls)} onClick={this.handleCheck}>{customEle}</span>);
   }
+
   renderChildren(props) {
+    const renderFirst = this.renderFirst;
+    this.renderFirst = 1;
+    this.haveRendered = this.haveRendered || props.expanded;
+    if (!this.haveRendered) {
+      return null;
+    }
+    let transitionAppear = true;
+    if (!renderFirst && props.expanded) {
+      transitionAppear = false;
+    }
     const children = props.children;
     let newChildren = children;
     if (!children) {
       return children;
     }
     if (children.type === TreeNode || Array.isArray(children) &&
-        children.every((item) => {
-          return item.type === TreeNode;
-        })) {
+      children.every((item) => {
+        return item.type === TreeNode;
+      })) {
       const cls = {
         [`${props.prefixCls}-child-tree`]: true,
         [`${props.prefixCls}-child-tree-open`]: props.expanded,
@@ -92,12 +107,16 @@ class TreeNode extends React.Component {
       if (props.openTransitionName) {
         animProps.transitionName = props.openTransitionName;
       } else if (typeof props.openAnimation === 'object') {
-        animProps.animation = props.openAnimation;
+        animProps.animation = assign({}, props.openAnimation);
+        if (!transitionAppear) {
+          delete animProps.animation.appear;
+        }
       }
       newChildren = this.newChildren = (
         <Animate {...animProps}
-        showProp="expanded"
-        component="">
+          showProp="expanded"
+          transitionAppear={transitionAppear}
+          component="">
           <ul className={classSet(cls)} expanded={props.expanded}>
             {React.Children.map(children, (item, index) => {
               return props.root.renderTreeNode(item, index, props.pos);
@@ -108,6 +127,7 @@ class TreeNode extends React.Component {
     }
     return newChildren;
   }
+
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
@@ -145,29 +165,34 @@ class TreeNode extends React.Component {
       }
       return (
         <a ref="selectHandle" title={content} {...domProps}>
-          {icon}{title}
+          {icon} {title}
         </a>
       );
     };
 
     return (
       <li className={joinClasses(props.className, props.disabled ? `${prefixCls}-treenode-disabled` : '')}>
-        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : <span className={`${prefixCls}-switcher-noop`}></span>}
+        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) :
+          <span className={`${prefixCls}-switcher-noop`}></span>}
         {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}
         {newChildren}
       </li>
     );
   }
+
   handleCheck() {
     this.props.root.handleCheck(this);
   }
+
   handleSelect() {
     this.props.root.handleSelect(this);
   }
+
   handleExpand() {
     this.props.root.handleExpand(this);
   }
+
   // keyboard event support
   handleKeyDown(e) {
     e.preventDefault();
