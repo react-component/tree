@@ -95,267 +95,26 @@
 /* 0 */,
 /* 1 */,
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(3);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(5)(content, {});
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		module.hot.accept("!!/Users/hua/my/react/c/tree/node_modules/rc-tools/node_modules/css-loader/index.js?sourceMap!/Users/hua/my/react/c/tree/node_modules/rc-tools/node_modules/less-loader/index.js?sourceMap!/Users/hua/my/react/c/tree/assets/index.less", function() {
-			var newContent = require("!!/Users/hua/my/react/c/tree/node_modules/rc-tools/node_modules/css-loader/index.js?sourceMap!/Users/hua/my/react/c/tree/node_modules/rc-tools/node_modules/less-loader/index.js?sourceMap!/Users/hua/my/react/c/tree/assets/index.less");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
+	// removed by extract-text-webpack-plugin
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(4)();
-	exports.push([module.id, ".rc-tree {\n  margin: 0;\n  padding: 5px;\n}\n.rc-tree li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  white-space: nowrap;\n  outline: 0;\n}\n.rc-tree li ul {\n  margin: 0;\n  padding: 0 0 0 18px;\n}\n.rc-tree li ul.rc-tree-line {\n  background: url(\"https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif\") 0 0 repeat-y;\n}\n.rc-tree li a {\n  display: inline-block;\n  padding: 1px 3px 0 0;\n  margin: 0;\n  cursor: pointer;\n  height: 17px;\n  text-decoration: none;\n  vertical-align: top;\n}\n.rc-tree li span.rc-tree-switcher-noop,\n.rc-tree li span.rc-tree-switcher,\n.rc-tree li span.rc-tree-checkbox,\n.rc-tree li span.rc-tree-iconEle {\n  line-height: 16px;\n  margin-right: 2px;\n  width: 16px;\n  height: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  border: 0 none;\n  cursor: pointer;\n  outline: none;\n  background-color: transparent;\n  background-repeat: no-repeat;\n  background-attachment: scroll;\n  background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n}\n.rc-tree li span.rc-tree-switcher-noop {\n  background-image: none;\n}\n.rc-tree li span.rc-tree-switcher-disabled {\n  background: #fff;\n  position: relative;\n}\n.rc-tree li span.rc-tree-switcher-disabled:after {\n  content: '-';\n  position: absolute;\n  top: 8px;\n  left: 6px;\n  color: gray;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-roots_open {\n  background-position: -92px 0;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-roots_close {\n  background-position: -74px 0;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-center_open {\n  background-position: -92px -18px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-center_close {\n  background-position: -74px -18px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-bottom_open {\n  background-position: -92px -36px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-bottom_close {\n  background-position: -74px -36px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-noline_open {\n  background-position: -92px -72px;\n}\n.rc-tree li span.rc-tree-switcher.rc-tree-noline_close {\n  background-position: -74px -72px;\n}\n.rc-tree li span.rc-tree-checkbox {\n  width: 13px;\n  height: 13px;\n  margin: 0 3px;\n  background-position: 0 0;\n}\n.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-checked {\n  background-position: -14px 0;\n}\n.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-indeterminate {\n  background-position: -14px -28px;\n}\n.rc-tree li span.rc-tree-checkbox-disabled {\n  background-position: 0 -28px !important;\n}\n.rc-tree-child-tree {\n  display: none;\n}\n.rc-tree-child-tree-open {\n  display: block;\n}\n.rc-tree-treenode-disabled > span,\n.rc-tree-treenode-disabled > a {\n  color: gray;\n}\n.rc-tree-node-selected {\n  background-color: #ffe6b0;\n  border: 1px #ffb951 solid;\n  opacity: 0.8;\n}\n.rc-tree-icon__open {\n  margin-right: 2px;\n  background-position: -110px -16px;\n  vertical-align: top;\n}\n.rc-tree-icon__close {\n  margin-right: 2px;\n  background-position: -110px 0;\n  vertical-align: top;\n}\n", "", {"version":3,"sources":["index.less"],"names":[],"mappings":"AACA,CAAC;EACC,SAAA;EACA,YAAA;;AAFF,CAAC,OAGC;EACE,UAAA;EACA,SAAA;EACA,gBAAA;EACA,mBAAA;EACA,UAAA;;AARJ,CAAC,OAGC,GAME;EACE,SAAA;EACA,mBAAA;;AACA,CAZL,OAGC,GAME,GAGG,CAAC,OAAgB;EAChB,gBAAgB,yEAAhB;;AAbR,CAAC,OAGC,GAaE;EACE,qBAAA;EACA,oBAAA;EACA,SAAA;EACA,eAAA;EACA,YAAA;EACA,qBAAA;EACA,mBAAA;;AAGA,CA1BL,OAGC,GAsBE,KACG,CAAC,OAAgB;AAClB,CA3BL,OAGC,GAsBE,KAEG,CAAC,OAAgB;AAClB,CA5BL,OAGC,GAsBE,KAGG,CAAC,OAAgB;AAClB,CA7BL,OAGC,GAsBE,KAIG,CAAC,OAAgB;EAChB,iBAAA;EACA,iBAAA;EACA,WAAA;EACA,YAAA;EACA,qBAAA;EACA,sBAAA;EACA,cAAA;EACA,eAAA;EACA,aAAA;EACA,6BAAA;EACA,4BAAA;EACA,6BAAA;EACA,sBAAsB,4DAAtB;;AAEF,CA5CL,OAGC,GAsBE,KAmBG,CAAC,OAAgB;EAChB,sBAAA;;AAGA,CAhDP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SACf;EACC,gBAAA;EACA,kBAAA;;AACA,CAnDT,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SACf,SAGE;EACC,SAAS,GAAT;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,WAAA;;AAGJ,CA3DP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAYf,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CA9DP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAef,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CAjEP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAkBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CApEP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAqBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CAvEP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAwBf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CA1EP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SA2Bf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CA7EP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SA8Bf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CAhFP,OAGC,GAsBE,KAsBG,CAAC,OAAgB,SAiCf,CAAC,OAAgB;EAChB,gCAAA;;AAGJ,CApFL,OAGC,GAsBE,KA2DG,CAAC,OAAgB;EAChB,WAAA;EACA,YAAA;EACA,aAAA;EACA,wBAAA;;AACA,CAzFP,OAGC,GAsBE,KA2DG,CAAC,OAAgB,SAKf,CAAC,OAAgB;EAChB,4BAAA;;AAEF,CA5FP,OAGC,GAsBE,KA2DG,CAAC,OAAgB,SAQf,CAAC,OAAgB;EAChB,gCAAA;;AAEF,CA/FP,OAGC,GAsBE,KA2DG,CAAC,OAAgB,SAWf;EACC,4BAAA;;AAKR,CArGD,OAqGE;EACC,aAAA;;AACA,CAvGH,OAqGE,WAEE;EACC,cAAA;;AAGJ,CA3GD,OA2GE,kBACC;AADF,CA3GD,OA2GE,kBAEC;EACE,WAAA;;AAGJ,CAjHD,OAiHE;EACC,yBAAA;EACA,yBAAA;EACA,YAAA;;AAEF,CAtHD,OAsHE;EACC,iBAAA;EACA,iCAAA;EACA,mBAAA;;AAEF,CA3HD,OA2HE;EACC,iBAAA;EACA,6BAAA;EACA,mBAAA","sourcesContent":["@treePrefixCls: rc-tree;\n.@{treePrefixCls} {\n  margin: 0;\n  padding: 5px;\n  li {\n    padding: 0;\n    margin: 0;\n    list-style: none;\n    white-space: nowrap;\n    outline: 0;\n    ul {\n      margin: 0;\n      padding: 0 0 0 18px;\n      &.@{treePrefixCls}-line {\n        background: url(\"https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif\") 0 0 repeat-y;\n      }\n    }\n    a {\n      display: inline-block;\n      padding: 1px 3px 0 0;\n      margin: 0;\n      cursor: pointer;\n      height: 17px;\n      text-decoration: none;\n      vertical-align: top;\n    }\n    span {\n      &.@{treePrefixCls}-switcher-noop,\n      &.@{treePrefixCls}-switcher,\n      &.@{treePrefixCls}-checkbox,\n      &.@{treePrefixCls}-iconEle {\n        line-height: 16px;\n        margin-right: 2px;\n        width: 16px;\n        height: 16px;\n        display: inline-block;\n        vertical-align: middle;\n        border: 0 none;\n        cursor: pointer;\n        outline: none;\n        background-color: transparent;\n        background-repeat: no-repeat;\n        background-attachment: scroll;\n        background-image: url(\"https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png\");\n      }\n      &.@{treePrefixCls}-switcher-noop {\n        background-image: none;\n      }\n      &.@{treePrefixCls}-switcher {\n        &-disabled {\n          background: #fff;\n          position: relative;\n          &:after {\n            content: '-';\n            position: absolute;\n            top: 8px;\n            left: 6px;\n            color: gray;\n          }\n        }\n        &.@{treePrefixCls}-roots_open {\n          background-position: -92px 0;\n        }\n        &.@{treePrefixCls}-roots_close {\n          background-position: -74px 0;\n        }\n        &.@{treePrefixCls}-center_open {\n          background-position: -92px -18px;\n        }\n        &.@{treePrefixCls}-center_close {\n          background-position: -74px -18px;\n        }\n        &.@{treePrefixCls}-bottom_open {\n          background-position: -92px -36px;\n        }\n        &.@{treePrefixCls}-bottom_close {\n          background-position: -74px -36px;\n        }\n        &.@{treePrefixCls}-noline_open {\n          background-position: -92px -72px;\n        }\n        &.@{treePrefixCls}-noline_close {\n          background-position: -74px -72px;\n        }\n      }\n      &.@{treePrefixCls}-checkbox {\n        width: 13px;\n        height: 13px;\n        margin: 0 3px;\n        background-position: 0 0;\n        &.@{treePrefixCls}-checkbox-checked {\n          background-position: -14px 0;\n        }\n        &.@{treePrefixCls}-checkbox-indeterminate {\n          background-position: -14px -28px;\n        }\n        &-disabled {\n          background-position: 0 -28px!important;\n        }\n      }\n    }\n  }\n  &-child-tree {\n    display: none;\n    &-open {\n      display: block;\n    }\n  }\n  &-treenode-disabled {\n    >span,\n    >a {\n      color: gray;\n    }\n  }\n  &-node-selected {\n    background-color: #ffe6b0;\n    border: 1px #ffb951 solid;\n    opacity: 0.8;\n  }\n  &-icon__open {\n    margin-right: 2px;\n    background-position: -110px -16px;\n    vertical-align: top;\n  }\n  &-icon__close {\n    margin-right: 2px;\n    background-position: -110px 0;\n    vertical-align: top;\n  }\n}\n"]}]);
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-	module.exports = function() {
-		var list = [];
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-		return list;
-	}
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isIE9 = memoize(function() {
-			return /msie 9\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0;
-	
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-	
-		options = options || {};
-		// Force single-tag solution on IE9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isIE9();
-	
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
-	
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-	
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-	
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-	
-	function createStyleElement() {
-		var styleElement = document.createElement("style");
-		var head = getHeadElement();
-		styleElement.type = "text/css";
-		head.appendChild(styleElement);
-		return styleElement;
-	}
-	
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-	
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement());
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else {
-			styleElement = createStyleElement();
-			update = applyToTag.bind(null, styleElement);
-			remove = function () {
-				styleElement.parentNode.removeChild(styleElement);
-			};
-		}
-	
-		update(obj);
-	
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-	
-	function replaceText(source, id, replacement) {
-		var boundaries = ["/** >>" + id + " **/", "/** " + id + "<< **/"];
-		var start = source.lastIndexOf(boundaries[0]);
-		var wrappedReplacement = replacement
-			? (boundaries[0] + replacement + boundaries[1])
-			: "";
-		if (source.lastIndexOf(boundaries[0]) >= 0) {
-			var end = source.lastIndexOf(boundaries[1]) + boundaries[1].length;
-			return source.slice(0, start) + wrappedReplacement + source.slice(end);
-		} else {
-			return source + wrappedReplacement;
-		}
-	}
-	
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-	
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(styleElement.styleSheet.cssText, index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-	
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
-	
-		if(sourceMap && typeof btoa === "function") {
-			try {
-				css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(JSON.stringify(sourceMap)) + " */";
-				css = "@import url(\"data:text/css;base64," + btoa(css) + "\")";
-			} catch(e) {}
-		}
-	
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-	
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-
-
-/***/ },
-/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 7 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(8);
+	module.exports = __webpack_require__(5);
 
 /***/ },
-/* 8 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -366,11 +125,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _Tree = __webpack_require__(9);
+	var _Tree = __webpack_require__(6);
 	
 	var _Tree2 = _interopRequireDefault(_Tree);
 	
-	var _TreeNode = __webpack_require__(22);
+	var _TreeNode = __webpack_require__(19);
 	
 	var _TreeNode2 = _interopRequireDefault(_TreeNode);
 	
@@ -380,7 +139,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 9 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -403,11 +162,11 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _react = __webpack_require__(6);
+	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcUtil = __webpack_require__(10);
+	var _rcUtil = __webpack_require__(7);
 	
 	// sorted array ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
 	var filterMin = function filterMin(arr) {
@@ -732,7 +491,7 @@
 	  onCheck: _react2['default'].PropTypes.func,
 	  onSelect: _react2['default'].PropTypes.func,
 	  openTransitionName: _react2['default'].PropTypes.string,
-	  openAnimation: _react2['default'].PropTypes.oneOfType(_react2['default'].PropTypes.string, _react2['default'].PropTypes.object)
+	  openAnimation: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.object])
 	};
 	
 	Tree.defaultProps = {
@@ -751,30 +510,30 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
-	  guid: __webpack_require__(11),
-	  classSet: __webpack_require__(12),
-	  joinClasses: __webpack_require__(13),
-	  KeyCode: __webpack_require__(14),
-	  PureRenderMixin: __webpack_require__(15),
-	  shallowEqual: __webpack_require__(16),
-	  createChainedFunction: __webpack_require__(17),
+	  guid: __webpack_require__(8),
+	  classSet: __webpack_require__(9),
+	  joinClasses: __webpack_require__(10),
+	  KeyCode: __webpack_require__(11),
+	  PureRenderMixin: __webpack_require__(12),
+	  shallowEqual: __webpack_require__(13),
+	  createChainedFunction: __webpack_require__(14),
 	  Dom: {
-	    addEventListener: __webpack_require__(18),
-	    contains: __webpack_require__(19)
+	    addEventListener: __webpack_require__(15),
+	    contains: __webpack_require__(16)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(20),
-	    mapSelf: __webpack_require__(21)
+	    toArray: __webpack_require__(17),
+	    mapSelf: __webpack_require__(18)
 	  }
 	};
 
 
 /***/ },
-/* 11 */
+/* 8 */
 /***/ function(module, exports) {
 
 	var seed = 0;
@@ -784,7 +543,7 @@
 
 
 /***/ },
-/* 12 */
+/* 9 */
 /***/ function(module, exports) {
 
 	/**
@@ -829,7 +588,7 @@
 
 
 /***/ },
-/* 13 */
+/* 10 */
 /***/ function(module, exports) {
 
 	/**
@@ -876,7 +635,7 @@
 
 
 /***/ },
-/* 14 */
+/* 11 */
 /***/ function(module, exports) {
 
 	/**
@@ -1403,7 +1162,7 @@
 
 
 /***/ },
-/* 15 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1419,7 +1178,7 @@
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(16);
+	var shallowEqual = __webpack_require__(13);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -1456,7 +1215,7 @@
 
 
 /***/ },
-/* 16 */
+/* 13 */
 /***/ function(module, exports) {
 
 	/**
@@ -1504,7 +1263,7 @@
 
 
 /***/ },
-/* 17 */
+/* 14 */
 /***/ function(module, exports) {
 
 	/**
@@ -1531,7 +1290,7 @@
 
 
 /***/ },
-/* 18 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = function (target, eventType, callback) {
@@ -1554,7 +1313,7 @@
 
 
 /***/ },
-/* 19 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = function (root, node) {
@@ -1570,10 +1329,10 @@
 
 
 /***/ },
-/* 20 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(6);
+	var React = __webpack_require__(3);
 	
 	module.exports = function (children) {
 	  var ret = [];
@@ -1585,10 +1344,10 @@
 
 
 /***/ },
-/* 21 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(6);
+	var React = __webpack_require__(3);
 	
 	function mirror(o) {
 	  return o;
@@ -1601,7 +1360,7 @@
 
 
 /***/ },
-/* 22 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1624,15 +1383,19 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _react = __webpack_require__(6);
+	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcUtil = __webpack_require__(10);
+	var _rcUtil = __webpack_require__(7);
 	
-	var _rcAnimate = __webpack_require__(23);
+	var _rcAnimate = __webpack_require__(20);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+	
+	var _objectAssign = __webpack_require__(28);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
 	var defaultTitle = '---';
 	
@@ -1723,6 +1486,12 @@
 	  }, {
 	    key: 'renderChildren',
 	    value: function renderChildren(props) {
+	      var renderFirst = this.renderFirst;
+	      this.renderFirst = 1;
+	      var transitionAppear = true;
+	      if (!renderFirst && props.expanded) {
+	        transitionAppear = false;
+	      }
 	      var children = props.children;
 	      var newChildren = children;
 	      if (!children) {
@@ -1741,14 +1510,17 @@
 	        if (props.openTransitionName) {
 	          animProps.transitionName = props.openTransitionName;
 	        } else if (typeof props.openAnimation === 'object') {
-	          animProps.animation = props.openAnimation;
+	          animProps.animation = (0, _objectAssign2['default'])({}, props.openAnimation);
+	          if (!transitionAppear) {
+	            delete animProps.animation.appear;
+	          }
 	        }
 	        newChildren = this.newChildren = _react2['default'].createElement(
 	          _rcAnimate2['default'],
 	          _extends({}, animProps, {
 	            showProp: 'expanded',
-	            component: '',
-	            animateMount: true }),
+	            transitionAppear: transitionAppear,
+	            component: '' }),
 	          _react2['default'].createElement(
 	            'ul',
 	            { className: (0, _rcUtil.classSet)(cls), expanded: props.expanded },
@@ -1776,7 +1548,7 @@
 	      // let content = props.title;
 	      var content = props.title;
 	      var newChildren = this.renderChildren(props);
-	      if (newChildren === props.children) {
+	      if (!newChildren || newChildren === props.children) {
 	        // content = newChildren;
 	        newChildren = null;
 	        canRenderSwitcher = false;
@@ -1859,16 +1631,16 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 23 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
 	'use strict';
 	
-	module.exports = __webpack_require__(24);
+	module.exports = __webpack_require__(21);
 
 /***/ },
-/* 24 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1881,17 +1653,21 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var _react = __webpack_require__(6);
+	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ChildrenUtils = __webpack_require__(25);
+	var _ChildrenUtils = __webpack_require__(22);
 	
 	var _ChildrenUtils2 = _interopRequireDefault(_ChildrenUtils);
 	
-	var _AnimateChild = __webpack_require__(26);
+	var _AnimateChild = __webpack_require__(23);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
+	
+	var _util = __webpack_require__(27);
+	
+	var _util2 = _interopRequireDefault(_util);
 	
 	var defaultKey = 'rc_animate_' + Date.now();
 	
@@ -1907,18 +1683,23 @@
 	  return children;
 	}
 	
+	function noop() {}
+	
 	var Animate = _react2['default'].createClass({
 	  displayName: 'Animate',
 	
-	  protoTypes: {
+	  propTypes: {
 	    component: _react2['default'].PropTypes.any,
 	    animation: _react2['default'].PropTypes.object,
 	    transitionName: _react2['default'].PropTypes.string,
 	    transitionEnter: _react2['default'].PropTypes.bool,
+	    transitionAppear: _react2['default'].PropTypes.bool,
 	    transitionLeave: _react2['default'].PropTypes.bool,
 	    onEnd: _react2['default'].PropTypes.func,
-	    showProp: _react2['default'].PropTypes.bool,
-	    animateMount: _react2['default'].PropTypes.bool
+	    onEnter: _react2['default'].PropTypes.func,
+	    onLeave: _react2['default'].PropTypes.func,
+	    onAppear: _react2['default'].PropTypes.func,
+	    showProp: _react2['default'].PropTypes.string
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -1927,9 +1708,11 @@
 	      component: 'span',
 	      transitionEnter: true,
 	      transitionLeave: true,
-	      enter: true,
-	      animateMount: false,
-	      onEnd: function onEnd() {}
+	      transitionAppear: false,
+	      onEnd: noop,
+	      onEnter: noop,
+	      onLeave: noop,
+	      onAppear: noop
 	    };
 	  },
 	
@@ -1942,8 +1725,23 @@
 	    };
 	  },
 	
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	  componentDidMount: function componentDidMount() {
 	    var _this = this;
+	
+	    var showProp = this.props.showProp;
+	    var children = this.state.children;
+	    if (showProp) {
+	      children = children.filter(function (c) {
+	        return !!c.props[showProp];
+	      });
+	    }
+	    children.forEach(function (c) {
+	      _this.performAppear(c.key);
+	    });
+	  },
+	
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var _this2 = this;
 	
 	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
 	    var props = this.props;
@@ -1957,10 +1755,11 @@
 	
 	    if (showProp && !exclusive) {
 	      newChildren = newChildren.map(function (c) {
+	        var ret = c;
 	        if (!c.props[showProp] && (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp)) {
-	          c = _react2['default'].cloneElement(c, _defineProperty({}, showProp, true));
+	          ret = _react2['default'].cloneElement(c, _defineProperty({}, showProp, true));
 	        }
-	        return c;
+	        return ret;
 	      });
 	    }
 	
@@ -1971,7 +1770,7 @@
 	    // exclusive needs immediate response
 	    if (exclusive) {
 	      Object.keys(currentlyAnimatingKeys).forEach(function (key) {
-	        _this.stop(key);
+	        _this2.stop(key);
 	      });
 	      currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
 	    }
@@ -1987,11 +1786,11 @@
 	          var showInNow = (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp);
 	          var showInNext = c.props[showProp];
 	          if (!showInNow && showInNext) {
-	            _this.keysToEnter.push(key);
+	            _this2.keysToEnter.push(key);
 	          }
 	        }
 	      } else if (!hasPrev) {
-	        _this.keysToEnter.push(key);
+	        _this2.keysToEnter.push(key);
 	      }
 	    });
 	
@@ -2006,86 +1805,13 @@
 	          var showInNext = (0, _ChildrenUtils.isShownInChildren)(nextChildren, c, showProp);
 	          var showInNow = c.props[showProp];
 	          if (!showInNext && showInNow) {
-	            _this.keysToLeave.push(key);
+	            _this2.keysToLeave.push(key);
 	          }
 	        }
 	      } else if (!hasNext) {
-	        _this.keysToLeave.push(key);
+	        _this2.keysToLeave.push(key);
 	      }
 	    });
-	  },
-	
-	  performEnter: function performEnter(key) {
-	    // may already remove by exclusive
-	    if (this.refs[key]) {
-	      this.currentlyAnimatingKeys[key] = true;
-	      this.refs[key].componentWillEnter(this._handleDoneEntering.bind(this, key));
-	    }
-	  },
-	
-	  _handleDoneEntering: function _handleDoneEntering(key) {
-	    delete this.currentlyAnimatingKeys[key];
-	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props));
-	    if (!this.isValidChildByKey(currentChildren, key)) {
-	      // exclusive will not need this
-	      this.performLeave(key);
-	    } else {
-	      this.props.onEnd(key, true);
-	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
-	        this.setState({
-	          children: currentChildren
-	        });
-	      }
-	    }
-	  },
-	
-	  performLeave: function performLeave(key) {
-	    // may already remove by exclusive
-	    if (this.refs[key]) {
-	      this.currentlyAnimatingKeys[key] = true;
-	      this.refs[key].componentWillLeave(this._handleDoneLeaving.bind(this, key));
-	    }
-	  },
-	
-	  isValidChildByKey: function isValidChildByKey(currentChildren, key) {
-	    var showProp = this.props.showProp;
-	    if (showProp) {
-	      return (0, _ChildrenUtils.isShownInChildrenByKey)(currentChildren, key, showProp);
-	    } else {
-	      return (0, _ChildrenUtils.inChildrenByKey)(currentChildren, key);
-	    }
-	  },
-	
-	  _handleDoneLeaving: function _handleDoneLeaving(key) {
-	    delete this.currentlyAnimatingKeys[key];
-	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props));
-	    // in case state change is too fast
-	    if (this.isValidChildByKey(currentChildren, key)) {
-	      this.performEnter(key);
-	    } else {
-	      this.props.onEnd(key, false);
-	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
-	        this.setState({
-	          children: currentChildren
-	        });
-	      }
-	    }
-	  },
-	
-	  stop: function stop(key) {
-	    delete this.currentlyAnimatingKeys[key];
-	    var component = this.refs[key];
-	    if (component) {
-	      component.stop();
-	    }
-	  },
-	
-	  componentDidMount: function componentDidMount() {
-	    if (this.props.animateMount) {
-	      this.state.children.map(function (c) {
-	        return c.key;
-	      }).forEach(this.performEnter);
-	    }
 	  },
 	
 	  componentDidUpdate: function componentDidUpdate() {
@@ -2111,6 +1837,7 @@
 	          animation: props.animation,
 	          transitionName: props.transitionName,
 	          transitionEnter: props.transitionEnter,
+	          transitionAppear: props.transitionAppear,
 	          transitionLeave: props.transitionLeave },
 	        child
 	      );
@@ -2122,8 +1849,93 @@
 	        this.props,
 	        children
 	      );
+	    }
+	    return children[0] || null;
+	  },
+	
+	  performEnter: function performEnter(key) {
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
+	    }
+	  },
+	
+	  performAppear: function performAppear(key) {
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
+	    }
+	  },
+	
+	  handleDoneAdding: function handleDoneAdding(key, type) {
+	    var props = this.props;
+	    delete this.currentlyAnimatingKeys[key];
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    if (!this.isValidChildByKey(currentChildren, key)) {
+	      // exclusive will not need this
+	      this.performLeave(key);
 	    } else {
-	      return children[0] || null;
+	      if (type === 'appear') {
+	        if (_util2['default'].isAppearSupported(props)) {
+	          props.onAppear(key);
+	          props.onEnd(key, true);
+	        }
+	      } else {
+	        if (_util2['default'].isEnterSupported(props)) {
+	          props.onEnter(key);
+	          props.onEnd(key, true);
+	        }
+	      }
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
+	        this.setState({
+	          children: currentChildren
+	        });
+	      }
+	    }
+	  },
+	
+	  performLeave: function performLeave(key) {
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
+	    }
+	  },
+	
+	  handleDoneLeaving: function handleDoneLeaving(key) {
+	    var props = this.props;
+	    delete this.currentlyAnimatingKeys[key];
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    // in case state change is too fast
+	    if (this.isValidChildByKey(currentChildren, key)) {
+	      this.performEnter(key);
+	    } else {
+	      if (_util2['default'].isLeaveSupported(props)) {
+	        props.onLeave(key);
+	        props.onEnd(key, false);
+	      }
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
+	        this.setState({
+	          children: currentChildren
+	        });
+	      }
+	    }
+	  },
+	
+	  isValidChildByKey: function isValidChildByKey(currentChildren, key) {
+	    var showProp = this.props.showProp;
+	    if (showProp) {
+	      return (0, _ChildrenUtils.isShownInChildrenByKey)(currentChildren, key, showProp);
+	    }
+	    return (0, _ChildrenUtils.inChildrenByKey)(currentChildren, key);
+	  },
+	
+	  stop: function stop(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var component = this.refs[key];
+	    if (component) {
+	      component.stop();
 	    }
 	  }
 	});
@@ -2132,7 +1944,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 25 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2143,7 +1955,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _react = __webpack_require__(6);
+	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -2251,7 +2063,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 26 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2262,21 +2074,30 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _react = __webpack_require__(6);
+	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cssAnimation = __webpack_require__(27);
+	var _cssAnimation = __webpack_require__(24);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
+	var _util = __webpack_require__(27);
+	
+	var _util2 = _interopRequireDefault(_util);
+	
 	var transitionMap = {
 	  enter: 'transitionEnter',
+	  appear: 'transitionAppear',
 	  leave: 'transitionLeave'
 	};
 	
 	var AnimateChild = _react2['default'].createClass({
 	  displayName: 'AnimateChild',
+	
+	  propTypes: {
+	    children: _react2['default'].PropTypes.any
+	  },
 	
 	  transition: function transition(animationType, finishCallback) {
 	    var _this = this;
@@ -2308,17 +2129,23 @@
 	  },
 	
 	  componentWillEnter: function componentWillEnter(done) {
-	    var props = this.props;
-	    if (props.transitionEnter && props.transitionName || props.animation.enter) {
+	    if (_util2['default'].isEnterSupported(this.props)) {
 	      this.transition('enter', done);
 	    } else {
 	      done();
 	    }
 	  },
 	
+	  componentWillAppear: function componentWillAppear(done) {
+	    if (_util2['default'].isAppearSupported(this.props)) {
+	      this.transition('appear', done);
+	    } else {
+	      done();
+	    }
+	  },
+	
 	  componentWillLeave: function componentWillLeave(done) {
-	    var props = this.props;
-	    if (props.transitionLeave && props.transitionName || props.animation.leave) {
+	    if (_util2['default'].isLeaveSupported(this.props)) {
 	      this.transition('leave', done);
 	    } else {
 	      done();
@@ -2334,13 +2161,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 27 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Event = __webpack_require__(28);
-	var Css = __webpack_require__(29);
+	var Event = __webpack_require__(25);
+	var Css = __webpack_require__(26);
 	var isCssAnimationSupported = Event.endEvents.length !== 0;
 	
 	function getDuration(node, name) {
@@ -2492,7 +2319,7 @@
 	module.exports = cssAnimation;
 
 /***/ },
-/* 28 */
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2580,7 +2407,7 @@
 	module.exports = TransitionEvents;
 
 /***/ },
-/* 29 */
+/* 26 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2609,6 +2436,74 @@
 	    elem.className = className.trim();
 	  }
 	};
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var util = {
+	  isAppearSupported: function isAppearSupported(props) {
+	    return props.transitionName && props.transitionAppear || props.animation.appear;
+	  },
+	  isEnterSupported: function isEnterSupported(props) {
+	    return props.transitionName && props.transitionEnter || props.animation.enter;
+	  },
+	  isLeaveSupported: function isLeaveSupported(props) {
+	    return props.transitionName && props.transitionLeave || props.animation.leave;
+	  }
+	};
+	exports["default"] = util;
+	module.exports = exports["default"];
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	'use strict';
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+	
+	function ToObject(val) {
+		if (val == null) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+	
+		return Object(val);
+	}
+	
+	function ownEnumerableKeys(obj) {
+		var keys = Object.getOwnPropertyNames(obj);
+	
+		if (Object.getOwnPropertySymbols) {
+			keys = keys.concat(Object.getOwnPropertySymbols(obj));
+		}
+	
+		return keys.filter(function (key) {
+			return propIsEnumerable.call(obj, key);
+		});
+	}
+	
+	module.exports = Object.assign || function (target, source) {
+		var from;
+		var keys;
+		var to = ToObject(target);
+	
+		for (var s = 1; s < arguments.length; s++) {
+			from = arguments[s];
+			keys = ownEnumerableKeys(Object(from));
+	
+			for (var i = 0; i < keys.length; i++) {
+				to[keys[i]] = from[keys[i]];
+			}
+		}
+	
+		return to;
+	};
+
 
 /***/ }
 /******/ ]);
