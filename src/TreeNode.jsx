@@ -97,8 +97,7 @@ class TreeNode extends React.Component {
       newChildren = this.newChildren = (
         <Animate {...animProps}
         showProp="expanded"
-        component=""
-        animateMount={true}>
+        component="">
           <ul className={classSet(cls)} expanded={props.expanded}>
             {React.Children.map(children, (item, index) => {
               return props.root.renderTreeNode(item, index, props.pos);

@@ -46,8 +46,8 @@
     "velocity-animate": "^1.2.2"
   },
   "dependencies": {
-    "rc-animate": "^1.1.0",
-    "rc-util": "^2.0.2"
+    "rc-animate": "1.x",
+    "rc-util": "2.x"
   },
   "precommit": [
     "lint"

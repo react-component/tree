@@ -288,7 +288,7 @@ Tree.propTypes = {
   onCheck: React.PropTypes.func,
   onSelect: React.PropTypes.func,
   openTransitionName: React.PropTypes.string,
-  openAnimation: React.PropTypes.oneOfType(React.PropTypes.string, React.PropTypes.object),
+  openAnimation: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]),
 };
 
 Tree.defaultProps = {
