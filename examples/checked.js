@@ -15,12 +15,14 @@ class TreeDemo extends React.Component {
       this[m] = this[m].bind(this);
     });
     this.state = {
-      checkedKeys: []
+      checkedKeys: [],
+      selectedKeys: []
     }
   }
   handleClick() {
     this.setState({
-      checkedKeys: ['p11']
+      checkedKeys: ['p11'],
+      selectedKeys: ['p21', 'p11']
     })
   }
   render() {
@@ -28,7 +30,8 @@ class TreeDemo extends React.Component {
       <div>
         <h2>checked</h2>
         <Tree defaultExpandAll={true} checkable={true}
-              onCheck={handleCheck} defaultCheckedKeys={['p1', 'p22']} checkedKeys={this.state.checkedKeys}>
+              onCheck={handleCheck} defaultCheckedKeys={['p1', 'p22']} checkedKeys={this.state.checkedKeys}
+              defaultSelectedKeys={['p11']} selectedKeys={this.state.selectedKeys} multiple>
           <TreeNode title="parent 1" key="p1">
             <TreeNode key="p10" title="leaf"/>
             <TreeNode title="parent 1-1" key="p11">

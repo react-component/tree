@@ -43,7 +43,7 @@ class Tree extends React.Component {
       props.checkedKeys = nextProps.checkedKeys;
     }
     if ('selectedKeys' in nextProps) {
-      props.selectedKeys = nextProps.selectedKeys;
+      props.selectedKeys = nextProps.multiple ? nextProps.selectedKeys : [nextProps.selectedKeys[0]];
     }
     this.setState(props);
   }
