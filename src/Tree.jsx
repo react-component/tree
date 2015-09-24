@@ -21,15 +21,31 @@ class Tree extends React.Component {
     ['handleKeyDown', 'handleCheck'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
-    const expandedKeys = props.defaultExpandedKeys;
-    const checkedKeys = props.defaultCheckedKeys;
     this.defaultExpandAll = props.defaultExpandAll;
-    const selectedKeys = props.multiple ? [...props.defaultSelectedKeys] : [props.defaultSelectedKeys[0]];
+    const expandedKeys = props.defaultExpandedKeys;
+    let checkedKeys = props.defaultCheckedKeys;
+    if ('checkedKeys' in props) {
+      checkedKeys = props.checkedKeys || [];
+    }
+    let selectedKeys = props.multiple ? [...props.defaultSelectedKeys] : [props.defaultSelectedKeys[0]];
+    if ('selectedKeys' in props) {
+      selectedKeys = props.multiple ? [...props.selectedKeys] : [props.selectedKeys[0]];
+    }
     this.state = {
       expandedKeys,
       checkedKeys,
       selectedKeys,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    const props = {};
+    if ('checkedKeys' in nextProps) {
+      props.checkedKeys = nextProps.checkedKeys;
+    }
+    if ('selectedKeys' in nextProps) {
+      props.selectedKeys = nextProps.selectedKeys;
+    }
+    this.setState(props);
   }
   getCheckKeys() {
     const checkPartKeys = [];
