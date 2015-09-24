@@ -235,43 +235,62 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-tree@0.15.4</h1>
+            <h1>rc-tree@0.16.0</h1>
             <p>tree ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
         <script src="common.js?nowrap"></script>
         <script src="checked.js?nowrap"></script>
-        <div class="highlight"><pre><code>'use strict';
+        <div class="highlight"><pre><code><span class="hljs-symbol">'use</span> strict';
 
-import 'rc-tree/assets/index.css';
-import React from 'react';
-import Tree, {TreeNode} from 'rc-tree';
+<span class="hljs-keyword">import</span> <span class="hljs-symbol">'rc</span>-tree/assets/index.css';
+<span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
+<span class="hljs-keyword">import</span> <span class="hljs-type">Tree</span>, {<span class="hljs-type">TreeNode</span>} from <span class="hljs-symbol">'rc</span>-tree';
 
 function handleCheck(info) {
-  console.log('check: ', info);
+  console.log(<span class="hljs-symbol">'check</span>: ', info);
 }
 
-var demo = (
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>checked<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandAll</span>=<span class="hljs-value">{true}</span> <span class="hljs-attribute">checkable</span>=<span class="hljs-value">{true}</span>
-          <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{handleCheck}</span> <span class="hljs-attribute">defaultCheckedKeys</span>=<span class="hljs-value">{['p1',</span> '<span class="hljs-attribute">p22</span>']}&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p1"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p10"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span>/&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p11"</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 2-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p21"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{&lt;span</span>&gt;</span>sss<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>}/&gt;
-          <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p22"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span>/&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p12"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span>/&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-);
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TreeDemo</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
+  constructor(props) {
+    <span class="hljs-keyword">super</span>(props);
+    [<span class="hljs-symbol">'handleClic</span>k'].forEach((m)=&gt; {
+      <span class="hljs-keyword">this</span>[m] = <span class="hljs-keyword">this</span>[m].bind(<span class="hljs-keyword">this</span>);
+    });
+    <span class="hljs-keyword">this</span>.state = {
+      checkedKeys: []
+    }
+  }
+  handleClick() {
+    <span class="hljs-keyword">this</span>.setState({
+      checkedKeys: [<span class="hljs-symbol">'p1</span>1']
+    })
+  }
+  render() {
+    <span class="hljs-keyword">return</span> &lt;div&gt;
+      &lt;div&gt;
+        &lt;h2&gt;checked&lt;/h2&gt;
+        &lt;<span class="hljs-type">Tree</span> defaultExpandAll={<span class="hljs-literal">true</span>} checkable={<span class="hljs-literal">true</span>}
+              onCheck={handleCheck} defaultCheckedKeys={[<span class="hljs-symbol">'p</span>1', <span class="hljs-symbol">'p2</span>2']} checkedKeys={<span class="hljs-keyword">this</span>.state.checkedKeys}&gt;
+          &lt;<span class="hljs-type">TreeNode</span> title=<span class="hljs-string">"parent 1"</span> key=<span class="hljs-string">"p1"</span>&gt;
+            &lt;<span class="hljs-type">TreeNode</span> key=<span class="hljs-string">"p10"</span> title=<span class="hljs-string">"leaf"</span>/&gt;
+            &lt;<span class="hljs-type">TreeNode</span> title=<span class="hljs-string">"parent 1-1"</span> key=<span class="hljs-string">"p11"</span>&gt;
+              &lt;<span class="hljs-type">TreeNode</span> title=<span class="hljs-string">"parent 2-1"</span> key=<span class="hljs-string">"p21"</span>&gt;
+                &lt;<span class="hljs-type">TreeNode</span>&gt;test&lt;/<span class="hljs-type">TreeNode</span>&gt;
+                &lt;<span class="hljs-type">TreeNode</span> title={&lt;span&gt;sss&lt;/span&gt;}/&gt;
+              &lt;/<span class="hljs-type">TreeNode</span>&gt;
+              &lt;<span class="hljs-type">TreeNode</span> key=<span class="hljs-string">"p22"</span> title=<span class="hljs-string">"leaf"</span>/&gt;
+            &lt;/<span class="hljs-type">TreeNode</span>&gt;
+          &lt;/<span class="hljs-type">TreeNode</span>&gt;
+          &lt;<span class="hljs-type">TreeNode</span> key=<span class="hljs-string">"p12"</span> title=<span class="hljs-string">"leaf"</span>/&gt;
+        &lt;/<span class="hljs-type">Tree</span>&gt;
+      &lt;/div&gt;
+      &lt;button onClick={<span class="hljs-keyword">this</span>.handleClick}&gt;check sth&lt;/button&gt;
+    &lt;/div&gt;
+  }
+}
 
-React.render(demo, document.getElementById('__react-content'));
+<span class="hljs-type">React</span>.render(&lt;<span class="hljs-type">TreeDemo</span> /&gt;, document.getElementById(<span class="hljs-symbol">'__react</span>-content'));
 </code></pre></div>
     </div>
     <a href="http://github.com/react-component/tree"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>

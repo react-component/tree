@@ -194,10 +194,16 @@
 	    ['handleKeyDown', 'handleCheck'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
+	    this.defaultExpandAll = props.defaultExpandAll;
 	    var expandedKeys = props.defaultExpandedKeys;
 	    var checkedKeys = props.defaultCheckedKeys;
-	    this.defaultExpandAll = props.defaultExpandAll;
+	    if ('checkedKeys' in props) {
+	      checkedKeys = props.checkedKeys || [];
+	    }
 	    var selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
+	    if ('selectedKeys' in props) {
+	      selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.selectedKeys)) : [props.selectedKeys[0]];
+	    }
 	    this.state = {
 	      expandedKeys: expandedKeys,
 	      checkedKeys: checkedKeys,
@@ -206,6 +212,18 @@
 	  }
 	
 	  _createClass(Tree, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      var props = {};
+	      if ('checkedKeys' in nextProps) {
+	        props.checkedKeys = nextProps.checkedKeys;
+	      }
+	      if ('selectedKeys' in nextProps) {
+	        props.selectedKeys = nextProps.selectedKeys;
+	      }
+	      this.setState(props);
+	    }
+	  }, {
 	    key: 'getCheckKeys',
 	    value: function getCheckKeys() {
 	      var _this2 = this;
