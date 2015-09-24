@@ -235,7 +235,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-tree@0.16.0</h1>
+            <h1>rc-tree@0.16.1</h1>
             <p>tree ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
@@ -258,12 +258,14 @@ function handleCheck(info) {
       <span class="hljs-keyword">this</span>[m] = <span class="hljs-keyword">this</span>[m].bind(<span class="hljs-keyword">this</span>);
     });
     <span class="hljs-keyword">this</span>.state = {
-      checkedKeys: []
+      checkedKeys: [],
+      selectedKeys: []
     }
   }
   handleClick() {
     <span class="hljs-keyword">this</span>.setState({
-      checkedKeys: [<span class="hljs-symbol">'p1</span>1']
+      checkedKeys: [<span class="hljs-symbol">'p1</span>1'],
+      selectedKeys: [<span class="hljs-symbol">'p2</span>1', <span class="hljs-symbol">'p1</span>1']
     })
   }
   render() {
@@ -271,7 +273,8 @@ function handleCheck(info) {
       &lt;div&gt;
         &lt;h2&gt;checked&lt;/h2&gt;
         &lt;<span class="hljs-type">Tree</span> defaultExpandAll={<span class="hljs-literal">true</span>} checkable={<span class="hljs-literal">true</span>}
-              onCheck={handleCheck} defaultCheckedKeys={[<span class="hljs-symbol">'p</span>1', <span class="hljs-symbol">'p2</span>2']} checkedKeys={<span class="hljs-keyword">this</span>.state.checkedKeys}&gt;
+              onCheck={handleCheck} defaultCheckedKeys={[<span class="hljs-symbol">'p</span>1', <span class="hljs-symbol">'p2</span>2']} checkedKeys={<span class="hljs-keyword">this</span>.state.checkedKeys}
+              defaultSelectedKeys={[<span class="hljs-symbol">'p1</span>1']} selectedKeys={<span class="hljs-keyword">this</span>.state.selectedKeys} multiple&gt;
           &lt;<span class="hljs-type">TreeNode</span> title=<span class="hljs-string">"parent 1"</span> key=<span class="hljs-string">"p1"</span>&gt;
             &lt;<span class="hljs-type">TreeNode</span> key=<span class="hljs-string">"p10"</span> title=<span class="hljs-string">"leaf"</span>/&gt;
             &lt;<span class="hljs-type">TreeNode</span> title=<span class="hljs-string">"parent 1-1"</span> key=<span class="hljs-string">"p11"</span>&gt;

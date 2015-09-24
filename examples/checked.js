@@ -48,7 +48,8 @@ webpackJsonp([0],[
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.state = {
-	      checkedKeys: []
+	      checkedKeys: [],
+	      selectedKeys: []
 	    };
 	  }
 	
@@ -56,7 +57,8 @@ webpackJsonp([0],[
 	    key: 'handleClick',
 	    value: function handleClick() {
 	      this.setState({
-	        checkedKeys: ['p11']
+	        checkedKeys: ['p11'],
+	        selectedKeys: ['p21', 'p11']
 	      });
 	    }
 	  }, {
@@ -76,7 +78,8 @@ webpackJsonp([0],[
 	          _react2['default'].createElement(
 	            _rcTree2['default'],
 	            { defaultExpandAll: true, checkable: true,
-	              onCheck: handleCheck, defaultCheckedKeys: ['p1', 'p22'], checkedKeys: this.state.checkedKeys },
+	              onCheck: handleCheck, defaultCheckedKeys: ['p1', 'p22'], checkedKeys: this.state.checkedKeys,
+	              defaultSelectedKeys: ['p11'], selectedKeys: this.state.selectedKeys, multiple: true },
 	            _react2['default'].createElement(
 	              _rcTree.TreeNode,
 	              { title: 'parent 1', key: 'p1' },
