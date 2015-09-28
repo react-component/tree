@@ -4,14 +4,10 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import Tree, {TreeNode} from 'rc-tree';
 
-function handleCheck(info) {
-  console.log('check: ', info);
-}
-
 class TreeDemo extends React.Component {
   constructor(props) {
     super(props);
-    ['handleClick'].forEach((m)=> {
+    ['handleClick', 'handleCheck', 'handleSelect'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
     this.state = {
@@ -25,13 +21,27 @@ class TreeDemo extends React.Component {
       selectedKeys: ['p21', 'p11']
     })
   }
+  handleCheck(info) {
+    console.log('check: ', info);
+    this.setState({
+      checkedKeys: ['p21'],
+      selectedKeys: ['p1', 'p21']
+    })
+  }
+  handleSelect(info) {
+    console.log('selected: ', info);
+    this.setState({
+      checkedKeys: ['p21'],
+      selectedKeys: ['p21']
+    })
+  }
   render() {
     return <div>
       <div>
         <h2>checked</h2>
         <Tree defaultExpandAll={true} checkable={true}
-              onCheck={handleCheck} defaultCheckedKeys={['p1', 'p22']} checkedKeys={this.state.checkedKeys}
-              defaultSelectedKeys={['p11']} selectedKeys={this.state.selectedKeys} multiple>
+              onCheck={this.handleCheck} checkedKeys={this.state.checkedKeys}
+              onSelect={this.handleSelect} selectedKeys={this.state.selectedKeys} multiple>
           <TreeNode title="parent 1" key="p1">
             <TreeNode key="p10" title="leaf"/>
             <TreeNode title="parent 1-1" key="p11">

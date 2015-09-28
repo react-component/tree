@@ -217,21 +217,27 @@ class Tree extends React.Component {
     this.handleCheckState(this.treeNodesChkStates, [pos], !checked);
     const checkKeys = this.getCheckKeys();
     this.checkPartKeys = checkKeys.checkPartKeys;
-    this.setState({
-      checkedKeys: checkKeys.checkedKeys,
-    });
-    if (this.props.onCheck) {
-      this.props.onCheck({
-        event: 'check',
-        checked: checked,
-        node: treeNode,
-        checkedKeys: checkKeys.checkedKeys,
+    let checkedKeys = checkKeys.checkedKeys;
+    const newSt = {
+      event: 'check',
+      node: treeNode,
+    };
+    if (!('checkedKeys' in this.props)) {
+      this.setState({
+        checkedKeys,
       });
+      newSt.checked = checked;
+    } else {
+      checkedKeys = this.state.checkedKeys;
+    }
+    newSt.checkedKeys = checkedKeys;
+    if (this.props.onCheck) {
+      this.props.onCheck(newSt);
     }
   }
   handleSelect(treeNode) {
     const props = this.props;
-    const selectedKeys = [...this.state.selectedKeys];
+    let selectedKeys = [...this.state.selectedKeys];
     const eventKey = treeNode.props.eventKey;
     const index = selectedKeys.indexOf(eventKey);
     let selected;
@@ -245,16 +251,21 @@ class Tree extends React.Component {
       }
       selectedKeys.push(eventKey);
     }
-    this.setState({
-      selectedKeys: selectedKeys,
-    });
-    if (props.onSelect) {
-      props.onSelect({
-        event: 'select',
-        selected: selected,
-        node: treeNode,
+    const newSt = {
+      event: 'select',
+      node: treeNode,
+    };
+    if (!('selectedKeys' in this.props)) {
+      this.setState({
         selectedKeys: selectedKeys,
       });
+      newSt.selected = selected;
+    } else {
+      selectedKeys = this.state.selectedKeys;
+    }
+    newSt.selectedKeys = selectedKeys;
+    if (props.onSelect) {
+      props.onSelect(newSt);
     }
   }
   handleExpand(treeNode) {
