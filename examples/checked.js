@@ -31,10 +31,6 @@ webpackJsonp([0],[
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	function handleCheck(info) {
-	  console.log('check: ', info);
-	}
-	
 	var TreeDemo = (function (_React$Component) {
 	  _inherits(TreeDemo, _React$Component);
 	
@@ -44,7 +40,7 @@ webpackJsonp([0],[
 	    _classCallCheck(this, TreeDemo);
 	
 	    _get(Object.getPrototypeOf(TreeDemo.prototype), 'constructor', this).call(this, props);
-	    ['handleClick'].forEach(function (m) {
+	    ['handleClick', 'handleCheck', 'handleSelect'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.state = {
@@ -59,6 +55,24 @@ webpackJsonp([0],[
 	      this.setState({
 	        checkedKeys: ['p11'],
 	        selectedKeys: ['p21', 'p11']
+	      });
+	    }
+	  }, {
+	    key: 'handleCheck',
+	    value: function handleCheck(info) {
+	      console.log('check: ', info);
+	      this.setState({
+	        checkedKeys: ['p21'],
+	        selectedKeys: ['p1', 'p21']
+	      });
+	    }
+	  }, {
+	    key: 'handleSelect',
+	    value: function handleSelect(info) {
+	      console.log('selected: ', info);
+	      this.setState({
+	        checkedKeys: ['p21'],
+	        selectedKeys: ['p21']
 	      });
 	    }
 	  }, {
@@ -78,8 +92,8 @@ webpackJsonp([0],[
 	          _react2['default'].createElement(
 	            _rcTree2['default'],
 	            { defaultExpandAll: true, checkable: true,
-	              onCheck: handleCheck, defaultCheckedKeys: ['p1', 'p22'], checkedKeys: this.state.checkedKeys,
-	              defaultSelectedKeys: ['p11'], selectedKeys: this.state.selectedKeys, multiple: true },
+	              onCheck: this.handleCheck, checkedKeys: this.state.checkedKeys,
+	              onSelect: this.handleSelect, selectedKeys: this.state.selectedKeys, multiple: true },
 	            _react2['default'].createElement(
 	              _rcTree.TreeNode,
 	              { title: 'parent 1', key: 'p1' },

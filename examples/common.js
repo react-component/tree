@@ -415,16 +415,22 @@
 	      this.handleCheckState(this.treeNodesChkStates, [pos], !checked);
 	      var checkKeys = this.getCheckKeys();
 	      this.checkPartKeys = checkKeys.checkPartKeys;
-	      this.setState({
-	        checkedKeys: checkKeys.checkedKeys
-	      });
-	      if (this.props.onCheck) {
-	        this.props.onCheck({
-	          event: 'check',
-	          checked: checked,
-	          node: treeNode,
-	          checkedKeys: checkKeys.checkedKeys
+	      var checkedKeys = checkKeys.checkedKeys;
+	      var newSt = {
+	        event: 'check',
+	        node: treeNode
+	      };
+	      if (!('checkedKeys' in this.props)) {
+	        this.setState({
+	          checkedKeys: checkedKeys
 	        });
+	        newSt.checked = checked;
+	      } else {
+	        checkedKeys = this.state.checkedKeys;
+	      }
+	      newSt.checkedKeys = checkedKeys;
+	      if (this.props.onCheck) {
+	        this.props.onCheck(newSt);
 	      }
 	    }
 	  }, {
@@ -445,16 +451,21 @@
 	        }
 	        selectedKeys.push(eventKey);
 	      }
-	      this.setState({
-	        selectedKeys: selectedKeys
-	      });
-	      if (props.onSelect) {
-	        props.onSelect({
-	          event: 'select',
-	          selected: selected,
-	          node: treeNode,
+	      var newSt = {
+	        event: 'select',
+	        node: treeNode
+	      };
+	      if (!('selectedKeys' in this.props)) {
+	        this.setState({
 	          selectedKeys: selectedKeys
 	        });
+	        newSt.selected = selected;
+	      } else {
+	        selectedKeys = this.state.selectedKeys;
+	      }
+	      newSt.selectedKeys = selectedKeys;
+	      if (props.onSelect) {
+	        props.onSelect(newSt);
 	      }
 	    }
 	  }, {
