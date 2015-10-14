@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		3:0
+/******/ 		4:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"checked","1":"expanded","2":"simple"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"checked","1":"dynamic","2":"expanded","3":"simple"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -267,6 +267,7 @@
 	        eventKey: key,
 	        pos: level + '-' + index,
 	        prefixCls: props.prefixCls,
+	        async: props.async,
 	        showLine: props.showLine,
 	        showIcon: props.showIcon,
 	        checkable: props.checkable,
@@ -471,6 +472,8 @@
 	  }, {
 	    key: 'handleExpand',
 	    value: function handleExpand(treeNode) {
+	      var _this5 = this;
+	
 	      var thisProps = this.props;
 	      var tnProps = treeNode.props;
 	      var expandedKeys = this.state.expandedKeys.concat([]);
@@ -488,10 +491,19 @@
 	      if (expanded) {
 	        if (index === -1) {
 	          expandedKeys.push(tnProps.eventKey);
+	          if (thisProps.async && thisProps.onDataLoaded) {
+	            return thisProps.onDataLoaded(treeNode).then(function () {
+	              _this5.setState({
+	                expandedKeys: expandedKeys
+	              });
+	            })['catch'](function () {
+	              // console.error('Something went wrong', reason);
+	            });
+	          }
 	        }
 	      } else {
-	        expandedKeys.splice(index, 1);
-	      }
+	          expandedKeys.splice(index, 1);
+	        }
 	      this.setState({
 	        expandedKeys: expandedKeys
 	      });
@@ -511,6 +523,7 @@
 	Tree.propTypes = {
 	  prefixCls: _react2['default'].PropTypes.string,
 	  checkable: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.bool, _react2['default'].PropTypes.node]),
+	  async: _react2['default'].PropTypes.bool,
 	  showLine: _react2['default'].PropTypes.bool,
 	  showIcon: _react2['default'].PropTypes.bool,
 	  defaultExpandAll: _react2['default'].PropTypes.bool,
@@ -519,12 +532,14 @@
 	  defaultSelectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
 	  onCheck: _react2['default'].PropTypes.func,
 	  onSelect: _react2['default'].PropTypes.func,
+	  onDataLoaded: _react2['default'].PropTypes.func,
 	  openTransitionName: _react2['default'].PropTypes.string,
 	  openAnimation: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.object])
 	};
 	
 	Tree.defaultProps = {
 	  prefixCls: 'rc-tree',
+	  async: false,
 	  multiple: false,
 	  checkable: false,
 	  showLine: false,
@@ -1440,6 +1455,9 @@
 	    ['handleExpand', 'handleCheck'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
+	    this.state = {
+	      dataLoading: false
+	    };
 	  }
 	
 	  _createClass(TreeNode, [{
@@ -1571,16 +1589,17 @@
 	      var prefixCls = props.prefixCls;
 	      var expandedState = props.expanded ? 'open' : 'close';
 	
-	      var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon__' + expandedState, true), _iconEleCls);
+	      var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon_loading', this.state.dataLoading), _defineProperty(_iconEleCls, prefixCls + '-icon__' + expandedState, true), _iconEleCls);
 	
 	      var canRenderSwitcher = true;
-	      // let content = props.title;
 	      var content = props.title;
 	      var newChildren = this.renderChildren(props);
 	      if (!newChildren || newChildren === props.children) {
 	        // content = newChildren;
 	        newChildren = null;
-	        canRenderSwitcher = false;
+	        if (!props.async) {
+	          canRenderSwitcher = false;
+	        }
 	      }
 	
 	      var selectHandle = function selectHandle() {
@@ -1632,7 +1651,24 @@
 	  }, {
 	    key: 'handleExpand',
 	    value: function handleExpand() {
-	      this.props.root.handleExpand(this);
+	      var _this3 = this;
+	
+	      var callbackPromise = this.props.root.handleExpand(this);
+	      if (callbackPromise && typeof callbackPromise === 'object') {
+	        (function () {
+	          var setLoading = function setLoading(dataLoading) {
+	            _this3.setState({
+	              dataLoading: dataLoading
+	            });
+	          };
+	          setLoading(true);
+	          callbackPromise.then(function () {
+	            setLoading(false);
+	          }, function () {
+	            setLoading(false);
+	          });
+	        })();
+	      }
 	    }
 	
 	    // keyboard event support

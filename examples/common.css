@@ -43,6 +43,11 @@
   background-attachment: scroll;
   background-image: url("https://t.alipayobjects.com/images/T1.ANfXhXtXXXXXXXX.png");
 }
+.rc-tree li span.rc-tree-icon_loading {
+  margin-right: 2px;
+  vertical-align: top;
+  background: url(https://t.alipayobjects.com/images/rmsweb/T1YxhiXgJbXXXXXXXX.gif) no-repeat scroll 0 0 transparent;
+}
 .rc-tree li span.rc-tree-switcher-noop {
   background-image: none;
 }
