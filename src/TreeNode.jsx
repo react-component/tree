@@ -11,6 +11,9 @@ class TreeNode extends React.Component {
     ['handleExpand', 'handleCheck'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
+    this.state = {
+      dataLoading: false,
+    };
   }
 
   getPosition(pos) {
@@ -131,17 +134,19 @@ class TreeNode extends React.Component {
 
     const iconEleCls = {
       [`${prefixCls}-iconEle`]: true,
+      [`${prefixCls}-icon_loading`]: this.state.dataLoading,
       [`${prefixCls}-icon__${expandedState}`]: true,
     };
 
     let canRenderSwitcher = true;
-    // let content = props.title;
     const content = props.title;
     let newChildren = this.renderChildren(props);
     if (!newChildren || newChildren === props.children) {
       // content = newChildren;
       newChildren = null;
-      canRenderSwitcher = false;
+      if (!props.async) {
+        canRenderSwitcher = false;
+      }
     }
 
     const selectHandle = () => {
@@ -185,7 +190,20 @@ class TreeNode extends React.Component {
   }
 
   handleExpand() {
-    this.props.root.handleExpand(this);
+    const callbackPromise = this.props.root.handleExpand(this);
+    if (callbackPromise && typeof callbackPromise === 'object') {
+      const setLoading = (dataLoading) => {
+        this.setState({
+          dataLoading,
+        });
+      };
+      setLoading(true);
+      callbackPromise.then(() => {
+        setLoading(false);
+      }, () => {
+        setLoading(false);
+      });
+    }
   }
 
   // keyboard event support

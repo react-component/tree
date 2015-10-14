@@ -81,6 +81,7 @@ class Tree extends React.Component {
       eventKey: key,
       pos: `${level}-${index}`,
       prefixCls: props.prefixCls,
+      async: props.async,
       showLine: props.showLine,
       showIcon: props.showIcon,
       checkable: props.checkable,
@@ -286,6 +287,15 @@ class Tree extends React.Component {
     if (expanded) {
       if (index === -1) {
         expandedKeys.push(tnProps.eventKey);
+        if (thisProps.async && thisProps.onDataLoaded) {
+          return thisProps.onDataLoaded(treeNode).then(() => {
+            this.setState({
+              expandedKeys: expandedKeys,
+            });
+          }).catch(() => {
+            // console.error('Something went wrong', reason);
+          });
+        }
       }
     } else {
       expandedKeys.splice(index, 1);
@@ -306,6 +316,7 @@ Tree.propTypes = {
     React.PropTypes.bool,
     React.PropTypes.node,
   ]),
+  async: React.PropTypes.bool,
   showLine: React.PropTypes.bool,
   showIcon: React.PropTypes.bool,
   defaultExpandAll: React.PropTypes.bool,
@@ -314,12 +325,14 @@ Tree.propTypes = {
   defaultSelectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
   onCheck: React.PropTypes.func,
   onSelect: React.PropTypes.func,
+  onDataLoaded: React.PropTypes.func,
   openTransitionName: React.PropTypes.string,
   openAnimation: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]),
 };
 
 Tree.defaultProps = {
   prefixCls: 'rc-tree',
+  async: false,
   multiple: false,
   checkable: false,
   showLine: false,
