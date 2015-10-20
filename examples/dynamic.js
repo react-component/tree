@@ -112,7 +112,7 @@ webpackJsonp([1],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { onSelect: this.handleSelect, async: true, onDataLoaded: this.handleDataLoaded, showLine: false },
+	        { onSelect: this.handleSelect, onDataLoaded: this.handleDataLoaded, showLine: false },
 	        treeNodes
 	      )
 	    );

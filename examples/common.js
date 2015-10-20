@@ -266,8 +266,8 @@
 	        root: this,
 	        eventKey: key,
 	        pos: level + '-' + index,
+	        onDataLoaded: props.onDataLoaded,
 	        prefixCls: props.prefixCls,
-	        async: props.async,
 	        showLine: props.showLine,
 	        showIcon: props.showIcon,
 	        checkable: props.checkable,
@@ -491,7 +491,7 @@
 	      if (expanded) {
 	        if (index === -1) {
 	          expandedKeys.push(tnProps.eventKey);
-	          if (thisProps.async && thisProps.onDataLoaded) {
+	          if (thisProps.onDataLoaded) {
 	            return thisProps.onDataLoaded(treeNode).then(function () {
 	              _this5.setState({
 	                expandedKeys: expandedKeys
@@ -523,7 +523,6 @@
 	Tree.propTypes = {
 	  prefixCls: _react2['default'].PropTypes.string,
 	  checkable: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.bool, _react2['default'].PropTypes.node]),
-	  async: _react2['default'].PropTypes.bool,
 	  showLine: _react2['default'].PropTypes.bool,
 	  showIcon: _react2['default'].PropTypes.bool,
 	  defaultExpandAll: _react2['default'].PropTypes.bool,
@@ -539,7 +538,6 @@
 	
 	Tree.defaultProps = {
 	  prefixCls: 'rc-tree',
-	  async: false,
 	  multiple: false,
 	  checkable: false,
 	  showLine: false,
@@ -1597,7 +1595,7 @@
 	      if (!newChildren || newChildren === props.children) {
 	        // content = newChildren;
 	        newChildren = null;
-	        if (!props.async) {
+	        if (!props.onDataLoaded) {
 	          canRenderSwitcher = false;
 	        }
 	      }
