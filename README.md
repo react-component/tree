@@ -80,8 +80,7 @@ React.render(
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
 |onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event}) | - |
 |onSelect | click the treeNode to fire | function(e:{selected:bool,node,checkedKeys,event}) | - |
-|async | whether load data asynchronously | bool | false |
-|onDataLoaded | when enabled async setting, this will work, and the return value should be a promise | function(node) | - |
+|onDataLoaded | load data asynchronously and the return value should be a promise | function(node) | - |
 
 ### TreeNode props
 

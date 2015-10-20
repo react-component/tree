@@ -144,7 +144,7 @@ class TreeNode extends React.Component {
     if (!newChildren || newChildren === props.children) {
       // content = newChildren;
       newChildren = null;
-      if (!props.async) {
+      if (!props.onDataLoaded) {
         canRenderSwitcher = false;
       }
     }
