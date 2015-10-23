@@ -1,0 +1,17 @@
+.rc-tree-contextmenu {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  z-index: 1070;
+  display: block;
+  background-color: #fff;
+}
+.rc-tree-contextmenu-hidden {
+  display: none;
+}
+.rc-tree-contextmenu-inner {
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+}
+
+/*# sourceMappingURL=rightclick.css.map*/

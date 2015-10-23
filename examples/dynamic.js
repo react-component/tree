@@ -3,12 +3,12 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(29);
+	module.exports = __webpack_require__(185);
 
 
 /***/ },
 
-/***/ 29:
+/***/ 185:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23,7 +23,11 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcTree = __webpack_require__(4);
+	var _reactDom = __webpack_require__(159);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _rcTree = __webpack_require__(160);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
@@ -119,7 +123,7 @@ webpackJsonp([1],{
 	  }
 	});
 	
-	_react2['default'].render(_react2['default'].createElement(TreeDemo, null), document.getElementById('__react-content'));
+	_reactDom2['default'].render(_react2['default'].createElement(TreeDemo, null), document.getElementById('__react-content'));
 
 /***/ }
 
