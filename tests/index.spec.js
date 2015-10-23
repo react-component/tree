@@ -5,8 +5,9 @@
 require('../assets/index.css');
 
 var expect = require('expect.js');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var Simulate = TestUtils.Simulate;
 //var KeyCode = require('rc-util').KeyCode;
 var Tree = require('../');

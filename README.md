@@ -81,6 +81,7 @@ React.render(
 |onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event}) | - |
 |onSelect | click the treeNode to fire | function(e:{selected:bool,node,checkedKeys,event}) | - |
 |onDataLoaded | load data asynchronously and the return value should be a promise | function(node) | - |
+|onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 
 ### TreeNode props
 

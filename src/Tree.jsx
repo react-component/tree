@@ -36,6 +36,7 @@ class Tree extends React.Component {
       checkedKeys,
       selectedKeys,
     };
+    this.contextmenuKeys = [];
   }
   componentWillReceiveProps(nextProps) {
     const props = {};
@@ -70,66 +71,6 @@ class Tree extends React.Component {
       transitionName = `${props.prefixCls}-open-${animationName}`;
     }
     return transitionName;
-  }
-  renderTreeNode(child, index, level = 0) {
-    const key = child.key || `${level}-${index}`;
-    const state = this.state;
-    const props = this.props;
-    const cloneProps = {
-      ref: 'treeNode',
-      root: this,
-      eventKey: key,
-      pos: `${level}-${index}`,
-      onDataLoaded: props.onDataLoaded,
-      prefixCls: props.prefixCls,
-      showLine: props.showLine,
-      showIcon: props.showIcon,
-      checkable: props.checkable,
-      expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
-      selected: state.selectedKeys.indexOf(key) !== -1,
-      checked: this.checkedKeys.indexOf(key) !== -1,
-      checkPart: this.checkPartKeys.indexOf(key) !== -1,
-      openTransitionName: this.getOpenTransitionName(),
-      openAnimation: props.openAnimation,
-    };
-    return React.cloneElement(child, cloneProps);
-  }
-  render() {
-    const props = this.props;
-    const domProps = {
-      className: classSet(props.className, props.prefixCls),
-      role: 'tree-node',
-    };
-    if (props.focusable) {
-      domProps.tabIndex = '0';
-      domProps.onKeyDown = this.handleKeyDown;
-    }
-    const checkedKeys = this.state.checkedKeys;
-    const checkedPos = [];
-    this.treeNodesChkStates = {};
-    this.loopAllChildren(props.children, (item, index, pos) => {
-      const key = item.key || pos;
-      let checked = false;
-      if (checkedKeys.indexOf(key) !== -1) {
-        checked = true;
-        checkedPos.push(pos);
-      }
-      this.treeNodesChkStates[pos] = {
-        key: key,
-        checked: checked,
-        checkPart: false,
-      };
-    });
-    this.handleCheckState(this.treeNodesChkStates, filterMin(checkedPos.sort()));
-    const checkKeys = this.getCheckKeys();
-    this.checkPartKeys = checkKeys.checkPartKeys;
-    this.checkedKeys = checkKeys.checkedKeys;
-    this.newChildren = React.Children.map(props.children, this.renderTreeNode, this);
-    return (
-      <ul {...domProps} ref="tree">
-        {this.newChildren}
-      </ul>
-    );
   }
   loopAllChildren(childs, callback) {
     const loop = (children, level) => {
@@ -269,6 +210,26 @@ class Tree extends React.Component {
       props.onSelect(newSt);
     }
   }
+  handleContextMenu(e, treeNode) {
+    const selectedKeys = [...this.state.selectedKeys];
+    const eventKey = treeNode.props.eventKey;
+    if (this.contextmenuKeys.indexOf(eventKey) === -1) {
+      this.contextmenuKeys.push(eventKey);
+    }
+    this.contextmenuKeys.forEach((key) => {
+      const index = selectedKeys.indexOf(key);
+      if (index !== -1) {
+        selectedKeys.splice(index, 1);
+      }
+    });
+    if (selectedKeys.indexOf(eventKey) === -1) {
+      selectedKeys.push(eventKey);
+    }
+    this.setState({
+      selectedKeys,
+    });
+    this.props.onRightClick({event: e, node: treeNode});
+  }
   handleExpand(treeNode) {
     const thisProps = this.props;
     const tnProps = treeNode.props;
@@ -308,6 +269,67 @@ class Tree extends React.Component {
   handleKeyDown(e) {
     e.preventDefault();
   }
+  renderTreeNode(child, index, level = 0) {
+    const key = child.key || `${level}-${index}`;
+    const state = this.state;
+    const props = this.props;
+    const cloneProps = {
+      ref: 'treeNode',
+      root: this,
+      eventKey: key,
+      pos: `${level}-${index}`,
+      onDataLoaded: props.onDataLoaded,
+      onRightClick: props.onRightClick,
+      prefixCls: props.prefixCls,
+      showLine: props.showLine,
+      showIcon: props.showIcon,
+      checkable: props.checkable,
+      expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
+      selected: state.selectedKeys.indexOf(key) !== -1,
+      checked: this.checkedKeys.indexOf(key) !== -1,
+      checkPart: this.checkPartKeys.indexOf(key) !== -1,
+      openTransitionName: this.getOpenTransitionName(),
+      openAnimation: props.openAnimation,
+    };
+    return React.cloneElement(child, cloneProps);
+  }
+  render() {
+    const props = this.props;
+    const domProps = {
+      className: classSet(props.className, props.prefixCls),
+      role: 'tree-node',
+    };
+    if (props.focusable) {
+      domProps.tabIndex = '0';
+      domProps.onKeyDown = this.handleKeyDown;
+    }
+    const checkedKeys = this.state.checkedKeys;
+    const checkedPos = [];
+    this.treeNodesChkStates = {};
+    this.loopAllChildren(props.children, (item, index, pos) => {
+      const key = item.key || pos;
+      let checked = false;
+      if (checkedKeys.indexOf(key) !== -1) {
+        checked = true;
+        checkedPos.push(pos);
+      }
+      this.treeNodesChkStates[pos] = {
+        key: key,
+        checked: checked,
+        checkPart: false,
+      };
+    });
+    this.handleCheckState(this.treeNodesChkStates, filterMin(checkedPos.sort()));
+    const checkKeys = this.getCheckKeys();
+    this.checkPartKeys = checkKeys.checkPartKeys;
+    this.checkedKeys = checkKeys.checkedKeys;
+    this.newChildren = React.Children.map(props.children, this.renderTreeNode, this);
+    return (
+      <ul {...domProps} ref="tree">
+        {this.newChildren}
+      </ul>
+    );
+  }
 }
 
 Tree.propTypes = {
@@ -316,15 +338,19 @@ Tree.propTypes = {
     React.PropTypes.bool,
     React.PropTypes.node,
   ]),
+  multiple: React.PropTypes.bool,
   showLine: React.PropTypes.bool,
   showIcon: React.PropTypes.bool,
   defaultExpandAll: React.PropTypes.bool,
   defaultExpandedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
+  checkedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
   defaultCheckedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
+  selectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
   defaultSelectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
   onCheck: React.PropTypes.func,
   onSelect: React.PropTypes.func,
   onDataLoaded: React.PropTypes.func,
+  onRightClick: React.PropTypes.func,
   openTransitionName: React.PropTypes.string,
   openAnimation: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]),
 };

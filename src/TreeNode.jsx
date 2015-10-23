@@ -8,7 +8,7 @@ const defaultTitle = '---';
 class TreeNode extends React.Component {
   constructor(props) {
     super(props);
-    ['handleExpand', 'handleCheck'].forEach((m)=> {
+    ['handleExpand', 'handleCheck', 'handleContextMenu'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
     this.state = {
@@ -33,6 +33,41 @@ class TreeNode extends React.Component {
       obj.center = true;
     }
     return obj;
+  }
+
+  handleCheck() {
+    this.props.root.handleCheck(this);
+  }
+
+  handleSelect() {
+    this.props.root.handleSelect(this);
+  }
+
+  handleContextMenu(e) {
+    e.preventDefault();
+    this.props.root.handleContextMenu(e, this);
+  }
+
+  handleExpand() {
+    const callbackPromise = this.props.root.handleExpand(this);
+    if (callbackPromise && typeof callbackPromise === 'object') {
+      const setLoading = (dataLoading) => {
+        this.setState({
+          dataLoading,
+        });
+      };
+      setLoading(true);
+      callbackPromise.then(() => {
+        setLoading(false);
+      }, () => {
+        setLoading(false);
+      });
+    }
+  }
+
+  // keyboard event support
+  handleKeyDown(e) {
+    e.preventDefault();
   }
 
   renderSwitcher(props, expandedState) {
@@ -163,6 +198,9 @@ class TreeNode extends React.Component {
             this.handleCheck();
           }
         };
+        if (props.onRightClick) {
+          domProps.onContextMenu = this.handleContextMenu;
+        }
       }
       return (
         <a ref="selectHandle" title={content} {...domProps}>
@@ -179,36 +217,6 @@ class TreeNode extends React.Component {
         {newChildren}
       </li>
     );
-  }
-
-  handleCheck() {
-    this.props.root.handleCheck(this);
-  }
-
-  handleSelect() {
-    this.props.root.handleSelect(this);
-  }
-
-  handleExpand() {
-    const callbackPromise = this.props.root.handleExpand(this);
-    if (callbackPromise && typeof callbackPromise === 'object') {
-      const setLoading = (dataLoading) => {
-        this.setState({
-          dataLoading,
-        });
-      };
-      setLoading(true);
-      callbackPromise.then(() => {
-        setLoading(false);
-      }, () => {
-        setLoading(false);
-      });
-    }
-  }
-
-  // keyboard event support
-  handleKeyDown(e) {
-    e.preventDefault();
   }
 }
 TreeNode.propTypes = {

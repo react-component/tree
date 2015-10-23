@@ -2,6 +2,7 @@
 
 import 'rc-tree/assets/index.less';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 
 const asyncTree = [
@@ -80,4 +81,4 @@ const TreeDemo = React.createClass({
   }
 })
 
-React.render(<TreeDemo />, document.getElementById('__react-content'));
+ReactDOM.render(<TreeDemo />, document.getElementById('__react-content'));

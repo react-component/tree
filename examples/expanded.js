@@ -2,6 +2,7 @@
 
 import 'rc-tree/assets/index.less';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 import velocity from 'velocity-animate';
 
@@ -86,4 +87,4 @@ var demo = (
   </div>
 );
 
-React.render(demo, document.getElementById('__react-content'));
+ReactDOM.render(demo, document.getElementById('__react-content'));
