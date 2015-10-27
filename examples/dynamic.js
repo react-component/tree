@@ -31,7 +31,7 @@ webpackJsonp([1],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var asyncTree = [{ name: "pNode 01", key: "0-0", children: [{ name: "leaf 011" }] }, { name: "pNode 02", key: "0-1" }, { name: "pNode 03", key: "0-2" }];
+	var asyncTree = [{ name: "pNode 01", key: "0-0", children: [{ name: "leaf 011", key: "0-1-0" }] }, { name: "pNode 02", key: "0-1" }, { name: "pNode 03", key: "0-2" }];
 	
 	var generateTreeNodes = function generateTreeNodes(treeNode) {
 	  var arr = [];
@@ -116,7 +116,7 @@ webpackJsonp([1],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { onSelect: this.handleSelect, onDataLoaded: this.handleDataLoaded, showLine: false },
+	        { onSelect: this.handleSelect, onDataLoaded: this.handleDataLoaded, showIcon: false, showLine: false },
 	        treeNodes
 	      )
 	    );

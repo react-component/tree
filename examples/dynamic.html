@@ -239,7 +239,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.18.0</h1>
+    <h1>rc-tree@0.18.1</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -255,7 +255,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-reserved">import</span> Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
 
 <span class="hljs-reserved">const</span> asyncTree = [
-  {<span class="hljs-attribute">name</span>: <span class="hljs-string">"pNode 01"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-0"</span>, <span class="hljs-attribute">children</span>: [{<span class="hljs-attribute">name</span>: <span class="hljs-string">"leaf 011"</span>}]},
+  {<span class="hljs-attribute">name</span>: <span class="hljs-string">"pNode 01"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-0"</span>, <span class="hljs-attribute">children</span>: [{<span class="hljs-attribute">name</span>: <span class="hljs-string">"leaf 011"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-1-0"</span>}]},
   {<span class="hljs-attribute">name</span>: <span class="hljs-string">"pNode 02"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-1"</span>},
   {<span class="hljs-attribute">name</span>: <span class="hljs-string">"pNode 03"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-2"</span>}
 ];
@@ -322,7 +322,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-keyword">return</span> (
       &lt;div&gt;
         &lt;h2&gt;dynamic render&lt;/h2&gt;
-        &lt;Tree onSelect={<span class="hljs-keyword">this</span>.handleSelect} onDataLoaded={<span class="hljs-keyword">this</span>.handleDataLoaded} showLine={<span class="hljs-literal">false</span>}&gt;
+        &lt;Tree onSelect={<span class="hljs-keyword">this</span>.handleSelect} onDataLoaded={<span class="hljs-keyword">this</span>.handleDataLoaded} showIcon={<span class="hljs-literal">false</span>} showLine={<span class="hljs-literal">false</span>}&gt;
           {treeNodes}
         &lt;/Tree&gt;
       &lt;/div&gt;

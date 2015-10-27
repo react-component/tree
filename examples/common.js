@@ -21215,7 +21215,7 @@
 	      }
 	
 	      var selectHandle = function selectHandle() {
-	        var icon = props.showIcon ? _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(iconEleCls) }) : null;
+	        var icon = props.showIcon || props.onDataLoaded && _this3.state.dataLoading ? _react2['default'].createElement('span', { className: (0, _rcUtil.classSet)(iconEleCls) }) : null;
 	        var title = _react2['default'].createElement(
 	          'span',
 	          { className: prefixCls + '-title' },
