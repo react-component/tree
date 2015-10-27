@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 
 const asyncTree = [
-  {name: "pNode 01", key: "0-0", children: [{name: "leaf 011", key: "0-1-0"}]},
+  {name: "pNode 01", key: "0-0"},
   {name: "pNode 02", key: "0-1"},
   {name: "pNode 03", key: "0-2"}
 ];
@@ -45,13 +45,24 @@ const TreeDemo = React.createClass({
   },
   handleDataLoaded(treeNode) {
     return this.timeout(1000).then(() => {
-      const child = generateTreeNodes(treeNode);
       const treeData = [...this.state.treeData];
-      treeData.forEach((item) => {
-        if (item.key === treeNode.props.eventKey) {
-          item.children = child;
-        }
-      });
+      const child = generateTreeNodes(treeNode);
+      const curKey = treeNode.props.eventKey;
+      const loop = (data) => {
+        if (curKey.length >= 9) return;
+        data.forEach((item) => {
+          if (curKey.indexOf(item.key) === 0) {
+            if (item.children) {
+              loop(item.children)
+            } else {
+              item.children = child;
+            }
+          } else {
+            return;
+          }
+        })
+      };
+      loop(treeData);
       this.setState({treeData});
       return child;
     });
