@@ -31,7 +31,7 @@ webpackJsonp([1],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var asyncTree = [{ name: "pNode 01", key: "0-0", children: [{ name: "leaf 011", key: "0-1-0" }] }, { name: "pNode 02", key: "0-1" }, { name: "pNode 03", key: "0-2" }];
+	var asyncTree = [{ name: "pNode 01", key: "0-0" }, { name: "pNode 02", key: "0-1" }, { name: "pNode 03", key: "0-2" }];
 	
 	var generateTreeNodes = function generateTreeNodes(treeNode) {
 	  var arr = [];
@@ -77,13 +77,24 @@ webpackJsonp([1],{
 	    var _this3 = this;
 	
 	    return this.timeout(1000).then(function () {
-	      var child = generateTreeNodes(treeNode);
 	      var treeData = [].concat(_toConsumableArray(_this3.state.treeData));
-	      treeData.forEach(function (item) {
-	        if (item.key === treeNode.props.eventKey) {
-	          item.children = child;
-	        }
-	      });
+	      var child = generateTreeNodes(treeNode);
+	      var curKey = treeNode.props.eventKey;
+	      var loop = function loop(data) {
+	        if (curKey.length >= 9) return;
+	        data.forEach(function (item) {
+	          if (curKey.indexOf(item.key) === 0) {
+	            if (item.children) {
+	              loop(item.children);
+	            } else {
+	              item.children = child;
+	            }
+	          } else {
+	            return;
+	          }
+	        });
+	      };
+	      loop(treeData);
 	      _this3.setState({ treeData: treeData });
 	      return child;
 	    });

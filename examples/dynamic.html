@@ -255,7 +255,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-reserved">import</span> Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
 
 <span class="hljs-reserved">const</span> asyncTree = [
-  {<span class="hljs-attribute">name</span>: <span class="hljs-string">"pNode 01"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-0"</span>, <span class="hljs-attribute">children</span>: [{<span class="hljs-attribute">name</span>: <span class="hljs-string">"leaf 011"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-1-0"</span>}]},
+  {<span class="hljs-attribute">name</span>: <span class="hljs-string">"pNode 01"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-0"</span>},
   {<span class="hljs-attribute">name</span>: <span class="hljs-string">"pNode 02"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-1"</span>},
   {<span class="hljs-attribute">name</span>: <span class="hljs-string">"pNode 03"</span>, <span class="hljs-attribute">key</span>: <span class="hljs-string">"0-2"</span>}
 ];
@@ -294,13 +294,24 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   },
   handleDataLoaded(treeNode) {
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.timeout(<span class="hljs-number">1000</span>).<span class="hljs-keyword">then</span>(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-      <span class="hljs-reserved">const</span> child = generateTreeNodes(treeNode);
       <span class="hljs-reserved">const</span> treeData = [...<span class="hljs-keyword">this</span>.state.treeData];
-      treeData.forEach(<span class="hljs-function"><span class="hljs-params">(item)</span> =&gt;</span> {
-        <span class="hljs-keyword">if</span> (item.key === treeNode.props.eventKey) {
-          item.children = child;
-        }
-      });
+      <span class="hljs-reserved">const</span> child = generateTreeNodes(treeNode);
+      <span class="hljs-reserved">const</span> curKey = treeNode.props.eventKey;
+      <span class="hljs-reserved">const</span> <span class="hljs-keyword">loop</span> = <span class="hljs-function"><span class="hljs-params">(data)</span> =&gt;</span> {
+        <span class="hljs-keyword">if</span> (curKey.length &gt;= <span class="hljs-number">9</span>) <span class="hljs-keyword">return</span>;
+        data.forEach(<span class="hljs-function"><span class="hljs-params">(item)</span> =&gt;</span> {
+          <span class="hljs-keyword">if</span> (curKey.indexOf(item.key) === <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">if</span> (item.children) {
+              <span class="hljs-keyword">loop</span>(item.children)
+            } <span class="hljs-keyword">else</span> {
+              item.children = child;
+            }
+          } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span>;
+          }
+        })
+      };
+      <span class="hljs-keyword">loop</span>(treeData);
       <span class="hljs-keyword">this</span>.setState({treeData});
       <span class="hljs-keyword">return</span> child;
     });
