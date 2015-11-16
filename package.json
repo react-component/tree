@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "0.18.1",
+  "version": "0.19.0",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -29,17 +29,17 @@
   "scripts": {
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
-    "start": "node --harmony node_modules/.bin/rc-server",
+    "start": "rc-server",
     "pub": "rc-tools run pub",
     "lint": "rc-tools run lint",
     "karma": "rc-tools run karma",
-    "saucelabs": "node --harmony node_modules/.bin/rc-tools run saucelabs",
-    "browser-test": "node --harmony node_modules/.bin/rc-tools run browser-test",
-    "browser-test-cover": "node --harmony node_modules/.bin/rc-tools run browser-test-cover"
+    "saucelabs": "rc-tools run saucelabs",
+    "browser-test": "rc-tools run browser-test",
+    "browser-test-cover": "rc-tools run browser-test-cover"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
-    "precommit-hook": "^1.0.7",
+    "pre-commit": "1.x",
     "rc-server": "3.x",
     "rc-tools": "4.x",
     "react": "^0.14.0",
@@ -49,11 +49,11 @@
     "velocity-animate": "^1.2.2"
   },
   "dependencies": {
-    "object-assign": "3.x",
-    "rc-animate": "1.x",
-    "rc-util": "2.x"
+    "object-assign": "4.x",
+    "rc-animate": "2.x",
+    "rc-util": "3.x"
   },
-  "precommit": [
+  "pre-commit": [
     "lint"
   ]
 }

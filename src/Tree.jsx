@@ -55,7 +55,7 @@ class Tree extends React.Component {
       const itemObj = this.treeNodesChkStates[item];
       if (itemObj.checked) {
         checkedKeys.push(itemObj.key);
-      }else if (itemObj.checkPart) {
+      } else if (itemObj.checkPart) {
         checkPartKeys.push(itemObj.key);
       }
     });
