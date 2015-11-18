@@ -3,12 +3,12 @@ webpackJsonp([4],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(230);
+	module.exports = __webpack_require__(214);
 
 
 /***/ },
 
-/***/ 230:
+/***/ 214:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43,7 +43,7 @@ webpackJsonp([4],{
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { className: 'myCls', onSelect: handleSelect, defaultSelectedKeys: ['0-1', '0-1-1'], multiple: true,
+	    { className: 'myCls', checkable: true, onSelect: handleSelect, defaultSelectedKeys: ['0-1', 'random'], multiple: true,
 	      defaultExpandAll: true, showIcon: false, showLine: true },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
@@ -51,13 +51,17 @@ webpackJsonp([4],{
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
 	        { title: 'parent 1-0', key: '0-1-1' },
-	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' }),
+	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: 'random' }),
 	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree.TreeNode,
 	        { title: 'parent 1-1' },
-	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
+	        _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
+	            'span',
+	            { style: { color: 'red' } },
+	            'sss'
+	          ) })
 	      )
 	    )
 	  )

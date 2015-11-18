@@ -35,6 +35,33 @@ webpackJsonp([0],[
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
+	var x = 12;
+	var y = 3;
+	var z = 2;
+	var data = [];
+	
+	var generateData = function generateData(_level, _preKey, _tns) {
+	  var preKey = _preKey || '0';
+	  var tns = _tns || data;
+	
+	  var children = [];
+	  for (var i = 0; i < x; i++) {
+	    var key = preKey + '-' + i;
+	    tns.push({ title: key, key: key });
+	    if (i < y) {
+	      children.push(key);
+	    }
+	  }
+	  if (_level < 0) {
+	    return tns;
+	  }
+	  children.forEach(function (key, index) {
+	    tns[index].children = [];
+	    return generateData(--_level, key, tns[index].children);
+	  });
+	};
+	generateData(z);
+	
 	var TreeDemo = (function (_React$Component) {
 	  _inherits(TreeDemo, _React$Component);
 	
@@ -57,7 +84,7 @@ webpackJsonp([0],[
 	    key: 'handleClick',
 	    value: function handleClick() {
 	      this.setState({
-	        checkedKeys: ['p11'],
+	        checkedKeys: ['0-0'],
 	        selectedKeys: ['p21', 'p11']
 	      });
 	    }
@@ -66,8 +93,8 @@ webpackJsonp([0],[
 	    value: function handleCheck(info) {
 	      console.log('check: ', info);
 	      this.setState({
-	        checkedKeys: ['p21'],
-	        selectedKeys: ['p1', 'p21']
+	        checkedKeys: ['0-1'],
+	        selectedKeys: ['0-3', '0-4']
 	      });
 	    }
 	  }, {
@@ -75,13 +102,26 @@ webpackJsonp([0],[
 	    value: function handleSelect(info) {
 	      console.log('selected: ', info);
 	      this.setState({
-	        checkedKeys: ['p21'],
-	        selectedKeys: ['p21']
+	        checkedKeys: ['0-2'],
+	        selectedKeys: ['0-2']
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var loop = function loop(data) {
+	        return data.map(function (item) {
+	          if (item.children) {
+	            return _react2['default'].createElement(
+	              _rcTree.TreeNode,
+	              { key: item.key, title: item.key },
+	              loop(item.children)
+	            );
+	          } else {
+	            return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.key });
+	          }
+	        });
+	      };
 	      return _react2['default'].createElement(
 	        'div',
 	        null,
@@ -95,40 +135,16 @@ webpackJsonp([0],[
 	          ),
 	          _react2['default'].createElement(
 	            _rcTree2['default'],
-	            { defaultExpandAll: true, checkable: true,
+	            { defaultExpandAll: false, checkable: true,
 	              onCheck: this.handleCheck, checkedKeys: this.state.checkedKeys,
 	              onSelect: this.handleSelect, selectedKeys: this.state.selectedKeys, multiple: true },
-	            _react2['default'].createElement(
-	              _rcTree.TreeNode,
-	              { title: 'parent 1', key: 'p1' },
-	              _react2['default'].createElement(_rcTree.TreeNode, { key: 'p10', title: 'leaf' }),
-	              _react2['default'].createElement(
-	                _rcTree.TreeNode,
-	                { title: 'parent 1-1', key: 'p11' },
-	                _react2['default'].createElement(
-	                  _rcTree.TreeNode,
-	                  { title: 'parent 2-1', key: 'p21' },
-	                  _react2['default'].createElement(
-	                    _rcTree.TreeNode,
-	                    null,
-	                    'test'
-	                  ),
-	                  _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
-	                      'span',
-	                      null,
-	                      'sss'
-	                    ) })
-	                ),
-	                _react2['default'].createElement(_rcTree.TreeNode, { key: 'p22', title: 'leaf' })
-	              )
-	            ),
-	            _react2['default'].createElement(_rcTree.TreeNode, { key: 'p12', title: 'leaf' })
+	            loop(data)
 	          )
 	        ),
 	        _react2['default'].createElement(
 	          'button',
 	          { onClick: this.handleClick },
-	          'check sth'
+	          'check again'
 	        )
 	      );
 	    }

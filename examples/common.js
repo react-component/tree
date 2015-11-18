@@ -19839,7 +19839,10 @@
 	        _react2['default'].Children.forEach(children, function (item, index) {
 	          var pos = level + '-' + index;
 	          var newChildren = item.props.children;
-	          if (Array.isArray(newChildren)) {
+	          if (newChildren) {
+	            if (!Array.isArray(newChildren)) {
+	              newChildren = [newChildren];
+	            }
 	            loop(newChildren, pos);
 	          }
 	          callback(item, index, pos);
@@ -19854,9 +19857,21 @@
 	      if (typeof unCheckEvent === 'boolean') {
 	        evt = true;
 	      }
+	      var splitPos = function splitPos(pos) {
+	        return pos.split('-');
+	      };
+	      // stripTail('x-xx-sss-xx')
+	      var stripTail = function stripTail(str) {
+	        var arr = str.match(/(.+)(-[^-]+)$/);
+	        var st = '';
+	        if (arr && arr.length === 3) {
+	          st = arr[1];
+	        }
+	        return st;
+	      };
 	      checkedArr.forEach(function (_pos) {
 	        Object.keys(obj).forEach(function (i) {
-	          if (i.length > _pos.length && i.indexOf(_pos) === 0) {
+	          if (splitPos(i).length > splitPos(_pos).length && i.indexOf(_pos) === 0) {
 	            obj[i].checkPart = false;
 	            if (evt) {
 	              if (unCheckEvent) {
@@ -19870,15 +19885,15 @@
 	          }
 	        });
 	        var loop = function loop(__pos) {
-	          var _posLen = __pos.length;
-	          if (_posLen <= 3) {
+	          var _posLen = splitPos(__pos).length;
+	          if (_posLen <= 2) {
 	            return;
 	          }
 	          var sibling = 0;
 	          var siblingChecked = 0;
-	          var parentPos = __pos.substring(0, _posLen - 2);
+	          var parentPos = stripTail(__pos);
 	          Object.keys(obj).forEach(function (i) {
-	            if (i.length === _posLen && i.substring(0, _posLen - 2) === parentPos) {
+	            if (splitPos(i).length === _posLen && i.indexOf(parentPos) === 0) {
 	              sibling++;
 	              if (obj[i].checked) {
 	                siblingChecked++;
