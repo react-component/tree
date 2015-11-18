@@ -76,8 +76,11 @@ class Tree extends React.Component {
     const loop = (children, level) => {
       React.Children.forEach(children, (item, index) => {
         const pos = `${level}-${index}`;
-        const newChildren = item.props.children;
-        if (Array.isArray(newChildren)) {
+        let newChildren = item.props.children;
+        if (newChildren) {
+          if (!Array.isArray(newChildren)) {
+            newChildren = [newChildren];
+          }
           loop(newChildren, pos);
         }
         callback(item, index, pos);
@@ -90,9 +93,21 @@ class Tree extends React.Component {
     if (typeof unCheckEvent === 'boolean') {
       evt = true;
     }
+    const splitPos = (pos) => {
+      return pos.split('-');
+    };
+    // stripTail('x-xx-sss-xx')
+    const stripTail = (str) => {
+      const arr = str.match(/(.+)(-[^-]+)$/);
+      let st = '';
+      if (arr && arr.length === 3) {
+        st = arr[1];
+      }
+      return st;
+    };
     checkedArr.forEach((_pos) => {
       Object.keys(obj).forEach((i) => {
-        if (i.length > _pos.length && i.indexOf(_pos) === 0) {
+        if (splitPos(i).length > splitPos(_pos).length && i.indexOf(_pos) === 0) {
           obj[i].checkPart = false;
           if (evt) {
             if (unCheckEvent) {
@@ -106,15 +121,15 @@ class Tree extends React.Component {
         }
       });
       const loop = (__pos) => {
-        const _posLen = __pos.length;
-        if (_posLen <= 3) {
+        const _posLen = splitPos(__pos).length;
+        if (_posLen <= 2) {
           return;
         }
         let sibling = 0;
         let siblingChecked = 0;
-        const parentPos = __pos.substring(0, _posLen - 2);
+        const parentPos = stripTail(__pos);
         Object.keys(obj).forEach((i) => {
-          if (i.length === _posLen && i.substring(0, _posLen - 2) === parentPos) {
+          if (splitPos(i).length === _posLen && i.indexOf(parentPos) === 0) {
             sibling++;
             if (obj[i].checked) {
               siblingChecked++;

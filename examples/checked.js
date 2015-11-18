@@ -5,6 +5,33 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 
+const x = 12;
+const y = 3;
+let z = 2;
+const data = [];
+
+const generateData = (_level, _preKey, _tns) => {
+  let preKey = _preKey || '0';
+  let tns = _tns || data;
+
+  let children = [];
+  for (let i = 0; i < x; i++) {
+    let key = `${preKey}-${i}`;
+    tns.push({title: key, key: key});
+    if (i < y) {
+      children.push(key);
+    }
+  }
+  if (_level < 0) {
+    return tns;
+  }
+  children.forEach((key, index) => {
+    tns[index].children = [];
+    return generateData(--_level, key, tns[index].children);
+  });
+};
+generateData(z);
+
 class TreeDemo extends React.Component {
   constructor(props) {
     super(props);
@@ -18,45 +45,44 @@ class TreeDemo extends React.Component {
   }
   handleClick() {
     this.setState({
-      checkedKeys: ['p11'],
+      checkedKeys: ['0-0'],
       selectedKeys: ['p21', 'p11']
     })
   }
   handleCheck(info) {
     console.log('check: ', info);
     this.setState({
-      checkedKeys: ['p21'],
-      selectedKeys: ['p1', 'p21']
+      checkedKeys: ['0-1'],
+      selectedKeys: ['0-3', '0-4']
     })
   }
   handleSelect(info) {
     console.log('selected: ', info);
     this.setState({
-      checkedKeys: ['p21'],
-      selectedKeys: ['p21']
+      checkedKeys: ['0-2'],
+      selectedKeys: ['0-2']
     })
   }
   render() {
+    const loop = (data) => {
+      return data.map((item) => {
+        if (item.children) {
+          return <TreeNode key={item.key} title={item.key}>{loop(item.children)}</TreeNode>
+        } else {
+          return <TreeNode key={item.key} title={item.key}></TreeNode>
+        }
+      })
+    };
     return <div>
       <div>
         <h2>checked</h2>
-        <Tree defaultExpandAll={true} checkable={true}
+        <Tree defaultExpandAll={false} checkable={true}
               onCheck={this.handleCheck} checkedKeys={this.state.checkedKeys}
               onSelect={this.handleSelect} selectedKeys={this.state.selectedKeys} multiple>
-          <TreeNode title="parent 1" key="p1">
-            <TreeNode key="p10" title="leaf"/>
-            <TreeNode title="parent 1-1" key="p11">
-              <TreeNode title="parent 2-1" key="p21">
-                <TreeNode>test</TreeNode>
-                <TreeNode title={<span>sss</span>}/>
-              </TreeNode>
-              <TreeNode key="p22" title="leaf"/>
-            </TreeNode>
-          </TreeNode>
-          <TreeNode key="p12" title="leaf"/>
+          {loop(data)}
         </Tree>
       </div>
-      <button onClick={this.handleClick}>check sth</button>
+      <button onClick={this.handleClick}>check again</button>
     </div>
   }
 }

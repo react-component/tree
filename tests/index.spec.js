@@ -9,7 +9,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var Simulate = TestUtils.Simulate;
-//var KeyCode = require('rc-util').KeyCode;
 var Tree = require('../');
 var TreeNode = Tree.TreeNode;
 
@@ -26,10 +25,10 @@ describe('Tree', function () {
   });
 
   it('should add css class of root dom node', function () {
-    var instance = TestUtils.renderIntoDocument(
+    var instance = ReactDOM.render(
       <Tree className="forTest">
-        <TreeNode>1</TreeNode>
-      </Tree>
+        <TreeNode title="1"></TreeNode>
+      </Tree>, div
     );
     expect(ReactDOM.findDOMNode(instance).className.indexOf('forTest') !== -1).to.be(true);
   });
@@ -51,8 +50,8 @@ describe('Tree', function () {
     var instance = ReactDOM.render(
       <Tree checkable={true} onSelect={handleSelect}>
         <TreeNode title="parent 1">
-          <TreeNode>leaf </TreeNode>
-          <TreeNode>leaf 1</TreeNode>
+          <TreeNode title="leaf" />
+          <TreeNode title="leaf" />
         </TreeNode>
       </Tree>, div);
     Simulate.click(ReactDOM.findDOMNode(instance.refs.treeNode.refs.selectHandle));
@@ -62,10 +61,10 @@ describe('Tree', function () {
     var instance = TestUtils.renderIntoDocument(
       <Tree checkable={true}>
         <TreeNode title="parent 1">
-          <TreeNode>leaf </TreeNode>
+          <TreeNode title="leaf" />
           <TreeNode title="parent 1-1">
-            <TreeNode>leaf </TreeNode>
-            <TreeNode>leaf </TreeNode>
+            <TreeNode title="leaf" />
+            <TreeNode title="leaf" />
           </TreeNode>
         </TreeNode>
       </Tree>

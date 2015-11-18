@@ -12,15 +12,15 @@ function handleSelect(info) {
 var demo = (
   <div>
     <h2>simple</h2>
-    <Tree className="myCls" onSelect={handleSelect} defaultSelectedKeys={['0-1', '0-1-1']} multiple={true}
+    <Tree className="myCls" checkable={true} onSelect={handleSelect} defaultSelectedKeys={['0-1', 'random']} multiple={true}
       defaultExpandAll={true} showIcon={false} showLine={true}>
       <TreeNode title="parent 1" key="0-1">
         <TreeNode title="parent 1-0" key="0-1-1">
-          <TreeNode title="leaf" />
+          <TreeNode title="leaf" key="random" />
           <TreeNode title="leaf" />
         </TreeNode>
         <TreeNode title="parent 1-1">
-          <TreeNode title="leaf" />
+          <TreeNode title={<span style={{color: 'red'}}>sss</span>} />
         </TreeNode>
       </TreeNode>
     </Tree>
