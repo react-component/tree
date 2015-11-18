@@ -49,16 +49,7 @@ online example: http://react-component.github.io/tree/examples/
 
 ## Usage
 
-```js
-var React = require('react');
-var Tree = require('rc-tree');
-var TreeNode = Tree.TreeNode;
-React.render(
-  <Tree>
-    <TreeNode>leaf </TreeNode>
-    <TreeNode>leaf </TreeNode>
-  <Tree/>, container);
-```
+see examples
 
 ## API
 
