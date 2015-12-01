@@ -69,8 +69,9 @@ describe('Tree', function des() {
         </TreeNode>
       </Tree>
     );
-    // Simulate.click(ReactDOM.findDOMNode(instance.refs.one));
-    Simulate.click(instance.refs.one);
-    // expect(true).to.be(true);
+    const ele = ReactDOM.findDOMNode(instance.refs.treeNode.refs.checkbox);
+    Simulate.click(ele);
+    // Simulate.click(instance.refs.one);
+    expect(ele.className.indexOf('-checked') !== -1).to.be(true);
   });
 });
