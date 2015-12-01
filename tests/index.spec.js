@@ -4,51 +4,51 @@
 
 require('../assets/index.css');
 
-var expect = require('expect.js');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var Simulate = TestUtils.Simulate;
-var Tree = require('../');
-var TreeNode = Tree.TreeNode;
+const expect = require('expect.js');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const TestUtils = require('react-addons-test-utils');
+const Simulate = TestUtils.Simulate;
+const Tree = require('../');
+const TreeNode = Tree.TreeNode;
 
-describe('Tree', function () {
-  var instance;
-  var div;
-  beforeEach(function () {
+describe('Tree', function des() {
+  let div;
+  beforeEach(function() {
     div = document.createElement('div');
     document.body.appendChild(div);
   });
-  afterEach(function () {
+  afterEach(function() {
     ReactDOM.unmountComponentAtNode(div);
     document.body.removeChild(div);
   });
 
-  it('should add css class of root dom node', function () {
-    var instance = ReactDOM.render(
+  it('should add css class of root dom node', function() {
+    const instance = ReactDOM.render(
       <Tree className="forTest">
-        <TreeNode title="1"></TreeNode>
+        <TreeNode title="1" />
       </Tree>, div
     );
     expect(ReactDOM.findDOMNode(instance).className.indexOf('forTest') !== -1).to.be(true);
   });
 
-  it('should select the item', function (done) {
+  it('should select the item', function(done) {
+    let instance;
     function handleSelect(arg) {
       if (arg) {
-        //console.log(ReactDOM.findDOMNode(instance.refs.treeNode.refs.selectHandle));
-        setTimeout(function (){
+        // console.log(ReactDOM.findDOMNode(instance.refs.treeNode.refs.selectHandle));
+        setTimeout(function() {
           expect(ReactDOM.findDOMNode(instance.refs.treeNode.refs.selectHandle).className
           .indexOf('-selected') !== -1).to.be(true);
-          setTimeout(function(){
+          setTimeout(function() {
             done();
-          }, 1000)
-        }, 100)
+          }, 1000);
+        }, 100);
       }
     }
 
-    var instance = ReactDOM.render(
-      <Tree checkable={true} onSelect={handleSelect}>
+    instance = ReactDOM.render(
+      <Tree checkable onSelect={handleSelect}>
         <TreeNode title="parent 1">
           <TreeNode title="leaf" />
           <TreeNode title="leaf" />
@@ -57,9 +57,9 @@ describe('Tree', function () {
     Simulate.click(ReactDOM.findDOMNode(instance.refs.treeNode.refs.selectHandle));
   });
 
-  it('should can fire check event', function () {
-    var instance = TestUtils.renderIntoDocument(
-      <Tree checkable={true}>
+  it('should can fire check event', function() {
+    const instance = TestUtils.renderIntoDocument(
+      <Tree checkable>
         <TreeNode title="parent 1">
           <TreeNode title="leaf" />
           <TreeNode title="parent 1-1">
@@ -69,10 +69,8 @@ describe('Tree', function () {
         </TreeNode>
       </Tree>
     );
-    //Simulate.click(ReactDOM.findDOMNode(instance.refs.one));
-    //Simulate.click(instance.refs.one);
-    expect(true).to.be(true);
+    // Simulate.click(ReactDOM.findDOMNode(instance.refs.one));
+    Simulate.click(instance.refs.one);
+    // expect(true).to.be(true);
   });
-
-
 });

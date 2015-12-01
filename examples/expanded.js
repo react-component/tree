@@ -1,5 +1,3 @@
-'use strict';
-
 import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,7 +5,7 @@ import Tree, {TreeNode} from 'rc-tree';
 import velocity from 'velocity-animate';
 
 function enter2(node, done) {
-  var ok = false;
+  let ok = false;
 
   function complete() {
     if (!ok) {
@@ -19,31 +17,31 @@ function enter2(node, done) {
   node.style.display = 'none';
   velocity(node, 'slideDown', {
     duration: 300,
-    complete: complete
+    complete: complete,
   });
   return {
-    stop: function () {
+    stop: function() {
       velocity(node, 'finish');
       // velocity complete is async
       complete();
-    }
+    },
   };
 }
 
 const animation = {
-  enter(node, done){
+  enter(node) {
     console.log('enter', node);
     return enter2.apply(this, arguments);
   },
 
-  appear(node){
+  appear(node) {
     console.log('appear', node);
     return enter2.apply(this, arguments);
   },
 
-  leave(node, done){
+  leave(node, done) {
     console.log('leave', node);
-    var ok = false;
+    let ok = false;
 
     function complete() {
       if (!ok) {
@@ -55,19 +53,19 @@ const animation = {
     node.style.display = 'block';
     velocity(node, 'slideUp', {
       duration: 300,
-      complete: complete
+      complete: complete,
     });
     return {
-      stop: function () {
+      stop: function() {
         velocity(node, 'finish');
         // velocity complete is async
         complete();
-      }
+      },
     };
   },
 };
 
-var demo = (
+const demo = (
   <div>
     <h2>expanded</h2>
     <Tree defaultExpandAll={false}
@@ -83,7 +81,6 @@ var demo = (
         </TreeNode>
       </TreeNode>
     </Tree>
-
   </div>
 );
 

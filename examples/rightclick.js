@@ -1,5 +1,3 @@
-'use strict';
-
 import 'rc-tree/assets/index.less';
 import 'rc-tree/assets/contextmenu.less';
 import React from 'react';
@@ -10,11 +8,11 @@ import Tooltip from 'rc-tooltip';
 
 const TreeDemo = React.createClass({
   propTypes: {},
-  getInitialState() {
+  getDefaultProps() {
     return {
     };
   },
-  getDefaultProps() {
+  getInitialState() {
     return {
     };
   },
@@ -24,8 +22,8 @@ const TreeDemo = React.createClass({
   },
   componentWillUnmount() {
     if (this.tipContainer) {
-      ReactDOM.unmountComponentAtNode(tipContainer);
-      document.body.removeChild(tipContainer);
+      ReactDOM.unmountComponentAtNode(this.tipContainer);
+      document.body.removeChild(this.tipContainer);
       this.tipContainer = null;
     }
     // remove event listener if it has
@@ -44,7 +42,7 @@ const TreeDemo = React.createClass({
   handleContextMenu(info) {
     console.log('handleContextMenu', info);
     // var trigger = this.refs.triggerELe.getDOMNode();
-    var trigger = this.tipContainer;
+    const trigger = this.tipContainer;
     const style = {
       position: 'absolute',
       left: info.event.pageX + 'px',
@@ -52,20 +50,20 @@ const TreeDemo = React.createClass({
     };
     assign(trigger.style, style);
     if (this.toolTip) {
-      ReactDOM.unmountComponentAtNode(trigger)
+      ReactDOM.unmountComponentAtNode(trigger);
       this.toolTip = null;
     }
     this.renderToolTip(info.node.props.eventKey);
   },
   renderToolTip(key) {
-    const overlay = <div>
+    const overlay = (<div>
       <h4>{key}</h4>
       <p><a herf="">link</a></p>
-    </div>;
-    this.toolTip = <Tooltip placement="bottomRight" trigger="click" prefixCls="rc-tree-contextmenu"
-             defaultVisible={true} overlay={overlay}>
+    </div>);
+    this.toolTip = (<Tooltip placement="bottomRight" trigger="click" prefixCls="rc-tree-contextmenu"
+             defaultVisible overlay={overlay}>
         <span></span>
-    </Tooltip>;
+    </Tooltip>);
     ReactDOM.render(this.toolTip, this.getTipContainer());
   },
   render() {
@@ -74,7 +72,7 @@ const TreeDemo = React.createClass({
         <h2>right click contextmenu</h2>
         <Tree onRightClick={this.handleContextMenu} onSelect={this.handleSelect}
           defaultSelectedKeys={['0-1', '0-1-1']}
-           multiple={true} defaultExpandAll={true} showLine={true}>
+           multiple defaultExpandAll showLine>
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
               <TreeNode title="leaf" />
@@ -87,6 +85,6 @@ const TreeDemo = React.createClass({
         </Tree>
       </div>
     );
-  }
+  },
 });
 ReactDOM.render(<TreeDemo />, document.getElementById('__react-content'));

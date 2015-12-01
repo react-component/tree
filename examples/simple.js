@@ -1,5 +1,3 @@
-'use strict';
-
 import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,11 +7,11 @@ function handleSelect(info) {
   console.log('selected', info);
 }
 
-var demo = (
+const demo = (
   <div>
     <h2>simple</h2>
-    <Tree className="myCls" checkable={true} onSelect={handleSelect} defaultSelectedKeys={['0-1', 'random']} multiple={true}
-      defaultExpandAll={true} showIcon={false} showLine={true}>
+    <Tree className="myCls" checkable onSelect={handleSelect} defaultSelectedKeys={['0-1', 'random']} multiple
+      defaultExpandAll showIcon={false} showLine>
       <TreeNode title="parent 1" key="0-1">
         <TreeNode title="parent 1-0" key="0-1-1">
           <TreeNode title="leaf" key="random" />
@@ -25,6 +23,6 @@ var demo = (
       </TreeNode>
     </Tree>
   </div>
-)
+);
 
 ReactDOM.render(demo, document.getElementById('__react-content'));

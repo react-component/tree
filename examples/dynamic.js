@@ -1,14 +1,12 @@
-'use strict';
-
 import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 
 const asyncTree = [
-  {name: "pNode 01", key: "0-0"},
-  {name: "pNode 02", key: "0-1"},
-  {name: "pNode 03", key: "0-2"}
+  {name: 'pNode 01', key: '0-0'},
+  {name: 'pNode 02', key: '0-1'},
+  {name: 'pNode 03', key: '0-2'},
 ];
 
 const generateTreeNodes = (treeNode) => {
@@ -18,26 +16,26 @@ const generateTreeNodes = (treeNode) => {
     arr.push({name: `leaf ${key}-${i}`, key: `${key}-${i}`});
   }
   return arr;
-}
+};
 
 const TreeDemo = React.createClass({
   propTypes: {},
-  timeout(duration = 0) {
-    return new Promise((resolve, reject) => {
-        setTimeout(resolve.bind(this), duration);
-    })
-  },
   getInitialState() {
     return {
-      treeData: []
+      treeData: [],
     };
   },
   componentDidMount() {
     this.timeout(1000).then(() => {
       this.setState({
-        treeData: asyncTree
+        treeData: asyncTree,
       });
       return asyncTree;
+    });
+  },
+  timeout(duration = 0) {
+    return new Promise((resolve) => {
+      setTimeout(resolve.bind(this), duration);
     });
   },
   handleSelect(info) {
@@ -53,14 +51,12 @@ const TreeDemo = React.createClass({
         data.forEach((item) => {
           if (curKey.indexOf(item.key) === 0) {
             if (item.children) {
-              loop(item.children)
+              loop(item.children);
             } else {
               item.children = child;
             }
-          } else {
-            return;
           }
-        })
+        });
       };
       loop(treeData);
       this.setState({treeData});
@@ -72,15 +68,14 @@ const TreeDemo = React.createClass({
       return data.map((item) => {
         if (item.children) {
           return <TreeNode title={item.name} key={item.key}>{loop(item.children)}</TreeNode>;
-        } else {
-          return <TreeNode title={item.name} key={item.key}></TreeNode>;
         }
-      })
+        return <TreeNode title={item.name} key={item.key} />;
+      });
     };
     const parseTreeNode = (data) => {
       return loop(data);
     };
-    let treeNodes = parseTreeNode(this.state.treeData);
+    const treeNodes = parseTreeNode(this.state.treeData);
     return (
       <div>
         <h2>dynamic render</h2>
@@ -88,8 +83,8 @@ const TreeDemo = React.createClass({
           {treeNodes}
         </Tree>
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
 ReactDOM.render(<TreeDemo />, document.getElementById('__react-content'));
