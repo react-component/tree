@@ -27,6 +27,8 @@ webpackJsonp([1],{
 	
 	__webpack_require__(2);
 	
+	__webpack_require__(198);
+	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -154,18 +156,27 @@ webpackJsonp([1],{
 	      };
 	      return _react2['default'].createElement(
 	        'div',
-	        null,
+	        { className: 'draggable-demo' },
 	        _react2['default'].createElement(
 	          'h2',
 	          null,
 	          'draggable '
 	        ),
 	        _react2['default'].createElement(
-	          _rcTree2['default'],
-	          { defaultExpandedKeys: ['0-0', '0-0-0'], draggable: true, onTreeDrop: this.handleDrop,
-	            checkable: false, onCheck: this.handleCheck, checkedKeys: this.state.checkedKeys,
-	            onSelect: this.handleSelect, selectedKeys: this.state.selectedKeys },
-	          loop(this.state.gData)
+	          'p',
+	          null,
+	          'drag a node into another node'
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'draggable-container' },
+	          _react2['default'].createElement(
+	            _rcTree2['default'],
+	            { defaultExpandedKeys: ['0-0', '0-0-0'], draggable: true, onTreeDrop: this.handleDrop,
+	              checkable: false, onCheck: this.handleCheck, checkedKeys: this.state.checkedKeys,
+	              onSelect: this.handleSelect, selectedKeys: this.state.selectedKeys },
+	            loop(this.state.gData)
+	          )
 	        )
 	      );
 	    }
@@ -175,6 +186,13 @@ webpackJsonp([1],{
 	})(_react2['default'].Component);
 	
 	_reactDom2['default'].render(_react2['default'].createElement(TreeDemo, null), document.getElementById('__react-content'));
+
+/***/ },
+
+/***/ 198:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 
