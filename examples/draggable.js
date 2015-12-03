@@ -1,4 +1,5 @@
 import 'rc-tree/assets/index.less';
+import 'rc-tree/assets/draggable-demo.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
@@ -97,13 +98,16 @@ class TreeDemo extends React.Component {
         return <TreeNode key={item.key} title={item.key} />;
       });
     };
-    return (<div>
+    return (<div className="draggable-demo">
       <h2>draggable </h2>
-      <Tree defaultExpandedKeys={['0-0', '0-0-0']} draggable onTreeDrop={this.handleDrop}
-            checkable={false} onCheck={this.handleCheck} checkedKeys={this.state.checkedKeys}
-            onSelect={this.handleSelect} selectedKeys={this.state.selectedKeys}>
-        {loop(this.state.gData)}
-      </Tree>
+      <p>drag a node into another node</p>
+      <div className="draggable-container">
+        <Tree defaultExpandedKeys={['0-0', '0-0-0']} draggable onTreeDrop={this.handleDrop}
+              checkable={false} onCheck={this.handleCheck} checkedKeys={this.state.checkedKeys}
+              onSelect={this.handleSelect} selectedKeys={this.state.selectedKeys}>
+          {loop(this.state.gData)}
+        </Tree>
+      </div>
     </div>);
   }
 }
