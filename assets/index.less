@@ -8,6 +8,24 @@
     list-style: none;
     white-space: nowrap;
     outline: 0;
+    a[draggable], a[draggable=true] {
+      color: #333;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      /* Required to make elements draggable in old WebKit */
+      -khtml-user-drag: element;
+      -webkit-user-drag: element;
+    }
+    &.drag-over {
+      > a[draggable] {
+        background-color: #316AC5;
+        color: white;
+        border:1px #316AC5 solid;
+        opacity: 0.8;
+      }
+    }
     ul {
       margin: 0;
       padding: 0 0 0 18px;

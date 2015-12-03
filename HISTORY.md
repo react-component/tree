@@ -1,6 +1,9 @@
 # History
 ---
 
+## 0.20.0 / 2015-12-01
+- add draggable feature #5
+
 ## 0.18.0 / 2015-10-23
 - add contextmenu feature #5
 

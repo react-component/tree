@@ -48,7 +48,7 @@ online example: http://react-component.github.io/tree/examples/
 [![rc-tree](https://nodei.co/npm/rc-tree.png)](https://npmjs.org/package/rc-tree)
 
 ## Usage
- 
+
 see examples
 
 ## API
@@ -73,6 +73,12 @@ see examples
 |onSelect | click the treeNode to fire | function(e:{selected:bool,node,checkedKeys,event}) | - |
 |onDataLoaded | load data asynchronously and the return value should be a promise | function(node) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
+|draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool | false |
+|onTreeDragStart | it execs when fire the tree's dragstart event | function({event,node}) | - |
+|onTreeDragEnter | it execs when fire the tree's dragenter event | function({event,node}) | - |
+|onTreeDragOver | it execs when fire the tree's dragover event | function({event,node}) | - |
+|onTreeDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
+|onTreeDrop | it execs when fire the tree's drop event | function({event,node,dragNode,dragNodesKeys}) | - |
 
 ### TreeNode props
 

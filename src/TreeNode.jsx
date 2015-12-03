@@ -1,14 +1,20 @@
 import React from 'react';
-import {joinClasses, classSet} from 'rc-util';
-import Animate from 'rc-animate';
 import assign from 'object-assign';
+import Animate from 'rc-animate';
+import {joinClasses, classSet} from 'rc-util';
+import { browser } from './util';
+
+const browserUa = browser(window.navigator.userAgent || '');
+const ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
+// const uaArray = browserUa.split(' ');
+// const gtIE8 = uaArray.length !== 2 || uaArray[0].indexOf('IE') === -1 || Number(uaArray[1]) > 8;
 
 const defaultTitle = '---';
 
 class TreeNode extends React.Component {
   constructor(props) {
     super(props);
-    ['handleExpand', 'handleCheck', 'handleContextMenu'].forEach((m)=> {
+    ['handleExpand', 'handleCheck', 'handleContextMenu', 'handleDragStart', 'handleDragEnter', 'handleDragOver', 'handleDragLeave', 'handleDrop'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
     this.state = {
@@ -21,7 +27,7 @@ class TreeNode extends React.Component {
       last: false,
       center: false,
     };
-    const siblings = Object.keys(this.props.root.treeNodesChkStates).filter((item) => {
+    const siblings = Object.keys(this.props.root.treeNodesStates).filter((item) => {
       const len = pos.length;
       return len === item.length && pos.substring(0, len - 2) === item.substring(0, len - 2);
     });
@@ -38,14 +44,43 @@ class TreeNode extends React.Component {
   handleCheck() {
     this.props.root.handleCheck(this);
   }
-
   handleSelect() {
     this.props.root.handleSelect(this);
   }
-
   handleContextMenu(e) {
     e.preventDefault();
     this.props.root.handleContextMenu(e, this);
+  }
+
+  handleDragStart(e) {
+    // console.log('dragstart', this.props.eventKey, e);
+    // e.preventDefault();
+    e.stopPropagation();
+    this.props.root.handleSelect(this);
+    this.props.root.handleDragStart(e, this);
+  }
+  handleDragEnter(e) {
+    // console.log('dragenter', this.props.eventKey, e);
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.root.handleDragEnter(e, this);
+  }
+  handleDragOver(e) {
+    // console.log(this.props.eventKey, e);
+    // todo disabled
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.root.handleDragOver(e, this);
+    return false;
+  }
+  handleDragLeave(e) {
+    // console.log(this.props.eventKey, e);
+    e.stopPropagation();
+    this.props.root.handleDragLeave(e, this);
+  }
+  handleDrop(e) {
+    e.stopPropagation();
+    this.props.root.handleDrop(e, this);
   }
 
   handleExpand() {
@@ -192,7 +227,8 @@ class TreeNode extends React.Component {
         if (props.selected) {
           domProps.className = `${prefixCls}-node-selected`;
         }
-        domProps.onClick = () => {
+        domProps.onClick = (e) => {
+          e.preventDefault();
           this.handleSelect();
           if (props.checkable) {
             this.handleCheck();
@@ -200,6 +236,15 @@ class TreeNode extends React.Component {
         };
         if (props.onRightClick) {
           domProps.onContextMenu = this.handleContextMenu;
+        }
+        if (props.draggable) {
+          if (ieOrEdge) {
+            // ie bug!
+            domProps.href = '#';
+          }
+          domProps.draggable = true;
+          domProps['aria-grabbed'] = true;
+          domProps.onDragStart = this.handleDragStart;
         }
       }
       return (
@@ -209,8 +254,24 @@ class TreeNode extends React.Component {
       );
     };
 
+    const liProps = {};
+    if (props.draggable) {
+      liProps.onDragEnter = this.handleDragEnter;
+      liProps.onDragOver = this.handleDragOver;
+      liProps.onDragLeave = this.handleDragLeave;
+      liProps.onDrop = this.handleDrop;
+    }
+
+    let disabledCls = '';
+    let dragOverCls = '';
+    if (props.disabled) {
+      disabledCls = `${prefixCls}-treenode-disabled`;
+    } else if (props.dragOver) {
+      dragOverCls = 'drag-over';
+    }
+
     return (
-      <li className={joinClasses(props.className, props.disabled ? `${prefixCls}-treenode-disabled` : '')}>
+      <li {...liProps} ref="li" className={joinClasses(props.className, disabledCls, dragOverCls)}>
         {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : <span className={`${prefixCls}-switcher-noop`}></span>}
         {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}
