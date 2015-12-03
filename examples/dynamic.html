@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>dynamic.js - example - rc-tree@0.19.1</title>
+  <title>dynamic.js - example - rc-tree@0.20.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,24 +257,22 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.19.1</h1>
+    <h1>rc-tree@0.20.0</h1>
 
     <p>tree ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="dynamic.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-pi">'use strict'</span>;
-
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
+  <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
 
 <span class="hljs-keyword">const</span> asyncTree = [
-  {name: <span class="hljs-string">"pNode 01"</span>, key: <span class="hljs-string">"0-0"</span>},
-  {name: <span class="hljs-string">"pNode 02"</span>, key: <span class="hljs-string">"0-1"</span>},
-  {name: <span class="hljs-string">"pNode 03"</span>, key: <span class="hljs-string">"0-2"</span>}
+  {name: <span class="hljs-string">'pNode 01'</span>, key: <span class="hljs-string">'0-0'</span>},
+  {name: <span class="hljs-string">'pNode 02'</span>, key: <span class="hljs-string">'0-1'</span>},
+  {name: <span class="hljs-string">'pNode 03'</span>, key: <span class="hljs-string">'0-2'</span>},
 ];
 
 <span class="hljs-keyword">const</span> generateTreeNodes = (treeNode) =&gt; {
@@ -284,26 +282,26 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     arr.push({name: <span class="hljs-string">`leaf <span class="hljs-subst">${key}</span>-<span class="hljs-subst">${i}</span>`</span>, key: <span class="hljs-string">`<span class="hljs-subst">${key}</span>-<span class="hljs-subst">${i}</span>`</span>});
   }
   <span class="hljs-keyword">return</span> arr;
-}
+};
 
 <span class="hljs-keyword">const</span> TreeDemo = React.createClass({
   propTypes: {},
-  timeout(duration = <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
-        setTimeout(resolve.bind(<span class="hljs-keyword">this</span>), duration);
-    })
-  },
   getInitialState() {
     <span class="hljs-keyword">return</span> {
-      treeData: []
+      treeData: [],
     };
   },
   componentDidMount() {
     <span class="hljs-keyword">this</span>.timeout(<span class="hljs-number">1000</span>).then(() =&gt; {
       <span class="hljs-keyword">this</span>.setState({
-        treeData: asyncTree
+        treeData: asyncTree,
       });
       <span class="hljs-keyword">return</span> asyncTree;
+    });
+  },
+  timeout(duration = <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve) =&gt; {
+      setTimeout(resolve.bind(<span class="hljs-keyword">this</span>), duration);
     });
   },
   handleSelect(info) {
@@ -319,14 +317,12 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         data.forEach((item) =&gt; {
           <span class="hljs-keyword">if</span> (curKey.indexOf(item.key) === <span class="hljs-number">0</span>) {
             <span class="hljs-keyword">if</span> (item.children) {
-              loop(item.children)
+              loop(item.children);
             } <span class="hljs-keyword">else</span> {
               item.children = child;
             }
-          } <span class="hljs-keyword">else</span> {
-            <span class="hljs-keyword">return</span>;
           }
-        })
+        });
       };
       loop(treeData);
       <span class="hljs-keyword">this</span>.setState({treeData});
@@ -338,15 +334,14 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
         <span class="hljs-keyword">if</span> (item.children) {
           <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.name}</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span>&gt;</span>{loop(item.children)}<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>;</span>
-        } <span class="hljs-keyword">else</span> {
-          <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.name}</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>;</span>
         }
-      })
+        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.name}</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> /&gt;</span>;</span>
+      });
     };
     <span class="hljs-keyword">const</span> parseTreeNode = (data) =&gt; {
       <span class="hljs-keyword">return</span> loop(data);
     };
-    <span class="hljs-keyword">let</span> treeNodes = parseTreeNode(<span class="hljs-keyword">this</span>.state.treeData);
+    <span class="hljs-keyword">const</span> treeNodes = parseTreeNode(<span class="hljs-keyword">this</span>.state.treeData);
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>dynamic render<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
@@ -354,9 +349,9 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           {treeNodes}
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>
-  }
-})
+    )</span>;
+  },
+});
 
 ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeDemo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>

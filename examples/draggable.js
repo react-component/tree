@@ -1,12 +1,14 @@
-webpackJsonp([0],[
-/* 0 */
+webpackJsonp([1],{
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(197);
 
 
 /***/ },
-/* 1 */
+
+/***/ 197:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16,6 +18,8 @@ webpackJsonp([0],[
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
@@ -35,7 +39,7 @@ webpackJsonp([0],[
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var x = 12;
+	var x = 4;
 	var y = 3;
 	var z = 2;
 	var gData = [];
@@ -72,39 +76,65 @@ webpackJsonp([0],[
 	    _classCallCheck(this, TreeDemo);
 	
 	    _get(Object.getPrototypeOf(TreeDemo.prototype), 'constructor', this).call(this, props);
-	    ['handleClick', 'handleCheck', 'handleSelect'].forEach(function (m) {
+	    ['handleDrop', 'handleCheck', 'handleSelect'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.state = {
+	      gData: gData,
 	      checkedKeys: [],
 	      selectedKeys: []
 	    };
 	  }
 	
 	  _createClass(TreeDemo, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'handleDrop',
+	    value: function handleDrop(info) {
+	      // console.log(info);
+	      var dropKey = info.node.props.eventKey;
+	      var dragKey = info.dragNode.props.eventKey;
+	      // const dragNodesKeys = info.dragNodesKeys;
+	      var loop = function loop(data, key, callback) {
+	        data.forEach(function (item, index, arr) {
+	          if (item.key === key) {
+	            return callback(item, index, arr);
+	          }
+	          if (item.children) {
+	            return loop(item.children, key, callback);
+	          }
+	        });
+	      };
+	      var data = [].concat(_toConsumableArray(this.state.gData));
+	      var dragObj = undefined;
+	      loop(data, dragKey, function (item, index, arr) {
+	        arr.splice(index, 1);
+	        dragObj = item;
+	      });
+	      loop(data, dropKey, function (item) {
+	        item.children = item.children || [];
+	        // where to insert 示例添加到尾部，可以是随意位置
+	        item.children.push(dragObj);
+	      });
 	      this.setState({
-	        checkedKeys: ['0-0'],
-	        selectedKeys: ['p21', 'p11']
+	        gData: data
 	      });
 	    }
 	  }, {
 	    key: 'handleCheck',
 	    value: function handleCheck(info) {
-	      console.log('check: ', info);
+	      // console.log('check: ', info);
 	      this.setState({
-	        checkedKeys: ['0-1'],
-	        selectedKeys: ['0-3', '0-4']
+	        checkedKeys: [info.node.props.eventKey]
 	      });
 	    }
 	  }, {
 	    key: 'handleSelect',
 	    value: function handleSelect(info) {
-	      console.log('selected: ', info);
+	      // console.log('selected: ', info);
 	      this.setState({
-	        checkedKeys: ['0-2'],
-	        selectedKeys: ['0-2']
+	        selectedKeys: [info.node.props.eventKey]
 	      });
 	    }
 	  }, {
@@ -126,25 +156,16 @@ webpackJsonp([0],[
 	        'div',
 	        null,
 	        _react2['default'].createElement(
-	          'div',
+	          'h2',
 	          null,
-	          _react2['default'].createElement(
-	            'h2',
-	            null,
-	            'checked'
-	          ),
-	          _react2['default'].createElement(
-	            _rcTree2['default'],
-	            { defaultExpandAll: false, checkable: true,
-	              onCheck: this.handleCheck, checkedKeys: this.state.checkedKeys,
-	              onSelect: this.handleSelect, selectedKeys: this.state.selectedKeys, multiple: true },
-	            loop(gData)
-	          )
+	          'draggable '
 	        ),
 	        _react2['default'].createElement(
-	          'button',
-	          { onClick: this.handleClick },
-	          'check again'
+	          _rcTree2['default'],
+	          { defaultExpandedKeys: ['0-0', '0-0-0'], draggable: true, onTreeDrop: this.handleDrop,
+	            checkable: false, onCheck: this.handleCheck, checkedKeys: this.state.checkedKeys,
+	            onSelect: this.handleSelect, selectedKeys: this.state.selectedKeys },
+	          loop(this.state.gData)
 	        )
 	      );
 	    }
@@ -156,5 +177,6 @@ webpackJsonp([0],[
 	_reactDom2['default'].render(_react2['default'].createElement(TreeDemo, null), document.getElementById('__react-content'));
 
 /***/ }
-]);
-//# sourceMappingURL=checked.js.map
+
+});
+//# sourceMappingURL=draggable.js.map

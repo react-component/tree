@@ -1,14 +1,14 @@
-webpackJsonp([1],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(190);
+	module.exports = __webpack_require__(198);
 
 
 /***/ },
 
-/***/ 190:
+/***/ 198:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31,7 +31,7 @@ webpackJsonp([1],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var asyncTree = [{ name: "pNode 01", key: "0-0" }, { name: "pNode 02", key: "0-1" }, { name: "pNode 03", key: "0-2" }];
+	var asyncTree = [{ name: 'pNode 01', key: '0-0' }, { name: 'pNode 02', key: '0-1' }, { name: 'pNode 03', key: '0-2' }];
 	
 	var generateTreeNodes = function generateTreeNodes(treeNode) {
 	  var arr = [];
@@ -46,28 +46,28 @@ webpackJsonp([1],{
 	  displayName: 'TreeDemo',
 	
 	  propTypes: {},
-	  timeout: function timeout() {
-	    var _this = this;
-	
-	    var duration = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-	
-	    return new Promise(function (resolve, reject) {
-	      setTimeout(resolve.bind(_this), duration);
-	    });
-	  },
 	  getInitialState: function getInitialState() {
 	    return {
 	      treeData: []
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    var _this2 = this;
+	    var _this = this;
 	
 	    this.timeout(1000).then(function () {
-	      _this2.setState({
+	      _this.setState({
 	        treeData: asyncTree
 	      });
 	      return asyncTree;
+	    });
+	  },
+	  timeout: function timeout() {
+	    var _this2 = this;
+	
+	    var duration = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+	
+	    return new Promise(function (resolve) {
+	      setTimeout(resolve.bind(_this2), duration);
 	    });
 	  },
 	  handleSelect: function handleSelect(info) {
@@ -89,8 +89,6 @@ webpackJsonp([1],{
 	            } else {
 	              item.children = child;
 	            }
-	          } else {
-	            return;
 	          }
 	        });
 	      };
@@ -108,9 +106,8 @@ webpackJsonp([1],{
 	            { title: item.name, key: item.key },
 	            loop(item.children)
 	          );
-	        } else {
-	          return _react2['default'].createElement(_rcTree.TreeNode, { title: item.name, key: item.key });
 	        }
+	        return _react2['default'].createElement(_rcTree.TreeNode, { title: item.name, key: item.key });
 	      });
 	    };
 	    var parseTreeNode = function parseTreeNode(data) {

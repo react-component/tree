@@ -1,14 +1,14 @@
-webpackJsonp([3],{
+webpackJsonp([4],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(193);
+	module.exports = __webpack_require__(201);
 
 
 /***/ },
 
-/***/ 193:
+/***/ 201:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,7 +17,7 @@ webpackJsonp([3],{
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(194);
+	__webpack_require__(202);
 	
 	var _react = __webpack_require__(3);
 	
@@ -31,11 +31,11 @@ webpackJsonp([3],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _objectAssign = __webpack_require__(177);
+	var _objectAssign = __webpack_require__(183);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _rcTooltip = __webpack_require__(195);
+	var _rcTooltip = __webpack_require__(203);
 	
 	var _rcTooltip2 = _interopRequireDefault(_rcTooltip);
 	
@@ -43,10 +43,10 @@ webpackJsonp([3],{
 	  displayName: 'TreeDemo',
 	
 	  propTypes: {},
-	  getInitialState: function getInitialState() {
+	  getDefaultProps: function getDefaultProps() {
 	    return {};
 	  },
-	  getDefaultProps: function getDefaultProps() {
+	  getInitialState: function getInitialState() {
 	    return {};
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -55,8 +55,8 @@ webpackJsonp([3],{
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    if (this.tipContainer) {
-	      _reactDom2['default'].unmountComponentAtNode(tipContainer);
-	      document.body.removeChild(tipContainer);
+	      _reactDom2['default'].unmountComponentAtNode(this.tipContainer);
+	      document.body.removeChild(this.tipContainer);
 	      this.tipContainer = null;
 	    }
 	    // remove event listener if it has
@@ -152,23 +152,23 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 194:
+/***/ 202:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 195:
+/***/ 203:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(196);
+	module.exports = __webpack_require__(204);
 
 /***/ },
 
-/***/ 196:
+/***/ 204:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -185,9 +185,9 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _placements = __webpack_require__(197);
+	var _placements = __webpack_require__(205);
 	
-	var _rcTrigger = __webpack_require__(198);
+	var _rcTrigger = __webpack_require__(206);
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
@@ -298,7 +298,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 197:
+/***/ 205:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -393,16 +393,16 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 198:
+/***/ 206:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(199);
+	module.exports = __webpack_require__(207);
 
 /***/ },
 
-/***/ 199:
+/***/ 207:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -425,11 +425,11 @@ webpackJsonp([3],{
 	
 	var _rcUtil = __webpack_require__(164);
 	
-	var _Popup = __webpack_require__(200);
+	var _Popup = __webpack_require__(208);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(213);
+	var _utils = __webpack_require__(221);
 	
 	function noop() {}
 	
@@ -755,7 +755,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 200:
+/***/ 208:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -774,15 +774,15 @@ webpackJsonp([3],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAlign = __webpack_require__(201);
+	var _rcAlign = __webpack_require__(209);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcAnimate = __webpack_require__(182);
+	var _rcAnimate = __webpack_require__(188);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _PopupInner = __webpack_require__(212);
+	var _PopupInner = __webpack_require__(220);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
@@ -916,7 +916,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 201:
+/***/ 209:
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
@@ -928,7 +928,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _Align = __webpack_require__(202);
+	var _Align = __webpack_require__(210);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -937,7 +937,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 202:
+/***/ 210:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -956,13 +956,13 @@ webpackJsonp([3],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _domAlign = __webpack_require__(203);
+	var _domAlign = __webpack_require__(211);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
 	var _rcUtil = __webpack_require__(164);
 	
-	var _isWindow = __webpack_require__(211);
+	var _isWindow = __webpack_require__(219);
 	
 	var _isWindow2 = _interopRequireDefault(_isWindow);
 	
@@ -1095,7 +1095,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 203:
+/***/ 211:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1111,27 +1111,27 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(204);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(205);
+	var _getOffsetParent = __webpack_require__(213);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
-	var _getVisibleRectForElement = __webpack_require__(206);
+	var _getVisibleRectForElement = __webpack_require__(214);
 	
 	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
 	
-	var _adjustForViewport = __webpack_require__(207);
+	var _adjustForViewport = __webpack_require__(215);
 	
 	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
 	
-	var _getRegion = __webpack_require__(208);
+	var _getRegion = __webpack_require__(216);
 	
 	var _getRegion2 = _interopRequireDefault(_getRegion);
 	
-	var _getElFuturePos = __webpack_require__(209);
+	var _getElFuturePos = __webpack_require__(217);
 	
 	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
 	
@@ -1299,7 +1299,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 204:
+/***/ 212:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1798,7 +1798,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 205:
+/***/ 213:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1809,7 +1809,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(204);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -1857,7 +1857,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 206:
+/***/ 214:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1868,11 +1868,11 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(204);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(205);
+	var _getOffsetParent = __webpack_require__(213);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
@@ -1939,7 +1939,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 207:
+/***/ 215:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1950,7 +1950,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(204);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -2000,7 +2000,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 208:
+/***/ 216:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2011,7 +2011,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(204);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -2042,7 +2042,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 209:
+/***/ 217:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2053,7 +2053,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _getAlignOffset = __webpack_require__(210);
+	var _getAlignOffset = __webpack_require__(218);
 	
 	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
 	
@@ -2084,7 +2084,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 210:
+/***/ 218:
 /***/ function(module, exports) {
 
 	/**
@@ -2130,7 +2130,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 211:
+/***/ 219:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2150,7 +2150,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 212:
+/***/ 220:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2197,7 +2197,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 213:
+/***/ 221:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2210,7 +2210,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _objectAssign = __webpack_require__(177);
+	var _objectAssign = __webpack_require__(183);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
