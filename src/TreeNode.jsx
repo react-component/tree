@@ -1,7 +1,7 @@
 import React from 'react';
 import assign from 'object-assign';
+import classNames from 'classnames';
 import Animate from 'rc-animate';
-import {joinClasses, classSet} from 'rc-util';
 import { browser } from './util';
 
 const browserUa = browser(window.navigator.userAgent || '');
@@ -112,7 +112,7 @@ class TreeNode extends React.Component {
     };
     if (props.disabled) {
       switcherCls[`${prefixCls}-switcher-disabled`] = true;
-      return <span className={classSet(switcherCls)}></span>;
+      return <span className={classNames(switcherCls)}></span>;
     }
 
     const posObj = this.getPosition(props.pos);
@@ -125,7 +125,7 @@ class TreeNode extends React.Component {
       switcherCls[`${prefixCls}-center_${expandedState}`] = posObj.center;
       switcherCls[`${prefixCls}-bottom_${expandedState}`] = posObj.last;
     }
-    return <span className={classSet(switcherCls)} onClick={this.handleExpand}></span>;
+    return <span className={classNames(switcherCls)} onClick={this.handleExpand}></span>;
   }
 
   renderCheckbox(props) {
@@ -144,9 +144,9 @@ class TreeNode extends React.Component {
     }
     if (props.disabled) {
       checkboxCls[`${prefixCls}-checkbox-disabled`] = true;
-      return <span ref="checkbox" className={classSet(checkboxCls)}>{customEle}</span>;
+      return <span ref="checkbox" className={classNames(checkboxCls)}>{customEle}</span>;
     }
-    return (<span ref="checkbox" className={classSet(checkboxCls)} onClick={this.handleCheck}>{customEle}</span>);
+    return (<span ref="checkbox" className={classNames(checkboxCls)} onClick={this.handleCheck}>{customEle}</span>);
   }
 
   renderChildren(props) {
@@ -186,7 +186,7 @@ class TreeNode extends React.Component {
           showProp="expanded"
           transitionAppear={transitionAppear}
           component="">
-          <ul className={classSet(cls)} expanded={props.expanded}>
+          <ul className={classNames(cls)} expanded={props.expanded}>
             {React.Children.map(children, (item, index) => {
               return props.root.renderTreeNode(item, index, props.pos);
             }, props.root)}
@@ -220,7 +220,7 @@ class TreeNode extends React.Component {
     }
 
     const selectHandle = () => {
-      const icon = (props.showIcon || props.onDataLoaded && this.state.dataLoading) ? <span className={classSet(iconEleCls)}></span> : null;
+      const icon = (props.showIcon || props.onDataLoaded && this.state.dataLoading) ? <span className={classNames(iconEleCls)}></span> : null;
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
       const domProps = {};
       if (!props.disabled) {
@@ -271,7 +271,7 @@ class TreeNode extends React.Component {
     }
 
     return (
-      <li {...liProps} ref="li" className={joinClasses(props.className, disabledCls, dragOverCls)}>
+      <li {...liProps} ref="li" className={classNames(props.className, disabledCls, dragOverCls)}>
         {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : <span className={`${prefixCls}-switcher-noop`}></span>}
         {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}

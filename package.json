@@ -49,9 +49,9 @@
     "velocity-animate": "^1.2.2"
   },
   "dependencies": {
+    "classnames": "~2.2.1",
     "object-assign": "4.x",
-    "rc-animate": "2.x",
-    "rc-util": "3.x"
+    "rc-animate": "2.x"
   },
   "pre-commit": [
     "lint"

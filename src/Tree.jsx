@@ -1,5 +1,5 @@
 import React from 'react';
-import {classSet} from 'rc-util';
+import classNames from 'classnames';
 
 // sorted array ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
 const filterMin = (arr) => {
@@ -121,7 +121,7 @@ class Tree extends React.Component {
     li.className = treeNode.props.className || '';
     li.appendChild(tn);
     const ul = document.createElement("ul");
-    ul.className = `${props.prefixCls}-dragUl ${classSet(props.className, props.prefixCls)}`;
+    ul.className = `${props.prefixCls}-dragUl ${classNames(props.className, props.prefixCls)}`;
     ul.appendChild(li);
 
     ul.setAttribute('draggable', 'true');
@@ -431,7 +431,7 @@ class Tree extends React.Component {
   render() {
     const props = this.props;
     const domProps = {
-      className: classSet(props.className, props.prefixCls),
+      className: classNames(props.className, props.prefixCls),
       role: 'tree-node',
     };
     if (props.focusable) {
