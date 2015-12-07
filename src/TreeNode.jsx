@@ -19,6 +19,7 @@ class TreeNode extends React.Component {
     });
     this.state = {
       dataLoading: false,
+      dragNodeHighlight: false,
     };
   }
 
@@ -56,7 +57,9 @@ class TreeNode extends React.Component {
     // console.log('dragstart', this.props.eventKey, e);
     // e.preventDefault();
     e.stopPropagation();
-    this.props.root.handleSelect(this);
+    this.setState({
+      dragNodeHighlight: true,
+    });
     this.props.root.handleDragStart(e, this);
   }
   handleDragEnter(e) {
@@ -80,6 +83,9 @@ class TreeNode extends React.Component {
   }
   handleDrop(e) {
     e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: false,
+    });
     this.props.root.handleDrop(e, this);
   }
 
@@ -224,7 +230,7 @@ class TreeNode extends React.Component {
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
       const domProps = {};
       if (!props.disabled) {
-        if (props.selected) {
+        if (props.selected || this.state.dragNodeHighlight) {
           domProps.className = `${prefixCls}-node-selected`;
         }
         domProps.onClick = (e) => {
