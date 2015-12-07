@@ -20440,7 +20440,8 @@
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.state = {
-	      dataLoading: false
+	      dataLoading: false,
+	      dragNodeHighlight: false
 	    };
 	  }
 	
@@ -20486,7 +20487,9 @@
 	      // console.log('dragstart', this.props.eventKey, e);
 	      // e.preventDefault();
 	      e.stopPropagation();
-	      this.props.root.handleSelect(this);
+	      this.setState({
+	        dragNodeHighlight: true
+	      });
 	      this.props.root.handleDragStart(e, this);
 	    }
 	  }, {
@@ -20518,6 +20521,9 @@
 	    key: 'handleDrop',
 	    value: function handleDrop(e) {
 	      e.stopPropagation();
+	      this.setState({
+	        dragNodeHighlight: false
+	      });
 	      this.props.root.handleDrop(e, this);
 	    }
 	  }, {
@@ -20680,7 +20686,7 @@
 	        );
 	        var domProps = {};
 	        if (!props.disabled) {
-	          if (props.selected) {
+	          if (props.selected || _this3.state.dragNodeHighlight) {
 	            domProps.className = prefixCls + '-node-selected';
 	          }
 	          domProps.onClick = function (e) {
