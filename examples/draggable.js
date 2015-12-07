@@ -3,12 +3,12 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(197);
+	module.exports = __webpack_require__(176);
 
 
 /***/ },
 
-/***/ 197:
+/***/ 176:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27,7 +27,7 @@ webpackJsonp([1],{
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(198);
+	__webpack_require__(177);
 	
 	var _react = __webpack_require__(3);
 	
@@ -78,11 +78,12 @@ webpackJsonp([1],{
 	    _classCallCheck(this, TreeDemo);
 	
 	    _get(Object.getPrototypeOf(TreeDemo.prototype), 'constructor', this).call(this, props);
-	    ['handleDrop', 'handleCheck', 'handleSelect'].forEach(function (m) {
+	    ['handleDragStart', 'handleDragEnter', 'handleDrop', 'handleCheck', 'handleSelect'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.state = {
 	      gData: gData,
+	      expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
 	      checkedKeys: [],
 	      selectedKeys: []
 	    };
@@ -91,6 +92,17 @@ webpackJsonp([1],{
 	  _createClass(TreeDemo, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {}
+	  }, {
+	    key: 'handleDragStart',
+	    value: function handleDragStart() {}
+	  }, {
+	    key: 'handleDragEnter',
+	    value: function handleDragEnter(info) {
+	      // console.log(info);
+	      this.setState({
+	        expandedKeys: info.expandedKeys
+	      });
+	    }
 	  }, {
 	    key: 'handleDrop',
 	    value: function handleDrop(info) {
@@ -172,7 +184,8 @@ webpackJsonp([1],{
 	          { className: 'draggable-container' },
 	          _react2['default'].createElement(
 	            _rcTree2['default'],
-	            { defaultExpandedKeys: ['0-0', '0-0-0'], draggable: true, onTreeDrop: this.handleDrop,
+	            { defaultExpandedKeys: this.state.expandedKeys, draggable: true,
+	              onTreeDragStart: this.handleDragStart, onTreeDragEnter: this.handleDragEnter, onTreeDrop: this.handleDrop,
 	              checkable: false, onCheck: this.handleCheck, checkedKeys: this.state.checkedKeys,
 	              onSelect: this.handleSelect, selectedKeys: this.state.selectedKeys },
 	            loop(this.state.gData)
@@ -189,7 +202,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 198:
+/***/ 177:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

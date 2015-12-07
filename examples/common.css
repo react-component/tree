@@ -81,10 +81,10 @@
   color: gray;
 }
 .rc-tree li span.rc-tree-switcher.rc-tree-roots_open {
-  background-position: -92px 0;
+  background-position: -93px -56px;
 }
 .rc-tree li span.rc-tree-switcher.rc-tree-roots_close {
-  background-position: -74px 0;
+  background-position: -75px -56px;
 }
 .rc-tree li span.rc-tree-switcher.rc-tree-center_open {
   background-position: -92px -18px;

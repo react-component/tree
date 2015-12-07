@@ -3,12 +3,12 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(223);
+	module.exports = __webpack_require__(224);
 
 
 /***/ },
 
-/***/ 223:
+/***/ 224:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43,8 +43,8 @@ webpackJsonp([5],{
 	  ),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { className: 'myCls', checkable: true, onSelect: handleSelect, defaultSelectedKeys: ['0-1', 'random'], multiple: true,
-	      defaultExpandAll: true, showIcon: false, showLine: true },
+	    { className: 'myCls', onSelect: handleSelect, defaultSelectedKeys: ['0-1', 'random'], multiple: true,
+	      checkable: true, defaultExpandAll: true, showIcon: false, showLine: true },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
 	      { title: 'parent 1', key: '0-1' },
