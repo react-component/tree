@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -39,13 +39,14 @@
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
+    "jquery": "~2.1.4",
     "pre-commit": "1.x",
     "rc-server": "3.x",
     "rc-tools": "4.x",
+    "rc-tooltip": "3.x",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
-    "rc-tooltip": "3.x",
     "velocity-animate": "^1.2.2"
   },
   "dependencies": {

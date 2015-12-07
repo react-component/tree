@@ -10,8 +10,8 @@ function handleSelect(info) {
 const demo = (
   <div>
     <h2>simple</h2>
-    <Tree className="myCls" checkable onSelect={handleSelect} defaultSelectedKeys={['0-1', 'random']} multiple
-      defaultExpandAll showIcon={false} showLine>
+    <Tree className="myCls" onSelect={handleSelect} defaultSelectedKeys={['0-1', 'random']} multiple
+      checkable defaultExpandAll showIcon={false} showLine>
       <TreeNode title="parent 1" key="0-1">
         <TreeNode title="parent 1-0" key="0-1-1">
           <TreeNode title="leaf" key="random" />

@@ -35,17 +35,27 @@ generateData(z);
 class TreeDemo extends React.Component {
   constructor(props) {
     super(props);
-    ['handleDrop', 'handleCheck', 'handleSelect'].forEach((m)=> {
+    ['handleDragStart', 'handleDragEnter', 'handleDrop', 'handleCheck', 'handleSelect'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
     this.state = {
       gData: gData,
+      expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
       checkedKeys: [],
       selectedKeys: [],
     };
   }
   componentDidMount() {
 
+  }
+  handleDragStart() {
+
+  }
+  handleDragEnter(info) {
+    // console.log(info);
+    this.setState({
+      expandedKeys: info.expandedKeys,
+    });
   }
   handleDrop(info) {
     // console.log(info);
@@ -102,7 +112,8 @@ class TreeDemo extends React.Component {
       <h2>draggable </h2>
       <p>drag a node into another node</p>
       <div className="draggable-container">
-        <Tree defaultExpandedKeys={['0-0', '0-0-0']} draggable onTreeDrop={this.handleDrop}
+        <Tree defaultExpandedKeys={this.state.expandedKeys} draggable
+              onTreeDragStart={this.handleDragStart} onTreeDragEnter={this.handleDragEnter} onTreeDrop={this.handleDrop}
               checkable={false} onCheck={this.handleCheck} checkedKeys={this.state.checkedKeys}
               onSelect={this.handleSelect} selectedKeys={this.state.selectedKeys}>
           {loop(this.state.gData)}

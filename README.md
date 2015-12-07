@@ -75,7 +75,7 @@ see examples
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 |draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool | false |
 |onTreeDragStart | it execs when fire the tree's dragstart event | function({event,node}) | - |
-|onTreeDragEnter | it execs when fire the tree's dragenter event | function({event,node}) | - |
+|onTreeDragEnter | it execs when fire the tree's dragenter event | function({event,node,expandedKeys}) | - |
 |onTreeDragOver | it execs when fire the tree's dragover event | function({event,node}) | - |
 |onTreeDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
 |onTreeDrop | it execs when fire the tree's drop event | function({event,node,dragNode,dragNodesKeys}) | - |
@@ -99,11 +99,11 @@ npm start
 
 ## Test Case
 
-http://localhost:8003/tests/runner.html?coverage
+http://localhost:8018/tests/runner.html?coverage
 
 ## Coverage
 
-http://localhost:8003/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8003/tests/runner.html?coverage
+http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8018/tests/runner.html?coverage
 
 ## License
 

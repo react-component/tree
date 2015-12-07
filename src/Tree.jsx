@@ -97,7 +97,7 @@ class Tree extends React.Component {
       exKeys.splice(expandedIndex, 1);
       return exKeys;
     }
-    if (expand) {
+    if (expand && expandedKeys.indexOf(key) === -1) {
       return expandedKeys.concat([key]);
     }
   }
@@ -143,7 +143,10 @@ class Tree extends React.Component {
     }
     this.setState(st);
     if (this.props.onTreeDragStart) {
-      this.props.onTreeDragStart({event: e, node: treeNode});
+      this.props.onTreeDragStart({
+        event: e,
+        node: treeNode,
+      });
     }
   }
   handleDragEnter(e, treeNode) {
@@ -159,7 +162,11 @@ class Tree extends React.Component {
     }
     this.setState(st);
     if (this.props.onTreeDragEnter) {
-      this.props.onTreeDragEnter({event: e, node: treeNode});
+      this.props.onTreeDragEnter({
+        event: e,
+        node: treeNode,
+        expandedKeys: expandedKeys || this.state.expandedKeys,
+      });
     }
   }
   handleDragOver(e, treeNode) {
@@ -407,7 +414,7 @@ class Tree extends React.Component {
     const state = this.state;
     const props = this.props;
     const cloneProps = {
-      ref: 'treeNode',
+      ref: 'treeNode-' + key,
       root: this,
       eventKey: key,
       pos: `${level}-${index}`,

@@ -1,4 +1,3 @@
-
 export function browser(ua) {
   let tem;
   let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
