@@ -274,6 +274,10 @@ class TreeNode extends React.Component {
       disabledCls = `${prefixCls}-treenode-disabled`;
     } else if (props.dragOver) {
       dragOverCls = 'drag-over';
+    } else if (props.dragOverGapTop) {
+      dragOverCls = 'drag-over-gap-top';
+    } else if (props.dragOverGapBottom) {
+      dragOverCls = 'drag-over-gap-bottom';
     }
 
     return (

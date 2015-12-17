@@ -58,7 +58,7 @@ class TreeDemo extends React.Component {
     });
   }
   handleDrop(info) {
-    // console.log(info);
+    console.log(info);
     const dropKey = info.node.props.eventKey;
     const dragKey = info.dragNode.props.eventKey;
     // const dragNodesKeys = info.dragNodesKeys;
@@ -78,11 +78,21 @@ class TreeDemo extends React.Component {
       arr.splice(index, 1);
       dragObj = item;
     });
-    loop(data, dropKey, (item) => {
-      item.children = item.children || [];
-      // where to insert 示例添加到尾部，可以是随意位置
-      item.children.push(dragObj);
-    });
+    if (info.dropToGap) {
+      let ar;
+      let i;
+      loop(data, dropKey, (item, index, arr) => {
+        ar = arr;
+        i = index;
+      });
+      ar.splice(i, 0, dragObj);
+    } else {
+      loop(data, dropKey, (item) => {
+        item.children = item.children || [];
+        // where to insert 示例添加到尾部，可以是随意位置
+        item.children.push(dragObj);
+      });
+    }
     this.setState({
       gData: data,
     });

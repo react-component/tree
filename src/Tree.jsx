@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import { getOffset } from './util';
 
 // sorted array ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
 const filterMin = (arr) => {
@@ -149,10 +150,35 @@ class Tree extends React.Component {
       });
     }
   }
+  handleDragEnterGap(e, treeNode) {
+    // console.log(e.pageY, getOffset(treeNode.refs.selectHandle), treeNode.props.eventKey);
+    const offsetTop = getOffset(treeNode.refs.selectHandle).top;
+    const offsetHeight = treeNode.refs.selectHandle.offsetHeight;
+    const pageY = e.pageY;
+    const gapHeight = 2;
+    if (pageY > offsetTop + offsetHeight - gapHeight) {
+      // console.log('enter gap');
+      this.dropPos = 1;
+      return 1;
+    }
+    if (pageY < offsetTop + gapHeight) {
+      // console.log('ee');
+      this.dropPos = -1;
+      return -1;
+    }
+    // console.log('xx');
+    this.dropPos = 0;
+    return 0;
+  }
   handleDragEnter(e, treeNode) {
-    if (this.dragNode.props.eventKey === treeNode.props.eventKey) {
+    const enterGap = this.handleDragEnterGap(e, treeNode);
+    if (this.dragNode.props.eventKey === treeNode.props.eventKey && enterGap === 0) {
+      this.setState({
+        dragOverNodeKey: '',
+      });
       return;
     }
+    // console.log('en...', this.dropPos);
     const st = {
       dragOverNodeKey: treeNode.props.eventKey,
     };
@@ -189,12 +215,18 @@ class Tree extends React.Component {
       dropNodeKey: key,
     });
     if (this.props.onTreeDrop) {
-      this.props.onTreeDrop({
+      const posArr = treeNode.props.pos.split('-');
+      const res = {
         event: e,
         node: treeNode,
         dragNode: this.dragNode,
         dragNodesKeys: this.dragNodesKeys,
-      });
+        dropPos: this.dropPos + Number(posArr[posArr.length - 1]),
+      };
+      if (this.dropPos !== 0) {
+        res.dropToGap = true;
+      }
+      this.props.onTreeDrop(res);
     }
   }
   loopAllChildren(childs, callback) {
@@ -425,7 +457,9 @@ class Tree extends React.Component {
       showIcon: props.showIcon,
       checkable: props.checkable,
       draggable: props.draggable,
-      dragOver: state.dragOverNodeKey === key,
+      dragOver: state.dragOverNodeKey === key && this.dropPos === 0,
+      dragOverGapTop: state.dragOverNodeKey === key && this.dropPos === -1,
+      dragOverGapBottom: state.dragOverNodeKey === key && this.dropPos === 1,
       expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
       selected: state.selectedKeys.indexOf(key) !== -1,
       checked: this.checkedKeys.indexOf(key) !== -1,

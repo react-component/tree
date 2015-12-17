@@ -16,3 +16,25 @@ export function browser(ua) {
   }
   return M.join(' ');
 }
+
+// export function getOffset(el) {
+//   const obj = el.getBoundingClientRect();
+//   return {
+//     left: obj.left + document.body.scrollLeft,
+//     top: obj.top + document.body.scrollTop,
+//     width: obj.width,
+//     height: obj.height
+//   };
+// }
+
+export function getOffset(ele) {
+  let el = ele;
+  let _x = 0;
+  let _y = 0;
+  while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+    _x += el.offsetLeft - el.scrollLeft;
+    _y += el.offsetTop - el.scrollTop;
+    el = el.offsetParent;
+  }
+  return { top: _y, left: _x };
+}

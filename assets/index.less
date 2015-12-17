@@ -22,8 +22,18 @@
       > a[draggable] {
         background-color: #316AC5;
         color: white;
-        border:1px #316AC5 solid;
+        border: 1px #316AC5 solid;
         opacity: 0.8;
+      }
+    }
+    &.drag-over-gap-top {
+      > a[draggable] {
+        border-top: 2px blue solid;
+      }
+    }
+    &.drag-over-gap-bottom {
+      > a[draggable] {
+        border-bottom: 2px blue solid;
       }
     }
     ul {
