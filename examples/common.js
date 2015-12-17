@@ -20672,7 +20672,7 @@
 	      if (!newChildren || newChildren === props.children) {
 	        // content = newChildren;
 	        newChildren = null;
-	        if (!props.onDataLoaded) {
+	        if (!props.onDataLoaded || props.isLeaf) {
 	          canRenderSwitcher = false;
 	        }
 	      }
@@ -20750,6 +20750,7 @@
 	TreeNode.propTypes = {
 	  prefixCls: _react2['default'].PropTypes.string,
 	  expanded: _react2['default'].PropTypes.bool,
+	  isLeaf: _react2['default'].PropTypes.bool,
 	  root: _react2['default'].PropTypes.object,
 	  onSelect: _react2['default'].PropTypes.func
 	};
