@@ -106,7 +106,7 @@ webpackJsonp([1],{
 	  }, {
 	    key: 'handleDrop',
 	    value: function handleDrop(info) {
-	      // console.log(info);
+	      console.log(info);
 	      var dropKey = info.node.props.eventKey;
 	      var dragKey = info.dragNode.props.eventKey;
 	      // const dragNodesKeys = info.dragNodesKeys;
@@ -126,11 +126,21 @@ webpackJsonp([1],{
 	        arr.splice(index, 1);
 	        dragObj = item;
 	      });
-	      loop(data, dropKey, function (item) {
-	        item.children = item.children || [];
-	        // where to insert 示例添加到尾部，可以是随意位置
-	        item.children.push(dragObj);
-	      });
+	      if (info.dropToGap) {
+	        var ar = undefined;
+	        var i = undefined;
+	        loop(data, dropKey, function (item, index, arr) {
+	          ar = arr;
+	          i = index;
+	        });
+	        ar.splice(i, 0, dragObj);
+	      } else {
+	        loop(data, dropKey, function (item) {
+	          item.children = item.children || [];
+	          // where to insert 示例添加到尾部，可以是随意位置
+	          item.children.push(dragObj);
+	        });
+	      }
 	      this.setState({
 	        gData: data
 	      });

@@ -19710,7 +19710,7 @@
 	
 	var _Tree2 = _interopRequireDefault(_Tree);
 	
-	var _TreeNode = __webpack_require__(165);
+	var _TreeNode = __webpack_require__(166);
 	
 	var _TreeNode2 = _interopRequireDefault(_TreeNode);
 	
@@ -19750,6 +19750,8 @@
 	var _classnames = __webpack_require__(164);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _util = __webpack_require__(165);
 	
 	// sorted array ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
 	var filterMin = function filterMin(arr) {
@@ -19921,11 +19923,38 @@
 	      }
 	    }
 	  }, {
+	    key: 'handleDragEnterGap',
+	    value: function handleDragEnterGap(e, treeNode) {
+	      // console.log(e.pageY, getOffset(treeNode.refs.selectHandle), treeNode.props.eventKey);
+	      var offsetTop = (0, _util.getOffset)(treeNode.refs.selectHandle).top;
+	      var offsetHeight = treeNode.refs.selectHandle.offsetHeight;
+	      var pageY = e.pageY;
+	      var gapHeight = 2;
+	      if (pageY > offsetTop + offsetHeight - gapHeight) {
+	        // console.log('enter gap');
+	        this.dropPos = 1;
+	        return 1;
+	      }
+	      if (pageY < offsetTop + gapHeight) {
+	        // console.log('ee');
+	        this.dropPos = -1;
+	        return -1;
+	      }
+	      // console.log('xx');
+	      this.dropPos = 0;
+	      return 0;
+	    }
+	  }, {
 	    key: 'handleDragEnter',
 	    value: function handleDragEnter(e, treeNode) {
-	      if (this.dragNode.props.eventKey === treeNode.props.eventKey) {
+	      var enterGap = this.handleDragEnterGap(e, treeNode);
+	      if (this.dragNode.props.eventKey === treeNode.props.eventKey && enterGap === 0) {
+	        this.setState({
+	          dragOverNodeKey: ''
+	        });
 	        return;
 	      }
+	      // console.log('en...', this.dropPos);
 	      var st = {
 	        dragOverNodeKey: treeNode.props.eventKey
 	      };
@@ -19968,12 +19997,18 @@
 	        dropNodeKey: key
 	      });
 	      if (this.props.onTreeDrop) {
-	        this.props.onTreeDrop({
+	        var posArr = treeNode.props.pos.split('-');
+	        var res = {
 	          event: e,
 	          node: treeNode,
 	          dragNode: this.dragNode,
-	          dragNodesKeys: this.dragNodesKeys
-	        });
+	          dragNodesKeys: this.dragNodesKeys,
+	          dropPos: this.dropPos + Number(posArr[posArr.length - 1])
+	        };
+	        if (this.dropPos !== 0) {
+	          res.dropToGap = true;
+	        }
+	        this.props.onTreeDrop(res);
 	      }
 	    }
 	  }, {
@@ -20227,7 +20262,9 @@
 	        showIcon: props.showIcon,
 	        checkable: props.checkable,
 	        draggable: props.draggable,
-	        dragOver: state.dragOverNodeKey === key,
+	        dragOver: state.dragOverNodeKey === key && this.dropPos === 0,
+	        dragOverGapTop: state.dragOverNodeKey === key && this.dropPos === -1,
+	        dragOverGapBottom: state.dragOverNodeKey === key && this.dropPos === 1,
 	        expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
 	        selected: state.selectedKeys.indexOf(key) !== -1,
 	        checked: this.checkedKeys.indexOf(key) !== -1,
@@ -20380,6 +20417,59 @@
 
 /***/ },
 /* 165 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.browser = browser;
+	exports.getOffset = getOffset;
+	
+	function browser(ua) {
+	  var tem = undefined;
+	  var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+	  if (/trident/i.test(M[1])) {
+	    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+	    return 'IE ' + (tem[1] || '');
+	  }
+	  if (M[1] === 'Chrome') {
+	    tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+	    if (tem) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+	  }
+	  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+	  tem = ua.match(/version\/(\d+)/i);
+	  if (tem) {
+	    M.splice(1, 1, tem[1]);
+	  }
+	  return M.join(' ');
+	}
+	
+	// export function getOffset(el) {
+	//   const obj = el.getBoundingClientRect();
+	//   return {
+	//     left: obj.left + document.body.scrollLeft,
+	//     top: obj.top + document.body.scrollTop,
+	//     width: obj.width,
+	//     height: obj.height
+	//   };
+	// }
+	
+	function getOffset(ele) {
+	  var el = ele;
+	  var _x = 0;
+	  var _y = 0;
+	  while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+	    _x += el.offsetLeft - el.scrollLeft;
+	    _y += el.offsetTop - el.scrollTop;
+	    el = el.offsetParent;
+	  }
+	  return { top: _y, left: _x };
+	}
+
+/***/ },
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20406,7 +20496,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _objectAssign = __webpack_require__(166);
+	var _objectAssign = __webpack_require__(167);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -20414,11 +20504,11 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _rcAnimate = __webpack_require__(167);
+	var _rcAnimate = __webpack_require__(168);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _util = __webpack_require__(175);
+	var _util = __webpack_require__(165);
 	
 	var browserUa = (0, _util.browser)(window.navigator.userAgent || '');
 	var ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
@@ -20731,6 +20821,10 @@
 	        disabledCls = prefixCls + '-treenode-disabled';
 	      } else if (props.dragOver) {
 	        dragOverCls = 'drag-over';
+	      } else if (props.dragOverGapTop) {
+	        dragOverCls = 'drag-over-gap-top';
+	      } else if (props.dragOverGapBottom) {
+	        dragOverCls = 'drag-over-gap-bottom';
 	      }
 	
 	      return _react2['default'].createElement(
@@ -20762,7 +20856,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports) {
 
 	/* eslint-disable no-unused-vars */
@@ -20807,16 +20901,16 @@
 
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
 	'use strict';
 	
-	module.exports = __webpack_require__(168);
+	module.exports = __webpack_require__(169);
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20833,13 +20927,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ChildrenUtils = __webpack_require__(169);
+	var _ChildrenUtils = __webpack_require__(170);
 	
-	var _AnimateChild = __webpack_require__(170);
+	var _AnimateChild = __webpack_require__(171);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _util = __webpack_require__(174);
+	var _util = __webpack_require__(175);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -21136,7 +21230,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21254,7 +21348,7 @@
 	}
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21273,11 +21367,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _cssAnimation = __webpack_require__(171);
+	var _cssAnimation = __webpack_require__(172);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _util = __webpack_require__(174);
+	var _util = __webpack_require__(175);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -21357,13 +21451,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Event = __webpack_require__(172);
-	var Css = __webpack_require__(173);
+	var Event = __webpack_require__(173);
+	var Css = __webpack_require__(174);
 	var isCssAnimationSupported = Event.endEvents.length !== 0;
 	
 	function getDuration(node, name) {
@@ -21515,7 +21609,7 @@
 	module.exports = cssAnimation;
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21603,7 +21697,7 @@
 	module.exports = TransitionEvents;
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21634,7 +21728,7 @@
 	};
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21665,36 +21759,6 @@
 	};
 	exports["default"] = util;
 	module.exports = exports["default"];
-
-/***/ },
-/* 175 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports.browser = browser;
-	
-	function browser(ua) {
-	  var tem = undefined;
-	  var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-	  if (/trident/i.test(M[1])) {
-	    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-	    return 'IE ' + (tem[1] || '');
-	  }
-	  if (M[1] === 'Chrome') {
-	    tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
-	    if (tem) return tem.slice(1).join(' ').replace('OPR', 'Opera');
-	  }
-	  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-	  tem = ua.match(/version\/(\d+)/i);
-	  if (tem) {
-	    M.splice(1, 1, tem[1]);
-	  }
-	  return M.join(' ');
-	}
 
 /***/ }
 /******/ ]);

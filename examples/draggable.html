@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>draggable.js - example - rc-tree@0.20.3</title>
+  <title>draggable.js - example - rc-tree@0.20.4</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.20.3</h1>
+    <h1>rc-tree@0.20.4</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -324,7 +324,7 @@ generateData(z);
     });
   }
   handleDrop(info) {
-    <span class="hljs-comment">// console.log(info);</span>
+    <span class="hljs-built_in">console</span>.log(info);
     <span class="hljs-keyword">const</span> dropKey = info.node.props.eventKey;
     <span class="hljs-keyword">const</span> dragKey = info.dragNode.props.eventKey;
     <span class="hljs-comment">// const dragNodesKeys = info.dragNodesKeys;</span>
@@ -344,11 +344,21 @@ generateData(z);
       arr.splice(index, <span class="hljs-number">1</span>);
       dragObj = item;
     });
-    loop(data, dropKey, (item) =&gt; {
-      item.children = item.children || [];
-      <span class="hljs-comment">// where to insert 示例添加到尾部，可以是随意位置</span>
-      item.children.push(dragObj);
-    });
+    <span class="hljs-keyword">if</span> (info.dropToGap) {
+      <span class="hljs-keyword">let</span> ar;
+      <span class="hljs-keyword">let</span> i;
+      loop(data, dropKey, (item, index, arr) =&gt; {
+        ar = arr;
+        i = index;
+      });
+      ar.splice(i, <span class="hljs-number">0</span>, dragObj);
+    } <span class="hljs-keyword">else</span> {
+      loop(data, dropKey, (item) =&gt; {
+        item.children = item.children || [];
+        <span class="hljs-comment">// where to insert 示例添加到尾部，可以是随意位置</span>
+        item.children.push(dragObj);
+      });
+    }
     <span class="hljs-keyword">this</span>.setState({
       gData: data,
     });

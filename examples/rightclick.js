@@ -31,7 +31,7 @@ webpackJsonp([4],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _objectAssign = __webpack_require__(166);
+	var _objectAssign = __webpack_require__(167);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -2389,7 +2389,7 @@ webpackJsonp([4],{
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
-	var _objectAssign = __webpack_require__(166);
+	var _objectAssign = __webpack_require__(167);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -2798,7 +2798,7 @@ webpackJsonp([4],{
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcAnimate = __webpack_require__(167);
+	var _rcAnimate = __webpack_require__(168);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -4230,7 +4230,7 @@ webpackJsonp([4],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _objectAssign = __webpack_require__(166);
+	var _objectAssign = __webpack_require__(167);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
