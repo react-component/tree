@@ -88,6 +88,7 @@ see examples
 |disabled | whether disabled the treeNode | bool | false |
 |title | tree/subTree's title | String | '---' |
 |key | it's used with tree props's defaultExpandedKeys/defaultCheckedKeys/defaultSelectedKeys | String | treeNode's position |
+|isLeaf | whether it's leaf node | bool | false |
 
 
 ## Development

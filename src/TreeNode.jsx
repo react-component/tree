@@ -220,7 +220,7 @@ class TreeNode extends React.Component {
     if (!newChildren || newChildren === props.children) {
       // content = newChildren;
       newChildren = null;
-      if (!props.onDataLoaded) {
+      if (!props.onDataLoaded || props.isLeaf) {
         canRenderSwitcher = false;
       }
     }
@@ -289,6 +289,7 @@ class TreeNode extends React.Component {
 TreeNode.propTypes = {
   prefixCls: React.PropTypes.string,
   expanded: React.PropTypes.bool,
+  isLeaf: React.PropTypes.bool,
   root: React.PropTypes.object,
   onSelect: React.PropTypes.func,
 };
