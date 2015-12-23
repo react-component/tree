@@ -45,11 +45,7 @@ class TreeDemo extends React.Component {
       selectedKeys: [],
     };
   }
-  componentDidMount() {
-
-  }
   handleDragStart() {
-
   }
   handleDragEnter(info) {
     // console.log(info);

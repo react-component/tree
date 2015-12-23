@@ -44,6 +44,7 @@
     "rc-server": "3.x",
     "rc-tools": "4.x",
     "rc-tooltip": "3.x",
+    "rc-trigger": "^1.0.6",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
