@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>draggable.js - example - rc-tree@0.20.4</title>
+  <title>util.js - example - rc-tree@0.20.4</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -251,7 +251,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
-  <link rel="stylesheet" href="draggable.css" /><link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="common.css" />
 </head>
 
 <body>
@@ -263,14 +263,9 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
-  <script src="draggable.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/draggable-demo.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
-
-<span class="hljs-keyword">const</span> x = <span class="hljs-number">4</span>;
+  <script src="util.js?nowrap"></script>
+  <div class="highlight"><pre><code language="js">
+<span class="hljs-keyword">const</span> x = <span class="hljs-number">5</span>;
 <span class="hljs-keyword">const</span> y = <span class="hljs-number">3</span>;
 <span class="hljs-keyword">const</span> z = <span class="hljs-number">2</span>;
 <span class="hljs-keyword">const</span> gData = [];
@@ -298,105 +293,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 };
 generateData(z);
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TreeDemo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  constructor(props) {
-    <span class="hljs-keyword">super</span>(props);
-    [<span class="hljs-string">'handleDragStart'</span>, <span class="hljs-string">'handleDragEnter'</span>, <span class="hljs-string">'handleDrop'</span>, <span class="hljs-string">'handleCheck'</span>, <span class="hljs-string">'handleSelect'</span>].forEach((m)=&gt; {
-      <span class="hljs-keyword">this</span>[m] = <span class="hljs-keyword">this</span>[m].bind(<span class="hljs-keyword">this</span>);
-    });
-    <span class="hljs-keyword">this</span>.state = {
-      gData: gData,
-      expandedKeys: [<span class="hljs-string">'0-0'</span>, <span class="hljs-string">'0-0-0'</span>, <span class="hljs-string">'0-0-0-0'</span>],
-      checkedKeys: [],
-      selectedKeys: [],
-    };
-  }
-  handleDragStart() {
-  }
-  handleDragEnter(info) {
-    <span class="hljs-comment">// console.log(info);</span>
-    <span class="hljs-keyword">this</span>.setState({
-      expandedKeys: info.expandedKeys,
-    });
-  }
-  handleDrop(info) {
-    <span class="hljs-built_in">console</span>.log(info);
-    <span class="hljs-keyword">const</span> dropKey = info.node.props.eventKey;
-    <span class="hljs-keyword">const</span> dragKey = info.dragNode.props.eventKey;
-    <span class="hljs-comment">// const dragNodesKeys = info.dragNodesKeys;</span>
-    <span class="hljs-keyword">const</span> loop = (data, key, callback) =&gt; {
-      data.forEach((item, index, arr) =&gt; {
-        <span class="hljs-keyword">if</span> (item.key === key) {
-          <span class="hljs-keyword">return</span> callback(item, index, arr);
-        }
-        <span class="hljs-keyword">if</span> (item.children) {
-          <span class="hljs-keyword">return</span> loop(item.children, key, callback);
-        }
-      });
-    };
-    <span class="hljs-keyword">const</span> data = [...this.state.gData];
-    <span class="hljs-keyword">let</span> dragObj;
-    loop(data, dragKey, (item, index, arr) =&gt; {
-      arr.splice(index, <span class="hljs-number">1</span>);
-      dragObj = item;
-    });
-    <span class="hljs-keyword">if</span> (info.dropToGap) {
-      <span class="hljs-keyword">let</span> ar;
-      <span class="hljs-keyword">let</span> i;
-      loop(data, dropKey, (item, index, arr) =&gt; {
-        ar = arr;
-        i = index;
-      });
-      ar.splice(i, <span class="hljs-number">0</span>, dragObj);
-    } <span class="hljs-keyword">else</span> {
-      loop(data, dropKey, (item) =&gt; {
-        item.children = item.children || [];
-        <span class="hljs-comment">// where to insert 示例添加到尾部，可以是随意位置</span>
-        item.children.push(dragObj);
-      });
-    }
-    <span class="hljs-keyword">this</span>.setState({
-      gData: data,
-    });
-  }
-  handleCheck(info) {
-    <span class="hljs-comment">// console.log('check: ', info);</span>
-    <span class="hljs-keyword">this</span>.setState({
-      checkedKeys: [info.node.props.eventKey],
-    });
-  }
-  handleSelect(info) {
-    <span class="hljs-comment">// console.log('selected: ', info);</span>
-    <span class="hljs-keyword">this</span>.setState({
-      selectedKeys: [info.node.props.eventKey],
-    });
-  }
-  render() {
-    <span class="hljs-keyword">const</span> loop = data =&gt; {
-      <span class="hljs-keyword">return</span> data.map((item) =&gt; {
-        <span class="hljs-keyword">if</span> (item.children) {
-          <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span>&gt;</span>{loop(item.children)}<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>;</span>
-        }
-        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span> /&gt;</span>;</span>
-      });
-    };
-    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"draggable-demo"</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>draggable <span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>drag a node into another node<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"draggable-container"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span> <span class="hljs-attribute">draggable</span>
-              <span class="hljs-attribute">onTreeDragStart</span>=<span class="hljs-value">{this.handleDragStart}</span> <span class="hljs-attribute">onTreeDragEnter</span>=<span class="hljs-value">{this.handleDragEnter}</span> <span class="hljs-attribute">onTreeDrop</span>=<span class="hljs-value">{this.handleDrop}</span>
-              <span class="hljs-attribute">checkable</span>=<span class="hljs-value">{false}</span> <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.handleCheck}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
-              <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.handleSelect}</span> <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{this.state.selectedKeys}</span>&gt;</span>
-          {loop(this.state.gData)}
-        <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  }
-}
-
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeDemo</span> /&gt;</span>, document.getElementById('__react-content'));
-</span></code></pre></div>
+<span class="hljs-keyword">export</span> { gData };
+</code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">
   <img style="position: absolute; top: 0; right: 0; border: 0;"

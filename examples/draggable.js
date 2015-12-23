@@ -90,9 +90,6 @@ webpackJsonp([1],{
 	  }
 	
 	  _createClass(TreeDemo, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	  }, {
 	    key: 'handleDragStart',
 	    value: function handleDragStart() {}
 	  }, {
