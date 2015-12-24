@@ -6,7 +6,7 @@ import Tree, {TreeNode} from 'rc-tree';
 import assign from 'object-assign';
 import Tooltip from 'rc-tooltip';
 
-const TreeDemo = React.createClass({
+const Demo = React.createClass({
   propTypes: {},
   getDefaultProps() {
     return {
@@ -87,4 +87,4 @@ const TreeDemo = React.createClass({
     );
   },
 });
-ReactDOM.render(<TreeDemo />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));

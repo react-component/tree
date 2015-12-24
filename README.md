@@ -107,5 +107,10 @@ http://localhost:8018/tests/runner.html?coverage
 http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8018/tests/runner.html?coverage
 
 ## License
-
 rc-tree is released under the MIT license.
+
+## other tree view
+- [ztree](http://www.ztree.me/)
+- [jqTree](http://mbraak.github.io/jqTree/)
+- [jquery.treeselect](http://travistidwell.com/jquery.treeselect.js/)
+- [angular Select Tree](http://a5hik.github.io/angular-multi-select-tree/)

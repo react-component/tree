@@ -2,12 +2,14 @@ import React from 'react';
 import classNames from 'classnames';
 import { getOffset } from './util';
 
-// sorted array ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
+const splitPos = (pos) => {
+  return pos.split('-');
+};
 const filterMin = (arr) => {
   const a = [];
   arr.forEach((item) => {
     const b = a.filter((i) => {
-      return item.indexOf(i) === 0;
+      return item.indexOf(i) === 0 && (item[i.length] === '-' || !item[i.length]);
     });
     if (!b.length) {
       a.push(item);
@@ -15,6 +17,7 @@ const filterMin = (arr) => {
   });
   return a;
 };
+// console.log(filterMin(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
 
 class Tree extends React.Component {
   constructor(props) {
@@ -23,37 +26,37 @@ class Tree extends React.Component {
       this[m] = this[m].bind(this);
     });
     this.defaultExpandAll = props.defaultExpandAll;
-    const expandedKeys = props.defaultExpandedKeys;
-    let checkedKeys = props.defaultCheckedKeys;
-    if ('checkedKeys' in props) {
-      checkedKeys = props.checkedKeys || [];
-    }
-    let selectedKeys = props.multiple ? [...props.defaultSelectedKeys] : [props.defaultSelectedKeys[0]];
-    if ('selectedKeys' in props) {
-      selectedKeys = props.multiple ? [...props.selectedKeys] : [props.selectedKeys[0]];
-    }
+    this.contextmenuKeys = [];
+
     this.state = {
-      expandedKeys,
-      checkedKeys,
-      selectedKeys,
+      expandedKeys: props.defaultExpandedKeys,
+      checkedKeys: this.getDefaultCheckedKeys(props),
+      selectedKeys: this.getDefaultSelectedKeys(props),
       dragNodesKeys: '',
       dragOverNodeKey: '',
       dropNodeKey: '',
     };
-    this.contextmenuKeys = [];
-  }
-  componentDidMount() {
-
   }
   componentWillReceiveProps(nextProps) {
-    const props = {};
-    if ('checkedKeys' in nextProps) {
-      props.checkedKeys = nextProps.checkedKeys;
+    this.setState({
+      expandedKeys: nextProps.defaultExpandedKeys,
+      checkedKeys: this.getDefaultCheckedKeys(nextProps),
+      selectedKeys: this.getDefaultSelectedKeys(nextProps),
+    });
+  }
+  getDefaultCheckedKeys(props) {
+    let checkedKeys = props.defaultCheckedKeys;
+    if ('checkedKeys' in props) {
+      checkedKeys = props.checkedKeys || [];
     }
-    if ('selectedKeys' in nextProps) {
-      props.selectedKeys = nextProps.multiple ? nextProps.selectedKeys : [nextProps.selectedKeys[0]];
+    return checkedKeys;
+  }
+  getDefaultSelectedKeys(props) {
+    let selectedKeys = props.multiple ? [...props.defaultSelectedKeys] : [props.defaultSelectedKeys[0]];
+    if ('selectedKeys' in props) {
+      selectedKeys = props.multiple ? [...props.selectedKeys] : [props.selectedKeys[0]];
     }
-    this.setState(props);
+    return selectedKeys;
   }
   getCheckKeys() {
     const checkPartKeys = [];
@@ -285,9 +288,6 @@ class Tree extends React.Component {
     if (typeof unCheckEvent === 'boolean') {
       evt = true;
     }
-    const splitPos = (pos) => {
-      return pos.split('-');
-    };
     // stripTail('x-xx-sss-xx')
     const stripTail = (str) => {
       const arr = str.match(/(.+)(-[^-]+)$/);
