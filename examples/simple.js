@@ -32,42 +32,72 @@ webpackJsonp([6],{
 	function handleSelect(info) {
 	  console.log('selected', info);
 	}
+	var Demo = _react2['default'].createClass({
+	  displayName: 'Demo',
 	
-	var demo = _react2['default'].createElement(
-	  'div',
-	  null,
-	  _react2['default'].createElement(
-	    'h2',
-	    null,
-	    'simple'
-	  ),
-	  _react2['default'].createElement(
-	    _rcTree2['default'],
-	    { className: 'myCls', onSelect: handleSelect, defaultSelectedKeys: ['0-1', 'random'], multiple: true,
-	      checkable: true, defaultExpandAll: true, showIcon: false, showLine: true },
-	    _react2['default'].createElement(
-	      _rcTree.TreeNode,
-	      { title: 'parent 1', key: '0-1' },
+	  propTypes: {
+	    defaultSelectedKeys: _react.PropTypes.array
+	  },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      defaultSelectedKeys: ['0-1', 'random']
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      defaultSelectedKeys: this.props.defaultSelectedKeys,
+	      switchIt: true
+	    };
+	  },
+	  change: function change() {
+	    this.setState({
+	      defaultSelectedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 0 : 1]],
+	      switchIt: !this.state.switchIt
+	    });
+	  },
+	  render: function render() {
+	    return _react2['default'].createElement(
+	      'div',
+	      null,
 	      _react2['default'].createElement(
-	        _rcTree.TreeNode,
-	        { title: 'parent 1-0', key: '0-1-1' },
-	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: 'random' }),
-	        _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
+	        'h2',
+	        null,
+	        'simple'
 	      ),
 	      _react2['default'].createElement(
-	        _rcTree.TreeNode,
-	        { title: 'parent 1-1' },
-	        _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
-	            'span',
-	            { style: { color: 'red' } },
-	            'sss'
-	          ) })
+	        _rcTree2['default'],
+	        { className: 'myCls', defaultSelectedKeys: this.state.defaultSelectedKeys, onSelect: handleSelect, multiple: true,
+	          checkable: true, defaultExpandAll: true, showIcon: false, showLine: true },
+	        _react2['default'].createElement(
+	          _rcTree.TreeNode,
+	          { title: 'parent 1', key: '0-1' },
+	          _react2['default'].createElement(
+	            _rcTree.TreeNode,
+	            { title: 'parent 1-0', key: '0-1-1' },
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: 'random' }),
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
+	          ),
+	          _react2['default'].createElement(
+	            _rcTree.TreeNode,
+	            { title: 'parent 1-1' },
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
+	                'span',
+	                { style: { color: 'red' } },
+	                'sss'
+	              ) })
+	          )
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        'button',
+	        { onClick: this.change },
+	        'change state'
 	      )
-	    )
-	  )
-	);
+	    );
+	  }
+	});
 	
-	_reactDom2['default'].render(demo, document.getElementById('__react-content'));
+	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 

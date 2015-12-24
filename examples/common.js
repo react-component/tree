@@ -19753,12 +19753,14 @@
 	
 	var _util = __webpack_require__(165);
 	
-	// sorted array ['0-0','0-1', '0-0-1', '0-1-1'] => ['0-0', '0-1']
+	var splitPos = function splitPos(pos) {
+	  return pos.split('-');
+	};
 	var filterMin = function filterMin(arr) {
 	  var a = [];
 	  arr.forEach(function (item) {
 	    var b = a.filter(function (i) {
-	      return item.indexOf(i) === 0;
+	      return item.indexOf(i) === 0 && (item[i.length] === '-' || !item[i.length]);
 	    });
 	    if (!b.length) {
 	      a.push(item);
@@ -19766,6 +19768,7 @@
 	  });
 	  return a;
 	};
+	// console.log(filterMin(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
 	
 	var Tree = (function (_React$Component) {
 	  _inherits(Tree, _React$Component);
@@ -19780,40 +19783,44 @@
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.defaultExpandAll = props.defaultExpandAll;
-	    var expandedKeys = props.defaultExpandedKeys;
-	    var checkedKeys = props.defaultCheckedKeys;
-	    if ('checkedKeys' in props) {
-	      checkedKeys = props.checkedKeys || [];
-	    }
-	    var selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
-	    if ('selectedKeys' in props) {
-	      selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.selectedKeys)) : [props.selectedKeys[0]];
-	    }
+	    this.contextmenuKeys = [];
+	
 	    this.state = {
-	      expandedKeys: expandedKeys,
-	      checkedKeys: checkedKeys,
-	      selectedKeys: selectedKeys,
+	      expandedKeys: props.defaultExpandedKeys,
+	      checkedKeys: this.getDefaultCheckedKeys(props),
+	      selectedKeys: this.getDefaultSelectedKeys(props),
 	      dragNodesKeys: '',
 	      dragOverNodeKey: '',
 	      dropNodeKey: ''
 	    };
-	    this.contextmenuKeys = [];
 	  }
 	
 	  _createClass(Tree, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      var props = {};
-	      if ('checkedKeys' in nextProps) {
-	        props.checkedKeys = nextProps.checkedKeys;
+	      this.setState({
+	        expandedKeys: nextProps.defaultExpandedKeys,
+	        checkedKeys: this.getDefaultCheckedKeys(nextProps),
+	        selectedKeys: this.getDefaultSelectedKeys(nextProps)
+	      });
+	    }
+	  }, {
+	    key: 'getDefaultCheckedKeys',
+	    value: function getDefaultCheckedKeys(props) {
+	      var checkedKeys = props.defaultCheckedKeys;
+	      if ('checkedKeys' in props) {
+	        checkedKeys = props.checkedKeys || [];
 	      }
-	      if ('selectedKeys' in nextProps) {
-	        props.selectedKeys = nextProps.multiple ? nextProps.selectedKeys : [nextProps.selectedKeys[0]];
+	      return checkedKeys;
+	    }
+	  }, {
+	    key: 'getDefaultSelectedKeys',
+	    value: function getDefaultSelectedKeys(props) {
+	      var selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
+	      if ('selectedKeys' in props) {
+	        selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.selectedKeys)) : [props.selectedKeys[0]];
 	      }
-	      this.setState(props);
+	      return selectedKeys;
 	    }
 	  }, {
 	    key: 'getCheckKeys',
@@ -20075,9 +20082,6 @@
 	      if (typeof unCheckEvent === 'boolean') {
 	        evt = true;
 	      }
-	      var splitPos = function splitPos(pos) {
-	        return pos.split('-');
-	      };
 	      // stripTail('x-xx-sss-xx')
 	      var stripTail = function stripTail(str) {
 	        var arr = str.match(/(.+)(-[^-]+)$/);

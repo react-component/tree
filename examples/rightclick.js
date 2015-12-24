@@ -2059,8 +2059,8 @@ webpackJsonp([5],{
 	
 	var _rcTooltip2 = _interopRequireDefault(_rcTooltip);
 	
-	var TreeDemo = _react2['default'].createClass({
-	  displayName: 'TreeDemo',
+	var Demo = _react2['default'].createClass({
+	  displayName: 'Demo',
 	
 	  propTypes: {},
 	  getDefaultProps: function getDefaultProps() {
@@ -2168,7 +2168,7 @@ webpackJsonp([5],{
 	    );
 	  }
 	});
-	_reactDom2['default'].render(_react2['default'].createElement(TreeDemo, null), document.getElementById('__react-content'));
+	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ },
 
