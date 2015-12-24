@@ -39,7 +39,7 @@ class Tree extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      expandedKeys: nextProps.defaultExpandedKeys,
+      // expandedKeys: nextProps.defaultExpandedKeys, // todo not work rightly
       checkedKeys: this.getDefaultCheckedKeys(nextProps),
       selectedKeys: this.getDefaultSelectedKeys(nextProps),
     });
