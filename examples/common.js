@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"checked","1":"draggable","2":"dropdown","3":"dynamic","4":"expanded","5":"rightclick","6":"simple"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"checked","1":"contextmenu","2":"draggable","3":"dropdown","4":"dynamic","5":"expanded","6":"simple"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -19779,7 +19779,7 @@
 	    _classCallCheck(this, Tree);
 	
 	    _get(Object.getPrototypeOf(Tree.prototype), 'constructor', this).call(this, props);
-	    ['handleKeyDown', 'handleCheck'].forEach(function (m) {
+	    ['onKeyDown', 'onCheck'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.defaultExpandAll = props.defaultExpandAll;
@@ -19803,83 +19803,6 @@
 	        checkedKeys: this.getDefaultCheckedKeys(nextProps),
 	        selectedKeys: this.getDefaultSelectedKeys(nextProps)
 	      });
-	    }
-	  }, {
-	    key: 'getDefaultCheckedKeys',
-	    value: function getDefaultCheckedKeys(props) {
-	      var checkedKeys = props.defaultCheckedKeys;
-	      if ('checkedKeys' in props) {
-	        checkedKeys = props.checkedKeys || [];
-	      }
-	      return checkedKeys;
-	    }
-	  }, {
-	    key: 'getDefaultSelectedKeys',
-	    value: function getDefaultSelectedKeys(props) {
-	      var selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
-	      if ('selectedKeys' in props) {
-	        selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.selectedKeys)) : [props.selectedKeys[0]];
-	      }
-	      return selectedKeys;
-	    }
-	  }, {
-	    key: 'getCheckKeys',
-	    value: function getCheckKeys() {
-	      var _this2 = this;
-	
-	      var checkPartKeys = [];
-	      var checkedKeys = [];
-	      Object.keys(this.treeNodesStates).forEach(function (item) {
-	        var itemObj = _this2.treeNodesStates[item];
-	        if (itemObj.checked) {
-	          checkedKeys.push(itemObj.key);
-	        } else if (itemObj.checkPart) {
-	          checkPartKeys.push(itemObj.key);
-	        }
-	      });
-	      return {
-	        checkPartKeys: checkPartKeys, checkedKeys: checkedKeys
-	      };
-	    }
-	  }, {
-	    key: 'getOpenTransitionName',
-	    value: function getOpenTransitionName() {
-	      var props = this.props;
-	      var transitionName = props.openTransitionName;
-	      var animationName = props.openAnimation;
-	      if (!transitionName && typeof animationName === 'string') {
-	        transitionName = props.prefixCls + '-open-' + animationName;
-	      }
-	      return transitionName;
-	    }
-	  }, {
-	    key: 'getDragNodes',
-	    value: function getDragNodes(treeNode) {
-	      var _this3 = this;
-	
-	      var dragNodesKeys = [];
-	      Object.keys(this.treeNodesStates).forEach(function (item) {
-	        if (item.indexOf(treeNode.props.pos) === 0) {
-	          dragNodesKeys.push(_this3.treeNodesStates[item].key);
-	        }
-	      });
-	      return dragNodesKeys;
-	    }
-	  }, {
-	    key: 'getExpandedKeys',
-	    value: function getExpandedKeys(treeNode, expand) {
-	      var key = treeNode.props.eventKey;
-	      var expandedKeys = this.state.expandedKeys;
-	      var expandedIndex = expandedKeys.indexOf(key);
-	      var exKeys = undefined;
-	      if (expandedIndex > -1 && !expand) {
-	        exKeys = [].concat(_toConsumableArray(expandedKeys));
-	        exKeys.splice(expandedIndex, 1);
-	        return exKeys;
-	      }
-	      if (expand && expandedKeys.indexOf(key) === -1) {
-	        return expandedKeys.concat([key]);
-	      }
 	    }
 	
 	    /*
@@ -19908,8 +19831,8 @@
 	    }
 	    */
 	  }, {
-	    key: 'handleDragStart',
-	    value: function handleDragStart(e, treeNode) {
+	    key: 'onDragStart',
+	    value: function onDragStart(e, treeNode) {
 	      // console.log(this.refs.tree.parentNode, treeNode.refs.selectHandle);
 	      // this.createDragElement(treeNode);
 	      this.dragNode = treeNode;
@@ -19930,8 +19853,8 @@
 	      }
 	    }
 	  }, {
-	    key: 'handleDragEnterGap',
-	    value: function handleDragEnterGap(e, treeNode) {
+	    key: 'onDragEnterGap',
+	    value: function onDragEnterGap(e, treeNode) {
 	      // console.log(e.pageY, getOffset(treeNode.refs.selectHandle), treeNode.props.eventKey);
 	      var offsetTop = (0, _util.getOffset)(treeNode.refs.selectHandle).top;
 	      var offsetHeight = treeNode.refs.selectHandle.offsetHeight;
@@ -19952,9 +19875,9 @@
 	      return 0;
 	    }
 	  }, {
-	    key: 'handleDragEnter',
-	    value: function handleDragEnter(e, treeNode) {
-	      var enterGap = this.handleDragEnterGap(e, treeNode);
+	    key: 'onDragEnter',
+	    value: function onDragEnter(e, treeNode) {
+	      var enterGap = this.onDragEnterGap(e, treeNode);
 	      if (this.dragNode.props.eventKey === treeNode.props.eventKey && enterGap === 0) {
 	        this.setState({
 	          dragOverNodeKey: ''
@@ -19979,22 +19902,22 @@
 	      }
 	    }
 	  }, {
-	    key: 'handleDragOver',
-	    value: function handleDragOver(e, treeNode) {
+	    key: 'onDragOver',
+	    value: function onDragOver(e, treeNode) {
 	      if (this.props.onTreeDragOver) {
 	        this.props.onTreeDragOver({ event: e, node: treeNode });
 	      }
 	    }
 	  }, {
-	    key: 'handleDragLeave',
-	    value: function handleDragLeave(e, treeNode) {
+	    key: 'onDragLeave',
+	    value: function onDragLeave(e, treeNode) {
 	      if (this.props.onTreeDragLeave) {
 	        this.props.onTreeDragLeave({ event: e, node: treeNode });
 	      }
 	    }
 	  }, {
-	    key: 'handleDrop',
-	    value: function handleDrop(e, treeNode) {
+	    key: 'onDrop',
+	    value: function onDrop(e, treeNode) {
 	      var key = treeNode.props.eventKey;
 	      if (this.dragNode.props.eventKey === key) {
 	        return;
@@ -20019,27 +19942,9 @@
 	      }
 	    }
 	  }, {
-	    key: 'loopAllChildren',
-	    value: function loopAllChildren(childs, callback) {
-	      var loop = function loop(children, level) {
-	        _react2['default'].Children.forEach(children, function (item, index) {
-	          var pos = level + '-' + index;
-	          var newChildren = item.props.children;
-	          if (newChildren) {
-	            if (!Array.isArray(newChildren)) {
-	              newChildren = [newChildren];
-	            }
-	            loop(newChildren, pos);
-	          }
-	          callback(item, index, pos);
-	        });
-	      };
-	      loop(childs, 0);
-	    }
-	  }, {
-	    key: 'handleExpand',
-	    value: function handleExpand(treeNode) {
-	      var _this4 = this;
+	    key: 'onExpand',
+	    value: function onExpand(treeNode) {
+	      var _this2 = this;
 	
 	      var thisProps = this.props;
 	      var tnProps = treeNode.props;
@@ -20060,7 +19965,7 @@
 	          expandedKeys.push(tnProps.eventKey);
 	          if (thisProps.onDataLoaded) {
 	            return thisProps.onDataLoaded(treeNode).then(function () {
-	              _this4.setState({
+	              _this2.setState({
 	                expandedKeys: expandedKeys
 	              });
 	            })['catch'](function () {
@@ -20074,6 +19979,197 @@
 	      this.setState({
 	        expandedKeys: expandedKeys
 	      });
+	    }
+	  }, {
+	    key: 'onCheck',
+	    value: function onCheck(treeNode) {
+	      var _this3 = this;
+	
+	      var tnProps = treeNode.props;
+	      var checked = !tnProps.checked;
+	      if (tnProps.checkPart) {
+	        checked = true;
+	      }
+	      var pos = undefined;
+	      Object.keys(this.treeNodesStates).forEach(function (item) {
+	        var itemObj = _this3.treeNodesStates[item];
+	        if (itemObj.key === (treeNode.key || tnProps.eventKey)) {
+	          pos = item;
+	          itemObj.checked = checked;
+	          itemObj.checkPart = false;
+	        }
+	      });
+	      this.handleCheckState(this.treeNodesStates, [pos], !checked);
+	      var checkKeys = this.getCheckKeys();
+	      this.checkPartKeys = checkKeys.checkPartKeys;
+	      var checkedKeys = checkKeys.checkedKeys;
+	      var newSt = {
+	        event: 'check',
+	        node: treeNode
+	      };
+	      if (!('checkedKeys' in this.props)) {
+	        this.setState({
+	          checkedKeys: checkedKeys
+	        });
+	        newSt.checked = checked;
+	      } else {
+	        checkedKeys = this.state.checkedKeys;
+	      }
+	      newSt.checkedKeys = checkedKeys;
+	      if (this.props.onCheck) {
+	        this.props.onCheck(newSt);
+	      }
+	    }
+	  }, {
+	    key: 'onSelect',
+	    value: function onSelect(treeNode) {
+	      var props = this.props;
+	      var selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
+	      var eventKey = treeNode.props.eventKey;
+	      var index = selectedKeys.indexOf(eventKey);
+	      var selected = undefined;
+	      if (index !== -1) {
+	        selected = false;
+	        selectedKeys.splice(index, 1);
+	      } else {
+	        selected = true;
+	        if (!props.multiple) {
+	          selectedKeys.length = 0;
+	        }
+	        selectedKeys.push(eventKey);
+	      }
+	      var newSt = {
+	        event: 'select',
+	        node: treeNode
+	      };
+	      if (!('selectedKeys' in this.props)) {
+	        this.setState({
+	          selectedKeys: selectedKeys
+	        });
+	        newSt.selected = selected;
+	      } else {
+	        selectedKeys = this.state.selectedKeys;
+	      }
+	      newSt.selectedKeys = selectedKeys;
+	      if (props.onSelect) {
+	        props.onSelect(newSt);
+	      }
+	    }
+	  }, {
+	    key: 'onMouseEnter',
+	    value: function onMouseEnter(e, treeNode) {
+	      this.props.onMouseEnter({ event: e, node: treeNode });
+	    }
+	  }, {
+	    key: 'onMouseLeave',
+	    value: function onMouseLeave(e, treeNode) {
+	      this.props.onMouseLeave({ event: e, node: treeNode });
+	    }
+	  }, {
+	    key: 'onContextMenu',
+	    value: function onContextMenu(e, treeNode) {
+	      var selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
+	      var eventKey = treeNode.props.eventKey;
+	      if (this.contextmenuKeys.indexOf(eventKey) === -1) {
+	        this.contextmenuKeys.push(eventKey);
+	      }
+	      this.contextmenuKeys.forEach(function (key) {
+	        var index = selectedKeys.indexOf(key);
+	        if (index !== -1) {
+	          selectedKeys.splice(index, 1);
+	        }
+	      });
+	      if (selectedKeys.indexOf(eventKey) === -1) {
+	        selectedKeys.push(eventKey);
+	      }
+	      this.setState({
+	        selectedKeys: selectedKeys
+	      });
+	      this.props.onRightClick({ event: e, node: treeNode });
+	    }
+	
+	    // all keyboard events callbacks run from here at first
+	  }, {
+	    key: 'onKeyDown',
+	    value: function onKeyDown(e) {
+	      e.preventDefault();
+	    }
+	  }, {
+	    key: 'getDefaultCheckedKeys',
+	    value: function getDefaultCheckedKeys(props) {
+	      var checkedKeys = props.defaultCheckedKeys;
+	      if ('checkedKeys' in props) {
+	        checkedKeys = props.checkedKeys || [];
+	      }
+	      return checkedKeys;
+	    }
+	  }, {
+	    key: 'getDefaultSelectedKeys',
+	    value: function getDefaultSelectedKeys(props) {
+	      var selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
+	      if ('selectedKeys' in props) {
+	        selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.selectedKeys)) : [props.selectedKeys[0]];
+	      }
+	      return selectedKeys;
+	    }
+	  }, {
+	    key: 'getCheckKeys',
+	    value: function getCheckKeys() {
+	      var _this4 = this;
+	
+	      var checkPartKeys = [];
+	      var checkedKeys = [];
+	      Object.keys(this.treeNodesStates).forEach(function (item) {
+	        var itemObj = _this4.treeNodesStates[item];
+	        if (itemObj.checked) {
+	          checkedKeys.push(itemObj.key);
+	        } else if (itemObj.checkPart) {
+	          checkPartKeys.push(itemObj.key);
+	        }
+	      });
+	      return {
+	        checkPartKeys: checkPartKeys, checkedKeys: checkedKeys
+	      };
+	    }
+	  }, {
+	    key: 'getOpenTransitionName',
+	    value: function getOpenTransitionName() {
+	      var props = this.props;
+	      var transitionName = props.openTransitionName;
+	      var animationName = props.openAnimation;
+	      if (!transitionName && typeof animationName === 'string') {
+	        transitionName = props.prefixCls + '-open-' + animationName;
+	      }
+	      return transitionName;
+	    }
+	  }, {
+	    key: 'getDragNodes',
+	    value: function getDragNodes(treeNode) {
+	      var _this5 = this;
+	
+	      var dragNodesKeys = [];
+	      Object.keys(this.treeNodesStates).forEach(function (item) {
+	        if (item.indexOf(treeNode.props.pos) === 0) {
+	          dragNodesKeys.push(_this5.treeNodesStates[item].key);
+	        }
+	      });
+	      return dragNodesKeys;
+	    }
+	  }, {
+	    key: 'getExpandedKeys',
+	    value: function getExpandedKeys(treeNode, expand) {
+	      var key = treeNode.props.eventKey;
+	      var expandedKeys = this.state.expandedKeys;
+	      var expandedIndex = expandedKeys.indexOf(key);
+	      var exKeys = undefined;
+	      if (expandedIndex > -1 && !expand) {
+	        exKeys = [].concat(_toConsumableArray(expandedKeys));
+	        exKeys.splice(expandedIndex, 1);
+	        return exKeys;
+	      }
+	      if (expand && expandedKeys.indexOf(key) === -1) {
+	        return expandedKeys.concat([key]);
+	      }
 	    }
 	  }, {
 	    key: 'handleCheckState',
@@ -20143,108 +20239,22 @@
 	      });
 	    }
 	  }, {
-	    key: 'handleCheck',
-	    value: function handleCheck(treeNode) {
-	      var _this5 = this;
-	
-	      var tnProps = treeNode.props;
-	      var checked = !tnProps.checked;
-	      if (tnProps.checkPart) {
-	        checked = true;
-	      }
-	      var pos = undefined;
-	      Object.keys(this.treeNodesStates).forEach(function (item) {
-	        var itemObj = _this5.treeNodesStates[item];
-	        if (itemObj.key === (treeNode.key || tnProps.eventKey)) {
-	          pos = item;
-	          itemObj.checked = checked;
-	          itemObj.checkPart = false;
-	        }
-	      });
-	      this.handleCheckState(this.treeNodesStates, [pos], !checked);
-	      var checkKeys = this.getCheckKeys();
-	      this.checkPartKeys = checkKeys.checkPartKeys;
-	      var checkedKeys = checkKeys.checkedKeys;
-	      var newSt = {
-	        event: 'check',
-	        node: treeNode
-	      };
-	      if (!('checkedKeys' in this.props)) {
-	        this.setState({
-	          checkedKeys: checkedKeys
+	    key: 'loopAllChildren',
+	    value: function loopAllChildren(childs, callback) {
+	      var loop = function loop(children, level) {
+	        _react2['default'].Children.forEach(children, function (item, index) {
+	          var pos = level + '-' + index;
+	          var newChildren = item.props.children;
+	          if (newChildren) {
+	            if (!Array.isArray(newChildren)) {
+	              newChildren = [newChildren];
+	            }
+	            loop(newChildren, pos);
+	          }
+	          callback(item, index, pos);
 	        });
-	        newSt.checked = checked;
-	      } else {
-	        checkedKeys = this.state.checkedKeys;
-	      }
-	      newSt.checkedKeys = checkedKeys;
-	      if (this.props.onCheck) {
-	        this.props.onCheck(newSt);
-	      }
-	    }
-	  }, {
-	    key: 'handleSelect',
-	    value: function handleSelect(treeNode) {
-	      var props = this.props;
-	      var selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
-	      var eventKey = treeNode.props.eventKey;
-	      var index = selectedKeys.indexOf(eventKey);
-	      var selected = undefined;
-	      if (index !== -1) {
-	        selected = false;
-	        selectedKeys.splice(index, 1);
-	      } else {
-	        selected = true;
-	        if (!props.multiple) {
-	          selectedKeys.length = 0;
-	        }
-	        selectedKeys.push(eventKey);
-	      }
-	      var newSt = {
-	        event: 'select',
-	        node: treeNode
 	      };
-	      if (!('selectedKeys' in this.props)) {
-	        this.setState({
-	          selectedKeys: selectedKeys
-	        });
-	        newSt.selected = selected;
-	      } else {
-	        selectedKeys = this.state.selectedKeys;
-	      }
-	      newSt.selectedKeys = selectedKeys;
-	      if (props.onSelect) {
-	        props.onSelect(newSt);
-	      }
-	    }
-	  }, {
-	    key: 'handleContextMenu',
-	    value: function handleContextMenu(e, treeNode) {
-	      var selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
-	      var eventKey = treeNode.props.eventKey;
-	      if (this.contextmenuKeys.indexOf(eventKey) === -1) {
-	        this.contextmenuKeys.push(eventKey);
-	      }
-	      this.contextmenuKeys.forEach(function (key) {
-	        var index = selectedKeys.indexOf(key);
-	        if (index !== -1) {
-	          selectedKeys.splice(index, 1);
-	        }
-	      });
-	      if (selectedKeys.indexOf(eventKey) === -1) {
-	        selectedKeys.push(eventKey);
-	      }
-	      this.setState({
-	        selectedKeys: selectedKeys
-	      });
-	      this.props.onRightClick({ event: e, node: treeNode });
-	    }
-	
-	    // all keyboard events callbacks run from here at first
-	  }, {
-	    key: 'handleKeyDown',
-	    value: function handleKeyDown(e) {
-	      e.preventDefault();
+	      loop(childs, 0);
 	    }
 	  }, {
 	    key: 'renderTreeNode',
@@ -20260,6 +20270,8 @@
 	        eventKey: key,
 	        pos: level + '-' + index,
 	        onDataLoaded: props.onDataLoaded,
+	        onMouseEnter: props.onMouseEnter,
+	        onMouseLeave: props.onMouseLeave,
 	        onRightClick: props.onRightClick,
 	        prefixCls: props.prefixCls,
 	        showLine: props.showLine,
@@ -20290,7 +20302,7 @@
 	      };
 	      if (props.focusable) {
 	        domProps.tabIndex = '0';
-	        domProps.onKeyDown = this.handleKeyDown;
+	        domProps.onKeyDown = this.onKeyDown;
 	      }
 	      var checkedKeys = this.state.checkedKeys;
 	      var checkedPos = [];
@@ -20339,6 +20351,8 @@
 	  onCheck: _react2['default'].PropTypes.func,
 	  onSelect: _react2['default'].PropTypes.func,
 	  onDataLoaded: _react2['default'].PropTypes.func,
+	  onMouseEnter: _react2['default'].PropTypes.func,
+	  onMouseLeave: _react2['default'].PropTypes.func,
 	  onRightClick: _react2['default'].PropTypes.func,
 	  onTreeDragStart: _react2['default'].PropTypes.func,
 	  onTreeDragEnter: _react2['default'].PropTypes.func,
@@ -20460,6 +20474,24 @@
 	//   };
 	// }
 	
+	// // iscroll offset
+	// offset = function (el) {
+	//   var left = -el.offsetLeft,
+	//     top = -el.offsetTop;
+	
+	//   // jshint -W084
+	//   while (el = el.offsetParent) {
+	//     left -= el.offsetLeft;
+	//     top -= el.offsetTop;
+	//   }
+	//   // jshint +W084
+	
+	//   return {
+	//     left: left,
+	//     top: top
+	//   };
+	// }
+	
 	function getOffset(ele) {
 	  var el = ele;
 	  var _x = 0;
@@ -20530,7 +20562,7 @@
 	    _classCallCheck(this, TreeNode);
 	
 	    _get(Object.getPrototypeOf(TreeNode.prototype), 'constructor', this).call(this, props);
-	    ['handleExpand', 'handleCheck', 'handleContextMenu', 'handleDragStart', 'handleDragEnter', 'handleDragOver', 'handleDragLeave', 'handleDrop'].forEach(function (m) {
+	    ['onExpand', 'onCheck', 'onContextMenu', 'onMouseEnter', 'onMouseLeave', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDragLeave', 'onDrop'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.state = {
@@ -20540,92 +20572,84 @@
 	  }
 	
 	  _createClass(TreeNode, [{
-	    key: 'getPosition',
-	    value: function getPosition(pos) {
-	      var obj = {
-	        last: false,
-	        center: false
-	      };
-	      var siblings = Object.keys(this.props.root.treeNodesStates).filter(function (item) {
-	        var len = pos.length;
-	        return len === item.length && pos.substring(0, len - 2) === item.substring(0, len - 2);
-	      });
-	      var sLen = siblings.length;
-	      var posIndex = Number(pos.substr(-1, 1));
-	      if (sLen === 1 || posIndex === sLen - 1) {
-	        obj.last = true;
-	      } else {
-	        obj.center = true;
-	      }
-	      return obj;
+	    key: 'onCheck',
+	    value: function onCheck() {
+	      this.props.root.onCheck(this);
 	    }
 	  }, {
-	    key: 'handleCheck',
-	    value: function handleCheck() {
-	      this.props.root.handleCheck(this);
+	    key: 'onSelect',
+	    value: function onSelect() {
+	      this.props.root.onSelect(this);
 	    }
 	  }, {
-	    key: 'handleSelect',
-	    value: function handleSelect() {
-	      this.props.root.handleSelect(this);
-	    }
-	  }, {
-	    key: 'handleContextMenu',
-	    value: function handleContextMenu(e) {
+	    key: 'onMouseEnter',
+	    value: function onMouseEnter(e) {
 	      e.preventDefault();
-	      this.props.root.handleContextMenu(e, this);
+	      this.props.root.onMouseEnter(e, this);
 	    }
 	  }, {
-	    key: 'handleDragStart',
-	    value: function handleDragStart(e) {
+	    key: 'onMouseLeave',
+	    value: function onMouseLeave(e) {
+	      e.preventDefault();
+	      this.props.root.onMouseLeave(e, this);
+	    }
+	  }, {
+	    key: 'onContextMenu',
+	    value: function onContextMenu(e) {
+	      e.preventDefault();
+	      this.props.root.onContextMenu(e, this);
+	    }
+	  }, {
+	    key: 'onDragStart',
+	    value: function onDragStart(e) {
 	      // console.log('dragstart', this.props.eventKey, e);
 	      // e.preventDefault();
 	      e.stopPropagation();
 	      this.setState({
 	        dragNodeHighlight: true
 	      });
-	      this.props.root.handleDragStart(e, this);
+	      this.props.root.onDragStart(e, this);
 	    }
 	  }, {
-	    key: 'handleDragEnter',
-	    value: function handleDragEnter(e) {
+	    key: 'onDragEnter',
+	    value: function onDragEnter(e) {
 	      // console.log('dragenter', this.props.eventKey, e);
 	      e.preventDefault();
 	      e.stopPropagation();
-	      this.props.root.handleDragEnter(e, this);
+	      this.props.root.onDragEnter(e, this);
 	    }
 	  }, {
-	    key: 'handleDragOver',
-	    value: function handleDragOver(e) {
+	    key: 'onDragOver',
+	    value: function onDragOver(e) {
 	      // console.log(this.props.eventKey, e);
 	      // todo disabled
 	      e.preventDefault();
 	      e.stopPropagation();
-	      this.props.root.handleDragOver(e, this);
+	      this.props.root.onDragOver(e, this);
 	      return false;
 	    }
 	  }, {
-	    key: 'handleDragLeave',
-	    value: function handleDragLeave(e) {
+	    key: 'onDragLeave',
+	    value: function onDragLeave(e) {
 	      // console.log(this.props.eventKey, e);
 	      e.stopPropagation();
-	      this.props.root.handleDragLeave(e, this);
+	      this.props.root.onDragLeave(e, this);
 	    }
 	  }, {
-	    key: 'handleDrop',
-	    value: function handleDrop(e) {
+	    key: 'onDrop',
+	    value: function onDrop(e) {
 	      e.stopPropagation();
 	      this.setState({
 	        dragNodeHighlight: false
 	      });
-	      this.props.root.handleDrop(e, this);
+	      this.props.root.onDrop(e, this);
 	    }
 	  }, {
-	    key: 'handleExpand',
-	    value: function handleExpand() {
+	    key: 'onExpand',
+	    value: function onExpand() {
 	      var _this2 = this;
 	
-	      var callbackPromise = this.props.root.handleExpand(this);
+	      var callbackPromise = this.props.root.onExpand(this);
 	      if (callbackPromise && typeof callbackPromise === 'object') {
 	        (function () {
 	          var setLoading = function setLoading(dataLoading) {
@@ -20645,9 +20669,29 @@
 	
 	    // keyboard event support
 	  }, {
-	    key: 'handleKeyDown',
-	    value: function handleKeyDown(e) {
+	    key: 'onKeyDown',
+	    value: function onKeyDown(e) {
 	      e.preventDefault();
+	    }
+	  }, {
+	    key: 'getPosition',
+	    value: function getPosition(pos) {
+	      var obj = {
+	        last: false,
+	        center: false
+	      };
+	      var siblings = Object.keys(this.props.root.treeNodesStates).filter(function (item) {
+	        var len = pos.length;
+	        return len === item.length && pos.substring(0, len - 2) === item.substring(0, len - 2);
+	      });
+	      var sLen = siblings.length;
+	      var posIndex = Number(pos.substr(-1, 1));
+	      if (sLen === 1 || posIndex === sLen - 1) {
+	        obj.last = true;
+	      } else {
+	        obj.center = true;
+	      }
+	      return obj;
 	    }
 	  }, {
 	    key: 'renderSwitcher',
@@ -20669,7 +20713,7 @@
 	        switcherCls[prefixCls + '-center_' + expandedState] = posObj.center;
 	        switcherCls[prefixCls + '-bottom_' + expandedState] = posObj.last;
 	      }
-	      return _react2['default'].createElement('span', { className: (0, _classnames2['default'])(switcherCls), onClick: this.handleExpand });
+	      return _react2['default'].createElement('span', { className: (0, _classnames2['default'])(switcherCls), onClick: this.onExpand });
 	    }
 	  }, {
 	    key: 'renderCheckbox',
@@ -20695,7 +20739,7 @@
 	      }
 	      return _react2['default'].createElement(
 	        'span',
-	        { ref: 'checkbox', className: (0, _classnames2['default'])(checkboxCls), onClick: this.handleCheck },
+	        { ref: 'checkbox', className: (0, _classnames2['default'])(checkboxCls), onClick: this.onCheck },
 	        customEle
 	      );
 	    }
@@ -20785,13 +20829,19 @@
 	          }
 	          domProps.onClick = function (e) {
 	            e.preventDefault();
-	            _this3.handleSelect();
+	            _this3.onSelect();
 	            if (props.checkable) {
-	              _this3.handleCheck();
+	              _this3.onCheck();
 	            }
 	          };
 	          if (props.onRightClick) {
-	            domProps.onContextMenu = _this3.handleContextMenu;
+	            domProps.onContextMenu = _this3.onContextMenu;
+	          }
+	          if (props.onMouseEnter) {
+	            domProps.onMouseEnter = _this3.onMouseEnter;
+	          }
+	          if (props.onMouseLeave) {
+	            domProps.onMouseLeave = _this3.onMouseLeave;
 	          }
 	          if (props.draggable) {
 	            if (ieOrEdge) {
@@ -20800,7 +20850,7 @@
 	            }
 	            domProps.draggable = true;
 	            domProps['aria-grabbed'] = true;
-	            domProps.onDragStart = _this3.handleDragStart;
+	            domProps.onDragStart = _this3.onDragStart;
 	          }
 	        }
 	        return _react2['default'].createElement(
@@ -20813,10 +20863,10 @@
 	
 	      var liProps = {};
 	      if (props.draggable) {
-	        liProps.onDragEnter = this.handleDragEnter;
-	        liProps.onDragOver = this.handleDragOver;
-	        liProps.onDragLeave = this.handleDragLeave;
-	        liProps.onDrop = this.handleDrop;
+	        liProps.onDragEnter = this.onDragEnter;
+	        liProps.onDragOver = this.onDragOver;
+	        liProps.onDragLeave = this.onDragLeave;
+	        liProps.onDrop = this.onDrop;
 	      }
 	
 	      var disabledCls = '';

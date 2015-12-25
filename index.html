@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-tree@0.20.6 - tree ui component for react</title>
+  <title>rc-tree@0.21.0 - tree ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-tree@0.20.6</h1>
+  <h1>rc-tree@0.21.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -746,6 +746,8 @@
       
       <li><a href="examples/checked.html">checked</a></li>
       
+      <li><a href="examples/contextmenu.html">contextmenu</a></li>
+      
       <li><a href="examples/draggable.html">draggable</a></li>
       
       <li><a href="examples/dropdown.html">dropdown</a></li>
@@ -753,8 +755,6 @@
       <li><a href="examples/dynamic.html">dynamic</a></li>
       
       <li><a href="examples/expanded.html">expanded</a></li>
-      
-      <li><a href="examples/rightclick.html">rightclick</a></li>
       
       <li><a href="examples/simple.html">simple</a></li>
       
@@ -887,6 +887,18 @@
 <tr>
 <td>onRightClick</td>
 <td>select current treeNode and show customized contextmenu</td>
+<td>function({event,node})</td>
+<td>-</td>
+</tr>
+<tr>
+<td>onMouseEnter</td>
+<td>call when mouse enter a treeNode</td>
+<td>function({event,node})</td>
+<td>-</td>
+</tr>
+<tr>
+<td>onMouseLeave</td>
+<td>call when mouse leave a treeNode</td>
 <td>function({event,node})</td>
 <td>-</td>
 </tr>
