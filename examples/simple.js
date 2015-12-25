@@ -46,12 +46,14 @@ webpackJsonp([6],{
 	  getInitialState: function getInitialState() {
 	    return {
 	      defaultSelectedKeys: this.props.defaultSelectedKeys,
+	      defaultCheckedKeys: this.props.defaultSelectedKeys,
 	      switchIt: true
 	    };
 	  },
 	  change: function change() {
 	    this.setState({
 	      defaultSelectedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 0 : 1]],
+	      defaultCheckedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 1 : 0]],
 	      switchIt: !this.state.switchIt
 	    });
 	  },
@@ -66,8 +68,10 @@ webpackJsonp([6],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { className: 'myCls', defaultSelectedKeys: this.state.defaultSelectedKeys, onSelect: handleSelect, multiple: true,
-	          checkable: true, defaultExpandAll: true, showIcon: false, showLine: true },
+	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true, showLine: true,
+	          defaultSelectedKeys: this.state.defaultSelectedKeys,
+	          defaultCheckedKeys: this.state.defaultCheckedKeys,
+	          onSelect: handleSelect },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          { title: 'parent 1', key: '0-1' },
@@ -89,9 +93,39 @@ webpackJsonp([6],{
 	        )
 	      ),
 	      _react2['default'].createElement(
-	        'button',
-	        { onClick: this.change },
-	        'change state'
+	        'div',
+	        null,
+	        _react2['default'].createElement(
+	          'button',
+	          { onClick: this.change },
+	          'change state'
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        _rcTree2['default'],
+	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true, key: Date.now(),
+	          defaultSelectedKeys: this.state.defaultSelectedKeys,
+	          defaultCheckedKeys: this.state.defaultCheckedKeys,
+	          onSelect: handleSelect },
+	        _react2['default'].createElement(
+	          _rcTree.TreeNode,
+	          { title: 'parent 1', key: '0-1' },
+	          _react2['default'].createElement(
+	            _rcTree.TreeNode,
+	            { title: 'parent 1-0', key: '0-1-1' },
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: 'random' }),
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
+	          ),
+	          _react2['default'].createElement(
+	            _rcTree.TreeNode,
+	            { title: 'parent 1-1' },
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
+	                'span',
+	                { style: { color: 'red' } },
+	                'sss'
+	              ) })
+	          )
+	        )
 	      )
 	    );
 	  }

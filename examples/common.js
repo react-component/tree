@@ -19739,6 +19739,8 @@
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
@@ -19798,11 +19800,11 @@
 	  _createClass(Tree, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      this.setState({
-	        // expandedKeys: nextProps.defaultExpandedKeys, // todo not work rightly
-	        checkedKeys: this.getDefaultCheckedKeys(nextProps),
-	        selectedKeys: this.getDefaultSelectedKeys(nextProps)
-	      });
+	      var _setState;
+	
+	      var checkedKeys = this.getDefaultCheckedKeys(nextProps, true);
+	      var selectedKeys = this.getDefaultSelectedKeys(nextProps, true);
+	      this.setState((_setState = {}, _defineProperty(_setState, checkedKeys && 'checkedKeys', checkedKeys), _defineProperty(_setState, selectedKeys && 'selectedKeys', selectedKeys), _setState));
 	    }
 	
 	    /*
@@ -20096,8 +20098,8 @@
 	    }
 	  }, {
 	    key: 'getDefaultCheckedKeys',
-	    value: function getDefaultCheckedKeys(props) {
-	      var checkedKeys = props.defaultCheckedKeys;
+	    value: function getDefaultCheckedKeys(props, willReceiveProps) {
+	      var checkedKeys = willReceiveProps ? undefined : props.defaultCheckedKeys;
 	      if ('checkedKeys' in props) {
 	        checkedKeys = props.checkedKeys || [];
 	      }
@@ -20105,8 +20107,9 @@
 	    }
 	  }, {
 	    key: 'getDefaultSelectedKeys',
-	    value: function getDefaultSelectedKeys(props) {
-	      var selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
+	    value: function getDefaultSelectedKeys(props, willReceiveProps) {
+	      var defaultSelectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
+	      var selectedKeys = willReceiveProps ? undefined : defaultSelectedKeys;
 	      if ('selectedKeys' in props) {
 	        selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.selectedKeys)) : [props.selectedKeys[0]];
 	      }
