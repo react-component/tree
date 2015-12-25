@@ -18,20 +18,24 @@ const Demo = React.createClass({
   getInitialState() {
     return {
       defaultSelectedKeys: this.props.defaultSelectedKeys,
+      defaultCheckedKeys: this.props.defaultSelectedKeys,
       switchIt: true,
     };
   },
   change() {
     this.setState({
       defaultSelectedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 0 : 1]],
+      defaultCheckedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 1 : 0]],
       switchIt: !this.state.switchIt,
     });
   },
   render() {
     return (<div>
       <h2>simple</h2>
-      <Tree className="myCls" defaultSelectedKeys={this.state.defaultSelectedKeys} onSelect={handleSelect} multiple
-        checkable defaultExpandAll showIcon={false} showLine>
+      <Tree className="myCls" multiple checkable defaultExpandAll showLine
+          defaultSelectedKeys={this.state.defaultSelectedKeys}
+          defaultCheckedKeys={this.state.defaultCheckedKeys}
+          onSelect={handleSelect}>
         <TreeNode title="parent 1" key="0-1">
           <TreeNode title="parent 1-0" key="0-1-1">
             <TreeNode title="leaf" key="random" />
@@ -42,7 +46,23 @@ const Demo = React.createClass({
           </TreeNode>
         </TreeNode>
       </Tree>
-      <button onClick={this.change}>change state</button>
+
+      <div><button onClick={this.change}>change state</button></div>
+
+      <Tree className="myCls" multiple checkable defaultExpandAll key={Date.now()}
+          defaultSelectedKeys={this.state.defaultSelectedKeys}
+          defaultCheckedKeys={this.state.defaultCheckedKeys}
+          onSelect={handleSelect}>
+        <TreeNode title="parent 1" key="0-1">
+          <TreeNode title="parent 1-0" key="0-1-1">
+            <TreeNode title="leaf" key="random" />
+            <TreeNode title="leaf" />
+          </TreeNode>
+          <TreeNode title="parent 1-1">
+            <TreeNode title={<span style={{color: 'red'}}>sss</span>} />
+          </TreeNode>
+        </TreeNode>
+      </Tree>
     </div>);
   },
 });

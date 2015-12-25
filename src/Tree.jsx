@@ -38,10 +38,11 @@ class Tree extends React.Component {
     };
   }
   componentWillReceiveProps(nextProps) {
+    const checkedKeys = this.getDefaultCheckedKeys(nextProps, true);
+    const selectedKeys = this.getDefaultSelectedKeys(nextProps, true);
     this.setState({
-      // expandedKeys: nextProps.defaultExpandedKeys, // todo not work rightly
-      checkedKeys: this.getDefaultCheckedKeys(nextProps),
-      selectedKeys: this.getDefaultSelectedKeys(nextProps),
+      [checkedKeys && 'checkedKeys']: checkedKeys,
+      [selectedKeys && 'selectedKeys']: selectedKeys,
     });
   }
   /*
@@ -305,15 +306,16 @@ class Tree extends React.Component {
   onKeyDown(e) {
     e.preventDefault();
   }
-  getDefaultCheckedKeys(props) {
-    let checkedKeys = props.defaultCheckedKeys;
+  getDefaultCheckedKeys(props, willReceiveProps) {
+    let checkedKeys = willReceiveProps ? undefined : props.defaultCheckedKeys;
     if ('checkedKeys' in props) {
       checkedKeys = props.checkedKeys || [];
     }
     return checkedKeys;
   }
-  getDefaultSelectedKeys(props) {
-    let selectedKeys = props.multiple ? [...props.defaultSelectedKeys] : [props.defaultSelectedKeys[0]];
+  getDefaultSelectedKeys(props, willReceiveProps) {
+    const defaultSelectedKeys = props.multiple ? [...props.defaultSelectedKeys] : [props.defaultSelectedKeys[0]];
+    let selectedKeys = willReceiveProps ? undefined : defaultSelectedKeys;
     if ('selectedKeys' in props) {
       selectedKeys = props.multiple ? [...props.selectedKeys] : [props.selectedKeys[0]];
     }
