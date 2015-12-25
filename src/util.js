@@ -27,6 +27,24 @@ export function browser(ua) {
 //   };
 // }
 
+// // iscroll offset
+// offset = function (el) {
+//   var left = -el.offsetLeft,
+//     top = -el.offsetTop;
+
+//   // jshint -W084
+//   while (el = el.offsetParent) {
+//     left -= el.offsetLeft;
+//     top -= el.offsetTop;
+//   }
+//   // jshint +W084
+
+//   return {
+//     left: left,
+//     top: top
+//   };
+// }
+
 export function getOffset(ele) {
   let el = ele;
   let _x = 0;

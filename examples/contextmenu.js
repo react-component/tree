@@ -17,7 +17,6 @@ const Demo = React.createClass({
     };
   },
   componentDidMount() {
-    // this.renderToolTip();
     this.getTipContainer();
   },
   componentWillUnmount() {
@@ -26,8 +25,29 @@ const Demo = React.createClass({
       document.body.removeChild(this.tipContainer);
       this.tipContainer = null;
     }
-    // remove event listener if it has
-    // ...
+  },
+  onSelect(info) {
+    console.log('selected', info);
+  },
+  onRightClick(info) {
+    console.log('right click', info);
+    this.setPosition(info);
+    this.renderToolTip(info.node.props.title);
+  },
+  onMouseEnter(info) {
+    console.log('enter', info);
+    this.setPosition(info);
+    this.renderToolTip(info.node.props.title);
+  },
+  onMouseLeave(info) {
+    console.log('leave', info);
+  },
+  setPosition(info) {
+    assign(this.tipContainer.style, {
+      position: 'absolute',
+      left: info.event.pageX + 'px',
+      top: info.event.pageY + 'px',
+    });
   },
   getTipContainer() {
     if (!this.tipContainer) {
@@ -36,32 +56,13 @@ const Demo = React.createClass({
     }
     return this.tipContainer;
   },
-  handleSelect(info) {
-    console.log('selected', info);
-  },
-  handleContextMenu(info) {
-    console.log('handleContextMenu', info);
-    // var trigger = this.refs.triggerELe.getDOMNode();
-    const trigger = this.tipContainer;
-    const style = {
-      position: 'absolute',
-      left: info.event.pageX + 'px',
-      top: info.event.pageY + 'px',
-    };
-    assign(trigger.style, style);
+  renderToolTip(txt) {
     if (this.toolTip) {
-      ReactDOM.unmountComponentAtNode(trigger);
+      ReactDOM.unmountComponentAtNode(this.tipContainer);
       this.toolTip = null;
     }
-    this.renderToolTip(info.node.props.eventKey);
-  },
-  renderToolTip(key) {
-    const overlay = (<div>
-      <h4>{key}</h4>
-      <p><a herf="">link</a></p>
-    </div>);
-    this.toolTip = (<Tooltip placement="bottomRight" trigger="click" prefixCls="rc-tree-contextmenu"
-             defaultVisible overlay={overlay}>
+    this.toolTip = (<Tooltip trigger="click" placement="bottomRight" prefixCls="rc-tree-contextmenu"
+             defaultVisible overlay={<h4>{txt}</h4>}>
         <span></span>
     </Tooltip>);
     ReactDOM.render(this.toolTip, this.getTipContainer());
@@ -70,8 +71,21 @@ const Demo = React.createClass({
     return (
       <div>
         <h2>right click contextmenu</h2>
-        <Tree onRightClick={this.handleContextMenu} onSelect={this.handleSelect}
+        <Tree onRightClick={this.onRightClick} onSelect={this.onSelect}
           defaultSelectedKeys={['0-1', '0-1-1']}
+           multiple defaultExpandAll showLine>
+          <TreeNode title="parent 1" key="0-1">
+            <TreeNode title="parent 1-0" key="0-1-1">
+              <TreeNode title="leaf" />
+              <TreeNode title="leaf" />
+            </TreeNode>
+            <TreeNode title="parent 1-1">
+              <TreeNode title="leaf" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>
+        <h2>hover popup contextmenu</h2>
+        <Tree onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onSelect={this.onSelect}
            multiple defaultExpandAll showLine>
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">

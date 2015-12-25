@@ -14,13 +14,92 @@ const defaultTitle = '---';
 class TreeNode extends React.Component {
   constructor(props) {
     super(props);
-    ['handleExpand', 'handleCheck', 'handleContextMenu', 'handleDragStart', 'handleDragEnter', 'handleDragOver', 'handleDragLeave', 'handleDrop'].forEach((m)=> {
+    ['onExpand', 'onCheck', 'onContextMenu', 'onMouseEnter', 'onMouseLeave', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDragLeave', 'onDrop'].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
     this.state = {
       dataLoading: false,
       dragNodeHighlight: false,
     };
+  }
+
+  onCheck() {
+    this.props.root.onCheck(this);
+  }
+  onSelect() {
+    this.props.root.onSelect(this);
+  }
+
+  onMouseEnter(e) {
+    e.preventDefault();
+    this.props.root.onMouseEnter(e, this);
+  }
+  onMouseLeave(e) {
+    e.preventDefault();
+    this.props.root.onMouseLeave(e, this);
+  }
+
+  onContextMenu(e) {
+    e.preventDefault();
+    this.props.root.onContextMenu(e, this);
+  }
+
+  onDragStart(e) {
+    // console.log('dragstart', this.props.eventKey, e);
+    // e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: true,
+    });
+    this.props.root.onDragStart(e, this);
+  }
+  onDragEnter(e) {
+    // console.log('dragenter', this.props.eventKey, e);
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.root.onDragEnter(e, this);
+  }
+  onDragOver(e) {
+    // console.log(this.props.eventKey, e);
+    // todo disabled
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.root.onDragOver(e, this);
+    return false;
+  }
+  onDragLeave(e) {
+    // console.log(this.props.eventKey, e);
+    e.stopPropagation();
+    this.props.root.onDragLeave(e, this);
+  }
+  onDrop(e) {
+    e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: false,
+    });
+    this.props.root.onDrop(e, this);
+  }
+
+  onExpand() {
+    const callbackPromise = this.props.root.onExpand(this);
+    if (callbackPromise && typeof callbackPromise === 'object') {
+      const setLoading = (dataLoading) => {
+        this.setState({
+          dataLoading,
+        });
+      };
+      setLoading(true);
+      callbackPromise.then(() => {
+        setLoading(false);
+      }, () => {
+        setLoading(false);
+      });
+    }
+  }
+
+  // keyboard event support
+  onKeyDown(e) {
+    e.preventDefault();
   }
 
   getPosition(pos) {
@@ -40,75 +119,6 @@ class TreeNode extends React.Component {
       obj.center = true;
     }
     return obj;
-  }
-
-  handleCheck() {
-    this.props.root.handleCheck(this);
-  }
-  handleSelect() {
-    this.props.root.handleSelect(this);
-  }
-  handleContextMenu(e) {
-    e.preventDefault();
-    this.props.root.handleContextMenu(e, this);
-  }
-
-  handleDragStart(e) {
-    // console.log('dragstart', this.props.eventKey, e);
-    // e.preventDefault();
-    e.stopPropagation();
-    this.setState({
-      dragNodeHighlight: true,
-    });
-    this.props.root.handleDragStart(e, this);
-  }
-  handleDragEnter(e) {
-    // console.log('dragenter', this.props.eventKey, e);
-    e.preventDefault();
-    e.stopPropagation();
-    this.props.root.handleDragEnter(e, this);
-  }
-  handleDragOver(e) {
-    // console.log(this.props.eventKey, e);
-    // todo disabled
-    e.preventDefault();
-    e.stopPropagation();
-    this.props.root.handleDragOver(e, this);
-    return false;
-  }
-  handleDragLeave(e) {
-    // console.log(this.props.eventKey, e);
-    e.stopPropagation();
-    this.props.root.handleDragLeave(e, this);
-  }
-  handleDrop(e) {
-    e.stopPropagation();
-    this.setState({
-      dragNodeHighlight: false,
-    });
-    this.props.root.handleDrop(e, this);
-  }
-
-  handleExpand() {
-    const callbackPromise = this.props.root.handleExpand(this);
-    if (callbackPromise && typeof callbackPromise === 'object') {
-      const setLoading = (dataLoading) => {
-        this.setState({
-          dataLoading,
-        });
-      };
-      setLoading(true);
-      callbackPromise.then(() => {
-        setLoading(false);
-      }, () => {
-        setLoading(false);
-      });
-    }
-  }
-
-  // keyboard event support
-  handleKeyDown(e) {
-    e.preventDefault();
   }
 
   renderSwitcher(props, expandedState) {
@@ -131,7 +141,7 @@ class TreeNode extends React.Component {
       switcherCls[`${prefixCls}-center_${expandedState}`] = posObj.center;
       switcherCls[`${prefixCls}-bottom_${expandedState}`] = posObj.last;
     }
-    return <span className={classNames(switcherCls)} onClick={this.handleExpand}></span>;
+    return <span className={classNames(switcherCls)} onClick={this.onExpand}></span>;
   }
 
   renderCheckbox(props) {
@@ -152,7 +162,7 @@ class TreeNode extends React.Component {
       checkboxCls[`${prefixCls}-checkbox-disabled`] = true;
       return <span ref="checkbox" className={classNames(checkboxCls)}>{customEle}</span>;
     }
-    return (<span ref="checkbox" className={classNames(checkboxCls)} onClick={this.handleCheck}>{customEle}</span>);
+    return (<span ref="checkbox" className={classNames(checkboxCls)} onClick={this.onCheck}>{customEle}</span>);
   }
 
   renderChildren(props) {
@@ -235,13 +245,19 @@ class TreeNode extends React.Component {
         }
         domProps.onClick = (e) => {
           e.preventDefault();
-          this.handleSelect();
+          this.onSelect();
           if (props.checkable) {
-            this.handleCheck();
+            this.onCheck();
           }
         };
         if (props.onRightClick) {
-          domProps.onContextMenu = this.handleContextMenu;
+          domProps.onContextMenu = this.onContextMenu;
+        }
+        if (props.onMouseEnter) {
+          domProps.onMouseEnter = this.onMouseEnter;
+        }
+        if (props.onMouseLeave) {
+          domProps.onMouseLeave = this.onMouseLeave;
         }
         if (props.draggable) {
           if (ieOrEdge) {
@@ -250,7 +266,7 @@ class TreeNode extends React.Component {
           }
           domProps.draggable = true;
           domProps['aria-grabbed'] = true;
-          domProps.onDragStart = this.handleDragStart;
+          domProps.onDragStart = this.onDragStart;
         }
       }
       return (
@@ -262,10 +278,10 @@ class TreeNode extends React.Component {
 
     const liProps = {};
     if (props.draggable) {
-      liProps.onDragEnter = this.handleDragEnter;
-      liProps.onDragOver = this.handleDragOver;
-      liProps.onDragLeave = this.handleDragLeave;
-      liProps.onDrop = this.handleDrop;
+      liProps.onDragEnter = this.onDragEnter;
+      liProps.onDragOver = this.onDragOver;
+      liProps.onDragLeave = this.onDragLeave;
+      liProps.onDrop = this.onDrop;
     }
 
     let disabledCls = '';

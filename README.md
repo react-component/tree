@@ -73,6 +73,8 @@ see examples
 |onSelect | click the treeNode to fire | function(e:{selected:bool,node,checkedKeys,event}) | - |
 |onDataLoaded | load data asynchronously and the return value should be a promise | function(node) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
+|onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
+|onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |
 |draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool | false |
 |onTreeDragStart | it execs when fire the tree's dragstart event | function({event,node}) | - |
 |onTreeDragEnter | it execs when fire the tree's dragenter event | function({event,node,expandedKeys}) | - |
