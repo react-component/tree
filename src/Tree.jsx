@@ -229,6 +229,7 @@ class Tree extends React.Component {
     const newSt = {
       event: 'check',
       node: treeNode,
+      allCheckedNodes: checkKeys.checkedNodes,
     };
     if (!('checkedKeys' in this.props)) {
       this.setState({
@@ -237,6 +238,12 @@ class Tree extends React.Component {
       newSt.checked = checked;
     } else {
       checkedKeys = this.state.checkedKeys;
+      newSt.allCheckedNodes = Object.keys(this.treeNodesStates).filter((item) => {
+        const itemObj = this.treeNodesStates[item];
+        if (this.checkedKeys.indexOf(itemObj.key) !== -1) {
+          return itemObj.node;
+        }
+      });
     }
     newSt.checkedKeys = checkedKeys;
     if (this.props.onCheck) {
@@ -324,16 +331,18 @@ class Tree extends React.Component {
   getCheckKeys() {
     const checkPartKeys = [];
     const checkedKeys = [];
+    const checkedNodes = [];
     Object.keys(this.treeNodesStates).forEach((item) => {
       const itemObj = this.treeNodesStates[item];
       if (itemObj.checked) {
         checkedKeys.push(itemObj.key);
+        checkedNodes.push(itemObj.node);
       } else if (itemObj.checkPart) {
         checkPartKeys.push(itemObj.key);
       }
     });
     return {
-      checkPartKeys, checkedKeys,
+      checkPartKeys, checkedKeys, checkedNodes,
     };
   }
   getOpenTransitionName() {
@@ -500,6 +509,7 @@ class Tree extends React.Component {
         checkedPos.push(pos);
       }
       this.treeNodesStates[pos] = {
+        node: item,
         key: key,
         checked: checked,
         checkPart: false,

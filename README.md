@@ -69,8 +69,8 @@ see examples
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
 |selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
-|onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event}) | - |
-|onSelect | click the treeNode to fire | function(e:{selected:bool,node,checkedKeys,event}) | - |
+|onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event,allCheckedNodes}) | - |
+|onSelect | click the treeNode to fire | function(e:{selected:bool,node,selectedKeys,event}) | - |
 |onDataLoaded | load data asynchronously and the return value should be a promise | function(node) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 |onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
