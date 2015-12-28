@@ -29,9 +29,6 @@ webpackJsonp([6],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	function handleSelect(info) {
-	  console.log('selected', info);
-	}
 	var Demo = _react2['default'].createClass({
 	  displayName: 'Demo',
 	
@@ -49,6 +46,12 @@ webpackJsonp([6],{
 	      defaultCheckedKeys: this.props.defaultSelectedKeys,
 	      switchIt: true
 	    };
+	  },
+	  onSelect: function onSelect(info) {
+	    console.log('selected', info);
+	  },
+	  onCheck: function onCheck(info) {
+	    console.log('onCheck', info);
 	  },
 	  change: function change() {
 	    this.setState({
@@ -71,7 +74,7 @@ webpackJsonp([6],{
 	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true, showLine: true,
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,
 	          defaultCheckedKeys: this.state.defaultCheckedKeys,
-	          onSelect: handleSelect },
+	          onSelect: this.onSelect, onCheck: this.onCheck },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          { title: 'parent 1', key: '0-1' },
@@ -106,7 +109,7 @@ webpackJsonp([6],{
 	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true, key: Date.now(),
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,
 	          defaultCheckedKeys: this.state.defaultCheckedKeys,
-	          onSelect: handleSelect },
+	          onSelect: this.onSelect, onCheck: this.onCheck },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          { title: 'parent 1', key: '0-1' },

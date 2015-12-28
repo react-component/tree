@@ -20007,7 +20007,8 @@
 	      var checkedKeys = checkKeys.checkedKeys;
 	      var newSt = {
 	        event: 'check',
-	        node: treeNode
+	        node: treeNode,
+	        allCheckedNodes: checkKeys.checkedNodes
 	      };
 	      if (!('checkedKeys' in this.props)) {
 	        this.setState({
@@ -20016,6 +20017,12 @@
 	        newSt.checked = checked;
 	      } else {
 	        checkedKeys = this.state.checkedKeys;
+	        newSt.allCheckedNodes = Object.keys(this.treeNodesStates).filter(function (item) {
+	          var itemObj = _this3.treeNodesStates[item];
+	          if (_this3.checkedKeys.indexOf(itemObj.key) !== -1) {
+	            return itemObj.node;
+	          }
+	        });
 	      }
 	      newSt.checkedKeys = checkedKeys;
 	      if (this.props.onCheck) {
@@ -20122,16 +20129,18 @@
 	
 	      var checkPartKeys = [];
 	      var checkedKeys = [];
+	      var checkedNodes = [];
 	      Object.keys(this.treeNodesStates).forEach(function (item) {
 	        var itemObj = _this4.treeNodesStates[item];
 	        if (itemObj.checked) {
 	          checkedKeys.push(itemObj.key);
+	          checkedNodes.push(itemObj.node);
 	        } else if (itemObj.checkPart) {
 	          checkPartKeys.push(itemObj.key);
 	        }
 	      });
 	      return {
-	        checkPartKeys: checkPartKeys, checkedKeys: checkedKeys
+	        checkPartKeys: checkPartKeys, checkedKeys: checkedKeys, checkedNodes: checkedNodes
 	      };
 	    }
 	  }, {
@@ -20318,6 +20327,7 @@
 	          checkedPos.push(pos);
 	        }
 	        _this6.treeNodesStates[pos] = {
+	          node: item,
 	          key: key,
 	          checked: checked,
 	          checkPart: false
