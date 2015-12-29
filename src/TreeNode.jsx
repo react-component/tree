@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import assign from 'object-assign';
 import classNames from 'classnames';
 import Animate from 'rc-animate';
@@ -307,11 +307,11 @@ class TreeNode extends React.Component {
   }
 }
 TreeNode.propTypes = {
-  prefixCls: React.PropTypes.string,
-  expanded: React.PropTypes.bool,
-  isLeaf: React.PropTypes.bool,
-  root: React.PropTypes.object,
-  onSelect: React.PropTypes.func,
+  prefixCls: PropTypes.string,
+  expanded: PropTypes.bool,
+  isLeaf: PropTypes.bool,
+  root: PropTypes.object,
+  onSelect: PropTypes.func,
 };
 TreeNode.defaultProps = {
   title: defaultTitle,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 import { getOffset } from './util';
 
@@ -18,6 +18,9 @@ const filterMin = (arr) => {
   return a;
 };
 // console.log(filterMin(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
+
+function noop() {
+}
 
 class Tree extends React.Component {
   constructor(props) {
@@ -86,12 +89,10 @@ class Tree extends React.Component {
       st.expandedKeys = expandedKeys;
     }
     this.setState(st);
-    if (this.props.onTreeDragStart) {
-      this.props.onTreeDragStart({
-        event: e,
-        node: treeNode,
-      });
-    }
+    this.props.onTreeDragStart({
+      event: e,
+      node: treeNode,
+    });
   }
   onDragEnterGap(e, treeNode) {
     // console.log(e.pageY, getOffset(treeNode.refs.selectHandle), treeNode.props.eventKey);
@@ -130,23 +131,17 @@ class Tree extends React.Component {
       st.expandedKeys = expandedKeys;
     }
     this.setState(st);
-    if (this.props.onTreeDragEnter) {
-      this.props.onTreeDragEnter({
-        event: e,
-        node: treeNode,
-        expandedKeys: expandedKeys || this.state.expandedKeys,
-      });
-    }
+    this.props.onTreeDragEnter({
+      event: e,
+      node: treeNode,
+      expandedKeys: expandedKeys || this.state.expandedKeys,
+    });
   }
   onDragOver(e, treeNode) {
-    if (this.props.onTreeDragOver) {
-      this.props.onTreeDragOver({event: e, node: treeNode});
-    }
+    this.props.onTreeDragOver({event: e, node: treeNode});
   }
   onDragLeave(e, treeNode) {
-    if (this.props.onTreeDragLeave) {
-      this.props.onTreeDragLeave({event: e, node: treeNode});
-    }
+    this.props.onTreeDragLeave({event: e, node: treeNode});
   }
   onDrop(e, treeNode) {
     const key = treeNode.props.eventKey;
@@ -157,20 +152,19 @@ class Tree extends React.Component {
       dragOverNodeKey: '',
       dropNodeKey: key,
     });
-    if (this.props.onTreeDrop) {
-      const posArr = treeNode.props.pos.split('-');
-      const res = {
-        event: e,
-        node: treeNode,
-        dragNode: this.dragNode,
-        dragNodesKeys: this.dragNodesKeys,
-        dropPos: this.dropPos + Number(posArr[posArr.length - 1]),
-      };
-      if (this.dropPos !== 0) {
-        res.dropToGap = true;
-      }
-      this.props.onTreeDrop(res);
+
+    const posArr = treeNode.props.pos.split('-');
+    const res = {
+      event: e,
+      node: treeNode,
+      dragNode: this.dragNode,
+      dragNodesKeys: this.dragNodesKeys,
+      dropPos: this.dropPos + Number(posArr[posArr.length - 1]),
+    };
+    if (this.dropPos !== 0) {
+      res.dropToGap = true;
     }
+    this.props.onTreeDrop(res);
   }
   onExpand(treeNode) {
     const thisProps = this.props;
@@ -246,9 +240,7 @@ class Tree extends React.Component {
       });
     }
     newSt.checkedKeys = checkedKeys;
-    if (this.props.onCheck) {
-      this.props.onCheck(newSt);
-    }
+    this.props.onCheck(newSt);
   }
   onSelect(treeNode) {
     const props = this.props;
@@ -279,9 +271,7 @@ class Tree extends React.Component {
       selectedKeys = this.state.selectedKeys;
     }
     newSt.selectedKeys = selectedKeys;
-    if (props.onSelect) {
-      props.onSelect(newSt);
-    }
+    props.onSelect(newSt);
   }
   onMouseEnter(e, treeNode) {
     this.props.onMouseEnter({event: e, node: treeNode});
@@ -529,33 +519,33 @@ class Tree extends React.Component {
 }
 
 Tree.propTypes = {
-  prefixCls: React.PropTypes.string,
-  checkable: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.node,
+  prefixCls: PropTypes.string,
+  checkable: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.node,
   ]),
-  multiple: React.PropTypes.bool,
-  showLine: React.PropTypes.bool,
-  showIcon: React.PropTypes.bool,
-  defaultExpandAll: React.PropTypes.bool,
-  defaultExpandedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
-  checkedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
-  defaultCheckedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
-  selectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
-  defaultSelectedKeys: React.PropTypes.arrayOf(React.PropTypes.string),
-  onCheck: React.PropTypes.func,
-  onSelect: React.PropTypes.func,
-  onDataLoaded: React.PropTypes.func,
-  onMouseEnter: React.PropTypes.func,
-  onMouseLeave: React.PropTypes.func,
-  onRightClick: React.PropTypes.func,
-  onTreeDragStart: React.PropTypes.func,
-  onTreeDragEnter: React.PropTypes.func,
-  onTreeDragOver: React.PropTypes.func,
-  onTreeDragLeave: React.PropTypes.func,
-  onTreeDrop: React.PropTypes.func,
-  openTransitionName: React.PropTypes.string,
-  openAnimation: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]),
+  multiple: PropTypes.bool,
+  showLine: PropTypes.bool,
+  showIcon: PropTypes.bool,
+  defaultExpandAll: PropTypes.bool,
+  defaultExpandedKeys: PropTypes.arrayOf(PropTypes.string),
+  checkedKeys: PropTypes.arrayOf(PropTypes.string),
+  defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
+  selectedKeys: PropTypes.arrayOf(PropTypes.string),
+  defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
+  onCheck: PropTypes.func,
+  onSelect: PropTypes.func,
+  onDataLoaded: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  onRightClick: PropTypes.func,
+  onTreeDragStart: PropTypes.func,
+  onTreeDragEnter: PropTypes.func,
+  onTreeDragOver: PropTypes.func,
+  onTreeDragLeave: PropTypes.func,
+  onTreeDrop: PropTypes.func,
+  openTransitionName: PropTypes.string,
+  openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 Tree.defaultProps = {
@@ -569,6 +559,13 @@ Tree.defaultProps = {
   defaultExpandedKeys: [],
   defaultCheckedKeys: [],
   defaultSelectedKeys: [],
+  onCheck: noop,
+  onSelect: noop,
+  onTreeDragStart: noop,
+  onTreeDragEnter: noop,
+  onTreeDragOver: noop,
+  onTreeDragLeave: noop,
+  onTreeDrop: noop,
 };
 
 export default Tree;
