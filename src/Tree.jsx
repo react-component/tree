@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
+import TreeNode from './TreeNode';
 import { getOffset } from './util';
 
 const splitPos = (pos) => {
@@ -436,12 +437,8 @@ class Tree extends React.Component {
     const loop = (children, level) => {
       React.Children.forEach(children, (item, index) => {
         const pos = `${level}-${index}`;
-        let newChildren = item.props.children;
-        if (newChildren) {
-          if (!Array.isArray(newChildren)) {
-            newChildren = [newChildren];
-          }
-          loop(newChildren, pos);
+        if (item.props.children && item.type === TreeNode) {
+          loop(item.props.children, pos);
         }
         callback(item, index, pos);
       });
