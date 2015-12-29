@@ -19772,6 +19772,8 @@
 	};
 	// console.log(filterMin(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
 	
+	function noop() {}
+	
 	var Tree = (function (_React$Component) {
 	  _inherits(Tree, _React$Component);
 	
@@ -19847,12 +19849,10 @@
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
-	      if (this.props.onTreeDragStart) {
-	        this.props.onTreeDragStart({
-	          event: e,
-	          node: treeNode
-	        });
-	      }
+	      this.props.onTreeDragStart({
+	        event: e,
+	        node: treeNode
+	      });
 	    }
 	  }, {
 	    key: 'onDragEnterGap',
@@ -19895,27 +19895,21 @@
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
-	      if (this.props.onTreeDragEnter) {
-	        this.props.onTreeDragEnter({
-	          event: e,
-	          node: treeNode,
-	          expandedKeys: expandedKeys || this.state.expandedKeys
-	        });
-	      }
+	      this.props.onTreeDragEnter({
+	        event: e,
+	        node: treeNode,
+	        expandedKeys: expandedKeys || this.state.expandedKeys
+	      });
 	    }
 	  }, {
 	    key: 'onDragOver',
 	    value: function onDragOver(e, treeNode) {
-	      if (this.props.onTreeDragOver) {
-	        this.props.onTreeDragOver({ event: e, node: treeNode });
-	      }
+	      this.props.onTreeDragOver({ event: e, node: treeNode });
 	    }
 	  }, {
 	    key: 'onDragLeave',
 	    value: function onDragLeave(e, treeNode) {
-	      if (this.props.onTreeDragLeave) {
-	        this.props.onTreeDragLeave({ event: e, node: treeNode });
-	      }
+	      this.props.onTreeDragLeave({ event: e, node: treeNode });
 	    }
 	  }, {
 	    key: 'onDrop',
@@ -19928,20 +19922,19 @@
 	        dragOverNodeKey: '',
 	        dropNodeKey: key
 	      });
-	      if (this.props.onTreeDrop) {
-	        var posArr = treeNode.props.pos.split('-');
-	        var res = {
-	          event: e,
-	          node: treeNode,
-	          dragNode: this.dragNode,
-	          dragNodesKeys: this.dragNodesKeys,
-	          dropPos: this.dropPos + Number(posArr[posArr.length - 1])
-	        };
-	        if (this.dropPos !== 0) {
-	          res.dropToGap = true;
-	        }
-	        this.props.onTreeDrop(res);
+	
+	      var posArr = treeNode.props.pos.split('-');
+	      var res = {
+	        event: e,
+	        node: treeNode,
+	        dragNode: this.dragNode,
+	        dragNodesKeys: this.dragNodesKeys,
+	        dropPos: this.dropPos + Number(posArr[posArr.length - 1])
+	      };
+	      if (this.dropPos !== 0) {
+	        res.dropToGap = true;
 	      }
+	      this.props.onTreeDrop(res);
 	    }
 	  }, {
 	    key: 'onExpand',
@@ -20025,9 +20018,7 @@
 	        });
 	      }
 	      newSt.checkedKeys = checkedKeys;
-	      if (this.props.onCheck) {
-	        this.props.onCheck(newSt);
-	      }
+	      this.props.onCheck(newSt);
 	    }
 	  }, {
 	    key: 'onSelect',
@@ -20060,9 +20051,7 @@
 	        selectedKeys = this.state.selectedKeys;
 	      }
 	      newSt.selectedKeys = selectedKeys;
-	      if (props.onSelect) {
-	        props.onSelect(newSt);
-	      }
+	      props.onSelect(newSt);
 	    }
 	  }, {
 	    key: 'onMouseEnter',
@@ -20350,30 +20339,30 @@
 	})(_react2['default'].Component);
 	
 	Tree.propTypes = {
-	  prefixCls: _react2['default'].PropTypes.string,
-	  checkable: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.bool, _react2['default'].PropTypes.node]),
-	  multiple: _react2['default'].PropTypes.bool,
-	  showLine: _react2['default'].PropTypes.bool,
-	  showIcon: _react2['default'].PropTypes.bool,
-	  defaultExpandAll: _react2['default'].PropTypes.bool,
-	  defaultExpandedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
-	  checkedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
-	  defaultCheckedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
-	  selectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
-	  defaultSelectedKeys: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
-	  onCheck: _react2['default'].PropTypes.func,
-	  onSelect: _react2['default'].PropTypes.func,
-	  onDataLoaded: _react2['default'].PropTypes.func,
-	  onMouseEnter: _react2['default'].PropTypes.func,
-	  onMouseLeave: _react2['default'].PropTypes.func,
-	  onRightClick: _react2['default'].PropTypes.func,
-	  onTreeDragStart: _react2['default'].PropTypes.func,
-	  onTreeDragEnter: _react2['default'].PropTypes.func,
-	  onTreeDragOver: _react2['default'].PropTypes.func,
-	  onTreeDragLeave: _react2['default'].PropTypes.func,
-	  onTreeDrop: _react2['default'].PropTypes.func,
-	  openTransitionName: _react2['default'].PropTypes.string,
-	  openAnimation: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.object])
+	  prefixCls: _react.PropTypes.string,
+	  checkable: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.node]),
+	  multiple: _react.PropTypes.bool,
+	  showLine: _react.PropTypes.bool,
+	  showIcon: _react.PropTypes.bool,
+	  defaultExpandAll: _react.PropTypes.bool,
+	  defaultExpandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  checkedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  defaultCheckedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  selectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  defaultSelectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  onCheck: _react.PropTypes.func,
+	  onSelect: _react.PropTypes.func,
+	  onDataLoaded: _react.PropTypes.func,
+	  onMouseEnter: _react.PropTypes.func,
+	  onMouseLeave: _react.PropTypes.func,
+	  onRightClick: _react.PropTypes.func,
+	  onTreeDragStart: _react.PropTypes.func,
+	  onTreeDragEnter: _react.PropTypes.func,
+	  onTreeDragOver: _react.PropTypes.func,
+	  onTreeDragLeave: _react.PropTypes.func,
+	  onTreeDrop: _react.PropTypes.func,
+	  openTransitionName: _react.PropTypes.string,
+	  openAnimation: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object])
 	};
 	
 	Tree.defaultProps = {
@@ -20386,7 +20375,14 @@
 	  defaultExpandAll: false,
 	  defaultExpandedKeys: [],
 	  defaultCheckedKeys: [],
-	  defaultSelectedKeys: []
+	  defaultSelectedKeys: [],
+	  onCheck: noop,
+	  onSelect: noop,
+	  onTreeDragStart: noop,
+	  onTreeDragEnter: noop,
+	  onTreeDragOver: noop,
+	  onTreeDragLeave: noop,
+	  onTreeDrop: noop
 	};
 	
 	exports['default'] = Tree;
@@ -20909,11 +20905,11 @@
 	})(_react2['default'].Component);
 	
 	TreeNode.propTypes = {
-	  prefixCls: _react2['default'].PropTypes.string,
-	  expanded: _react2['default'].PropTypes.bool,
-	  isLeaf: _react2['default'].PropTypes.bool,
-	  root: _react2['default'].PropTypes.object,
-	  onSelect: _react2['default'].PropTypes.func
+	  prefixCls: _react.PropTypes.string,
+	  expanded: _react.PropTypes.bool,
+	  isLeaf: _react.PropTypes.bool,
+	  root: _react.PropTypes.object,
+	  onSelect: _react.PropTypes.func
 	};
 	TreeNode.defaultProps = {
 	  title: defaultTitle
