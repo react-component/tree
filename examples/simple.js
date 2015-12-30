@@ -5,17 +5,19 @@ import Tree, {TreeNode} from 'rc-tree';
 
 const Demo = React.createClass({
   propTypes: {
-    defaultSelectedKeys: PropTypes.array,
+    keys: PropTypes.array,
   },
   getDefaultProps() {
     return {
-      defaultSelectedKeys: ['0-1', 'random'],
+      keys: ['0-1-1', 'random2'],
     };
   },
   getInitialState() {
+    const keys = this.props.keys;
     return {
-      defaultSelectedKeys: this.props.defaultSelectedKeys,
-      defaultCheckedKeys: this.props.defaultSelectedKeys,
+      defaultExpandedKeys: keys,
+      defaultSelectedKeys: keys,
+      defaultCheckedKeys: keys,
       switchIt: true,
     };
   },
@@ -26,16 +28,23 @@ const Demo = React.createClass({
     console.log('onCheck', info);
   },
   change() {
+    const keys = this.props.keys;
     this.setState({
-      defaultSelectedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 0 : 1]],
-      defaultCheckedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 1 : 0]],
+      defaultExpandedKeys: ['0-1', keys[this.state.switchIt ? 0 : 1]],
+      defaultSelectedKeys: [keys[this.state.switchIt ? 0 : 1]],
+      defaultCheckedKeys: [keys[this.state.switchIt ? 1 : 0]],
       switchIt: !this.state.switchIt,
     });
   },
   render() {
-    return (<div>
+    return (<div style={{margin: '0 20px;'}}>
       <h2>simple</h2>
-      <Tree className="myCls" multiple checkable defaultExpandAll showLine
+      <p style={{color: 'red'}}>
+        tips: 把 defaultXX 前的 default 去掉，可变为受控组件 <br />
+        (defaultExpandAll 除外)
+      </p>
+      <Tree className="myCls" multiple checkable defaultExpandAll
+          defaultExpandedKeys={this.state.defaultExpandedKeys}
           defaultSelectedKeys={this.state.defaultSelectedKeys}
           defaultCheckedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect} onCheck={this.onCheck}>
@@ -44,24 +53,27 @@ const Demo = React.createClass({
             <TreeNode title="leaf" key="random" />
             <TreeNode title="leaf" />
           </TreeNode>
-          <TreeNode title="parent 1-1">
+          <TreeNode title="parent 1-1" key="random2">
             <TreeNode title={<span style={{color: 'red'}}>sss</span>} />
           </TreeNode>
         </TreeNode>
       </Tree>
 
+      <br />
       <div><button onClick={this.change}>change state</button></div>
+      <br />
 
-      <Tree className="myCls" multiple checkable defaultExpandAll key={Date.now()}
+      <Tree className="myCls" multiple checkable key={1}
+          expandedKeys={this.state.defaultExpandedKeys}
           defaultSelectedKeys={this.state.defaultSelectedKeys}
-          defaultCheckedKeys={this.state.defaultCheckedKeys}
+          checkedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect} onCheck={this.onCheck}>
         <TreeNode title="parent 1" key="0-1">
           <TreeNode title="parent 1-0" key="0-1-1">
             <TreeNode title="leaf" key="random" />
             <TreeNode title="leaf" />
           </TreeNode>
-          <TreeNode title="parent 1-1">
+          <TreeNode title="parent 1-1" key="random2">
             <TreeNode title={<span style={{color: 'red'}}>sss</span>} />
           </TreeNode>
         </TreeNode>

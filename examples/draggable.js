@@ -1,5 +1,5 @@
 import 'rc-tree/assets/index.less';
-import 'rc-tree/assets/draggable-demo.less';
+import 'rc-tree/assets/demo-draggable.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
@@ -91,6 +91,7 @@ class TreeDemo extends React.Component {
     }
     this.setState({
       gData: data,
+      expandedKeys: info.originExpandedKeys,
     });
   }
   handleCheck(info) {

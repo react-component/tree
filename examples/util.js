@@ -1,7 +1,7 @@
 
-const x = 5;
-const y = 3;
-const z = 2;
+const x = 3;
+const y = 2;
+const z = 1;
 const gData = [];
 
 const generateData = (_level, _preKey, _tns) => {

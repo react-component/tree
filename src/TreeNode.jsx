@@ -197,7 +197,7 @@ class TreeNode extends React.Component {
           delete animProps.animation.appear;
         }
       }
-      newChildren = this.newChildren = (
+      newChildren = (
         <Animate {...animProps}
           showProp="expanded"
           transitionAppear={transitionAppear}
@@ -296,8 +296,10 @@ class TreeNode extends React.Component {
       dragOverCls = 'drag-over-gap-bottom';
     }
 
+    const filterCls = props.filterTreeNode(this) ? 'filter-node' : '';
+
     return (
-      <li {...liProps} ref="li" className={classNames(props.className, disabledCls, dragOverCls)}>
+      <li {...liProps} ref="li" className={classNames(props.className, disabledCls, dragOverCls, filterCls)}>
         {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : <span className={`${prefixCls}-switcher-noop`}></span>}
         {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}

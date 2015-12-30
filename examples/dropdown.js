@@ -1,6 +1,6 @@
 // use jsx to render html, do not modify simple.html
 import 'rc-tree/assets/index.less';
-import 'rc-tree/assets/dropdown-demo.less';
+import 'rc-tree/assets/demo-dropdown.less';
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
@@ -44,7 +44,7 @@ const DropdownTree = React.createClass({
   getDefaultProps() {
     return {
       minOverlayWidthMatchTrigger: true,
-      prefixCls: 'dropdown-tree',
+      prefixCls: 'demo-dropdown-tree',
       trigger: ['hover'],
       overlayClassName: '',
       overlayStyle: {},
@@ -143,20 +143,31 @@ const Demo = React.createClass({
   getInitialState() {
     return {
       visible: false,
+      inputValue: '',
       sel: '',
     };
+  },
+  onChange(event) {
+    this.setState({
+      inputValue: event.target.value,
+    });
   },
   onVisibleChange(visible) {
     this.setState({
       visible: visible,
     });
   },
-  handleSelect(info) {
+  onSelect(info) {
     console.log('selected: ', info);
     this.setState({
       visible: false,
       sel: info.node.props.title,
     });
+  },
+  filterTreeNode(treeNode) {
+    console.log(treeNode);
+    // 根据 key 进行搜索，可以根据其他数据，如 value
+    return this.state.inputValue && treeNode.props.eventKey.indexOf(this.state.inputValue) > -1;
   },
   render() {
     const loop = data => {
@@ -167,9 +178,12 @@ const Demo = React.createClass({
         return <TreeNode key={item.key} title={item.key} />;
       });
     };
-    const overlay = (<Tree defaultExpandAll={false} onSelect={this.handleSelect}>
-      {loop(gData)}
-    </Tree>);
+    const overlay = (<div>
+      <input placeholder="请筛选" value={this.state.inputValue} onChange={this.onChange} />
+      <Tree defaultExpandAll={false} onSelect={this.onSelect} filterTreeNode={this.filterTreeNode}>
+        {loop(gData)}
+      </Tree>
+    </div>);
 
     return (<div style={{padding: '10px 30px'}}>
       <h3>tree in dropdown</h3>
@@ -178,7 +192,7 @@ const Demo = React.createClass({
          visible={this.state.visible}
          closeOnSelect={false}
          overlay={overlay} animation="slide-up">
-        <input key={Date.now()} placeholder="选择岗位节点" defaultValue={this.state.sel} readOnly />
+        <div className="demo-dropdown-trigger">{this.state.sel}</div>
       </DropdownTree>
     </div>);
   },
