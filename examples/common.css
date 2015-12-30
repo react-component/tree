@@ -84,7 +84,7 @@
   position: relative;
 }
 .rc-tree li span.rc-tree-switcher-disabled:after {
-  content: '-';
+  content: ' ';
   position: absolute;
   top: 8px;
   left: 6px;
