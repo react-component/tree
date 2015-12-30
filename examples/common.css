@@ -21,6 +21,10 @@
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
+.rc-tree li.filter-node > a {
+  color: #A60000!important;
+  font-weight: bold!important;
+}
 .rc-tree li.drag-over > a[draggable] {
   background-color: #316AC5;
   color: white;

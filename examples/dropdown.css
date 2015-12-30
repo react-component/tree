@@ -1,4 +1,10 @@
-.dropdown-tree {
+.demo-dropdown-trigger {
+  width: 200px;
+  height: 30px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+.demo-dropdown-tree {
   position: absolute;
   left: -9999px;
   top: -9999px;
@@ -6,11 +12,11 @@
   display: block;
   background-color: #fff;
 }
-.dropdown-tree-hidden {
+.demo-dropdown-tree-hidden {
   display: none;
 }
-.dropdown-tree-slide-up-enter,
-.dropdown-tree-slide-up-appear {
+.demo-dropdown-tree-slide-up-enter,
+.demo-dropdown-tree-slide-up-appear {
   -webkit-animation-duration: 0.3s;
           animation-duration: 0.3s;
   -webkit-animation-fill-mode: both;
@@ -25,7 +31,7 @@
   -webkit-animation-play-state: paused;
           animation-play-state: paused;
 }
-.dropdown-tree-slide-up-leave {
+.demo-dropdown-tree-slide-up-leave {
   -webkit-animation-duration: 0.3s;
           animation-duration: 0.3s;
   -webkit-animation-fill-mode: both;
@@ -40,27 +46,27 @@
   -webkit-animation-play-state: paused;
           animation-play-state: paused;
 }
-.dropdown-tree-slide-up-enter.dropdown-tree-slide-up-enter-active.dropdown-tree-placement-bottomLeft,
-.dropdown-tree-slide-up-appear.dropdown-tree-slide-up-appear-active.dropdown-tree-placement-bottomLeft {
+.demo-dropdown-tree-slide-up-enter.demo-dropdown-tree-slide-up-enter-active.demo-dropdown-tree-placement-bottomLeft,
+.demo-dropdown-tree-slide-up-appear.demo-dropdown-tree-slide-up-appear-active.demo-dropdown-tree-placement-bottomLeft {
   -webkit-animation-name: slideUpIn;
           animation-name: slideUpIn;
   -webkit-animation-play-state: running;
           animation-play-state: running;
 }
-.dropdown-tree-slide-up-enter.dropdown-tree-slide-up-enter-active.dropdown-tree-placement-topLeft,
-.dropdown-tree-slide-up-appear.dropdown-tree-slide-up-appear-active.dropdown-tree-placement-topLeft {
+.demo-dropdown-tree-slide-up-enter.demo-dropdown-tree-slide-up-enter-active.demo-dropdown-tree-placement-topLeft,
+.demo-dropdown-tree-slide-up-appear.demo-dropdown-tree-slide-up-appear-active.demo-dropdown-tree-placement-topLeft {
   -webkit-animation-name: slideDownIn;
           animation-name: slideDownIn;
   -webkit-animation-play-state: running;
           animation-play-state: running;
 }
-.dropdown-tree-slide-up-leave.dropdown-tree-slide-up-leave-active.dropdown-tree-placement-bottomLeft {
+.demo-dropdown-tree-slide-up-leave.demo-dropdown-tree-slide-up-leave-active.demo-dropdown-tree-placement-bottomLeft {
   -webkit-animation-name: slideUpOut;
           animation-name: slideUpOut;
   -webkit-animation-play-state: running;
           animation-play-state: running;
 }
-.dropdown-tree-slide-up-leave.dropdown-tree-slide-up-leave-active.dropdown-tree-placement-topLeft {
+.demo-dropdown-tree-slide-up-leave.demo-dropdown-tree-slide-up-leave-active.demo-dropdown-tree-placement-topLeft {
   -webkit-animation-name: slideDownOut;
           animation-name: slideDownOut;
   -webkit-animation-play-state: running;

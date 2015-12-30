@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>dropdown.js - example - rc-tree@0.21.3</title>
+  <title>dropdown.js - example - rc-tree@0.22.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.21.3</h1>
+    <h1>rc-tree@0.22.0</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -266,7 +266,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <script src="dropdown.js?nowrap"></script>
   <div class="highlight"><pre><code language="js"><span class="hljs-comment">// use jsx to render html, do not modify simple.html</span>
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/dropdown-demo.css'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/demo-dropdown.css'</span>;
 <span class="hljs-keyword">import</span> React, {PropTypes} <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
@@ -310,7 +310,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   getDefaultProps() {
     <span class="hljs-keyword">return</span> {
       minOverlayWidthMatchTrigger: <span class="hljs-literal">true</span>,
-      prefixCls: <span class="hljs-string">'dropdown-tree'</span>,
+      prefixCls: <span class="hljs-string">'demo-dropdown-tree'</span>,
       trigger: [<span class="hljs-string">'hover'</span>],
       overlayClassName: <span class="hljs-string">''</span>,
       overlayStyle: {},
@@ -409,20 +409,31 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   getInitialState() {
     <span class="hljs-keyword">return</span> {
       visible: <span class="hljs-literal">false</span>,
+      inputValue: <span class="hljs-string">''</span>,
       sel: <span class="hljs-string">''</span>,
     };
+  },
+  onChange(event) {
+    <span class="hljs-keyword">this</span>.setState({
+      inputValue: event.target.value,
+    });
   },
   onVisibleChange(visible) {
     <span class="hljs-keyword">this</span>.setState({
       visible: visible,
     });
   },
-  handleSelect(info) {
+  onSelect(info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected: '</span>, info);
     <span class="hljs-keyword">this</span>.setState({
       visible: <span class="hljs-literal">false</span>,
       sel: info.node.props.title,
     });
+  },
+  filterTreeNode(treeNode) {
+    <span class="hljs-built_in">console</span>.log(treeNode);
+    <span class="hljs-comment">// 根据 key 进行搜索，可以根据其他数据，如 value</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.state.inputValue &amp;&amp; treeNode.props.eventKey.indexOf(<span class="hljs-keyword">this</span>.state.inputValue) &gt; -<span class="hljs-number">1</span>;
   },
   render() {
     <span class="hljs-keyword">const</span> loop = data =&gt; {
@@ -433,9 +444,12 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span> /&gt;</span>;</span>
       });
     };
-    <span class="hljs-keyword">const</span> overlay = (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandAll</span>=<span class="hljs-value">{false}</span> <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.handleSelect}</span>&gt;</span>
-      {loop(gData)}
-    <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>)</span>;
+    <span class="hljs-keyword">const</span> overlay = (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"请筛选"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.state.inputValue}</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onChange}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandAll</span>=<span class="hljs-value">{false}</span> <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">filterTreeNode</span>=<span class="hljs-value">{this.filterTreeNode}</span>&gt;</span>
+        {loop(gData)}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
 
     <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{padding:</span> '<span class="hljs-attribute">10px</span> <span class="hljs-attribute">30px</span>'}}&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>tree in dropdown<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
@@ -444,7 +458,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
          <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>
          <span class="hljs-attribute">closeOnSelect</span>=<span class="hljs-value">{false}</span>
          <span class="hljs-attribute">overlay</span>=<span class="hljs-value">{overlay}</span> <span class="hljs-attribute">animation</span>=<span class="hljs-value">"slide-up"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{Date.now()}</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"选择岗位节点"</span> <span class="hljs-attribute">defaultValue</span>=<span class="hljs-value">{this.state.sel}</span> <span class="hljs-attribute">readOnly</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"demo-dropdown-trigger"</span>&gt;</span>{this.state.sel}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">DropdownTree</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
   },

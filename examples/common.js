@@ -19710,7 +19710,7 @@
 	
 	var _Tree2 = _interopRequireDefault(_Tree);
 	
-	var _TreeNode = __webpack_require__(166);
+	var _TreeNode = __webpack_require__(165);
 	
 	var _TreeNode2 = _interopRequireDefault(_TreeNode);
 	
@@ -19753,7 +19753,11 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _util = __webpack_require__(165);
+	var _TreeNode = __webpack_require__(165);
+	
+	var _TreeNode2 = _interopRequireDefault(_TreeNode);
+	
+	var _util = __webpack_require__(175);
 	
 	var splitPos = function splitPos(pos) {
 	  return pos.split('-');
@@ -19786,11 +19790,10 @@
 	    ['onKeyDown', 'onCheck'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
-	    this.defaultExpandAll = props.defaultExpandAll;
 	    this.contextmenuKeys = [];
 	
 	    this.state = {
-	      expandedKeys: props.defaultExpandedKeys,
+	      expandedKeys: this.getDefaultExpandedKeys(props),
 	      checkedKeys: this.getDefaultCheckedKeys(props),
 	      selectedKeys: this.getDefaultSelectedKeys(props),
 	      dragNodesKeys: '',
@@ -19804,9 +19807,10 @@
 	    value: function componentWillReceiveProps(nextProps) {
 	      var _setState;
 	
+	      var expandedKeys = this.getDefaultExpandedKeys(nextProps, true);
 	      var checkedKeys = this.getDefaultCheckedKeys(nextProps, true);
 	      var selectedKeys = this.getDefaultSelectedKeys(nextProps, true);
-	      this.setState((_setState = {}, _defineProperty(_setState, checkedKeys && 'checkedKeys', checkedKeys), _defineProperty(_setState, selectedKeys && 'selectedKeys', selectedKeys), _setState));
+	      this.setState((_setState = {}, _defineProperty(_setState, expandedKeys && 'expandedKeys', expandedKeys), _defineProperty(_setState, checkedKeys && 'checkedKeys', checkedKeys), _defineProperty(_setState, selectedKeys && 'selectedKeys', selectedKeys), _setState));
 	    }
 	
 	    /*
@@ -19846,6 +19850,11 @@
 	      };
 	      var expandedKeys = this.getExpandedKeys(treeNode, false);
 	      if (expandedKeys) {
+	        // Controlled expand, save and then reset
+	        this.getOriginExpandedKeys();
+	        // if ('expandedKeys' in this.props) {
+	        //   this._originExpandedKeys = [...this.state.expandedKeys];
+	        // }
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
@@ -19892,6 +19901,7 @@
 	      };
 	      var expandedKeys = this.getExpandedKeys(treeNode, true);
 	      if (expandedKeys) {
+	        this.getOriginExpandedKeys();
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
@@ -19918,10 +19928,11 @@
 	      if (this.dragNode.props.eventKey === key) {
 	        return;
 	      }
-	      this.setState({
+	      var st = {
 	        dragOverNodeKey: '',
 	        dropNodeKey: key
-	      });
+	      };
+	      this.setState(st);
 	
 	      var posArr = treeNode.props.pos.split('-');
 	      var res = {
@@ -19934,6 +19945,9 @@
 	      if (this.dropPos !== 0) {
 	        res.dropToGap = true;
 	      }
+	      if ('expandedKeys' in this.props) {
+	        res.originExpandedKeys = this._originExpandedKeys || [].concat(_toConsumableArray(this.state.expandedKeys));
+	      }
 	      this.props.onTreeDrop(res);
 	    }
 	  }, {
@@ -19943,17 +19957,8 @@
 	
 	      var thisProps = this.props;
 	      var tnProps = treeNode.props;
-	      var expandedKeys = this.state.expandedKeys.concat([]);
+	      var expandedKeys = [].concat(_toConsumableArray(this.state.expandedKeys));
 	      var expanded = !tnProps.expanded;
-	      if (this.defaultExpandAll) {
-	        this.loopAllChildren(thisProps.children, function (item, index, pos) {
-	          var key = item.key || pos;
-	          if (expandedKeys.indexOf(key) === -1) {
-	            expandedKeys.push(key);
-	          }
-	        });
-	        this.defaultExpandAll = false;
-	      }
 	      var index = expandedKeys.indexOf(tnProps.eventKey);
 	      if (expanded) {
 	        if (index === -1) {
@@ -19971,9 +19976,9 @@
 	      } else {
 	          expandedKeys.splice(index, 1);
 	        }
-	      this.setState({
-	        expandedKeys: expandedKeys
-	      });
+	      if (!('expandedKeys' in this.props)) {
+	        this.setState({ expandedKeys: expandedKeys });
+	      }
 	    }
 	  }, {
 	    key: 'onCheck',
@@ -20093,6 +20098,23 @@
 	      e.preventDefault();
 	    }
 	  }, {
+	    key: 'getDefaultExpandedKeys',
+	    value: function getDefaultExpandedKeys(props, willReceiveProps) {
+	      var defaultExpandedKeys = props.defaultExpandedKeys;
+	      if (props.defaultExpandAll) {
+	        defaultExpandedKeys = [];
+	        this.loopAllChildren(props.children, function (item, index, pos) {
+	          var key = item.key || pos;
+	          defaultExpandedKeys.push(key);
+	        });
+	      }
+	      var expandedKeys = willReceiveProps ? undefined : defaultExpandedKeys;
+	      if ('expandedKeys' in props) {
+	        expandedKeys = props.expandedKeys || [];
+	      }
+	      return expandedKeys;
+	    }
+	  }, {
 	    key: 'getDefaultCheckedKeys',
 	    value: function getDefaultCheckedKeys(props, willReceiveProps) {
 	      var checkedKeys = willReceiveProps ? undefined : props.defaultCheckedKeys;
@@ -20133,6 +20155,13 @@
 	      };
 	    }
 	  }, {
+	    key: 'getOriginExpandedKeys',
+	    value: function getOriginExpandedKeys() {
+	      if (!this._originExpandedKeys && 'expandedKeys' in this.props) {
+	        this._originExpandedKeys = [].concat(_toConsumableArray(this.state.expandedKeys));
+	      }
+	    }
+	  }, {
 	    key: 'getOpenTransitionName',
 	    value: function getOpenTransitionName() {
 	      var props = this.props;
@@ -20171,6 +20200,15 @@
 	      if (expand && expandedKeys.indexOf(key) === -1) {
 	        return expandedKeys.concat([key]);
 	      }
+	    }
+	  }, {
+	    key: 'filterTreeNode',
+	    value: function filterTreeNode(treeNode) {
+	      var filterTreeNode = this.props.filterTreeNode;
+	      if (typeof filterTreeNode !== 'function' || treeNode.props.disabled) {
+	        return false;
+	      }
+	      return filterTreeNode.call(this, treeNode);
 	    }
 	  }, {
 	    key: 'handleCheckState',
@@ -20245,12 +20283,8 @@
 	      var loop = function loop(children, level) {
 	        _react2['default'].Children.forEach(children, function (item, index) {
 	          var pos = level + '-' + index;
-	          var newChildren = item.props.children;
-	          if (newChildren) {
-	            if (!Array.isArray(newChildren)) {
-	              newChildren = [newChildren];
-	            }
-	            loop(newChildren, pos);
+	          if (item.props.children && item.type === _TreeNode2['default']) {
+	            loop(item.props.children, pos);
 	          }
 	          callback(item, index, pos);
 	        });
@@ -20262,14 +20296,15 @@
 	    value: function renderTreeNode(child, index) {
 	      var level = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
 	
-	      var key = child.key || level + '-' + index;
+	      var pos = level + '-' + index;
+	      var key = child.key || pos;
 	      var state = this.state;
 	      var props = this.props;
 	      var cloneProps = {
 	        ref: 'treeNode-' + key,
 	        root: this,
 	        eventKey: key,
-	        pos: level + '-' + index,
+	        pos: pos,
 	        onDataLoaded: props.onDataLoaded,
 	        onMouseEnter: props.onMouseEnter,
 	        onMouseLeave: props.onMouseLeave,
@@ -20282,12 +20317,13 @@
 	        dragOver: state.dragOverNodeKey === key && this.dropPos === 0,
 	        dragOverGapTop: state.dragOverNodeKey === key && this.dropPos === -1,
 	        dragOverGapBottom: state.dragOverNodeKey === key && this.dropPos === 1,
-	        expanded: this.defaultExpandAll || state.expandedKeys.indexOf(key) !== -1,
+	        expanded: state.expandedKeys.indexOf(key) !== -1,
 	        selected: state.selectedKeys.indexOf(key) !== -1,
 	        checked: this.checkedKeys.indexOf(key) !== -1,
 	        checkPart: this.checkPartKeys.indexOf(key) !== -1,
 	        openTransitionName: this.getOpenTransitionName(),
-	        openAnimation: props.openAnimation
+	        openAnimation: props.openAnimation,
+	        filterTreeNode: this.filterTreeNode.bind(this)
 	      };
 	      return _react2['default'].cloneElement(child, cloneProps);
 	    }
@@ -20305,6 +20341,7 @@
 	        domProps.tabIndex = '0';
 	        domProps.onKeyDown = this.onKeyDown;
 	      }
+	      // console.log(this.state.expandedKeys, this._originExpandedKeys, props.children);
 	      var checkedKeys = this.state.checkedKeys;
 	      var checkedPos = [];
 	      this.treeNodesStates = {};
@@ -20326,11 +20363,11 @@
 	      var checkKeys = this.getCheckKeys();
 	      this.checkPartKeys = checkKeys.checkPartKeys;
 	      this.checkedKeys = checkKeys.checkedKeys;
-	      this.newChildren = _react2['default'].Children.map(props.children, this.renderTreeNode, this);
+	
 	      return _react2['default'].createElement(
 	        'ul',
 	        _extends({}, domProps, { unselectable: true, ref: 'tree' }),
-	        this.newChildren
+	        _react2['default'].Children.map(props.children, this.renderTreeNode, this)
 	      );
 	    }
 	  }]);
@@ -20361,6 +20398,7 @@
 	  onTreeDragOver: _react.PropTypes.func,
 	  onTreeDragLeave: _react.PropTypes.func,
 	  onTreeDrop: _react.PropTypes.func,
+	  filterTreeNode: _react.PropTypes.func,
 	  openTransitionName: _react.PropTypes.string,
 	  openAnimation: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object])
 	};
@@ -20444,77 +20482,6 @@
 
 /***/ },
 /* 165 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports.browser = browser;
-	exports.getOffset = getOffset;
-	
-	function browser(ua) {
-	  var tem = undefined;
-	  var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-	  if (/trident/i.test(M[1])) {
-	    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-	    return 'IE ' + (tem[1] || '');
-	  }
-	  if (M[1] === 'Chrome') {
-	    tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
-	    if (tem) return tem.slice(1).join(' ').replace('OPR', 'Opera');
-	  }
-	  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-	  tem = ua.match(/version\/(\d+)/i);
-	  if (tem) {
-	    M.splice(1, 1, tem[1]);
-	  }
-	  return M.join(' ');
-	}
-	
-	// export function getOffset(el) {
-	//   const obj = el.getBoundingClientRect();
-	//   return {
-	//     left: obj.left + document.body.scrollLeft,
-	//     top: obj.top + document.body.scrollTop,
-	//     width: obj.width,
-	//     height: obj.height
-	//   };
-	// }
-	
-	// // iscroll offset
-	// offset = function (el) {
-	//   var left = -el.offsetLeft,
-	//     top = -el.offsetTop;
-	
-	//   // jshint -W084
-	//   while (el = el.offsetParent) {
-	//     left -= el.offsetLeft;
-	//     top -= el.offsetTop;
-	//   }
-	//   // jshint +W084
-	
-	//   return {
-	//     left: left,
-	//     top: top
-	//   };
-	// }
-	
-	function getOffset(ele) {
-	  var el = ele;
-	  var _x = 0;
-	  var _y = 0;
-	  while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-	    _x += el.offsetLeft - el.scrollLeft;
-	    _y += el.offsetTop - el.scrollTop;
-	    el = el.offsetParent;
-	  }
-	  return { top: _y, left: _x };
-	}
-
-/***/ },
-/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20541,7 +20508,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _objectAssign = __webpack_require__(167);
+	var _objectAssign = __webpack_require__(166);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -20549,11 +20516,11 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _rcAnimate = __webpack_require__(168);
+	var _rcAnimate = __webpack_require__(167);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _util = __webpack_require__(165);
+	var _util = __webpack_require__(175);
 	
 	var browserUa = (0, _util.browser)(window.navigator.userAgent || '');
 	var ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
@@ -20784,7 +20751,7 @@
 	            delete animProps.animation.appear;
 	          }
 	        }
-	        newChildren = this.newChildren = _react2['default'].createElement(
+	        newChildren = _react2['default'].createElement(
 	          _rcAnimate2['default'],
 	          _extends({}, animProps, {
 	            showProp: 'expanded',
@@ -20890,9 +20857,11 @@
 	        dragOverCls = 'drag-over-gap-bottom';
 	      }
 	
+	      var filterCls = props.filterTreeNode(this) ? 'filter-node' : '';
+	
 	      return _react2['default'].createElement(
 	        'li',
-	        _extends({}, liProps, { ref: 'li', className: (0, _classnames2['default'])(props.className, disabledCls, dragOverCls) }),
+	        _extends({}, liProps, { ref: 'li', className: (0, _classnames2['default'])(props.className, disabledCls, dragOverCls, filterCls) }),
 	        canRenderSwitcher ? this.renderSwitcher(props, expandedState) : _react2['default'].createElement('span', { className: prefixCls + '-switcher-noop' }),
 	        props.checkable ? this.renderCheckbox(props) : null,
 	        selectHandle(),
@@ -20919,7 +20888,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 167 */
+/* 166 */
 /***/ function(module, exports) {
 
 	/* eslint-disable no-unused-vars */
@@ -20964,16 +20933,16 @@
 
 
 /***/ },
-/* 168 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
 	'use strict';
 	
-	module.exports = __webpack_require__(169);
+	module.exports = __webpack_require__(168);
 
 /***/ },
-/* 169 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20990,13 +20959,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ChildrenUtils = __webpack_require__(170);
+	var _ChildrenUtils = __webpack_require__(169);
 	
-	var _AnimateChild = __webpack_require__(171);
+	var _AnimateChild = __webpack_require__(170);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _util = __webpack_require__(175);
+	var _util = __webpack_require__(174);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -21293,7 +21262,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 170 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21411,7 +21380,7 @@
 	}
 
 /***/ },
-/* 171 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21430,11 +21399,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _cssAnimation = __webpack_require__(172);
+	var _cssAnimation = __webpack_require__(171);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _util = __webpack_require__(175);
+	var _util = __webpack_require__(174);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -21514,13 +21483,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 172 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Event = __webpack_require__(173);
-	var Css = __webpack_require__(174);
+	var Event = __webpack_require__(172);
+	var Css = __webpack_require__(173);
 	var isCssAnimationSupported = Event.endEvents.length !== 0;
 	
 	function getDuration(node, name) {
@@ -21672,7 +21641,7 @@
 	module.exports = cssAnimation;
 
 /***/ },
-/* 173 */
+/* 172 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21760,7 +21729,7 @@
 	module.exports = TransitionEvents;
 
 /***/ },
-/* 174 */
+/* 173 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21791,7 +21760,7 @@
 	};
 
 /***/ },
-/* 175 */
+/* 174 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21822,6 +21791,77 @@
 	};
 	exports["default"] = util;
 	module.exports = exports["default"];
+
+/***/ },
+/* 175 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.browser = browser;
+	exports.getOffset = getOffset;
+	
+	function browser(ua) {
+	  var tem = undefined;
+	  var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+	  if (/trident/i.test(M[1])) {
+	    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+	    return 'IE ' + (tem[1] || '');
+	  }
+	  if (M[1] === 'Chrome') {
+	    tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+	    if (tem) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+	  }
+	  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+	  tem = ua.match(/version\/(\d+)/i);
+	  if (tem) {
+	    M.splice(1, 1, tem[1]);
+	  }
+	  return M.join(' ');
+	}
+	
+	// export function getOffset(el) {
+	//   const obj = el.getBoundingClientRect();
+	//   return {
+	//     left: obj.left + document.body.scrollLeft,
+	//     top: obj.top + document.body.scrollTop,
+	//     width: obj.width,
+	//     height: obj.height
+	//   };
+	// }
+	
+	// // iscroll offset
+	// offset = function (el) {
+	//   var left = -el.offsetLeft,
+	//     top = -el.offsetTop;
+	
+	//   // jshint -W084
+	//   while (el = el.offsetParent) {
+	//     left -= el.offsetLeft;
+	//     top -= el.offsetTop;
+	//   }
+	//   // jshint +W084
+	
+	//   return {
+	//     left: left,
+	//     top: top
+	//   };
+	// }
+	
+	function getOffset(ele) {
+	  var el = ele;
+	  var _x = 0;
+	  var _y = 0;
+	  while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+	    _x += el.offsetLeft - el.scrollLeft;
+	    _y += el.offsetTop - el.scrollTop;
+	    el = el.offsetParent;
+	  }
+	  return { top: _y, left: _x };
+	}
 
 /***/ }
 /******/ ]);

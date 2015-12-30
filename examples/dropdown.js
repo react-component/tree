@@ -1642,7 +1642,7 @@ webpackJsonp([3],{
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
-	var _objectAssign = __webpack_require__(167);
+	var _objectAssign = __webpack_require__(166);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -2097,7 +2097,7 @@ webpackJsonp([3],{
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      minOverlayWidthMatchTrigger: true,
-	      prefixCls: 'dropdown-tree',
+	      prefixCls: 'demo-dropdown-tree',
 	      trigger: ['hover'],
 	      overlayClassName: '',
 	      overlayStyle: {},
@@ -2207,20 +2207,31 @@ webpackJsonp([3],{
 	  getInitialState: function getInitialState() {
 	    return {
 	      visible: false,
+	      inputValue: '',
 	      sel: ''
 	    };
+	  },
+	  onChange: function onChange(event) {
+	    this.setState({
+	      inputValue: event.target.value
+	    });
 	  },
 	  onVisibleChange: function onVisibleChange(visible) {
 	    this.setState({
 	      visible: visible
 	    });
 	  },
-	  handleSelect: function handleSelect(info) {
+	  onSelect: function onSelect(info) {
 	    console.log('selected: ', info);
 	    this.setState({
 	      visible: false,
 	      sel: info.node.props.title
 	    });
+	  },
+	  filterTreeNode: function filterTreeNode(treeNode) {
+	    console.log(treeNode);
+	    // 根据 key 进行搜索，可以根据其他数据，如 value
+	    return this.state.inputValue && treeNode.props.eventKey.indexOf(this.state.inputValue) > -1;
 	  },
 	  render: function render() {
 	    var loop = function loop(data) {
@@ -2236,9 +2247,14 @@ webpackJsonp([3],{
 	      });
 	    };
 	    var overlay = _react2['default'].createElement(
-	      _rcTree2['default'],
-	      { defaultExpandAll: false, onSelect: this.handleSelect },
-	      loop(_util.gData)
+	      'div',
+	      null,
+	      _react2['default'].createElement('input', { placeholder: '请筛选', value: this.state.inputValue, onChange: this.onChange }),
+	      _react2['default'].createElement(
+	        _rcTree2['default'],
+	        { defaultExpandAll: false, onSelect: this.onSelect, filterTreeNode: this.filterTreeNode },
+	        loop(_util.gData)
+	      )
 	    );
 	
 	    return _react2['default'].createElement(
@@ -2256,7 +2272,11 @@ webpackJsonp([3],{
 	          visible: this.state.visible,
 	          closeOnSelect: false,
 	          overlay: overlay, animation: 'slide-up' },
-	        _react2['default'].createElement('input', { key: Date.now(), placeholder: '选择岗位节点', defaultValue: this.state.sel, readOnly: true })
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'demo-dropdown-trigger' },
+	          this.state.sel
+	        )
 	      )
 	    );
 	  }
@@ -2282,9 +2302,9 @@ webpackJsonp([3],{
 	  value: true
 	});
 	
-	var x = 5;
-	var y = 3;
-	var z = 2;
+	var x = 3;
+	var y = 2;
+	var z = 1;
 	var gData = [];
 	
 	var generateData = function generateData(_level, _preKey, _tns) {
@@ -2699,7 +2719,7 @@ webpackJsonp([3],{
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcAnimate = __webpack_require__(168);
+	var _rcAnimate = __webpack_require__(167);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -4131,7 +4151,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _objectAssign = __webpack_require__(167);
+	var _objectAssign = __webpack_require__(166);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	

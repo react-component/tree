@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>draggable.js - example - rc-tree@0.21.3</title>
+  <title>draggable.js - example - rc-tree@0.22.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.21.3</h1>
+    <h1>rc-tree@0.22.0</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -265,7 +265,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <script src="common.js?nowrap"></script>
   <script src="draggable.js?nowrap"></script>
   <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/draggable-demo.css'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/demo-draggable.css'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
@@ -357,6 +357,7 @@ generateData(z);
     }
     <span class="hljs-keyword">this</span>.setState({
       gData: data,
+      expandedKeys: info.originExpandedKeys,
     });
   }
   handleCheck(info) {

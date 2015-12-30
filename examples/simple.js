@@ -33,17 +33,19 @@ webpackJsonp([6],{
 	  displayName: 'Demo',
 	
 	  propTypes: {
-	    defaultSelectedKeys: _react.PropTypes.array
+	    keys: _react.PropTypes.array
 	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      defaultSelectedKeys: ['0-1', 'random']
+	      keys: ['0-1-1', 'random2']
 	    };
 	  },
 	  getInitialState: function getInitialState() {
+	    var keys = this.props.keys;
 	    return {
-	      defaultSelectedKeys: this.props.defaultSelectedKeys,
-	      defaultCheckedKeys: this.props.defaultSelectedKeys,
+	      defaultExpandedKeys: keys,
+	      defaultSelectedKeys: keys,
+	      defaultCheckedKeys: keys,
 	      switchIt: true
 	    };
 	  },
@@ -54,24 +56,34 @@ webpackJsonp([6],{
 	    console.log('onCheck', info);
 	  },
 	  change: function change() {
+	    var keys = this.props.keys;
 	    this.setState({
-	      defaultSelectedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 0 : 1]],
-	      defaultCheckedKeys: [this.props.defaultSelectedKeys[this.state.switchIt ? 1 : 0]],
+	      defaultExpandedKeys: ['0-1', keys[this.state.switchIt ? 0 : 1]],
+	      defaultSelectedKeys: [keys[this.state.switchIt ? 0 : 1]],
+	      defaultCheckedKeys: [keys[this.state.switchIt ? 1 : 0]],
 	      switchIt: !this.state.switchIt
 	    });
 	  },
 	  render: function render() {
 	    return _react2['default'].createElement(
 	      'div',
-	      null,
+	      { style: { margin: '0 20px;' } },
 	      _react2['default'].createElement(
 	        'h2',
 	        null,
 	        'simple'
 	      ),
 	      _react2['default'].createElement(
+	        'p',
+	        { style: { color: 'red' } },
+	        'tips: 把 defaultXX 前的 default 去掉，可变为受控组件 ',
+	        _react2['default'].createElement('br', null),
+	        '(defaultExpandAll 除外)'
+	      ),
+	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true, showLine: true,
+	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true,
+	          defaultExpandedKeys: this.state.defaultExpandedKeys,
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,
 	          defaultCheckedKeys: this.state.defaultCheckedKeys,
 	          onSelect: this.onSelect, onCheck: this.onCheck },
@@ -86,7 +98,7 @@ webpackJsonp([6],{
 	          ),
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { title: 'parent 1-1' },
+	            { title: 'parent 1-1', key: 'random2' },
 	            _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
 	                'span',
 	                { style: { color: 'red' } },
@@ -95,6 +107,7 @@ webpackJsonp([6],{
 	          )
 	        )
 	      ),
+	      _react2['default'].createElement('br', null),
 	      _react2['default'].createElement(
 	        'div',
 	        null,
@@ -104,11 +117,13 @@ webpackJsonp([6],{
 	          'change state'
 	        )
 	      ),
+	      _react2['default'].createElement('br', null),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true, key: Date.now(),
+	        { className: 'myCls', multiple: true, checkable: true, key: 1,
+	          expandedKeys: this.state.defaultExpandedKeys,
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,
-	          defaultCheckedKeys: this.state.defaultCheckedKeys,
+	          checkedKeys: this.state.defaultCheckedKeys,
 	          onSelect: this.onSelect, onCheck: this.onCheck },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
@@ -121,7 +136,7 @@ webpackJsonp([6],{
 	          ),
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { title: 'parent 1-1' },
+	            { title: 'parent 1-1', key: 'random2' },
 	            _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
 	                'span',
 	                { style: { color: 'red' } },

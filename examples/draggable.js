@@ -139,7 +139,8 @@ webpackJsonp([2],{
 	        });
 	      }
 	      this.setState({
-	        gData: data
+	        gData: data,
+	        expandedKeys: info.originExpandedKeys
 	      });
 	    }
 	  }, {
