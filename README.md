@@ -70,6 +70,7 @@ see examples
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
 |selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
+|onExpand | fire on treeNode expand or not | function(treeNode, expanded, expandedKeys) | - |
 |onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event,allCheckedNodes}) | - |
 |onSelect | click the treeNode to fire | function(e:{selected:bool,node,selectedKeys,event}) | - |
 |filterTreeNode | filter some treeNodes as you need. it should return true | function(treeNode) | - |

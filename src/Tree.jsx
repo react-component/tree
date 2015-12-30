@@ -203,6 +203,7 @@ class Tree extends React.Component {
     if (!('expandedKeys' in this.props)) {
       this.setState({ expandedKeys });
     }
+    thisProps.onExpand(treeNode, expanded, expandedKeys);
   }
   onCheck(treeNode) {
     const tnProps = treeNode.props;
@@ -562,6 +563,7 @@ Tree.propTypes = {
   defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
   selectedKeys: PropTypes.arrayOf(PropTypes.string),
   defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
+  onExpand: PropTypes.func,
   onCheck: PropTypes.func,
   onSelect: PropTypes.func,
   onDataLoaded: PropTypes.func,
@@ -589,6 +591,7 @@ Tree.defaultProps = {
   defaultExpandedKeys: [],
   defaultCheckedKeys: [],
   defaultSelectedKeys: [],
+  onExpand: noop,
   onCheck: noop,
   onSelect: noop,
   onTreeDragStart: noop,

@@ -21,6 +21,14 @@ const Demo = React.createClass({
       switchIt: true,
     };
   },
+  onExpand(treeNode, expanded, expandedKeys) {
+    console.log(treeNode, expanded, expandedKeys);
+    const keys = this.props.keys;
+    this.setState({
+      defaultExpandedKeys: ['0-1', keys[this.state.switchIt ? 0 : 1]],
+      switchIt: !this.state.switchIt,
+    });
+  },
   onSelect(info) {
     console.log('selected', info);
   },
@@ -37,7 +45,7 @@ const Demo = React.createClass({
     });
   },
   render() {
-    return (<div style={{margin: '0 20px;'}}>
+    return (<div style={{margin: '0 20px'}}>
       <h2>simple</h2>
       <p style={{color: 'red'}}>
         tips: 把 defaultXX 前的 default 去掉，可变为受控组件 <br />
@@ -65,6 +73,7 @@ const Demo = React.createClass({
 
       <Tree className="myCls" multiple checkable key={1}
           expandedKeys={this.state.defaultExpandedKeys}
+          onExpand={this.onExpand}
           defaultSelectedKeys={this.state.defaultSelectedKeys}
           checkedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect} onCheck={this.onCheck}>
