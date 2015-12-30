@@ -19979,6 +19979,7 @@
 	      if (!('expandedKeys' in this.props)) {
 	        this.setState({ expandedKeys: expandedKeys });
 	      }
+	      thisProps.onExpand(treeNode, expanded, expandedKeys);
 	    }
 	  }, {
 	    key: 'onCheck',
@@ -20387,6 +20388,7 @@
 	  defaultCheckedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  selectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  defaultSelectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  onExpand: _react.PropTypes.func,
 	  onCheck: _react.PropTypes.func,
 	  onSelect: _react.PropTypes.func,
 	  onDataLoaded: _react.PropTypes.func,
@@ -20414,6 +20416,7 @@
 	  defaultExpandedKeys: [],
 	  defaultCheckedKeys: [],
 	  defaultSelectedKeys: [],
+	  onExpand: noop,
 	  onCheck: noop,
 	  onSelect: noop,
 	  onTreeDragStart: noop,

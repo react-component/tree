@@ -49,6 +49,14 @@ webpackJsonp([6],{
 	      switchIt: true
 	    };
 	  },
+	  onExpand: function onExpand(treeNode, expanded, expandedKeys) {
+	    console.log(treeNode, expanded, expandedKeys);
+	    var keys = this.props.keys;
+	    this.setState({
+	      defaultExpandedKeys: ['0-1', keys[this.state.switchIt ? 0 : 1]],
+	      switchIt: !this.state.switchIt
+	    });
+	  },
 	  onSelect: function onSelect(info) {
 	    console.log('selected', info);
 	  },
@@ -67,7 +75,7 @@ webpackJsonp([6],{
 	  render: function render() {
 	    return _react2['default'].createElement(
 	      'div',
-	      { style: { margin: '0 20px;' } },
+	      { style: { margin: '0 20px' } },
 	      _react2['default'].createElement(
 	        'h2',
 	        null,
@@ -122,6 +130,7 @@ webpackJsonp([6],{
 	        _rcTree2['default'],
 	        { className: 'myCls', multiple: true, checkable: true, key: 1,
 	          expandedKeys: this.state.defaultExpandedKeys,
+	          onExpand: this.onExpand,
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,
 	          checkedKeys: this.state.defaultCheckedKeys,
 	          onSelect: this.onSelect, onCheck: this.onCheck },
