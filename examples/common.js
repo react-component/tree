@@ -20810,9 +20810,10 @@
 	          domProps.onClick = function (e) {
 	            e.preventDefault();
 	            _this3.onSelect();
-	            if (props.checkable) {
-	              _this3.onCheck();
-	            }
+	            // not fire check event
+	            // if (props.checkable) {
+	            //   this.onCheck();
+	            // }
 	          };
 	          if (props.onRightClick) {
 	            domProps.onContextMenu = _this3.onContextMenu;
