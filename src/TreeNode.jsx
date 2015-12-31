@@ -230,13 +230,13 @@ class TreeNode extends React.Component {
     if (!newChildren || newChildren === props.children) {
       // content = newChildren;
       newChildren = null;
-      if (!props.onDataLoaded || props.isLeaf) {
+      if (!props.loadData || props.isLeaf) {
         canRenderSwitcher = false;
       }
     }
 
     const selectHandle = () => {
-      const icon = (props.showIcon || props.onDataLoaded && this.state.dataLoading) ? <span className={classNames(iconEleCls)}></span> : null;
+      const icon = (props.showIcon || props.loadData && this.state.dataLoading) ? <span className={classNames(iconEleCls)}></span> : null;
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
       const domProps = {};
       if (!props.disabled) {

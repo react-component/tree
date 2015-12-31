@@ -187,8 +187,8 @@ class Tree extends React.Component {
     if (expanded) {
       if (index === -1) {
         expandedKeys.push(tnProps.eventKey);
-        if (thisProps.onDataLoaded) {
-          return thisProps.onDataLoaded(treeNode).then(() => {
+        if (thisProps.loadData) {
+          return thisProps.loadData(treeNode).then(() => {
             this.setState({
               expandedKeys: expandedKeys,
             });
@@ -485,7 +485,7 @@ class Tree extends React.Component {
       root: this,
       eventKey: key,
       pos,
-      onDataLoaded: props.onDataLoaded,
+      loadData: props.loadData,
       onMouseEnter: props.onMouseEnter,
       onMouseLeave: props.onMouseLeave,
       onRightClick: props.onRightClick,
@@ -566,7 +566,7 @@ Tree.propTypes = {
   onExpand: PropTypes.func,
   onCheck: PropTypes.func,
   onSelect: PropTypes.func,
-  onDataLoaded: PropTypes.func,
+  loadData: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onRightClick: PropTypes.func,

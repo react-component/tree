@@ -92,7 +92,7 @@ const TreeDemo = React.createClass({
     return (
       <div>
         <h2>dynamic render</h2>
-        <Tree onSelect={this.handleSelect} onDataLoaded={this.handleDataLoaded} showIcon={false} showLine={false}>
+        <Tree onSelect={this.handleSelect} loadData={this.handleDataLoaded} showIcon={false} showLine={false}>
           {treeNodes}
         </Tree>
       </div>

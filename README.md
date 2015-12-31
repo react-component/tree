@@ -74,7 +74,7 @@ see examples
 |onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event,allCheckedNodes}) | - |
 |onSelect | click the treeNode to fire | function(e:{selected:bool,node,selectedKeys,event}) | - |
 |filterTreeNode | filter some treeNodes as you need. it should return true | function(treeNode) | - |
-|onDataLoaded | load data asynchronously and the return value should be a promise | function(node) | - |
+|loadData | load data asynchronously and the return value should be a promise | function(node) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 |onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
 |onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |
