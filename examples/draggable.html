@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>draggable.js - example - rc-tree@0.23.2</title>
+  <title>draggable.js - example - rc-tree@0.23.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.23.2</h1>
+    <h1>rc-tree@0.23.3</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -269,34 +269,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
-
-<span class="hljs-keyword">const</span> x = <span class="hljs-number">4</span>;
-<span class="hljs-keyword">const</span> y = <span class="hljs-number">3</span>;
-<span class="hljs-keyword">const</span> z = <span class="hljs-number">2</span>;
-<span class="hljs-keyword">const</span> gData = [];
-
-<span class="hljs-keyword">const</span> generateData = (_level, _preKey, _tns) =&gt; {
-  <span class="hljs-keyword">const</span> preKey = _preKey || <span class="hljs-string">'0'</span>;
-  <span class="hljs-keyword">const</span> tns = _tns || gData;
-
-  <span class="hljs-keyword">const</span> children = [];
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; x; i++) {
-    <span class="hljs-keyword">const</span> key = <span class="hljs-string">`<span class="hljs-subst">${preKey}</span>-<span class="hljs-subst">${i}</span>`</span>;
-    tns.push({title: key, key: key});
-    <span class="hljs-keyword">if</span> (i &lt; y) {
-      children.push(key);
-    }
-  }
-  <span class="hljs-keyword">if</span> (_level &lt; <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">return</span> tns;
-  }
-  <span class="hljs-keyword">const</span> __level = _level - <span class="hljs-number">1</span>;
-  children.forEach((key, index) =&gt; {
-    tns[index].children = [];
-    <span class="hljs-keyword">return</span> generateData(__level, key, tns[index].children);
-  });
-};
-generateData(z);
+<span class="hljs-keyword">import</span> { gData } <span class="hljs-keyword">from</span> <span class="hljs-string">'./util'</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TreeDemo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   constructor(props) {

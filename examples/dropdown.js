@@ -3,37 +3,78 @@ webpackJsonp([3],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(221);
+	module.exports = __webpack_require__(222);
 
 
 /***/ },
 
-/***/ 183:
+/***/ 176:
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var x = 3;
+	var y = 2;
+	var z = 1;
+	var gData = [];
+	
+	var generateData = function generateData(_level, _preKey, _tns) {
+	  var preKey = _preKey || '0';
+	  var tns = _tns || gData;
+	
+	  var children = [];
+	  for (var i = 0; i < x; i++) {
+	    var key = preKey + '-' + i;
+	    tns.push({ title: key, key: key });
+	    if (i < y) {
+	      children.push(key);
+	    }
+	  }
+	  if (_level < 0) {
+	    return tns;
+	  }
+	  var __level = _level - 1;
+	  children.forEach(function (key, index) {
+	    tns[index].children = [];
+	    return generateData(__level, key, tns[index].children);
+	  });
+	};
+	generateData(z);
+	
+	exports.gData = gData;
+
+/***/ },
+
+/***/ 184:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	module.exports = {
-	  guid: __webpack_require__(184),
-	  classSet: __webpack_require__(185),
-	  joinClasses: __webpack_require__(188),
-	  KeyCode: __webpack_require__(189),
-	  PureRenderMixin: __webpack_require__(190),
-	  shallowEqual: __webpack_require__(191),
-	  createChainedFunction: __webpack_require__(197),
+	  guid: __webpack_require__(185),
+	  classSet: __webpack_require__(186),
+	  joinClasses: __webpack_require__(189),
+	  KeyCode: __webpack_require__(190),
+	  PureRenderMixin: __webpack_require__(191),
+	  shallowEqual: __webpack_require__(192),
+	  createChainedFunction: __webpack_require__(198),
 	  Dom: {
-	    addEventListener: __webpack_require__(198),
-	    contains: __webpack_require__(202)
+	    addEventListener: __webpack_require__(199),
+	    contains: __webpack_require__(203)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(203),
-	    mapSelf: __webpack_require__(204)
+	    toArray: __webpack_require__(204),
+	    mapSelf: __webpack_require__(205)
 	  }
 	};
 
 /***/ },
 
-/***/ 184:
+/***/ 185:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45,19 +86,19 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 185:
+/***/ 186:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var deprecate = __webpack_require__(186);
-	var classNames = __webpack_require__(187);
+	var deprecate = __webpack_require__(187);
+	var classNames = __webpack_require__(188);
 	
 	module.exports = deprecate(classNames, '`rcUtil.classSet()` is deprecated, use `classNames()` by `require(\'classnames\')` instead');
 
 /***/ },
 
-/***/ 186:
+/***/ 187:
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -132,7 +173,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 187:
+/***/ 188:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -187,19 +228,19 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 188:
+/***/ 189:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var deprecate = __webpack_require__(186);
-	var classNames = __webpack_require__(187);
+	var deprecate = __webpack_require__(187);
+	var classNames = __webpack_require__(188);
 	
 	module.exports = deprecate(classNames, '`rcUtil.joinClasses()` is deprecated, use `classNames()` by `require(\'classnames\')` instead');
 
 /***/ },
 
-/***/ 189:
+/***/ 190:
 /***/ function(module, exports) {
 
 	/**
@@ -725,12 +766,12 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 190:
+/***/ 191:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var shallowEqual = __webpack_require__(191);
+	var shallowEqual = __webpack_require__(192);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -766,23 +807,23 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 191:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var shallowEqual = __webpack_require__(192);
-	
-	module.exports = shallowEqual;
-
-/***/ },
-
 /***/ 192:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var fetchKeys = __webpack_require__(193);
+	var shallowEqual = __webpack_require__(193);
+	
+	module.exports = shallowEqual;
+
+/***/ },
+
+/***/ 193:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var fetchKeys = __webpack_require__(194);
 	
 	module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 	
@@ -831,7 +872,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 193:
+/***/ 194:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -842,9 +883,9 @@ webpackJsonp([3],{
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(194),
-	    isArguments = __webpack_require__(195),
-	    isArray = __webpack_require__(196);
+	var getNative = __webpack_require__(195),
+	    isArguments = __webpack_require__(196),
+	    isArray = __webpack_require__(197);
 	
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -1074,7 +1115,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 194:
+/***/ 195:
 /***/ function(module, exports) {
 
 	/**
@@ -1218,7 +1259,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 195:
+/***/ 196:
 /***/ function(module, exports) {
 
 	/**
@@ -1331,7 +1372,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 196:
+/***/ 197:
 /***/ function(module, exports) {
 
 	/**
@@ -1518,7 +1559,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 197:
+/***/ 198:
 /***/ function(module, exports) {
 
 	/**
@@ -1546,7 +1587,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 198:
+/***/ 199:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1558,7 +1599,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _addDomEventListener = __webpack_require__(199);
+	var _addDomEventListener = __webpack_require__(200);
 	
 	var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 	
@@ -1578,7 +1619,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 199:
+/***/ 200:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1590,7 +1631,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventObject = __webpack_require__(200);
+	var _EventObject = __webpack_require__(201);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
@@ -1621,7 +1662,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 200:
+/***/ 201:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1638,7 +1679,7 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventBaseObject = __webpack_require__(201);
+	var _EventBaseObject = __webpack_require__(202);
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
@@ -1905,7 +1946,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 201:
+/***/ 202:
 /***/ function(module, exports) {
 
 	/**
@@ -1974,7 +2015,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 202:
+/***/ 203:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1993,7 +2034,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 203:
+/***/ 204:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2010,7 +2051,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 204:
+/***/ 205:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2028,7 +2069,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 221:
+/***/ 222:
 /***/ function(module, exports, __webpack_require__) {
 
 	// use jsx to render html, do not modify simple.html
@@ -2038,7 +2079,7 @@ webpackJsonp([3],{
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(222);
+	__webpack_require__(223);
 	
 	var _react = __webpack_require__(3);
 	
@@ -2052,11 +2093,11 @@ webpackJsonp([3],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _util = __webpack_require__(223);
-	
 	var _rcTrigger = __webpack_require__(224);
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
+	
+	var _util = __webpack_require__(176);
 	
 	var placements = {
 	  topLeft: {
@@ -2286,51 +2327,10 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 222:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-
 /***/ 223:
 /***/ function(module, exports) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var x = 3;
-	var y = 2;
-	var z = 1;
-	var gData = [];
-	
-	var generateData = function generateData(_level, _preKey, _tns) {
-	  var preKey = _preKey || '0';
-	  var tns = _tns || gData;
-	
-	  var children = [];
-	  for (var i = 0; i < x; i++) {
-	    var key = preKey + '-' + i;
-	    tns.push({ title: key, key: key });
-	    if (i < y) {
-	      children.push(key);
-	    }
-	  }
-	  if (_level < 0) {
-	    return tns;
-	  }
-	  var __level = _level - 1;
-	  children.forEach(function (key, index) {
-	    tns[index].children = [];
-	    return generateData(__level, key, tns[index].children);
-	  });
-	};
-	generateData(z);
-	
-	exports.gData = gData;
+	// removed by extract-text-webpack-plugin
 
 /***/ },
 
@@ -2364,7 +2364,7 @@ webpackJsonp([3],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcUtil = __webpack_require__(183);
+	var _rcUtil = __webpack_require__(184);
 	
 	var _Popup = __webpack_require__(226);
 	
@@ -2901,7 +2901,7 @@ webpackJsonp([3],{
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
-	var _rcUtil = __webpack_require__(183);
+	var _rcUtil = __webpack_require__(184);
 	
 	var _isWindow = __webpack_require__(237);
 	

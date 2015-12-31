@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>checked.js - example - rc-tree@0.23.2</title>
+  <title>checked.js - example - rc-tree@0.23.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.23.2</h1>
+    <h1>rc-tree@0.23.3</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -268,66 +268,68 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
+<span class="hljs-keyword">import</span> { gData } <span class="hljs-keyword">from</span> <span class="hljs-string">'./util'</span>;
 
-<span class="hljs-keyword">const</span> x = <span class="hljs-number">12</span>;
-<span class="hljs-keyword">const</span> y = <span class="hljs-number">3</span>;
-<span class="hljs-keyword">const</span> z = <span class="hljs-number">2</span>;
-<span class="hljs-keyword">const</span> gData = [];
-
-<span class="hljs-keyword">const</span> generateData = (_level, _preKey, _tns) =&gt; {
-  <span class="hljs-keyword">const</span> preKey = _preKey || <span class="hljs-string">'0'</span>;
-  <span class="hljs-keyword">const</span> tns = _tns || gData;
-
-  <span class="hljs-keyword">const</span> children = [];
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; x; i++) {
-    <span class="hljs-keyword">const</span> key = <span class="hljs-string">`<span class="hljs-subst">${preKey}</span>-<span class="hljs-subst">${i}</span>`</span>;
-    tns.push({title: key, key: key});
-    <span class="hljs-keyword">if</span> (i &lt; y) {
-      children.push(key);
-    }
-  }
-  <span class="hljs-keyword">if</span> (_level &lt; <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">return</span> tns;
-  }
-  <span class="hljs-keyword">const</span> __level = _level - <span class="hljs-number">1</span>;
-  children.forEach((key, index) =&gt; {
-    tns[index].children = [];
-    <span class="hljs-keyword">return</span> generateData(__level, key, tns[index].children);
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isValid</span>(<span class="hljs-params">iArray, nArray</span>) </span>{
+  <span class="hljs-keyword">return</span> iArray.every((ii, i) =&gt; {
+    <span class="hljs-keyword">return</span> ii === nArray[i];
   });
-};
-generateData(z);
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCheckedKeys</span>(<span class="hljs-params">node, checkedKeys, allCheckedNodesKeys</span>) </span>{
+  <span class="hljs-keyword">const</span> nodeKey = node.props.eventKey;
+  <span class="hljs-keyword">let</span> newCks = [...checkedKeys];
+  <span class="hljs-keyword">let</span> nodePos;
+  <span class="hljs-keyword">const</span> unCheck = allCheckedNodesKeys.some(item =&gt; {
+    <span class="hljs-keyword">if</span> (item.key === nodeKey) {
+      nodePos = item.pos;
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+  });
+  <span class="hljs-keyword">if</span> (unCheck) {
+    <span class="hljs-keyword">const</span> nArr = nodePos.split(<span class="hljs-string">'-'</span>);
+    newCks = [];
+    allCheckedNodesKeys.forEach(item =&gt; {
+      <span class="hljs-keyword">const</span> iArr = item.pos.split(<span class="hljs-string">'-'</span>);
+      <span class="hljs-keyword">if</span> (item.pos === nodePos ||
+        nArr.length &gt; iArr.length &amp;&amp; isValid(iArr, nArr) ||
+        nArr.length &lt; iArr.length &amp;&amp; isValid(nArr, iArr)) {
+        <span class="hljs-keyword">return</span>;
+      }
+      newCks.push(item.key);
+    });
+  } <span class="hljs-keyword">else</span> {
+    newCks.push(nodeKey);
+  }
+  <span class="hljs-keyword">return</span> newCks;
+}
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TreeDemo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  constructor(props) {
-    <span class="hljs-keyword">super</span>(props);
-    [<span class="hljs-string">'handleClick'</span>, <span class="hljs-string">'handleCheck'</span>, <span class="hljs-string">'handleSelect'</span>].forEach((m)=&gt; {
-      <span class="hljs-keyword">this</span>[m] = <span class="hljs-keyword">this</span>[m].bind(<span class="hljs-keyword">this</span>);
-    });
-    <span class="hljs-keyword">this</span>.state = {
-      checkedKeys: [],
-      selectedKeys: [],
+<span class="hljs-keyword">const</span> Demo = React.createClass({
+  getInitialState() {
+    <span class="hljs-keyword">return</span> {
+      checkedKeys: [<span class="hljs-string">'0-0-0'</span>],
+      selectedKeys: [<span class="hljs-string">'0-0'</span>],
     };
-  }
-  handleClick() {
-    <span class="hljs-keyword">this</span>.setState({
-      checkedKeys: [<span class="hljs-string">'0-0'</span>],
-      selectedKeys: [<span class="hljs-string">'p21'</span>, <span class="hljs-string">'p11'</span>],
-    });
-  }
-  handleCheck(info) {
+  },
+  onCheck(info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'check: '</span>, info);
     <span class="hljs-keyword">this</span>.setState({
-      checkedKeys: [<span class="hljs-string">'0-1'</span>],
+      checkedKeys: getCheckedKeys(info.node, info.checkedKeys, info.allCheckedNodesKeys),
       selectedKeys: [<span class="hljs-string">'0-3'</span>, <span class="hljs-string">'0-4'</span>],
     });
-  }
-  handleSelect(info) {
+  },
+  onSelect(info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected: '</span>, info);
+    <span class="hljs-keyword">const</span> selectedKeys = [...this.state.selectedKeys];
+    <span class="hljs-keyword">const</span> index = selectedKeys.indexOf(info.node.props.eventKey);
+    <span class="hljs-keyword">if</span> (index &gt; -<span class="hljs-number">1</span>) {
+      selectedKeys.splice(index, <span class="hljs-number">1</span>);
+    } <span class="hljs-keyword">else</span> {
+      selectedKeys.push(info.node.props.eventKey);
+    }
     <span class="hljs-keyword">this</span>.setState({
-      checkedKeys: [<span class="hljs-string">'0-2'</span>],
-      selectedKeys: [<span class="hljs-string">'0-2'</span>],
+      selectedKeys: selectedKeys,
     });
-  }
+  },
   render() {
     <span class="hljs-keyword">const</span> loop = data =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
@@ -338,20 +340,17 @@ generateData(z);
       });
     };
     <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>checked<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandAll</span>=<span class="hljs-value">{false}</span> <span class="hljs-attribute">checkable</span>
-              <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.handleCheck}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
-              <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.handleSelect}</span> <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{this.state.selectedKeys}</span> <span class="hljs-attribute">multiple</span>&gt;</span>
-          {loop(gData)}
-        <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleClick}</span>&gt;</span>check again<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>checked<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandAll</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">multiple</span>
+            <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
+            <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{this.state.selectedKeys}</span>&gt;</span>
+        {loop(gData)}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  }
-}
+  },
+});
 
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeDemo</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">

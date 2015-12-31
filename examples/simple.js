@@ -82,13 +82,6 @@ webpackJsonp([6],{
 	        'simple'
 	      ),
 	      _react2['default'].createElement(
-	        'p',
-	        { style: { color: 'red' } },
-	        'tips: 把 defaultXX 前的 default 去掉，可变为受控组件 ',
-	        _react2['default'].createElement('br', null),
-	        '(defaultExpandAll 除外)'
-	      ),
-	      _react2['default'].createElement(
 	        _rcTree2['default'],
 	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true,
 	          defaultExpandedKeys: this.state.defaultExpandedKeys,
