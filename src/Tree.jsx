@@ -236,10 +236,11 @@ class Tree extends React.Component {
       newSt.checked = checked;
     } else {
       checkedKeys = this.state.checkedKeys;
-      newSt.allCheckedNodes = Object.keys(this.treeNodesStates).filter((item) => {
+      newSt.allCheckedNodes = [];
+      Object.keys(this.treeNodesStates).forEach((item) => {
         const itemObj = this.treeNodesStates[item];
         if (this.checkedKeys.indexOf(itemObj.key) !== -1) {
-          return itemObj.node;
+          newSt.allCheckedNodes.push(itemObj.node);
         }
       });
     }

@@ -33,15 +33,10 @@ const TreeDemo = React.createClass({
       return asyncTree;
     });
   },
-  timeout(duration = 0) {
-    return new Promise((resolve) => {
-      setTimeout(resolve.bind(this), duration);
-    });
-  },
-  handleSelect(info) {
+  onSelect(info) {
     console.log('selected', info);
   },
-  handleDataLoaded(treeNode) {
+  onLoadData(treeNode) {
     return this.timeout(500).then(() => {
       const treeData = [...this.state.treeData];
       const child = generateTreeNodes(treeNode);
@@ -79,6 +74,11 @@ const TreeDemo = React.createClass({
       return child;
     });
   },
+  timeout(duration = 0) {
+    return new Promise((resolve) => {
+      setTimeout(resolve.bind(this), duration);
+    });
+  },
   render() {
     const loop = (data) => {
       return data.map((item) => {
@@ -92,7 +92,7 @@ const TreeDemo = React.createClass({
     return (
       <div>
         <h2>dynamic render</h2>
-        <Tree onSelect={this.handleSelect} loadData={this.handleDataLoaded} showIcon={false} showLine={false}>
+        <Tree onSelect={this.onSelect} loadData={this.onLoadData} showIcon={false} showLine={false}>
           {treeNodes}
         </Tree>
       </div>
