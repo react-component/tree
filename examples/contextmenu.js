@@ -8,14 +8,6 @@ import Tooltip from 'rc-tooltip';
 
 const Demo = React.createClass({
   propTypes: {},
-  getDefaultProps() {
-    return {
-    };
-  },
-  getInitialState() {
-    return {
-    };
-  },
   componentDidMount() {
     this.getTipContainer();
   },

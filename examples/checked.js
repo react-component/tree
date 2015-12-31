@@ -2,66 +2,68 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
+import { gData } from './util';
 
-const x = 12;
-const y = 3;
-const z = 2;
-const gData = [];
-
-const generateData = (_level, _preKey, _tns) => {
-  const preKey = _preKey || '0';
-  const tns = _tns || gData;
-
-  const children = [];
-  for (let i = 0; i < x; i++) {
-    const key = `${preKey}-${i}`;
-    tns.push({title: key, key: key});
-    if (i < y) {
-      children.push(key);
-    }
-  }
-  if (_level < 0) {
-    return tns;
-  }
-  const __level = _level - 1;
-  children.forEach((key, index) => {
-    tns[index].children = [];
-    return generateData(__level, key, tns[index].children);
+function isValid(iArray, nArray) {
+  return iArray.every((ii, i) => {
+    return ii === nArray[i];
   });
-};
-generateData(z);
+}
+function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
+  const nodeKey = node.props.eventKey;
+  let newCks = [...checkedKeys];
+  let nodePos;
+  const unCheck = allCheckedNodesKeys.some(item => {
+    if (item.key === nodeKey) {
+      nodePos = item.pos;
+      return true;
+    }
+  });
+  if (unCheck) {
+    const nArr = nodePos.split('-');
+    newCks = [];
+    allCheckedNodesKeys.forEach(item => {
+      const iArr = item.pos.split('-');
+      if (item.pos === nodePos ||
+        nArr.length > iArr.length && isValid(iArr, nArr) ||
+        nArr.length < iArr.length && isValid(nArr, iArr)) {
+        return;
+      }
+      newCks.push(item.key);
+    });
+  } else {
+    newCks.push(nodeKey);
+  }
+  return newCks;
+}
 
-class TreeDemo extends React.Component {
-  constructor(props) {
-    super(props);
-    ['handleClick', 'handleCheck', 'handleSelect'].forEach((m)=> {
-      this[m] = this[m].bind(this);
-    });
-    this.state = {
-      checkedKeys: [],
-      selectedKeys: [],
+const Demo = React.createClass({
+  getInitialState() {
+    return {
+      checkedKeys: ['0-0-0'],
+      selectedKeys: ['0-0'],
     };
-  }
-  handleClick() {
-    this.setState({
-      checkedKeys: ['0-0'],
-      selectedKeys: ['p21', 'p11'],
-    });
-  }
-  handleCheck(info) {
+  },
+  onCheck(info) {
     console.log('check: ', info);
     this.setState({
-      checkedKeys: ['0-1'],
+      checkedKeys: getCheckedKeys(info.node, info.checkedKeys, info.allCheckedNodesKeys),
       selectedKeys: ['0-3', '0-4'],
     });
-  }
-  handleSelect(info) {
+  },
+  onSelect(info) {
     console.log('selected: ', info);
+    const selectedKeys = [...this.state.selectedKeys];
+    const index = selectedKeys.indexOf(info.node.props.eventKey);
+    if (index > -1) {
+      selectedKeys.splice(index, 1);
+    } else {
+      selectedKeys.push(info.node.props.eventKey);
+    }
     this.setState({
-      checkedKeys: ['0-2'],
-      selectedKeys: ['0-2'],
+      selectedKeys: selectedKeys,
     });
-  }
+  },
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -72,17 +74,14 @@ class TreeDemo extends React.Component {
       });
     };
     return (<div>
-      <div>
-        <h2>checked</h2>
-        <Tree defaultExpandAll={false} checkable
-              onCheck={this.handleCheck} checkedKeys={this.state.checkedKeys}
-              onSelect={this.handleSelect} selectedKeys={this.state.selectedKeys} multiple>
-          {loop(gData)}
-        </Tree>
-      </div>
-      <button onClick={this.handleClick}>check again</button>
+      <h2>checked</h2>
+      <Tree defaultExpandAll checkable multiple
+            onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
+            onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}>
+        {loop(gData)}
+      </Tree>
     </div>);
-  }
-}
+  },
+});
 
-ReactDOM.render(<TreeDemo />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));

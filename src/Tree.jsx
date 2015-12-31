@@ -227,7 +227,7 @@ class Tree extends React.Component {
     const newSt = {
       event: 'check',
       node: treeNode,
-      allCheckedNodes: checkKeys.checkedNodes,
+      allCheckedNodesKeys: checkKeys.checkedNodesKeys,
     };
     if (!('checkedKeys' in this.props)) {
       this.setState({
@@ -235,12 +235,14 @@ class Tree extends React.Component {
       });
       newSt.checked = checked;
     } else {
-      checkedKeys = this.state.checkedKeys;
-      newSt.allCheckedNodes = [];
+      checkedKeys = [...this.state.checkedKeys];
+      newSt.allCheckedNodesKeys = [];
       Object.keys(this.treeNodesStates).forEach((item) => {
         const itemObj = this.treeNodesStates[item];
+        // 此处用 this.checkedKeys，能包含上一次所有选中的节点，
+        // 供用户判断点击节点，下次是否需要选中
         if (this.checkedKeys.indexOf(itemObj.key) !== -1) {
-          newSt.allCheckedNodes.push(itemObj.node);
+          newSt.allCheckedNodesKeys.push({key: itemObj.key, node: itemObj.node, pos: item});
         }
       });
     }
@@ -273,7 +275,7 @@ class Tree extends React.Component {
       });
       newSt.selected = selected;
     } else {
-      selectedKeys = this.state.selectedKeys;
+      selectedKeys = [...this.state.selectedKeys];
     }
     newSt.selectedKeys = selectedKeys;
     props.onSelect(newSt);
@@ -342,11 +344,13 @@ class Tree extends React.Component {
     const checkPartKeys = [];
     const checkedKeys = [];
     const checkedNodes = [];
+    const checkedNodesKeys = [];
     Object.keys(this.treeNodesStates).forEach((item) => {
       const itemObj = this.treeNodesStates[item];
       if (itemObj.checked) {
         checkedKeys.push(itemObj.key);
         checkedNodes.push(itemObj.node);
+        checkedNodesKeys.push({key: itemObj.key, node: itemObj.node, pos: item});
       } else if (itemObj.checkPart) {
         checkPartKeys.push(itemObj.key);
       }

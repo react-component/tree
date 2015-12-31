@@ -47,10 +47,6 @@ const Demo = React.createClass({
   render() {
     return (<div style={{margin: '0 20px'}}>
       <h2>simple</h2>
-      <p style={{color: 'red'}}>
-        tips: 把 defaultXX 前的 default 去掉，可变为受控组件 <br />
-        (defaultExpandAll 除外)
-      </p>
       <Tree className="myCls" multiple checkable defaultExpandAll
           defaultExpandedKeys={this.state.defaultExpandedKeys}
           defaultSelectedKeys={this.state.defaultSelectedKeys}

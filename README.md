@@ -71,7 +71,7 @@ see examples
 |selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
 |onExpand | fire on treeNode expand or not | function(treeNode, expanded, expandedKeys) | - |
-|onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event,allCheckedNodes}) | - |
+|onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool,node,checkedKeys,event,allCheckedNodesKeys}) | - |
 |onSelect | click the treeNode to fire | function(e:{selected:bool,node,selectedKeys,event}) | - |
 |filterTreeNode | filter some treeNodes as you need. it should return true | function(treeNode) | - |
 |loadData | load data asynchronously and the return value should be a promise | function(node) | - |

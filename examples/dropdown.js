@@ -4,8 +4,8 @@ import 'rc-tree/assets/demo-dropdown.less';
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
-import { gData } from './util';
 import Trigger from 'rc-trigger';
+import { gData } from './util';
 
 const placements = {
   topLeft: {
