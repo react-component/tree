@@ -19963,8 +19963,8 @@
 	      if (expanded) {
 	        if (index === -1) {
 	          expandedKeys.push(tnProps.eventKey);
-	          if (thisProps.onDataLoaded) {
-	            return thisProps.onDataLoaded(treeNode).then(function () {
+	          if (thisProps.loadData) {
+	            return thisProps.loadData(treeNode).then(function () {
 	              _this2.setState({
 	                expandedKeys: expandedKeys
 	              });
@@ -20306,7 +20306,7 @@
 	        root: this,
 	        eventKey: key,
 	        pos: pos,
-	        onDataLoaded: props.onDataLoaded,
+	        loadData: props.loadData,
 	        onMouseEnter: props.onMouseEnter,
 	        onMouseLeave: props.onMouseLeave,
 	        onRightClick: props.onRightClick,
@@ -20391,7 +20391,7 @@
 	  onExpand: _react.PropTypes.func,
 	  onCheck: _react.PropTypes.func,
 	  onSelect: _react.PropTypes.func,
-	  onDataLoaded: _react.PropTypes.func,
+	  loadData: _react.PropTypes.func,
 	  onMouseEnter: _react.PropTypes.func,
 	  onMouseLeave: _react.PropTypes.func,
 	  onRightClick: _react.PropTypes.func,
@@ -20789,13 +20789,13 @@
 	      if (!newChildren || newChildren === props.children) {
 	        // content = newChildren;
 	        newChildren = null;
-	        if (!props.onDataLoaded || props.isLeaf) {
+	        if (!props.loadData || props.isLeaf) {
 	          canRenderSwitcher = false;
 	        }
 	      }
 	
 	      var selectHandle = function selectHandle() {
-	        var icon = props.showIcon || props.onDataLoaded && _this3.state.dataLoading ? _react2['default'].createElement('span', { className: (0, _classnames2['default'])(iconEleCls) }) : null;
+	        var icon = props.showIcon || props.loadData && _this3.state.dataLoading ? _react2['default'].createElement('span', { className: (0, _classnames2['default'])(iconEleCls) }) : null;
 	        var title = _react2['default'].createElement(
 	          'span',
 	          { className: prefixCls + '-title' },

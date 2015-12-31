@@ -136,7 +136,7 @@ webpackJsonp([4],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { onSelect: this.handleSelect, onDataLoaded: this.handleDataLoaded, showIcon: false, showLine: false },
+	        { onSelect: this.handleSelect, loadData: this.handleDataLoaded, showIcon: false, showLine: false },
 	        treeNodes
 	      )
 	    );
