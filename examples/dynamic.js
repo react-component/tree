@@ -61,23 +61,14 @@ webpackJsonp([4],{
 	      return asyncTree;
 	    });
 	  },
-	  timeout: function timeout() {
-	    var _this2 = this;
-	
-	    var duration = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-	
-	    return new Promise(function (resolve) {
-	      setTimeout(resolve.bind(_this2), duration);
-	    });
-	  },
-	  handleSelect: function handleSelect(info) {
+	  onSelect: function onSelect(info) {
 	    console.log('selected', info);
 	  },
-	  handleDataLoaded: function handleDataLoaded(treeNode) {
-	    var _this3 = this;
+	  onLoadData: function onLoadData(treeNode) {
+	    var _this2 = this;
 	
 	    return this.timeout(500).then(function () {
-	      var treeData = [].concat(_toConsumableArray(_this3.state.treeData));
+	      var treeData = [].concat(_toConsumableArray(_this2.state.treeData));
 	      var child = generateTreeNodes(treeNode);
 	      var curKey = treeNode.props.eventKey;
 	      var level = 2;
@@ -108,8 +99,17 @@ webpackJsonp([4],{
 	        });
 	      };
 	      loopLeaf(treeData, level + 1);
-	      _this3.setState({ treeData: treeData });
+	      _this2.setState({ treeData: treeData });
 	      return child;
+	    });
+	  },
+	  timeout: function timeout() {
+	    var _this3 = this;
+	
+	    var duration = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+	
+	    return new Promise(function (resolve) {
+	      setTimeout(resolve.bind(_this3), duration);
 	    });
 	  },
 	  render: function render() {
@@ -136,7 +136,7 @@ webpackJsonp([4],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { onSelect: this.handleSelect, loadData: this.handleDataLoaded, showIcon: false, showLine: false },
+	        { onSelect: this.onSelect, loadData: this.onLoadData, showIcon: false, showLine: false },
 	        treeNodes
 	      )
 	    );

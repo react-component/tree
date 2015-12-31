@@ -20016,10 +20016,11 @@
 	        newSt.checked = checked;
 	      } else {
 	        checkedKeys = this.state.checkedKeys;
-	        newSt.allCheckedNodes = Object.keys(this.treeNodesStates).filter(function (item) {
+	        newSt.allCheckedNodes = [];
+	        Object.keys(this.treeNodesStates).forEach(function (item) {
 	          var itemObj = _this3.treeNodesStates[item];
 	          if (_this3.checkedKeys.indexOf(itemObj.key) !== -1) {
-	            return itemObj.node;
+	            newSt.allCheckedNodes.push(itemObj.node);
 	          }
 	        });
 	      }
