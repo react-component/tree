@@ -246,9 +246,10 @@ class TreeNode extends React.Component {
         domProps.onClick = (e) => {
           e.preventDefault();
           this.onSelect();
-          if (props.checkable) {
-            this.onCheck();
-          }
+          // not fire check event
+          // if (props.checkable) {
+          //   this.onCheck();
+          // }
         };
         if (props.onRightClick) {
           domProps.onContextMenu = this.onContextMenu;
