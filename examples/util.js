@@ -34,7 +34,7 @@ function isInclude(smallArray, bigArray) {
     return ii === bigArray[i];
   });
 }
-export function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
+function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
   const nodeKey = node.props.eventKey;
   let newCks = [...checkedKeys];
   let nodePos;
@@ -64,5 +64,38 @@ export function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
   return newCks;
 }
 
+function loopData(data, callback) {
+  const loop = (d, level = 0) => {
+    d.forEach((item, index) => {
+      const pos = `${level}-${index}`;
+      if (item.children) {
+        loop(item.children, pos);
+      }
+      callback(item, index, pos);
+    });
+  };
+  loop(data);
+}
 
-export { gData, getCheckedKeys };
+function getFilterExpandedKeys(data, expandedKeys) {
+  const expandedPosArr = [];
+  loopData(data, (item, index, pos) => {
+    if (expandedKeys.indexOf(item.key) > -1) {
+      expandedPosArr.push(pos);
+    }
+  });
+  const filterExpandedKeys = [];
+  loopData(data, (item, index, pos) => {
+    expandedPosArr.forEach(p => {
+      if ((pos.split('-').length < p.split('-').length
+        && p.indexOf(pos) === 0 || pos === p)
+        && filterExpandedKeys.indexOf(item.key) === -1) {
+        filterExpandedKeys.push(item.key);
+      }
+    });
+  });
+  return filterExpandedKeys;
+}
+
+
+export { gData, getCheckedKeys, getFilterExpandedKeys };

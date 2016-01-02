@@ -275,8 +275,8 @@ class Tree extends React.Component {
         filterExpandedKeys.push(newKey);
       } else if (props.autoExpandParent) {
         expandedPosArr.forEach(p => {
-          if (pos.split('-').length < p.split('-').length
-            && p.indexOf(pos) === 0
+          if ((pos.split('-').length < p.split('-').length
+            && p.indexOf(pos) === 0 || pos === p)
             && filterExpandedKeys.indexOf(newKey) === -1) {
             filterExpandedKeys.push(newKey);
           }
