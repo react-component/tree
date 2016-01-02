@@ -1,14 +1,14 @@
-webpackJsonp([5],{
+webpackJsonp([0],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(241);
+	module.exports = __webpack_require__(1);
 
 
 /***/ },
 
-/***/ 241:
+/***/ 1:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29,7 +29,7 @@ webpackJsonp([5],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _velocityAnimate = __webpack_require__(242);
+	var _velocityAnimate = __webpack_require__(176);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
@@ -129,7 +129,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 242:
+/***/ 176:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
@@ -4022,4 +4022,4 @@ webpackJsonp([5],{
 /***/ }
 
 });
-//# sourceMappingURL=expanded.js.map
+//# sourceMappingURL=animation.js.map

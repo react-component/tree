@@ -1,14 +1,14 @@
-webpackJsonp([0],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(178);
 
 
 /***/ },
 
-/***/ 1:
+/***/ 178:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31,54 +31,25 @@ webpackJsonp([0],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _util = __webpack_require__(176);
-	
-	function isValid(iArray, nArray) {
-	  return iArray.every(function (ii, i) {
-	    return ii === nArray[i];
-	  });
-	}
-	function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
-	  var nodeKey = node.props.eventKey;
-	  var newCks = [].concat(_toConsumableArray(checkedKeys));
-	  var nodePos = undefined;
-	  var unCheck = allCheckedNodesKeys.some(function (item) {
-	    if (item.key === nodeKey) {
-	      nodePos = item.pos;
-	      return true;
-	    }
-	  });
-	  if (unCheck) {
-	    (function () {
-	      var nArr = nodePos.split('-');
-	      newCks = [];
-	      allCheckedNodesKeys.forEach(function (item) {
-	        var iArr = item.pos.split('-');
-	        if (item.pos === nodePos || nArr.length > iArr.length && isValid(iArr, nArr) || nArr.length < iArr.length && isValid(nArr, iArr)) {
-	          return;
-	        }
-	        newCks.push(item.key);
-	      });
-	    })();
-	  } else {
-	    newCks.push(nodeKey);
-	  }
-	  return newCks;
-	}
+	var _util = __webpack_require__(179);
 	
 	var Demo = _react2['default'].createClass({
 	  displayName: 'Demo',
 	
 	  getInitialState: function getInitialState() {
 	    return {
+	      expandedKeys: ['0-0-0'],
 	      checkedKeys: ['0-0-0'],
 	      selectedKeys: ['0-0']
 	    };
 	  },
+	  onExpand: function onExpand(treeNode, expand, expandedKeys) {
+	    console.log('onExpand', expand, expandedKeys);
+	  },
 	  onCheck: function onCheck(info) {
 	    console.log('check: ', info);
 	    this.setState({
-	      checkedKeys: getCheckedKeys(info.node, info.checkedKeys, info.allCheckedNodesKeys),
+	      checkedKeys: (0, _util.getCheckedKeys)(info.node, info.checkedKeys, info.allCheckedNodesKeys),
 	      selectedKeys: ['0-3', '0-4']
 	    });
 	  },
@@ -118,7 +89,8 @@ webpackJsonp([0],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { defaultExpandAll: true, checkable: true, multiple: true,
+	        { checkable: true, multiple: true,
+	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
 	          onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
 	          onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
 	        loop(_util.gData)
@@ -131,7 +103,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 176:
+/***/ 179:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -139,6 +111,9 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	exports.getCheckedKeys = getCheckedKeys;
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 	
 	var x = 3;
 	var y = 2;
@@ -168,9 +143,47 @@ webpackJsonp([0],{
 	};
 	generateData(z);
 	
+	function isInclude(smallArray, bigArray) {
+	  // attention: [0,0,1] [0,0,10]
+	  return smallArray.every(function (ii, i) {
+	    return ii === bigArray[i];
+	  });
+	}
+	
+	function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
+	  var nodeKey = node.props.eventKey;
+	  var newCks = [].concat(_toConsumableArray(checkedKeys));
+	  var nodePos = undefined;
+	  var unCheck = allCheckedNodesKeys.some(function (item) {
+	    if (item.key === nodeKey) {
+	      nodePos = item.pos;
+	      return true;
+	    }
+	  });
+	  if (unCheck) {
+	    (function () {
+	      var nArr = nodePos.split('-');
+	      newCks = [];
+	      allCheckedNodesKeys.forEach(function (item) {
+	        var iArr = item.pos.split('-');
+	        if (item.pos === nodePos || nArr.length > iArr.length && isInclude(iArr, nArr) || nArr.length < iArr.length && isInclude(nArr, iArr)) {
+	          // 过滤掉 非父级节点 和 所有子节点。
+	          // 因为 node节点 不选时，其 非父级节点 和 所有子节点 都不选。
+	          return;
+	        }
+	        newCks.push(item.key);
+	      });
+	    })();
+	  } else {
+	    newCks.push(nodeKey);
+	  }
+	  return newCks;
+	}
+	
 	exports.gData = gData;
+	exports.getCheckedKeys = getCheckedKeys;
 
 /***/ }
 
 });
-//# sourceMappingURL=checked.js.map
+//# sourceMappingURL=basic-controlled.js.map

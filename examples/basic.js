@@ -1,14 +1,14 @@
-webpackJsonp([6],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(243);
+	module.exports = __webpack_require__(177);
 
 
 /***/ },
 
-/***/ 243:
+/***/ 177:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49,13 +49,8 @@ webpackJsonp([6],{
 	      switchIt: true
 	    };
 	  },
-	  onExpand: function onExpand(treeNode, expanded, expandedKeys) {
-	    console.log(treeNode, expanded, expandedKeys);
-	    var keys = this.props.keys;
-	    this.setState({
-	      defaultExpandedKeys: ['0-1', keys[this.state.switchIt ? 0 : 1]],
-	      switchIt: !this.state.switchIt
-	    });
+	  onExpand: function onExpand(treeNode, expand, expandedKeys) {
+	    console.log('onExpand', expand, expandedKeys);
 	  },
 	  onSelect: function onSelect(info) {
 	    console.log('selected', info);
@@ -83,8 +78,9 @@ webpackJsonp([6],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { className: 'myCls', multiple: true, checkable: true, defaultExpandAll: true,
+	        { className: 'myCls', showLine: true, multiple: true, checkable: true, autoExpandParent: false,
 	          defaultExpandedKeys: this.state.defaultExpandedKeys,
+	          onExpand: this.onExpand,
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,
 	          defaultCheckedKeys: this.state.defaultCheckedKeys,
 	          onSelect: this.onSelect, onCheck: this.onCheck },
@@ -116,35 +112,11 @@ webpackJsonp([6],{
 	          'button',
 	          { onClick: this.change },
 	          'change state'
-	        )
-	      ),
-	      _react2['default'].createElement('br', null),
-	      _react2['default'].createElement(
-	        _rcTree2['default'],
-	        { className: 'myCls', multiple: true, checkable: true, key: 1,
-	          expandedKeys: this.state.defaultExpandedKeys,
-	          onExpand: this.onExpand,
-	          defaultSelectedKeys: this.state.defaultSelectedKeys,
-	          checkedKeys: this.state.defaultCheckedKeys,
-	          onSelect: this.onSelect, onCheck: this.onCheck },
+	        ),
 	        _react2['default'].createElement(
-	          _rcTree.TreeNode,
-	          { title: 'parent 1', key: '0-1' },
-	          _react2['default'].createElement(
-	            _rcTree.TreeNode,
-	            { title: 'parent 1-0', key: '0-1-1' },
-	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: 'random' }),
-	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
-	          ),
-	          _react2['default'].createElement(
-	            _rcTree.TreeNode,
-	            { title: 'parent 1-1', key: 'random2' },
-	            _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
-	                'span',
-	                { style: { color: 'red' } },
-	                'sss'
-	              ) })
-	          )
+	          'p',
+	          null,
+	          'defaultXX 的初始化状态不会改变'
 	        )
 	      )
 	    );
@@ -156,4 +128,4 @@ webpackJsonp([6],{
 /***/ }
 
 });
-//# sourceMappingURL=simple.js.map
+//# sourceMappingURL=basic.js.map

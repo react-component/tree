@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple.js - example - rc-tree@0.23.3</title>
+  <title>basic.js - example - rc-tree@0.24.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,13 +257,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.23.3</h1>
+    <h1>rc-tree@0.24.0</h1>
 
     <p>tree ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
-  <script src="simple.js?nowrap"></script>
+  <script src="basic.js?nowrap"></script>
   <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
 <span class="hljs-keyword">import</span> React, {PropTypes} <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
@@ -287,13 +287,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       switchIt: <span class="hljs-literal">true</span>,
     };
   },
-  onExpand(treeNode, expanded, expandedKeys) {
-    <span class="hljs-built_in">console</span>.log(treeNode, expanded, expandedKeys);
-    <span class="hljs-keyword">const</span> keys = <span class="hljs-keyword">this</span>.props.keys;
-    <span class="hljs-keyword">this</span>.setState({
-      defaultExpandedKeys: [<span class="hljs-string">'0-1'</span>, keys[<span class="hljs-keyword">this</span>.state.switchIt ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>]],
-      switchIt: !<span class="hljs-keyword">this</span>.state.switchIt,
-    });
+  onExpand(treeNode, expand, expandedKeys) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expand, expandedKeys);
   },
   onSelect(info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected'</span>, info);
@@ -313,8 +308,9 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   render() {
     <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{margin:</span> '<span class="hljs-attribute">0</span> <span class="hljs-attribute">20px</span>'}}&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>simple<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"myCls"</span> <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">defaultExpandAll</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"myCls"</span> <span class="hljs-attribute">showLine</span> <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">autoExpandParent</span>=<span class="hljs-value">{false}</span>
           <span class="hljs-attribute">defaultExpandedKeys</span>=<span class="hljs-value">{this.state.defaultExpandedKeys}</span>
+          <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span>
           <span class="hljs-attribute">defaultSelectedKeys</span>=<span class="hljs-value">{this.state.defaultSelectedKeys}</span>
           <span class="hljs-attribute">defaultCheckedKeys</span>=<span class="hljs-value">{this.state.defaultCheckedKeys}</span>
           <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span>&gt;</span>
@@ -330,25 +326,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
 
       <span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.change}</span>&gt;</span>change state<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>
-
-      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"myCls"</span> <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{1}</span>
-          <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.defaultExpandedKeys}</span>
-          <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span>
-          <span class="hljs-attribute">defaultSelectedKeys</span>=<span class="hljs-value">{this.state.defaultSelectedKeys}</span>
-          <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.defaultCheckedKeys}</span>
-          <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-1"</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-0"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-1-1"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"random"</span> /&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> /&gt;</span>
-          <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"random2"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{&lt;span</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{color:</span> '<span class="hljs-attribute">red</span>'}}&gt;</span>sss<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>} /&gt;
-          <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.change}</span>&gt;</span>change state<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>defaultXX 的初始化状态不会改变<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
   },
 });

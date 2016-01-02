@@ -1,14 +1,14 @@
-webpackJsonp([4],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(240);
+	module.exports = __webpack_require__(243);
 
 
 /***/ },
 
-/***/ 240:
+/***/ 243:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31,16 +31,48 @@ webpackJsonp([4],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var asyncTree = [{ name: 'pNode 01', key: '0-0' }, { name: 'pNode 02', key: '0-1' }, { name: 'pNode 03', key: '0-2', isLeaf: true }];
-	
-	var generateTreeNodes = function generateTreeNodes(treeNode) {
+	function generateTreeNodes(treeNode) {
 	  var arr = [];
 	  var key = treeNode.props.eventKey;
 	  for (var i = 0; i < 3; i++) {
 	    arr.push({ name: 'leaf ' + key + '-' + i, key: key + '-' + i });
 	  }
 	  return arr;
-	};
+	}
+	
+	function setLeaf(treeData, curKey, level) {
+	  var loopLeaf = function loopLeaf(data, lev) {
+	    var l = lev - 1;
+	    data.forEach(function (item) {
+	      if (item.key.length > curKey.length ? item.key.indexOf(curKey) !== 0 : curKey.indexOf(item.key) !== 0) {
+	        return;
+	      }
+	      if (item.children) {
+	        loopLeaf(item.children, l);
+	      } else if (l < 1) {
+	        item.isLeaf = true;
+	      }
+	    });
+	  };
+	  loopLeaf(treeData, level + 1);
+	}
+	
+	function getNewTreeData(treeData, curKey, child, level) {
+	  var loop = function loop(data) {
+	    if (level < 1 || curKey.length - 3 > level * 2) return;
+	    data.forEach(function (item) {
+	      if (curKey.indexOf(item.key) === 0) {
+	        if (item.children) {
+	          loop(item.children);
+	        } else {
+	          item.children = child;
+	        }
+	      }
+	    });
+	  };
+	  loop(treeData);
+	  setLeaf(treeData, curKey, level);
+	}
 	
 	var TreeDemo = _react2['default'].createClass({
 	  displayName: 'TreeDemo',
@@ -54,12 +86,11 @@ webpackJsonp([4],{
 	  componentDidMount: function componentDidMount() {
 	    var _this = this;
 	
-	    this.timeout(100).then(function () {
+	    setTimeout(function () {
 	      _this.setState({
-	        treeData: asyncTree
+	        treeData: [{ name: 'pNode 01', key: '0-0' }, { name: 'pNode 02', key: '0-1' }, { name: 'pNode 03', key: '0-2', isLeaf: true }]
 	      });
-	      return asyncTree;
-	    });
+	    }, 100);
 	  },
 	  onSelect: function onSelect(info) {
 	    console.log('selected', info);
@@ -67,49 +98,13 @@ webpackJsonp([4],{
 	  onLoadData: function onLoadData(treeNode) {
 	    var _this2 = this;
 	
-	    return this.timeout(500).then(function () {
-	      var treeData = [].concat(_toConsumableArray(_this2.state.treeData));
-	      var child = generateTreeNodes(treeNode);
-	      var curKey = treeNode.props.eventKey;
-	      var level = 2;
-	      var loop = function loop(data) {
-	        if (level < 1 || curKey.length - 3 > level * 2) return;
-	        data.forEach(function (item) {
-	          if (curKey.indexOf(item.key) === 0) {
-	            if (item.children) {
-	              loop(item.children);
-	            } else {
-	              item.children = child;
-	            }
-	          }
-	        });
-	      };
-	      loop(treeData);
-	      var loopLeaf = function loopLeaf(data, lev) {
-	        var l = lev - 1;
-	        data.forEach(function (item) {
-	          if (item.key.length > curKey.length ? item.key.indexOf(curKey) !== 0 : curKey.indexOf(item.key) !== 0) {
-	            return;
-	          }
-	          if (item.children) {
-	            loopLeaf(item.children, l);
-	          } else if (l < 1) {
-	            item.isLeaf = true;
-	          }
-	        });
-	      };
-	      loopLeaf(treeData, level + 1);
-	      _this2.setState({ treeData: treeData });
-	      return child;
-	    });
-	  },
-	  timeout: function timeout() {
-	    var _this3 = this;
-	
-	    var duration = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-	
 	    return new Promise(function (resolve) {
-	      setTimeout(resolve.bind(_this3), duration);
+	      setTimeout(function () {
+	        var treeData = [].concat(_toConsumableArray(_this2.state.treeData));
+	        getNewTreeData(treeData, treeNode.props.eventKey, generateTreeNodes(treeNode), 2);
+	        _this2.setState({ treeData: treeData });
+	        resolve();
+	      }, 500);
 	    });
 	  },
 	  render: function render() {
@@ -136,7 +131,7 @@ webpackJsonp([4],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { onSelect: this.onSelect, loadData: this.onLoadData, showIcon: false, showLine: false },
+	        { onSelect: this.onSelect, loadData: this.onLoadData },
 	        treeNodes
 	      )
 	    );
