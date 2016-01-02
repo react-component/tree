@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>util.js - example - rc-tree@0.24.0</title>
+  <title>util.js - example - rc-tree@0.24.1</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.24.0</h1>
+    <h1>rc-tree@0.24.1</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -300,7 +300,7 @@ generateData(z);
     <span class="hljs-keyword">return</span> ii === bigArray[i];
   });
 }
-<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCheckedKeys</span>(<span class="hljs-params">node, checkedKeys, allCheckedNodesKeys</span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCheckedKeys</span>(<span class="hljs-params">node, checkedKeys, allCheckedNodesKeys</span>) </span>{
   <span class="hljs-keyword">const</span> nodeKey = node.props.eventKey;
   <span class="hljs-keyword">let</span> newCks = [...checkedKeys];
   <span class="hljs-keyword">let</span> nodePos;
@@ -330,8 +330,41 @@ generateData(z);
   <span class="hljs-keyword">return</span> newCks;
 }
 
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loopData</span>(<span class="hljs-params">data, callback</span>) </span>{
+  <span class="hljs-keyword">const</span> loop = (d, level = <span class="hljs-number">0</span>) =&gt; {
+    d.forEach((item, index) =&gt; {
+      <span class="hljs-keyword">const</span> pos = <span class="hljs-string">`<span class="hljs-subst">${level}</span>-<span class="hljs-subst">${index}</span>`</span>;
+      <span class="hljs-keyword">if</span> (item.children) {
+        loop(item.children, pos);
+      }
+      callback(item, index, pos);
+    });
+  };
+  loop(data);
+}
 
-<span class="hljs-keyword">export</span> { gData, getCheckedKeys };
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFilterExpandedKeys</span>(<span class="hljs-params">data, expandedKeys</span>) </span>{
+  <span class="hljs-keyword">const</span> expandedPosArr = [];
+  loopData(data, (item, index, pos) =&gt; {
+    <span class="hljs-keyword">if</span> (expandedKeys.indexOf(item.key) &gt; -<span class="hljs-number">1</span>) {
+      expandedPosArr.push(pos);
+    }
+  });
+  <span class="hljs-keyword">const</span> filterExpandedKeys = [];
+  loopData(data, (item, index, pos) =&gt; {
+    expandedPosArr.forEach(p =&gt; {
+      <span class="hljs-keyword">if</span> ((pos.split(<span class="hljs-string">'-'</span>).length &lt; p.split(<span class="hljs-string">'-'</span>).length
+        &amp;&amp; p.indexOf(pos) === <span class="hljs-number">0</span> || pos === p)
+        &amp;&amp; filterExpandedKeys.indexOf(item.key) === -<span class="hljs-number">1</span>) {
+        filterExpandedKeys.push(item.key);
+      }
+    });
+  });
+  <span class="hljs-keyword">return</span> filterExpandedKeys;
+}
+
+
+<span class="hljs-keyword">export</span> { gData, getCheckedKeys, getFilterExpandedKeys };
 </code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">

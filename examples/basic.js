@@ -78,7 +78,7 @@ webpackJsonp([1],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { className: 'myCls', showLine: true, multiple: true, checkable: true, autoExpandParent: false,
+	        { className: 'myCls', showLine: true, multiple: true, checkable: true,
 	          defaultExpandedKeys: this.state.defaultExpandedKeys,
 	          onExpand: this.onExpand,
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,

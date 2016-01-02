@@ -16,7 +16,6 @@ webpackJsonp([5],{
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	exports.getCheckedKeys = getCheckedKeys;
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 	
@@ -54,7 +53,6 @@ webpackJsonp([5],{
 	    return ii === bigArray[i];
 	  });
 	}
-	
 	function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
 	  var nodeKey = node.props.eventKey;
 	  var newCks = [].concat(_toConsumableArray(checkedKeys));
@@ -85,8 +83,42 @@ webpackJsonp([5],{
 	  return newCks;
 	}
 	
+	function loopData(data, callback) {
+	  var loop = function loop(d) {
+	    var level = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+	
+	    d.forEach(function (item, index) {
+	      var pos = level + '-' + index;
+	      if (item.children) {
+	        loop(item.children, pos);
+	      }
+	      callback(item, index, pos);
+	    });
+	  };
+	  loop(data);
+	}
+	
+	function getFilterExpandedKeys(data, expandedKeys) {
+	  var expandedPosArr = [];
+	  loopData(data, function (item, index, pos) {
+	    if (expandedKeys.indexOf(item.key) > -1) {
+	      expandedPosArr.push(pos);
+	    }
+	  });
+	  var filterExpandedKeys = [];
+	  loopData(data, function (item, index, pos) {
+	    expandedPosArr.forEach(function (p) {
+	      if ((pos.split('-').length < p.split('-').length && p.indexOf(pos) === 0 || pos === p) && filterExpandedKeys.indexOf(item.key) === -1) {
+	        filterExpandedKeys.push(item.key);
+	      }
+	    });
+	  });
+	  return filterExpandedKeys;
+	}
+	
 	exports.gData = gData;
 	exports.getCheckedKeys = getCheckedKeys;
+	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 
 /***/ },
 
