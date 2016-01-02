@@ -84,9 +84,7 @@ class TreeNode extends React.Component {
     const callbackPromise = this.props.root.onExpand(this);
     if (callbackPromise && typeof callbackPromise === 'object') {
       const setLoading = (dataLoading) => {
-        this.setState({
-          dataLoading,
-        });
+        this.setState({ dataLoading });
       };
       setLoading(true);
       callbackPromise.then(() => {
@@ -102,25 +100,6 @@ class TreeNode extends React.Component {
     e.preventDefault();
   }
 
-  getPosition(pos) {
-    const obj = {
-      last: false,
-      center: false,
-    };
-    const siblings = Object.keys(this.props.root.treeNodesStates).filter((item) => {
-      const len = pos.length;
-      return len === item.length && pos.substring(0, len - 2) === item.substring(0, len - 2);
-    });
-    const sLen = siblings.length;
-    const posIndex = Number(pos.substr(-1, 1));
-    if (sLen === 1 || posIndex === sLen - 1) {
-      obj.last = true;
-    } else {
-      obj.center = true;
-    }
-    return obj;
-  }
-
   renderSwitcher(props, expandedState) {
     const prefixCls = props.prefixCls;
     const switcherCls = {
@@ -131,15 +110,13 @@ class TreeNode extends React.Component {
       return <span className={classNames(switcherCls)}></span>;
     }
 
-    const posObj = this.getPosition(props.pos);
-
     if (!props.showLine) {
       switcherCls[prefixCls + '-noline_' + expandedState] = true;
     } else if (props.pos === '0-0') {
       switcherCls[`${prefixCls}-roots_${expandedState}`] = true;
     } else {
-      switcherCls[`${prefixCls}-center_${expandedState}`] = posObj.center;
-      switcherCls[`${prefixCls}-bottom_${expandedState}`] = posObj.last;
+      switcherCls[`${prefixCls}-center_${expandedState}`] = !props.last;
+      switcherCls[`${prefixCls}-bottom_${expandedState}`] = props.last;
     }
     return <span className={classNames(switcherCls)} onClick={this.onExpand}></span>;
   }
@@ -174,19 +151,16 @@ class TreeNode extends React.Component {
     }
     const children = props.children;
     let newChildren = children;
-    if (!children) {
-      return children;
-    }
-    if (children.type === TreeNode || Array.isArray(children) &&
-      children.every((item) => {
-        return item.type === TreeNode;
-      })) {
+    const allTreeNode = Array.isArray(children) && children.every((item) => {
+      return item.type === TreeNode;
+    });
+    if (children && (children.type === TreeNode || allTreeNode)) {
       const cls = {
         [`${props.prefixCls}-child-tree`]: true,
         [`${props.prefixCls}-child-tree-open`]: props.expanded,
       };
       if (props.showLine) {
-        cls[`${props.prefixCls}-line`] = this.getPosition(props.pos).center;
+        cls[`${props.prefixCls}-line`] = !props.last;
       }
       const animProps = {};
       if (props.openTransitionName) {
@@ -299,9 +273,23 @@ class TreeNode extends React.Component {
 
     const filterCls = props.filterTreeNode(this) ? 'filter-node' : '';
 
+    const noopSwitcher = () => {
+      const cls = {
+        [`${prefixCls}-switcher`]: true,
+        [`${prefixCls}-switcher-noop`]: true,
+      };
+      if (props.showLine) {
+        cls[`${prefixCls}-center_docu`] = !props.last;
+        cls[`${prefixCls}-bottom_docu`] = props.last;
+      } else {
+        cls[`${prefixCls}-noline_docu`] = true;
+      }
+      return <span className={classNames(cls)}></span>;
+    };
+
     return (
       <li {...liProps} ref="li" className={classNames(props.className, disabledCls, dragOverCls, filterCls)}>
-        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : <span className={`${prefixCls}-switcher-noop`}></span>}
+        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : noopSwitcher()}
         {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}
         {newChildren}

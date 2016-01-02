@@ -65,11 +65,12 @@ const Demo = React.createClass({
         <h2>right click contextmenu</h2>
         <Tree onRightClick={this.onRightClick} onSelect={this.onSelect}
           defaultSelectedKeys={['0-1', '0-1-1']}
-           multiple defaultExpandAll showLine>
+          multiple defaultExpandAll showLine>
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
-              <TreeNode title="leaf" />
-              <TreeNode title="leaf" />
+              <TreeNode title="leaf0" />
+              <TreeNode title="leaf1" />
+              <TreeNode title="leaf2" />
             </TreeNode>
             <TreeNode title="parent 1-1">
               <TreeNode title="leaf" />

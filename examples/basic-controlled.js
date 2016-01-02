@@ -2,47 +2,18 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
-import { gData } from './util';
-
-function isValid(iArray, nArray) {
-  return iArray.every((ii, i) => {
-    return ii === nArray[i];
-  });
-}
-function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
-  const nodeKey = node.props.eventKey;
-  let newCks = [...checkedKeys];
-  let nodePos;
-  const unCheck = allCheckedNodesKeys.some(item => {
-    if (item.key === nodeKey) {
-      nodePos = item.pos;
-      return true;
-    }
-  });
-  if (unCheck) {
-    const nArr = nodePos.split('-');
-    newCks = [];
-    allCheckedNodesKeys.forEach(item => {
-      const iArr = item.pos.split('-');
-      if (item.pos === nodePos ||
-        nArr.length > iArr.length && isValid(iArr, nArr) ||
-        nArr.length < iArr.length && isValid(nArr, iArr)) {
-        return;
-      }
-      newCks.push(item.key);
-    });
-  } else {
-    newCks.push(nodeKey);
-  }
-  return newCks;
-}
+import { gData, getCheckedKeys } from './util';
 
 const Demo = React.createClass({
   getInitialState() {
     return {
+      expandedKeys: ['0-0-0'],
       checkedKeys: ['0-0-0'],
       selectedKeys: ['0-0'],
     };
+  },
+  onExpand(treeNode, expand, expandedKeys) {
+    console.log('onExpand', expand, expandedKeys);
   },
   onCheck(info) {
     console.log('check: ', info);
@@ -75,9 +46,10 @@ const Demo = React.createClass({
     };
     return (<div>
       <h2>checked</h2>
-      <Tree defaultExpandAll checkable multiple
-            onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
-            onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}>
+      <Tree checkable multiple
+          onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
+          onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
+          onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}>
         {loop(gData)}
       </Tree>
     </div>);

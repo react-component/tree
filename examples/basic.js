@@ -21,13 +21,8 @@ const Demo = React.createClass({
       switchIt: true,
     };
   },
-  onExpand(treeNode, expanded, expandedKeys) {
-    console.log(treeNode, expanded, expandedKeys);
-    const keys = this.props.keys;
-    this.setState({
-      defaultExpandedKeys: ['0-1', keys[this.state.switchIt ? 0 : 1]],
-      switchIt: !this.state.switchIt,
-    });
+  onExpand(treeNode, expand, expandedKeys) {
+    console.log('onExpand', expand, expandedKeys);
   },
   onSelect(info) {
     console.log('selected', info);
@@ -47,8 +42,9 @@ const Demo = React.createClass({
   render() {
     return (<div style={{margin: '0 20px'}}>
       <h2>simple</h2>
-      <Tree className="myCls" multiple checkable defaultExpandAll
+      <Tree className="myCls" showLine multiple checkable autoExpandParent={false}
           defaultExpandedKeys={this.state.defaultExpandedKeys}
+          onExpand={this.onExpand}
           defaultSelectedKeys={this.state.defaultSelectedKeys}
           defaultCheckedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect} onCheck={this.onCheck}>
@@ -64,25 +60,10 @@ const Demo = React.createClass({
       </Tree>
 
       <br />
-      <div><button onClick={this.change}>change state</button></div>
-      <br />
-
-      <Tree className="myCls" multiple checkable key={1}
-          expandedKeys={this.state.defaultExpandedKeys}
-          onExpand={this.onExpand}
-          defaultSelectedKeys={this.state.defaultSelectedKeys}
-          checkedKeys={this.state.defaultCheckedKeys}
-          onSelect={this.onSelect} onCheck={this.onCheck}>
-        <TreeNode title="parent 1" key="0-1">
-          <TreeNode title="parent 1-0" key="0-1-1">
-            <TreeNode title="leaf" key="random" />
-            <TreeNode title="leaf" />
-          </TreeNode>
-          <TreeNode title="parent 1-1" key="random2">
-            <TreeNode title={<span style={{color: 'red'}}>sss</span>} />
-          </TreeNode>
-        </TreeNode>
-      </Tree>
+      <div>
+        <button onClick={this.change}>change state</button>
+        <p>defaultXX 的初始化状态不会改变</p>
+      </div>
     </div>);
   },
 });

@@ -27,4 +27,42 @@ const generateData = (_level, _preKey, _tns) => {
 };
 generateData(z);
 
-export { gData };
+
+function isInclude(smallArray, bigArray) {
+  // attention: [0,0,1] [0,0,10]
+  return smallArray.every((ii, i) => {
+    return ii === bigArray[i];
+  });
+}
+export function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
+  const nodeKey = node.props.eventKey;
+  let newCks = [...checkedKeys];
+  let nodePos;
+  const unCheck = allCheckedNodesKeys.some(item => {
+    if (item.key === nodeKey) {
+      nodePos = item.pos;
+      return true;
+    }
+  });
+  if (unCheck) {
+    const nArr = nodePos.split('-');
+    newCks = [];
+    allCheckedNodesKeys.forEach(item => {
+      const iArr = item.pos.split('-');
+      if (item.pos === nodePos ||
+        nArr.length > iArr.length && isInclude(iArr, nArr) ||
+        nArr.length < iArr.length && isInclude(nArr, iArr)) {
+        // 过滤掉 非父级节点 和 所有子节点。
+        // 因为 node节点 不选时，其 非父级节点 和 所有子节点 都不选。
+        return;
+      }
+      newCks.push(item.key);
+    });
+  } else {
+    newCks.push(nodeKey);
+  }
+  return newCks;
+}
+
+
+export { gData, getCheckedKeys };

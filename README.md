@@ -66,6 +66,7 @@ see examples
 |defaultExpandAll | expand all treeNodes | bool | false |
 |defaultExpandedKeys | expand specific treeNodes | String[] | - |
 |expandedKeys | Controlled expand specific treeNodes | String[] | - |
+|autoExpandParent | whether auto expand parent treeNodes | bool | true |
 |checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work) | String[] | [] |
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
 |selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |

@@ -5,28 +5,22 @@ import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 import { gData } from './util';
 
-class TreeDemo extends React.Component {
-  constructor(props) {
-    super(props);
-    ['handleDragStart', 'handleDragEnter', 'handleDrop', 'handleCheck', 'handleSelect'].forEach((m)=> {
-      this[m] = this[m].bind(this);
-    });
-    this.state = {
+const Demo = React.createClass({
+  getInitialState() {
+    return {
       gData: gData,
       expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
-      checkedKeys: [],
-      selectedKeys: [],
     };
-  }
-  handleDragStart() {
-  }
-  handleDragEnter(info) {
+  },
+  onTreeDragStart() {
+  },
+  onTreeDragEnter(info) {
     // console.log(info);
     this.setState({
       expandedKeys: info.expandedKeys,
     });
-  }
-  handleDrop(info) {
+  },
+  onTreeDrop(info) {
     console.log(info);
     const dropKey = info.node.props.eventKey;
     const dragKey = info.dragNode.props.eventKey;
@@ -66,19 +60,7 @@ class TreeDemo extends React.Component {
       gData: data,
       expandedKeys: info.originExpandedKeys,
     });
-  }
-  handleCheck(info) {
-    // console.log('check: ', info);
-    this.setState({
-      checkedKeys: [info.node.props.eventKey],
-    });
-  }
-  handleSelect(info) {
-    // console.log('selected: ', info);
-    this.setState({
-      selectedKeys: [info.node.props.eventKey],
-    });
-  }
+  },
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -93,14 +75,15 @@ class TreeDemo extends React.Component {
       <p>drag a node into another node</p>
       <div className="draggable-container">
         <Tree defaultExpandedKeys={this.state.expandedKeys} draggable
-              onTreeDragStart={this.handleDragStart} onTreeDragEnter={this.handleDragEnter} onTreeDrop={this.handleDrop}
-              checkable={false} onCheck={this.handleCheck} checkedKeys={this.state.checkedKeys}
-              onSelect={this.handleSelect} selectedKeys={this.state.selectedKeys}>
+              onTreeDragStart={this.onTreeDragStart}
+              onTreeDragEnter={this.onTreeDragEnter}
+              onTreeDrop={this.onTreeDrop}
+              >
           {loop(this.state.gData)}
         </Tree>
       </div>
     </div>);
-  }
-}
+  },
+});
 
-ReactDOM.render(<TreeDemo />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));
