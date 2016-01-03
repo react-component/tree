@@ -107,21 +107,19 @@ export function filterMinPos(arr) {
 }
 // console.log(filterMinPos(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
 
-
-// stripTail('x-xx-sss-xx')
-const stripTail = (str) => {
-  const arr = str.match(/(.+)(-[^-]+)$/);
-  let st = '';
-  if (arr && arr.length === 3) {
-    st = arr[1];
-  }
-  return st;
-};
-const splitPos = (pos) => {
-  return pos.split('-');
-};
-
 function handleCheckState(obj, checkedPosArr, checkIt) {
+  const stripTail = (str) => {
+    const arr = str.match(/(.+)(-[^-]+)$/);
+    let st = '';
+    if (arr && arr.length === 3) {
+      st = arr[1];
+    }
+    return st;
+  };
+  // stripTail('x-xx-sss-xx')
+  const splitPos = (pos) => {
+    return pos.split('-');
+  };
   checkedPosArr.forEach((_pos) => {
     // 设置子节点，全选或全不选
     Object.keys(obj).forEach((i) => {

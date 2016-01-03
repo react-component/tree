@@ -47,7 +47,7 @@ function getNewTreeData(treeData, curKey, child, level) {
   setLeaf(treeData, curKey, level);
 }
 
-const TreeDemo = React.createClass({
+const Demo = React.createClass({
   propTypes: {},
   getInitialState() {
     return {
@@ -99,4 +99,4 @@ const TreeDemo = React.createClass({
   },
 });
 
-ReactDOM.render(<TreeDemo />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));
