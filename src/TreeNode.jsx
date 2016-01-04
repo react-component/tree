@@ -245,7 +245,7 @@ class TreeNode extends React.Component {
         }
       }
       return (
-        <a ref="selectHandle" title={content} {...domProps}>
+        <a ref="selectHandle" title={typeof content === 'string' ? content : ''} {...domProps}>
           {icon}{title}
         </a>
       );
