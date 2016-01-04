@@ -20516,20 +20516,19 @@
 	
 	// console.log(filterMinPos(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
 	
-	// stripTail('x-xx-sss-xx')
-	var stripTail = function stripTail(str) {
-	  var arr = str.match(/(.+)(-[^-]+)$/);
-	  var st = '';
-	  if (arr && arr.length === 3) {
-	    st = arr[1];
-	  }
-	  return st;
-	};
-	var splitPos = function splitPos(pos) {
-	  return pos.split('-');
-	};
-	
 	function handleCheckState(obj, checkedPosArr, checkIt) {
+	  var stripTail = function stripTail(str) {
+	    var arr = str.match(/(.+)(-[^-]+)$/);
+	    var st = '';
+	    if (arr && arr.length === 3) {
+	      st = arr[1];
+	    }
+	    return st;
+	  };
+	  // stripTail('x-xx-sss-xx')
+	  var splitPos = function splitPos(pos) {
+	    return pos.split('-');
+	  };
 	  checkedPosArr.forEach(function (_pos) {
 	    // 设置子节点，全选或全不选
 	    Object.keys(obj).forEach(function (i) {
@@ -20959,7 +20958,7 @@
 	        }
 	        return _react2['default'].createElement(
 	          'a',
-	          _extends({ ref: 'selectHandle', title: content }, domProps),
+	          _extends({ ref: 'selectHandle', title: typeof content === 'string' ? content : '' }, domProps),
 	          icon,
 	          title
 	        );

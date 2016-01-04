@@ -74,8 +74,8 @@ webpackJsonp([6],{
 	  setLeaf(treeData, curKey, level);
 	}
 	
-	var TreeDemo = _react2['default'].createClass({
-	  displayName: 'TreeDemo',
+	var Demo = _react2['default'].createClass({
+	  displayName: 'Demo',
 	
 	  propTypes: {},
 	  getInitialState: function getInitialState() {
@@ -138,7 +138,7 @@ webpackJsonp([6],{
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(TreeDemo, null), document.getElementById('__react-content'));
+	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 
