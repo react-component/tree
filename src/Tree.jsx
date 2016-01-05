@@ -300,10 +300,18 @@ class Tree extends React.Component {
     return checkedKeys;
   }
   getDefaultSelectedKeys(props, willReceiveProps) {
-    const defaultSelectedKeys = props.multiple ? [...props.defaultSelectedKeys] : [props.defaultSelectedKeys[0]];
-    let selectedKeys = willReceiveProps ? undefined : defaultSelectedKeys;
+    const getKeys = (keys) => {
+      if (props.multiple) {
+        return [...keys];
+      }
+      if (keys.length) {
+        return [keys[0]];
+      }
+      return keys;
+    };
+    let selectedKeys = willReceiveProps ? undefined : getKeys(props.defaultSelectedKeys);
     if ('selectedKeys' in props) {
-      selectedKeys = props.multiple ? [...props.selectedKeys] : [props.selectedKeys[0]];
+      selectedKeys = getKeys(props.selectedKeys);
     }
     return selectedKeys;
   }

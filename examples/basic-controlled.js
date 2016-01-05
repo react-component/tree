@@ -1,15 +1,23 @@
 import 'rc-tree/assets/index.less';
-import React from 'react';
+import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 import { gData, getCheckedKeys, getFilterExpandedKeys } from './util';
 
 const Demo = React.createClass({
+  propTypes: {
+    multiple: PropTypes.bool,
+  },
+  getDefaultProps() {
+    return {
+      multiple: false,
+    };
+  },
   getInitialState() {
     return {
       expandedKeys: getFilterExpandedKeys(gData, ['0-0-0']),
       checkedKeys: ['0-0-0'],
-      selectedKeys: ['0-0'],
+      selectedKeys: [],
     };
   },
   onExpand(treeNode, expand, expandedKeys) {
@@ -37,12 +45,14 @@ const Demo = React.createClass({
   },
   onSelect(info) {
     console.log('selected: ', info);
-    const selectedKeys = [...this.state.selectedKeys];
+    let selectedKeys = [...this.state.selectedKeys];
     const index = selectedKeys.indexOf(info.node.props.eventKey);
     if (index > -1) {
       selectedKeys.splice(index, 1);
-    } else {
+    } else if (this.props.multiple) {
       selectedKeys.push(info.node.props.eventKey);
+    } else {
+      selectedKeys = [info.node.props.eventKey];
     }
     this.setState({
       selectedKeys: selectedKeys,
@@ -59,7 +69,7 @@ const Demo = React.createClass({
     };
     return (<div>
       <h2>controlled</h2>
-      <Tree checkable multiple
+      <Tree checkable multiple={this.props.multiple}
           onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
           onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
           onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}>
