@@ -20099,10 +20099,18 @@
 	  }, {
 	    key: 'getDefaultSelectedKeys',
 	    value: function getDefaultSelectedKeys(props, willReceiveProps) {
-	      var defaultSelectedKeys = props.multiple ? [].concat(_toConsumableArray(props.defaultSelectedKeys)) : [props.defaultSelectedKeys[0]];
-	      var selectedKeys = willReceiveProps ? undefined : defaultSelectedKeys;
+	      var getKeys = function getKeys(keys) {
+	        if (props.multiple) {
+	          return [].concat(_toConsumableArray(keys));
+	        }
+	        if (keys.length) {
+	          return [keys[0]];
+	        }
+	        return keys;
+	      };
+	      var selectedKeys = willReceiveProps ? undefined : getKeys(props.defaultSelectedKeys);
 	      if ('selectedKeys' in props) {
-	        selectedKeys = props.multiple ? [].concat(_toConsumableArray(props.selectedKeys)) : [props.selectedKeys[0]];
+	        selectedKeys = getKeys(props.selectedKeys);
 	      }
 	      return selectedKeys;
 	    }

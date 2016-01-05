@@ -36,11 +36,19 @@ webpackJsonp([2],{
 	var Demo = _react2['default'].createClass({
 	  displayName: 'Demo',
 	
+	  propTypes: {
+	    multiple: _react.PropTypes.bool
+	  },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      multiple: false
+	    };
+	  },
 	  getInitialState: function getInitialState() {
 	    return {
 	      expandedKeys: (0, _util.getFilterExpandedKeys)(_util.gData, ['0-0-0']),
 	      checkedKeys: ['0-0-0'],
-	      selectedKeys: ['0-0']
+	      selectedKeys: []
 	    };
 	  },
 	  onExpand: function onExpand(treeNode, expand, expandedKeys) {
@@ -72,8 +80,10 @@ webpackJsonp([2],{
 	    var index = selectedKeys.indexOf(info.node.props.eventKey);
 	    if (index > -1) {
 	      selectedKeys.splice(index, 1);
-	    } else {
+	    } else if (this.props.multiple) {
 	      selectedKeys.push(info.node.props.eventKey);
+	    } else {
+	      selectedKeys = [info.node.props.eventKey];
 	    }
 	    this.setState({
 	      selectedKeys: selectedKeys
@@ -102,7 +112,7 @@ webpackJsonp([2],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { checkable: true, multiple: true,
+	        { checkable: true, multiple: this.props.multiple,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
 	          onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
 	          onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
