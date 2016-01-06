@@ -62,7 +62,7 @@ const Demo = React.createClass({
     const loop = data => {
       return data.map((item) => {
         if (item.children) {
-          return <TreeNode key={item.key} title={item.key}>{loop(item.children)}</TreeNode>;
+          return <TreeNode key={item.key} title={item.key} disableCheckbox={item.key === '0-0-0' ? true : false}>{loop(item.children)}</TreeNode>;
         }
         return <TreeNode key={item.key} title={item.key} />;
       });

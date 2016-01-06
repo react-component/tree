@@ -49,7 +49,7 @@ const Demo = React.createClass({
           defaultCheckedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect} onCheck={this.onCheck}>
         <TreeNode title="parent 1" key="0-1">
-          <TreeNode title="parent 1-0" key="0-1-1">
+          <TreeNode title="parent 1-0" key="0-1-1" disableCheckbox>
             <TreeNode title="leaf" key="random" />
             <TreeNode title="leaf" />
           </TreeNode>
