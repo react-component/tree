@@ -95,7 +95,7 @@ webpackJsonp([2],{
 	        if (item.children) {
 	          return _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { key: item.key, title: item.key },
+	            { key: item.key, title: item.key, disableCheckbox: item.key === '0-0-0' ? true : false },
 	            loop(item.children)
 	          );
 	        }

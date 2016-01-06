@@ -20841,7 +20841,7 @@
 	      if (typeof props.checkable !== 'boolean') {
 	        customEle = props.checkable;
 	      }
-	      if (props.disabled) {
+	      if (props.disabled || props.disableCheckbox) {
 	        checkboxCls[prefixCls + '-checkbox-disabled'] = true;
 	        return _react2['default'].createElement(
 	          'span',

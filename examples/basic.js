@@ -89,7 +89,7 @@ webpackJsonp([1],{
 	          { title: 'parent 1', key: '0-1' },
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { title: 'parent 1-0', key: '0-1-1' },
+	            { title: 'parent 1-0', key: '0-1-1', disableCheckbox: true },
 	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: 'random' }),
 	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
 	          ),
