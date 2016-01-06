@@ -75,17 +75,6 @@
   vertical-align: top;
   background: url(https://t.alipayobjects.com/images/rmsweb/T1YxhiXgJbXXXXXXXX.gif) no-repeat scroll 0 0 transparent;
 }
-.rc-tree li span.rc-tree-switcher-disabled {
-  background: #fff;
-  position: relative;
-}
-.rc-tree li span.rc-tree-switcher-disabled:after {
-  content: ' ';
-  position: absolute;
-  top: 8px;
-  left: 6px;
-  color: gray;
-}
 .rc-tree li span.rc-tree-switcher.rc-tree-roots_open {
   background-position: -93px -56px;
 }
@@ -125,14 +114,36 @@
   margin: 0 3px;
   background-position: 0 0;
 }
-.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-checked {
+.rc-tree li span.rc-tree-checkbox-checked {
   background-position: -14px 0;
 }
-.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-indeterminate {
+.rc-tree li span.rc-tree-checkbox-indeterminate {
   background-position: -14px -28px;
 }
 .rc-tree li span.rc-tree-checkbox-disabled {
-  background-position: 0 -28px !important;
+  background-position: 0 -56px;
+}
+.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-checked.rc-tree-checkbox-disabled {
+  background-position: -14px -56px;
+}
+.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-indeterminate.rc-tree-checkbox-disabled {
+  position: relative;
+  background: #ccc;
+  border-radius: 3px;
+}
+.rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-indeterminate.rc-tree-checkbox-disabled::after {
+  content: ' ';
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+      transform: scale(1);
+  position: absolute;
+  left: 3px;
+  top: 5px;
+  width: 5px;
+  height: 0;
+  border: 2px solid #fff;
+  border-top: 0;
+  border-left: 0;
 }
 .rc-tree-child-tree {
   display: none;

@@ -20820,11 +20820,6 @@
 	    value: function renderSwitcher(props, expandedState) {
 	      var prefixCls = props.prefixCls;
 	      var switcherCls = _defineProperty({}, prefixCls + '-switcher', true);
-	      if (props.disabled) {
-	        switcherCls[prefixCls + '-switcher-disabled'] = true;
-	        return _react2['default'].createElement('span', { className: (0, _classnames2['default'])(switcherCls) });
-	      }
-	
 	      if (!props.showLine) {
 	        switcherCls[prefixCls + '-noline_' + expandedState] = true;
 	      } else if (props.pos === '0-0') {
@@ -20832,6 +20827,10 @@
 	      } else {
 	        switcherCls[prefixCls + '-center_' + expandedState] = !props.last;
 	        switcherCls[prefixCls + '-bottom_' + expandedState] = props.last;
+	      }
+	      if (props.disabled) {
+	        switcherCls[prefixCls + '-switcher-disabled'] = true;
+	        return _react2['default'].createElement('span', { className: (0, _classnames2['default'])(switcherCls) });
 	      }
 	      return _react2['default'].createElement('span', { className: (0, _classnames2['default'])(switcherCls), onClick: this.onExpand });
 	    }

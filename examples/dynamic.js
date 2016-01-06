@@ -117,7 +117,7 @@ webpackJsonp([6],{
 	            loop(item.children)
 	          );
 	        }
-	        return _react2['default'].createElement(_rcTree.TreeNode, { title: item.name, key: item.key, isLeaf: item.isLeaf });
+	        return _react2['default'].createElement(_rcTree.TreeNode, { title: item.name, key: item.key, isLeaf: item.isLeaf, disabled: item.key === '0-0-0' ? true : false });
 	      });
 	    };
 	    var treeNodes = loop(this.state.treeData);
