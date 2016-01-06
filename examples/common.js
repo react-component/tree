@@ -19739,8 +19739,6 @@
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
@@ -19788,12 +19786,20 @@
 	  _createClass(Tree, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      var _setState;
-	
 	      var expandedKeys = this.getDefaultExpandedKeys(nextProps, true);
 	      var checkedKeys = this.getDefaultCheckedKeys(nextProps, true);
 	      var selectedKeys = this.getDefaultSelectedKeys(nextProps, true);
-	      this.setState((_setState = {}, _defineProperty(_setState, expandedKeys && 'expandedKeys', expandedKeys), _defineProperty(_setState, checkedKeys && 'checkedKeys', checkedKeys), _defineProperty(_setState, selectedKeys && 'selectedKeys', selectedKeys), _setState));
+	      var st = {};
+	      if (expandedKeys) {
+	        st.expandedKeys = expandedKeys;
+	      }
+	      if (checkedKeys) {
+	        st.checkedKeys = checkedKeys;
+	      }
+	      if (selectedKeys) {
+	        st.selectedKeys = selectedKeys;
+	      }
+	      this.setState(st);
 	    }
 	  }, {
 	    key: 'onDragStart',
@@ -19865,7 +19871,7 @@
 	      this.props.onTreeDragEnter({
 	        event: e,
 	        node: treeNode,
-	        expandedKeys: expandedKeys || this.state.expandedKeys
+	        expandedKeys: expandedKeys && [].concat(_toConsumableArray(expandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys))
 	      });
 	    }
 	  }, {
@@ -19896,14 +19902,14 @@
 	        event: e,
 	        node: treeNode,
 	        dragNode: this.dragNode,
-	        dragNodesKeys: this.dragNodesKeys,
+	        dragNodesKeys: [].concat(_toConsumableArray(this.dragNodesKeys)),
 	        dropPos: this.dropPos + Number(posArr[posArr.length - 1])
 	      };
 	      if (this.dropPos !== 0) {
 	        res.dropToGap = true;
 	      }
 	      if ('expandedKeys' in this.props) {
-	        res.originExpandedKeys = this._originExpandedKeys || [].concat(_toConsumableArray(this.state.expandedKeys));
+	        res.originExpandedKeys = [].concat(_toConsumableArray(this._originExpandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys));
 	      }
 	      this.props.onTreeDrop(res);
 	    }
@@ -19925,9 +19931,11 @@
 	          expandedKeys.splice(index, 1);
 	        }
 	        this.setState({ expandedKeys: expandedKeys });
-	        this.props.onExpand(treeNode, expand, expandedKeys);
+	        // remember the return object, such as expandedKeys, must clone!!
+	        // so you can avoid outer code change it.
+	        this.props.onExpand(treeNode, expand, [].concat(_toConsumableArray(expandedKeys)));
 	      } else {
-	        this.props.onExpand(treeNode, !expand, expandedKeys);
+	        this.props.onExpand(treeNode, !expand, [].concat(_toConsumableArray(expandedKeys)));
 	      }
 	
 	      // after data loaded, need set new expandedKeys
@@ -19977,7 +19985,7 @@
 	          }
 	        });
 	      }
-	      newSt.checkedKeys = checkedKeys;
+	      newSt.checkedKeys = [].concat(_toConsumableArray(checkedKeys));
 	      this.props.onCheck(newSt);
 	    }
 	  }, {
@@ -20010,7 +20018,7 @@
 	      } else {
 	        selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
 	      }
-	      newSt.selectedKeys = selectedKeys;
+	      newSt.selectedKeys = [].concat(_toConsumableArray(selectedKeys));
 	      props.onSelect(newSt);
 	    }
 	  }, {
