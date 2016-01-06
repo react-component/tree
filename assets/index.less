@@ -83,15 +83,6 @@
       }
       &.@{treePrefixCls}-switcher {
         &-disabled {
-          background: #fff;
-          position: relative;
-          &:after {
-            content: ' ';
-            position: absolute;
-            top: 8px;
-            left: 6px;
-            color: gray;
-          }
         }
         &.@{treePrefixCls}-roots_open {
           background-position: -93px -56px;
@@ -132,14 +123,35 @@
         height: 13px;
         margin: 0 3px;
         background-position: 0 0;
-        &.@{treePrefixCls}-checkbox-checked {
+        &-checked {
           background-position: -14px 0;
         }
-        &.@{treePrefixCls}-checkbox-indeterminate {
+        &-indeterminate {
           background-position: -14px -28px;
         }
         &-disabled {
-          background-position: 0 -28px!important;
+          background-position: 0 -56px;
+        }
+        &.@{treePrefixCls}-checkbox-checked.@{treePrefixCls}-checkbox-disabled {
+          background-position: -14px -56px;
+        }
+        &.@{treePrefixCls}-checkbox-indeterminate.@{treePrefixCls}-checkbox-disabled {
+          position: relative;
+          background: #ccc;
+          border-radius: 3px;
+          &::after {
+            content: ' ';
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            position: absolute;
+            left: 3px;
+            top: 5px;
+            width: 5px;
+            height: 0;
+            border: 2px solid #fff;
+            border-top: 0;
+            border-left: 0;
+          }
         }
       }
     }

@@ -105,11 +105,6 @@ class TreeNode extends React.Component {
     const switcherCls = {
       [`${prefixCls}-switcher`]: true,
     };
-    if (props.disabled) {
-      switcherCls[`${prefixCls}-switcher-disabled`] = true;
-      return <span className={classNames(switcherCls)}></span>;
-    }
-
     if (!props.showLine) {
       switcherCls[prefixCls + '-noline_' + expandedState] = true;
     } else if (props.pos === '0-0') {
@@ -117,6 +112,10 @@ class TreeNode extends React.Component {
     } else {
       switcherCls[`${prefixCls}-center_${expandedState}`] = !props.last;
       switcherCls[`${prefixCls}-bottom_${expandedState}`] = props.last;
+    }
+    if (props.disabled) {
+      switcherCls[`${prefixCls}-switcher-disabled`] = true;
+      return <span className={classNames(switcherCls)}></span>;
     }
     return <span className={classNames(switcherCls)} onClick={this.onExpand}></span>;
   }

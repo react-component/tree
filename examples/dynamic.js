@@ -84,7 +84,7 @@ const Demo = React.createClass({
         if (item.children) {
           return <TreeNode title={item.name} key={item.key}>{loop(item.children)}</TreeNode>;
         }
-        return <TreeNode title={item.name} key={item.key} isLeaf={item.isLeaf} />;
+        return <TreeNode title={item.name} key={item.key} isLeaf={item.isLeaf} disabled={item.key === '0-0-0' ? true : false} />;
       });
     };
     const treeNodes = loop(this.state.treeData);
