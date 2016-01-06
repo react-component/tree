@@ -27,11 +27,17 @@ class Tree extends React.Component {
     const expandedKeys = this.getDefaultExpandedKeys(nextProps, true);
     const checkedKeys = this.getDefaultCheckedKeys(nextProps, true);
     const selectedKeys = this.getDefaultSelectedKeys(nextProps, true);
-    this.setState({
-      [expandedKeys && 'expandedKeys']: expandedKeys,
-      [checkedKeys && 'checkedKeys']: checkedKeys,
-      [selectedKeys && 'selectedKeys']: selectedKeys,
-    });
+    const st = {};
+    if (expandedKeys) {
+      st.expandedKeys = expandedKeys;
+    }
+    if (checkedKeys) {
+      st.checkedKeys = checkedKeys;
+    }
+    if (selectedKeys) {
+      st.selectedKeys = selectedKeys;
+    }
+    this.setState(st);
   }
   onDragStart(e, treeNode) {
     // console.log(this.refs.tree.parentNode, treeNode.refs.selectHandle);
@@ -97,7 +103,7 @@ class Tree extends React.Component {
     this.props.onTreeDragEnter({
       event: e,
       node: treeNode,
-      expandedKeys: expandedKeys || this.state.expandedKeys,
+      expandedKeys: expandedKeys && [...expandedKeys] || [...this.state.expandedKeys],
     });
   }
   onDragOver(e, treeNode) {
@@ -122,14 +128,14 @@ class Tree extends React.Component {
       event: e,
       node: treeNode,
       dragNode: this.dragNode,
-      dragNodesKeys: this.dragNodesKeys,
+      dragNodesKeys: [...this.dragNodesKeys],
       dropPos: this.dropPos + Number(posArr[posArr.length - 1]),
     };
     if (this.dropPos !== 0) {
       res.dropToGap = true;
     }
     if ('expandedKeys' in this.props) {
-      res.originExpandedKeys = this._originExpandedKeys || [...this.state.expandedKeys];
+      res.originExpandedKeys = [...this._originExpandedKeys] || [...this.state.expandedKeys];
     }
     this.props.onTreeDrop(res);
   }
@@ -147,9 +153,11 @@ class Tree extends React.Component {
         expandedKeys.splice(index, 1);
       }
       this.setState({ expandedKeys });
-      this.props.onExpand(treeNode, expand, expandedKeys);
+      // remember the return object, such as expandedKeys, must clone!!
+      // so you can avoid outer code change it.
+      this.props.onExpand(treeNode, expand, [...expandedKeys]);
     } else {
-      this.props.onExpand(treeNode, !expand, expandedKeys);
+      this.props.onExpand(treeNode, !expand, [...expandedKeys]);
     }
 
     // after data loaded, need set new expandedKeys
@@ -195,7 +203,7 @@ class Tree extends React.Component {
         }
       });
     }
-    newSt.checkedKeys = checkedKeys;
+    newSt.checkedKeys = [...checkedKeys];
     this.props.onCheck(newSt);
   }
   onSelect(treeNode) {
@@ -226,7 +234,7 @@ class Tree extends React.Component {
     } else {
       selectedKeys = [...this.state.selectedKeys];
     }
-    newSt.selectedKeys = selectedKeys;
+    newSt.selectedKeys = [...selectedKeys];
     props.onSelect(newSt);
   }
   onMouseEnter(e, treeNode) {
