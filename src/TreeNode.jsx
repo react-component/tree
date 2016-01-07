@@ -73,6 +73,7 @@ class TreeNode extends React.Component {
     this.props.root.onDragLeave(e, this);
   }
   onDrop(e) {
+    e.preventDefault();
     e.stopPropagation();
     this.setState({
       dragNodeHighlight: false,
