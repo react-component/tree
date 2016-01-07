@@ -29,11 +29,12 @@ generateData(z);
 
 
 function isInclude(smallArray, bigArray) {
-  // attention: [0,0,1] [0,0,10]
   return smallArray.every((ii, i) => {
     return ii === bigArray[i];
   });
 }
+// console.log(isInclude(['0', '1'], ['0', '10', '1']));
+
 function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
   const nodeKey = node.props.eventKey;
   let newCks = [...checkedKeys];

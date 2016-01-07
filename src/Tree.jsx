@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import assign from 'object-assign';
 import classNames from 'classnames';
-import { loopAllChildren, getOffset, getTreeNodesStates } from './util';
+import { loopAllChildren, isInclude, getOffset, getTreeNodesStates } from './util';
 
 function noop() {
 }
@@ -69,17 +69,14 @@ class Tree extends React.Component {
     const pageY = e.pageY;
     const gapHeight = 2;
     if (pageY > offsetTop + offsetHeight - gapHeight) {
-      // console.log('enter gap');
-      this.dropPos = 1;
+      this.dropPosition = 1;
       return 1;
     }
     if (pageY < offsetTop + gapHeight) {
-      // console.log('ee');
-      this.dropPos = -1;
+      this.dropPosition = -1;
       return -1;
     }
-    // console.log('xx');
-    this.dropPos = 0;
+    this.dropPosition = 0;
     return 0;
   }
   onDragEnter(e, treeNode) {
@@ -90,7 +87,6 @@ class Tree extends React.Component {
       });
       return;
     }
-    // console.log('en...', this.dropPos);
     const st = {
       dragOverNodeKey: treeNode.props.eventKey,
     };
@@ -129,9 +125,9 @@ class Tree extends React.Component {
       node: treeNode,
       dragNode: this.dragNode,
       dragNodesKeys: [...this.dragNodesKeys],
-      dropPos: this.dropPos + Number(posArr[posArr.length - 1]),
+      dropPosition: this.dropPosition + Number(posArr[posArr.length - 1]),
     };
-    if (this.dropPos !== 0) {
+    if (this.dropPosition !== 0) {
       res.dropToGap = true;
     }
     if ('expandedKeys' in this.props) {
@@ -269,11 +265,11 @@ class Tree extends React.Component {
   }
   getFilterExpandedKeys(props) {
     const defaultExpandedKeys = props.defaultExpandedKeys;
-    const expandedPosArr = [];
+    const expandedPositionArr = [];
     if (props.autoExpandParent) {
       loopAllChildren(props.children, (item, index, pos, newKey) => {
         if (defaultExpandedKeys.indexOf(newKey) > -1) {
-          expandedPosArr.push(pos);
+          expandedPositionArr.push(pos);
         }
       });
     }
@@ -282,9 +278,9 @@ class Tree extends React.Component {
       if (props.defaultExpandAll) {
         filterExpandedKeys.push(newKey);
       } else if (props.autoExpandParent) {
-        expandedPosArr.forEach(p => {
-          if ((pos.split('-').length < p.split('-').length
-            && p.indexOf(pos) === 0 || pos === p)
+        expandedPositionArr.forEach(p => {
+          if ((p.split('-').length > pos.split('-').length
+            && isInclude(pos.split('-'), p.split('-')) || pos === p)
             && filterExpandedKeys.indexOf(newKey) === -1) {
             filterExpandedKeys.push(newKey);
           }
@@ -339,8 +335,10 @@ class Tree extends React.Component {
   }
   getDragNodes(treeNode) {
     const dragNodesKeys = [];
+    const tPArr = treeNode.props.pos.split('-');
     loopAllChildren(this.props.children, (item, index, pos, newKey) => {
-      if (pos.indexOf(treeNode.props.pos) === 0) {
+      const pArr = pos.split('-');
+      if (treeNode.props.pos === pos || tPArr.length < pArr.length && isInclude(tPArr, pArr)) {
         dragNodesKeys.push(newKey);
       }
     });
@@ -386,9 +384,9 @@ class Tree extends React.Component {
       showIcon: props.showIcon,
       checkable: props.checkable,
       draggable: props.draggable,
-      dragOver: state.dragOverNodeKey === key && this.dropPos === 0,
-      dragOverGapTop: state.dragOverNodeKey === key && this.dropPos === -1,
-      dragOverGapBottom: state.dragOverNodeKey === key && this.dropPos === 1,
+      dragOver: state.dragOverNodeKey === key && this.dropPosition === 0,
+      dragOverGapTop: state.dragOverNodeKey === key && this.dropPosition === -1,
+      dragOverGapBottom: state.dragOverNodeKey === key && this.dropPosition === 1,
       expanded: state.expandedKeys.indexOf(key) !== -1,
       selected: state.selectedKeys.indexOf(key) !== -1,
       checked: this.checkedKeys.indexOf(key) !== -1,
@@ -398,7 +396,7 @@ class Tree extends React.Component {
       filterTreeNode: this.filterTreeNode.bind(this),
     };
     if (this.treeNodesStates[pos]) {
-      assign(cloneProps, this.treeNodesStates[pos].siblingPos);
+      assign(cloneProps, this.treeNodesStates[pos].siblingPosition);
     }
     return React.cloneElement(child, cloneProps);
   }

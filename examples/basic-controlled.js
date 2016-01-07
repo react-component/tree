@@ -15,7 +15,7 @@ const Demo = React.createClass({
   },
   getInitialState() {
     return {
-      expandedKeys: getFilterExpandedKeys(gData, ['0-0-0']),
+      expandedKeys: getFilterExpandedKeys(gData, ['0-0-0', '0-0-1']),
       checkedKeys: ['0-0-0'],
       selectedKeys: [],
     };
