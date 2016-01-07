@@ -46,7 +46,7 @@ webpackJsonp([2],{
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      expandedKeys: (0, _util.getFilterExpandedKeys)(_util.gData, ['0-0-0']),
+	      expandedKeys: (0, _util.getFilterExpandedKeys)(_util.gData, ['0-0-0', '0-0-1']),
 	      checkedKeys: ['0-0-0'],
 	      selectedKeys: []
 	    };
@@ -166,11 +166,12 @@ webpackJsonp([2],{
 	generateData(z);
 	
 	function isInclude(smallArray, bigArray) {
-	  // attention: [0,0,1] [0,0,10]
 	  return smallArray.every(function (ii, i) {
 	    return ii === bigArray[i];
 	  });
 	}
+	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
+	
 	function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
 	  var nodeKey = node.props.eventKey;
 	  var newCks = [].concat(_toConsumableArray(checkedKeys));

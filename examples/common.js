@@ -19835,17 +19835,14 @@
 	      var pageY = e.pageY;
 	      var gapHeight = 2;
 	      if (pageY > offsetTop + offsetHeight - gapHeight) {
-	        // console.log('enter gap');
-	        this.dropPos = 1;
+	        this.dropPosition = 1;
 	        return 1;
 	      }
 	      if (pageY < offsetTop + gapHeight) {
-	        // console.log('ee');
-	        this.dropPos = -1;
+	        this.dropPosition = -1;
 	        return -1;
 	      }
-	      // console.log('xx');
-	      this.dropPos = 0;
+	      this.dropPosition = 0;
 	      return 0;
 	    }
 	  }, {
@@ -19858,7 +19855,6 @@
 	        });
 	        return;
 	      }
-	      // console.log('en...', this.dropPos);
 	      var st = {
 	        dragOverNodeKey: treeNode.props.eventKey
 	      };
@@ -19903,9 +19899,9 @@
 	        node: treeNode,
 	        dragNode: this.dragNode,
 	        dragNodesKeys: [].concat(_toConsumableArray(this.dragNodesKeys)),
-	        dropPos: this.dropPos + Number(posArr[posArr.length - 1])
+	        dropPosition: this.dropPosition + Number(posArr[posArr.length - 1])
 	      };
-	      if (this.dropPos !== 0) {
+	      if (this.dropPosition !== 0) {
 	        res.dropToGap = true;
 	      }
 	      if ('expandedKeys' in this.props) {
@@ -20064,11 +20060,11 @@
 	    key: 'getFilterExpandedKeys',
 	    value: function getFilterExpandedKeys(props) {
 	      var defaultExpandedKeys = props.defaultExpandedKeys;
-	      var expandedPosArr = [];
+	      var expandedPositionArr = [];
 	      if (props.autoExpandParent) {
 	        (0, _util.loopAllChildren)(props.children, function (item, index, pos, newKey) {
 	          if (defaultExpandedKeys.indexOf(newKey) > -1) {
-	            expandedPosArr.push(pos);
+	            expandedPositionArr.push(pos);
 	          }
 	        });
 	      }
@@ -20077,8 +20073,8 @@
 	        if (props.defaultExpandAll) {
 	          filterExpandedKeys.push(newKey);
 	        } else if (props.autoExpandParent) {
-	          expandedPosArr.forEach(function (p) {
-	            if ((pos.split('-').length < p.split('-').length && p.indexOf(pos) === 0 || pos === p) && filterExpandedKeys.indexOf(newKey) === -1) {
+	          expandedPositionArr.forEach(function (p) {
+	            if ((p.split('-').length > pos.split('-').length && (0, _util.isInclude)(pos.split('-'), p.split('-')) || pos === p) && filterExpandedKeys.indexOf(newKey) === -1) {
 	              filterExpandedKeys.push(newKey);
 	            }
 	          });
@@ -20144,8 +20140,10 @@
 	    key: 'getDragNodes',
 	    value: function getDragNodes(treeNode) {
 	      var dragNodesKeys = [];
+	      var tPArr = treeNode.props.pos.split('-');
 	      (0, _util.loopAllChildren)(this.props.children, function (item, index, pos, newKey) {
-	        if (pos.indexOf(treeNode.props.pos) === 0) {
+	        var pArr = pos.split('-');
+	        if (treeNode.props.pos === pos || tPArr.length < pArr.length && (0, _util.isInclude)(tPArr, pArr)) {
 	          dragNodesKeys.push(newKey);
 	        }
 	      });
@@ -20199,9 +20197,9 @@
 	        showIcon: props.showIcon,
 	        checkable: props.checkable,
 	        draggable: props.draggable,
-	        dragOver: state.dragOverNodeKey === key && this.dropPos === 0,
-	        dragOverGapTop: state.dragOverNodeKey === key && this.dropPos === -1,
-	        dragOverGapBottom: state.dragOverNodeKey === key && this.dropPos === 1,
+	        dragOver: state.dragOverNodeKey === key && this.dropPosition === 0,
+	        dragOverGapTop: state.dragOverNodeKey === key && this.dropPosition === -1,
+	        dragOverGapBottom: state.dragOverNodeKey === key && this.dropPosition === 1,
 	        expanded: state.expandedKeys.indexOf(key) !== -1,
 	        selected: state.selectedKeys.indexOf(key) !== -1,
 	        checked: this.checkedKeys.indexOf(key) !== -1,
@@ -20211,7 +20209,7 @@
 	        filterTreeNode: this.filterTreeNode.bind(this)
 	      };
 	      if (this.treeNodesStates[pos]) {
-	        (0, _objectAssign2['default'])(cloneProps, this.treeNodesStates[pos].siblingPos);
+	        (0, _objectAssign2['default'])(cloneProps, this.treeNodesStates[pos].siblingPosition);
 	      }
 	      return _react2['default'].cloneElement(child, cloneProps);
 	    }
@@ -20412,7 +20410,8 @@
 	exports.browser = browser;
 	exports.getOffset = getOffset;
 	exports.loopAllChildren = loopAllChildren;
-	exports.filterMinPos = filterMinPos;
+	exports.filterMinPosition = filterMinPosition;
+	exports.isInclude = isInclude;
 	exports.getTreeNodesStates = getTreeNodesStates;
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -20492,15 +20491,15 @@
 	  return len;
 	}
 	
-	function getSiblingPos(index, len, siblingPos) {
+	function getSiblingPosition(index, len, siblingPosition) {
 	  if (len === 1) {
-	    siblingPos.first = true;
-	    siblingPos.last = true;
+	    siblingPosition.first = true;
+	    siblingPosition.last = true;
 	  } else {
-	    siblingPos.first = index === 0;
-	    siblingPos.last = index === len - 1;
+	    siblingPosition.first = index === 0;
+	    siblingPosition.last = index === len - 1;
 	  }
-	  return siblingPos;
+	  return siblingPosition;
 	}
 	
 	function loopAllChildren(childs, callback) {
@@ -20511,13 +20510,13 @@
 	      if (item.props.children && item.type === _TreeNode2['default']) {
 	        loop(item.props.children, pos);
 	      }
-	      callback(item, index, pos, item.key || pos, getSiblingPos(index, len, {}));
+	      callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}));
 	    });
 	  };
 	  loop(childs, 0);
 	}
 	
-	function filterMinPos(arr) {
+	function filterMinPosition(arr) {
 	  var a = [];
 	  arr.forEach(function (item) {
 	    var b = a.filter(function (i) {
@@ -20530,9 +20529,17 @@
 	  return a;
 	}
 	
-	// console.log(filterMinPos(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
+	// console.log(filterMinPosition(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
 	
-	function handleCheckState(obj, checkedPosArr, checkIt) {
+	function isInclude(smallArray, bigArray) {
+	  return smallArray.every(function (ii, i) {
+	    return ii === bigArray[i];
+	  });
+	}
+	
+	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
+	
+	function handleCheckState(obj, checkedPositionArr, checkIt) {
 	  var stripTail = function stripTail(str) {
 	    var arr = str.match(/(.+)(-[^-]+)$/);
 	    var st = '';
@@ -20541,30 +20548,33 @@
 	    }
 	    return st;
 	  };
-	  // stripTail('x-xx-sss-xx')
-	  var splitPos = function splitPos(pos) {
+	  // console.log(stripTail('0-101-000'));
+	  var splitPosition = function splitPosition(pos) {
 	    return pos.split('-');
 	  };
-	  checkedPosArr.forEach(function (_pos) {
+	  checkedPositionArr.forEach(function (_pos) {
 	    // 设置子节点，全选或全不选
+	    var _posArr = splitPosition(_pos);
 	    Object.keys(obj).forEach(function (i) {
-	      if (splitPos(i).length > splitPos(_pos).length && i.indexOf(_pos) === 0) {
+	      var iArr = splitPosition(i);
+	      if (iArr.length > _posArr.length && isInclude(_posArr, iArr)) {
 	        obj[i].checkPart = false;
 	        obj[i].checked = checkIt;
 	      }
 	    });
 	    // 循环设置父节点的 选中 或 半选状态
 	    var loop = function loop(__pos) {
-	      var _posLen = splitPos(__pos).length;
+	      var _posLen = splitPosition(__pos).length;
 	      if (_posLen <= 2) {
 	        // e.g. '0-0', '0-1'
 	        return;
 	      }
 	      var sibling = 0;
 	      var siblingChecked = 0;
-	      var parentPos = stripTail(__pos);
+	      var parentPosition = stripTail(__pos);
 	      Object.keys(obj).forEach(function (i) {
-	        if (splitPos(i).length === _posLen && i.indexOf(parentPos) === 0) {
+	        var iArr = splitPosition(i);
+	        if (iArr.length === _posLen && isInclude(splitPosition(parentPosition), iArr)) {
 	          sibling++;
 	          if (obj[i].checked) {
 	            siblingChecked++;
@@ -20573,7 +20583,7 @@
 	          }
 	        }
 	      });
-	      var parent = obj[parentPos];
+	      var parent = obj[parentPosition];
 	      // sibling 不会等于0
 	      // 全不选 - 全选 - 半选
 	      if (siblingChecked === 0) {
@@ -20586,7 +20596,7 @@
 	        parent.checkPart = true;
 	        parent.checked = false;
 	      }
-	      loop(parentPos);
+	      loop(parentPosition);
 	    };
 	    loop(_pos);
 	  });
@@ -20613,24 +20623,24 @@
 	}
 	
 	function getTreeNodesStates(children, checkedKeys, checkIt, unCheckKey) {
-	  var checkedPos = [];
+	  var checkedPosition = [];
 	  var treeNodesStates = {};
-	  loopAllChildren(children, function (item, index, pos, newKey, siblingPos) {
+	  loopAllChildren(children, function (item, index, pos, newKey, siblingPosition) {
 	    var checked = false;
 	    if (checkedKeys.indexOf(newKey) !== -1) {
 	      checked = true;
-	      checkedPos.push(pos);
+	      checkedPosition.push(pos);
 	    }
 	    treeNodesStates[pos] = {
 	      node: item,
 	      key: newKey,
 	      checked: checked,
 	      checkPart: false,
-	      siblingPos: siblingPos
+	      siblingPosition: siblingPosition
 	    };
 	  });
 	  // debugger
-	  handleCheckState(treeNodesStates, filterMinPos(checkedPos.sort()), true);
+	  handleCheckState(treeNodesStates, filterMinPosition(checkedPosition.sort()), true);
 	
 	  if (!checkIt && unCheckKey) {
 	    var pos = undefined;
