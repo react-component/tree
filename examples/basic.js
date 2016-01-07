@@ -37,7 +37,7 @@ webpackJsonp([1],{
 	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      keys: ['0-1-1', 'random2']
+	      keys: ['0-0-0', '0-0-1']
 	    };
 	  },
 	  getInitialState: function getInitialState() {
@@ -61,7 +61,7 @@ webpackJsonp([1],{
 	  change: function change() {
 	    var keys = this.props.keys;
 	    this.setState({
-	      defaultExpandedKeys: ['0-1', keys[this.state.switchIt ? 0 : 1]],
+	      defaultExpandedKeys: ['0-0', keys[this.state.switchIt ? 0 : 1]],
 	      defaultSelectedKeys: [keys[this.state.switchIt ? 0 : 1]],
 	      defaultCheckedKeys: [keys[this.state.switchIt ? 1 : 0]],
 	      switchIt: !this.state.switchIt
@@ -86,21 +86,21 @@ webpackJsonp([1],{
 	          onSelect: this.onSelect, onCheck: this.onCheck },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
-	          { title: 'parent 1', key: '0-1' },
+	          { title: 'parent 1', key: '0-0' },
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { title: 'parent 1-0', key: '0-1-1', disabled: true },
-	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: 'random', disableCheckbox: true }),
-	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf' })
+	            { title: 'parent 1-0', key: '0-0-0', disabled: true },
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: '0-0-0-0', disableCheckbox: true }),
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: '0-0-0-1' })
 	          ),
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { title: 'parent 1-1', key: 'random2' },
+	            { title: 'parent 1-1', key: '0-0-1' },
 	            _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
 	                'span',
 	                { style: { color: 'red' } },
 	                'sss'
-	              ) })
+	              ), key: '0-0-1-0' })
 	          )
 	        )
 	      ),

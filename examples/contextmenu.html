@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>contextmenu.js - example - rc-tree@0.25.3</title>
+  <title>contextmenu.js - example - rc-tree@0.25.4</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.25.3</h1>
+    <h1>rc-tree@0.25.4</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -272,16 +272,29 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> assign <span class="hljs-keyword">from</span> <span class="hljs-string">'object-assign'</span>;
 <span class="hljs-keyword">import</span> Tooltip <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tooltip'</span>;
 
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">contains</span>(<span class="hljs-params">root, n</span>) </span>{
+  <span class="hljs-keyword">let</span> node = n;
+  <span class="hljs-keyword">while</span> (node) {
+    <span class="hljs-keyword">if</span> (node === root) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    node = node.parentNode;
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+
 <span class="hljs-keyword">const</span> Demo = React.createClass({
   propTypes: {},
   componentDidMount() {
-    <span class="hljs-keyword">this</span>.getTipContainer();
+    <span class="hljs-keyword">this</span>.getContainer();
+    <span class="hljs-comment">// console.log(ReactDOM.findDOMNode(this), this.cmContainer);</span>
+    <span class="hljs-built_in">console</span>.log(contains(ReactDOM.findDOMNode(<span class="hljs-keyword">this</span>), <span class="hljs-keyword">this</span>.cmContainer));
   },
   componentWillUnmount() {
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.tipContainer) {
-      ReactDOM.unmountComponentAtNode(<span class="hljs-keyword">this</span>.tipContainer);
-      <span class="hljs-built_in">document</span>.body.removeChild(<span class="hljs-keyword">this</span>.tipContainer);
-      <span class="hljs-keyword">this</span>.tipContainer = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.cmContainer) {
+      ReactDOM.unmountComponentAtNode(<span class="hljs-keyword">this</span>.cmContainer);
+      <span class="hljs-built_in">document</span>.body.removeChild(<span class="hljs-keyword">this</span>.cmContainer);
+      <span class="hljs-keyword">this</span>.cmContainer = <span class="hljs-literal">null</span>;
     }
   },
   onSelect(info) {
@@ -289,41 +302,40 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   },
   onRightClick(info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'right click'</span>, info);
-    <span class="hljs-keyword">this</span>.setPosition(info);
-    <span class="hljs-keyword">this</span>.renderToolTip(info.node.props.title);
+    <span class="hljs-keyword">this</span>.renderCm(info);
   },
   onMouseEnter(info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'enter'</span>, info);
-    <span class="hljs-keyword">this</span>.setPosition(info);
-    <span class="hljs-keyword">this</span>.renderToolTip(info.node.props.title);
+    <span class="hljs-keyword">this</span>.renderCm(info);
   },
   onMouseLeave(info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'leave'</span>, info);
   },
-  setPosition(info) {
-    assign(<span class="hljs-keyword">this</span>.tipContainer.style, {
+  getContainer() {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.cmContainer) {
+      <span class="hljs-keyword">this</span>.cmContainer = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+      <span class="hljs-built_in">document</span>.body.appendChild(<span class="hljs-keyword">this</span>.cmContainer);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.cmContainer;
+  },
+  renderCm(info) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.toolTip) {
+      ReactDOM.unmountComponentAtNode(<span class="hljs-keyword">this</span>.cmContainer);
+      <span class="hljs-keyword">this</span>.toolTip = <span class="hljs-literal">null</span>;
+    }
+    <span class="hljs-keyword">this</span>.toolTip = (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Tooltip</span> <span class="hljs-attribute">trigger</span>=<span class="hljs-value">"click"</span> <span class="hljs-attribute">placement</span>=<span class="hljs-value">"bottomRight"</span> <span class="hljs-attribute">prefixCls</span>=<span class="hljs-value">"rc-tree-contextmenu"</span>
+             <span class="hljs-attribute">defaultVisible</span> <span class="hljs-attribute">overlay</span>=<span class="hljs-value">{&lt;h4</span>&gt;</span>{info.node.props.title}<span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">Tooltip</span>&gt;</span>)</span>;
+
+    <span class="hljs-keyword">const</span> container = <span class="hljs-keyword">this</span>.getContainer();
+    assign(<span class="hljs-keyword">this</span>.cmContainer.style, {
       position: <span class="hljs-string">'absolute'</span>,
       left: info.event.pageX + <span class="hljs-string">'px'</span>,
       top: info.event.pageY + <span class="hljs-string">'px'</span>,
     });
-  },
-  getTipContainer() {
-    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.tipContainer) {
-      <span class="hljs-keyword">this</span>.tipContainer = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
-      <span class="hljs-built_in">document</span>.body.appendChild(<span class="hljs-keyword">this</span>.tipContainer);
-    }
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.tipContainer;
-  },
-  renderToolTip(txt) {
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.toolTip) {
-      ReactDOM.unmountComponentAtNode(<span class="hljs-keyword">this</span>.tipContainer);
-      <span class="hljs-keyword">this</span>.toolTip = <span class="hljs-literal">null</span>;
-    }
-    <span class="hljs-keyword">this</span>.toolTip = (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Tooltip</span> <span class="hljs-attribute">trigger</span>=<span class="hljs-value">"click"</span> <span class="hljs-attribute">placement</span>=<span class="hljs-value">"bottomRight"</span> <span class="hljs-attribute">prefixCls</span>=<span class="hljs-value">"rc-tree-contextmenu"</span>
-             <span class="hljs-attribute">defaultVisible</span> <span class="hljs-attribute">overlay</span>=<span class="hljs-value">{&lt;h4</span>&gt;</span>{txt}<span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>}&gt;
-        <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">Tooltip</span>&gt;</span>)</span>;
-    ReactDOM.render(<span class="hljs-keyword">this</span>.toolTip, <span class="hljs-keyword">this</span>.getTipContainer());
+
+    ReactDOM.render(<span class="hljs-keyword">this</span>.toolTip, container);
   },
   render() {
     <span class="hljs-keyword">return</span> (

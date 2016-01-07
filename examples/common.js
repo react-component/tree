@@ -19815,9 +19815,6 @@
 	      if (expandedKeys) {
 	        // Controlled expand, save and then reset
 	        this.getOriginExpandedKeys();
-	        // if ('expandedKeys' in this.props) {
-	        //   this._originExpandedKeys = [...this.state.expandedKeys];
-	        // }
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
@@ -19884,7 +19881,10 @@
 	    key: 'onDrop',
 	    value: function onDrop(e, treeNode) {
 	      var key = treeNode.props.eventKey;
-	      if (this.dragNode.props.eventKey === key) {
+	      if (this.dragNodesKeys.indexOf(key) > -1) {
+	        if (console.warn) {
+	          console.warn('can not drop to dragNode and its children');
+	        }
 	        return;
 	      }
 	      var st = {

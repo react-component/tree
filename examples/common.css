@@ -21,10 +21,6 @@
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
-.rc-tree li.filter-node > a {
-  color: #A60000!important;
-  font-weight: bold!important;
-}
 .rc-tree li.drag-over > a[draggable] {
   background-color: #316AC5;
   color: white;
@@ -36,6 +32,10 @@
 }
 .rc-tree li.drag-over-gap-bottom > a[draggable] {
   border-bottom: 2px blue solid;
+}
+.rc-tree li.filter-node > a {
+  color: #A60000!important;
+  font-weight: bold!important;
 }
 .rc-tree li ul {
   margin: 0;
@@ -152,8 +152,10 @@
   display: block;
 }
 .rc-tree-treenode-disabled > span,
-.rc-tree-treenode-disabled > a {
-  color: gray;
+.rc-tree-treenode-disabled > a,
+.rc-tree-treenode-disabled > a span {
+  color: #ccc;
+  cursor: not-allowed;
 }
 .rc-tree-node-selected {
   background-color: #ffe6b0;
