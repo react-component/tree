@@ -19804,8 +19804,6 @@
 	  }, {
 	    key: 'onDragStart',
 	    value: function onDragStart(e, treeNode) {
-	      // console.log(this.refs.tree.parentNode, treeNode.refs.selectHandle);
-	      // this.createDragElement(treeNode);
 	      this.dragNode = treeNode;
 	      this.dragNodesKeys = this.getDragNodes(treeNode);
 	      var st = {
@@ -19822,6 +19820,12 @@
 	        event: e,
 	        node: treeNode
 	      });
+	      try {
+	        // ie throw error
+	        e.dataTransfer.setData('text/plain', 'firefox-need-it');
+	      } finally {
+	        // empty
+	      }
 	    }
 	  }, {
 	    key: 'onDragEnterGap',
@@ -20792,6 +20796,7 @@
 	  }, {
 	    key: 'onDrop',
 	    value: function onDrop(e) {
+	      e.preventDefault();
 	      e.stopPropagation();
 	      this.setState({
 	        dragNodeHighlight: false

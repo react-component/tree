@@ -10,7 +10,7 @@
   outline: 0;
 }
 .rc-tree li a[draggable],
-.rc-tree li a[draggable=true] {
+.rc-tree li a[draggable="true"] {
   color: #333;
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -22,9 +22,9 @@
   -webkit-user-drag: element;
 }
 .rc-tree li.drag-over > a[draggable] {
-  background-color: #316AC5;
+  background-color: #316ac5;
   color: white;
-  border: 1px #316AC5 solid;
+  border: 1px #316ac5 solid;
   opacity: 0.8;
 }
 .rc-tree li.drag-over-gap-top > a[draggable] {
@@ -34,7 +34,7 @@
   border-bottom: 2px blue solid;
 }
 .rc-tree li.filter-node > a {
-  color: #A60000!important;
+  color: #a60000!important;
   font-weight: bold!important;
 }
 .rc-tree li ul {
