@@ -6,16 +6,29 @@ import Tree, {TreeNode} from 'rc-tree';
 import assign from 'object-assign';
 import Tooltip from 'rc-tooltip';
 
+function contains(root, n) {
+  let node = n;
+  while (node) {
+    if (node === root) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
+}
+
 const Demo = React.createClass({
   propTypes: {},
   componentDidMount() {
-    this.getTipContainer();
+    this.getContainer();
+    // console.log(ReactDOM.findDOMNode(this), this.cmContainer);
+    console.log(contains(ReactDOM.findDOMNode(this), this.cmContainer));
   },
   componentWillUnmount() {
-    if (this.tipContainer) {
-      ReactDOM.unmountComponentAtNode(this.tipContainer);
-      document.body.removeChild(this.tipContainer);
-      this.tipContainer = null;
+    if (this.cmContainer) {
+      ReactDOM.unmountComponentAtNode(this.cmContainer);
+      document.body.removeChild(this.cmContainer);
+      this.cmContainer = null;
     }
   },
   onSelect(info) {
@@ -23,41 +36,40 @@ const Demo = React.createClass({
   },
   onRightClick(info) {
     console.log('right click', info);
-    this.setPosition(info);
-    this.renderToolTip(info.node.props.title);
+    this.renderCm(info);
   },
   onMouseEnter(info) {
     console.log('enter', info);
-    this.setPosition(info);
-    this.renderToolTip(info.node.props.title);
+    this.renderCm(info);
   },
   onMouseLeave(info) {
     console.log('leave', info);
   },
-  setPosition(info) {
-    assign(this.tipContainer.style, {
+  getContainer() {
+    if (!this.cmContainer) {
+      this.cmContainer = document.createElement('div');
+      document.body.appendChild(this.cmContainer);
+    }
+    return this.cmContainer;
+  },
+  renderCm(info) {
+    if (this.toolTip) {
+      ReactDOM.unmountComponentAtNode(this.cmContainer);
+      this.toolTip = null;
+    }
+    this.toolTip = (<Tooltip trigger="click" placement="bottomRight" prefixCls="rc-tree-contextmenu"
+             defaultVisible overlay={<h4>{info.node.props.title}</h4>}>
+        <span></span>
+    </Tooltip>);
+
+    const container = this.getContainer();
+    assign(this.cmContainer.style, {
       position: 'absolute',
       left: info.event.pageX + 'px',
       top: info.event.pageY + 'px',
     });
-  },
-  getTipContainer() {
-    if (!this.tipContainer) {
-      this.tipContainer = document.createElement('div');
-      document.body.appendChild(this.tipContainer);
-    }
-    return this.tipContainer;
-  },
-  renderToolTip(txt) {
-    if (this.toolTip) {
-      ReactDOM.unmountComponentAtNode(this.tipContainer);
-      this.toolTip = null;
-    }
-    this.toolTip = (<Tooltip trigger="click" placement="bottomRight" prefixCls="rc-tree-contextmenu"
-             defaultVisible overlay={<h4>{txt}</h4>}>
-        <span></span>
-    </Tooltip>);
-    ReactDOM.render(this.toolTip, this.getTipContainer());
+
+    ReactDOM.render(this.toolTip, container);
   },
   render() {
     return (

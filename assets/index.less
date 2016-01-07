@@ -18,12 +18,6 @@
       -khtml-user-drag: element;
       -webkit-user-drag: element;
     }
-    &.filter-node {
-      > a {
-        color: #A60000!important;
-        font-weight: bold!important;
-      }
-    }
     &.drag-over {
       > a[draggable] {
         background-color: #316AC5;
@@ -40,6 +34,12 @@
     &.drag-over-gap-bottom {
       > a[draggable] {
         border-bottom: 2px blue solid;
+      }
+    }
+    &.filter-node {
+      > a {
+        color: #A60000!important;
+        font-weight: bold!important;
       }
     }
     ul {
@@ -82,8 +82,6 @@
         background: url(https://t.alipayobjects.com/images/rmsweb/T1YxhiXgJbXXXXXXXX.gif) no-repeat scroll 0 0 transparent;
       }
       &.@{treePrefixCls}-switcher {
-        &-disabled {
-        }
         &.@{treePrefixCls}-roots_open {
           background-position: -93px -56px;
         }
@@ -164,8 +162,9 @@
   }
   &-treenode-disabled {
     >span,
-    >a {
-      color: gray;
+    >a, >a span {
+      color: #ccc;
+      cursor: not-allowed;
     }
   }
   &-node-selected {

@@ -9,7 +9,7 @@ const Demo = React.createClass({
   },
   getDefaultProps() {
     return {
-      keys: ['0-1-1', 'random2'],
+      keys: ['0-0-0', '0-0-1'],
     };
   },
   getInitialState() {
@@ -33,7 +33,7 @@ const Demo = React.createClass({
   change() {
     const keys = this.props.keys;
     this.setState({
-      defaultExpandedKeys: ['0-1', keys[this.state.switchIt ? 0 : 1]],
+      defaultExpandedKeys: ['0-0', keys[this.state.switchIt ? 0 : 1]],
       defaultSelectedKeys: [keys[this.state.switchIt ? 0 : 1]],
       defaultCheckedKeys: [keys[this.state.switchIt ? 1 : 0]],
       switchIt: !this.state.switchIt,
@@ -48,13 +48,13 @@ const Demo = React.createClass({
           defaultSelectedKeys={this.state.defaultSelectedKeys}
           defaultCheckedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect} onCheck={this.onCheck}>
-        <TreeNode title="parent 1" key="0-1">
-          <TreeNode title="parent 1-0" key="0-1-1" disabled>
-            <TreeNode title="leaf" key="random" disableCheckbox />
-            <TreeNode title="leaf" />
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="parent 1-0" key="0-0-0" disabled>
+            <TreeNode title="leaf" key="0-0-0-0" disableCheckbox />
+            <TreeNode title="leaf" key="0-0-0-1" />
           </TreeNode>
-          <TreeNode title="parent 1-1" key="random2">
-            <TreeNode title={<span style={{color: 'red'}}>sss</span>} />
+          <TreeNode title="parent 1-1" key="0-0-1">
+            <TreeNode title={<span style={{color: 'red'}}>sss</span>} key="0-0-1-0" />
           </TreeNode>
         </TreeNode>
       </Tree>
