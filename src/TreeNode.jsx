@@ -299,6 +299,8 @@ class TreeNode extends React.Component {
 }
 TreeNode.propTypes = {
   prefixCls: PropTypes.string,
+  disabled: PropTypes.bool,
+  disableCheckbox: PropTypes.bool,
   expanded: PropTypes.bool,
   isLeaf: PropTypes.bool,
   root: PropTypes.object,
