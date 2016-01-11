@@ -21045,6 +21045,8 @@
 	
 	TreeNode.propTypes = {
 	  prefixCls: _react.PropTypes.string,
+	  disabled: _react.PropTypes.bool,
+	  disableCheckbox: _react.PropTypes.bool,
 	  expanded: _react.PropTypes.bool,
 	  isLeaf: _react.PropTypes.bool,
 	  root: _react.PropTypes.object,
