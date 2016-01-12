@@ -134,8 +134,7 @@
 .rc-tree li span.rc-tree-checkbox.rc-tree-checkbox-indeterminate.rc-tree-checkbox-disabled::after {
   content: ' ';
   -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-      transform: scale(1);
+  transform: scale(1);
   position: absolute;
   left: 3px;
   top: 5px;

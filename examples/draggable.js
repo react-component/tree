@@ -3,7 +3,7 @@ webpackJsonp([4],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(223);
+	module.exports = __webpack_require__(222);
 
 
 /***/ },
@@ -71,8 +71,8 @@ webpackJsonp([4],{
 	      allCheckedNodesKeys.forEach(function (item) {
 	        var iArr = item.pos.split('-');
 	        if (item.pos === nodePos || nArr.length > iArr.length && isInclude(iArr, nArr) || nArr.length < iArr.length && isInclude(nArr, iArr)) {
-	          // 过滤掉 非父级节点 和 所有子节点。
-	          // 因为 node节点 不选时，其 非父级节点 和 所有子节点 都不选。
+	          // 过滤掉 父级节点 和 所有子节点。
+	          // 因为 node节点 不选时，其 父级节点 和 所有子节点 都不选。
 	          return;
 	        }
 	        newCks.push(item.key);
@@ -123,7 +123,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 223:
+/***/ 222:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -134,7 +134,7 @@ webpackJsonp([4],{
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(224);
+	__webpack_require__(223);
 	
 	var _react = __webpack_require__(3);
 	
@@ -254,7 +254,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 224:
+/***/ 223:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

@@ -189,8 +189,8 @@ webpackJsonp([2],{
 	      allCheckedNodesKeys.forEach(function (item) {
 	        var iArr = item.pos.split('-');
 	        if (item.pos === nodePos || nArr.length > iArr.length && isInclude(iArr, nArr) || nArr.length < iArr.length && isInclude(nArr, iArr)) {
-	          // 过滤掉 非父级节点 和 所有子节点。
-	          // 因为 node节点 不选时，其 非父级节点 和 所有子节点 都不选。
+	          // 过滤掉 父级节点 和 所有子节点。
+	          // 因为 node节点 不选时，其 父级节点 和 所有子节点 都不选。
 	          return;
 	        }
 	        newCks.push(item.key);

@@ -319,8 +319,8 @@ generateData(z);
       <span class="hljs-keyword">if</span> (item.pos === nodePos ||
         nArr.length &gt; iArr.length &amp;&amp; isInclude(iArr, nArr) ||
         nArr.length &lt; iArr.length &amp;&amp; isInclude(nArr, iArr)) {
-        <span class="hljs-comment">// 过滤掉 非父级节点 和 所有子节点。</span>
-        <span class="hljs-comment">// 因为 node节点 不选时，其 非父级节点 和 所有子节点 都不选。</span>
+        <span class="hljs-comment">// 过滤掉 父级节点 和 所有子节点。</span>
+        <span class="hljs-comment">// 因为 node节点 不选时，其 父级节点 和 所有子节点 都不选。</span>
         <span class="hljs-keyword">return</span>;
       }
       newCks.push(item.key);
