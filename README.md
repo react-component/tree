@@ -80,11 +80,11 @@ see examples
 |onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
 |onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |
 |draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool | false |
-|onTreeDragStart | it execs when fire the tree's dragstart event | function({event,node}) | - |
-|onTreeDragEnter | it execs when fire the tree's dragenter event | function({event,node,expandedKeys}) | - |
-|onTreeDragOver | it execs when fire the tree's dragover event | function({event,node}) | - |
-|onTreeDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
-|onTreeDrop | it execs when fire the tree's drop event | function({event, node, dragNode, dragNodesKeys}) | - |
+|onDragStart | it execs when fire the tree's dragstart event | function({event,node}) | - |
+|onDragEnter | it execs when fire the tree's dragenter event | function({event,node,expandedKeys}) | - |
+|onDragOver | it execs when fire the tree's dragover event | function({event,node}) | - |
+|onDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
+|onDrop | it execs when fire the tree's drop event | function({event, node, dragNode, dragNodesKeys}) | - |
 
 ### TreeNode props
 

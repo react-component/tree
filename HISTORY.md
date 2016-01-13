@@ -1,6 +1,9 @@
 # History
 ---
 
+## 0.26.x / 2016-01-13
+- change drag api (from `onTreeXX` to `onXX`)
+
 ## 0.23.x / 2015-12-31
 - change onDataLoaded api to loadData
 

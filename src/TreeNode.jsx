@@ -14,7 +14,18 @@ const defaultTitle = '---';
 class TreeNode extends React.Component {
   constructor(props) {
     super(props);
-    ['onExpand', 'onCheck', 'onContextMenu', 'onMouseEnter', 'onMouseLeave', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDragLeave', 'onDrop'].forEach((m)=> {
+    [
+      'onExpand',
+      'onCheck',
+      'onContextMenu',
+      'onMouseEnter',
+      'onMouseLeave',
+      'onDragStart',
+      'onDragEnter',
+      'onDragOver',
+      'onDragLeave',
+      'onDrop',
+    ].forEach((m)=> {
       this[m] = this[m].bind(this);
     });
     this.state = {

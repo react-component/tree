@@ -52,7 +52,7 @@ class Tree extends React.Component {
       st.expandedKeys = expandedKeys;
     }
     this.setState(st);
-    this.props.onTreeDragStart({
+    this.props.onDragStart({
       event: e,
       node: treeNode,
     });
@@ -97,17 +97,17 @@ class Tree extends React.Component {
       st.expandedKeys = expandedKeys;
     }
     this.setState(st);
-    this.props.onTreeDragEnter({
+    this.props.onDragEnter({
       event: e,
       node: treeNode,
       expandedKeys: expandedKeys && [...expandedKeys] || [...this.state.expandedKeys],
     });
   }
   onDragOver(e, treeNode) {
-    this.props.onTreeDragOver({event: e, node: treeNode});
+    this.props.onDragOver({event: e, node: treeNode});
   }
   onDragLeave(e, treeNode) {
-    this.props.onTreeDragLeave({event: e, node: treeNode});
+    this.props.onDragLeave({event: e, node: treeNode});
   }
   onDrop(e, treeNode) {
     const key = treeNode.props.eventKey;
@@ -137,7 +137,7 @@ class Tree extends React.Component {
     if ('expandedKeys' in this.props) {
       res.originExpandedKeys = [...this._originExpandedKeys] || [...this.state.expandedKeys];
     }
-    this.props.onTreeDrop(res);
+    this.props.onDrop(res);
   }
   onExpand(treeNode) {
     const expand = !treeNode.props.expanded;
@@ -453,11 +453,11 @@ Tree.propTypes = {
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onRightClick: PropTypes.func,
-  onTreeDragStart: PropTypes.func,
-  onTreeDragEnter: PropTypes.func,
-  onTreeDragOver: PropTypes.func,
-  onTreeDragLeave: PropTypes.func,
-  onTreeDrop: PropTypes.func,
+  onDragStart: PropTypes.func,
+  onDragEnter: PropTypes.func,
+  onDragOver: PropTypes.func,
+  onDragLeave: PropTypes.func,
+  onDrop: PropTypes.func,
   filterTreeNode: PropTypes.func,
   openTransitionName: PropTypes.string,
   openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -478,11 +478,11 @@ Tree.defaultProps = {
   onExpand: noop,
   onCheck: noop,
   onSelect: noop,
-  onTreeDragStart: noop,
-  onTreeDragEnter: noop,
-  onTreeDragOver: noop,
-  onTreeDragLeave: noop,
-  onTreeDrop: noop,
+  onDragStart: noop,
+  onDragEnter: noop,
+  onDragOver: noop,
+  onDragLeave: noop,
+  onDrop: noop,
 };
 
 export default Tree;
