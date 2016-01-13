@@ -5,13 +5,13 @@
 - change drag api (from `onTreeXX` to `onXX`)
 
 ## 0.23.x / 2015-12-31
-- change onDataLoaded api to loadData
+- change `onDataLoaded` api to `loadData`
 
 ## 0.22.x / 2015-12-30
-- add expandedKeys/onExpand/filterTreeNode API
+- add `expandedKeys`/`onExpand`/`filterTreeNode` api
 
 ## 0.21.x / 2015-12-25
-- add onMouseEnter/onMouseLeave API
+- add `onMouseEnter`/`onMouseLeave` api
 
 ## 0.20.0 / 2015-12-01
 - add draggable feature #5

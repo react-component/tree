@@ -63,6 +63,12 @@ class TreeNode extends React.Component {
       dragNodeHighlight: true,
     });
     this.props.root.onDragStart(e, this);
+    try {
+      // ie throw error
+      e.dataTransfer.setData('text/plain', 'firefox-need-it');
+    } finally {
+      // empty
+    }
   }
   onDragEnter(e) {
     // console.log('dragenter', this.props.eventKey, e);

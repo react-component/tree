@@ -56,12 +56,6 @@ class Tree extends React.Component {
       event: e,
       node: treeNode,
     });
-    try {
-      // ie throw error
-      e.dataTransfer.setData('text/plain', 'firefox-need-it');
-    } finally {
-      // empty
-    }
   }
   onDragEnterGap(e, treeNode) {
     // console.log(e.pageY, getOffset(treeNode.refs.selectHandle), treeNode.props.eventKey);
@@ -111,17 +105,16 @@ class Tree extends React.Component {
   }
   onDrop(e, treeNode) {
     const key = treeNode.props.eventKey;
-    if (this.dragNodesKeys.indexOf(key) > -1) {
-      if (console.warn) {
-        console.warn('can not drop to dragNode and its children');
-      }
-      return;
-    }
-    const st = {
+    this.setState({
       dragOverNodeKey: '',
       dropNodeKey: key,
-    };
-    this.setState(st);
+    });
+    if (this.dragNodesKeys.indexOf(key) > -1) {
+      if (console.warn) {
+        console.warn('can not drop to dragNode(include it\'s children node)');
+      }
+      return false;
+    }
 
     const posArr = treeNode.props.pos.split('-');
     const res = {
