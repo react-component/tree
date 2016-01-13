@@ -159,14 +159,14 @@ webpackJsonp([4],{
 	      expandedKeys: ['0-0', '0-0-0', '0-0-0-0']
 	    };
 	  },
-	  onTreeDragStart: function onTreeDragStart() {},
-	  onTreeDragEnter: function onTreeDragEnter(info) {
+	  onDragStart: function onDragStart() {},
+	  onDragEnter: function onDragEnter(info) {
 	    // console.log(info);
 	    this.setState({
 	      expandedKeys: info.expandedKeys
 	    });
 	  },
-	  onTreeDrop: function onTreeDrop(info) {
+	  onDrop: function onDrop(info) {
 	    console.log(info);
 	    var dropKey = info.node.props.eventKey;
 	    var dragKey = info.dragNode.props.eventKey;
@@ -239,9 +239,9 @@ webpackJsonp([4],{
 	        _react2['default'].createElement(
 	          _rcTree2['default'],
 	          { defaultExpandedKeys: this.state.expandedKeys, draggable: true,
-	            onTreeDragStart: this.onTreeDragStart,
-	            onTreeDragEnter: this.onTreeDragEnter,
-	            onTreeDrop: this.onTreeDrop
+	            onDragStart: this.onDragStart,
+	            onDragEnter: this.onDragEnter,
+	            onDrop: this.onDrop
 	          },
 	          loop(this.state.gData)
 	        )

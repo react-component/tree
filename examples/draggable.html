@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>draggable.js - example - rc-tree@0.25.6</title>
+  <title>draggable.js - example - rc-tree@0.26.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.25.6</h1>
+    <h1>rc-tree@0.26.0</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -278,15 +278,15 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       expandedKeys: [<span class="hljs-string">'0-0'</span>, <span class="hljs-string">'0-0-0'</span>, <span class="hljs-string">'0-0-0-0'</span>],
     };
   },
-  onTreeDragStart() {
+  onDragStart() {
   },
-  onTreeDragEnter(info) {
+  onDragEnter(info) {
     <span class="hljs-comment">// console.log(info);</span>
     <span class="hljs-keyword">this</span>.setState({
       expandedKeys: info.expandedKeys,
     });
   },
-  onTreeDrop(info) {
+  onDrop(info) {
     <span class="hljs-built_in">console</span>.log(info);
     <span class="hljs-keyword">const</span> dropKey = info.node.props.eventKey;
     <span class="hljs-keyword">const</span> dragKey = info.dragNode.props.eventKey;
@@ -341,9 +341,9 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>drag a node into another node<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"draggable-container"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span> <span class="hljs-attribute">draggable</span>
-              <span class="hljs-attribute">onTreeDragStart</span>=<span class="hljs-value">{this.onTreeDragStart}</span>
-              <span class="hljs-attribute">onTreeDragEnter</span>=<span class="hljs-value">{this.onTreeDragEnter}</span>
-              <span class="hljs-attribute">onTreeDrop</span>=<span class="hljs-value">{this.onTreeDrop}</span>
+              <span class="hljs-attribute">onDragStart</span>=<span class="hljs-value">{this.onDragStart}</span>
+              <span class="hljs-attribute">onDragEnter</span>=<span class="hljs-value">{this.onDragEnter}</span>
+              <span class="hljs-attribute">onDrop</span>=<span class="hljs-value">{this.onDrop}</span>
               &gt;</span>
           {loop(this.state.gData)}
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>

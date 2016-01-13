@@ -19824,7 +19824,7 @@
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
-	      this.props.onTreeDragStart({
+	      this.props.onDragStart({
 	        event: e,
 	        node: treeNode
 	      });
@@ -19873,7 +19873,7 @@
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
-	      this.props.onTreeDragEnter({
+	      this.props.onDragEnter({
 	        event: e,
 	        node: treeNode,
 	        expandedKeys: expandedKeys && [].concat(_toConsumableArray(expandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys))
@@ -19882,12 +19882,12 @@
 	  }, {
 	    key: 'onDragOver',
 	    value: function onDragOver(e, treeNode) {
-	      this.props.onTreeDragOver({ event: e, node: treeNode });
+	      this.props.onDragOver({ event: e, node: treeNode });
 	    }
 	  }, {
 	    key: 'onDragLeave',
 	    value: function onDragLeave(e, treeNode) {
-	      this.props.onTreeDragLeave({ event: e, node: treeNode });
+	      this.props.onDragLeave({ event: e, node: treeNode });
 	    }
 	  }, {
 	    key: 'onDrop',
@@ -19919,7 +19919,7 @@
 	      if ('expandedKeys' in this.props) {
 	        res.originExpandedKeys = [].concat(_toConsumableArray(this._originExpandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys));
 	      }
-	      this.props.onTreeDrop(res);
+	      this.props.onDrop(res);
 	    }
 	  }, {
 	    key: 'onExpand',
@@ -20276,11 +20276,11 @@
 	  onMouseEnter: _react.PropTypes.func,
 	  onMouseLeave: _react.PropTypes.func,
 	  onRightClick: _react.PropTypes.func,
-	  onTreeDragStart: _react.PropTypes.func,
-	  onTreeDragEnter: _react.PropTypes.func,
-	  onTreeDragOver: _react.PropTypes.func,
-	  onTreeDragLeave: _react.PropTypes.func,
-	  onTreeDrop: _react.PropTypes.func,
+	  onDragStart: _react.PropTypes.func,
+	  onDragEnter: _react.PropTypes.func,
+	  onDragOver: _react.PropTypes.func,
+	  onDragLeave: _react.PropTypes.func,
+	  onDrop: _react.PropTypes.func,
 	  filterTreeNode: _react.PropTypes.func,
 	  openTransitionName: _react.PropTypes.string,
 	  openAnimation: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object])
@@ -20301,11 +20301,11 @@
 	  onExpand: noop,
 	  onCheck: noop,
 	  onSelect: noop,
-	  onTreeDragStart: noop,
-	  onTreeDragEnter: noop,
-	  onTreeDragOver: noop,
-	  onTreeDragLeave: noop,
-	  onTreeDrop: noop
+	  onDragStart: noop,
+	  onDragEnter: noop,
+	  onDragOver: noop,
+	  onDragLeave: noop,
+	  onDrop: noop
 	};
 	
 	exports['default'] = Tree;
