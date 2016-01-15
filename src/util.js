@@ -114,6 +114,7 @@ export function isInclude(smallArray, bigArray) {
 }
 // console.log(isInclude(['0', '1'], ['0', '10', '1']));
 
+// TODO 效率差, 需要缓存优化
 function handleCheckState(obj, checkedPositionArr, checkIt) {
   const stripTail = (str) => {
     const arr = str.match(/(.+)(-[^-]+)$/);
@@ -213,7 +214,8 @@ export function getTreeNodesStates(children, checkedKeys, checkIt, unCheckKey) {
       siblingPosition,
     };
   });
-// debugger
+
+  // debugger
   handleCheckState(treeNodesStates, filterMinPosition(checkedPosition.sort()), true);
 
   if (!checkIt && unCheckKey) {

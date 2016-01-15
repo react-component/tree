@@ -1,4 +1,4 @@
-// use jsx to render html, do not modify simple.html
+/* eslint react/no-multi-comp:0 */
 import 'rc-tree/assets/index.less';
 import 'rc-tree/assets/demo-dropdown.less';
 import React, {PropTypes} from 'react';
@@ -157,7 +157,7 @@ const Demo = React.createClass({
       visible: visible,
     });
   },
-  onSelect(info) {
+  onSelect(selectedKeys, info) {
     console.log('selected: ', info);
     this.setState({
       visible: false,

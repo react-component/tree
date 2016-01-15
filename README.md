@@ -61,6 +61,7 @@ see examples
 |prefixCls | prefix class | String | '' |
 |showLine | whether show line | bool | true |
 |showIcon | whether show icon | bool | true |
+|selectable | whether can be selected | bool | true |
 |multiple | whether multiple select | bool | false |
 |checkable | whether support checked | bool/React Node | false |
 |defaultExpandAll | expand all treeNodes | bool | false |
@@ -72,8 +73,8 @@ see examples
 |selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
 |onExpand | fire on treeNode expand or not | function(node, expanded, expandedKeys) | - |
-|onCheck | click the treeNode/checkbox to fire | function(e:{checked:bool, node, checkedKeys, event, allCheckedNodesKeys}) | - |
-|onSelect | click the treeNode to fire | function(e:{selected:bool, node, selectedKeys, event}) | - |
+|onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked:bool, node, event}) | - |
+|onSelect | click the treeNode to fire | function(selectedKeys, e:{selected:bool, node, event}) | - |
 |filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
 |loadData | load data asynchronously and the return value should be a promise | function(node) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |

@@ -21,7 +21,6 @@ const Demo = React.createClass({
     });
   },
   onDrop(info) {
-    console.log(info);
     const dropKey = info.node.props.eventKey;
     const dragKey = info.dragNode.props.eventKey;
     // const dragNodesKeys = info.dragNodesKeys;
@@ -74,7 +73,8 @@ const Demo = React.createClass({
       <h2>draggable </h2>
       <p>drag a node into another node</p>
       <div className="draggable-container">
-        <Tree defaultExpandedKeys={this.state.expandedKeys} draggable
+        <Tree defaultExpandedKeys={this.state.expandedKeys}
+              draggable
               onDragStart={this.onDragStart}
               onDragEnter={this.onDragEnter}
               onDrop={this.onDrop}

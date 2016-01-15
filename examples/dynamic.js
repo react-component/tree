@@ -91,7 +91,8 @@ const Demo = React.createClass({
     return (
       <div>
         <h2>dynamic render</h2>
-        <Tree onSelect={this.onSelect} loadData={this.onLoadData}>
+        <Tree onSelect={this.onSelect}
+              loadData={this.onLoadData}>
           {treeNodes}
         </Tree>
       </div>

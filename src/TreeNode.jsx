@@ -37,6 +37,7 @@ class TreeNode extends React.Component {
   onCheck() {
     this.props.root.onCheck(this);
   }
+
   onSelect() {
     this.props.root.onSelect(this);
   }
@@ -45,6 +46,7 @@ class TreeNode extends React.Component {
     e.preventDefault();
     this.props.root.onMouseEnter(e, this);
   }
+
   onMouseLeave(e) {
     e.preventDefault();
     this.props.root.onMouseLeave(e, this);
@@ -70,12 +72,14 @@ class TreeNode extends React.Component {
       // empty
     }
   }
+
   onDragEnter(e) {
     // console.log('dragenter', this.props.eventKey, e);
     e.preventDefault();
     e.stopPropagation();
     this.props.root.onDragEnter(e, this);
   }
+
   onDragOver(e) {
     // console.log(this.props.eventKey, e);
     // todo disabled
@@ -84,11 +88,13 @@ class TreeNode extends React.Component {
     this.props.root.onDragOver(e, this);
     return false;
   }
+
   onDragLeave(e) {
     // console.log(this.props.eventKey, e);
     e.stopPropagation();
     this.props.root.onDragLeave(e, this);
   }
+
   onDrop(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -102,7 +108,7 @@ class TreeNode extends React.Component {
     const callbackPromise = this.props.root.onExpand(this);
     if (callbackPromise && typeof callbackPromise === 'object') {
       const setLoading = (dataLoading) => {
-        this.setState({ dataLoading });
+        this.setState({dataLoading});
       };
       setLoading(true);
       callbackPromise.then(() => {
@@ -168,9 +174,12 @@ class TreeNode extends React.Component {
     }
     const children = props.children;
     let newChildren = children;
-    const allTreeNode = Array.isArray(children) && children.every((item) => {
-      return item.type === TreeNode;
-    });
+    let allTreeNode;
+    if (Array.isArray(children)) {
+      allTreeNode = children.every((item) => {
+        return item.type === TreeNode;
+      });
+    }
     if (children && (children.type === TreeNode || allTreeNode)) {
       const cls = {
         [`${props.prefixCls}-child-tree`]: true,
@@ -227,7 +236,8 @@ class TreeNode extends React.Component {
     }
 
     const selectHandle = () => {
-      const icon = (props.showIcon || props.loadData && this.state.dataLoading) ? <span className={classNames(iconEleCls)}></span> : null;
+      const icon = (props.showIcon || props.loadData && this.state.dataLoading) ?
+        <span className={classNames(iconEleCls)}></span> : null;
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
       const domProps = {};
       if (!props.disabled) {
@@ -236,7 +246,9 @@ class TreeNode extends React.Component {
         }
         domProps.onClick = (e) => {
           e.preventDefault();
-          this.onSelect();
+          if (props.selectable) {
+            this.onSelect();
+          }
           // not fire check event
           // if (props.checkable) {
           //   this.onCheck();
