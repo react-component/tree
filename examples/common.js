@@ -19965,7 +19965,7 @@
 	        event: 'check',
 	        node: treeNode,
 	        checked: checked,
-	        checkedNodesKeys: checkKeys.checkedNodesKeys
+	        checkedNodes: checkKeys.checkedNodes
 	      };
 	      checkedKeys = checkKeys.checkedKeys;
 	      if (!('checkedKeys' in this.props)) {
@@ -19993,10 +19993,19 @@
 	        }
 	        selectedKeys.push(eventKey);
 	      }
+	      var selectedNodes = [];
+	      if (selectedKeys.length) {
+	        (0, _util.loopAllChildren)(this.props.children, function (item) {
+	          if (selectedKeys.indexOf(item.key) !== -1) {
+	            selectedNodes.push(item);
+	          }
+	        });
+	      }
 	      var newSt = {
 	        event: 'select',
 	        node: treeNode,
-	        selected: selected
+	        selected: selected,
+	        selectedNodes: selectedNodes
 	      };
 	      if (!('selectedKeys' in this.props)) {
 	        this.setState({

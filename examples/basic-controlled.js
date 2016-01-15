@@ -71,7 +71,8 @@ webpackJsonp([2],{
 	      selectedKeys: ['0-3', '0-4']
 	    });
 	  },
-	  onSelect: function onSelect(selectedKeys) {
+	  onSelect: function onSelect(selectedKeys, info) {
+	    console.log('onSelect', info);
 	    this.setState({
 	      selectedKeys: selectedKeys
 	    });
@@ -123,8 +124,6 @@ webpackJsonp([2],{
 	  value: true
 	});
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-	
 	var x = 3;
 	var y = 2;
 	var z = 1;
@@ -152,43 +151,6 @@ webpackJsonp([2],{
 	  });
 	};
 	generateData(z);
-	
-	function isInclude(smallArray, bigArray) {
-	  return smallArray.every(function (ii, i) {
-	    return ii === bigArray[i];
-	  });
-	}
-	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
-	
-	function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
-	  var nodeKey = node.props.eventKey;
-	  var newCks = [].concat(_toConsumableArray(checkedKeys));
-	  var nodePos = undefined;
-	  var unCheck = allCheckedNodesKeys.some(function (item) {
-	    if (item.key === nodeKey) {
-	      nodePos = item.pos;
-	      return true;
-	    }
-	  });
-	  if (unCheck) {
-	    (function () {
-	      var nArr = nodePos.split('-');
-	      newCks = [];
-	      allCheckedNodesKeys.forEach(function (item) {
-	        var iArr = item.pos.split('-');
-	        if (item.pos === nodePos || nArr.length > iArr.length && isInclude(iArr, nArr) || nArr.length < iArr.length && isInclude(nArr, iArr)) {
-	          // 过滤掉 父级节点 和 所有子节点。
-	          // 因为 node节点 不选时，其 父级节点 和 所有子节点 都不选。
-	          return;
-	        }
-	        newCks.push(item.key);
-	      });
-	    })();
-	  } else {
-	    newCks.push(nodeKey);
-	  }
-	  return newCks;
-	}
 	
 	function loopData(data, callback) {
 	  var loop = function loop(d) {
@@ -224,7 +186,6 @@ webpackJsonp([2],{
 	}
 	
 	exports.gData = gData;
-	exports.getCheckedKeys = getCheckedKeys;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 
 /***/ }

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>util.js - example - rc-tree@1.0.0</title>
+  <title>util.js - example - rc-tree@1.0.1</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.0.0</h1>
+    <h1>rc-tree@1.0.1</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -294,43 +294,6 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 generateData(z);
 
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isInclude</span><span class="hljs-params">(smallArray, bigArray)</span> </span>{
-  <span class="hljs-keyword">return</span> smallArray.every((ii, i) =&gt; {
-    <span class="hljs-keyword">return</span> ii === bigArray[i];
-  });
-}
-<span class="hljs-comment">// console.log(isInclude(['0', '1'], ['0', '10', '1']));</span>
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCheckedKeys</span><span class="hljs-params">(node, checkedKeys, allCheckedNodesKeys)</span> </span>{
-  <span class="hljs-keyword">const</span> nodeKey = node.props.eventKey;
-  <span class="hljs-keyword">let</span> newCks = [...checkedKeys];
-  <span class="hljs-keyword">let</span> nodePos;
-  <span class="hljs-keyword">const</span> unCheck = allCheckedNodesKeys.some(item =&gt; {
-    <span class="hljs-keyword">if</span> (item.key === nodeKey) {
-      nodePos = item.pos;
-      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-    }
-  });
-  <span class="hljs-keyword">if</span> (unCheck) {
-    <span class="hljs-keyword">const</span> nArr = nodePos.split(<span class="hljs-string">'-'</span>);
-    newCks = [];
-    allCheckedNodesKeys.forEach(item =&gt; {
-      <span class="hljs-keyword">const</span> iArr = item.pos.split(<span class="hljs-string">'-'</span>);
-      <span class="hljs-keyword">if</span> (item.pos === nodePos ||
-        nArr.length &gt; iArr.length &amp;&amp; isInclude(iArr, nArr) ||
-        nArr.length &lt; iArr.length &amp;&amp; isInclude(nArr, iArr)) {
-        <span class="hljs-comment">// 过滤掉 父级节点 和 所有子节点。</span>
-        <span class="hljs-comment">// 因为 node节点 不选时，其 父级节点 和 所有子节点 都不选。</span>
-        <span class="hljs-keyword">return</span>;
-      }
-      newCks.push(item.key);
-    });
-  } <span class="hljs-keyword">else</span> {
-    newCks.push(nodeKey);
-  }
-  <span class="hljs-keyword">return</span> newCks;
-}
-
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loopData</span><span class="hljs-params">(data, callback)</span> </span>{
   <span class="hljs-keyword">const</span> loop = (d, level = <span class="hljs-number">0</span>) =&gt; {
     d.forEach((item, index) =&gt; {
@@ -365,7 +328,7 @@ generateData(z);
 }
 
 
-export { gData, getCheckedKeys, getFilterExpandedKeys };
+export { gData, getFilterExpandedKeys };
 </code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">
