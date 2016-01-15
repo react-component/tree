@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>contextmenu.js - example - rc-tree@0.26.1</title>
+  <title>contextmenu.js - example - rc-tree@1.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,22 +257,22 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.26.1</h1>
+    <h1>rc-tree@1.0.0</h1>
 
     <p>tree ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="contextmenu.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/demo-contextmenu.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
-<span class="hljs-keyword">import</span> assign <span class="hljs-keyword">from</span> <span class="hljs-string">'object-assign'</span>;
-<span class="hljs-keyword">import</span> Tooltip <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tooltip'</span>;
+  <div class="highlight"><pre><code language="js">import <span class="hljs-string">'rc-tree/assets/index.css'</span>;
+import <span class="hljs-string">'rc-tree/assets/demo-contextmenu.css'</span>;
+import React from <span class="hljs-string">'react'</span>;
+import ReactDOM from <span class="hljs-string">'react-dom'</span>;
+import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
+import assign from <span class="hljs-string">'object-assign'</span>;
+import Tooltip from <span class="hljs-string">'rc-tooltip'</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">contains</span>(<span class="hljs-params">root, n</span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">contains</span><span class="hljs-params">(root, n)</span> </span>{
   <span class="hljs-keyword">let</span> node = n;
   <span class="hljs-keyword">while</span> (node) {
     <span class="hljs-keyword">if</span> (node === root) {
@@ -326,20 +326,20 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-keyword">this</span>.toolTip = (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Tooltip</span> <span class="hljs-attribute">trigger</span>=<span class="hljs-value">"click"</span> <span class="hljs-attribute">placement</span>=<span class="hljs-value">"bottomRight"</span> <span class="hljs-attribute">prefixCls</span>=<span class="hljs-value">"rc-tree-contextmenu"</span>
              <span class="hljs-attribute">defaultVisible</span> <span class="hljs-attribute">overlay</span>=<span class="hljs-value">{&lt;h4</span>&gt;</span>{info.node.props.title}<span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>}&gt;
         <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">Tooltip</span>&gt;</span>)</span>;
+    <span class="hljs-tag">&lt;/<span class="hljs-title">Tooltip</span>&gt;</span>);
 
-    <span class="hljs-keyword">const</span> container = <span class="hljs-keyword">this</span>.getContainer();
-    assign(<span class="hljs-keyword">this</span>.cmContainer.style, {
-      position: <span class="hljs-string">'absolute'</span>,
-      left: info.event.pageX + <span class="hljs-string">'px'</span>,
-      top: info.event.pageY + <span class="hljs-string">'px'</span>,
+    const container = this.getContainer();
+    assign(this.cmContainer.style, {
+      position: 'absolute',
+      left: info.event.pageX + 'px',
+      top: info.event.pageY + 'px',
     });
 
-    ReactDOM.render(<span class="hljs-keyword">this</span>.toolTip, container);
+    ReactDOM.render(this.toolTip, container);
   },
   render() {
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+    return (
+      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>right click contextmenu<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">onRightClick</span>=<span class="hljs-value">{this.onRightClick}</span> <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span>
           <span class="hljs-attribute">defaultSelectedKeys</span>=<span class="hljs-value">{['0-1',</span> '<span class="hljs-attribute">0-1-1</span>']}
@@ -369,10 +369,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>;
+    );
   },
 });
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">

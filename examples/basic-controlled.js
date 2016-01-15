@@ -15,8 +15,6 @@ webpackJsonp([2],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-	
 	__webpack_require__(2);
 	
 	var _react = __webpack_require__(3);
@@ -41,7 +39,7 @@ webpackJsonp([2],{
 	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      multiple: false
+	      multiple: true
 	    };
 	  },
 	  getInitialState: function getInitialState() {
@@ -67,24 +65,13 @@ webpackJsonp([2],{
 	      expandedKeys: expandedKeys
 	    });
 	  },
-	  onCheck: function onCheck(info) {
-	    console.log('check: ', info);
+	  onCheck: function onCheck(checkedKeys) {
 	    this.setState({
-	      checkedKeys: (0, _util.getCheckedKeys)(info.node, info.checkedKeys, info.allCheckedNodesKeys),
+	      checkedKeys: checkedKeys,
 	      selectedKeys: ['0-3', '0-4']
 	    });
 	  },
-	  onSelect: function onSelect(info) {
-	    console.log('selected: ', info);
-	    var selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
-	    var index = selectedKeys.indexOf(info.node.props.eventKey);
-	    if (index > -1) {
-	      selectedKeys.splice(index, 1);
-	    } else if (this.props.multiple) {
-	      selectedKeys.push(info.node.props.eventKey);
-	    } else {
-	      selectedKeys = [info.node.props.eventKey];
-	    }
+	  onSelect: function onSelect(selectedKeys) {
 	    this.setState({
 	      selectedKeys: selectedKeys
 	    });
@@ -95,7 +82,8 @@ webpackJsonp([2],{
 	        if (item.children) {
 	          return _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { key: item.key, title: item.key, disableCheckbox: item.key === '0-0-0' ? true : false },
+	            { key: item.key, title: item.key,
+	              disableCheckbox: item.key === '0-0-0' ? true : false },
 	            loop(item.children)
 	          );
 	        }

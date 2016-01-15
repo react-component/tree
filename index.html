@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-tree@0.26.1 - tree ui component for react</title>
+  <title>rc-tree@1.0.0 - tree ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-tree@0.26.1</h1>
+  <h1>rc-tree@1.0.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -819,6 +819,12 @@
 <td>true</td>
 </tr>
 <tr>
+<td>selectable</td>
+<td>whether can be selected</td>
+<td>bool</td>
+<td>true</td>
+</tr>
+<tr>
 <td>multiple</td>
 <td>whether multiple select</td>
 <td>bool</td>
@@ -887,13 +893,13 @@
 <tr>
 <td>onCheck</td>
 <td>click the treeNode/checkbox to fire</td>
-<td>function(e:{checked:bool, node, checkedKeys, event, allCheckedNodesKeys})</td>
+<td>function(checkedKeys, e:{checked:bool, node, event})</td>
 <td>-</td>
 </tr>
 <tr>
 <td>onSelect</td>
 <td>click the treeNode to fire</td>
-<td>function(e:{selected:bool, node, selectedKeys, event})</td>
+<td>function(selectedKeys, e:{selected:bool, node, event})</td>
 <td>-</td>
 </tr>
 <tr>

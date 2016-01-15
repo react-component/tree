@@ -167,7 +167,6 @@ webpackJsonp([4],{
 	    });
 	  },
 	  onDrop: function onDrop(info) {
-	    console.log(info);
 	    var dropKey = info.node.props.eventKey;
 	    var dragKey = info.dragNode.props.eventKey;
 	    // const dragNodesKeys = info.dragNodesKeys;
@@ -238,7 +237,8 @@ webpackJsonp([4],{
 	        { className: 'draggable-container' },
 	        _react2['default'].createElement(
 	          _rcTree2['default'],
-	          { defaultExpandedKeys: this.state.expandedKeys, draggable: true,
+	          { defaultExpandedKeys: this.state.expandedKeys,
+	            draggable: true,
 	            onDragStart: this.onDragStart,
 	            onDragEnter: this.onDragEnter,
 	            onDrop: this.onDrop

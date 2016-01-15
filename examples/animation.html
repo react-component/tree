@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>animation.js - example - rc-tree@0.26.1</title>
+  <title>animation.js - example - rc-tree@1.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,23 +257,23 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.26.1</h1>
+    <h1>rc-tree@1.0.0</h1>
 
     <p>tree ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="animation.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
-<span class="hljs-keyword">import</span> velocity <span class="hljs-keyword">from</span> <span class="hljs-string">'velocity-animate'</span>;
+  <div class="highlight"><pre><code language="js">import <span class="hljs-string">'rc-tree/assets/index.css'</span>;
+import React from <span class="hljs-string">'react'</span>;
+import ReactDOM from <span class="hljs-string">'react-dom'</span>;
+import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
+import velocity from <span class="hljs-string">'velocity-animate'</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">enter2</span>(<span class="hljs-params">node, done</span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">enter2</span><span class="hljs-params">(node, done)</span> </span>{
   <span class="hljs-keyword">let</span> ok = <span class="hljs-literal">false</span>;
 
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (!ok) {
       ok = <span class="hljs-number">1</span>;
       done();
@@ -286,7 +286,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     complete: complete,
   });
   <span class="hljs-keyword">return</span> {
-    stop: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    stop: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
       velocity(node, <span class="hljs-string">'finish'</span>);
       <span class="hljs-comment">// velocity complete is async</span>
       complete();
@@ -309,7 +309,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'leave'</span>, node);
     <span class="hljs-keyword">let</span> ok = <span class="hljs-literal">false</span>;
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-keyword">if</span> (!ok) {
         ok = <span class="hljs-number">1</span>;
         done();
@@ -322,7 +322,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       complete: complete,
     });
     <span class="hljs-keyword">return</span> {
-      stop: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      stop: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
         velocity(node, <span class="hljs-string">'finish'</span>);
         <span class="hljs-comment">// velocity complete is async</span>
         complete();
@@ -348,10 +348,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-)</span>;
+);
 
-ReactDOM.render(demo, <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'__react-content'</span>));
-</code></pre></div>
+ReactDOM.render(demo, document.getElementById('__react-content'));
+</span></code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">
   <img style="position: absolute; top: 0; right: 0; border: 0;"

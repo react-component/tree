@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>draggable.js - example - rc-tree@0.26.1</title>
+  <title>draggable.js - example - rc-tree@1.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,19 +257,19 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@0.26.1</h1>
+    <h1>rc-tree@1.0.0</h1>
 
     <p>tree ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="draggable.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/demo-draggable.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> Tree, {TreeNode} <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
-<span class="hljs-keyword">import</span> { gData } <span class="hljs-keyword">from</span> <span class="hljs-string">'./util'</span>;
+  <div class="highlight"><pre><code language="js">import <span class="hljs-string">'rc-tree/assets/index.css'</span>;
+import <span class="hljs-string">'rc-tree/assets/demo-draggable.css'</span>;
+import React from <span class="hljs-string">'react'</span>;
+import ReactDOM from <span class="hljs-string">'react-dom'</span>;
+import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
+import { gData } from <span class="hljs-string">'./util'</span>;
 
 <span class="hljs-keyword">const</span> Demo = React.createClass({
   getInitialState() {
@@ -287,7 +287,6 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
   },
   onDrop(info) {
-    <span class="hljs-built_in">console</span>.log(info);
     <span class="hljs-keyword">const</span> dropKey = info.node.props.eventKey;
     <span class="hljs-keyword">const</span> dragKey = info.dragNode.props.eventKey;
     <span class="hljs-comment">// const dragNodesKeys = info.dragNodesKeys;</span>
@@ -340,7 +339,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>draggable <span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>drag a node into another node<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"draggable-container"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span> <span class="hljs-attribute">draggable</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
+              <span class="hljs-attribute">draggable</span>
               <span class="hljs-attribute">onDragStart</span>=<span class="hljs-value">{this.onDragStart}</span>
               <span class="hljs-attribute">onDragEnter</span>=<span class="hljs-value">{this.onDragEnter}</span>
               <span class="hljs-attribute">onDrop</span>=<span class="hljs-value">{this.onDrop}</span>
@@ -348,11 +348,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           {loop(this.state.gData)}
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>);
   },
 });
 
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">

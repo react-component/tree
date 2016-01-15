@@ -19951,8 +19951,6 @@
 	  }, {
 	    key: 'onCheck',
 	    value: function onCheck(treeNode) {
-	      var _this3 = this;
-	
 	      var checked = !treeNode.props.checked;
 	      if (treeNode.props.checkPart) {
 	        checked = true;
@@ -19963,31 +19961,19 @@
 	        checkedKeys.push(key);
 	      }
 	      var checkKeys = (0, _util.getTreeNodesStates)(this.props.children, checkedKeys, checked, key);
-	      // this.checkPartKeys = checkKeys.checkPartKeys;
 	      var newSt = {
 	        event: 'check',
 	        node: treeNode,
-	        allCheckedNodesKeys: checkKeys.checkedNodesKeys
+	        checked: checked,
+	        checkedNodesKeys: checkKeys.checkedNodesKeys
 	      };
+	      checkedKeys = checkKeys.checkedKeys;
 	      if (!('checkedKeys' in this.props)) {
 	        this.setState({
-	          checkedKeys: checkKeys.checkedKeys
-	        });
-	        newSt.checked = checked;
-	      } else {
-	        checkedKeys = [].concat(_toConsumableArray(this.state.checkedKeys));
-	        newSt.allCheckedNodesKeys = [];
-	        Object.keys(checkKeys.treeNodesStates).forEach(function (item) {
-	          var itemObj = checkKeys.treeNodesStates[item];
-	          // 此处用 this.checkedKeys，能包含上一次所有选中的节点，
-	          // 供用户判断点击节点，下次是否需要选中
-	          if (_this3.checkedKeys.indexOf(itemObj.key) !== -1) {
-	            newSt.allCheckedNodesKeys.push({ key: itemObj.key, node: itemObj.node, pos: item });
-	          }
+	          checkedKeys: checkedKeys
 	        });
 	      }
-	      newSt.checkedKeys = [].concat(_toConsumableArray(checkedKeys));
-	      this.props.onCheck(newSt);
+	      this.props.onCheck(checkedKeys, newSt);
 	    }
 	  }, {
 	    key: 'onSelect',
@@ -20009,18 +19995,15 @@
 	      }
 	      var newSt = {
 	        event: 'select',
-	        node: treeNode
+	        node: treeNode,
+	        selected: selected
 	      };
 	      if (!('selectedKeys' in this.props)) {
 	        this.setState({
 	          selectedKeys: selectedKeys
 	        });
-	        newSt.selected = selected;
-	      } else {
-	        selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
 	      }
-	      newSt.selectedKeys = [].concat(_toConsumableArray(selectedKeys));
-	      props.onSelect(newSt);
+	      props.onSelect(selectedKeys, newSt);
 	    }
 	  }, {
 	    key: 'onMouseEnter',
@@ -20193,6 +20176,7 @@
 	        root: this,
 	        eventKey: key,
 	        pos: pos,
+	        selectable: props.selectable,
 	        loadData: props.loadData,
 	        onMouseEnter: props.onMouseEnter,
 	        onMouseLeave: props.onMouseLeave,
@@ -20286,6 +20270,7 @@
 	  draggable: false,
 	  showLine: false,
 	  showIcon: true,
+	  selectable: true,
 	  autoExpandParent: true,
 	  defaultExpandAll: false,
 	  defaultExpandedKeys: [],
@@ -20544,6 +20529,7 @@
 	
 	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
 	
+	// TODO 效率差, 需要缓存优化
 	function handleCheckState(obj, checkedPositionArr, checkIt) {
 	  var stripTail = function stripTail(str) {
 	    var arr = str.match(/(.+)(-[^-]+)$/);
@@ -20644,6 +20630,7 @@
 	      siblingPosition: siblingPosition
 	    };
 	  });
+	
 	  // debugger
 	  handleCheckState(treeNodesStates, filterMinPosition(checkedPosition.sort()), true);
 	
@@ -20895,9 +20882,12 @@
 	      }
 	      var children = props.children;
 	      var newChildren = children;
-	      var allTreeNode = Array.isArray(children) && children.every(function (item) {
-	        return item.type === TreeNode;
-	      });
+	      var allTreeNode = undefined;
+	      if (Array.isArray(children)) {
+	        allTreeNode = children.every(function (item) {
+	          return item.type === TreeNode;
+	        });
+	      }
 	      if (children && (children.type === TreeNode || allTreeNode)) {
 	        var _cls;
 	
@@ -20968,7 +20958,9 @@
 	          }
 	          domProps.onClick = function (e) {
 	            e.preventDefault();
-	            _this3.onSelect();
+	            if (props.selectable) {
+	              _this3.onSelect();
+	            }
 	            // not fire check event
 	            // if (props.checkable) {
 	            //   this.onCheck();
