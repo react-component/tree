@@ -1,6 +1,9 @@
 # History
 ---
 
+## 1.0.x / 2016-01-15
+- change onSelect/onCheck params
+
 ## 0.26.x / 2016-01-13
 - change drag api (from `onTreeXX` to `onXX`)
 

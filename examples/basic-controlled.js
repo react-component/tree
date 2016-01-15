@@ -42,7 +42,8 @@ const Demo = React.createClass({
       selectedKeys: ['0-3', '0-4'],
     });
   },
-  onSelect(selectedKeys) {
+  onSelect(selectedKeys, info) {
+    console.log('onSelect', info);
     this.setState({
       selectedKeys,
     });
@@ -52,7 +53,7 @@ const Demo = React.createClass({
       return data.map((item) => {
         if (item.children) {
           return (<TreeNode key={item.key} title={item.key}
-                           disableCheckbox={item.key === '0-0-0' ? true : false}>
+                            disableCheckbox={item.key === '0-0-0' ? true : false}>
             {loop(item.children)}
           </TreeNode>);
         }

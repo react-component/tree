@@ -28,43 +28,6 @@ const generateData = (_level, _preKey, _tns) => {
 generateData(z);
 
 
-function isInclude(smallArray, bigArray) {
-  return smallArray.every((ii, i) => {
-    return ii === bigArray[i];
-  });
-}
-// console.log(isInclude(['0', '1'], ['0', '10', '1']));
-
-function getCheckedKeys(node, checkedKeys, allCheckedNodesKeys) {
-  const nodeKey = node.props.eventKey;
-  let newCks = [...checkedKeys];
-  let nodePos;
-  const unCheck = allCheckedNodesKeys.some(item => {
-    if (item.key === nodeKey) {
-      nodePos = item.pos;
-      return true;
-    }
-  });
-  if (unCheck) {
-    const nArr = nodePos.split('-');
-    newCks = [];
-    allCheckedNodesKeys.forEach(item => {
-      const iArr = item.pos.split('-');
-      if (item.pos === nodePos ||
-        nArr.length > iArr.length && isInclude(iArr, nArr) ||
-        nArr.length < iArr.length && isInclude(nArr, iArr)) {
-        // 过滤掉 父级节点 和 所有子节点。
-        // 因为 node节点 不选时，其 父级节点 和 所有子节点 都不选。
-        return;
-      }
-      newCks.push(item.key);
-    });
-  } else {
-    newCks.push(nodeKey);
-  }
-  return newCks;
-}
-
 function loopData(data, callback) {
   const loop = (d, level = 0) => {
     d.forEach((item, index) => {
@@ -99,4 +62,4 @@ function getFilterExpandedKeys(data, expandedKeys) {
 }
 
 
-export { gData, getCheckedKeys, getFilterExpandedKeys };
+export { gData, getFilterExpandedKeys };

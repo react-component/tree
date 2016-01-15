@@ -73,8 +73,8 @@ see examples
 |selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
 |onExpand | fire on treeNode expand or not | function(node, expanded, expandedKeys) | - |
-|onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked:bool, node, event}) | - |
-|onSelect | click the treeNode to fire | function(selectedKeys, e:{selected:bool, node, event}) | - |
+|onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event}) | - |
+|onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event}) | - |
 |filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
 |loadData | load data asynchronously and the return value should be a promise | function(node) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |

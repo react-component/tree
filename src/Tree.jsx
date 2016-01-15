@@ -186,7 +186,7 @@ class Tree extends React.Component {
       event: 'check',
       node: treeNode,
       checked,
-      checkedNodesKeys: checkKeys.checkedNodesKeys,
+      checkedNodes: checkKeys.checkedNodes,
     };
     checkedKeys = checkKeys.checkedKeys;
     if (!('checkedKeys' in this.props)) {
@@ -213,10 +213,19 @@ class Tree extends React.Component {
       }
       selectedKeys.push(eventKey);
     }
+    const selectedNodes = [];
+    if (selectedKeys.length) {
+      loopAllChildren(this.props.children, (item)=> {
+        if (selectedKeys.indexOf(item.key) !== -1) {
+          selectedNodes.push(item);
+        }
+      });
+    }
     const newSt = {
       event: 'select',
       node: treeNode,
       selected,
+      selectedNodes,
     };
     if (!('selectedKeys' in this.props)) {
       this.setState({
