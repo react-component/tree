@@ -20419,10 +20419,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TreeNode = __webpack_require__(167);
-	
-	var _TreeNode2 = _interopRequireDefault(_TreeNode);
-	
 	function browser(ua) {
 	  var tem = undefined;
 	  var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -20506,7 +20502,7 @@
 	    var len = getChildrenlength(children);
 	    _react2['default'].Children.forEach(children, function (item, index) {
 	      var pos = level + '-' + index;
-	      if (item.props.children && item.type === _TreeNode2['default']) {
+	      if (item.props.children && item.type && item.type.isTreeNode) {
 	        loop(item.props.children, pos);
 	      }
 	      callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}));
@@ -21051,6 +21047,8 @@
 	  return TreeNode;
 	})(_react2['default'].Component);
 	
+	TreeNode.isTreeNode = 1;
+	
 	TreeNode.propTypes = {
 	  prefixCls: _react.PropTypes.string,
 	  disabled: _react.PropTypes.bool,
@@ -21060,6 +21058,7 @@
 	  root: _react.PropTypes.object,
 	  onSelect: _react.PropTypes.func
 	};
+	
 	TreeNode.defaultProps = {
 	  title: defaultTitle
 	};
