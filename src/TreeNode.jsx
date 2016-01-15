@@ -326,6 +326,9 @@ class TreeNode extends React.Component {
     );
   }
 }
+
+TreeNode.isTreeNode = 1;
+
 TreeNode.propTypes = {
   prefixCls: PropTypes.string,
   disabled: PropTypes.bool,
@@ -335,6 +338,7 @@ TreeNode.propTypes = {
   root: PropTypes.object,
   onSelect: PropTypes.func,
 };
+
 TreeNode.defaultProps = {
   title: defaultTitle,
 };

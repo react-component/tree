@@ -1,5 +1,4 @@
 import React from 'react';
-import TreeNode from './TreeNode';
 
 export function browser(ua) {
   let tem;
@@ -84,7 +83,7 @@ export function loopAllChildren(childs, callback) {
     const len = getChildrenlength(children);
     React.Children.forEach(children, (item, index) => {
       const pos = `${level}-${index}`;
-      if (item.props.children && item.type === TreeNode) {
+      if (item.props.children && item.type && item.type.isTreeNode) {
         loop(item.props.children, pos);
       }
       callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}));
