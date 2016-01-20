@@ -1,4 +1,5 @@
 import 'rc-tree/assets/index.less';
+import 'rc-tree/assets/demo-basic.less';
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
@@ -9,7 +10,7 @@ const Demo = React.createClass({
   },
   getDefaultProps() {
     return {
-      keys: ['0-0-0', '0-0-1'],
+      keys: ['0-0-0-0', '0-0-1'],
     };
   },
   getInitialState() {
@@ -30,16 +31,22 @@ const Demo = React.createClass({
   onCheck(info) {
     console.log('onCheck', info);
   },
-  change() {
-    const keys = this.props.keys;
-    this.setState({
-      defaultExpandedKeys: ['0-0', keys[this.state.switchIt ? 0 : 1]],
-      defaultSelectedKeys: [keys[this.state.switchIt ? 0 : 1]],
-      defaultCheckedKeys: [keys[this.state.switchIt ? 1 : 0]],
-      switchIt: !this.state.switchIt,
-    });
+  onEdit(e) {
+    console.log('edit', this);
+    e.stopPropagation();
+  },
+  onDel(e) {
+    if (!window.confirm('sure to delete?')) {
+      return;
+    }
+    e.stopPropagation();
   },
   render() {
+    const customLabel = (<span className="cus-label">
+      <span>operations: </span>
+      <span style={{color: 'blue'}} onClick={this.onEdit}>Edit</span>&nbsp;
+      <span style={{color: 'red'}} onClick={this.onDel}>Delete</span>
+    </span>);
     return (<div style={{margin: '0 20px'}}>
       <h2>simple</h2>
       <Tree className="myCls" showLine multiple checkable
@@ -49,21 +56,16 @@ const Demo = React.createClass({
           defaultCheckedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect} onCheck={this.onCheck}>
         <TreeNode title="parent 1" key="0-0">
-          <TreeNode title="parent 1-0" key="0-0-0" disabled>
-            <TreeNode title="leaf" key="0-0-0-0" disableCheckbox />
+          <TreeNode title={customLabel} key="0-0-0">
+            <TreeNode title="leaf" key="0-0-0-0" />
             <TreeNode title="leaf" key="0-0-0-1" />
           </TreeNode>
-          <TreeNode title="parent 1-1" key="0-0-1">
-            <TreeNode title={<span style={{color: 'red'}}>sss</span>} key="0-0-1-0" />
+          <TreeNode title="parent 1-1" key="0-0-1" disabled>
+            <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
+            <TreeNode title="parent 1-1-1" key="0-0-1-1" />
           </TreeNode>
         </TreeNode>
       </Tree>
-
-      <br />
-      <div>
-        <button onClick={this.change}>change state</button>
-        <p>defaultXX 的初始化状态不会改变</p>
-      </div>
     </div>);
   },
 });
