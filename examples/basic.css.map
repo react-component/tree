@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///assets/demo-basic.less"],"names":[],"mappings":"AAAA;EAEI;CAAH","file":"basic.css","sourcesContent":[".rc-tree li a .rc-tree-title{\n  .cus-label {\n    background-color: white;\n  }\n}\n\n\n\n/** WEBPACK FOOTER **\n ** assets/demo-basic.less\n **/"],"sourceRoot":""}

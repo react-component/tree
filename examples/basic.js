@@ -17,6 +17,8 @@ webpackJsonp([1],{
 	
 	__webpack_require__(2);
 	
+	__webpack_require__(178);
+	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -37,7 +39,7 @@ webpackJsonp([1],{
 	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      keys: ['0-0-0', '0-0-1']
+	      keys: ['0-0-0-0', '0-0-1']
 	    };
 	  },
 	  getInitialState: function getInitialState() {
@@ -58,16 +60,37 @@ webpackJsonp([1],{
 	  onCheck: function onCheck(info) {
 	    console.log('onCheck', info);
 	  },
-	  change: function change() {
-	    var keys = this.props.keys;
-	    this.setState({
-	      defaultExpandedKeys: ['0-0', keys[this.state.switchIt ? 0 : 1]],
-	      defaultSelectedKeys: [keys[this.state.switchIt ? 0 : 1]],
-	      defaultCheckedKeys: [keys[this.state.switchIt ? 1 : 0]],
-	      switchIt: !this.state.switchIt
-	    });
+	  onEdit: function onEdit(e) {
+	    console.log('edit', this);
+	    e.stopPropagation();
+	  },
+	  onDel: function onDel(e) {
+	    if (!window.confirm('sure to delete?')) {
+	      return;
+	    }
+	    e.stopPropagation();
 	  },
 	  render: function render() {
+	    var customLabel = _react2['default'].createElement(
+	      'span',
+	      { className: 'cus-label' },
+	      _react2['default'].createElement(
+	        'span',
+	        null,
+	        'operations: '
+	      ),
+	      _react2['default'].createElement(
+	        'span',
+	        { style: { color: 'blue' }, onClick: this.onEdit },
+	        'Edit'
+	      ),
+	      ' ',
+	      _react2['default'].createElement(
+	        'span',
+	        { style: { color: 'red' }, onClick: this.onDel },
+	        'Delete'
+	      )
+	    );
 	    return _react2['default'].createElement(
 	      'div',
 	      { style: { margin: '0 20px' } },
@@ -89,34 +112,16 @@ webpackJsonp([1],{
 	          { title: 'parent 1', key: '0-0' },
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { title: 'parent 1-0', key: '0-0-0', disabled: true },
-	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: '0-0-0-0', disableCheckbox: true }),
+	            { title: customLabel, key: '0-0-0' },
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: '0-0-0-0' }),
 	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'leaf', key: '0-0-0-1' })
 	          ),
 	          _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { title: 'parent 1-1', key: '0-0-1' },
-	            _react2['default'].createElement(_rcTree.TreeNode, { title: _react2['default'].createElement(
-	                'span',
-	                { style: { color: 'red' } },
-	                'sss'
-	              ), key: '0-0-1-0' })
+	            { title: 'parent 1-1', key: '0-0-1', disabled: true },
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'parent 1-1-0', key: '0-0-1-0', disableCheckbox: true }),
+	            _react2['default'].createElement(_rcTree.TreeNode, { title: 'parent 1-1-1', key: '0-0-1-1' })
 	          )
-	        )
-	      ),
-	      _react2['default'].createElement('br', null),
-	      _react2['default'].createElement(
-	        'div',
-	        null,
-	        _react2['default'].createElement(
-	          'button',
-	          { onClick: this.change },
-	          'change state'
-	        ),
-	        _react2['default'].createElement(
-	          'p',
-	          null,
-	          'defaultXX 的初始化状态不会改变'
 	        )
 	      )
 	    );
@@ -124,6 +129,13 @@ webpackJsonp([1],{
 	});
 	
 	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+
+/***/ },
+
+/***/ 178:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 
