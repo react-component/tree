@@ -25,15 +25,17 @@ const Demo = React.createClass({
   onExpand(treeNode, expand, expandedKeys) {
     console.log('onExpand', expand, expandedKeys);
   },
-  onSelect(info) {
-    console.log('selected', info);
+  onSelect(selectedKeys, info) {
+    console.log('selected', selectedKeys, info);
+    this.selKey = info.node.props.eventKey;
   },
-  onCheck(info) {
-    console.log('onCheck', info);
+  onCheck(checkedKeys, info) {
+    console.log('onCheck', checkedKeys, info);
   },
-  onEdit(e) {
-    console.log('edit', this);
-    e.stopPropagation();
+  onEdit() {
+    setTimeout(() => {
+      console.log('current key: ', this.selKey);
+    }, 0);
   },
   onDel(e) {
     if (!window.confirm('sure to delete?')) {
