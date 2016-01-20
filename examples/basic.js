@@ -54,15 +54,19 @@ webpackJsonp([1],{
 	  onExpand: function onExpand(treeNode, expand, expandedKeys) {
 	    console.log('onExpand', expand, expandedKeys);
 	  },
-	  onSelect: function onSelect(info) {
-	    console.log('selected', info);
+	  onSelect: function onSelect(selectedKeys, info) {
+	    console.log('selected', selectedKeys, info);
+	    this.selKey = info.node.props.eventKey;
 	  },
-	  onCheck: function onCheck(info) {
-	    console.log('onCheck', info);
+	  onCheck: function onCheck(checkedKeys, info) {
+	    console.log('onCheck', checkedKeys, info);
 	  },
-	  onEdit: function onEdit(e) {
-	    console.log('edit', this);
-	    e.stopPropagation();
+	  onEdit: function onEdit() {
+	    var _this = this;
+	
+	    setTimeout(function () {
+	      console.log('current key: ', _this.selKey);
+	    }, 0);
 	  },
 	  onDel: function onDel(e) {
 	    if (!window.confirm('sure to delete?')) {

@@ -291,15 +291,17 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
   onExpand(treeNode, expand, expandedKeys) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expand, expandedKeys);
   },
-  onSelect(info) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected'</span>, info);
+  onSelect(selectedKeys, info) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected'</span>, selectedKeys, info);
+    <span class="hljs-keyword">this</span>.selKey = info.node.props.eventKey;
   },
-  onCheck(info) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onCheck'</span>, info);
+  onCheck(checkedKeys, info) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onCheck'</span>, checkedKeys, info);
   },
-  onEdit(e) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'edit'</span>, <span class="hljs-keyword">this</span>);
-    e.stopPropagation();
+  onEdit() {
+    setTimeout(() =&gt; {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'current key: '</span>, <span class="hljs-keyword">this</span>.selKey);
+    }, <span class="hljs-number">0</span>);
   },
   onDel(e) {
     <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">window</span>.confirm(<span class="hljs-string">'sure to delete?'</span>)) {

@@ -1,5 +1,6 @@
-.rc-tree li a .rc-tree-title .cus-label {
+.rc-tree li a.rc-tree-node-selected .cus-label {
   background-color: white;
+  border: none;
 }
 
 /*# sourceMappingURL=basic.css.map*/
