@@ -57,7 +57,7 @@ const Demo = React.createClass({
     }
     this.setState({
       gData: data,
-      expandedKeys: info.originExpandedKeys,
+      expandedKeys: info.rawExpandedKeys.concat([info.node.props.eventKey]),
     });
   },
   render() {
@@ -73,7 +73,7 @@ const Demo = React.createClass({
       <h2>draggable </h2>
       <p>drag a node into another node</p>
       <div className="draggable-container">
-        <Tree defaultExpandedKeys={this.state.expandedKeys}
+        <Tree expandedKeys={this.state.expandedKeys}
               draggable
               onDragStart={this.onDragStart}
               onDragEnter={this.onDragEnter}

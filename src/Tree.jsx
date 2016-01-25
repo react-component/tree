@@ -50,7 +50,7 @@ class Tree extends React.Component {
     const expandedKeys = this.getExpandedKeys(treeNode, false);
     if (expandedKeys) {
       // Controlled expand, save and then reset
-      this.getOriginExpandedKeys();
+      this.getRawExpandedKeys();
       st.expandedKeys = expandedKeys;
     }
     this.setState(st);
@@ -91,7 +91,7 @@ class Tree extends React.Component {
     };
     const expandedKeys = this.getExpandedKeys(treeNode, true);
     if (expandedKeys) {
-      this.getOriginExpandedKeys();
+      this.getRawExpandedKeys();
       st.expandedKeys = expandedKeys;
     }
     this.setState(st);
@@ -135,7 +135,7 @@ class Tree extends React.Component {
       res.dropToGap = true;
     }
     if ('expandedKeys' in this.props) {
-      res.originExpandedKeys = [...this._originExpandedKeys] || [...this.state.expandedKeys];
+      res.rawExpandedKeys = [...this._rawExpandedKeys] || [...this.state.expandedKeys];
     }
     this.props.onDrop(res);
   }
@@ -329,9 +329,9 @@ class Tree extends React.Component {
     return selectedKeys;
   }
 
-  getOriginExpandedKeys() {
-    if (!this._originExpandedKeys && ('expandedKeys' in this.props)) {
-      this._originExpandedKeys = [...this.state.expandedKeys];
+  getRawExpandedKeys() {
+    if (!this._rawExpandedKeys && ('expandedKeys' in this.props)) {
+      this._rawExpandedKeys = [...this.state.expandedKeys];
     }
   }
 
@@ -427,7 +427,7 @@ class Tree extends React.Component {
       domProps.tabIndex = '0';
       domProps.onKeyDown = this.onKeyDown;
     }
-    // console.log(this.state.expandedKeys, this._originExpandedKeys, props.children);
+    // console.log(this.state.expandedKeys, this._rawExpandedKeys, props.children);
     const checkKeys = getTreeNodesStates(props.children, this.state.checkedKeys, true);
     this.checkPartKeys = checkKeys.checkPartKeys;
     this.checkedKeys = checkKeys.checkedKeys;

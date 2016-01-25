@@ -1,8 +1,11 @@
 # History
 ---
 
+## 1.1.0 / 2016-01-25
+- change `onDrop` params (from `originExpandedKeys` to `rawExpandedKeys`)
+
 ## 1.0.x / 2016-01-15
-- change onSelect/onCheck params
+- change `onSelect`/`onCheck` params
 
 ## 0.26.x / 2016-01-13
 - change drag api (from `onTreeXX` to `onXX`)
