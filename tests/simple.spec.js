@@ -7,7 +7,7 @@ const Tree = require('../');
 const TreeNode = Tree.TreeNode;
 const $ = require('jquery');
 
-describe('simple tree', function des() {
+describe('simple tree', () => {
   let instance;
   let div;
   beforeEach(() => {
@@ -30,13 +30,13 @@ describe('simple tree', function des() {
 
   it('should have checkbox, default expand all treeNode, not show icon, show line', (done) => {
     instance = ReactDOM.render(
-      <Tree checkable defaultExpandAll showIcon={false} showLine>
-        <TreeNode title="parent 1" key="0-0">
-          <TreeNode title="leaf 1" key="0-0-0">
+      <Tree selectable checkable defaultExpandAll showIcon={false} showLine multiple>
+        <TreeNode title="parent 1" key="0-0" className="spe">
+          <TreeNode title="leaf 1" key="0-0-0" disabled>
             <TreeNode title="leaf" key="random"/>
             <TreeNode title="leaf"/>
           </TreeNode>
-          <TreeNode title="leaf 2" key="0-0-1"/>
+          <TreeNode title="leaf 2" key="0-0-1" disableCheckbox />
         </TreeNode>
       </Tree>, div);
 
@@ -124,7 +124,7 @@ describe('simple tree', function des() {
       }
     }
     instance = ReactDOM.render(
-      <Tree multiple onSelect={handleSelect}>
+      <Tree selectable multiple onSelect={handleSelect}>
         <TreeNode title="parent 1" key="0-0">
           <TreeNode title="leaf 1" key="0-0-0"/>
           <TreeNode title="leaf 2" key="0-0-1"/>
