@@ -163,7 +163,7 @@ webpackJsonp([4],{
 	    }
 	    this.setState({
 	      gData: data,
-	      expandedKeys: info.originExpandedKeys
+	      expandedKeys: info.rawExpandedKeys.concat([info.node.props.eventKey])
 	    });
 	  },
 	  render: function render() {
@@ -197,7 +197,7 @@ webpackJsonp([4],{
 	        { className: 'draggable-container' },
 	        _react2['default'].createElement(
 	          _rcTree2['default'],
-	          { defaultExpandedKeys: this.state.expandedKeys,
+	          { expandedKeys: this.state.expandedKeys,
 	            draggable: true,
 	            onDragStart: this.onDragStart,
 	            onDragEnter: this.onDragEnter,

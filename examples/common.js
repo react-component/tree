@@ -19820,7 +19820,7 @@
 	      var expandedKeys = this.getExpandedKeys(treeNode, false);
 	      if (expandedKeys) {
 	        // Controlled expand, save and then reset
-	        this.getOriginExpandedKeys();
+	        this.getRawExpandedKeys();
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
@@ -19863,7 +19863,7 @@
 	      };
 	      var expandedKeys = this.getExpandedKeys(treeNode, true);
 	      if (expandedKeys) {
-	        this.getOriginExpandedKeys();
+	        this.getRawExpandedKeys();
 	        st.expandedKeys = expandedKeys;
 	      }
 	      this.setState(st);
@@ -19910,7 +19910,7 @@
 	        res.dropToGap = true;
 	      }
 	      if ('expandedKeys' in this.props) {
-	        res.originExpandedKeys = [].concat(_toConsumableArray(this._originExpandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys));
+	        res.rawExpandedKeys = [].concat(_toConsumableArray(this._rawExpandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys));
 	      }
 	      this.props.onDrop(res);
 	    }
@@ -20116,10 +20116,10 @@
 	      return selectedKeys;
 	    }
 	  }, {
-	    key: 'getOriginExpandedKeys',
-	    value: function getOriginExpandedKeys() {
-	      if (!this._originExpandedKeys && 'expandedKeys' in this.props) {
-	        this._originExpandedKeys = [].concat(_toConsumableArray(this.state.expandedKeys));
+	    key: 'getRawExpandedKeys',
+	    value: function getRawExpandedKeys() {
+	      if (!this._rawExpandedKeys && 'expandedKeys' in this.props) {
+	        this._rawExpandedKeys = [].concat(_toConsumableArray(this.state.expandedKeys));
 	      }
 	    }
 	  }, {
@@ -20223,7 +20223,7 @@
 	        domProps.tabIndex = '0';
 	        domProps.onKeyDown = this.onKeyDown;
 	      }
-	      // console.log(this.state.expandedKeys, this._originExpandedKeys, props.children);
+	      // console.log(this.state.expandedKeys, this._rawExpandedKeys, props.children);
 	      var checkKeys = (0, _util.getTreeNodesStates)(props.children, this.state.checkedKeys, true);
 	      this.checkPartKeys = checkKeys.checkPartKeys;
 	      this.checkedKeys = checkKeys.checkedKeys;
