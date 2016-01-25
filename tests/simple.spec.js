@@ -77,6 +77,23 @@ describe('simple tree', function des() {
     expect(li.find('.rc-tree-node-selected').length).to.be(1);
   });
 
+  it('should set expandedKeys, selectedKeys, checkedKeys and controlled', function() {
+    instance = ReactDOM.render(
+      <Tree checkable expandedKeys={['0-0']} selectedKeys={['0-0']} checkedKeys={['0-0']}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0">
+            <TreeNode title="leaf" key="0-0-0-0" />
+            <TreeNode title="leaf" key="0-0-0-1" />
+          </TreeNode>
+          <TreeNode title="leaf 2" key="0-0-1" />
+        </TreeNode>
+      </Tree>, div);
+    const li = $(instance.refs['treeNode-0-0'].refs.li);
+    expect(li.find('.rc-tree-switcher')[0].className).to.contain('open');
+    expect(li.find('.rc-tree-checkbox-checked').length).to.be(5);
+    expect(li.find('.rc-tree-node-selected').length).to.be(1);
+  });
+
   it('should expand specific treeNode', function(done) {
     function cb() {
       setTimeout(() => {
@@ -122,7 +139,7 @@ describe('simple tree', function des() {
       expect(checkedKeys.indexOf('0-0-0-1') > -1).to.be(true);
       done();
     }
-    instance = TestUtils.renderIntoDocument(
+    instance = ReactDOM.render(
       <Tree checkable onCheck={cb}>
         <TreeNode title="parent 1" key="0-0">
           <TreeNode title="leaf 1" key="0-0-0">
@@ -131,9 +148,63 @@ describe('simple tree', function des() {
           </TreeNode>
           <TreeNode title="leaf 2" key="0-0-1" />
         </TreeNode>
-      </Tree>
+      </Tree>, div
     );
     const ele = ReactDOM.findDOMNode(instance.refs['treeNode-0-0'].refs['treeNode-0-0-0'].refs.checkbox);
     Simulate.click(ele);
+  });
+
+  it('should fire rightClick callback', function(done) {
+    function cb(info) {
+      expect(info.node.props.title).to.be('parent 1');
+      done();
+    }
+    instance = ReactDOM.render(
+      <Tree onRightClick={cb}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0">
+            <TreeNode title="leaf" key="0-0-0-0" />
+            <TreeNode title="leaf" key="0-0-0-1" />
+          </TreeNode>
+          <TreeNode title="leaf 2" key="0-0-1" />
+        </TreeNode>
+      </Tree>, div
+    );
+    Simulate.contextMenu(instance.refs['treeNode-0-0'].refs.selectHandle);
+  });
+
+  it('should filter treeNode', function() {
+    function filterTreeNode(treeNode) {
+      return treeNode.props.title.indexOf('parent') > -1;
+    }
+    instance = ReactDOM.render(
+      <Tree filterTreeNode={filterTreeNode}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0">
+            <TreeNode title="leaf" key="0-0-0-0" />
+            <TreeNode title="leaf" key="0-0-0-1" />
+          </TreeNode>
+          <TreeNode title="leaf 2" key="0-0-1" />
+        </TreeNode>
+      </Tree>, div
+    );
+    expect($(instance.refs.tree).find('.filter-node').length).to.be(1);
+  });
+
+  it('should dynamic load treeNodes', (done) => {
+    function loadData() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+          done();
+        }, 500);
+      });
+    }
+    instance = ReactDOM.render(
+      <Tree loadData={loadData}>
+        <TreeNode title="parent 1" key="0-0" />
+      </Tree>, div
+    );
+    instance.refs['treeNode-0-0'].onExpand();
   });
 });
