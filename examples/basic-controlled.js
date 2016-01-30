@@ -39,7 +39,6 @@ const Demo = React.createClass({
   onCheck(checkedKeys) {
     this.setState({
       checkedKeys,
-      selectedKeys: ['0-3', '0-4'],
     });
   },
   onSelect(selectedKeys, info) {
