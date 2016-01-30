@@ -67,8 +67,7 @@ webpackJsonp([2],{
 	  },
 	  onCheck: function onCheck(checkedKeys) {
 	    this.setState({
-	      checkedKeys: checkedKeys,
-	      selectedKeys: ['0-3', '0-4']
+	      checkedKeys: checkedKeys
 	    });
 	  },
 	  onSelect: function onSelect(selectedKeys, info) {
