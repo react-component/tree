@@ -307,6 +307,13 @@ generateData(z);
   loop(data);
 }
 
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">spl</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hljs-keyword">return</span> str.split(<span class="hljs-string">'-'</span>);
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">splitLen</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hljs-keyword">return</span> str.split(<span class="hljs-string">'-'</span>).length;
+}
+
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFilterExpandedKeys</span><span class="hljs-params">(data, expandedKeys)</span> </span>{
   <span class="hljs-keyword">const</span> expandedPosArr = [];
   loopData(data, (item, index, pos) =&gt; {
@@ -317,7 +324,7 @@ generateData(z);
   <span class="hljs-keyword">const</span> filterExpandedKeys = [];
   loopData(data, (item, index, pos) =&gt; {
     expandedPosArr.forEach(p =&gt; {
-      <span class="hljs-keyword">if</span> ((pos.split(<span class="hljs-string">'-'</span>).length &lt; p.split(<span class="hljs-string">'-'</span>).length
+      <span class="hljs-keyword">if</span> ((splitLen(pos) &lt; splitLen(p)
         &amp;&amp; p.indexOf(pos) === <span class="hljs-number">0</span> || pos === p)
         &amp;&amp; filterExpandedKeys.indexOf(item.key) === -<span class="hljs-number">1</span>) {
         filterExpandedKeys.push(item.key);
@@ -327,8 +334,59 @@ generateData(z);
   <span class="hljs-keyword">return</span> filterExpandedKeys;
 }
 
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSibling</span><span class="hljs-params">(pos, pos1)</span> </span>{
+  pos.pop();
+  pos1.pop();
+  <span class="hljs-keyword">return</span> pos.join(<span class="hljs-string">','</span>) === pos1.join(<span class="hljs-string">','</span>);
+}
 
-export { gData, getFilterExpandedKeys };
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRadioSelectKeys</span><span class="hljs-params">(data, selectedKeys, key)</span> </span>{
+  <span class="hljs-keyword">const</span> res = [];
+  <span class="hljs-keyword">const</span> pkObjArr = [];
+  <span class="hljs-keyword">const</span> selPkObjArr = [];
+  loopData(data, (item, index, pos) =&gt; {
+    <span class="hljs-keyword">if</span> (selectedKeys.indexOf(item.key) &gt; -<span class="hljs-number">1</span>) {
+      pkObjArr.push([pos, item.key]);
+    }
+    <span class="hljs-keyword">if</span> (key &amp;&amp; key === item.key) {
+      selPkObjArr.push(pos, item.key);
+    }
+  });
+  <span class="hljs-keyword">const</span> lenObj = {};
+  <span class="hljs-keyword">const</span> getPosKey = (pos, k) =&gt; {
+    <span class="hljs-keyword">const</span> posLen = splitLen(pos);
+    <span class="hljs-keyword">if</span> (!lenObj[posLen]) {
+      lenObj[posLen] = [[pos, k]];
+    } <span class="hljs-keyword">else</span> {
+      lenObj[posLen].forEach((pkArr, i) =&gt; {
+        <span class="hljs-keyword">if</span> (isSibling(spl(pkArr[<span class="hljs-number">0</span>]), spl(pos))) {
+          <span class="hljs-comment">// 后来覆盖前者</span>
+          lenObj[posLen][i] = [pos, k];
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (spl(pkArr[<span class="hljs-number">0</span>]) !== spl(pos)) {
+          lenObj[posLen].push([pos, k]);
+        }
+      });
+    }
+  };
+  pkObjArr.forEach((pk) =&gt; {
+    getPosKey(pk[<span class="hljs-number">0</span>], pk[<span class="hljs-number">1</span>]);
+  });
+  <span class="hljs-keyword">if</span> (key) {
+    getPosKey(selPkObjArr[<span class="hljs-number">0</span>], selPkObjArr[<span class="hljs-number">1</span>]);
+  }
+
+  <span class="hljs-built_in">Object</span>.keys(lenObj).forEach((item) =&gt; {
+    lenObj[item].forEach((i) =&gt; {
+      <span class="hljs-keyword">if</span> (res.indexOf(i[<span class="hljs-number">1</span>]) === -<span class="hljs-number">1</span>) {
+        res.push(i[<span class="hljs-number">1</span>]);
+      }
+    });
+  });
+  <span class="hljs-keyword">return</span> res;
+}
+
+
+export { gData, getFilterExpandedKeys, getRadioSelectKeys };
 </code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">

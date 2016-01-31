@@ -60,6 +60,13 @@ webpackJsonp([4],{
 	  loop(data);
 	}
 	
+	function spl(str) {
+	  return str.split('-');
+	}
+	function splitLen(str) {
+	  return str.split('-').length;
+	}
+	
 	function getFilterExpandedKeys(data, expandedKeys) {
 	  var expandedPosArr = [];
 	  loopData(data, function (item, index, pos) {
@@ -70,7 +77,7 @@ webpackJsonp([4],{
 	  var filterExpandedKeys = [];
 	  loopData(data, function (item, index, pos) {
 	    expandedPosArr.forEach(function (p) {
-	      if ((pos.split('-').length < p.split('-').length && p.indexOf(pos) === 0 || pos === p) && filterExpandedKeys.indexOf(item.key) === -1) {
+	      if ((splitLen(pos) < splitLen(p) && p.indexOf(pos) === 0 || pos === p) && filterExpandedKeys.indexOf(item.key) === -1) {
 	        filterExpandedKeys.push(item.key);
 	      }
 	    });
@@ -78,8 +85,60 @@ webpackJsonp([4],{
 	  return filterExpandedKeys;
 	}
 	
+	function isSibling(pos, pos1) {
+	  pos.pop();
+	  pos1.pop();
+	  return pos.join(',') === pos1.join(',');
+	}
+	
+	function getRadioSelectKeys(data, selectedKeys, key) {
+	  var res = [];
+	  var pkObjArr = [];
+	  var selPkObjArr = [];
+	  loopData(data, function (item, index, pos) {
+	    if (selectedKeys.indexOf(item.key) > -1) {
+	      pkObjArr.push([pos, item.key]);
+	    }
+	    if (key && key === item.key) {
+	      selPkObjArr.push(pos, item.key);
+	    }
+	  });
+	  var lenObj = {};
+	  var getPosKey = function getPosKey(pos, k) {
+	    var posLen = splitLen(pos);
+	    if (!lenObj[posLen]) {
+	      lenObj[posLen] = [[pos, k]];
+	    } else {
+	      lenObj[posLen].forEach(function (pkArr, i) {
+	        if (isSibling(spl(pkArr[0]), spl(pos))) {
+	          // 后来覆盖前者
+	          lenObj[posLen][i] = [pos, k];
+	        } else if (spl(pkArr[0]) !== spl(pos)) {
+	          lenObj[posLen].push([pos, k]);
+	        }
+	      });
+	    }
+	  };
+	  pkObjArr.forEach(function (pk) {
+	    getPosKey(pk[0], pk[1]);
+	  });
+	  if (key) {
+	    getPosKey(selPkObjArr[0], selPkObjArr[1]);
+	  }
+	
+	  Object.keys(lenObj).forEach(function (item) {
+	    lenObj[item].forEach(function (i) {
+	      if (res.indexOf(i[1]) === -1) {
+	        res.push(i[1]);
+	      }
+	    });
+	  });
+	  return res;
+	}
+	
 	exports.gData = gData;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
+	exports.getRadioSelectKeys = getRadioSelectKeys;
 
 /***/ },
 

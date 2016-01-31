@@ -268,7 +268,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 import React, {PropTypes} from <span class="hljs-string">'react'</span>;
 import ReactDOM from <span class="hljs-string">'react-dom'</span>;
 import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
-import { gData, getFilterExpandedKeys } from <span class="hljs-string">'./util'</span>;
+import { gData, getFilterExpandedKeys, getRadioSelectKeys } from <span class="hljs-string">'./util'</span>;
 
 <span class="hljs-keyword">const</span> Demo = React.createClass({
   propTypes: {
@@ -281,7 +281,7 @@ import { gData, getFilterExpandedKeys } from <span class="hljs-string">'./util'<
   },
   getInitialState() {
     <span class="hljs-keyword">return</span> {
-      expandedKeys: getFilterExpandedKeys(gData, [<span class="hljs-string">'0-0-0'</span>, <span class="hljs-string">'0-0-1'</span>]),
+      expandedKeys: getFilterExpandedKeys(gData, [<span class="hljs-string">'0-0-0'</span>]),
       checkedKeys: [<span class="hljs-string">'0-0-0'</span>],
       selectedKeys: [],
     };
@@ -308,9 +308,18 @@ import { gData, getFilterExpandedKeys } from <span class="hljs-string">'./util'<
     });
   },
   onSelect(selectedKeys, info) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onSelect'</span>, info);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onSelect'</span>, selectedKeys, info);
     <span class="hljs-keyword">this</span>.setState({
       selectedKeys,
+    });
+  },
+  onRbSelect(selectedKeys, info) {
+    <span class="hljs-keyword">let</span> _selectedKeys = selectedKeys;
+    <span class="hljs-keyword">if</span> (info.selected) {
+      _selectedKeys = getRadioSelectKeys(gData, selectedKeys, info.node.props.eventKey);
+    }
+    <span class="hljs-keyword">this</span>.setState({
+      selectedKeys: _selectedKeys,
     });
   },
   render() {
@@ -325,12 +334,19 @@ import { gData, getFilterExpandedKeys } from <span class="hljs-string">'./util'<
         return <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span>/&gt;</span>;</span>
       });
     };
-    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-comment">// console.log(getRadioSelectKeys(gData, this.state.selectedKeys));</span>
+    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{padding:</span> '<span class="hljs-attribute">0</span> <span class="hljs-attribute">20px</span>'}}&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>controlled<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">multiple</span>=<span class="hljs-value">{this.props.multiple}</span> <span class="hljs-attribute">defaultExpandAll</span>
             <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
             <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
             <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{this.state.selectedKeys}</span>&gt;</span>
+        {loop(gData)}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>radio's behavior select (in the same level)<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">defaultExpandAll</span>
+            <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onRbSelect}</span>
+            <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{getRadioSelectKeys(gData,</span> <span class="hljs-attribute">this.state.selectedKeys</span>)}&gt;</span>
         {loop(gData)}
       <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>);
