@@ -2,7 +2,7 @@ import 'rc-tree/assets/index.less';
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
-import { gData, getFilterExpandedKeys } from './util';
+import { gData, getFilterExpandedKeys, getRadioSelectKeys } from './util';
 
 const Demo = React.createClass({
   propTypes: {
@@ -15,7 +15,7 @@ const Demo = React.createClass({
   },
   getInitialState() {
     return {
-      expandedKeys: getFilterExpandedKeys(gData, ['0-0-0', '0-0-1']),
+      expandedKeys: getFilterExpandedKeys(gData, ['0-0-0']),
       checkedKeys: ['0-0-0'],
       selectedKeys: [],
     };
@@ -42,9 +42,18 @@ const Demo = React.createClass({
     });
   },
   onSelect(selectedKeys, info) {
-    console.log('onSelect', info);
+    console.log('onSelect', selectedKeys, info);
     this.setState({
       selectedKeys,
+    });
+  },
+  onRbSelect(selectedKeys, info) {
+    let _selectedKeys = selectedKeys;
+    if (info.selected) {
+      _selectedKeys = getRadioSelectKeys(gData, selectedKeys, info.node.props.eventKey);
+    }
+    this.setState({
+      selectedKeys: _selectedKeys,
     });
   },
   render() {
@@ -59,12 +68,19 @@ const Demo = React.createClass({
         return <TreeNode key={item.key} title={item.key}/>;
       });
     };
-    return (<div>
+    // console.log(getRadioSelectKeys(gData, this.state.selectedKeys));
+    return (<div style={{padding: '0 20px'}}>
       <h2>controlled</h2>
       <Tree checkable multiple={this.props.multiple} defaultExpandAll
             onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
             onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
             onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}>
+        {loop(gData)}
+      </Tree>
+      <h2>radio's behavior select (in the same level)</h2>
+      <Tree multiple defaultExpandAll
+            onSelect={this.onRbSelect}
+            selectedKeys={getRadioSelectKeys(gData, this.state.selectedKeys)}>
         {loop(gData)}
       </Tree>
     </div>);
