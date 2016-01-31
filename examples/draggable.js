@@ -9,7 +9,7 @@ const Demo = React.createClass({
   getInitialState() {
     return {
       gData: gData,
-      expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
+      expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
     };
   },
   onDragStart() {
@@ -64,9 +64,9 @@ const Demo = React.createClass({
     const loop = data => {
       return data.map((item) => {
         if (item.children) {
-          return <TreeNode key={item.key} title={item.key}>{loop(item.children)}</TreeNode>;
+          return <TreeNode key={item.key} title={item.title}>{loop(item.children)}</TreeNode>;
         }
-        return <TreeNode key={item.key} title={item.key} />;
+        return <TreeNode key={item.key} title={item.title} />;
       });
     };
     return (<div className="draggable-demo">

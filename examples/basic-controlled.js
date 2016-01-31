@@ -15,8 +15,8 @@ const Demo = React.createClass({
   },
   getInitialState() {
     return {
-      expandedKeys: getFilterExpandedKeys(gData, ['0-0-0']),
-      checkedKeys: ['0-0-0'],
+      expandedKeys: getFilterExpandedKeys(gData, ['0-0-0-key']),
+      checkedKeys: ['0-0-0-key'],
       selectedKeys: [],
     };
   },
@@ -60,12 +60,12 @@ const Demo = React.createClass({
     const loop = data => {
       return data.map((item) => {
         if (item.children) {
-          return (<TreeNode key={item.key} title={item.key}
-                            disableCheckbox={item.key === '0-0-0' ? true : false}>
+          return (<TreeNode key={item.key} title={item.title}
+                            disableCheckbox={item.key === '0-0-0-key' ? true : false}>
             {loop(item.children)}
           </TreeNode>);
         }
-        return <TreeNode key={item.key} title={item.key}/>;
+        return <TreeNode key={item.key} title={item.title}/>;
       });
     };
     // console.log(getRadioSelectKeys(gData, this.state.selectedKeys));
