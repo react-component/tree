@@ -277,7 +277,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <span class="hljs-keyword">const</span> children = [];
   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; x; i++) {
     <span class="hljs-keyword">const</span> key = `${preKey}-${i}`;
-    tns.push({title: key, key: key});
+    tns.push({title: key + <span class="hljs-string">'-label'</span>, key: key + <span class="hljs-string">'-key'</span>});
     <span class="hljs-keyword">if</span> (i &lt; y) {
       children.push(key);
     }

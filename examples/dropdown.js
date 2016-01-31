@@ -29,7 +29,7 @@ webpackJsonp([5],{
 	  var children = [];
 	  for (var i = 0; i < x; i++) {
 	    var key = preKey + '-' + i;
-	    tns.push({ title: key, key: key });
+	    tns.push({ title: key + '-label', key: key + '-key' });
 	    if (i < y) {
 	      children.push(key);
 	    }

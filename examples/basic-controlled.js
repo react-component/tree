@@ -44,8 +44,8 @@ webpackJsonp([2],{
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      expandedKeys: (0, _util.getFilterExpandedKeys)(_util.gData, ['0-0-0']),
-	      checkedKeys: ['0-0-0'],
+	      expandedKeys: (0, _util.getFilterExpandedKeys)(_util.gData, ['0-0-0-key']),
+	      checkedKeys: ['0-0-0-key'],
 	      selectedKeys: []
 	    };
 	  },
@@ -91,12 +91,12 @@ webpackJsonp([2],{
 	        if (item.children) {
 	          return _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { key: item.key, title: item.key,
-	              disableCheckbox: item.key === '0-0-0' ? true : false },
+	            { key: item.key, title: item.title,
+	              disableCheckbox: item.key === '0-0-0-key' ? true : false },
 	            loop(item.children)
 	          );
 	        }
-	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.key });
+	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.title });
 	      });
 	    };
 	    // console.log(getRadioSelectKeys(gData, this.state.selectedKeys));
@@ -157,7 +157,7 @@ webpackJsonp([2],{
 	  var children = [];
 	  for (var i = 0; i < x; i++) {
 	    var key = preKey + '-' + i;
-	    tns.push({ title: key, key: key });
+	    tns.push({ title: key + '-label', key: key + '-key' });
 	    if (i < y) {
 	      children.push(key);
 	    }

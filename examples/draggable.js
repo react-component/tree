@@ -29,7 +29,7 @@ webpackJsonp([4],{
 	  var children = [];
 	  for (var i = 0; i < x; i++) {
 	    var key = preKey + '-' + i;
-	    tns.push({ title: key, key: key });
+	    tns.push({ title: key + '-label', key: key + '-key' });
 	    if (i < y) {
 	      children.push(key);
 	    }
@@ -175,7 +175,7 @@ webpackJsonp([4],{
 	  getInitialState: function getInitialState() {
 	    return {
 	      gData: _util.gData,
-	      expandedKeys: ['0-0', '0-0-0', '0-0-0-0']
+	      expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key']
 	    };
 	  },
 	  onDragStart: function onDragStart() {},
@@ -231,11 +231,11 @@ webpackJsonp([4],{
 	        if (item.children) {
 	          return _react2['default'].createElement(
 	            _rcTree.TreeNode,
-	            { key: item.key, title: item.key },
+	            { key: item.key, title: item.title },
 	            loop(item.children)
 	          );
 	        }
-	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.key });
+	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.title });
 	      });
 	    };
 	    return _react2['default'].createElement(

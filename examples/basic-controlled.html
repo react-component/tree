@@ -281,8 +281,8 @@ import { gData, getFilterExpandedKeys, getRadioSelectKeys } from <span class="hl
   },
   getInitialState() {
     <span class="hljs-keyword">return</span> {
-      expandedKeys: getFilterExpandedKeys(gData, [<span class="hljs-string">'0-0-0'</span>]),
-      checkedKeys: [<span class="hljs-string">'0-0-0'</span>],
+      expandedKeys: getFilterExpandedKeys(gData, [<span class="hljs-string">'0-0-0-key'</span>]),
+      checkedKeys: [<span class="hljs-string">'0-0-0-key'</span>],
       selectedKeys: [],
     };
   },
@@ -326,12 +326,12 @@ import { gData, getFilterExpandedKeys, getRadioSelectKeys } from <span class="hl
     <span class="hljs-keyword">const</span> loop = data =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
         <span class="hljs-keyword">if</span> (item.children) {
-          <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span>
-                            <span class="hljs-attribute">disableCheckbox</span>=<span class="hljs-value">{item.key</span> =<span class="hljs-value">==</span> '<span class="hljs-attribute">0-0-0</span>' ? <span class="hljs-attribute">true</span> <span class="hljs-attribute">:</span> <span class="hljs-attribute">false</span>}&gt;</span>
+          <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.title}</span>
+                            <span class="hljs-attribute">disableCheckbox</span>=<span class="hljs-value">{item.key</span> =<span class="hljs-value">==</span> '<span class="hljs-attribute">0-0-0-key</span>' ? <span class="hljs-attribute">true</span> <span class="hljs-attribute">:</span> <span class="hljs-attribute">false</span>}&gt;</span>
             {loop(item.children)}
           <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>);
         }
-        return <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span>/&gt;</span>;</span>
+        return <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.title}</span>/&gt;</span>;</span>
       });
     };
     <span class="hljs-comment">// console.log(getRadioSelectKeys(gData, this.state.selectedKeys));</span>
