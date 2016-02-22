@@ -88,6 +88,9 @@ see examples
 |onDrop | it execs when fire the tree's drop event | function({event, node, dragNode, dragNodesKeys}) | - |
 
 ### TreeNode props
+> note: if you have a lot of TreeNode, like more than 1000,   
+> make the parent node is collapsed by default, will obvious effect, very fast.  
+> Because the children hide TreeNode will not insert into dom.
 
 | name     | description    | type     | default      |
 |----------|----------------|----------|--------------|
