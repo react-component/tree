@@ -234,6 +234,10 @@ class TreeNode extends React.Component {
         canRenderSwitcher = false;
       }
     }
+    // 如果默认不展开，不渲染进dom，在大量数据下，能使性能有很大提升！
+    if (!props.expanded) {
+      newChildren = null;
+    }
 
     const selectHandle = () => {
       const icon = (props.showIcon || props.loadData && this.state.dataLoading) ?
