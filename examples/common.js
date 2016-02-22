@@ -20950,6 +20950,10 @@
 	          canRenderSwitcher = false;
 	        }
 	      }
+	      // 如果默认不展开，不渲染进dom，在大量数据下，能使性能有很大提升！
+	      if (!props.expanded) {
+	        newChildren = null;
+	      }
 	
 	      var selectHandle = function selectHandle() {
 	        var icon = props.showIcon || props.loadData && _this3.state.dataLoading ? _react2['default'].createElement('span', { className: (0, _classnames2['default'])(iconEleCls) }) : null;
