@@ -73,7 +73,7 @@ describe('simple tree', () => {
       </Tree>, div);
     const li = $(instance.refs['treeNode-0-0'].refs.li);
     expect(li.find('.rc-tree-switcher')[0].className).to.contain('open');
-    expect(li.find('.rc-tree-checkbox-checked').length).to.be(5);
+    expect(li.find('.rc-tree-checkbox-checked').length).to.be(3);
     expect(li.find('.rc-tree-node-selected').length).to.be(1);
   });
 
@@ -90,7 +90,7 @@ describe('simple tree', () => {
       </Tree>, div);
     const li = $(instance.refs['treeNode-0-0'].refs.li);
     expect(li.find('.rc-tree-switcher')[0].className).to.contain('open');
-    expect(li.find('.rc-tree-checkbox-checked').length).to.be(5);
+    expect(li.find('.rc-tree-checkbox-checked').length).to.be(3);
     expect(li.find('.rc-tree-node-selected').length).to.be(1);
   });
 
@@ -124,7 +124,7 @@ describe('simple tree', () => {
       }
     }
     instance = ReactDOM.render(
-      <Tree selectable multiple onSelect={handleSelect}>
+      <Tree defaultExpandAll selectable multiple onSelect={handleSelect}>
         <TreeNode title="parent 1" key="0-0">
           <TreeNode title="leaf 1" key="0-0-0"/>
           <TreeNode title="leaf 2" key="0-0-1"/>
@@ -140,7 +140,7 @@ describe('simple tree', () => {
       done();
     }
     instance = ReactDOM.render(
-      <Tree checkable onCheck={cb}>
+      <Tree defaultExpandAll checkable onCheck={cb}>
         <TreeNode title="parent 1" key="0-0">
           <TreeNode title="leaf 1" key="0-0-0">
             <TreeNode title="leaf" key="0-0-0-0" />
