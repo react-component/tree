@@ -21,9 +21,11 @@ webpackJsonp([5],{
 	var y = 2;
 	var z = 1;
 	// x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
-	// 总节点数：
-	// const rec = (n) => n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
-	// console.log(rec(z + 1));
+	/* eslint no-param-reassign:0*/
+	var rec = function rec(n) {
+	  return n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
+	};
+	console.log('总节点数：', rec(z + 1));
 	// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 	
 	var gData = [];
