@@ -187,6 +187,7 @@ class Tree extends React.Component {
       node: treeNode,
       checked,
       checkedNodes: checkKeys.checkedNodes,
+      checkedNodesPositions: checkKeys.checkedNodesPositions,
     };
     checkedKeys = checkKeys.checkedKeys;
     if (!('checkedKeys' in this.props)) {

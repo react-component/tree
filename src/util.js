@@ -180,34 +180,34 @@ function getCheckKeys(treeNodesStates) {
   const checkPartKeys = [];
   const checkedKeys = [];
   const checkedNodes = [];
-  const checkedNodesKeys = [];
+  const checkedNodesPositions = [];
   Object.keys(treeNodesStates).forEach((item) => {
     const itemObj = treeNodesStates[item];
     if (itemObj.checked) {
       checkedKeys.push(itemObj.key);
       checkedNodes.push(itemObj.node);
-      checkedNodesKeys.push({key: itemObj.key, node: itemObj.node, pos: item});
+      checkedNodesPositions.push({node: itemObj.node, pos: item});
     } else if (itemObj.checkPart) {
       checkPartKeys.push(itemObj.key);
     }
   });
   return {
-    checkPartKeys, checkedKeys, checkedNodes, checkedNodesKeys, treeNodesStates,
+    checkPartKeys, checkedKeys, checkedNodes, checkedNodesPositions, treeNodesStates,
   };
 }
 
 export function getTreeNodesStates(children, checkedKeys, checkIt, unCheckKey) {
   const checkedPosition = [];
   const treeNodesStates = {};
-  loopAllChildren(children, (item, index, pos, newKey, siblingPosition) => {
+  loopAllChildren(children, (item, index, pos, keyOrPos, siblingPosition) => {
     let checked = false;
-    if (checkedKeys.indexOf(newKey) !== -1) {
+    if (checkedKeys.indexOf(keyOrPos) !== -1) {
       checked = true;
       checkedPosition.push(pos);
     }
     treeNodesStates[pos] = {
       node: item,
-      key: newKey,
+      key: keyOrPos,
       checked: checked,
       checkPart: false,
       siblingPosition,
