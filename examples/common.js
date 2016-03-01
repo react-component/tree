@@ -20412,8 +20412,8 @@
 	exports.browser = browser;
 	exports.getOffset = getOffset;
 	exports.loopAllChildren = loopAllChildren;
-	exports.filterMinPosition = filterMinPosition;
 	exports.isInclude = isInclude;
+	exports.filterParentPosition = filterParentPosition;
 	exports.getTreeNodesStates = getTreeNodesStates;
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -20514,21 +20514,6 @@
 	  loop(childs, 0);
 	}
 	
-	function filterMinPosition(arr) {
-	  var a = [];
-	  arr.forEach(function (item) {
-	    var b = a.filter(function (i) {
-	      return item.indexOf(i) === 0 && (item[i.length] === '-' || !item[i.length]);
-	    });
-	    if (!b.length) {
-	      a.push(item);
-	    }
-	  });
-	  return a;
-	}
-	
-	// console.log(filterMinPosition(['0-0','0-1', '0-10', '0-0-1', '0-1-1', '0-10-0']));
-	
 	function isInclude(smallArray, bigArray) {
 	  return smallArray.every(function (ii, i) {
 	    return ii === bigArray[i];
@@ -20536,6 +20521,36 @@
 	}
 	
 	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
+	
+	function uniqueArray(arr) {
+	  var obj = {};
+	  arr.forEach(function (item) {
+	    if (!obj[item]) {
+	      obj[item] = true;
+	    }
+	  });
+	  return Object.keys(obj);
+	}
+	// console.log(uniqueArray(['11', '2', '2']));
+	
+	function filterParentPosition(arr) {
+	  var a = [].concat(arr);
+	  arr.forEach(function (item) {
+	    var itemArr = item.split('-');
+	    a.forEach(function (ii, index) {
+	      var iiArr = ii.split('-');
+	      if (itemArr.length <= iiArr.length && isInclude(itemArr, iiArr)) {
+	        a[index] = item;
+	      }
+	      if (itemArr.length > iiArr.length && isInclude(iiArr, itemArr)) {
+	        a[index] = ii;
+	      }
+	    });
+	  });
+	  return uniqueArray(a);
+	}
+	
+	// console.log(filterParentPosition(['0-2', '0-10', '0-0-1', '0-1-1', '0-0','0-1', '0-10-0']));
 	
 	// TODO 效率差, 需要缓存优化
 	function handleCheckState(obj, checkedPositionArr, checkIt) {
@@ -20640,7 +20655,7 @@
 	  });
 	
 	  // debugger
-	  handleCheckState(treeNodesStates, filterMinPosition(checkedPosition.sort()), true);
+	  handleCheckState(treeNodesStates, filterParentPosition(checkedPosition.sort()), true);
 	
 	  if (!checkIt && unCheckKey) {
 	    var pos = undefined;
