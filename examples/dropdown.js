@@ -3,7 +3,7 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(225);
+	module.exports = __webpack_require__(224);
 
 
 /***/ },
@@ -182,11 +182,11 @@ webpackJsonp([5],{
 	
 	var _rcUtil = __webpack_require__(188);
 	
-	var _Popup = __webpack_require__(209);
+	var _Popup = __webpack_require__(208);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(222);
+	var _utils = __webpack_require__(221);
 	
 	function noop() {}
 	
@@ -194,11 +194,15 @@ webpackJsonp([5],{
 	  return '';
 	}
 	
+	var ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter', 'onMouseLeave', 'onFocus', 'onBlur'];
+	
 	var Trigger = _react2['default'].createClass({
 	  displayName: 'Trigger',
 	
 	  propTypes: {
 	    action: _react.PropTypes.any,
+	    showAction: _react.PropTypes.any,
+	    hideAction: _react.PropTypes.any,
 	    getPopupClassNameFromAlign: _react.PropTypes.any,
 	    onPopupVisibleChange: _react.PropTypes.func,
 	    afterPopupVisibleChange: _react.PropTypes.func,
@@ -211,6 +215,8 @@ webpackJsonp([5],{
 	    popupAnimation: _react.PropTypes.any,
 	    mouseEnterDelay: _react.PropTypes.number,
 	    mouseLeaveDelay: _react.PropTypes.number,
+	    focusDelay: _react.PropTypes.number,
+	    blurDelay: _react.PropTypes.number,
 	    getPopupContainer: _react.PropTypes.func,
 	    destroyPopupOnHide: _react.PropTypes.bool,
 	    popupAlign: _react.PropTypes.object,
@@ -226,11 +232,15 @@ webpackJsonp([5],{
 	      popupClassName: '',
 	      mouseEnterDelay: 0,
 	      mouseLeaveDelay: 0.1,
+	      focusDelay: 0,
+	      blurDelay: 0.15,
 	      popupStyle: {},
 	      destroyPopupOnHide: false,
 	      popupAlign: {},
 	      defaultPopupVisible: false,
-	      action: []
+	      action: [],
+	      showAction: [],
+	      hideAction: []
 	    };
 	  },
 	
@@ -312,10 +322,7 @@ webpackJsonp([5],{
 	      }
 	      this.popupContainer = null;
 	    }
-	    if (this.delayTimer) {
-	      clearTimeout(this.delayTimer);
-	      this.delayTimer = null;
-	    }
+	    this.clearDelayTimer();
 	    if (this.clickOutsideHandler) {
 	      this.clickOutsideHandler.remove();
 	      this.touchOutsideHandler.remove();
@@ -334,7 +341,7 @@ webpackJsonp([5],{
 	
 	  onFocus: function onFocus() {
 	    this.focusTime = Date.now();
-	    this.setPopupVisible(true);
+	    this.delaySetPopupVisible(true, this.props.focusDelay);
 	  },
 	
 	  onMouseDown: function onMouseDown() {
@@ -346,7 +353,7 @@ webpackJsonp([5],{
 	  },
 	
 	  onBlur: function onBlur() {
-	    this.setPopupVisible(false);
+	    this.delaySetPopupVisible(false, this.props.blurDelay);
 	  },
 	
 	  onClick: function onClick(event) {
@@ -368,7 +375,10 @@ webpackJsonp([5],{
 	    this.preClickTime = 0;
 	    this.preTouchTime = 0;
 	    event.preventDefault();
-	    this.setPopupVisible(!this.state.popupVisible);
+	    var nextVisible = !this.state.popupVisible;
+	    if (this.isClickToHide() && !nextVisible || nextVisible && this.isClickToShow()) {
+	      this.setPopupVisible(!this.state.popupVisible);
+	    }
 	  },
 	
 	  onDocumentClick: function onDocumentClick(event) {
@@ -453,6 +463,7 @@ webpackJsonp([5],{
 	  },
 	
 	  setPopupVisible: function setPopupVisible(popupVisible) {
+	    this.clearDelayTimer();
 	    if (this.state.popupVisible !== popupVisible) {
 	      if (!('popupVisible' in this.props)) {
 	        this.setState({
@@ -467,18 +478,70 @@ webpackJsonp([5],{
 	    var _this2 = this;
 	
 	    var delay = delayS * 1000;
-	    if (this.delayTimer) {
-	      clearTimeout(this.delayTimer);
-	      this.delayTimer = null;
-	    }
+	    this.clearDelayTimer();
 	    if (delay) {
 	      this.delayTimer = setTimeout(function () {
 	        _this2.setPopupVisible(visible);
-	        _this2.delayTimer = null;
+	        _this2.clearDelayTimer();
 	      }, delay);
 	    } else {
 	      this.setPopupVisible(visible);
 	    }
+	  },
+	
+	  clearDelayTimer: function clearDelayTimer() {
+	    if (this.delayTimer) {
+	      clearTimeout(this.delayTimer);
+	      this.delayTimer = null;
+	    }
+	  },
+	
+	  isClickToShow: function isClickToShow() {
+	    var _props = this.props;
+	    var action = _props.action;
+	    var showAction = _props.showAction;
+	
+	    return action.indexOf('click') !== -1 || showAction.indexOf('click') !== -1;
+	  },
+	
+	  isClickToHide: function isClickToHide() {
+	    var _props2 = this.props;
+	    var action = _props2.action;
+	    var hideAction = _props2.hideAction;
+	
+	    return action.indexOf('click') !== -1 || hideAction.indexOf('click') !== -1;
+	  },
+	
+	  isMouseEnterToShow: function isMouseEnterToShow() {
+	    var _props3 = this.props;
+	    var action = _props3.action;
+	    var showAction = _props3.showAction;
+	
+	    return action.indexOf('hover') !== -1 || showAction.indexOf('mouseEnter') !== -1;
+	  },
+	
+	  isMouseLeaveToHide: function isMouseLeaveToHide() {
+	    var _props4 = this.props;
+	    var action = _props4.action;
+	    var hideAction = _props4.hideAction;
+	
+	    return action.indexOf('hover') !== -1 || hideAction.indexOf('mouseLeave') !== -1;
+	  },
+	
+	  isFocusToShow: function isFocusToShow() {
+	    var _props5 = this.props;
+	    var action = _props5.action;
+	    var showAction = _props5.showAction;
+	
+	    return action.indexOf('focus') !== -1 || showAction.indexOf('focus') !== -1;
+	  },
+	
+	  isBlurToHide: function isBlurToHide() {
+	    var _props6 = this.props;
+	    var action = _props6.action;
+	    var hideAction = _props6.hideAction;
+	
+	    return action.indexOf('focus') !== -1 || hideAction.indexOf('blur') !== -1;
 	  },
 	
 	  render: function render() {
@@ -488,20 +551,36 @@ webpackJsonp([5],{
 	    var child = _react2['default'].Children.only(children);
 	    var childProps = child.props || {};
 	    var newChildProps = {};
-	    var trigger = props.action;
-	    if (trigger.indexOf('click') !== -1) {
+	
+	    if (this.isClickToHide() || this.isClickToShow()) {
 	      newChildProps.onClick = (0, _rcUtil.createChainedFunction)(this.onClick, childProps.onClick);
 	      newChildProps.onMouseDown = (0, _rcUtil.createChainedFunction)(this.onMouseDown, childProps.onMouseDown);
 	      newChildProps.onTouchStart = (0, _rcUtil.createChainedFunction)(this.onTouchStart, childProps.onTouchStart);
 	    }
-	    if (trigger.indexOf('hover') !== -1) {
+	    if (this.isMouseEnterToShow()) {
 	      newChildProps.onMouseEnter = (0, _rcUtil.createChainedFunction)(this.onMouseEnter, childProps.onMouseEnter);
+	    }
+	    if (this.isMouseLeaveToHide()) {
 	      newChildProps.onMouseLeave = (0, _rcUtil.createChainedFunction)(this.onMouseLeave, childProps.onMouseLeave);
 	    }
-	    if (trigger.indexOf('focus') !== -1) {
+	    if (this.isFocusToShow()) {
 	      newChildProps.onFocus = (0, _rcUtil.createChainedFunction)(this.onFocus, childProps.onFocus);
+	    }
+	    if (this.isBlurToHide()) {
 	      newChildProps.onBlur = (0, _rcUtil.createChainedFunction)(this.onBlur, childProps.onBlur);
 	    }
+	
+	    ALL_HANDLERS.forEach(function (handler) {
+	      var newFn = undefined;
+	      if (props[handler] && newChildProps[handler]) {
+	        newFn = (0, _rcUtil.createChainedFunction)(props[handler], newChildProps[handler]);
+	      } else {
+	        newFn = props[handler] || newChildProps[handler];
+	      }
+	      if (newFn) {
+	        newChildProps[handler] = newFn;
+	      }
+	    });
 	
 	    return _react2['default'].cloneElement(child, newChildProps);
 	  }
@@ -524,14 +603,14 @@ webpackJsonp([5],{
 	  KeyCode: __webpack_require__(193),
 	  PureRenderMixin: __webpack_require__(194),
 	  shallowEqual: __webpack_require__(195),
-	  createChainedFunction: __webpack_require__(201),
+	  createChainedFunction: __webpack_require__(200),
 	  Dom: {
-	    addEventListener: __webpack_require__(202),
-	    contains: __webpack_require__(206)
+	    addEventListener: __webpack_require__(201),
+	    contains: __webpack_require__(205)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(207),
-	    mapSelf: __webpack_require__(208)
+	    toArray: __webpack_require__(206),
+	    mapSelf: __webpack_require__(207)
 	  }
 	};
 
@@ -1220,18 +1299,7 @@ webpackJsonp([5],{
 
 	'use strict';
 	
-	var shallowEqual = __webpack_require__(196);
-	
-	module.exports = shallowEqual;
-
-/***/ },
-
-/***/ 196:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var fetchKeys = __webpack_require__(197);
+	var fetchKeys = __webpack_require__(196);
 	
 	module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 	
@@ -1280,7 +1348,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 197:
+/***/ 196:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1291,9 +1359,9 @@ webpackJsonp([5],{
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(198),
-	    isArguments = __webpack_require__(199),
-	    isArray = __webpack_require__(200);
+	var getNative = __webpack_require__(197),
+	    isArguments = __webpack_require__(198),
+	    isArray = __webpack_require__(199);
 	
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -1523,7 +1591,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 198:
+/***/ 197:
 /***/ function(module, exports) {
 
 	/**
@@ -1667,11 +1735,11 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 199:
+/***/ 198:
 /***/ function(module, exports) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {/**
-	 * lodash 3.0.5 (Custom Build) <https://lodash.com/>
+	/**
+	 * lodash 3.0.8 (Custom Build) <https://lodash.com/>
 	 * Build: `lodash modularize exports="npm" -o ./`
 	 * Copyright 2012-2016 The Dojo Foundation <http://dojofoundation.org/>
 	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -1688,7 +1756,7 @@ webpackJsonp([5],{
 	    genTag = '[object GeneratorFunction]';
 	
 	/** Used for built-in method references. */
-	var objectProto = global.Object.prototype;
+	var objectProto = Object.prototype;
 	
 	/** Used to check objects for own properties. */
 	var hasOwnProperty = objectProto.hasOwnProperty;
@@ -1756,7 +1824,6 @@ webpackJsonp([5],{
 	 *
 	 * @static
 	 * @memberOf _
-	 * @type Function
 	 * @category Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
@@ -1775,8 +1842,7 @@ webpackJsonp([5],{
 	 * // => false
 	 */
 	function isArrayLike(value) {
-	  return value != null &&
-	    !(typeof value == 'function' && isFunction(value)) && isLength(getLength(value));
+	  return value != null && isLength(getLength(value)) && !isFunction(value);
 	}
 	
 	/**
@@ -1785,7 +1851,6 @@ webpackJsonp([5],{
 	 *
 	 * @static
 	 * @memberOf _
-	 * @type Function
 	 * @category Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is an array-like object, else `false`.
@@ -1825,8 +1890,8 @@ webpackJsonp([5],{
 	 */
 	function isFunction(value) {
 	  // The use of `Object#toString` avoids issues with the `typeof` operator
-	  // in Safari 8 which returns 'object' for typed array constructors, and
-	  // PhantomJS 1.9 which returns 'function' for `NodeList` instances.
+	  // in Safari 8 which returns 'object' for typed array and weak map constructors,
+	  // and PhantomJS 1.9 which returns 'function' for `NodeList` instances.
 	  var tag = isObject(value) ? objectToString.call(value) : '';
 	  return tag == funcTag || tag == genTag;
 	}
@@ -1856,7 +1921,8 @@ webpackJsonp([5],{
 	 * // => false
 	 */
 	function isLength(value) {
-	  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	  return typeof value == 'number' &&
+	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
 	}
 	
 	/**
@@ -1883,8 +1949,6 @@ webpackJsonp([5],{
 	 * // => false
 	 */
 	function isObject(value) {
-	  // Avoid a V8 JIT bug in Chrome 19-20.
-	  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
 	  var type = typeof value;
 	  return !!value && (type == 'object' || type == 'function');
 	}
@@ -1917,12 +1981,11 @@ webpackJsonp([5],{
 	}
 	
 	module.exports = isArguments;
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
 
 /***/ },
 
-/***/ 200:
+/***/ 199:
 /***/ function(module, exports) {
 
 	/**
@@ -2109,7 +2172,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 201:
+/***/ 200:
 /***/ function(module, exports) {
 
 	/**
@@ -2137,7 +2200,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 202:
+/***/ 201:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2149,7 +2212,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _addDomEventListener = __webpack_require__(203);
+	var _addDomEventListener = __webpack_require__(202);
 	
 	var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 	
@@ -2169,7 +2232,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 203:
+/***/ 202:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2181,7 +2244,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventObject = __webpack_require__(204);
+	var _EventObject = __webpack_require__(203);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
@@ -2212,7 +2275,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 204:
+/***/ 203:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2229,7 +2292,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventBaseObject = __webpack_require__(205);
+	var _EventBaseObject = __webpack_require__(204);
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
@@ -2496,7 +2559,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 205:
+/***/ 204:
 /***/ function(module, exports) {
 
 	/**
@@ -2565,7 +2628,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 206:
+/***/ 205:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2584,7 +2647,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 207:
+/***/ 206:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2601,7 +2664,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 208:
+/***/ 207:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2619,7 +2682,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 209:
+/***/ 208:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2638,7 +2701,7 @@ webpackJsonp([5],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAlign = __webpack_require__(210);
+	var _rcAlign = __webpack_require__(209);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
@@ -2646,7 +2709,7 @@ webpackJsonp([5],{
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _PopupInner = __webpack_require__(221);
+	var _PopupInner = __webpack_require__(220);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
@@ -2780,7 +2843,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 210:
+/***/ 209:
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
@@ -2792,7 +2855,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _Align = __webpack_require__(211);
+	var _Align = __webpack_require__(210);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -2801,7 +2864,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 211:
+/***/ 210:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2820,13 +2883,13 @@ webpackJsonp([5],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _domAlign = __webpack_require__(212);
+	var _domAlign = __webpack_require__(211);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
 	var _rcUtil = __webpack_require__(188);
 	
-	var _isWindow = __webpack_require__(220);
+	var _isWindow = __webpack_require__(219);
 	
 	var _isWindow2 = _interopRequireDefault(_isWindow);
 	
@@ -2959,7 +3022,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 212:
+/***/ 211:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2975,27 +3038,27 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(213);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(214);
+	var _getOffsetParent = __webpack_require__(213);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
-	var _getVisibleRectForElement = __webpack_require__(215);
+	var _getVisibleRectForElement = __webpack_require__(214);
 	
 	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
 	
-	var _adjustForViewport = __webpack_require__(216);
+	var _adjustForViewport = __webpack_require__(215);
 	
 	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
 	
-	var _getRegion = __webpack_require__(217);
+	var _getRegion = __webpack_require__(216);
 	
 	var _getRegion2 = _interopRequireDefault(_getRegion);
 	
-	var _getElFuturePos = __webpack_require__(218);
+	var _getElFuturePos = __webpack_require__(217);
 	
 	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
 	
@@ -3163,7 +3226,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 213:
+/***/ 212:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3662,7 +3725,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 214:
+/***/ 213:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3673,7 +3736,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(213);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -3721,7 +3784,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 215:
+/***/ 214:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3732,11 +3795,11 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(213);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(214);
+	var _getOffsetParent = __webpack_require__(213);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
@@ -3803,7 +3866,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 216:
+/***/ 215:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3814,7 +3877,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(213);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -3864,7 +3927,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 217:
+/***/ 216:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3875,7 +3938,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(213);
+	var _utils = __webpack_require__(212);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -3906,7 +3969,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 218:
+/***/ 217:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3917,7 +3980,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _getAlignOffset = __webpack_require__(219);
+	var _getAlignOffset = __webpack_require__(218);
 	
 	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
 	
@@ -3948,7 +4011,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 219:
+/***/ 218:
 /***/ function(module, exports) {
 
 	/**
@@ -3994,7 +4057,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 220:
+/***/ 219:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4014,7 +4077,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 221:
+/***/ 220:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4061,30 +4124,26 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 222:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 221:
+/***/ function(module, exports) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	exports.getAlignFromPlacement = getAlignFromPlacement;
 	exports.getPopupClassNameFromAlign = getPopupClassNameFromAlign;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _objectAssign = __webpack_require__(164);
-	
-	var _objectAssign2 = _interopRequireDefault(_objectAssign);
-	
 	function isPointsEq(a1, a2) {
 	  return a1[0] === a2[0] && a1[1] === a2[1];
 	}
 	
 	function getAlignFromPlacement(builtinPlacements, placementStr, align) {
 	  var baseAlign = builtinPlacements[placementStr] || {};
-	  return (0, _objectAssign2['default'])({}, baseAlign, align);
+	  return _extends({}, baseAlign, align);
 	}
 	
 	function getPopupClassNameFromAlign(builtinPlacements, prefixCls, align) {
@@ -4101,7 +4160,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 225:
+/***/ 224:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint react/no-multi-comp:0 */
@@ -4111,7 +4170,7 @@ webpackJsonp([5],{
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(226);
+	__webpack_require__(225);
 	
 	var _react = __webpack_require__(3);
 	
@@ -4359,7 +4418,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 226:
+/***/ 225:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
