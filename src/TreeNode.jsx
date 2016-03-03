@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Animate from 'rc-animate';
 import { browser } from './util';
 
-const browserUa = browser(window.navigator.userAgent || '');
+const browserUa = browser(typeof window !== 'undefined' ? window.navigator.userAgent : '');
 const ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
 // const uaArray = browserUa.split(' ');
 // const gtIE8 = uaArray.length !== 2 || uaArray[0].indexOf('IE') === -1 || Number(uaArray[1]) > 8;
