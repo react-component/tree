@@ -1,0 +1,112 @@
+
+.demo-dropdown-trigger {
+  width: 200px;
+  height: 30px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+.demo-dropdown-tree {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  z-index: 1070;
+  display: block;
+  background-color: #fff;
+
+  &-hidden {
+    display: none;
+  }
+
+  .effect() {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+    transform-origin: 0 0;
+    display: block !important;
+  }
+
+  &-slide-up-enter,&-slide-up-appear {
+    .effect();
+    opacity: 0;
+    animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
+    animation-play-state: paused;
+  }
+
+  &-slide-up-leave {
+    .effect();
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+    animation-play-state: paused;
+  }
+
+  &-slide-up-enter&-slide-up-enter-active&-placement-bottomLeft,
+  &-slide-up-appear&-slide-up-appear-active&-placement-bottomLeft {
+    animation-name: slideUpIn;
+    animation-play-state: running;
+  }
+
+  &-slide-up-enter&-slide-up-enter-active&-placement-topLeft,
+  &-slide-up-appear&-slide-up-appear-active&-placement-topLeft {
+    animation-name: slideDownIn;
+    animation-play-state: running;
+  }
+
+  &-slide-up-leave&-slide-up-leave-active&-placement-bottomLeft {
+    animation-name: slideUpOut;
+    animation-play-state: running;
+  }
+
+  &-slide-up-leave&-slide-up-leave-active&-placement-topLeft {
+    animation-name: slideDownOut;
+    animation-play-state: running;
+  }
+
+  @keyframes slideUpIn {
+    0% {
+      opacity: 0;
+      transform-origin: 0% 0%;
+      transform: scaleY(0);
+    }
+    100% {
+      opacity: 1;
+      transform-origin: 0% 0%;
+      transform: scaleY(1);
+    }
+  }
+  @keyframes slideUpOut {
+    0% {
+      opacity: 1;
+      transform-origin: 0% 0%;
+      transform: scaleY(1);
+    }
+    100% {
+      opacity: 0;
+      transform-origin: 0% 0%;
+      transform: scaleY(0);
+    }
+  }
+
+  @keyframes slideDownIn {
+    0% {
+      opacity: 0;
+      transform-origin: 0% 100%;
+      transform: scaleY(0);
+    }
+    100% {
+      opacity: 1;
+      transform-origin: 0% 100%;
+      transform: scaleY(1);
+    }
+  }
+  @keyframes slideDownOut {
+    0% {
+      opacity: 1;
+      transform-origin: 0% 100%;
+      transform: scaleY(1);
+    }
+    100% {
+      opacity: 0;
+      transform-origin: 0% 100%;
+      transform: scaleY(0);
+    }
+  }
+}
