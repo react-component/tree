@@ -1,5 +1,5 @@
 import 'rc-tree/assets/index.less';
-import 'rc-tree/assets/demo-basic.less';
+import './basic.less';
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';

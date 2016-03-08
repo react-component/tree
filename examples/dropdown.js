@@ -1,6 +1,6 @@
 /* eslint react/no-multi-comp:0 */
 import 'rc-tree/assets/index.less';
-import 'rc-tree/assets/demo-dropdown.less';
+import './dropdown.less';
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
