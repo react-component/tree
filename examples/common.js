@@ -20428,8 +20428,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	function browser(ua) {
+	function browser(navigator) {
 	  var tem = undefined;
+	  var ua = navigator.userAgent;
 	  var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
 	  if (/trident/i.test(M[1])) {
 	    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
@@ -20721,7 +20722,7 @@
 	
 	var _util = __webpack_require__(166);
 	
-	var browserUa = (0, _util.browser)(typeof window !== 'undefined' ? window.navigator.userAgent : '');
+	var browserUa = typeof window !== 'undefined' ? (0, _util.browser)(window.navigator) : '';
 	var ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
 	// const uaArray = browserUa.split(' ');
 	// const gtIE8 = uaArray.length !== 2 || uaArray[0].indexOf('IE') === -1 || Number(uaArray[1]) > 8;
