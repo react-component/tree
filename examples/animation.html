@@ -267,91 +267,74 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <div class="highlight"><pre><code language="js">import <span class="hljs-string">'rc-tree/assets/index.css'</span>;
 import React from <span class="hljs-string">'react'</span>;
 import ReactDOM from <span class="hljs-string">'react-dom'</span>;
-import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
-import velocity from <span class="hljs-string">'velocity-animate'</span>;
+import Tree, { TreeNode } from <span class="hljs-string">'rc-tree'</span>;
+import cssAnimation from <span class="hljs-string">'css-animation'</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">enter2</span><span class="hljs-params">(node, done)</span> </span>{
-  <span class="hljs-keyword">let</span> ok = <span class="hljs-literal">false</span>;
+<span class="hljs-keyword">const</span> STYLE = `
+.collapse {
+  overflow: hidden;
+}
 
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">if</span> (!ok) {
-      ok = <span class="hljs-number">1</span>;
-      done();
-    }
-  }
+.collapse-active {
+  transition: height <span class="hljs-number">0.3</span>s ease-out;
+}
+`;
 
-  node.style.display = <span class="hljs-string">'none'</span>;
-  velocity(node, <span class="hljs-string">'slideDown'</span>, {
-    duration: <span class="hljs-number">300</span>,
-    complete: complete,
-  });
-  <span class="hljs-keyword">return</span> {
-    stop: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-      velocity(node, <span class="hljs-string">'finish'</span>);
-      <span class="hljs-comment">// velocity complete is async</span>
-      complete();
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">animate</span><span class="hljs-params">(node, show, done)</span> </span>{
+  <span class="hljs-keyword">let</span> height;
+  <span class="hljs-keyword">return</span> cssAnimation(node, <span class="hljs-string">'collapse'</span>, {
+    start() {
+      <span class="hljs-keyword">if</span> (!show) {
+        node.style.height = `${node.offsetHeight}px`;
+      } <span class="hljs-keyword">else</span> {
+        height = node.offsetHeight;
+        node.style.height = <span class="hljs-number">0</span>;
+      }
     },
-  };
+    active() {
+      node.style.height = `${show ? height : <span class="hljs-number">0</span>}px`;
+    },
+    end() {
+      node.style.height = <span class="hljs-string">''</span>;
+      done();
+    },
+  });
 }
 
 <span class="hljs-keyword">const</span> animation = {
-  enter(node) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'enter'</span>, node);
-    <span class="hljs-keyword">return</span> enter2.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+  enter(node, done) {
+    <span class="hljs-keyword">return</span> animate(node, <span class="hljs-literal">true</span>, done);
   },
-
-  appear(node) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'appear'</span>, node);
-    <span class="hljs-keyword">return</span> enter2.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
-  },
-
   leave(node, done) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'leave'</span>, node);
-    <span class="hljs-keyword">let</span> ok = <span class="hljs-literal">false</span>;
-
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span><span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">if</span> (!ok) {
-        ok = <span class="hljs-number">1</span>;
-        done();
-      }
-    }
-
-    node.style.display = <span class="hljs-string">'block'</span>;
-    velocity(node, <span class="hljs-string">'slideUp'</span>, {
-      duration: <span class="hljs-number">300</span>,
-      complete: complete,
-    });
-    <span class="hljs-keyword">return</span> {
-      stop: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-        velocity(node, <span class="hljs-string">'finish'</span>);
-        <span class="hljs-comment">// velocity complete is async</span>
-        complete();
-      },
-    };
+    <span class="hljs-keyword">return</span> animate(node, <span class="hljs-literal">false</span>, done);
+  },
+  appear(node, done) {
+    <span class="hljs-keyword">return</span> animate(node, <span class="hljs-literal">true</span>, done);
   },
 };
 
 <span class="hljs-keyword">const</span> demo = (
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>expanded<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">defaultExpandAll</span>=<span class="hljs-value">{false}</span>
-          <span class="hljs-attribute">openAnimation</span>=<span class="hljs-value">{animation}</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p1"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p10"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span>/&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p11"</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 2-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p21"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span>/&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span>/&gt;</span>
-          <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"p22"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span>/&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">dangerouslySetInnerHTML</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">__html:</span> <span class="hljs-attribute">STYLE</span> }}/&gt;</span><span class="css">
+    &lt;<span class="hljs-tag">Tree</span> <span class="hljs-tag">defaultExpandAll</span>=<span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">false}
+          openAnimation={animation}&gt;
+      &lt;TreeNode title="parent 1" key="p1"&gt;
+        &lt;TreeNode key="p10" title="leaf"/&gt;
+        &lt;TreeNode title="parent 1-1" key="p11"&gt;
+          &lt;TreeNode title="parent 2-1" key="p21"&gt;
+            &lt;TreeNode title="leaf"/&gt;
+            &lt;TreeNode title="leaf"/&gt;
+          &lt;/TreeNode&gt;
+          &lt;TreeNode key="p22" title="leaf"/&gt;
+        &lt;/TreeNode&gt;
+      &lt;/TreeNode&gt;
+    &lt;/Tree&gt;
+  &lt;/div&gt;
 );
 
 ReactDOM.render(demo, document.getElementById('__react-content'));
-</span></code></pre></div>
+</span></span></span></span></span></code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">
   <img style="position: absolute; top: 0; right: 0; border: 0;"

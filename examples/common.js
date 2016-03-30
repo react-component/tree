@@ -9356,7 +9356,6 @@
 	 */
 	var EventInterface = {
 	  type: null,
-	  target: null,
 	  // currentTarget is set when dispatching; no use in copying it here
 	  currentTarget: emptyFunction.thatReturnsNull,
 	  eventPhase: null,
@@ -9390,6 +9389,8 @@
 	  this.dispatchConfig = dispatchConfig;
 	  this.dispatchMarker = dispatchMarker;
 	  this.nativeEvent = nativeEvent;
+	  this.target = nativeEventTarget;
+	  this.currentTarget = nativeEventTarget;
 	
 	  var Interface = this.constructor.Interface;
 	  for (var propName in Interface) {
@@ -9400,11 +9401,7 @@
 	    if (normalize) {
 	      this[propName] = normalize(nativeEvent);
 	    } else {
-	      if (propName === 'target') {
-	        this.target = nativeEventTarget;
-	      } else {
-	        this[propName] = nativeEvent[propName];
-	      }
+	      this[propName] = nativeEvent[propName];
 	    }
 	  }
 	
@@ -13253,10 +13250,7 @@
 	      }
 	    });
 	
-	    if (content) {
-	      nativeProps.children = content;
-	    }
-	
+	    nativeProps.children = content;
 	    return nativeProps;
 	  }
 	
@@ -18729,7 +18723,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.7';
+	module.exports = '0.14.6';
 
 /***/ },
 /* 149 */
@@ -21128,7 +21122,7 @@
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _util = __webpack_require__(175);
+	var _util = __webpack_require__(176);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -21207,19 +21201,13 @@
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    var _this2 = this;
 	
-	    this.nextProps = nextProps;
 	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
 	    var props = this.props;
-	    // exclusive needs immediate response
-	    if (props.exclusive) {
-	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
-	        _this2.stop(key);
-	      });
-	    }
 	    var showProp = props.showProp;
 	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
 	    // last props children if exclusive
-	    var currentChildren = props.exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
+	    // exclusive needs immediate response
+	    var currentChildren = this.state.children;
 	    // in case destroy in showProp mode
 	    var newChildren = [];
 	    if (showProp) {
@@ -21292,7 +21280,15 @@
 	    });
 	  },
 	
-	  componentDidUpdate: function componentDidUpdate() {
+	  componentDidUpdate: function componentDidUpdate(prevProps) {
+	    var _this3 = this;
+	
+	    // exclusive needs immediate response
+	    if (this.props.exclusive && this.props !== prevProps) {
+	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
+	        _this3.stop(key);
+	      });
+	    }
 	    if (this.isMounted()) {
 	      var keysToEnter = this.keysToEnter;
 	      this.keysToEnter = [];
@@ -21321,10 +21317,6 @@
 	  handleDoneAdding: function handleDoneAdding(key, type) {
 	    var props = this.props;
 	    delete this.currentlyAnimatingKeys[key];
-	    // if update on exclusive mode, skip check
-	    if (props.exclusive && props !== this.nextProps) {
-	      return;
-	    }
 	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
 	    if (!this.isValidChildByKey(currentChildren, key)) {
 	      // exclusive will not need this
@@ -21355,10 +21347,6 @@
 	  handleDoneLeaving: function handleDoneLeaving(key) {
 	    var props = this.props;
 	    delete this.currentlyAnimatingKeys[key];
-	    // if update on exclusive mode, skip check
-	    if (props.exclusive && props !== this.nextProps) {
-	      return;
-	    }
 	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
 	    // in case state change is too fast
 	    if (this.isValidChildByKey(currentChildren, key)) {
@@ -21394,14 +21382,10 @@
 	
 	  render: function render() {
 	    var props = this.props;
-	    this.nextProps = props;
 	    var stateChildren = this.state.children;
 	    var children = null;
 	    if (stateChildren) {
 	      children = stateChildren.map(function (child) {
-	        if (child === null) {
-	          return child;
-	        }
 	        if (!child.key) {
 	          throw new Error('must set key for <rc-animate> children');
 	        }
@@ -21576,7 +21560,7 @@
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _util = __webpack_require__(175);
+	var _util = __webpack_require__(176);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -21661,13 +21645,31 @@
 
 	'use strict';
 	
-	var Event = __webpack_require__(173);
-	var Css = __webpack_require__(174);
-	var isCssAnimationSupported = Event.endEvents.length !== 0;
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Event = __webpack_require__(173);
+	
+	var _Event2 = _interopRequireDefault(_Event);
+	
+	var _componentClasses = __webpack_require__(174);
+	
+	var _componentClasses2 = _interopRequireDefault(_componentClasses);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	var isCssAnimationSupported = _Event2["default"].endEvents.length !== 0;
+	
+	
+	var capitalPrefixes = ['Webkit', 'Moz', 'O',
+	// ms is special .... !
+	'ms'];
+	var prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
 	
 	function getDuration(node, name) {
 	  var style = window.getComputedStyle(node);
-	  var prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
+	
 	  var ret = '';
 	  for (var i = 0; i < prefixes.length; i++) {
 	    ret = style.getPropertyValue(prefixes[i] + name);
@@ -21700,9 +21702,19 @@
 	  }
 	}
 	
-	var cssAnimation = function cssAnimation(node, transitionName, callback) {
+	var cssAnimation = function cssAnimation(node, transitionName, endCallback) {
 	  var className = transitionName;
 	  var activeClassName = className + '-active';
+	  var end = endCallback;
+	  var start = void 0;
+	  var active = void 0;
+	  var nodeClasses = (0, _componentClasses2["default"])(node);
+	
+	  if (endCallback && Object.prototype.toString.call(endCallback) === '[object Object]') {
+	    end = endCallback.end;
+	    start = endCallback.start;
+	    active = endCallback.active;
+	  }
 	
 	  if (node.rcEndListener) {
 	    node.rcEndListener();
@@ -21720,26 +21732,33 @@
 	
 	    clearBrowserBugTimeout(node);
 	
-	    Css.removeClass(node, className);
-	    Css.removeClass(node, activeClassName);
+	    nodeClasses.remove(className);
+	    nodeClasses.remove(activeClassName);
 	
-	    Event.removeEndEventListener(node, node.rcEndListener);
+	    _Event2["default"].removeEndEventListener(node, node.rcEndListener);
 	    node.rcEndListener = null;
 	
-	    // Usually this optional callback is used for informing an owner of
+	    // Usually this optional end is used for informing an owner of
 	    // a leave animation and telling it to remove the child.
-	    if (callback) {
-	      callback();
+	    if (end) {
+	      end();
 	    }
 	  };
 	
-	  Event.addEndEventListener(node, node.rcEndListener);
+	  _Event2["default"].addEndEventListener(node, node.rcEndListener);
 	
-	  Css.addClass(node, className);
+	  nodeClasses.add(className);
+	
+	  if (start) {
+	    start();
+	  }
 	
 	  node.rcAnimTimeout = setTimeout(function () {
 	    node.rcAnimTimeout = null;
-	    Css.addClass(node, activeClassName);
+	    nodeClasses.add(activeClassName);
+	    if (active) {
+	      active();
+	    }
 	    fixBrowserByTimeout(node);
 	  }, 0);
 	
@@ -21769,7 +21788,7 @@
 	
 	    clearBrowserBugTimeout(node);
 	
-	    Event.removeEndEventListener(node, node.rcEndListener);
+	    _Event2["default"].removeEndEventListener(node, node.rcEndListener);
 	    node.rcEndListener = null;
 	
 	    // Usually this optional callback is used for informing an owner of
@@ -21779,7 +21798,7 @@
 	    }
 	  };
 	
-	  Event.addEndEventListener(node, node.rcEndListener);
+	  _Event2["default"].addEndEventListener(node, node.rcEndListener);
 	
 	  node.rcAnimTimeout = setTimeout(function () {
 	    for (var s in style) {
@@ -21800,18 +21819,15 @@
 	    property = '';
 	  }
 	  property = property || '';
-	  ['Webkit', 'Moz', 'O',
-	  // ms is special .... !
-	  'ms'].forEach(function (prefix) {
+	  capitalPrefixes.forEach(function (prefix) {
 	    node.style[prefix + 'Transition' + property] = v;
 	  });
 	};
 	
-	cssAnimation.addClass = Css.addClass;
-	cssAnimation.removeClass = Css.removeClass;
 	cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
 	
-	module.exports = cssAnimation;
+	exports["default"] = cssAnimation;
+	module.exports = exports['default'];
 
 /***/ },
 /* 173 */
@@ -21819,6 +21835,9 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	var EVENT_NAME_MAP = {
 	  transitionend: {
 	    transition: 'transitionend',
@@ -21887,6 +21906,7 @@
 	    });
 	  },
 	
+	
 	  endEvents: endEvents,
 	
 	  removeEndEventListener: function removeEndEventListener(node, eventListener) {
@@ -21899,41 +21919,216 @@
 	  }
 	};
 	
-	module.exports = TransitionEvents;
+	exports["default"] = TransitionEvents;
+	module.exports = exports['default'];
 
 /***/ },
 /* 174 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/**
+	 * Module dependencies.
+	 */
 	
-	var SPACE = ' ';
-	var RE_CLASS = /[\n\t\r]/g;
+	var index = __webpack_require__(175);
 	
-	function norm(elemClass) {
-	  return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
+	/**
+	 * Whitespace regexp.
+	 */
+	
+	var re = /\s+/;
+	
+	/**
+	 * toString reference.
+	 */
+	
+	var toString = Object.prototype.toString;
+	
+	/**
+	 * Wrap `el` in a `ClassList`.
+	 *
+	 * @param {Element} el
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	module.exports = function(el){
+	  return new ClassList(el);
+	};
+	
+	/**
+	 * Initialize a new ClassList for `el`.
+	 *
+	 * @param {Element} el
+	 * @api private
+	 */
+	
+	function ClassList(el) {
+	  if (!el || !el.nodeType) {
+	    throw new Error('A DOM element reference is required');
+	  }
+	  this.el = el;
+	  this.list = el.classList;
 	}
 	
-	module.exports = {
-	  addClass: function addClass(elem, className) {
-	    elem.className += ' ' + className;
-	  },
+	/**
+	 * Add class `name` if not already present.
+	 *
+	 * @param {String} name
+	 * @return {ClassList}
+	 * @api public
+	 */
 	
-	  removeClass: function removeClass(elem, n) {
-	    var elemClass = elem.className.trim();
-	    var className = norm(elemClass);
-	    var needle = n.trim();
-	    needle = SPACE + needle + SPACE;
-	    // 一个 cls 有可能多次出现：'link link2 link link3 link'
-	    while (className.indexOf(needle) >= 0) {
-	      className = className.replace(needle, SPACE);
-	    }
-	    elem.className = className.trim();
+	ClassList.prototype.add = function(name){
+	  // classList
+	  if (this.list) {
+	    this.list.add(name);
+	    return this;
 	  }
+	
+	  // fallback
+	  var arr = this.array();
+	  var i = index(arr, name);
+	  if (!~i) arr.push(name);
+	  this.el.className = arr.join(' ');
+	  return this;
 	};
+	
+	/**
+	 * Remove class `name` when present, or
+	 * pass a regular expression to remove
+	 * any which match.
+	 *
+	 * @param {String|RegExp} name
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	ClassList.prototype.remove = function(name){
+	  if ('[object RegExp]' == toString.call(name)) {
+	    return this.removeMatching(name);
+	  }
+	
+	  // classList
+	  if (this.list) {
+	    this.list.remove(name);
+	    return this;
+	  }
+	
+	  // fallback
+	  var arr = this.array();
+	  var i = index(arr, name);
+	  if (~i) arr.splice(i, 1);
+	  this.el.className = arr.join(' ');
+	  return this;
+	};
+	
+	/**
+	 * Remove all classes matching `re`.
+	 *
+	 * @param {RegExp} re
+	 * @return {ClassList}
+	 * @api private
+	 */
+	
+	ClassList.prototype.removeMatching = function(re){
+	  var arr = this.array();
+	  for (var i = 0; i < arr.length; i++) {
+	    if (re.test(arr[i])) {
+	      this.remove(arr[i]);
+	    }
+	  }
+	  return this;
+	};
+	
+	/**
+	 * Toggle class `name`, can force state via `force`.
+	 *
+	 * For browsers that support classList, but do not support `force` yet,
+	 * the mistake will be detected and corrected.
+	 *
+	 * @param {String} name
+	 * @param {Boolean} force
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	ClassList.prototype.toggle = function(name, force){
+	  // classList
+	  if (this.list) {
+	    if ("undefined" !== typeof force) {
+	      if (force !== this.list.toggle(name, force)) {
+	        this.list.toggle(name); // toggle again to correct
+	      }
+	    } else {
+	      this.list.toggle(name);
+	    }
+	    return this;
+	  }
+	
+	  // fallback
+	  if ("undefined" !== typeof force) {
+	    if (!force) {
+	      this.remove(name);
+	    } else {
+	      this.add(name);
+	    }
+	  } else {
+	    if (this.has(name)) {
+	      this.remove(name);
+	    } else {
+	      this.add(name);
+	    }
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Return an array of classes.
+	 *
+	 * @return {Array}
+	 * @api public
+	 */
+	
+	ClassList.prototype.array = function(){
+	  var className = this.el.getAttribute('class') || '';
+	  var str = className.replace(/^\s+|\s+$/g, '');
+	  var arr = str.split(re);
+	  if ('' === arr[0]) arr.shift();
+	  return arr;
+	};
+	
+	/**
+	 * Check if class `name` is present.
+	 *
+	 * @param {String} name
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	ClassList.prototype.has =
+	ClassList.prototype.contains = function(name){
+	  return this.list
+	    ? this.list.contains(name)
+	    : !! ~index(this.array(), name);
+	};
+
 
 /***/ },
 /* 175 */
+/***/ function(module, exports) {
+
+	module.exports = function(arr, obj){
+	  if (arr.indexOf) return arr.indexOf(obj);
+	  for (var i = 0; i < arr.length; ++i) {
+	    if (arr[i] === obj) return i;
+	  }
+	  return -1;
+	};
+
+/***/ },
+/* 176 */
 /***/ function(module, exports) {
 
 	"use strict";
