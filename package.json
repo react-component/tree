@@ -48,10 +48,10 @@
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
-    "velocity-animate": "^1.2.2"
+    "css-animation": "^1.2.0"
   },
   "dependencies": {
-    "classnames": "~2.2.1",
+    "classnames": "2.x",
     "object-assign": "4.x",
     "rc-animate": "2.x"
   },
