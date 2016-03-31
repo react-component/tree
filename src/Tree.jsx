@@ -181,6 +181,16 @@ class Tree extends React.Component {
     if (checked && checkedKeys.indexOf(key) === -1) {
       checkedKeys.push(key);
     }
+
+    // checkStrictly
+    const _checkedKeys = [...checkedKeys];
+    if (this.props.checkStrictly) {
+      const index = _checkedKeys.indexOf(key);
+      if (!checked && index > -1) {
+        _checkedKeys.splice(index, 1);
+      }
+    }
+
     const checkKeys = getTreeNodesStates(this.props.children, checkedKeys, checked, key);
     const newSt = {
       event: 'check',
@@ -195,7 +205,13 @@ class Tree extends React.Component {
         checkedKeys,
       });
     }
-    this.props.onCheck(checkedKeys, newSt);
+
+    if (this.props.checkStrictly) {
+      delete newSt.checkedNodes;
+      delete newSt.checkedNodesPositions;
+    }
+
+    this.props.onCheck(this.props.checkStrictly ? _checkedKeys : checkedKeys, newSt);
   }
 
   onSelect(treeNode) {
@@ -406,8 +422,8 @@ class Tree extends React.Component {
       dragOverGapBottom: state.dragOverNodeKey === key && this.dropPosition === 1,
       expanded: state.expandedKeys.indexOf(key) !== -1,
       selected: state.selectedKeys.indexOf(key) !== -1,
-      checked: this.checkedKeys.indexOf(key) !== -1,
-      checkPart: this.checkPartKeys.indexOf(key) !== -1,
+      checked: (props.checkStrictly ? state.checkedKeys : this.checkedKeys).indexOf(key) !== -1,
+      checkPart: props.checkStrictly ? false : this.checkPartKeys.indexOf(key) !== -1,
       openTransitionName: this.getOpenTransitionName(),
       openAnimation: props.openAnimation,
       filterTreeNode: this.filterTreeNode.bind(this),
@@ -453,6 +469,7 @@ Tree.propTypes = {
     PropTypes.bool,
     PropTypes.node,
   ]),
+  checkStrictly: PropTypes.bool,
   draggable: PropTypes.bool,
   autoExpandParent: PropTypes.bool,
   defaultExpandAll: PropTypes.bool,
@@ -486,6 +503,7 @@ Tree.defaultProps = {
   selectable: true,
   multiple: false,
   checkable: false,
+  checkStrictly: false,
   draggable: false,
   autoExpandParent: true,
   defaultExpandAll: false,

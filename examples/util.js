@@ -5,10 +5,10 @@ const z = 1;
 // x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
 /* eslint no-param-reassign:0*/
 const rec = (n) => n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
-console.log('总节点数：', rec(z + 1));
+console.log('总节点数（单个tree）：', rec(z + 1));
 // 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 
-const gData = [];
+export const gData = [];
 
 const generateData = (_level, _preKey, _tns) => {
   const preKey = _preKey || '0';
@@ -33,6 +33,42 @@ const generateData = (_level, _preKey, _tns) => {
 };
 generateData(z);
 
+export function isInclude(smallArray, bigArray) {
+  return smallArray.every((ii, i) => {
+    return ii === bigArray[i];
+  });
+}
+// console.log(isInclude(['0', '1'], ['0', '10', '1']));
+
+function uniqueArray(arr) {
+  const obj = {};
+  arr.forEach(item => {
+    if (!obj[item]) {
+      obj[item] = true;
+    }
+  });
+  return Object.keys(obj);
+}
+// console.log(uniqueArray(['11', '2', '2']));
+
+export function filterParentPosition(arr) {
+  const a = [].concat(arr);
+  arr.forEach((item) => {
+    const itemArr = item.split('-');
+    a.forEach((ii, index) => {
+      const iiArr = ii.split('-');
+      if (itemArr.length <= iiArr.length && isInclude(itemArr, iiArr)) {
+        a[index] = item;
+      }
+      if (itemArr.length > iiArr.length && isInclude(iiArr, itemArr)) {
+        a[index] = ii;
+      }
+    });
+  });
+  return uniqueArray(a);
+}
+// console.log(filterParentPosition(['0-2', '0-10', '0-0-1', '0-1-1', '0-0','0-1', '0-10-0']));
+
 
 function loopData(data, callback) {
   const loop = (d, level = 0) => {
@@ -54,7 +90,7 @@ function splitLen(str) {
   return str.split('-').length;
 }
 
-function getFilterExpandedKeys(data, expandedKeys) {
+export function getFilterExpandedKeys(data, expandedKeys) {
   const expandedPosArr = [];
   loopData(data, (item, index, pos) => {
     if (expandedKeys.indexOf(item.key) > -1) {
@@ -80,7 +116,7 @@ function isSibling(pos, pos1) {
   return pos.join(',') === pos1.join(',');
 }
 
-function getRadioSelectKeys(data, selectedKeys, key) {
+export function getRadioSelectKeys(data, selectedKeys, key) {
   const res = [];
   const pkObjArr = [];
   const selPkObjArr = [];
@@ -125,5 +161,4 @@ function getRadioSelectKeys(data, selectedKeys, key) {
   return res;
 }
 
-
-export { gData, getFilterExpandedKeys, getRadioSelectKeys };
+// export { gData, getFilterExpandedKeys, getRadioSelectKeys };

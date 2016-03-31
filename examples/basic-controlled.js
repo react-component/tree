@@ -2,7 +2,7 @@ import 'rc-tree/assets/index.less';
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
-import { gData, getFilterExpandedKeys, getRadioSelectKeys } from './util';
+import { gData, /* filterParentPosition,*/ getFilterExpandedKeys, getRadioSelectKeys } from './util';
 
 const Demo = React.createClass({
   propTypes: {
@@ -41,6 +41,15 @@ const Demo = React.createClass({
       checkedKeys,
     });
   },
+  onCheckStrictly(checkedKeys, /* extra*/) {
+    // console.log(checkedKeys, extra);
+    // const { checkedNodesPositions } = extra;
+    // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
+    // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));
+    this.setState({
+      checkedKeys,
+    });
+  },
   onSelect(selectedKeys, info) {
     console.log('onSelect', selectedKeys, info);
     this.setState({
@@ -75,6 +84,13 @@ const Demo = React.createClass({
             onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
             onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
             onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}>
+        {loop(gData)}
+      </Tree>
+      <h2>checkStrictly</h2>
+      <Tree checkable multiple={this.props.multiple} defaultExpandAll
+            onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
+            onCheck={this.onCheckStrictly} checkedKeys={this.state.checkedKeys}
+            checkStrictly>
         {loop(gData)}
       </Tree>
       <h2>radio's behavior select (in the same level)</h2>
