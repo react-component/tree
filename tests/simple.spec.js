@@ -6,6 +6,7 @@ const Simulate = TestUtils.Simulate;
 const Tree = require('../');
 const TreeNode = Tree.TreeNode;
 const $ = require('jquery');
+import {Promise} from 'es6-promise';
 
 describe('simple tree', () => {
   let instance;

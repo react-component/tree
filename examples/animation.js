@@ -1,73 +1,56 @@
 import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tree, {TreeNode} from 'rc-tree';
-import velocity from 'velocity-animate';
+import Tree, { TreeNode } from 'rc-tree';
+import cssAnimation from 'css-animation';
 
-function enter2(node, done) {
-  let ok = false;
+const STYLE = `
+.collapse {
+  overflow: hidden;
+}
 
-  function complete() {
-    if (!ok) {
-      ok = 1;
-      done();
-    }
-  }
+.collapse-active {
+  transition: height 0.3s ease-out;
+}
+`;
 
-  node.style.display = 'none';
-  velocity(node, 'slideDown', {
-    duration: 300,
-    complete: complete,
-  });
-  return {
-    stop: function() {
-      velocity(node, 'finish');
-      // velocity complete is async
-      complete();
+function animate(node, show, done) {
+  let height;
+  return cssAnimation(node, 'collapse', {
+    start() {
+      if (!show) {
+        node.style.height = `${node.offsetHeight}px`;
+      } else {
+        height = node.offsetHeight;
+        node.style.height = 0;
+      }
     },
-  };
+    active() {
+      node.style.height = `${show ? height : 0}px`;
+    },
+    end() {
+      node.style.height = '';
+      done();
+    },
+  });
 }
 
 const animation = {
-  enter(node) {
-    console.log('enter', node);
-    return enter2.apply(this, arguments);
+  enter(node, done) {
+    return animate(node, true, done);
   },
-
-  appear(node) {
-    console.log('appear', node);
-    return enter2.apply(this, arguments);
-  },
-
   leave(node, done) {
-    console.log('leave', node);
-    let ok = false;
-
-    function complete() {
-      if (!ok) {
-        ok = 1;
-        done();
-      }
-    }
-
-    node.style.display = 'block';
-    velocity(node, 'slideUp', {
-      duration: 300,
-      complete: complete,
-    });
-    return {
-      stop: function() {
-        velocity(node, 'finish');
-        // velocity complete is async
-        complete();
-      },
-    };
+    return animate(node, false, done);
+  },
+  appear(node, done) {
+    return animate(node, true, done);
   },
 };
 
 const demo = (
   <div>
     <h2>expanded</h2>
+    <style dangerouslySetInnerHTML={{ __html: STYLE }}/>
     <Tree defaultExpandAll={false}
           openAnimation={animation}>
       <TreeNode title="parent 1" key="p1">

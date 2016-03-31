@@ -38,6 +38,8 @@
     "browser-test-cover": "rc-tools run browser-test-cover"
   },
   "devDependencies": {
+    "css-animation": "^1.2.0",
+    "es6-promise": "^3.1.2",
     "expect.js": "~0.3.1",
     "jquery": "~2.1.4",
     "pre-commit": "1.x",
@@ -47,11 +49,10 @@
     "rc-trigger": "^1.0.6",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
-    "react-dom": "^0.14.0",
-    "velocity-animate": "^1.2.2"
+    "react-dom": "^0.14.0"
   },
   "dependencies": {
-    "classnames": "~2.2.1",
+    "classnames": "2.x",
     "object-assign": "4.x",
     "rc-animate": "2.x"
   },
