@@ -70,6 +70,15 @@ webpackJsonp([2],{
 	      checkedKeys: checkedKeys
 	    });
 	  },
+	  onCheckStrictly: function onCheckStrictly(checkedKeys) /* extra*/{
+	    // console.log(checkedKeys, extra);
+	    // const { checkedNodesPositions } = extra;
+	    // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
+	    // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));
+	    this.setState({
+	      checkedKeys: checkedKeys
+	    });
+	  },
 	  onSelect: function onSelect(selectedKeys, info) {
 	    console.log('onSelect', selectedKeys, info);
 	    this.setState({
@@ -119,6 +128,19 @@ webpackJsonp([2],{
 	      _react2['default'].createElement(
 	        'h2',
 	        null,
+	        'checkStrictly'
+	      ),
+	      _react2['default'].createElement(
+	        _rcTree2['default'],
+	        { checkable: true, multiple: this.props.multiple, defaultExpandAll: true,
+	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
+	          onCheck: this.onCheckStrictly, checkedKeys: this.state.checkedKeys,
+	          checkStrictly: true },
+	        loop(_util.gData)
+	      ),
+	      _react2['default'].createElement(
+	        'h2',
+	        null,
 	        'radio\'s behavior select (in the same level)'
 	      ),
 	      _react2['default'].createElement(
@@ -133,6 +155,7 @@ webpackJsonp([2],{
 	});
 	
 	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	/* filterParentPosition,*/
 
 /***/ },
 
@@ -144,6 +167,10 @@ webpackJsonp([2],{
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	exports.isInclude = isInclude;
+	exports.filterParentPosition = filterParentPosition;
+	exports.getFilterExpandedKeys = getFilterExpandedKeys;
+	exports.getRadioSelectKeys = getRadioSelectKeys;
 	
 	var x = 3;
 	var y = 2;
@@ -153,11 +180,12 @@ webpackJsonp([2],{
 	var rec = function rec(n) {
 	  return n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
 	};
-	console.log('总节点数：', rec(z + 1));
+	console.log('总节点数（单个tree）：', rec(z + 1));
 	// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 	
 	var gData = [];
 	
+	exports.gData = gData;
 	var generateData = function generateData(_level, _preKey, _tns) {
 	  var preKey = _preKey || '0';
 	  var tns = _tns || gData;
@@ -180,6 +208,44 @@ webpackJsonp([2],{
 	  });
 	};
 	generateData(z);
+	
+	function isInclude(smallArray, bigArray) {
+	  return smallArray.every(function (ii, i) {
+	    return ii === bigArray[i];
+	  });
+	}
+	
+	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
+	
+	function uniqueArray(arr) {
+	  var obj = {};
+	  arr.forEach(function (item) {
+	    if (!obj[item]) {
+	      obj[item] = true;
+	    }
+	  });
+	  return Object.keys(obj);
+	}
+	// console.log(uniqueArray(['11', '2', '2']));
+	
+	function filterParentPosition(arr) {
+	  var a = [].concat(arr);
+	  arr.forEach(function (item) {
+	    var itemArr = item.split('-');
+	    a.forEach(function (ii, index) {
+	      var iiArr = ii.split('-');
+	      if (itemArr.length <= iiArr.length && isInclude(itemArr, iiArr)) {
+	        a[index] = item;
+	      }
+	      if (itemArr.length > iiArr.length && isInclude(iiArr, itemArr)) {
+	        a[index] = ii;
+	      }
+	    });
+	  });
+	  return uniqueArray(a);
+	}
+	
+	// console.log(filterParentPosition(['0-2', '0-10', '0-0-1', '0-1-1', '0-0','0-1', '0-10-0']));
 	
 	function loopData(data, callback) {
 	  var loop = function loop(d) {
@@ -272,9 +338,7 @@ webpackJsonp([2],{
 	  return res;
 	}
 	
-	exports.gData = gData;
-	exports.getFilterExpandedKeys = getFilterExpandedKeys;
-	exports.getRadioSelectKeys = getRadioSelectKeys;
+	// export { gData, getFilterExpandedKeys, getRadioSelectKeys };
 
 /***/ }
 

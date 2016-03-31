@@ -7998,6 +7998,10 @@
 	  }
 	};
 	
+	function registerNullComponentID() {
+	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
+	}
+	
 	var ReactEmptyComponent = function (instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -8006,7 +8010,7 @@
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function (element) {},
 	  mountComponent: function (rootID, transaction, context) {
-	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
+	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -9356,6 +9360,7 @@
 	 */
 	var EventInterface = {
 	  type: null,
+	  target: null,
 	  // currentTarget is set when dispatching; no use in copying it here
 	  currentTarget: emptyFunction.thatReturnsNull,
 	  eventPhase: null,
@@ -9389,8 +9394,6 @@
 	  this.dispatchConfig = dispatchConfig;
 	  this.dispatchMarker = dispatchMarker;
 	  this.nativeEvent = nativeEvent;
-	  this.target = nativeEventTarget;
-	  this.currentTarget = nativeEventTarget;
 	
 	  var Interface = this.constructor.Interface;
 	  for (var propName in Interface) {
@@ -9401,7 +9404,11 @@
 	    if (normalize) {
 	      this[propName] = normalize(nativeEvent);
 	    } else {
-	      this[propName] = nativeEvent[propName];
+	      if (propName === 'target') {
+	        this.target = nativeEventTarget;
+	      } else {
+	        this[propName] = nativeEvent[propName];
+	      }
 	    }
 	  }
 	
@@ -13250,7 +13257,10 @@
 	      }
 	    });
 	
-	    nativeProps.children = content;
+	    if (content) {
+	      nativeProps.children = content;
+	    }
+	
 	    return nativeProps;
 	  }
 	
@@ -18723,7 +18733,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.6';
+	module.exports = '0.14.8';
 
 /***/ },
 /* 149 */
@@ -19960,6 +19970,16 @@
 	      if (checked && checkedKeys.indexOf(key) === -1) {
 	        checkedKeys.push(key);
 	      }
+	
+	      // checkStrictly
+	      var _checkedKeys = [].concat(_toConsumableArray(checkedKeys));
+	      if (this.props.checkStrictly) {
+	        var index = _checkedKeys.indexOf(key);
+	        if (!checked && index > -1) {
+	          _checkedKeys.splice(index, 1);
+	        }
+	      }
+	
 	      var checkKeys = (0, _util.getTreeNodesStates)(this.props.children, checkedKeys, checked, key);
 	      var newSt = {
 	        event: 'check',
@@ -19974,7 +19994,13 @@
 	          checkedKeys: checkedKeys
 	        });
 	      }
-	      this.props.onCheck(checkedKeys, newSt);
+	
+	      if (this.props.checkStrictly) {
+	        delete newSt.checkedNodes;
+	        delete newSt.checkedNodesPositions;
+	      }
+	
+	      this.props.onCheck(this.props.checkStrictly ? _checkedKeys : checkedKeys, newSt);
 	    }
 	  }, {
 	    key: 'onSelect',
@@ -20201,8 +20227,8 @@
 	        dragOverGapBottom: state.dragOverNodeKey === key && this.dropPosition === 1,
 	        expanded: state.expandedKeys.indexOf(key) !== -1,
 	        selected: state.selectedKeys.indexOf(key) !== -1,
-	        checked: this.checkedKeys.indexOf(key) !== -1,
-	        checkPart: this.checkPartKeys.indexOf(key) !== -1,
+	        checked: (props.checkStrictly ? state.checkedKeys : this.checkedKeys).indexOf(key) !== -1,
+	        checkPart: props.checkStrictly ? false : this.checkPartKeys.indexOf(key) !== -1,
 	        openTransitionName: this.getOpenTransitionName(),
 	        openAnimation: props.openAnimation,
 	        filterTreeNode: this.filterTreeNode.bind(this)
@@ -20249,6 +20275,7 @@
 	  selectable: _react.PropTypes.bool,
 	  multiple: _react.PropTypes.bool,
 	  checkable: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.node]),
+	  checkStrictly: _react.PropTypes.bool,
 	  draggable: _react.PropTypes.bool,
 	  autoExpandParent: _react.PropTypes.bool,
 	  defaultExpandAll: _react.PropTypes.bool,
@@ -20282,6 +20309,7 @@
 	  selectable: true,
 	  multiple: false,
 	  checkable: false,
+	  checkStrictly: false,
 	  draggable: false,
 	  autoExpandParent: true,
 	  defaultExpandAll: false,
@@ -21201,13 +21229,19 @@
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    var _this2 = this;
 	
+	    this.nextProps = nextProps;
 	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
 	    var props = this.props;
+	    // exclusive needs immediate response
+	    if (props.exclusive) {
+	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
+	        _this2.stop(key);
+	      });
+	    }
 	    var showProp = props.showProp;
 	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
 	    // last props children if exclusive
-	    // exclusive needs immediate response
-	    var currentChildren = this.state.children;
+	    var currentChildren = props.exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
 	    // in case destroy in showProp mode
 	    var newChildren = [];
 	    if (showProp) {
@@ -21280,15 +21314,7 @@
 	    });
 	  },
 	
-	  componentDidUpdate: function componentDidUpdate(prevProps) {
-	    var _this3 = this;
-	
-	    // exclusive needs immediate response
-	    if (this.props.exclusive && this.props !== prevProps) {
-	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
-	        _this3.stop(key);
-	      });
-	    }
+	  componentDidUpdate: function componentDidUpdate() {
 	    if (this.isMounted()) {
 	      var keysToEnter = this.keysToEnter;
 	      this.keysToEnter = [];
@@ -21317,6 +21343,10 @@
 	  handleDoneAdding: function handleDoneAdding(key, type) {
 	    var props = this.props;
 	    delete this.currentlyAnimatingKeys[key];
+	    // if update on exclusive mode, skip check
+	    if (props.exclusive && props !== this.nextProps) {
+	      return;
+	    }
 	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
 	    if (!this.isValidChildByKey(currentChildren, key)) {
 	      // exclusive will not need this
@@ -21347,6 +21377,10 @@
 	  handleDoneLeaving: function handleDoneLeaving(key) {
 	    var props = this.props;
 	    delete this.currentlyAnimatingKeys[key];
+	    // if update on exclusive mode, skip check
+	    if (props.exclusive && props !== this.nextProps) {
+	      return;
+	    }
 	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
 	    // in case state change is too fast
 	    if (this.isValidChildByKey(currentChildren, key)) {
@@ -21382,10 +21416,14 @@
 	
 	  render: function render() {
 	    var props = this.props;
+	    this.nextProps = props;
 	    var stateChildren = this.state.children;
 	    var children = null;
 	    if (stateChildren) {
 	      children = stateChildren.map(function (child) {
+	        if (child === null) {
+	          return child;
+	        }
 	        if (!child.key) {
 	          throw new Error('must set key for <rc-animate> children');
 	        }

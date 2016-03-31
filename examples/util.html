@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>util.js - example - rc-tree@1.1.6</title>
+  <title>util.js - example - rc-tree@1.2.0-beta</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.1.6</h1>
+    <h1>rc-tree@1.2.0-beta</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -271,10 +271,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-comment">// x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）</span>
 <span class="hljs-comment">/* eslint no-param-reassign:0*/</span>
 <span class="hljs-keyword">const</span> rec = (n) =&gt; n &gt;= <span class="hljs-number">0</span> ? x * <span class="hljs-built_in">Math</span>.pow(y, n--) + rec(n) : <span class="hljs-number">0</span>;
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'总节点数：'</span>, rec(z + <span class="hljs-number">1</span>));
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'总节点数（单个tree）：'</span>, rec(z + <span class="hljs-number">1</span>));
 <span class="hljs-comment">// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。</span>
 
-<span class="hljs-keyword">const</span> gData = [];
+export <span class="hljs-keyword">const</span> gData = [];
 
 <span class="hljs-keyword">const</span> generateData = (_level, _preKey, _tns) =&gt; {
   <span class="hljs-keyword">const</span> preKey = _preKey || <span class="hljs-string">'0'</span>;
@@ -299,6 +299,42 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 };
 generateData(z);
 
+export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isInclude</span><span class="hljs-params">(smallArray, bigArray)</span> </span>{
+  <span class="hljs-keyword">return</span> smallArray.every((ii, i) =&gt; {
+    <span class="hljs-keyword">return</span> ii === bigArray[i];
+  });
+}
+<span class="hljs-comment">// console.log(isInclude(['0', '1'], ['0', '10', '1']));</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">uniqueArray</span><span class="hljs-params">(arr)</span> </span>{
+  <span class="hljs-keyword">const</span> obj = {};
+  arr.forEach(item =&gt; {
+    <span class="hljs-keyword">if</span> (!obj[item]) {
+      obj[item] = <span class="hljs-literal">true</span>;
+    }
+  });
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(obj);
+}
+<span class="hljs-comment">// console.log(uniqueArray(['11', '2', '2']));</span>
+
+export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filterParentPosition</span><span class="hljs-params">(arr)</span> </span>{
+  <span class="hljs-keyword">const</span> a = [].concat(arr);
+  arr.forEach((item) =&gt; {
+    <span class="hljs-keyword">const</span> itemArr = item.split(<span class="hljs-string">'-'</span>);
+    a.forEach((ii, index) =&gt; {
+      <span class="hljs-keyword">const</span> iiArr = ii.split(<span class="hljs-string">'-'</span>);
+      <span class="hljs-keyword">if</span> (itemArr.length &lt;= iiArr.length &amp;&amp; isInclude(itemArr, iiArr)) {
+        a[index] = item;
+      }
+      <span class="hljs-keyword">if</span> (itemArr.length &gt; iiArr.length &amp;&amp; isInclude(iiArr, itemArr)) {
+        a[index] = ii;
+      }
+    });
+  });
+  <span class="hljs-keyword">return</span> uniqueArray(a);
+}
+<span class="hljs-comment">// console.log(filterParentPosition(['0-2', '0-10', '0-0-1', '0-1-1', '0-0','0-1', '0-10-0']));</span>
+
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loopData</span><span class="hljs-params">(data, callback)</span> </span>{
   <span class="hljs-keyword">const</span> loop = (d, level = <span class="hljs-number">0</span>) =&gt; {
@@ -320,7 +356,7 @@ generateData(z);
   <span class="hljs-keyword">return</span> str.split(<span class="hljs-string">'-'</span>).length;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFilterExpandedKeys</span><span class="hljs-params">(data, expandedKeys)</span> </span>{
+export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFilterExpandedKeys</span><span class="hljs-params">(data, expandedKeys)</span> </span>{
   <span class="hljs-keyword">const</span> expandedPosArr = [];
   loopData(data, (item, index, pos) =&gt; {
     <span class="hljs-keyword">if</span> (expandedKeys.indexOf(item.key) &gt; -<span class="hljs-number">1</span>) {
@@ -346,7 +382,7 @@ generateData(z);
   <span class="hljs-keyword">return</span> pos.join(<span class="hljs-string">','</span>) === pos1.join(<span class="hljs-string">','</span>);
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRadioSelectKeys</span><span class="hljs-params">(data, selectedKeys, key)</span> </span>{
+export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRadioSelectKeys</span><span class="hljs-params">(data, selectedKeys, key)</span> </span>{
   <span class="hljs-keyword">const</span> res = [];
   <span class="hljs-keyword">const</span> pkObjArr = [];
   <span class="hljs-keyword">const</span> selPkObjArr = [];
@@ -391,8 +427,7 @@ generateData(z);
   <span class="hljs-keyword">return</span> res;
 }
 
-
-export { gData, getFilterExpandedKeys, getRadioSelectKeys };
+<span class="hljs-comment">// export { gData, getFilterExpandedKeys, getRadioSelectKeys };</span>
 </code></pre></div>
 </div>
 <a href="http://github.com/react-component/tree">

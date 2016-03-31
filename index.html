@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-tree@1.1.6 - tree ui component for react</title>
+  <title>rc-tree@1.2.0-beta - tree ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-tree@1.1.6</h1>
+  <h1>rc-tree@1.2.0-beta</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -862,9 +862,15 @@
 </tr>
 <tr>
 <td>checkedKeys</td>
-<td>Controlled checked treeNodes(After setting, defaultCheckedKeys will not work)</td>
+<td>Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node&#39;s key exists, it all children node will be checked, and vice versa.</td>
 <td>String[]</td>
 <td>[]</td>
+</tr>
+<tr>
+<td>checkStrictly</td>
+<td>check the key of node precisely, parent and children nodes are not associated</td>
+<td>bool</td>
+<td>false</td>
 </tr>
 <tr>
 <td>defaultCheckedKeys</td>
