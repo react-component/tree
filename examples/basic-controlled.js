@@ -71,7 +71,7 @@ webpackJsonp([2],{
 	    });
 	  },
 	  onCheckStrictly: function onCheckStrictly(checkedKeys) /* extra*/{
-	    // console.log(checkedKeys, extra);
+	    console.log(arguments);
 	    // const { checkedNodesPositions } = extra;
 	    // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
 	    // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));

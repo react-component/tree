@@ -19967,40 +19967,42 @@
 	      }
 	      var key = treeNode.key || treeNode.props.eventKey;
 	      var checkedKeys = [].concat(_toConsumableArray(this.state.checkedKeys));
-	      if (checked && checkedKeys.indexOf(key) === -1) {
+	      var index = checkedKeys.indexOf(key);
+	      if (checked && index === -1) {
 	        checkedKeys.push(key);
 	      }
 	
-	      // checkStrictly
-	      var _checkedKeys = [].concat(_toConsumableArray(checkedKeys));
-	      if (this.props.checkStrictly) {
-	        var index = _checkedKeys.indexOf(key);
-	        if (!checked && index > -1) {
-	          _checkedKeys.splice(index, 1);
-	        }
-	      }
-	
-	      var checkKeys = (0, _util.getTreeNodesStates)(this.props.children, checkedKeys, checked, key);
 	      var newSt = {
 	        event: 'check',
 	        node: treeNode,
-	        checked: checked,
-	        checkedNodes: checkKeys.checkedNodes,
-	        checkedNodesPositions: checkKeys.checkedNodesPositions
+	        checked: checked
 	      };
-	      checkedKeys = checkKeys.checkedKeys;
-	      if (!('checkedKeys' in this.props)) {
-	        this.setState({
-	          checkedKeys: checkedKeys
+	
+	      // checkStrictly
+	      if (this.props.checkStrictly && 'checkedKeys' in this.props) {
+	        if (!checked && index > -1) {
+	          checkedKeys.splice(index, 1);
+	        }
+	        newSt.checkedNodes = [];
+	        (0, _util.loopAllChildren)(this.props.children, function (item, ind, pos, keyOrPos) {
+	          if (checkedKeys.indexOf(keyOrPos) !== -1) {
+	            checked = true;
+	            newSt.checkedNodes.push(item);
+	          }
 	        });
-	      }
+	      } else {
+	        var checkKeys = (0, _util.getTreeNodesStates)(this.props.children, checkedKeys, checked, key);
+	        newSt.checkedNodes = checkKeys.checkedNodes;
+	        newSt.checkedNodesPositions = checkKeys.checkedNodesPositions;
 	
-	      if (this.props.checkStrictly) {
-	        delete newSt.checkedNodes;
-	        delete newSt.checkedNodesPositions;
+	        checkedKeys = checkKeys.checkedKeys;
+	        if (!('checkedKeys' in this.props)) {
+	          this.setState({
+	            checkedKeys: checkedKeys
+	          });
+	        }
 	      }
-	
-	      this.props.onCheck(this.props.checkStrictly ? _checkedKeys : checkedKeys, newSt);
+	      this.props.onCheck(checkedKeys, newSt);
 	    }
 	  }, {
 	    key: 'onSelect',
