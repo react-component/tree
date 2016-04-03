@@ -1,4 +1,4 @@
-
+/* eslint no-loop-func: 0*/
 const x = 3;
 const y = 2;
 const z = 1;
@@ -40,34 +40,39 @@ export function isInclude(smallArray, bigArray) {
 }
 // console.log(isInclude(['0', '1'], ['0', '10', '1']));
 
-function uniqueArray(arr) {
-  const obj = {};
-  arr.forEach(item => {
-    if (!obj[item]) {
-      obj[item] = true;
-    }
-  });
-  return Object.keys(obj);
-}
-// console.log(uniqueArray(['11', '2', '2']));
 
+// arr.length === 628, use time: ~20ms
 export function filterParentPosition(arr) {
-  const a = [].concat(arr);
+  const levelObj = {};
   arr.forEach((item) => {
-    const itemArr = item.split('-');
-    a.forEach((ii, index) => {
-      const iiArr = ii.split('-');
-      if (itemArr.length <= iiArr.length && isInclude(itemArr, iiArr)) {
-        a[index] = item;
-      }
-      if (itemArr.length > iiArr.length && isInclude(iiArr, itemArr)) {
-        a[index] = ii;
-      }
-    });
+    const posLen = item.split('-').length;
+    if (!levelObj[posLen]) {
+      levelObj[posLen] = [];
+    }
+    levelObj[posLen].push(item);
   });
-  return uniqueArray(a);
+  const levelArr = Object.keys(levelObj).sort();
+  for (let i = 0; i < levelArr.length; i++) {
+    if (levelArr[i + 1]) {
+      levelObj[levelArr[i]].forEach(ii => {
+        for (let j = i + 1; j < levelArr.length; j++) {
+          levelObj[levelArr[j]].forEach((_i, index) => {
+            if (isInclude(ii.split('-'), _i.split('-'))) {
+              levelObj[levelArr[j]][index] = null;
+            }
+          });
+          levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(p => p);
+        }
+      });
+    }
+  }
+  let nArr = [];
+  levelArr.forEach(i => {
+    nArr = nArr.concat(levelObj[i]);
+  });
+  return nArr;
 }
-// console.log(filterParentPosition(['0-2', '0-10', '0-0-1', '0-1-1', '0-0','0-1', '0-10-0']));
+// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 
 
 function loopData(data, callback) {
