@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>basic-controlled.js - example - rc-tree@1.2.0-beta.1</title>
+  <title>basic-controlled.js - example - rc-tree@1.2.0-beta.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.2.0-beta.1</h1>
+    <h1>rc-tree@1.2.0-beta.2</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -282,6 +282,7 @@ import { gData, <span class="hljs-comment">/* filterParentPosition,*/</span> get
   getInitialState() {
     <span class="hljs-keyword">return</span> {
       expandedKeys: getFilterExpandedKeys(gData, [<span class="hljs-string">'0-0-0-key'</span>]),
+      <span class="hljs-comment">// checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],</span>
       checkedKeys: [<span class="hljs-string">'0-0-0-key'</span>],
       selectedKeys: [],
     };

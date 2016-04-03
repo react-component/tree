@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>util.js - example - rc-tree@1.2.0-beta.1</title>
+  <title>util.js - example - rc-tree@1.2.0-beta.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,14 +257,14 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.2.0-beta.1</h1>
+    <h1>rc-tree@1.2.0-beta.2</h1>
 
     <p>tree ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="util.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js">
+  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-loop-func: 0*/</span>
 <span class="hljs-keyword">const</span> x = <span class="hljs-number">3</span>;
 <span class="hljs-keyword">const</span> y = <span class="hljs-number">2</span>;
 <span class="hljs-keyword">const</span> z = <span class="hljs-number">1</span>;
@@ -306,34 +306,39 @@ export <span class="hljs-function"><span class="hljs-keyword">function</span> <s
 }
 <span class="hljs-comment">// console.log(isInclude(['0', '1'], ['0', '10', '1']));</span>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">uniqueArray</span><span class="hljs-params">(arr)</span> </span>{
-  <span class="hljs-keyword">const</span> obj = {};
-  arr.forEach(item =&gt; {
-    <span class="hljs-keyword">if</span> (!obj[item]) {
-      obj[item] = <span class="hljs-literal">true</span>;
-    }
-  });
-  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(obj);
-}
-<span class="hljs-comment">// console.log(uniqueArray(['11', '2', '2']));</span>
 
+<span class="hljs-comment">// arr.length === 628, use time: ~20ms</span>
 export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filterParentPosition</span><span class="hljs-params">(arr)</span> </span>{
-  <span class="hljs-keyword">const</span> a = [].concat(arr);
+  <span class="hljs-keyword">const</span> levelObj = {};
   arr.forEach((item) =&gt; {
-    <span class="hljs-keyword">const</span> itemArr = item.split(<span class="hljs-string">'-'</span>);
-    a.forEach((ii, index) =&gt; {
-      <span class="hljs-keyword">const</span> iiArr = ii.split(<span class="hljs-string">'-'</span>);
-      <span class="hljs-keyword">if</span> (itemArr.length &lt;= iiArr.length &amp;&amp; isInclude(itemArr, iiArr)) {
-        a[index] = item;
-      }
-      <span class="hljs-keyword">if</span> (itemArr.length &gt; iiArr.length &amp;&amp; isInclude(iiArr, itemArr)) {
-        a[index] = ii;
-      }
-    });
+    <span class="hljs-keyword">const</span> posLen = item.split(<span class="hljs-string">'-'</span>).length;
+    <span class="hljs-keyword">if</span> (!levelObj[posLen]) {
+      levelObj[posLen] = [];
+    }
+    levelObj[posLen].push(item);
   });
-  <span class="hljs-keyword">return</span> uniqueArray(a);
+  <span class="hljs-keyword">const</span> levelArr = <span class="hljs-built_in">Object</span>.keys(levelObj).sort();
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; levelArr.length; i++) {
+    <span class="hljs-keyword">if</span> (levelArr[i + <span class="hljs-number">1</span>]) {
+      levelObj[levelArr[i]].forEach(ii =&gt; {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> j = i + <span class="hljs-number">1</span>; j &lt; levelArr.length; j++) {
+          levelObj[levelArr[j]].forEach((_i, index) =&gt; {
+            <span class="hljs-keyword">if</span> (isInclude(ii.split(<span class="hljs-string">'-'</span>), _i.split(<span class="hljs-string">'-'</span>))) {
+              levelObj[levelArr[j]][index] = <span class="hljs-literal">null</span>;
+            }
+          });
+          levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(p =&gt; p);
+        }
+      });
+    }
+  }
+  <span class="hljs-keyword">let</span> nArr = [];
+  levelArr.forEach(i =&gt; {
+    nArr = nArr.concat(levelObj[i]);
+  });
+  <span class="hljs-keyword">return</span> nArr;
 }
-<span class="hljs-comment">// console.log(filterParentPosition(['0-2', '0-10', '0-0-1', '0-1-1', '0-0','0-1', '0-10-0']));</span>
+<span class="hljs-comment">// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));</span>
 
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loopData</span><span class="hljs-params">(data, callback)</span> </span>{

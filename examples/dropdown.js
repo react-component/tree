@@ -11,6 +11,7 @@ webpackJsonp([5],{
 /***/ 180:
 /***/ function(module, exports) {
 
+	/* eslint no-loop-func: 0*/
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
@@ -20,7 +21,6 @@ webpackJsonp([5],{
 	exports.filterParentPosition = filterParentPosition;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 	exports.getRadioSelectKeys = getRadioSelectKeys;
-	
 	var x = 3;
 	var y = 2;
 	var z = 1;
@@ -66,35 +66,51 @@ webpackJsonp([5],{
 	
 	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
 	
-	function uniqueArray(arr) {
-	  var obj = {};
-	  arr.forEach(function (item) {
-	    if (!obj[item]) {
-	      obj[item] = true;
-	    }
-	  });
-	  return Object.keys(obj);
-	}
-	// console.log(uniqueArray(['11', '2', '2']));
+	// arr.length === 628, use time: ~20ms
 	
 	function filterParentPosition(arr) {
-	  var a = [].concat(arr);
+	  var levelObj = {};
 	  arr.forEach(function (item) {
-	    var itemArr = item.split('-');
-	    a.forEach(function (ii, index) {
-	      var iiArr = ii.split('-');
-	      if (itemArr.length <= iiArr.length && isInclude(itemArr, iiArr)) {
-	        a[index] = item;
-	      }
-	      if (itemArr.length > iiArr.length && isInclude(iiArr, itemArr)) {
-	        a[index] = ii;
-	      }
-	    });
+	    var posLen = item.split('-').length;
+	    if (!levelObj[posLen]) {
+	      levelObj[posLen] = [];
+	    }
+	    levelObj[posLen].push(item);
 	  });
-	  return uniqueArray(a);
+	  var levelArr = Object.keys(levelObj).sort();
+	
+	  var _loop = function (i) {
+	    if (levelArr[i + 1]) {
+	      levelObj[levelArr[i]].forEach(function (ii) {
+	        var _loop2 = function (j) {
+	          levelObj[levelArr[j]].forEach(function (_i, index) {
+	            if (isInclude(ii.split('-'), _i.split('-'))) {
+	              levelObj[levelArr[j]][index] = null;
+	            }
+	          });
+	          levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(function (p) {
+	            return p;
+	          });
+	        };
+	
+	        for (var j = i + 1; j < levelArr.length; j++) {
+	          _loop2(j);
+	        }
+	      });
+	    }
+	  };
+	
+	  for (var i = 0; i < levelArr.length; i++) {
+	    _loop(i);
+	  }
+	  var nArr = [];
+	  levelArr.forEach(function (i) {
+	    nArr = nArr.concat(levelObj[i]);
+	  });
+	  return nArr;
 	}
 	
-	// console.log(filterParentPosition(['0-2', '0-10', '0-0-1', '0-1-1', '0-0','0-1', '0-10-0']));
+	// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 	
 	function loopData(data, callback) {
 	  var loop = function loop(d) {

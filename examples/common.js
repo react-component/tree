@@ -19790,6 +19790,7 @@
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    this.contextmenuKeys = [];
+	    this.checkedKeysChange = true;
 	
 	    this.state = {
 	      expandedKeys: this.getDefaultExpandedKeys(props),
@@ -19812,6 +19813,11 @@
 	        st.expandedKeys = expandedKeys;
 	      }
 	      if (checkedKeys) {
+	        if (checkedKeys === this.props.checkedKeys) {
+	          this.checkedKeysChange = false;
+	        } else {
+	          this.checkedKeysChange = true;
+	        }
 	        st.checkedKeys = checkedKeys;
 	      }
 	      if (selectedKeys) {
@@ -19961,6 +19967,8 @@
 	  }, {
 	    key: 'onCheck',
 	    value: function onCheck(treeNode) {
+	      var _this3 = this;
+	
 	      var checked = !treeNode.props.checked;
 	      if (treeNode.props.checkPart) {
 	        checked = true;
@@ -19968,9 +19976,6 @@
 	      var key = treeNode.key || treeNode.props.eventKey;
 	      var checkedKeys = [].concat(_toConsumableArray(this.state.checkedKeys));
 	      var index = checkedKeys.indexOf(key);
-	      if (checked && index === -1) {
-	        checkedKeys.push(key);
-	      }
 	
 	      var newSt = {
 	        event: 'check',
@@ -19980,22 +19985,42 @@
 	
 	      // checkStrictly
 	      if (this.props.checkStrictly && 'checkedKeys' in this.props) {
+	        if (checked && index === -1) {
+	          checkedKeys.push(key);
+	        }
 	        if (!checked && index > -1) {
 	          checkedKeys.splice(index, 1);
 	        }
 	        newSt.checkedNodes = [];
 	        (0, _util.loopAllChildren)(this.props.children, function (item, ind, pos, keyOrPos) {
 	          if (checkedKeys.indexOf(keyOrPos) !== -1) {
-	            checked = true;
 	            newSt.checkedNodes.push(item);
 	          }
 	        });
 	      } else {
-	        var checkKeys = (0, _util.getTreeNodesStates)(this.props.children, checkedKeys, checked, key);
+	        if (checked && index === -1) {
+	          (function () {
+	            _this3.treeNodesStates[treeNode.props.pos].checked = true;
+	            var checkedPositions = [];
+	            Object.keys(_this3.treeNodesStates).forEach(function (i) {
+	              if (_this3.treeNodesStates[i].checked) {
+	                checkedPositions.push(i);
+	              }
+	            });
+	            (0, _util.handleCheckState)(_this3.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
+	          })();
+	        }
+	        if (!checked) {
+	          this.treeNodesStates[treeNode.props.pos].checked = false;
+	          this.treeNodesStates[treeNode.props.pos].checkPart = false;
+	          (0, _util.handleCheckState)(this.treeNodesStates, [treeNode.props.pos], false);
+	        }
+	        var checkKeys = (0, _util.getCheckKeys)(this.treeNodesStates);
 	        newSt.checkedNodes = checkKeys.checkedNodes;
 	        newSt.checkedNodesPositions = checkKeys.checkedNodesPositions;
+	        this.checkKeys = checkKeys;
 	
-	        checkedKeys = checkKeys.checkedKeys;
+	        this._checkedKeys = checkedKeys = checkKeys.checkedKeys;
 	        if (!('checkedKeys' in this.props)) {
 	          this.setState({
 	            checkedKeys: checkedKeys
@@ -20222,27 +20247,31 @@
 	        prefixCls: props.prefixCls,
 	        showLine: props.showLine,
 	        showIcon: props.showIcon,
-	        checkable: props.checkable,
 	        draggable: props.draggable,
 	        dragOver: state.dragOverNodeKey === key && this.dropPosition === 0,
 	        dragOverGapTop: state.dragOverNodeKey === key && this.dropPosition === -1,
 	        dragOverGapBottom: state.dragOverNodeKey === key && this.dropPosition === 1,
 	        expanded: state.expandedKeys.indexOf(key) !== -1,
 	        selected: state.selectedKeys.indexOf(key) !== -1,
-	        checked: (props.checkStrictly ? state.checkedKeys : this.checkedKeys).indexOf(key) !== -1,
-	        checkPart: props.checkStrictly ? false : this.checkPartKeys.indexOf(key) !== -1,
 	        openTransitionName: this.getOpenTransitionName(),
 	        openAnimation: props.openAnimation,
 	        filterTreeNode: this.filterTreeNode.bind(this)
 	      };
-	      if (this.treeNodesStates[pos]) {
-	        (0, _objectAssign2['default'])(cloneProps, this.treeNodesStates[pos].siblingPosition);
+	      if (props.checkable) {
+	        cloneProps.checkable = props.checkable;
+	        cloneProps.checked = (props.checkStrictly ? state.checkedKeys : this.checkedKeys).indexOf(key) !== -1;
+	        cloneProps.checkPart = props.checkStrictly ? false : this.checkPartKeys.indexOf(key) !== -1;
+	        if (this.treeNodesStates[pos]) {
+	          (0, _objectAssign2['default'])(cloneProps, this.treeNodesStates[pos].siblingPosition);
+	        }
 	      }
 	      return _react2['default'].cloneElement(child, cloneProps);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+	
 	      var props = this.props;
 	      var domProps = {
 	        className: (0, _classnames2['default'])(props.className, props.prefixCls),
@@ -20253,10 +20282,50 @@
 	        domProps.onKeyDown = this.onKeyDown;
 	      }
 	      // console.log(this.state.expandedKeys, this._rawExpandedKeys, props.children);
-	      var checkKeys = (0, _util.getTreeNodesStates)(props.children, this.state.checkedKeys, true);
-	      this.checkPartKeys = checkKeys.checkPartKeys;
-	      this.checkedKeys = checkKeys.checkedKeys;
-	      this.treeNodesStates = checkKeys.treeNodesStates;
+	      if (props.checkable && this.checkedKeysChange) {
+	        if (props.checkStrictly) {
+	          this.treeNodesStates = {};
+	          (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
+	            _this4.treeNodesStates[pos] = {
+	              siblingPosition: siblingPosition
+	            };
+	          });
+	        } else {
+	          (function () {
+	            var checkedKeys = _this4.state.checkedKeys;
+	            var checkKeys = undefined;
+	            if (_this4.checkKeys && _this4._checkedKeys && _this4._checkedKeys.every(function (i, index) {
+	              return checkedKeys[index] === i;
+	            })) {
+	              // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
+	              checkKeys = _this4.checkKeys;
+	            } else {
+	              (function () {
+	                var checkedPositions = [];
+	                _this4.treeNodesStates = {};
+	                (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
+	                  _this4.treeNodesStates[pos] = {
+	                    node: item,
+	                    key: keyOrPos,
+	                    checked: false,
+	                    checkPart: false,
+	                    siblingPosition: siblingPosition
+	                  };
+	                  if (checkedKeys.indexOf(keyOrPos) !== -1) {
+	                    _this4.treeNodesStates[pos].checked = true;
+	                    checkedPositions.push(pos);
+	                  }
+	                });
+	                // if the parent node's key exists, it all children node will be checked
+	                (0, _util.handleCheckState)(_this4.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
+	                checkKeys = (0, _util.getCheckKeys)(_this4.treeNodesStates);
+	              })();
+	            }
+	            _this4.checkPartKeys = checkKeys.checkPartKeys;
+	            _this4.checkedKeys = checkKeys.checkedKeys;
+	          })();
+	        }
+	      }
 	
 	      return _react2['default'].createElement(
 	        'ul',
@@ -20434,6 +20503,8 @@
 /* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* eslint no-loop-func: 0*/
+	
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
@@ -20444,7 +20515,8 @@
 	exports.loopAllChildren = loopAllChildren;
 	exports.isInclude = isInclude;
 	exports.filterParentPosition = filterParentPosition;
-	exports.getTreeNodesStates = getTreeNodesStates;
+	exports.handleCheckState = handleCheckState;
+	exports.getCheckKeys = getCheckKeys;
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -20553,60 +20625,96 @@
 	
 	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
 	
-	function uniqueArray(arr) {
-	  var obj = {};
-	  arr.forEach(function (item) {
-	    if (!obj[item]) {
-	      obj[item] = true;
-	    }
-	  });
-	  return Object.keys(obj);
-	}
-	// console.log(uniqueArray(['11', '2', '2']));
+	// arr.length === 628, use time: ~20ms
 	
 	function filterParentPosition(arr) {
-	  var a = [].concat(arr);
+	  var levelObj = {};
 	  arr.forEach(function (item) {
-	    var itemArr = item.split('-');
-	    a.forEach(function (ii, index) {
-	      var iiArr = ii.split('-');
-	      if (itemArr.length <= iiArr.length && isInclude(itemArr, iiArr)) {
-	        a[index] = item;
-	      }
-	      if (itemArr.length > iiArr.length && isInclude(iiArr, itemArr)) {
-	        a[index] = ii;
-	      }
-	    });
+	    var posLen = item.split('-').length;
+	    if (!levelObj[posLen]) {
+	      levelObj[posLen] = [];
+	    }
+	    levelObj[posLen].push(item);
 	  });
-	  return uniqueArray(a);
+	  var levelArr = Object.keys(levelObj).sort();
+	
+	  var _loop = function (i) {
+	    if (levelArr[i + 1]) {
+	      levelObj[levelArr[i]].forEach(function (ii) {
+	        var _loop2 = function (j) {
+	          levelObj[levelArr[j]].forEach(function (_i, index) {
+	            if (isInclude(ii.split('-'), _i.split('-'))) {
+	              levelObj[levelArr[j]][index] = null;
+	            }
+	          });
+	          levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(function (p) {
+	            return p;
+	          });
+	        };
+	
+	        for (var j = i + 1; j < levelArr.length; j++) {
+	          _loop2(j);
+	        }
+	      });
+	    }
+	  };
+	
+	  for (var i = 0; i < levelArr.length; i++) {
+	    _loop(i);
+	  }
+	  var nArr = [];
+	  levelArr.forEach(function (i) {
+	    nArr = nArr.concat(levelObj[i]);
+	  });
+	  return nArr;
 	}
 	
-	// console.log(filterParentPosition(['0-2', '0-10', '0-0-1', '0-1-1', '0-0','0-1', '0-10-0']));
+	// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 	
-	// TODO 效率差, 需要缓存优化
+	var stripTail = function stripTail(str) {
+	  var arr = str.match(/(.+)(-[^-]+)$/);
+	  var st = '';
+	  if (arr && arr.length === 3) {
+	    st = arr[1];
+	  }
+	  return st;
+	};
+	var splitPosition = function splitPosition(pos) {
+	  return pos.split('-');
+	};
+	
+	// TODO 再优化
+	
 	function handleCheckState(obj, checkedPositionArr, checkIt) {
-	  var stripTail = function stripTail(str) {
-	    var arr = str.match(/(.+)(-[^-]+)$/);
-	    var st = '';
-	    if (arr && arr.length === 3) {
-	      st = arr[1];
-	    }
-	    return st;
-	  };
 	  // console.log(stripTail('0-101-000'));
-	  var splitPosition = function splitPosition(pos) {
-	    return pos.split('-');
-	  };
-	  checkedPositionArr.forEach(function (_pos) {
-	    // 设置子节点，全选或全不选
-	    var _posArr = splitPosition(_pos);
-	    Object.keys(obj).forEach(function (i) {
-	      var iArr = splitPosition(i);
+	  // let s = Date.now();
+	  var objKeys = Object.keys(obj);
+	
+	  objKeys.forEach(function (i, index) {
+	    var iArr = splitPosition(i);
+	    var saved = false;
+	    checkedPositionArr.forEach(function (_pos) {
+	      // 设置子节点，全选或全不选
+	      var _posArr = splitPosition(_pos);
 	      if (iArr.length > _posArr.length && isInclude(_posArr, iArr)) {
 	        obj[i].checkPart = false;
 	        obj[i].checked = checkIt;
+	        objKeys[index] = null;
+	      }
+	      if (iArr[0] === _posArr[0] && iArr[1] === _posArr[1]) {
+	        // 如果
+	        saved = true;
 	      }
 	    });
+	    if (!saved) {
+	      objKeys[index] = null;
+	    }
+	  });
+	  objKeys = objKeys.filter(function (i) {
+	    return i;
+	  }); // filter non null;
+	
+	  var _loop3 = function (_pIndex) {
 	    // 循环设置父节点的 选中 或 半选状态
 	    var loop = function loop(__pos) {
 	      var _posLen = splitPosition(__pos).length;
@@ -20617,17 +20725,26 @@
 	      var sibling = 0;
 	      var siblingChecked = 0;
 	      var parentPosition = stripTail(__pos);
-	      Object.keys(obj).forEach(function (i) {
+	      objKeys.forEach(function (i /* , index*/) {
 	        var iArr = splitPosition(i);
 	        if (iArr.length === _posLen && isInclude(splitPosition(parentPosition), iArr)) {
 	          sibling++;
 	          if (obj[i].checked) {
 	            siblingChecked++;
+	            var _i = checkedPositionArr.indexOf(i);
+	            if (_i > -1) {
+	              checkedPositionArr.splice(_i, 1);
+	              if (_i <= _pIndex) {
+	                _pIndex--;
+	              }
+	            }
 	          } else if (obj[i].checkPart) {
 	            siblingChecked += 0.5;
 	          }
+	          // objKeys[index] = null;
 	        }
 	      });
+	      // objKeys = objKeys.filter(i => i); // filter non null;
 	      var parent = obj[parentPosition];
 	      // sibling 不会等于0
 	      // 全不选 - 全选 - 半选
@@ -20643,8 +20760,14 @@
 	      }
 	      loop(parentPosition);
 	    };
-	    loop(_pos);
-	  });
+	    loop(checkedPositionArr[_pIndex], _pIndex);
+	    pIndex = _pIndex;
+	  };
+	
+	  for (var pIndex = 0; pIndex < checkedPositionArr.length; pIndex++) {
+	    _loop3(pIndex);
+	  }
+	  // console.log(Date.now()-s, objKeys.length, checkIt);
 	}
 	
 	function getCheckKeys(treeNodesStates) {
@@ -20665,43 +20788,6 @@
 	  return {
 	    checkPartKeys: checkPartKeys, checkedKeys: checkedKeys, checkedNodes: checkedNodes, checkedNodesPositions: checkedNodesPositions, treeNodesStates: treeNodesStates
 	  };
-	}
-	
-	function getTreeNodesStates(children, checkedKeys, checkIt, unCheckKey) {
-	  var checkedPosition = [];
-	  var treeNodesStates = {};
-	  loopAllChildren(children, function (item, index, pos, keyOrPos, siblingPosition) {
-	    var checked = false;
-	    if (checkedKeys.indexOf(keyOrPos) !== -1) {
-	      checked = true;
-	      checkedPosition.push(pos);
-	    }
-	    treeNodesStates[pos] = {
-	      node: item,
-	      key: keyOrPos,
-	      checked: checked,
-	      checkPart: false,
-	      siblingPosition: siblingPosition
-	    };
-	  });
-	
-	  // debugger
-	  handleCheckState(treeNodesStates, filterParentPosition(checkedPosition.sort()), true);
-	
-	  if (!checkIt && unCheckKey) {
-	    var pos = undefined;
-	    Object.keys(treeNodesStates).forEach(function (item) {
-	      var itemObj = treeNodesStates[item];
-	      if (itemObj.key === unCheckKey) {
-	        pos = item;
-	        itemObj.checked = checkIt;
-	        itemObj.checkPart = false;
-	      }
-	    });
-	    handleCheckState(treeNodesStates, [pos], checkIt);
-	  }
-	
-	  return getCheckKeys(treeNodesStates);
 	}
 
 /***/ },
