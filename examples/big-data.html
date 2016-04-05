@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>basic-controlled.js - example - rc-tree@1.2.0-beta.3</title>
+  <title>big-data.js - example - rc-tree@1.2.0-beta.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,12 +263,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
-  <script src="basic-controlled.js?nowrap"></script>
+  <script src="big-data.js?nowrap"></script>
   <div class="highlight"><pre><code language="js">import <span class="hljs-string">'rc-tree/assets/index.css'</span>;
 import React, {PropTypes} from <span class="hljs-string">'react'</span>;
 import ReactDOM from <span class="hljs-string">'react-dom'</span>;
 import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
-import { gData, <span class="hljs-comment">/* filterParentPosition,*/</span> getFilterExpandedKeys, getRadioSelectKeys } from <span class="hljs-string">'./util'</span>;
+import { <span class="hljs-comment">/* filterParentPosition,*/</span> getFilterExpandedKeys } from <span class="hljs-string">'./util'</span>;
+import Gen from <span class="hljs-string">'./big-data-generator'</span>;
 
 <span class="hljs-keyword">const</span> Demo = React.createClass({
   propTypes: {
@@ -276,16 +277,26 @@ import { gData, <span class="hljs-comment">/* filterParentPosition,*/</span> get
   },
   getDefaultProps() {
     <span class="hljs-keyword">return</span> {
-      multiple: <span class="hljs-literal">true</span>,
     };
   },
   getInitialState() {
     <span class="hljs-keyword">return</span> {
-      expandedKeys: getFilterExpandedKeys(gData, [<span class="hljs-string">'0-0-0-key'</span>]),
-      <span class="hljs-comment">// checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],</span>
-      checkedKeys: [<span class="hljs-string">'0-0-0-key'</span>],
+      gData: [],
+      expandedKeys: [],
+      checkedKeys: [],
+      checkedKeys1: [],
       selectedKeys: [],
     };
+  },
+  componentWillUpdate(nextProps, nextState) {
+    <span class="hljs-comment">// invoked immediately before rendering with new props or state, not for initial 'render'</span>
+    <span class="hljs-comment">// see componentWillReceiveProps if you need to call setState</span>
+    <span class="hljs-comment">// console.log(nextState.gData === this.state.gData);</span>
+    <span class="hljs-keyword">if</span> (nextState.gData === <span class="hljs-keyword">this</span>.state.gData) {
+      <span class="hljs-keyword">this</span>.notReRender = <span class="hljs-literal">true</span>;
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">this</span>.notReRender = <span class="hljs-literal">false</span>;
+    }
   },
   onExpand(treeNode, expand, expandedKeys) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expand, expandedKeys);
@@ -308,13 +319,13 @@ import { gData, <span class="hljs-comment">/* filterParentPosition,*/</span> get
       checkedKeys,
     });
   },
-  onCheckStrictly(checkedKeys, <span class="hljs-comment">/* extra*/</span>) {
+  onCheckStrictly(checkedKeys1, <span class="hljs-comment">/* extra*/</span>) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">arguments</span>);
     <span class="hljs-comment">// const { checkedNodesPositions } = extra;</span>
     <span class="hljs-comment">// const pps = filterParentPosition(checkedNodesPositions.map(i =&gt; i.pos));</span>
     <span class="hljs-comment">// console.log(checkedNodesPositions.filter(i =&gt; pps.indexOf(i.pos) &gt; -1).map(i =&gt; i.node.key));</span>
     <span class="hljs-keyword">this</span>.setState({
-      checkedKeys,
+      checkedKeys1,
     });
   },
   onSelect(selectedKeys, info) {
@@ -323,49 +334,64 @@ import { gData, <span class="hljs-comment">/* filterParentPosition,*/</span> get
       selectedKeys,
     });
   },
-  onRbSelect(selectedKeys, info) {
-    <span class="hljs-keyword">let</span> _selectedKeys = selectedKeys;
-    <span class="hljs-keyword">if</span> (info.selected) {
-      _selectedKeys = getRadioSelectKeys(gData, selectedKeys, info.node.props.eventKey);
-    }
+  onGen(data) {
     <span class="hljs-keyword">this</span>.setState({
-      selectedKeys: _selectedKeys,
+      gData: data,
+      expandedKeys: getFilterExpandedKeys(data, [<span class="hljs-string">'0-0-0-key'</span>]),
+      <span class="hljs-comment">// checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],</span>
+      checkedKeys: [<span class="hljs-string">'0-0-0-key'</span>],
+      checkedKeys1: [<span class="hljs-string">'0-0-0-key'</span>],
+      selectedKeys: [],
     });
   },
   render() {
     <span class="hljs-keyword">const</span> loop = data =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
         <span class="hljs-keyword">if</span> (item.children) {
-          <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.title}</span>
-                            <span class="hljs-attribute">disableCheckbox</span>=<span class="hljs-value">{item.key</span> =<span class="hljs-value">==</span> '<span class="hljs-attribute">0-0-0-key</span>' ? <span class="hljs-attribute">true</span> <span class="hljs-attribute">:</span> <span class="hljs-attribute">false</span>}&gt;</span>
+          <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.title}</span>&gt;</span>
             {loop(item.children)}
           <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>);
         }
         return <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.title}</span>/&gt;</span>;</span>
       });
     };
-    <span class="hljs-comment">// console.log(getRadioSelectKeys(gData, this.state.selectedKeys));</span>
+    <span class="hljs-comment">// const s = Date.now();</span>
+    <span class="hljs-comment">// const treeNodes = loop(this.state.gData);</span>
+    <span class="hljs-keyword">let</span> treeNodes;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.treeNodes &amp;&amp; <span class="hljs-keyword">this</span>.notReRender) {
+      treeNodes = <span class="hljs-keyword">this</span>.treeNodes;
+    } <span class="hljs-keyword">else</span> {
+      treeNodes = loop(<span class="hljs-keyword">this</span>.state.gData);
+      <span class="hljs-keyword">this</span>.treeNodes = treeNodes;
+    }
+    <span class="hljs-comment">// console.log(Date.now()-s);</span>
     <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{padding:</span> '<span class="hljs-attribute">0</span> <span class="hljs-attribute">20px</span>'}}&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>controlled<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">multiple</span>=<span class="hljs-value">{this.props.multiple}</span> <span class="hljs-attribute">defaultExpandAll</span>
-            <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
-            <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
-            <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{this.state.selectedKeys}</span>&gt;</span>
-        {loop(gData)}
-      <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>checkStrictly<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">multiple</span>=<span class="hljs-value">{this.props.multiple}</span> <span class="hljs-attribute">defaultExpandAll</span>
-            <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
-            <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheckStrictly}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
-            <span class="hljs-attribute">checkStrictly</span>&gt;</span>
-        {loop(gData)}
-      <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>radio's behavior select (in the same level)<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">defaultExpandAll</span>
-            <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onRbSelect}</span>
-            <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{getRadioSelectKeys(gData,</span> <span class="hljs-attribute">this.state.selectedKeys</span>)}&gt;</span>
-        {loop(gData)}
-      <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Gen</span> <span class="hljs-attribute">onGen</span>=<span class="hljs-value">{this.onGen}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">border:</span> '<span class="hljs-attribute">1px</span> <span class="hljs-attribute">solid</span> <span class="hljs-attribute">red</span>', <span class="hljs-attribute">width:</span> <span class="hljs-attribute">700</span>, <span class="hljs-attribute">padding:</span> <span class="hljs-attribute">10</span>}}&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">h5</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">margin:</span> <span class="hljs-attribute">10</span> }}&gt;</span>大数据量下优化建议：<span class="hljs-tag">&lt;/<span class="hljs-title">h5</span>&gt;</span>
+        初始展开的节点少，向dom中插入节点就会少，速度更快。 <span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>
+        treeNodes 总数据量尽量少变化，缓存并复用计算出的 treeNodes，可在 componentWillUpdate 等时机做判断。 <span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+      {this.state.gData.length ? <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">display:</span> '<span class="hljs-attribute">flex</span>' }}&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">marginRight:</span> <span class="hljs-attribute">20</span> }}&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>normal check<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">multiple</span>=<span class="hljs-value">{this.props.multiple}</span>
+                <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
+                <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
+                <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{this.state.selectedKeys}</span>&gt;</span>
+            {treeNodes}
+          <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>checkStrictly<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">checkStrictly</span> <span class="hljs-attribute">multiple</span>=<span class="hljs-value">{this.props.multiple}</span>
+                <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
+                <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheckStrictly}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys1}</span>
+                <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{this.state.selectedKeys}</span>&gt;</span>
+            {treeNodes}
+          <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span> : null}
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>);
   },
 });

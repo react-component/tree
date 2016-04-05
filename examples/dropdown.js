@@ -1,9 +1,9 @@
-webpackJsonp([5],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(225);
+	module.exports = __webpack_require__(227);
 
 
 /***/ },
@@ -12,51 +12,69 @@ webpackJsonp([5],{
 /***/ function(module, exports) {
 
 	/* eslint no-loop-func: 0*/
+	
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	exports.generateData = generateData;
+	exports.calcTotal = calcTotal;
 	exports.isInclude = isInclude;
 	exports.filterParentPosition = filterParentPosition;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 	exports.getRadioSelectKeys = getRadioSelectKeys;
-	var x = 3;
-	var y = 2;
-	var z = 1;
-	// x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
-	/* eslint no-param-reassign:0*/
-	var rec = function rec(n) {
-	  return n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
-	};
-	console.log('总节点数（单个tree）：', rec(z + 1));
+	
+	function generateData() {
+	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
+	  var y = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+	  var z = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+	  var gData = arguments.length <= 3 || arguments[3] === undefined ? [] : arguments[3];
+	
+	  // x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
+	  function _loop(_level, _preKey, _tns) {
+	    var preKey = _preKey || '0';
+	    var tns = _tns || gData;
+	
+	    var children = [];
+	    for (var i = 0; i < x; i++) {
+	      var key = preKey + '-' + i;
+	      tns.push({ title: key + '-label', key: key + '-key' });
+	      if (i < y) {
+	        children.push(key);
+	      }
+	    }
+	    if (_level < 0) {
+	      return tns;
+	    }
+	    var __level = _level - 1;
+	    children.forEach(function (key, index) {
+	      tns[index].children = [];
+	      return _loop(__level, key, tns[index].children);
+	    });
+	  }
+	  _loop(z);
+	  return gData;
+	}
+	
+	function calcTotal() {
+	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
+	  var y = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+	  var z = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+	
+	  /* eslint no-param-reassign:0*/
+	  var rec = function rec(n) {
+	    return n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
+	  };
+	  return rec(z + 1);
+	}
+	
+	console.log('总节点数（单个tree）：', calcTotal());
 	// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 	
-	var gData = [];
+	var gData = generateData();
 	
 	exports.gData = gData;
-	var generateData = function generateData(_level, _preKey, _tns) {
-	  var preKey = _preKey || '0';
-	  var tns = _tns || gData;
-	
-	  var children = [];
-	  for (var i = 0; i < x; i++) {
-	    var key = preKey + '-' + i;
-	    tns.push({ title: key + '-label', key: key + '-key' });
-	    if (i < y) {
-	      children.push(key);
-	    }
-	  }
-	  if (_level < 0) {
-	    return tns;
-	  }
-	  var __level = _level - 1;
-	  children.forEach(function (key, index) {
-	    tns[index].children = [];
-	    return generateData(__level, key, tns[index].children);
-	  });
-	};
-	generateData(z);
 	
 	function isInclude(smallArray, bigArray) {
 	  return smallArray.every(function (ii, i) {
@@ -79,10 +97,10 @@ webpackJsonp([5],{
 	  });
 	  var levelArr = Object.keys(levelObj).sort();
 	
-	  var _loop = function (i) {
+	  var _loop2 = function (i) {
 	    if (levelArr[i + 1]) {
 	      levelObj[levelArr[i]].forEach(function (ii) {
-	        var _loop2 = function (j) {
+	        var _loop3 = function (j) {
 	          levelObj[levelArr[j]].forEach(function (_i, index) {
 	            if (isInclude(ii.split('-'), _i.split('-'))) {
 	              levelObj[levelArr[j]][index] = null;
@@ -94,14 +112,14 @@ webpackJsonp([5],{
 	        };
 	
 	        for (var j = i + 1; j < levelArr.length; j++) {
-	          _loop2(j);
+	          _loop3(j);
 	        }
 	      });
 	    }
 	  };
 	
 	  for (var i = 0; i < levelArr.length; i++) {
-	    _loop(i);
+	    _loop2(i);
 	  }
 	  var nArr = [];
 	  levelArr.forEach(function (i) {
@@ -207,16 +225,16 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 186:
+/***/ 188:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(187);
+	module.exports = __webpack_require__(189);
 
 /***/ },
 
-/***/ 187:
+/***/ 189:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -237,13 +255,13 @@ webpackJsonp([5],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcUtil = __webpack_require__(188);
+	var _rcUtil = __webpack_require__(190);
 	
-	var _Popup = __webpack_require__(208);
+	var _Popup = __webpack_require__(210);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(222);
+	var _utils = __webpack_require__(224);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -640,32 +658,32 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 188:
+/***/ 190:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	module.exports = {
-	  guid: __webpack_require__(189),
-	  classSet: __webpack_require__(190),
-	  joinClasses: __webpack_require__(192),
-	  KeyCode: __webpack_require__(193),
-	  PureRenderMixin: __webpack_require__(194),
-	  shallowEqual: __webpack_require__(195),
-	  createChainedFunction: __webpack_require__(200),
+	  guid: __webpack_require__(191),
+	  classSet: __webpack_require__(192),
+	  joinClasses: __webpack_require__(194),
+	  KeyCode: __webpack_require__(195),
+	  PureRenderMixin: __webpack_require__(196),
+	  shallowEqual: __webpack_require__(197),
+	  createChainedFunction: __webpack_require__(202),
 	  Dom: {
-	    addEventListener: __webpack_require__(201),
-	    contains: __webpack_require__(205)
+	    addEventListener: __webpack_require__(203),
+	    contains: __webpack_require__(207)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(206),
-	    mapSelf: __webpack_require__(207)
+	    toArray: __webpack_require__(208),
+	    mapSelf: __webpack_require__(209)
 	  }
 	};
 
 /***/ },
 
-/***/ 189:
+/***/ 191:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -677,19 +695,19 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 190:
+/***/ 192:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var deprecate = __webpack_require__(191);
+	var deprecate = __webpack_require__(193);
 	var classNames = __webpack_require__(165);
 	
 	module.exports = deprecate(classNames, '`rcUtil.classSet()` is deprecated, use `classNames()` by `require(\'classnames\')` instead');
 
 /***/ },
 
-/***/ 191:
+/***/ 193:
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -764,19 +782,19 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 192:
+/***/ 194:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var deprecate = __webpack_require__(191);
+	var deprecate = __webpack_require__(193);
 	var classNames = __webpack_require__(165);
 	
 	module.exports = deprecate(classNames, '`rcUtil.joinClasses()` is deprecated, use `classNames()` by `require(\'classnames\')` instead');
 
 /***/ },
 
-/***/ 193:
+/***/ 195:
 /***/ function(module, exports) {
 
 	/**
@@ -1302,12 +1320,12 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 194:
+/***/ 196:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var shallowEqual = __webpack_require__(195);
+	var shallowEqual = __webpack_require__(197);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -1343,12 +1361,12 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 195:
+/***/ 197:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var fetchKeys = __webpack_require__(196);
+	var fetchKeys = __webpack_require__(198);
 	
 	module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 	
@@ -1397,7 +1415,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 196:
+/***/ 198:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1408,9 +1426,9 @@ webpackJsonp([5],{
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(197),
-	    isArguments = __webpack_require__(198),
-	    isArray = __webpack_require__(199);
+	var getNative = __webpack_require__(199),
+	    isArguments = __webpack_require__(200),
+	    isArray = __webpack_require__(201);
 	
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -1640,7 +1658,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 197:
+/***/ 199:
 /***/ function(module, exports) {
 
 	/**
@@ -1784,7 +1802,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 198:
+/***/ 200:
 /***/ function(module, exports) {
 
 	/**
@@ -2034,7 +2052,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 199:
+/***/ 201:
 /***/ function(module, exports) {
 
 	/**
@@ -2221,7 +2239,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 200:
+/***/ 202:
 /***/ function(module, exports) {
 
 	/**
@@ -2249,7 +2267,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 201:
+/***/ 203:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2261,7 +2279,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _addDomEventListener = __webpack_require__(202);
+	var _addDomEventListener = __webpack_require__(204);
 	
 	var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 	
@@ -2281,7 +2299,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 202:
+/***/ 204:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2293,7 +2311,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventObject = __webpack_require__(203);
+	var _EventObject = __webpack_require__(205);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
@@ -2324,7 +2342,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 203:
+/***/ 205:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2341,7 +2359,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventBaseObject = __webpack_require__(204);
+	var _EventBaseObject = __webpack_require__(206);
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
@@ -2608,7 +2626,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 204:
+/***/ 206:
 /***/ function(module, exports) {
 
 	/**
@@ -2677,7 +2695,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 205:
+/***/ 207:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2696,7 +2714,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 206:
+/***/ 208:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2713,7 +2731,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 207:
+/***/ 209:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2731,7 +2749,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 208:
+/***/ 210:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2750,7 +2768,7 @@ webpackJsonp([5],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAlign = __webpack_require__(209);
+	var _rcAlign = __webpack_require__(211);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
@@ -2758,11 +2776,11 @@ webpackJsonp([5],{
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _PopupInner = __webpack_require__(220);
+	var _PopupInner = __webpack_require__(222);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
-	var _LazyRenderBox = __webpack_require__(221);
+	var _LazyRenderBox = __webpack_require__(223);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -2954,7 +2972,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 209:
+/***/ 211:
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
@@ -2966,7 +2984,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _Align = __webpack_require__(210);
+	var _Align = __webpack_require__(212);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -2975,7 +2993,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 210:
+/***/ 212:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2994,13 +3012,13 @@ webpackJsonp([5],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _domAlign = __webpack_require__(211);
+	var _domAlign = __webpack_require__(213);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
-	var _rcUtil = __webpack_require__(188);
+	var _rcUtil = __webpack_require__(190);
 	
-	var _isWindow = __webpack_require__(219);
+	var _isWindow = __webpack_require__(221);
 	
 	var _isWindow2 = _interopRequireDefault(_isWindow);
 	
@@ -3133,7 +3151,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 211:
+/***/ 213:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3149,27 +3167,27 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(212);
+	var _utils = __webpack_require__(214);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(213);
+	var _getOffsetParent = __webpack_require__(215);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
-	var _getVisibleRectForElement = __webpack_require__(214);
+	var _getVisibleRectForElement = __webpack_require__(216);
 	
 	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
 	
-	var _adjustForViewport = __webpack_require__(215);
+	var _adjustForViewport = __webpack_require__(217);
 	
 	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
 	
-	var _getRegion = __webpack_require__(216);
+	var _getRegion = __webpack_require__(218);
 	
 	var _getRegion2 = _interopRequireDefault(_getRegion);
 	
-	var _getElFuturePos = __webpack_require__(217);
+	var _getElFuturePos = __webpack_require__(219);
 	
 	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
 	
@@ -3337,7 +3355,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 212:
+/***/ 214:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3836,7 +3854,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 213:
+/***/ 215:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3847,7 +3865,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(212);
+	var _utils = __webpack_require__(214);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -3895,7 +3913,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 214:
+/***/ 216:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3906,11 +3924,11 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(212);
+	var _utils = __webpack_require__(214);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(213);
+	var _getOffsetParent = __webpack_require__(215);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
@@ -3977,7 +3995,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 215:
+/***/ 217:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3988,7 +4006,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(212);
+	var _utils = __webpack_require__(214);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -4038,7 +4056,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 216:
+/***/ 218:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4049,7 +4067,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(212);
+	var _utils = __webpack_require__(214);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -4080,7 +4098,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 217:
+/***/ 219:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4091,7 +4109,7 @@ webpackJsonp([5],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _getAlignOffset = __webpack_require__(218);
+	var _getAlignOffset = __webpack_require__(220);
 	
 	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
 	
@@ -4122,7 +4140,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 218:
+/***/ 220:
 /***/ function(module, exports) {
 
 	/**
@@ -4168,7 +4186,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 219:
+/***/ 221:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4188,7 +4206,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 220:
+/***/ 222:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4201,7 +4219,7 @@ webpackJsonp([5],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _LazyRenderBox = __webpack_require__(221);
+	var _LazyRenderBox = __webpack_require__(223);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -4246,7 +4264,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 221:
+/***/ 223:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4295,7 +4313,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 222:
+/***/ 224:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4331,7 +4349,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 225:
+/***/ 227:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint react/no-multi-comp:0 */
@@ -4341,7 +4359,7 @@ webpackJsonp([5],{
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(226);
+	__webpack_require__(228);
 	
 	var _react = __webpack_require__(3);
 	
@@ -4355,7 +4373,7 @@ webpackJsonp([5],{
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _rcTrigger = __webpack_require__(186);
+	var _rcTrigger = __webpack_require__(188);
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
@@ -4589,7 +4607,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 226:
+/***/ 228:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

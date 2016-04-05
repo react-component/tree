@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		7:0
+/******/ 		8:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"basic","2":"basic-controlled","3":"contextmenu","4":"draggable","5":"dropdown","6":"dynamic"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"basic","2":"basic-controlled","3":"big-data","4":"contextmenu","5":"draggable","6":"dropdown","7":"dynamic"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -20015,7 +20015,7 @@
 	          this.treeNodesStates[treeNode.props.pos].checkPart = false;
 	          (0, _util.handleCheckState)(this.treeNodesStates, [treeNode.props.pos], false);
 	        }
-	        var checkKeys = (0, _util.getCheckKeys)(this.treeNodesStates);
+	        var checkKeys = (0, _util.getCheck)(this.treeNodesStates);
 	        newSt.checkedNodes = checkKeys.checkedNodes;
 	        newSt.checkedNodesPositions = checkKeys.checkedNodesPositions;
 	        this.checkKeys = checkKeys;
@@ -20290,6 +20290,10 @@
 	              siblingPosition: siblingPosition
 	            };
 	          });
+	        } else if (props._treeNodesStates) {
+	          this.treeNodesStates = props._treeNodesStates.treeNodesStates;
+	          this.checkPartKeys = props._treeNodesStates.checkPartKeys;
+	          this.checkedKeys = props._treeNodesStates.checkedKeys;
 	        } else {
 	          (function () {
 	            var checkedKeys = _this4.state.checkedKeys;
@@ -20318,7 +20322,7 @@
 	                });
 	                // if the parent node's key exists, it all children node will be checked
 	                (0, _util.handleCheckState)(_this4.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
-	                checkKeys = (0, _util.getCheckKeys)(_this4.treeNodesStates);
+	                checkKeys = (0, _util.getCheck)(_this4.treeNodesStates);
 	              })();
 	            }
 	            _this4.checkPartKeys = checkKeys.checkPartKeys;
@@ -20346,6 +20350,7 @@
 	  selectable: _react.PropTypes.bool,
 	  multiple: _react.PropTypes.bool,
 	  checkable: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.node]),
+	  _treeNodesStates: _react.PropTypes.object,
 	  checkStrictly: _react.PropTypes.bool,
 	  draggable: _react.PropTypes.bool,
 	  autoExpandParent: _react.PropTypes.bool,
@@ -20516,7 +20521,7 @@
 	exports.isInclude = isInclude;
 	exports.filterParentPosition = filterParentPosition;
 	exports.handleCheckState = handleCheckState;
-	exports.getCheckKeys = getCheckKeys;
+	exports.getCheck = getCheck;
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -20603,18 +20608,18 @@
 	  return siblingPosition;
 	}
 	
-	function loopAllChildren(childs, callback) {
-	  var loop = function loop(children, level) {
+	function loopAllChildren(childs, callback, parent) {
+	  var loop = function loop(children, level, _parent) {
 	    var len = getChildrenlength(children);
 	    _react2['default'].Children.forEach(children, function (item, index) {
 	      var pos = level + '-' + index;
 	      if (item.props.children && item.type && item.type.isTreeNode) {
-	        loop(item.props.children, pos);
+	        loop(item.props.children, pos, { node: item, pos: pos });
 	      }
-	      callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}));
+	      callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}), _parent);
 	    });
 	  };
-	  loop(childs, 0);
+	  loop(childs, 0, parent);
 	}
 	
 	function isInclude(smallArray, bigArray) {
@@ -20671,25 +20676,22 @@
 	
 	// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 	
-	var stripTail = function stripTail(str) {
+	function stripTail(str) {
 	  var arr = str.match(/(.+)(-[^-]+)$/);
 	  var st = '';
 	  if (arr && arr.length === 3) {
 	    st = arr[1];
 	  }
 	  return st;
-	};
-	var splitPosition = function splitPosition(pos) {
+	}
+	function splitPosition(pos) {
 	  return pos.split('-');
-	};
-	
-	// TODO 再优化
+	}
 	
 	function handleCheckState(obj, checkedPositionArr, checkIt) {
 	  // console.log(stripTail('0-101-000'));
-	  // let s = Date.now();
 	  var objKeys = Object.keys(obj);
-	
+	  // let s = Date.now();
 	  objKeys.forEach(function (i, index) {
 	    var iArr = splitPosition(i);
 	    var saved = false;
@@ -20710,6 +20712,8 @@
 	      objKeys[index] = null;
 	    }
 	  });
+	  // TODO: 循环 2470000 次耗时约 1400 ms。 性能瓶颈！
+	  // console.log(Date.now()-s, checkedPositionArr.length * objKeys.length);
 	  objKeys = objKeys.filter(function (i) {
 	    return i;
 	  }); // filter non null;
@@ -20770,7 +20774,7 @@
 	  // console.log(Date.now()-s, objKeys.length, checkIt);
 	}
 	
-	function getCheckKeys(treeNodesStates) {
+	function getCheck(treeNodesStates) {
 	  var checkPartKeys = [];
 	  var checkedKeys = [];
 	  var checkedNodes = [];

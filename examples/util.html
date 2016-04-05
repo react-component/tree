@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>util.js - example - rc-tree@1.2.0-beta.2</title>
+  <title>util.js - example - rc-tree@1.2.0-beta.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.2.0-beta.2</h1>
+    <h1>rc-tree@1.2.0-beta.3</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -265,39 +265,42 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <script src="common.js?nowrap"></script>
   <script src="util.js?nowrap"></script>
   <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-loop-func: 0*/</span>
-<span class="hljs-keyword">const</span> x = <span class="hljs-number">3</span>;
-<span class="hljs-keyword">const</span> y = <span class="hljs-number">2</span>;
-<span class="hljs-keyword">const</span> z = <span class="hljs-number">1</span>;
-<span class="hljs-comment">// x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）</span>
-<span class="hljs-comment">/* eslint no-param-reassign:0*/</span>
-<span class="hljs-keyword">const</span> rec = (n) =&gt; n &gt;= <span class="hljs-number">0</span> ? x * <span class="hljs-built_in">Math</span>.pow(y, n--) + rec(n) : <span class="hljs-number">0</span>;
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'总节点数（单个tree）：'</span>, rec(z + <span class="hljs-number">1</span>));
+
+export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateData</span><span class="hljs-params">(x = 3, y = 2, z = 1, gData = [])</span> </span>{
+  <span class="hljs-comment">// x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_loop</span><span class="hljs-params">(_level, _preKey, _tns)</span> </span>{
+    <span class="hljs-keyword">const</span> preKey = _preKey || <span class="hljs-string">'0'</span>;
+    <span class="hljs-keyword">const</span> tns = _tns || gData;
+
+    <span class="hljs-keyword">const</span> children = [];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; x; i++) {
+      <span class="hljs-keyword">const</span> key = `${preKey}-${i}`;
+      tns.push({title: key + <span class="hljs-string">'-label'</span>, key: key + <span class="hljs-string">'-key'</span>});
+      <span class="hljs-keyword">if</span> (i &lt; y) {
+        children.push(key);
+      }
+    }
+    <span class="hljs-keyword">if</span> (_level &lt; <span class="hljs-number">0</span>) {
+      <span class="hljs-keyword">return</span> tns;
+    }
+    <span class="hljs-keyword">const</span> __level = _level - <span class="hljs-number">1</span>;
+    children.forEach((key, index) =&gt; {
+      tns[index].children = [];
+      <span class="hljs-keyword">return</span> _loop(__level, key, tns[index].children);
+    });
+  }
+  _loop(z);
+  <span class="hljs-keyword">return</span> gData;
+}
+export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calcTotal</span><span class="hljs-params">(x = 3, y = 2, z = 1)</span> </span>{
+  <span class="hljs-comment">/* eslint no-param-reassign:0*/</span>
+  <span class="hljs-keyword">const</span> rec = (n) =&gt; n &gt;= <span class="hljs-number">0</span> ? x * <span class="hljs-built_in">Math</span>.pow(y, n--) + rec(n) : <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">return</span> rec(z + <span class="hljs-number">1</span>);
+}
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'总节点数（单个tree）：'</span>, calcTotal());
 <span class="hljs-comment">// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。</span>
 
-export <span class="hljs-keyword">const</span> gData = [];
-
-<span class="hljs-keyword">const</span> generateData = (_level, _preKey, _tns) =&gt; {
-  <span class="hljs-keyword">const</span> preKey = _preKey || <span class="hljs-string">'0'</span>;
-  <span class="hljs-keyword">const</span> tns = _tns || gData;
-
-  <span class="hljs-keyword">const</span> children = [];
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; x; i++) {
-    <span class="hljs-keyword">const</span> key = `${preKey}-${i}`;
-    tns.push({title: key + <span class="hljs-string">'-label'</span>, key: key + <span class="hljs-string">'-key'</span>});
-    <span class="hljs-keyword">if</span> (i &lt; y) {
-      children.push(key);
-    }
-  }
-  <span class="hljs-keyword">if</span> (_level &lt; <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">return</span> tns;
-  }
-  <span class="hljs-keyword">const</span> __level = _level - <span class="hljs-number">1</span>;
-  children.forEach((key, index) =&gt; {
-    tns[index].children = [];
-    <span class="hljs-keyword">return</span> generateData(__level, key, tns[index].children);
-  });
-};
-generateData(z);
+export <span class="hljs-keyword">const</span> gData = generateData();
 
 export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isInclude</span><span class="hljs-params">(smallArray, bigArray)</span> </span>{
   <span class="hljs-keyword">return</span> smallArray.every((ii, i) =&gt; {

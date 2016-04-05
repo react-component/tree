@@ -1,9 +1,9 @@
-webpackJsonp([4],{
+webpackJsonp([5],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(223);
+	module.exports = __webpack_require__(225);
 
 
 /***/ },
@@ -12,51 +12,69 @@ webpackJsonp([4],{
 /***/ function(module, exports) {
 
 	/* eslint no-loop-func: 0*/
+	
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	exports.generateData = generateData;
+	exports.calcTotal = calcTotal;
 	exports.isInclude = isInclude;
 	exports.filterParentPosition = filterParentPosition;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 	exports.getRadioSelectKeys = getRadioSelectKeys;
-	var x = 3;
-	var y = 2;
-	var z = 1;
-	// x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
-	/* eslint no-param-reassign:0*/
-	var rec = function rec(n) {
-	  return n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
-	};
-	console.log('总节点数（单个tree）：', rec(z + 1));
+	
+	function generateData() {
+	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
+	  var y = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+	  var z = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+	  var gData = arguments.length <= 3 || arguments[3] === undefined ? [] : arguments[3];
+	
+	  // x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
+	  function _loop(_level, _preKey, _tns) {
+	    var preKey = _preKey || '0';
+	    var tns = _tns || gData;
+	
+	    var children = [];
+	    for (var i = 0; i < x; i++) {
+	      var key = preKey + '-' + i;
+	      tns.push({ title: key + '-label', key: key + '-key' });
+	      if (i < y) {
+	        children.push(key);
+	      }
+	    }
+	    if (_level < 0) {
+	      return tns;
+	    }
+	    var __level = _level - 1;
+	    children.forEach(function (key, index) {
+	      tns[index].children = [];
+	      return _loop(__level, key, tns[index].children);
+	    });
+	  }
+	  _loop(z);
+	  return gData;
+	}
+	
+	function calcTotal() {
+	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
+	  var y = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+	  var z = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+	
+	  /* eslint no-param-reassign:0*/
+	  var rec = function rec(n) {
+	    return n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
+	  };
+	  return rec(z + 1);
+	}
+	
+	console.log('总节点数（单个tree）：', calcTotal());
 	// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 	
-	var gData = [];
+	var gData = generateData();
 	
 	exports.gData = gData;
-	var generateData = function generateData(_level, _preKey, _tns) {
-	  var preKey = _preKey || '0';
-	  var tns = _tns || gData;
-	
-	  var children = [];
-	  for (var i = 0; i < x; i++) {
-	    var key = preKey + '-' + i;
-	    tns.push({ title: key + '-label', key: key + '-key' });
-	    if (i < y) {
-	      children.push(key);
-	    }
-	  }
-	  if (_level < 0) {
-	    return tns;
-	  }
-	  var __level = _level - 1;
-	  children.forEach(function (key, index) {
-	    tns[index].children = [];
-	    return generateData(__level, key, tns[index].children);
-	  });
-	};
-	generateData(z);
 	
 	function isInclude(smallArray, bigArray) {
 	  return smallArray.every(function (ii, i) {
@@ -79,10 +97,10 @@ webpackJsonp([4],{
 	  });
 	  var levelArr = Object.keys(levelObj).sort();
 	
-	  var _loop = function (i) {
+	  var _loop2 = function (i) {
 	    if (levelArr[i + 1]) {
 	      levelObj[levelArr[i]].forEach(function (ii) {
-	        var _loop2 = function (j) {
+	        var _loop3 = function (j) {
 	          levelObj[levelArr[j]].forEach(function (_i, index) {
 	            if (isInclude(ii.split('-'), _i.split('-'))) {
 	              levelObj[levelArr[j]][index] = null;
@@ -94,14 +112,14 @@ webpackJsonp([4],{
 	        };
 	
 	        for (var j = i + 1; j < levelArr.length; j++) {
-	          _loop2(j);
+	          _loop3(j);
 	        }
 	      });
 	    }
 	  };
 	
 	  for (var i = 0; i < levelArr.length; i++) {
-	    _loop(i);
+	    _loop2(i);
 	  }
 	  var nArr = [];
 	  levelArr.forEach(function (i) {
@@ -207,7 +225,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 223:
+/***/ 225:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -218,7 +236,7 @@ webpackJsonp([4],{
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(224);
+	__webpack_require__(226);
 	
 	var _react = __webpack_require__(3);
 	
@@ -338,7 +356,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 224:
+/***/ 226:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
