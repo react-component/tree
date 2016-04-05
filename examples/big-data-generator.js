@@ -1,4 +1,3 @@
-import 'rc-tree/assets/index.less';
 import React, {PropTypes} from 'react';
 import { generateData, calcTotal } from './util';
 
