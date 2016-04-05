@@ -3,7 +3,7 @@ import assign from 'object-assign';
 import classNames from 'classnames';
 import {
   loopAllChildren, isInclude, getOffset,
-  filterParentPosition, handleCheckState, getCheckKeys,
+  filterParentPosition, handleCheckState, getCheck,
 } from './util';
 
 function noop() {
@@ -225,7 +225,7 @@ class Tree extends React.Component {
         this.treeNodesStates[treeNode.props.pos].checkPart = false;
         handleCheckState(this.treeNodesStates, [treeNode.props.pos], false);
       }
-      const checkKeys = getCheckKeys(this.treeNodesStates);
+      const checkKeys = getCheck(this.treeNodesStates);
       newSt.checkedNodes = checkKeys.checkedNodes;
       newSt.checkedNodesPositions = checkKeys.checkedNodesPositions;
       this.checkKeys = checkKeys;
@@ -483,6 +483,10 @@ class Tree extends React.Component {
             siblingPosition,
           };
         });
+      } else if (props._treeNodesStates) {
+        this.treeNodesStates = props._treeNodesStates.treeNodesStates;
+        this.checkPartKeys = props._treeNodesStates.checkPartKeys;
+        this.checkedKeys = props._treeNodesStates.checkedKeys;
       } else {
         const checkedKeys = this.state.checkedKeys;
         let checkKeys;
@@ -508,7 +512,7 @@ class Tree extends React.Component {
           });
           // if the parent node's key exists, it all children node will be checked
           handleCheckState(this.treeNodesStates, filterParentPosition(checkedPositions), true);
-          checkKeys = getCheckKeys(this.treeNodesStates);
+          checkKeys = getCheck(this.treeNodesStates);
         }
         this.checkPartKeys = checkKeys.checkPartKeys;
         this.checkedKeys = checkKeys.checkedKeys;
@@ -534,6 +538,7 @@ Tree.propTypes = {
     PropTypes.bool,
     PropTypes.node,
   ]),
+  _treeNodesStates: PropTypes.object,
   checkStrictly: PropTypes.bool,
   draggable: PropTypes.bool,
   autoExpandParent: PropTypes.bool,

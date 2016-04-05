@@ -81,18 +81,18 @@ function getSiblingPosition(index, len, siblingPosition) {
   return siblingPosition;
 }
 
-export function loopAllChildren(childs, callback) {
-  const loop = (children, level) => {
+export function loopAllChildren(childs, callback, parent) {
+  const loop = (children, level, _parent) => {
     const len = getChildrenlength(children);
     React.Children.forEach(children, (item, index) => {
       const pos = `${level}-${index}`;
       if (item.props.children && item.type && item.type.isTreeNode) {
-        loop(item.props.children, pos);
+        loop(item.props.children, pos, { node: item, pos });
       }
-      callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}));
+      callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}), _parent);
     });
   };
-  loop(childs, 0);
+  loop(childs, 0, parent);
 }
 
 export function isInclude(smallArray, bigArray) {
@@ -137,24 +137,22 @@ export function filterParentPosition(arr) {
 // console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 
 
-const stripTail = (str) => {
+function stripTail(str) {
   const arr = str.match(/(.+)(-[^-]+)$/);
   let st = '';
   if (arr && arr.length === 3) {
     st = arr[1];
   }
   return st;
-};
-const splitPosition = (pos) => {
+}
+function splitPosition(pos) {
   return pos.split('-');
-};
+}
 
-// TODO 再优化
 export function handleCheckState(obj, checkedPositionArr, checkIt) {
   // console.log(stripTail('0-101-000'));
-  // let s = Date.now();
   let objKeys = Object.keys(obj);
-
+  // let s = Date.now();
   objKeys.forEach((i, index) => {
     const iArr = splitPosition(i);
     let saved = false;
@@ -175,6 +173,8 @@ export function handleCheckState(obj, checkedPositionArr, checkIt) {
       objKeys[index] = null;
     }
   });
+  // TODO: 循环 2470000 次耗时约 1400 ms。 性能瓶颈！
+  // console.log(Date.now()-s, checkedPositionArr.length * objKeys.length);
   objKeys = objKeys.filter(i => i); // filter non null;
 
   for (let pIndex = 0; pIndex < checkedPositionArr.length; pIndex++) {
@@ -227,7 +227,7 @@ export function handleCheckState(obj, checkedPositionArr, checkIt) {
   // console.log(Date.now()-s, objKeys.length, checkIt);
 }
 
-export function getCheckKeys(treeNodesStates) {
+export function getCheck(treeNodesStates) {
   const checkPartKeys = [];
   const checkedKeys = [];
   const checkedNodes = [];
