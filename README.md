@@ -68,11 +68,12 @@ see examples
 |defaultExpandedKeys | expand specific treeNodes | String[] | - |
 |expandedKeys | Controlled expand specific treeNodes | String[] | - |
 |autoExpandParent | whether auto expand parent treeNodes | bool | true |
-|checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. | String[] | [] |
-|checkStrictly| check node precisely, parent and children nodes are not associated| bool | false |
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
-|selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
+|checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. | String[] | [] |
+|halfCheckedKeys | when set checkStrictly, it works | String[] | [] |
+|checkStrictly| check node precisely, parent and children nodes are not associated| bool | false |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
+|selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 |onExpand | fire on treeNode expand or not | function(node, expanded, expandedKeys) | - |
 |onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event}) | - |
 |onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event}) | - |

@@ -49,6 +49,7 @@ const Demo = React.createClass({
     // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));
     this.setState({
       checkedKeys,
+      halfCheckedKeys: ['0-0-key'],
     });
   },
   onSelect(selectedKeys, info) {
@@ -90,7 +91,8 @@ const Demo = React.createClass({
       <h2>checkStrictly</h2>
       <Tree checkable multiple={this.props.multiple} defaultExpandAll
             onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
-            onCheck={this.onCheckStrictly} checkedKeys={this.state.checkedKeys}
+            onCheck={this.onCheckStrictly}
+            checkedKeys={this.state.checkedKeys} halfCheckedKeys={this.state.halfCheckedKeys}
             checkStrictly>
         {loop(gData)}
       </Tree>

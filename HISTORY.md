@@ -1,9 +1,9 @@
 # History
 ---
 
-## 1.2.0 / 2016-04-03
+## 1.2.0 / 2016-04-06
 - improve performance.
-- add `checkStrictly` api.
+- add `checkStrictly`/`halfCheckedKeys` api.
 
 ## 1.1.0 / 2016-01-25
 - change `onDrop` params (from `originExpandedKeys` to `rawExpandedKeys`)

@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "1.2.0-beta.3",
+  "version": "1.2.0",
   "description": "tree ui component for react",
   "keywords": [
     "react",

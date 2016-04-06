@@ -455,8 +455,16 @@ class Tree extends React.Component {
       cloneProps.checkable = props.checkable;
       cloneProps.checked = (props.checkStrictly ? state.checkedKeys : this.checkedKeys).
         indexOf(key) !== -1;
-      cloneProps.checkPart = props.checkStrictly ? false : this.checkPartKeys.
-        indexOf(key) !== -1;
+      if (props.checkStrictly) {
+        if (props.halfCheckedKeys) {
+          cloneProps.checkPart = props.halfCheckedKeys.indexOf(key) !== -1 || false;
+        } else {
+          cloneProps.checkPart = false;
+        }
+      } else {
+        cloneProps.checkPart = this.checkPartKeys.indexOf(key) !== -1;
+      }
+
       if (this.treeNodesStates[pos]) {
         assign(cloneProps, this.treeNodesStates[pos].siblingPosition);
       }
@@ -543,12 +551,13 @@ Tree.propTypes = {
   draggable: PropTypes.bool,
   autoExpandParent: PropTypes.bool,
   defaultExpandAll: PropTypes.bool,
-  expandedKeys: PropTypes.arrayOf(PropTypes.string),
   defaultExpandedKeys: PropTypes.arrayOf(PropTypes.string),
-  checkedKeys: PropTypes.arrayOf(PropTypes.string),
+  expandedKeys: PropTypes.arrayOf(PropTypes.string),
   defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
-  selectedKeys: PropTypes.arrayOf(PropTypes.string),
+  checkedKeys: PropTypes.arrayOf(PropTypes.string),
+  halfCheckedKeys: PropTypes.arrayOf(PropTypes.string),
   defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
+  selectedKeys: PropTypes.arrayOf(PropTypes.string),
   onExpand: PropTypes.func,
   onCheck: PropTypes.func,
   onSelect: PropTypes.func,
