@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>basic-controlled.js - example - rc-tree@1.2.0-beta.3</title>
+  <title>basic-controlled.js - example - rc-tree@1.2.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.2.0-beta.3</h1>
+    <h1>rc-tree@1.2.0</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -315,6 +315,7 @@ import { gData, <span class="hljs-comment">/* filterParentPosition,*/</span> get
     <span class="hljs-comment">// console.log(checkedNodesPositions.filter(i =&gt; pps.indexOf(i.pos) &gt; -1).map(i =&gt; i.node.key));</span>
     <span class="hljs-keyword">this</span>.setState({
       checkedKeys,
+      halfCheckedKeys: [<span class="hljs-string">'0-0-key'</span>],
     });
   },
   onSelect(selectedKeys, info) {
@@ -356,7 +357,8 @@ import { gData, <span class="hljs-comment">/* filterParentPosition,*/</span> get
       <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>checkStrictly<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">multiple</span>=<span class="hljs-value">{this.props.multiple}</span> <span class="hljs-attribute">defaultExpandAll</span>
             <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
-            <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheckStrictly}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
+            <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheckStrictly}</span>
+            <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span> <span class="hljs-attribute">halfCheckedKeys</span>=<span class="hljs-value">{this.state.halfCheckedKeys}</span>
             <span class="hljs-attribute">checkStrictly</span>&gt;</span>
         {loop(gData)}
       <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>

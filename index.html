@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-tree@1.2.0-beta.3 - tree ui component for react</title>
+  <title>rc-tree@1.2.0 - tree ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-tree@1.2.0-beta.3</h1>
+  <h1>rc-tree@1.2.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -865,8 +865,20 @@
 <td>true</td>
 </tr>
 <tr>
+<td>defaultCheckedKeys</td>
+<td>default checked treeNodes</td>
+<td>String[]</td>
+<td>[]</td>
+</tr>
+<tr>
 <td>checkedKeys</td>
 <td>Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node&#39;s key exists, it all children node will be checked, and vice versa.</td>
+<td>String[]</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>halfCheckedKeys</td>
+<td>when set checkStrictly, it works</td>
 <td>String[]</td>
 <td>[]</td>
 </tr>
@@ -877,20 +889,14 @@
 <td>false</td>
 </tr>
 <tr>
-<td>defaultCheckedKeys</td>
-<td>default checked treeNodes</td>
+<td>defaultSelectedKeys</td>
+<td>default selected treeNodes</td>
 <td>String[]</td>
 <td>[]</td>
 </tr>
 <tr>
 <td>selectedKeys</td>
 <td>Controlled selected treeNodes(After setting, defaultSelectedKeys will not work)</td>
-<td>String[]</td>
-<td>[]</td>
-</tr>
-<tr>
-<td>defaultSelectedKeys</td>
-<td>default selected treeNodes</td>
 <td>String[]</td>
 <td>[]</td>
 </tr>

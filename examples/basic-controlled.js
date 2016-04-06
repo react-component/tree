@@ -77,7 +77,8 @@ webpackJsonp([2],{
 	    // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
 	    // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));
 	    this.setState({
-	      checkedKeys: checkedKeys
+	      checkedKeys: checkedKeys,
+	      halfCheckedKeys: ['0-0-key']
 	    });
 	  },
 	  onSelect: function onSelect(selectedKeys, info) {
@@ -135,7 +136,8 @@ webpackJsonp([2],{
 	        _rcTree2['default'],
 	        { checkable: true, multiple: this.props.multiple, defaultExpandAll: true,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
-	          onCheck: this.onCheckStrictly, checkedKeys: this.state.checkedKeys,
+	          onCheck: this.onCheckStrictly,
+	          checkedKeys: this.state.checkedKeys, halfCheckedKeys: this.state.halfCheckedKeys,
 	          checkStrictly: true },
 	        loop(_util.gData)
 	      ),

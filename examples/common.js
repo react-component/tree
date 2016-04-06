@@ -20260,7 +20260,16 @@
 	      if (props.checkable) {
 	        cloneProps.checkable = props.checkable;
 	        cloneProps.checked = (props.checkStrictly ? state.checkedKeys : this.checkedKeys).indexOf(key) !== -1;
-	        cloneProps.checkPart = props.checkStrictly ? false : this.checkPartKeys.indexOf(key) !== -1;
+	        if (props.checkStrictly) {
+	          if (props.halfCheckedKeys) {
+	            cloneProps.checkPart = props.halfCheckedKeys.indexOf(key) !== -1 || false;
+	          } else {
+	            cloneProps.checkPart = false;
+	          }
+	        } else {
+	          cloneProps.checkPart = this.checkPartKeys.indexOf(key) !== -1;
+	        }
+	
 	        if (this.treeNodesStates[pos]) {
 	          (0, _objectAssign2['default'])(cloneProps, this.treeNodesStates[pos].siblingPosition);
 	        }
@@ -20355,12 +20364,13 @@
 	  draggable: _react.PropTypes.bool,
 	  autoExpandParent: _react.PropTypes.bool,
 	  defaultExpandAll: _react.PropTypes.bool,
-	  expandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  defaultExpandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  checkedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  expandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  defaultCheckedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  selectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  checkedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  halfCheckedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  defaultSelectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  selectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  onExpand: _react.PropTypes.func,
 	  onCheck: _react.PropTypes.func,
 	  onSelect: _react.PropTypes.func,
