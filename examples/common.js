@@ -19813,7 +19813,7 @@
 	        st.expandedKeys = expandedKeys;
 	      }
 	      if (checkedKeys) {
-	        if (checkedKeys === this.props.checkedKeys) {
+	        if (nextProps.checkedKeys === this.props.checkedKeys) {
 	          this.checkedKeysChange = false;
 	        } else {
 	          this.checkedKeysChange = true;
@@ -19983,7 +19983,6 @@
 	        checked: checked
 	      };
 	
-	      // checkStrictly
 	      if (this.props.checkStrictly && 'checkedKeys' in this.props) {
 	        if (checked && index === -1) {
 	          checkedKeys.push(key);
@@ -19997,6 +19996,7 @@
 	            newSt.checkedNodes.push(item);
 	          }
 	        });
+	        this.props.onCheck((0, _util.getStrictlyValue)(checkedKeys, this.props.checkedKeys.halfChecked), newSt);
 	      } else {
 	        if (checked && index === -1) {
 	          (function () {
@@ -20026,8 +20026,8 @@
 	            checkedKeys: checkedKeys
 	          });
 	        }
+	        this.props.onCheck(checkedKeys, newSt);
 	      }
-	      this.props.onCheck(checkedKeys, newSt);
 	    }
 	  }, {
 	    key: 'onSelect',
@@ -20148,6 +20148,13 @@
 	      var checkedKeys = willReceiveProps ? undefined : props.defaultCheckedKeys;
 	      if ('checkedKeys' in props) {
 	        checkedKeys = props.checkedKeys || [];
+	        if (props.checkStrictly) {
+	          if (props.checkedKeys.checked) {
+	            checkedKeys = props.checkedKeys.checked;
+	          } else if (!Array.isArray(props.checkedKeys)) {
+	            checkedKeys = [];
+	          }
+	        }
 	      }
 	      return checkedKeys;
 	    }
@@ -20259,14 +20266,19 @@
 	      };
 	      if (props.checkable) {
 	        cloneProps.checkable = props.checkable;
-	        cloneProps.checked = (props.checkStrictly ? state.checkedKeys : this.checkedKeys).indexOf(key) !== -1;
 	        if (props.checkStrictly) {
-	          if (props.halfCheckedKeys) {
-	            cloneProps.checkPart = props.halfCheckedKeys.indexOf(key) !== -1 || false;
+	          if (state.checkedKeys) {
+	            cloneProps.checked = state.checkedKeys.indexOf(key) !== -1 || false;
+	          }
+	          if (props.checkedKeys.halfChecked) {
+	            cloneProps.checkPart = props.checkedKeys.halfChecked.indexOf(key) !== -1 || false;
 	          } else {
 	            cloneProps.checkPart = false;
 	          }
 	        } else {
+	          if (this.checkedKeys) {
+	            cloneProps.checked = this.checkedKeys.indexOf(key) !== -1 || false;
+	          }
 	          cloneProps.checkPart = this.checkPartKeys.indexOf(key) !== -1;
 	        }
 	
@@ -20367,8 +20379,7 @@
 	  defaultExpandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  expandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  defaultCheckedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  checkedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  halfCheckedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	  checkedKeys: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.object]),
 	  defaultSelectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  selectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	  onExpand: _react.PropTypes.func,
@@ -20532,6 +20543,7 @@
 	exports.filterParentPosition = filterParentPosition;
 	exports.handleCheckState = handleCheckState;
 	exports.getCheck = getCheck;
+	exports.getStrictlyValue = getStrictlyValue;
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -20802,6 +20814,13 @@
 	  return {
 	    checkPartKeys: checkPartKeys, checkedKeys: checkedKeys, checkedNodes: checkedNodes, checkedNodesPositions: checkedNodesPositions, treeNodesStates: treeNodesStates
 	  };
+	}
+	
+	function getStrictlyValue(checkedKeys, halfChecked) {
+	  if (halfChecked) {
+	    return { checked: checkedKeys, halfChecked: halfChecked };
+	  }
+	  return checkedKeys;
 	}
 
 /***/ },

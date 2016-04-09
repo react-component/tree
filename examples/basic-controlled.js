@@ -47,6 +47,7 @@ webpackJsonp([2],{
 	      expandedKeys: (0, _util.getFilterExpandedKeys)(_util.gData, ['0-0-0-key']),
 	      // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
 	      checkedKeys: ['0-0-0-key'],
+	      checkStrictlyKeys: {},
 	      selectedKeys: []
 	    };
 	  },
@@ -76,11 +77,16 @@ webpackJsonp([2],{
 	    // const { checkedNodesPositions } = extra;
 	    // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
 	    // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));
+	    var cks = {
+	      checked: checkedKeys.checked || checkedKeys,
+	      halfChecked: ['0-0-' + parseInt(Math.random() * 3, 10) + '-key']
+	    };
 	    this.setState({
-	      checkedKeys: checkedKeys,
-	      halfCheckedKeys: ['0-0-key']
+	      // checkedKeys,
+	      checkStrictlyKeys: cks
 	    });
 	  },
+	  // checkStrictlyKeys: checkedKeys,
 	  onSelect: function onSelect(selectedKeys, info) {
 	    console.log('onSelect', selectedKeys, info);
 	    this.setState({
@@ -137,7 +143,7 @@ webpackJsonp([2],{
 	        { checkable: true, multiple: this.props.multiple, defaultExpandAll: true,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
 	          onCheck: this.onCheckStrictly,
-	          checkedKeys: this.state.checkedKeys, halfCheckedKeys: this.state.halfCheckedKeys,
+	          checkedKeys: this.state.checkStrictlyKeys,
 	          checkStrictly: true },
 	        loop(_util.gData)
 	      ),

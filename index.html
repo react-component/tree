@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-tree@1.2.0 - tree ui component for react</title>
+  <title>rc-tree@1.2.1 - tree ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-tree@1.2.0</h1>
+  <h1>rc-tree@1.2.1</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -872,8 +872,8 @@
 </tr>
 <tr>
 <td>checkedKeys</td>
-<td>Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node&#39;s key exists, it all children node will be checked, and vice versa.</td>
-<td>String[]</td>
+<td>Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node&#39;s key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array.</td>
+<td>String[]/{checked:Array<String>,halfChecked:Array<String>}</td>
 <td>[]</td>
 </tr>
 <tr>
@@ -1020,7 +1020,7 @@
 <tr>
 <td>title</td>
 <td>tree/subTree&#39;s title</td>
-<td>String/node</td>
+<td>String/element</td>
 <td>&#39;---&#39;</td>
 </tr>
 <tr>
