@@ -18,6 +18,7 @@ const Demo = React.createClass({
       expandedKeys: getFilterExpandedKeys(gData, ['0-0-0-key']),
       // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
       checkedKeys: ['0-0-0-key'],
+      checkStrictlyKeys: {},
       selectedKeys: [],
     };
   },
@@ -47,9 +48,14 @@ const Demo = React.createClass({
     // const { checkedNodesPositions } = extra;
     // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
     // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));
+    const cks = {
+      checked: checkedKeys.checked || checkedKeys,
+      halfChecked: [`0-0-${parseInt(Math.random() * 3, 10)}-key`],
+    };
     this.setState({
-      checkedKeys,
-      halfCheckedKeys: ['0-0-key'],
+      // checkedKeys,
+      checkStrictlyKeys: cks,
+      // checkStrictlyKeys: checkedKeys,
     });
   },
   onSelect(selectedKeys, info) {
@@ -92,7 +98,7 @@ const Demo = React.createClass({
       <Tree checkable multiple={this.props.multiple} defaultExpandAll
             onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
             onCheck={this.onCheckStrictly}
-            checkedKeys={this.state.checkedKeys} halfCheckedKeys={this.state.halfCheckedKeys}
+            checkedKeys={this.state.checkStrictlyKeys}
             checkStrictly>
         {loop(gData)}
       </Tree>

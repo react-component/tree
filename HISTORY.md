@@ -1,6 +1,9 @@
 # History
 ---
 
+## 1.2.1 / 2016-04-08
+- remove `halfCheckedKeys` api, and change `checkedKeys` to an object on setting `checkStrictly`.
+
 ## 1.2.0 / 2016-04-06
 - improve performance.
 - add `checkStrictly`/`halfCheckedKeys` api.

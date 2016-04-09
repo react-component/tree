@@ -69,7 +69,7 @@ see examples
 |expandedKeys | Controlled expand specific treeNodes | String[] | - |
 |autoExpandParent | whether auto expand parent treeNodes | bool | true |
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
-|checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. | String[] | [] |
+|checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array. | String[]/{checked:Array<String>,halfChecked:Array<String>} | [] |
 |halfCheckedKeys | when set checkStrictly, it works | String[] | [] |
 |checkStrictly| check node precisely, parent and children nodes are not associated| bool | false |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
@@ -99,7 +99,7 @@ see examples
 |className | additional class to treeNode | String | '' |
 |disabled | whether disabled the treeNode | bool | false |
 |disableCheckbox | whether disable the treeNode' checkbox | bool | false |
-|title | tree/subTree's title | String/node | '---' |
+|title | tree/subTree's title | String/element | '---' |
 |key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
 |isLeaf | whether it's leaf node | bool | false |
 

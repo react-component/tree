@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import {
   loopAllChildren, isInclude, getOffset,
   filterParentPosition, handleCheckState, getCheck,
+  getStrictlyValue,
 } from './util';
 
 function noop() {
@@ -37,7 +38,7 @@ class Tree extends React.Component {
       st.expandedKeys = expandedKeys;
     }
     if (checkedKeys) {
-      if (checkedKeys === this.props.checkedKeys) {
+      if (nextProps.checkedKeys === this.props.checkedKeys) {
         this.checkedKeysChange = false;
       } else {
         this.checkedKeysChange = true;
@@ -195,7 +196,6 @@ class Tree extends React.Component {
       checked,
     };
 
-    // checkStrictly
     if (this.props.checkStrictly && ('checkedKeys' in this.props)) {
       if (checked && index === -1) {
         checkedKeys.push(key);
@@ -209,6 +209,7 @@ class Tree extends React.Component {
           newSt.checkedNodes.push(item);
         }
       });
+      this.props.onCheck(getStrictlyValue(checkedKeys, this.props.checkedKeys.halfChecked), newSt);
     } else {
       if (checked && index === -1) {
         this.treeNodesStates[treeNode.props.pos].checked = true;
@@ -236,8 +237,8 @@ class Tree extends React.Component {
           checkedKeys,
         });
       }
+      this.props.onCheck(checkedKeys, newSt);
     }
-    this.props.onCheck(checkedKeys, newSt);
   }
 
   onSelect(treeNode) {
@@ -351,6 +352,13 @@ class Tree extends React.Component {
     let checkedKeys = willReceiveProps ? undefined : props.defaultCheckedKeys;
     if ('checkedKeys' in props) {
       checkedKeys = props.checkedKeys || [];
+      if (props.checkStrictly) {
+        if (props.checkedKeys.checked) {
+          checkedKeys = props.checkedKeys.checked;
+        } else if (!Array.isArray(props.checkedKeys)) {
+          checkedKeys = [];
+        }
+      }
     }
     return checkedKeys;
   }
@@ -453,15 +461,19 @@ class Tree extends React.Component {
     };
     if (props.checkable) {
       cloneProps.checkable = props.checkable;
-      cloneProps.checked = (props.checkStrictly ? state.checkedKeys : this.checkedKeys).
-        indexOf(key) !== -1;
       if (props.checkStrictly) {
-        if (props.halfCheckedKeys) {
-          cloneProps.checkPart = props.halfCheckedKeys.indexOf(key) !== -1 || false;
+        if (state.checkedKeys) {
+          cloneProps.checked = state.checkedKeys.indexOf(key) !== -1 || false;
+        }
+        if (props.checkedKeys.halfChecked) {
+          cloneProps.checkPart = props.checkedKeys.halfChecked.indexOf(key) !== -1 || false;
         } else {
           cloneProps.checkPart = false;
         }
       } else {
+        if (this.checkedKeys) {
+          cloneProps.checked = this.checkedKeys.indexOf(key) !== -1 || false;
+        }
         cloneProps.checkPart = this.checkPartKeys.indexOf(key) !== -1;
       }
 
@@ -554,8 +566,10 @@ Tree.propTypes = {
   defaultExpandedKeys: PropTypes.arrayOf(PropTypes.string),
   expandedKeys: PropTypes.arrayOf(PropTypes.string),
   defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
-  checkedKeys: PropTypes.arrayOf(PropTypes.string),
-  halfCheckedKeys: PropTypes.arrayOf(PropTypes.string),
+  checkedKeys: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.object,
+  ]),
   defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
   selectedKeys: PropTypes.arrayOf(PropTypes.string),
   onExpand: PropTypes.func,

@@ -246,3 +246,10 @@ export function getCheck(treeNodesStates) {
     checkPartKeys, checkedKeys, checkedNodes, checkedNodesPositions, treeNodesStates,
   };
 }
+
+export function getStrictlyValue(checkedKeys, halfChecked) {
+  if (halfChecked) {
+    return { checked: checkedKeys, halfChecked };
+  }
+  return checkedKeys;
+}
