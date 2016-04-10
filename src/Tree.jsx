@@ -183,7 +183,7 @@ class Tree extends React.Component {
 
   onCheck(treeNode) {
     let checked = !treeNode.props.checked;
-    if (treeNode.props.checkPart) {
+    if (treeNode.props.halfChecked) {
       checked = true;
     }
     const key = treeNode.key || treeNode.props.eventKey;
@@ -223,7 +223,7 @@ class Tree extends React.Component {
       }
       if (!checked) {
         this.treeNodesStates[treeNode.props.pos].checked = false;
-        this.treeNodesStates[treeNode.props.pos].checkPart = false;
+        this.treeNodesStates[treeNode.props.pos].halfChecked = false;
         handleCheckState(this.treeNodesStates, [treeNode.props.pos], false);
       }
       const checkKeys = getCheck(this.treeNodesStates);
@@ -466,15 +466,15 @@ class Tree extends React.Component {
           cloneProps.checked = state.checkedKeys.indexOf(key) !== -1 || false;
         }
         if (props.checkedKeys.halfChecked) {
-          cloneProps.checkPart = props.checkedKeys.halfChecked.indexOf(key) !== -1 || false;
+          cloneProps.halfChecked = props.checkedKeys.halfChecked.indexOf(key) !== -1 || false;
         } else {
-          cloneProps.checkPart = false;
+          cloneProps.halfChecked = false;
         }
       } else {
         if (this.checkedKeys) {
           cloneProps.checked = this.checkedKeys.indexOf(key) !== -1 || false;
         }
-        cloneProps.checkPart = this.checkPartKeys.indexOf(key) !== -1;
+        cloneProps.halfChecked = this.halfCheckedKeys.indexOf(key) !== -1;
       }
 
       if (this.treeNodesStates[pos]) {
@@ -505,7 +505,7 @@ class Tree extends React.Component {
         });
       } else if (props._treeNodesStates) {
         this.treeNodesStates = props._treeNodesStates.treeNodesStates;
-        this.checkPartKeys = props._treeNodesStates.checkPartKeys;
+        this.halfCheckedKeys = props._treeNodesStates.halfCheckedKeys;
         this.checkedKeys = props._treeNodesStates.checkedKeys;
       } else {
         const checkedKeys = this.state.checkedKeys;
@@ -522,7 +522,7 @@ class Tree extends React.Component {
               node: item,
               key: keyOrPos,
               checked: false,
-              checkPart: false,
+              halfChecked: false,
               siblingPosition,
             };
             if (checkedKeys.indexOf(keyOrPos) !== -1) {
@@ -534,7 +534,7 @@ class Tree extends React.Component {
           handleCheckState(this.treeNodesStates, filterParentPosition(checkedPositions), true);
           checkKeys = getCheck(this.treeNodesStates);
         }
-        this.checkPartKeys = checkKeys.checkPartKeys;
+        this.halfCheckedKeys = checkKeys.halfCheckedKeys;
         this.checkedKeys = checkKeys.checkedKeys;
       }
     }

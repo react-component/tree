@@ -149,10 +149,10 @@ class TreeNode extends React.Component {
     const checkboxCls = {
       [`${prefixCls}-checkbox`]: true,
     };
-    if (props.checkPart) {
-      checkboxCls[`${prefixCls}-checkbox-indeterminate`] = true;
-    } else if (props.checked) {
+    if (props.checked) {
       checkboxCls[`${prefixCls}-checkbox-checked`] = true;
+    } else if (props.halfChecked) {
+      checkboxCls[`${prefixCls}-checkbox-indeterminate`] = true;
     }
     let customEle = null;
     if (typeof props.checkable !== 'boolean') {
