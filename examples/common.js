@@ -19970,7 +19970,7 @@
 	      var _this3 = this;
 	
 	      var checked = !treeNode.props.checked;
-	      if (treeNode.props.checkPart) {
+	      if (treeNode.props.halfChecked) {
 	        checked = true;
 	      }
 	      var key = treeNode.key || treeNode.props.eventKey;
@@ -20012,7 +20012,7 @@
 	        }
 	        if (!checked) {
 	          this.treeNodesStates[treeNode.props.pos].checked = false;
-	          this.treeNodesStates[treeNode.props.pos].checkPart = false;
+	          this.treeNodesStates[treeNode.props.pos].halfChecked = false;
 	          (0, _util.handleCheckState)(this.treeNodesStates, [treeNode.props.pos], false);
 	        }
 	        var checkKeys = (0, _util.getCheck)(this.treeNodesStates);
@@ -20271,15 +20271,15 @@
 	            cloneProps.checked = state.checkedKeys.indexOf(key) !== -1 || false;
 	          }
 	          if (props.checkedKeys.halfChecked) {
-	            cloneProps.checkPart = props.checkedKeys.halfChecked.indexOf(key) !== -1 || false;
+	            cloneProps.halfChecked = props.checkedKeys.halfChecked.indexOf(key) !== -1 || false;
 	          } else {
-	            cloneProps.checkPart = false;
+	            cloneProps.halfChecked = false;
 	          }
 	        } else {
 	          if (this.checkedKeys) {
 	            cloneProps.checked = this.checkedKeys.indexOf(key) !== -1 || false;
 	          }
-	          cloneProps.checkPart = this.checkPartKeys.indexOf(key) !== -1;
+	          cloneProps.halfChecked = this.halfCheckedKeys.indexOf(key) !== -1;
 	        }
 	
 	        if (this.treeNodesStates[pos]) {
@@ -20313,7 +20313,7 @@
 	          });
 	        } else if (props._treeNodesStates) {
 	          this.treeNodesStates = props._treeNodesStates.treeNodesStates;
-	          this.checkPartKeys = props._treeNodesStates.checkPartKeys;
+	          this.halfCheckedKeys = props._treeNodesStates.halfCheckedKeys;
 	          this.checkedKeys = props._treeNodesStates.checkedKeys;
 	        } else {
 	          (function () {
@@ -20333,7 +20333,7 @@
 	                    node: item,
 	                    key: keyOrPos,
 	                    checked: false,
-	                    checkPart: false,
+	                    halfChecked: false,
 	                    siblingPosition: siblingPosition
 	                  };
 	                  if (checkedKeys.indexOf(keyOrPos) !== -1) {
@@ -20346,7 +20346,7 @@
 	                checkKeys = (0, _util.getCheck)(_this4.treeNodesStates);
 	              })();
 	            }
-	            _this4.checkPartKeys = checkKeys.checkPartKeys;
+	            _this4.halfCheckedKeys = checkKeys.halfCheckedKeys;
 	            _this4.checkedKeys = checkKeys.checkedKeys;
 	          })();
 	        }
@@ -20721,7 +20721,7 @@
 	      // 设置子节点，全选或全不选
 	      var _posArr = splitPosition(_pos);
 	      if (iArr.length > _posArr.length && isInclude(_posArr, iArr)) {
-	        obj[i].checkPart = false;
+	        obj[i].halfChecked = false;
 	        obj[i].checked = checkIt;
 	        objKeys[index] = null;
 	      }
@@ -20764,7 +20764,7 @@
 	                _pIndex--;
 	              }
 	            }
-	          } else if (obj[i].checkPart) {
+	          } else if (obj[i].halfChecked) {
 	            siblingChecked += 0.5;
 	          }
 	          // objKeys[index] = null;
@@ -20776,12 +20776,12 @@
 	      // 全不选 - 全选 - 半选
 	      if (siblingChecked === 0) {
 	        parent.checked = false;
-	        parent.checkPart = false;
+	        parent.halfChecked = false;
 	      } else if (siblingChecked === sibling) {
 	        parent.checked = true;
-	        parent.checkPart = false;
+	        parent.halfChecked = false;
 	      } else {
-	        parent.checkPart = true;
+	        parent.halfChecked = true;
 	        parent.checked = false;
 	      }
 	      loop(parentPosition);
@@ -20797,7 +20797,7 @@
 	}
 	
 	function getCheck(treeNodesStates) {
-	  var checkPartKeys = [];
+	  var halfCheckedKeys = [];
 	  var checkedKeys = [];
 	  var checkedNodes = [];
 	  var checkedNodesPositions = [];
@@ -20807,12 +20807,12 @@
 	      checkedKeys.push(itemObj.key);
 	      checkedNodes.push(itemObj.node);
 	      checkedNodesPositions.push({ node: itemObj.node, pos: item });
-	    } else if (itemObj.checkPart) {
-	      checkPartKeys.push(itemObj.key);
+	    } else if (itemObj.halfChecked) {
+	      halfCheckedKeys.push(itemObj.key);
 	    }
 	  });
 	  return {
-	    checkPartKeys: checkPartKeys, checkedKeys: checkedKeys, checkedNodes: checkedNodes, checkedNodesPositions: checkedNodesPositions, treeNodesStates: treeNodesStates
+	    halfCheckedKeys: halfCheckedKeys, checkedKeys: checkedKeys, checkedNodes: checkedNodes, checkedNodesPositions: checkedNodesPositions, treeNodesStates: treeNodesStates
 	  };
 	}
 	
@@ -21021,10 +21021,10 @@
 	    value: function renderCheckbox(props) {
 	      var prefixCls = props.prefixCls;
 	      var checkboxCls = _defineProperty({}, prefixCls + '-checkbox', true);
-	      if (props.checkPart) {
-	        checkboxCls[prefixCls + '-checkbox-indeterminate'] = true;
-	      } else if (props.checked) {
+	      if (props.checked) {
 	        checkboxCls[prefixCls + '-checkbox-checked'] = true;
+	      } else if (props.halfChecked) {
+	        checkboxCls[prefixCls + '-checkbox-indeterminate'] = true;
 	      }
 	      var customEle = null;
 	      if (typeof props.checkable !== 'boolean') {
