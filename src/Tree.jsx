@@ -186,7 +186,7 @@ class Tree extends React.Component {
     if (treeNode.props.halfChecked) {
       checked = true;
     }
-    const key = treeNode.key || treeNode.props.eventKey;
+    const key = treeNode.props.eventKey;
     let checkedKeys = [...this.state.checkedKeys];
     const index = checkedKeys.indexOf(key);
 

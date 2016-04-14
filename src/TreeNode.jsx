@@ -34,6 +34,13 @@ class TreeNode extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (!this.props.root._treeNodeInstances) {
+      this.props.root._treeNodeInstances = [];
+    }
+    this.props.root._treeNodeInstances.push(this);
+  }
+
   onCheck() {
     this.props.root.onCheck(this);
   }
