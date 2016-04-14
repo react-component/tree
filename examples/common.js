@@ -19973,7 +19973,7 @@
 	      if (treeNode.props.halfChecked) {
 	        checked = true;
 	      }
-	      var key = treeNode.key || treeNode.props.eventKey;
+	      var key = treeNode.props.eventKey;
 	      var checkedKeys = [].concat(_toConsumableArray(this.state.checkedKeys));
 	      var index = checkedKeys.indexOf(key);
 	
@@ -20891,6 +20891,14 @@
 	  }
 	
 	  _createClass(TreeNode, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (!this.props.root._treeNodeInstances) {
+	        this.props.root._treeNodeInstances = [];
+	      }
+	      this.props.root._treeNodeInstances.push(this);
+	    }
+	  }, {
 	    key: 'onCheck',
 	    value: function onCheck() {
 	      this.props.root.onCheck(this);
