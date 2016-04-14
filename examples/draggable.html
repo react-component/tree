@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>draggable.js - example - rc-tree@1.2.3-beta</title>
+  <title>draggable.js - example - rc-tree@1.3.0-beta</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.2.3-beta</h1>
+    <h1>rc-tree@1.3.0-beta</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -275,6 +275,7 @@ import { gData } from <span class="hljs-string">'./util'</span>;
   getInitialState() {
     <span class="hljs-keyword">return</span> {
       gData: gData,
+      autoExpandParent: <span class="hljs-literal">true</span>,
       expandedKeys: [<span class="hljs-string">'0-0-key'</span>, <span class="hljs-string">'0-0-0-key'</span>, <span class="hljs-string">'0-0-0-0-key'</span>],
     };
   },
@@ -326,6 +327,13 @@ import { gData } from <span class="hljs-string">'./util'</span>;
       expandedKeys: info.rawExpandedKeys.concat([info.node.props.eventKey]),
     });
   },
+  onExpand(expandedKeys) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, <span class="hljs-built_in">arguments</span>);
+    <span class="hljs-keyword">this</span>.setState({
+      expandedKeys,
+      autoExpandParent: <span class="hljs-literal">false</span>,
+    });
+  },
   render() {
     <span class="hljs-keyword">const</span> loop = data =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
@@ -340,6 +348,7 @@ import { gData } from <span class="hljs-string">'./util'</span>;
       <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>drag a node into another node<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"draggable-container"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
+              <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">autoExpandParent</span>=<span class="hljs-value">{this.state.autoExpandParent}</span>
               <span class="hljs-attribute">draggable</span>
               <span class="hljs-attribute">onDragStart</span>=<span class="hljs-value">{this.onDragStart}</span>
               <span class="hljs-attribute">onDragEnter</span>=<span class="hljs-value">{this.onDragEnter}</span>

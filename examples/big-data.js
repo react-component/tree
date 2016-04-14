@@ -220,8 +220,6 @@ webpackJsonp([3],{
 	  });
 	  return res;
 	}
-	
-	// export { gData, getFilterExpandedKeys, getRadioSelectKeys };
 
 /***/ },
 
@@ -245,8 +243,6 @@ webpackJsonp([3],{
 	var _rcTree = __webpack_require__(161);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
-	
-	var _util = __webpack_require__(180);
 	
 	var _bigDataGenerator = __webpack_require__(182);
 	
@@ -280,22 +276,6 @@ webpackJsonp([3],{
 	      this.notReRender = false;
 	    }
 	  },
-	  onExpand: function onExpand(treeNode, expand, expandedKeys) {
-	    console.log('onExpand', expand, expandedKeys);
-	    var index = expandedKeys.indexOf(treeNode.props.eventKey);
-	    if (expand) {
-	      if (index > -1) {
-	        expandedKeys.splice(index, 1);
-	      }
-	    } else {
-	      if (index === -1) {
-	        expandedKeys.push(treeNode.props.eventKey);
-	      }
-	    }
-	    this.setState({
-	      expandedKeys: expandedKeys
-	    });
-	  },
 	  onCheck: function onCheck(checkedKeys) {
 	    this.setState({
 	      checkedKeys: checkedKeys
@@ -303,9 +283,6 @@ webpackJsonp([3],{
 	  },
 	  onCheckStrictly: function onCheckStrictly(checkedKeys1) /* extra*/{
 	    console.log(arguments);
-	    // const { checkedNodesPositions } = extra;
-	    // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
-	    // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));
 	    this.setState({
 	      checkedKeys1: checkedKeys1
 	    });
@@ -319,7 +296,7 @@ webpackJsonp([3],{
 	  onGen: function onGen(data) {
 	    this.setState({
 	      gData: data,
-	      expandedKeys: (0, _util.getFilterExpandedKeys)(data, ['0-0-0-key']),
+	      expandedKeys: ['0-0-0-key'],
 	      // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
 	      checkedKeys: ['0-0-0-key'],
 	      checkedKeys1: ['0-0-0-key'],
@@ -380,7 +357,7 @@ webpackJsonp([3],{
 	          _react2['default'].createElement(
 	            _rcTree2['default'],
 	            { checkable: true, multiple: this.props.multiple,
-	              onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
+	              defaultExpandedKeys: this.state.expandedKeys,
 	              onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
 	              onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
 	            treeNodes
@@ -397,7 +374,7 @@ webpackJsonp([3],{
 	          _react2['default'].createElement(
 	            _rcTree2['default'],
 	            { checkable: true, checkStrictly: true, multiple: this.props.multiple,
-	              onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
+	              defaultExpandedKeys: this.state.expandedKeys,
 	              onCheck: this.onCheckStrictly, checkedKeys: this.state.checkedKeys1,
 	              onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
 	            treeNodes
@@ -409,7 +386,6 @@ webpackJsonp([3],{
 	});
 	
 	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
-	/* filterParentPosition,*/
 
 /***/ },
 

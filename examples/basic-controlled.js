@@ -44,27 +44,22 @@ webpackJsonp([2],{
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      expandedKeys: (0, _util.getFilterExpandedKeys)(_util.gData, ['0-0-0-key']),
+	      // expandedKeys: getFilterExpandedKeys(gData, ['0-0-0-key']),
+	      expandedKeys: ['0-0-0-key'],
+	      autoExpandParent: true,
 	      // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
 	      checkedKeys: ['0-0-0-key'],
 	      checkStrictlyKeys: {},
 	      selectedKeys: []
 	    };
 	  },
-	  onExpand: function onExpand(treeNode, expand, expandedKeys) {
-	    console.log('onExpand', expand, expandedKeys);
-	    var index = expandedKeys.indexOf(treeNode.props.eventKey);
-	    if (expand) {
-	      if (index > -1) {
-	        expandedKeys.splice(index, 1);
-	      }
-	    } else {
-	      if (index === -1) {
-	        expandedKeys.push(treeNode.props.eventKey);
-	      }
-	    }
+	  onExpand: function onExpand(expandedKeys) {
+	    console.log('onExpand', arguments);
+	    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+	    // or, you can remove all expanded chilren keys.
 	    this.setState({
-	      expandedKeys: expandedKeys
+	      expandedKeys: expandedKeys,
+	      autoExpandParent: false
 	    });
 	  },
 	  onCheck: function onCheck(checkedKeys) {
@@ -127,8 +122,9 @@ webpackJsonp([2],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { checkable: true, multiple: this.props.multiple, defaultExpandAll: true,
+	        { checkable: true, multiple: this.props.multiple,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
+	          autoExpandParent: this.state.autoExpandParent,
 	          onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
 	          onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
 	        loop(_util.gData)
@@ -164,7 +160,7 @@ webpackJsonp([2],{
 	});
 	
 	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
-	/* filterParentPosition,*/
+	/* filterParentPosition, getFilterExpandedKeys,*/
 
 /***/ },
 
@@ -380,8 +376,6 @@ webpackJsonp([2],{
 	  });
 	  return res;
 	}
-	
-	// export { gData, getFilterExpandedKeys, getRadioSelectKeys };
 
 /***/ }
 

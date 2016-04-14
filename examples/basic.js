@@ -51,8 +51,8 @@ webpackJsonp([1],{
 	      switchIt: true
 	    };
 	  },
-	  onExpand: function onExpand(treeNode, expand, expandedKeys) {
-	    console.log('onExpand', expand, expandedKeys);
+	  onExpand: function onExpand(expandedKeys) {
+	    console.log('onExpand', expandedKeys, arguments);
 	  },
 	  onSelect: function onSelect(selectedKeys, info) {
 	    console.log('selected', selectedKeys, info);

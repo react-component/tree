@@ -220,8 +220,6 @@ webpackJsonp([5],{
 	  });
 	  return res;
 	}
-	
-	// export { gData, getFilterExpandedKeys, getRadioSelectKeys };
 
 /***/ },
 
@@ -258,6 +256,7 @@ webpackJsonp([5],{
 	  getInitialState: function getInitialState() {
 	    return {
 	      gData: _util.gData,
+	      autoExpandParent: true,
 	      expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key']
 	    };
 	  },
@@ -308,6 +307,13 @@ webpackJsonp([5],{
 	      expandedKeys: info.rawExpandedKeys.concat([info.node.props.eventKey])
 	    });
 	  },
+	  onExpand: function onExpand(expandedKeys) {
+	    console.log('onExpand', arguments);
+	    this.setState({
+	      expandedKeys: expandedKeys,
+	      autoExpandParent: false
+	    });
+	  },
 	  render: function render() {
 	    var loop = function loop(data) {
 	      return data.map(function (item) {
@@ -340,6 +346,7 @@ webpackJsonp([5],{
 	        _react2['default'].createElement(
 	          _rcTree2['default'],
 	          { expandedKeys: this.state.expandedKeys,
+	            onExpand: this.onExpand, autoExpandParent: this.state.autoExpandParent,
 	            draggable: true,
 	            onDragStart: this.onDragStart,
 	            onDragEnter: this.onDragEnter,
