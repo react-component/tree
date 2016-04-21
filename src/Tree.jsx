@@ -151,28 +151,22 @@ class Tree extends React.Component {
   }
 
   onExpand(treeNode) {
-    const expand = !treeNode.props.expanded;
+    const expanded = !treeNode.props.expanded;
     const controlled = 'expandedKeys' in this.props;
     const expandedKeys = [...this.state.expandedKeys];
     const index = expandedKeys.indexOf(treeNode.props.eventKey);
-    if (!controlled) {
-      if (expand) {
-        if (index === -1) {
-          expandedKeys.push(treeNode.props.eventKey);
-        }
-      } else {
-        expandedKeys.splice(index, 1);
-      }
-      this.setState({expandedKeys});
-      // remember the return object, such as expandedKeys, must clone!!
-      // so you can avoid outer code change it.
-      this.props.onExpand(treeNode, expand, [...expandedKeys]);
-    } else {
-      this.props.onExpand(treeNode, !expand, [...expandedKeys]);
+    if (expanded && index === -1) {
+      expandedKeys.push(treeNode.props.eventKey);
+    } else if (!expanded && index > -1) {
+      expandedKeys.splice(index, 1);
     }
+    if (!controlled) {
+      this.setState({expandedKeys});
+    }
+    this.props.onExpand(expandedKeys, { node: treeNode, expanded });
 
     // after data loaded, need set new expandedKeys
-    if (expand && this.props.loadData) {
+    if (expanded && this.props.loadData) {
       return this.props.loadData(treeNode).then(() => {
         if (!controlled) {
           this.setState({expandedKeys});
@@ -313,19 +307,19 @@ class Tree extends React.Component {
     e.preventDefault();
   }
 
-  getFilterExpandedKeys(props) {
-    const defaultExpandedKeys = props.defaultExpandedKeys;
+  getFilterExpandedKeys(props, expandKeyProp, expandAll) {
+    const keys = props[expandKeyProp];
     const expandedPositionArr = [];
     if (props.autoExpandParent) {
       loopAllChildren(props.children, (item, index, pos, newKey) => {
-        if (defaultExpandedKeys.indexOf(newKey) > -1) {
+        if (keys.indexOf(newKey) > -1) {
           expandedPositionArr.push(pos);
         }
       });
     }
     const filterExpandedKeys = [];
     loopAllChildren(props.children, (item, index, pos, newKey) => {
-      if (props.defaultExpandAll) {
+      if (expandAll) {
         filterExpandedKeys.push(newKey);
       } else if (props.autoExpandParent) {
         expandedPositionArr.forEach(p => {
@@ -337,13 +331,16 @@ class Tree extends React.Component {
         });
       }
     });
-    return filterExpandedKeys.length ? filterExpandedKeys : defaultExpandedKeys;
+    return filterExpandedKeys.length ? filterExpandedKeys : keys;
   }
 
   getDefaultExpandedKeys(props, willReceiveProps) {
-    let expandedKeys = willReceiveProps ? undefined : this.getFilterExpandedKeys(props);
+    let expandedKeys = willReceiveProps ? undefined :
+      this.getFilterExpandedKeys(props, 'defaultExpandedKeys', props.defaultExpandAll);
     if ('expandedKeys' in props) {
-      expandedKeys = props.expandedKeys || [];
+      expandedKeys = (props.autoExpandParent ?
+        this.getFilterExpandedKeys(props, 'expandedKeys', false) :
+        props.expandedKeys) || [];
     }
     return expandedKeys;
   }

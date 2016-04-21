@@ -9,6 +9,7 @@ const Demo = React.createClass({
   getInitialState() {
     return {
       gData: gData,
+      autoExpandParent: true,
       expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
     };
   },
@@ -60,6 +61,13 @@ const Demo = React.createClass({
       expandedKeys: info.rawExpandedKeys.concat([info.node.props.eventKey]),
     });
   },
+  onExpand(expandedKeys) {
+    console.log('onExpand', arguments);
+    this.setState({
+      expandedKeys,
+      autoExpandParent: false,
+    });
+  },
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -74,6 +82,7 @@ const Demo = React.createClass({
       <p>drag a node into another node</p>
       <div className="draggable-container">
         <Tree expandedKeys={this.state.expandedKeys}
+              onExpand={this.onExpand} autoExpandParent={this.state.autoExpandParent}
               draggable
               onDragStart={this.onDragStart}
               onDragEnter={this.onDragEnter}

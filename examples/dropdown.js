@@ -145,9 +145,12 @@ const Demo = React.createClass({
       visible: false,
       inputValue: '',
       sel: '',
+      expandedKeys: [],
+      autoExpandParent: true,
     };
   },
   onChange(event) {
+    this.filterKeys = [];
     this.setState({
       inputValue: event.target.value,
     });
@@ -164,23 +167,52 @@ const Demo = React.createClass({
       sel: info.node.props.title,
     });
   },
+  onExpand(expandedKeys) {
+    this.filterKeys = undefined;
+    console.log('onExpand', arguments);
+    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+    // or, you can remove all expanded chilren keys.
+    this.setState({
+      expandedKeys,
+      autoExpandParent: false,
+    });
+  },
   filterTreeNode(treeNode) {
     console.log(treeNode);
     // 根据 key 进行搜索，可以根据其他数据，如 value
-    return this.state.inputValue && treeNode.props.eventKey.indexOf(this.state.inputValue) > -1;
+    return this.filterFn(treeNode.props.eventKey);
+  },
+  filterFn(key) {
+    if (this.state.inputValue && key.indexOf(this.state.inputValue) > -1) {
+      return true;
+    }
+    return false;
   },
   render() {
     const loop = data => {
       return data.map((item) => {
+        if (this.filterKeys && this.filterFn(item.key)) {
+          this.filterKeys.push(item.key);
+        }
         if (item.children) {
           return <TreeNode key={item.key} title={item.key}>{loop(item.children)}</TreeNode>;
         }
         return <TreeNode key={item.key} title={item.key} />;
       });
     };
+    let expandedKeys = this.state.expandedKeys;
+    let autoExpandParent = this.state.autoExpandParent;
+    if (this.filterKeys) {
+      expandedKeys = this.filterKeys;
+      autoExpandParent = true;
+    }
+
     const overlay = (<div>
       <input placeholder="请筛选" value={this.state.inputValue} onChange={this.onChange} />
-      <Tree defaultExpandAll={false} onSelect={this.onSelect} filterTreeNode={this.filterTreeNode}>
+      <Tree
+        onExpand={this.onExpand} expandedKeys={expandedKeys}
+        autoExpandParent={autoExpandParent}
+        onSelect={this.onSelect} filterTreeNode={this.filterTreeNode}>
         {loop(gData)}
       </Tree>
     </div>);

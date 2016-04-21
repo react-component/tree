@@ -2,7 +2,7 @@ import 'rc-tree/assets/index.less';
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
-import { gData, /* filterParentPosition,*/ getFilterExpandedKeys, getRadioSelectKeys } from './util';
+import { gData, /* filterParentPosition, getFilterExpandedKeys,*/ getRadioSelectKeys } from './util';
 
 const Demo = React.createClass({
   propTypes: {
@@ -15,27 +15,22 @@ const Demo = React.createClass({
   },
   getInitialState() {
     return {
-      expandedKeys: getFilterExpandedKeys(gData, ['0-0-0-key']),
+      // expandedKeys: getFilterExpandedKeys(gData, ['0-0-0-key']),
+      expandedKeys: ['0-0-0-key'],
+      autoExpandParent: true,
       // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
       checkedKeys: ['0-0-0-key'],
       checkStrictlyKeys: {},
       selectedKeys: [],
     };
   },
-  onExpand(treeNode, expand, expandedKeys) {
-    console.log('onExpand', expand, expandedKeys);
-    const index = expandedKeys.indexOf(treeNode.props.eventKey);
-    if (expand) {
-      if (index > -1) {
-        expandedKeys.splice(index, 1);
-      }
-    } else {
-      if (index === -1) {
-        expandedKeys.push(treeNode.props.eventKey);
-      }
-    }
+  onExpand(expandedKeys) {
+    console.log('onExpand', arguments);
+    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+    // or, you can remove all expanded chilren keys.
     this.setState({
-      expandedKeys: expandedKeys,
+      expandedKeys,
+      autoExpandParent: false,
     });
   },
   onCheck(checkedKeys) {
@@ -88,8 +83,9 @@ const Demo = React.createClass({
     // console.log(getRadioSelectKeys(gData, this.state.selectedKeys));
     return (<div style={{padding: '0 20px'}}>
       <h2>controlled</h2>
-      <Tree checkable multiple={this.props.multiple} defaultExpandAll
+      <Tree checkable multiple={this.props.multiple}
             onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
+            autoExpandParent={this.state.autoExpandParent}
             onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
             onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}>
         {loop(gData)}

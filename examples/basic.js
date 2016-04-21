@@ -22,8 +22,8 @@ const Demo = React.createClass({
       switchIt: true,
     };
   },
-  onExpand(treeNode, expand, expandedKeys) {
-    console.log('onExpand', expand, expandedKeys);
+  onExpand(expandedKeys) {
+    console.log('onExpand', expandedKeys, arguments);
   },
   onSelect(selectedKeys, info) {
     console.log('selected', selectedKeys, info);

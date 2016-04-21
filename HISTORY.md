@@ -1,6 +1,12 @@
 # History
 ---
 
+## 1.3.0 / 2016-04-15
+- make `autoExpandParent` also work in controlled mode.(Before just work in uncontrolled mode)
+- change `onExpand` params
+    - old: function(node, expanded, expandedKeys)
+    - new: function(expandedKeys, {expanded: bool, node})
+
 ## 1.2.1 / 2016-04-08
 - remove `halfCheckedKeys` api, and change `checkedKeys` to an object on setting `checkStrictly`.
 
