@@ -4527,10 +4527,13 @@ webpackJsonp([6],{
 	    return {
 	      visible: false,
 	      inputValue: '',
-	      sel: ''
+	      sel: '',
+	      expandedKeys: [],
+	      autoExpandParent: true
 	    };
 	  },
 	  onChange: function onChange(event) {
+	    this.filterKeys = [];
 	    this.setState({
 	      inputValue: event.target.value
 	    });
@@ -4547,14 +4550,35 @@ webpackJsonp([6],{
 	      sel: info.node.props.title
 	    });
 	  },
+	  onExpand: function onExpand(expandedKeys) {
+	    this.filterKeys = undefined;
+	    console.log('onExpand', arguments);
+	    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+	    // or, you can remove all expanded chilren keys.
+	    this.setState({
+	      expandedKeys: expandedKeys,
+	      autoExpandParent: false
+	    });
+	  },
 	  filterTreeNode: function filterTreeNode(treeNode) {
 	    console.log(treeNode);
 	    // 根据 key 进行搜索，可以根据其他数据，如 value
-	    return this.state.inputValue && treeNode.props.eventKey.indexOf(this.state.inputValue) > -1;
+	    return this.filterFn(treeNode.props.eventKey);
+	  },
+	  filterFn: function filterFn(key) {
+	    if (this.state.inputValue && key.indexOf(this.state.inputValue) > -1) {
+	      return true;
+	    }
+	    return false;
 	  },
 	  render: function render() {
+	    var _this = this;
+	
 	    var loop = function loop(data) {
 	      return data.map(function (item) {
+	        if (_this.filterKeys && _this.filterFn(item.key)) {
+	          _this.filterKeys.push(item.key);
+	        }
 	        if (item.children) {
 	          return _react2['default'].createElement(
 	            _rcTree.TreeNode,
@@ -4565,13 +4589,23 @@ webpackJsonp([6],{
 	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.key });
 	      });
 	    };
+	    var expandedKeys = this.state.expandedKeys;
+	    var autoExpandParent = this.state.autoExpandParent;
+	    if (this.filterKeys) {
+	      expandedKeys = this.filterKeys;
+	      autoExpandParent = true;
+	    }
+	
 	    var overlay = _react2['default'].createElement(
 	      'div',
 	      null,
 	      _react2['default'].createElement('input', { placeholder: '请筛选', value: this.state.inputValue, onChange: this.onChange }),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { defaultExpandAll: false, onSelect: this.onSelect, filterTreeNode: this.filterTreeNode },
+	        {
+	          onExpand: this.onExpand, expandedKeys: expandedKeys,
+	          autoExpandParent: autoExpandParent,
+	          onSelect: this.onSelect, filterTreeNode: this.filterTreeNode },
 	        loop(_util.gData)
 	      )
 	    );
