@@ -52,6 +52,7 @@ const Demo = React.createClass({
   getInitialState() {
     return {
       treeData: [],
+      checkedKeys: [],
     };
   },
   componentDidMount() {
@@ -62,11 +63,18 @@ const Demo = React.createClass({
           {name: 'pNode 02', key: '0-1'},
           {name: 'pNode 03', key: '0-2', isLeaf: true},
         ],
+        checkedKeys: ['0-0'],
       });
     }, 100);
   },
   onSelect(info) {
     console.log('selected', info);
+  },
+  onCheck(checkedKeys) {
+    console.log(checkedKeys);
+    this.setState({
+      checkedKeys,
+    });
   },
   onLoadData(treeNode) {
     return new Promise((resolve) => {
@@ -92,6 +100,7 @@ const Demo = React.createClass({
       <div>
         <h2>dynamic render</h2>
         <Tree onSelect={this.onSelect}
+              checkable onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
               loadData={this.onLoadData}>
           {treeNodes}
         </Tree>

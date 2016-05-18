@@ -492,7 +492,7 @@ class Tree extends React.Component {
       domProps.onKeyDown = this.onKeyDown;
     }
     // console.log(this.state.expandedKeys, this._rawExpandedKeys, props.children);
-    if (props.checkable && this.checkedKeysChange) {
+    if (props.checkable && (this.checkedKeysChange || props.loadData)) {
       if (props.checkStrictly) {
         this.treeNodesStates = {};
         loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition) => {
@@ -507,7 +507,7 @@ class Tree extends React.Component {
       } else {
         const checkedKeys = this.state.checkedKeys;
         let checkKeys;
-        if (this.checkKeys && this._checkedKeys &&
+        if (!props.loadData && this.checkKeys && this._checkedKeys &&
           this._checkedKeys.every((i, index) => checkedKeys[index] === i)) {
           // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
           checkKeys = this.checkKeys;
