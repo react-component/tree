@@ -80,7 +80,8 @@ webpackJsonp([7],{
 	  propTypes: {},
 	  getInitialState: function getInitialState() {
 	    return {
-	      treeData: []
+	      treeData: [],
+	      checkedKeys: []
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -88,12 +89,19 @@ webpackJsonp([7],{
 	
 	    setTimeout(function () {
 	      _this.setState({
-	        treeData: [{ name: 'pNode 01', key: '0-0' }, { name: 'pNode 02', key: '0-1' }, { name: 'pNode 03', key: '0-2', isLeaf: true }]
+	        treeData: [{ name: 'pNode 01', key: '0-0' }, { name: 'pNode 02', key: '0-1' }, { name: 'pNode 03', key: '0-2', isLeaf: true }],
+	        checkedKeys: ['0-0']
 	      });
 	    }, 100);
 	  },
 	  onSelect: function onSelect(info) {
 	    console.log('selected', info);
+	  },
+	  onCheck: function onCheck(checkedKeys) {
+	    console.log(checkedKeys);
+	    this.setState({
+	      checkedKeys: checkedKeys
+	    });
 	  },
 	  onLoadData: function onLoadData(treeNode) {
 	    var _this2 = this;
@@ -132,6 +140,7 @@ webpackJsonp([7],{
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
 	        { onSelect: this.onSelect,
+	          checkable: true, onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
 	          loadData: this.onLoadData },
 	        treeNodes
 	      )

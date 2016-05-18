@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>dynamic.js - example - rc-tree@1.3.0</title>
+  <title>dynamic.js - example - rc-tree@1.3.1</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.3.0</h1>
+    <h1>rc-tree@1.3.1</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -318,6 +318,7 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
   getInitialState() {
     <span class="hljs-keyword">return</span> {
       treeData: [],
+      checkedKeys: [],
     };
   },
   componentDidMount() {
@@ -328,11 +329,18 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
           {name: <span class="hljs-string">'pNode 02'</span>, key: <span class="hljs-string">'0-1'</span>},
           {name: <span class="hljs-string">'pNode 03'</span>, key: <span class="hljs-string">'0-2'</span>, isLeaf: <span class="hljs-literal">true</span>},
         ],
+        checkedKeys: [<span class="hljs-string">'0-0'</span>],
       });
     }, <span class="hljs-number">100</span>);
   },
   onSelect(info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected'</span>, info);
+  },
+  onCheck(checkedKeys) {
+    <span class="hljs-built_in">console</span>.log(checkedKeys);
+    <span class="hljs-keyword">this</span>.setState({
+      checkedKeys,
+    });
   },
   onLoadData(treeNode) {
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Promise((resolve) =&gt; {
@@ -358,6 +366,7 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>dynamic render<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span>
+              <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>
               <span class="hljs-attribute">loadData</span>=<span class="hljs-value">{this.onLoadData}</span>&gt;</span>
           {treeNodes}
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>

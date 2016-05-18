@@ -20297,7 +20297,7 @@
 	        domProps.onKeyDown = this.onKeyDown;
 	      }
 	      // console.log(this.state.expandedKeys, this._rawExpandedKeys, props.children);
-	      if (props.checkable && this.checkedKeysChange) {
+	      if (props.checkable && (this.checkedKeysChange || props.loadData)) {
 	        if (props.checkStrictly) {
 	          this.treeNodesStates = {};
 	          (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
@@ -20313,7 +20313,7 @@
 	          (function () {
 	            var checkedKeys = _this4.state.checkedKeys;
 	            var checkKeys = undefined;
-	            if (_this4.checkKeys && _this4._checkedKeys && _this4._checkedKeys.every(function (i, index) {
+	            if (!props.loadData && _this4.checkKeys && _this4._checkedKeys && _this4._checkedKeys.every(function (i, index) {
 	              return checkedKeys[index] === i;
 	            })) {
 	              // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
