@@ -3,6 +3,8 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 import { gData, /* filterParentPosition, getFilterExpandedKeys,*/ getRadioSelectKeys } from './util';
+import 'rc-dialog/assets/index.less';
+import Modal from 'rc-dialog';
 
 const Demo = React.createClass({
   propTypes: {
@@ -10,6 +12,7 @@ const Demo = React.createClass({
   },
   getDefaultProps() {
     return {
+      visible: false,
       multiple: true,
     };
   },
@@ -68,6 +71,23 @@ const Demo = React.createClass({
       selectedKeys: _selectedKeys,
     });
   },
+  onClose() {
+    this.setState({
+      visible: false,
+    });
+  },
+  handleOk() {
+    this.setState({
+      visible: false,
+    });
+  },
+  showModal() {
+    this.setState({
+      expandedKeys: ['0-0-0-key', '0-0-1-key'],
+      checkedKeys: ['0-0-0-key'],
+      visible: true,
+    });
+  },
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -82,6 +102,17 @@ const Demo = React.createClass({
     };
     // console.log(getRadioSelectKeys(gData, this.state.selectedKeys));
     return (<div style={{padding: '0 20px'}}>
+      <h2>dialog</h2>
+      <button className="btn btn-primary" onClick={this.showModal}>show dialog</button>
+      <Modal title="TestDemo" visible={this.state.visible}
+        onOk={this.handleOk} onClose={this.onClose}>
+        <Tree checkable className="dialog-tree"
+              onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
+              autoExpandParent={this.state.autoExpandParent}
+              onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}>
+          {loop(gData)}
+        </Tree>
+      </Modal>
       <h2>controlled</h2>
       <Tree checkable multiple={this.props.multiple}
             onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}

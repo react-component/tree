@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import {
   loopAllChildren, isInclude, getOffset,
   filterParentPosition, handleCheckState, getCheck,
-  getStrictlyValue,
+  getStrictlyValue, arraysEqual,
 } from './util';
 
 function noop() {
@@ -508,7 +508,7 @@ class Tree extends React.Component {
         const checkedKeys = this.state.checkedKeys;
         let checkKeys;
         if (!props.loadData && this.checkKeys && this._checkedKeys &&
-          this._checkedKeys.every((i, index) => checkedKeys[index] === i)) {
+          arraysEqual(this._checkedKeys, checkedKeys)) {
           // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
           checkKeys = this.checkKeys;
         } else {
