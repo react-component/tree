@@ -20313,9 +20313,7 @@
 	          (function () {
 	            var checkedKeys = _this4.state.checkedKeys;
 	            var checkKeys = undefined;
-	            if (!props.loadData && _this4.checkKeys && _this4._checkedKeys && _this4._checkedKeys.every(function (i, index) {
-	              return checkedKeys[index] === i;
-	            })) {
+	            if (!props.loadData && _this4.checkKeys && _this4._checkedKeys && (0, _util.arraysEqual)(_this4._checkedKeys, checkedKeys)) {
 	              // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
 	              checkKeys = _this4.checkKeys;
 	            } else {
@@ -20538,6 +20536,7 @@
 	exports.handleCheckState = handleCheckState;
 	exports.getCheck = getCheck;
 	exports.getStrictlyValue = getStrictlyValue;
+	exports.arraysEqual = arraysEqual;
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -20815,6 +20814,20 @@
 	    return { checked: checkedKeys, halfChecked: halfChecked };
 	  }
 	  return checkedKeys;
+	}
+	
+	function arraysEqual(a, b) {
+	  if (a === b) return true;
+	  if (a === null || typeof a === 'undefined' || b === null || typeof b === 'undefined') return false;
+	  if (a.length !== b.length) return false;
+	
+	  // If you don't care about the order of the elements inside
+	  // the array, you should sort both arrays here.
+	
+	  for (var i = 0; i < a.length; ++i) {
+	    if (a[i] !== b[i]) return false;
+	  }
+	  return true;
 	}
 
 /***/ },

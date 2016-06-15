@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>basic-controlled.js - example - rc-tree@1.3.1</title>
+  <title>basic-controlled.js - example - rc-tree@1.3.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.3.1</h1>
+    <h1>rc-tree@1.3.2</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -269,6 +269,8 @@ import React, {PropTypes} from <span class="hljs-string">'react'</span>;
 import ReactDOM from <span class="hljs-string">'react-dom'</span>;
 import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
 import { gData, <span class="hljs-comment">/* filterParentPosition, getFilterExpandedKeys,*/</span> getRadioSelectKeys } from <span class="hljs-string">'./util'</span>;
+import <span class="hljs-string">'rc-dialog/assets/index.less'</span>;
+import Modal from <span class="hljs-string">'rc-dialog'</span>;
 
 <span class="hljs-keyword">const</span> Demo = React.createClass({
   propTypes: {
@@ -276,6 +278,7 @@ import { gData, <span class="hljs-comment">/* filterParentPosition, getFilterExp
   },
   getDefaultProps() {
     <span class="hljs-keyword">return</span> {
+      visible: <span class="hljs-literal">false</span>,
       multiple: <span class="hljs-literal">true</span>,
     };
   },
@@ -334,6 +337,23 @@ import { gData, <span class="hljs-comment">/* filterParentPosition, getFilterExp
       selectedKeys: _selectedKeys,
     });
   },
+  onClose() {
+    <span class="hljs-keyword">this</span>.setState({
+      visible: <span class="hljs-literal">false</span>,
+    });
+  },
+  handleOk() {
+    <span class="hljs-keyword">this</span>.setState({
+      visible: <span class="hljs-literal">false</span>,
+    });
+  },
+  showModal() {
+    <span class="hljs-keyword">this</span>.setState({
+      expandedKeys: [<span class="hljs-string">'0-0-0-key'</span>, <span class="hljs-string">'0-0-1-key'</span>],
+      checkedKeys: [<span class="hljs-string">'0-0-0-key'</span>],
+      visible: <span class="hljs-literal">true</span>,
+    });
+  },
   render() {
     <span class="hljs-keyword">const</span> loop = data =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
@@ -348,6 +368,17 @@ import { gData, <span class="hljs-comment">/* filterParentPosition, getFilterExp
     };
     <span class="hljs-comment">// console.log(getRadioSelectKeys(gData, this.state.selectedKeys));</span>
     <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{padding:</span> '<span class="hljs-attribute">0</span> <span class="hljs-attribute">20px</span>'}}&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>dialog<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.showModal}</span>&gt;</span>show dialog<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Modal</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"TestDemo"</span> <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>
+        <span class="hljs-attribute">onOk</span>=<span class="hljs-value">{this.handleOk}</span> <span class="hljs-attribute">onClose</span>=<span class="hljs-value">{this.onClose}</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"dialog-tree"</span>
+              <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
+              <span class="hljs-attribute">autoExpandParent</span>=<span class="hljs-value">{this.state.autoExpandParent}</span>
+              <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span> <span class="hljs-attribute">checkedKeys</span>=<span class="hljs-value">{this.state.checkedKeys}</span>&gt;</span>
+          {loop(gData)}
+        <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Modal</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>controlled<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">multiple</span>=<span class="hljs-value">{this.props.multiple}</span>
             <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
