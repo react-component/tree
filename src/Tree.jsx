@@ -433,13 +433,13 @@ class Tree extends React.Component {
     const key = child.key || pos;
     const state = this.state;
     const props = this.props;
-    
-    //prefer to child's own selectable property if passed
+
+    // prefer to child's own selectable property if passed
     let selectable = props.selectable;
-    if (child.props.hasOwnProperty('selectable')){
+    if (child.props.hasOwnProperty('selectable')) {
       selectable = child.props.selectable;
     }
-    
+
     const cloneProps = {
       ref: 'treeNode-' + key,
       root: this,
@@ -463,7 +463,6 @@ class Tree extends React.Component {
       openAnimation: props.openAnimation,
       filterTreeNode: this.filterTreeNode.bind(this),
     };
-    
     if (props.checkable) {
       cloneProps.checkable = props.checkable;
       if (props.checkStrictly) {
