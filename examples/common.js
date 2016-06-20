@@ -20235,12 +20235,19 @@
 	      var key = child.key || pos;
 	      var state = this.state;
 	      var props = this.props;
+	
+	      // prefer to child's own selectable property if passed
+	      var selectable = props.selectable;
+	      if (child.props.hasOwnProperty('selectable')) {
+	        selectable = child.props.selectable;
+	      }
+	
 	      var cloneProps = {
 	        ref: 'treeNode-' + key,
 	        root: this,
 	        eventKey: key,
 	        pos: pos,
-	        selectable: props.selectable,
+	        selectable: selectable,
 	        loadData: props.loadData,
 	        onMouseEnter: props.onMouseEnter,
 	        onMouseLeave: props.onMouseLeave,
