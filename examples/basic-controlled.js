@@ -3,7 +3,7 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Tree, {TreeNode} from 'rc-tree';
 import { gData, /* filterParentPosition, getFilterExpandedKeys,*/ getRadioSelectKeys } from './util';
-import 'rc-dialog/assets/index.less';
+import 'rc-dialog/assets/index.css';
 import Modal from 'rc-dialog';
 
 const Demo = React.createClass({
@@ -23,7 +23,7 @@ const Demo = React.createClass({
       autoExpandParent: true,
       // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
       checkedKeys: ['0-0-0-key'],
-      checkStrictlyKeys: {},
+      checkStrictlyKeys: { checked: ['0-0-1-key'], halfChecked: [] },
       selectedKeys: [],
     };
   },
