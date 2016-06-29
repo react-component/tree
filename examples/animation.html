@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>animation.js - example - rc-tree@1.3.3</title>
+  <title>animation.js - example - rc-tree@1.3.4</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-tree@1.3.3</h1>
+    <h1>rc-tree@1.3.4</h1>
 
     <p>tree ui component for react</p>
   </div>
@@ -273,6 +273,7 @@ import cssAnimation from <span class="hljs-string">'css-animation'</span>;
 <span class="hljs-keyword">const</span> STYLE = `
 .collapse {
   overflow: hidden;
+  display: block;
 }
 
 .collapse-active {
@@ -281,7 +282,7 @@ import cssAnimation from <span class="hljs-string">'css-animation'</span>;
 `;
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">animate</span><span class="hljs-params">(node, show, done)</span> </span>{
-  <span class="hljs-keyword">let</span> height;
+  <span class="hljs-keyword">let</span> height = node.offsetHeight;
   <span class="hljs-keyword">return</span> cssAnimation(node, <span class="hljs-string">'collapse'</span>, {
     start() {
       <span class="hljs-keyword">if</span> (!show) {
@@ -317,7 +318,7 @@ import cssAnimation from <span class="hljs-string">'css-animation'</span>;
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>expanded<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">dangerouslySetInnerHTML</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">__html:</span> <span class="hljs-attribute">STYLE</span> }}/&gt;</span><span class="css">
-    &lt;<span class="hljs-tag">Tree</span> <span class="hljs-tag">defaultExpandAll</span>=<span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">false}
+    &lt;<span class="hljs-tag">Tree</span> <span class="hljs-tag">defaultExpandAll</span>=<span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">false} defaultExpandedKeys={['p1']}
           openAnimation={animation}&gt;
       &lt;TreeNode title="parent 1" key="p1"&gt;
         &lt;TreeNode key="p10" title="leaf"/&gt;

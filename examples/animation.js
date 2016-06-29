@@ -31,10 +31,10 @@ webpackJsonp([0],[
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var STYLE = '\n.collapse {\n  overflow: hidden;\n}\n\n.collapse-active {\n  transition: height 0.3s ease-out;\n}\n';
+	var STYLE = '\n.collapse {\n  overflow: hidden;\n  display: block;\n}\n\n.collapse-active {\n  transition: height 0.3s ease-out;\n}\n';
 	
 	function animate(node, show, done) {
-	  var height = undefined;
+	  var height = node.offsetHeight;
 	  return (0, _cssAnimation2['default'])(node, 'collapse', {
 	    start: function start() {
 	      if (!show) {
@@ -77,7 +77,7 @@ webpackJsonp([0],[
 	  _react2['default'].createElement('style', { dangerouslySetInnerHTML: { __html: STYLE } }),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { defaultExpandAll: false,
+	    { defaultExpandAll: false, defaultExpandedKeys: ['p1'],
 	      openAnimation: animation },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,

@@ -20912,6 +20912,14 @@
 	      }
 	      this.props.root._treeNodeInstances.push(this);
 	    }
+	
+	    // shouldComponentUpdate(nextProps) {
+	    //   if (!nextProps.expanded) {
+	    //     return false;
+	    //   }
+	    //   return true;
+	    // }
+	
 	  }, {
 	    key: 'onCheck',
 	    value: function onCheck() {
@@ -21077,13 +21085,9 @@
 	      }
 	      var children = props.children;
 	      var newChildren = children;
-	      var allTreeNode = undefined;
-	      if (Array.isArray(children)) {
-	        allTreeNode = children.every(function (item) {
-	          return item.type === TreeNode;
-	        });
-	      }
-	      if (children && (children.type === TreeNode || allTreeNode)) {
+	      if (children && (children.type === TreeNode || Array.isArray(children) && children.every(function (item) {
+	        return item.type === TreeNode;
+	      }))) {
 	        var _cls;
 	
 	        var cls = (_cls = {}, _defineProperty(_cls, props.prefixCls + '-child-tree', true), _defineProperty(_cls, props.prefixCls + '-child-tree-open', props.expanded), _cls);
@@ -21105,7 +21109,7 @@
 	            showProp: 'expanded',
 	            transitionAppear: transitionAppear,
 	            component: '' }),
-	          _react2['default'].createElement(
+	          !props.expanded ? null : _react2['default'].createElement(
 	            'ul',
 	            { className: (0, _classnames2['default'])(cls), expanded: props.expanded },
 	            _react2['default'].Children.map(children, function (item, index) {
@@ -21138,10 +21142,10 @@
 	          canRenderSwitcher = false;
 	        }
 	      }
-	      // 如果默认不展开，不渲染进dom，在大量数据下，能使性能有很大提升！
-	      if (!props.expanded) {
-	        newChildren = null;
-	      }
+	      // For performance, does't render children into dom when `!props.expanded` (move to Animate)
+	      // if (!props.expanded) {
+	      //   newChildren = null;
+	      // }
 	
 	      var selectHandle = function selectHandle() {
 	        var icon = props.showIcon || props.loadData && _this3.state.dataLoading ? _react2['default'].createElement('span', { className: (0, _classnames2['default'])(iconEleCls) }) : null;
