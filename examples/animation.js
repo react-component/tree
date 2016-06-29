@@ -7,6 +7,7 @@ import cssAnimation from 'css-animation';
 const STYLE = `
 .collapse {
   overflow: hidden;
+  display: block;
 }
 
 .collapse-active {
@@ -15,7 +16,7 @@ const STYLE = `
 `;
 
 function animate(node, show, done) {
-  let height;
+  let height = node.offsetHeight;
   return cssAnimation(node, 'collapse', {
     start() {
       if (!show) {
@@ -51,7 +52,7 @@ const demo = (
   <div>
     <h2>expanded</h2>
     <style dangerouslySetInnerHTML={{ __html: STYLE }}/>
-    <Tree defaultExpandAll={false}
+    <Tree defaultExpandAll={false} defaultExpandedKeys={['p1']}
           openAnimation={animation}>
       <TreeNode title="parent 1" key="p1">
         <TreeNode key="p10" title="leaf"/>

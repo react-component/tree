@@ -40,6 +40,12 @@ class TreeNode extends React.Component {
     }
     this.props.root._treeNodeInstances.push(this);
   }
+  // shouldComponentUpdate(nextProps) {
+  //   if (!nextProps.expanded) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   onCheck() {
     this.props.root.onCheck(this);
@@ -181,13 +187,9 @@ class TreeNode extends React.Component {
     }
     const children = props.children;
     let newChildren = children;
-    let allTreeNode;
-    if (Array.isArray(children)) {
-      allTreeNode = children.every((item) => {
-        return item.type === TreeNode;
-      });
-    }
-    if (children && (children.type === TreeNode || allTreeNode)) {
+    if (children && (children.type === TreeNode || Array.isArray(children) && children.every((item) => {
+      return item.type === TreeNode;
+    }))) {
       const cls = {
         [`${props.prefixCls}-child-tree`]: true,
         [`${props.prefixCls}-child-tree-open`]: props.expanded,
@@ -209,11 +211,11 @@ class TreeNode extends React.Component {
           showProp="expanded"
           transitionAppear={transitionAppear}
           component="">
-          <ul className={classNames(cls)} expanded={props.expanded}>
+          {!props.expanded ? null : <ul className={classNames(cls)} expanded={props.expanded}>
             {React.Children.map(children, (item, index) => {
               return props.root.renderTreeNode(item, index, props.pos);
             }, props.root)}
-          </ul>
+          </ul>}
         </Animate>
       );
     }
@@ -241,10 +243,10 @@ class TreeNode extends React.Component {
         canRenderSwitcher = false;
       }
     }
-    // 如果默认不展开，不渲染进dom，在大量数据下，能使性能有很大提升！
-    if (!props.expanded) {
-      newChildren = null;
-    }
+    // For performance, does't render children into dom when `!props.expanded` (move to Animate)
+    // if (!props.expanded) {
+    //   newChildren = null;
+    // }
 
     const selectHandle = () => {
       const icon = (props.showIcon || props.loadData && this.state.dataLoading) ?
