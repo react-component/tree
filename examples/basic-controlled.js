@@ -31,9 +31,9 @@ webpackJsonp([2],{
 	
 	var _util = __webpack_require__(180);
 	
-	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-dialog/assets/index.less\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	__webpack_require__(181);
 	
-	var _rcDialog = __webpack_require__(181);
+	var _rcDialog = __webpack_require__(182);
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
@@ -56,7 +56,7 @@ webpackJsonp([2],{
 	      autoExpandParent: true,
 	      // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
 	      checkedKeys: ['0-0-0-key'],
-	      checkStrictlyKeys: {},
+	      checkStrictlyKeys: { checked: ['0-0-1-key'], halfChecked: [] },
 	      selectedKeys: []
 	    };
 	  },
@@ -427,15 +427,22 @@ webpackJsonp([2],{
 /***/ },
 
 /***/ 181:
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
-	
-	module.exports = __webpack_require__(182);
+	// removed by extract-text-webpack-plugin
 
 /***/ },
 
 /***/ 182:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	module.exports = __webpack_require__(183);
+
+/***/ },
+
+/***/ 183:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -456,7 +463,7 @@ webpackJsonp([2],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Dialog = __webpack_require__(183);
+	var _Dialog = __webpack_require__(184);
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
@@ -620,7 +627,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 183:
+/***/ 184:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -639,7 +646,7 @@ webpackJsonp([2],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _KeyCode = __webpack_require__(184);
+	var _KeyCode = __webpack_require__(185);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
@@ -647,7 +654,7 @@ webpackJsonp([2],{
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _LazyRenderBox = __webpack_require__(185);
+	var _LazyRenderBox = __webpack_require__(186);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -1050,7 +1057,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 184:
+/***/ 185:
 /***/ function(module, exports) {
 
 	/**
@@ -1576,7 +1583,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 185:
+/***/ 186:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
