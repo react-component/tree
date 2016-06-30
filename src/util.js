@@ -50,9 +50,10 @@ export function browser(navigator) {
 //   };
 // }
 
+/* eslint-disable */
 export function getOffset(ele) {
   let doc, win, docElem, rect;
-    
+
   if (!ele.getClientRects().length) {
     return { top: 0, left: 0 };
   }
@@ -72,6 +73,7 @@ export function getOffset(ele) {
 
   return rect;
 }
+/* eslint-enable */
 
 function getChildrenlength(children) {
   let len = 1;
