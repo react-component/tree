@@ -19848,7 +19848,6 @@
 	  }, {
 	    key: 'onDragEnterGap',
 	    value: function onDragEnterGap(e, treeNode) {
-	      // console.log(e.pageY, getOffset(treeNode.refs.selectHandle), treeNode.props.eventKey);
 	      var offsetTop = (0, _util.getOffset)(treeNode.refs.selectHandle).top;
 	      var offsetHeight = treeNode.refs.selectHandle.offsetHeight;
 	      var pageY = e.pageY;
@@ -20599,17 +20598,35 @@
 	//   };
 	// }
 	
+	/* eslint-disable */
+	
 	function getOffset(ele) {
-	  var el = ele;
-	  var _x = 0;
-	  var _y = 0;
-	  while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-	    _x += el.offsetLeft - el.scrollLeft;
-	    _y += el.offsetTop - el.scrollTop;
-	    el = el.offsetParent;
+	  var doc = undefined,
+	      win = undefined,
+	      docElem = undefined,
+	      rect = undefined;
+	
+	  if (!ele.getClientRects().length) {
+	    return { top: 0, left: 0 };
 	  }
-	  return { top: _y, left: _x };
+	
+	  rect = ele.getBoundingClientRect();
+	
+	  if (rect.width || rect.height) {
+	    doc = ele.ownerDocument;
+	    win = doc.defaultView;
+	    docElem = doc.documentElement;
+	
+	    return {
+	      top: rect.top + win.pageYOffset - docElem.clientTop,
+	      left: rect.left + win.pageXOffset - docElem.clientLeft
+	    };
+	  }
+	
+	  return rect;
 	}
+	
+	/* eslint-enable */
 	
 	function getChildrenlength(children) {
 	  var len = 1;
