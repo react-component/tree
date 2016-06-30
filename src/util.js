@@ -51,15 +51,26 @@ export function browser(navigator) {
 // }
 
 export function getOffset(ele) {
-  let el = ele;
-  let _x = 0;
-  let _y = 0;
-  while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-    _x += el.offsetLeft - el.scrollLeft;
-    _y += el.offsetTop - el.scrollTop;
-    el = el.offsetParent;
+  let doc, win, docElem, rect;
+    
+  if (!ele.getClientRects().length) {
+    return { top: 0, left: 0 };
   }
-  return { top: _y, left: _x };
+
+  rect = ele.getBoundingClientRect();
+
+  if (rect.width || rect.height) {
+    doc = ele.ownerDocument;
+    win = doc.defaultView;
+    docElem = doc.documentElement;
+
+    return {
+      top: rect.top + win.pageYOffset - docElem.clientTop,
+      left: rect.left + win.pageXOffset - docElem.clientLeft
+    };
+  }
+
+  return rect;
 }
 
 function getChildrenlength(children) {
