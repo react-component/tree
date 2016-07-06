@@ -121,6 +121,11 @@ webpackJsonp([2],{
 	      visible: true
 	    });
 	  },
+	  triggerChecked: function triggerChecked() {
+	    this.setState({
+	      checkedKeys: ['0-0-' + parseInt(Math.random() * 3, 10) + '-key']
+	    });
+	  },
 	  render: function render() {
 	    var loop = function loop(data) {
 	      return data.map(function (item) {
@@ -175,6 +180,11 @@ webpackJsonp([2],{
 	          onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
 	          onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
 	        loop(_util.gData)
+	      ),
+	      _react2['default'].createElement(
+	        'button',
+	        { onClick: this.triggerChecked },
+	        'trigger checked'
 	      ),
 	      _react2['default'].createElement(
 	        'h2',

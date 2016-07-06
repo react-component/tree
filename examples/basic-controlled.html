@@ -354,6 +354,11 @@ import Modal from <span class="hljs-string">'rc-dialog'</span>;
       visible: <span class="hljs-literal">true</span>,
     });
   },
+  triggerChecked() {
+    <span class="hljs-keyword">this</span>.setState({
+      checkedKeys: [`<span class="hljs-number">0</span>-<span class="hljs-number">0</span>-${<span class="hljs-built_in">parseInt</span>(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">3</span>, <span class="hljs-number">10</span>)}-key`],
+    });
+  },
   render() {
     <span class="hljs-keyword">const</span> loop = data =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
@@ -387,6 +392,7 @@ import Modal from <span class="hljs-string">'rc-dialog'</span>;
             <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">selectedKeys</span>=<span class="hljs-value">{this.state.selectedKeys}</span>&gt;</span>
         {loop(gData)}
       <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.triggerChecked}</span>&gt;</span>trigger checked<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>checkStrictly<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">checkable</span> <span class="hljs-attribute">multiple</span>=<span class="hljs-value">{this.props.multiple}</span> <span class="hljs-attribute">defaultExpandAll</span>
             <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
