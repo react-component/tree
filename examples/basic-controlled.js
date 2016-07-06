@@ -88,6 +88,11 @@ const Demo = React.createClass({
       visible: true,
     });
   },
+  triggerChecked() {
+    this.setState({
+      checkedKeys: [`0-0-${parseInt(Math.random() * 3, 10)}-key`],
+    });
+  },
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -121,6 +126,7 @@ const Demo = React.createClass({
             onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}>
         {loop(gData)}
       </Tree>
+      <button onClick={this.triggerChecked}>trigger checked</button>
       <h2>checkStrictly</h2>
       <Tree checkable multiple={this.props.multiple} defaultExpandAll
             onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
