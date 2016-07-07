@@ -208,10 +208,10 @@ class TreeNode extends React.Component {
       }
       newChildren = (
         <Animate {...animProps}
-          showProp="expanded"
+          showProp="data-expanded"
           transitionAppear={transitionAppear}
           component="">
-          {!props.expanded ? null : <ul className={classNames(cls)} expanded={props.expanded}>
+          {!props.expanded ? null : <ul className={classNames(cls)} data-expanded={props.expanded}>
             {React.Children.map(children, (item, index) => {
               return props.root.renderTreeNode(item, index, props.pos);
             }, props.root)}

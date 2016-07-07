@@ -48,9 +48,9 @@
     "rc-tools": "4.x",
     "rc-tooltip": "3.x",
     "rc-trigger": "^1.0.6",
-    "react": "^0.14.0",
-    "react-addons-test-utils": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react": "^15.2.0",
+    "react-addons-test-utils": "^15.2.0",
+    "react-dom": "^15.2.0"
   },
   "dependencies": {
     "classnames": "2.x",
