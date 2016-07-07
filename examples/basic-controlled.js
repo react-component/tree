@@ -3,12 +3,12 @@ webpackJsonp([2],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(179);
+	module.exports = __webpack_require__(189);
 
 
 /***/ },
 
-/***/ 179:
+/***/ 189:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21,19 +21,19 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(35);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(161);
+	var _rcTree = __webpack_require__(172);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _util = __webpack_require__(180);
+	var _util = __webpack_require__(190);
 	
-	__webpack_require__(181);
+	__webpack_require__(191);
 	
-	var _rcDialog = __webpack_require__(182);
+	var _rcDialog = __webpack_require__(192);
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
@@ -221,7 +221,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 180:
+/***/ 190:
 /***/ function(module, exports) {
 
 	/* eslint no-loop-func: 0*/
@@ -436,23 +436,23 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 181:
+/***/ 191:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 182:
+/***/ 192:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(183);
+	module.exports = __webpack_require__(193);
 
 /***/ },
 
-/***/ 183:
+/***/ 193:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -469,11 +469,11 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(35);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Dialog = __webpack_require__(184);
+	var _Dialog = __webpack_require__(194);
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
@@ -637,7 +637,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 184:
+/***/ 194:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -652,19 +652,19 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(35);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _KeyCode = __webpack_require__(185);
+	var _KeyCode = __webpack_require__(195);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _rcAnimate = __webpack_require__(168);
+	var _rcAnimate = __webpack_require__(178);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _LazyRenderBox = __webpack_require__(186);
+	var _LazyRenderBox = __webpack_require__(196);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -1067,7 +1067,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 185:
+/***/ 195:
 /***/ function(module, exports) {
 
 	/**
@@ -1593,7 +1593,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 186:
+/***/ 196:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1626,7 +1626,11 @@ webpackJsonp([2],{
 	    if (this.props.hiddenClassName && !this.props.visible) {
 	      className += ' ' + this.props.hiddenClassName;
 	    }
-	    return _react2["default"].createElement('div', _extends({}, this.props, { className: className }));
+	    var props = _extends({}, this.props);
+	    delete props.hiddenClassName;
+	    delete props.visible;
+	    props.className = className;
+	    return _react2["default"].createElement('div', props);
 	  }
 	});
 	
