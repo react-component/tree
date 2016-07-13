@@ -174,7 +174,7 @@ webpackJsonp([2],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { checkable: true, multiple: this.props.multiple,
+	        { checkable: true,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
 	          autoExpandParent: this.state.autoExpandParent,
 	          onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
