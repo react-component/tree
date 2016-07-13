@@ -119,7 +119,7 @@ const Demo = React.createClass({
         </Tree>
       </Modal>
       <h2>controlled</h2>
-      <Tree checkable multiple={this.props.multiple}
+      <Tree checkable
             onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
             autoExpandParent={this.state.autoExpandParent}
             onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}

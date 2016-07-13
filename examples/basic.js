@@ -51,7 +51,7 @@ const Demo = React.createClass({
     </span>);
     return (<div style={{margin: '0 20px'}}>
       <h2>simple</h2>
-      <Tree className="myCls" showLine multiple checkable
+      <Tree className="myCls" showLine checkable
           defaultExpandedKeys={this.state.defaultExpandedKeys}
           onExpand={this.onExpand}
           defaultSelectedKeys={this.state.defaultSelectedKeys}
