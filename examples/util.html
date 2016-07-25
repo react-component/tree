@@ -7,7 +7,7 @@
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
+  <link href="https://a.alipayobjects.com/normalize.css/3.0.1/normalize.css" rel="stylesheet"/>
   <style>
     .highlight pre {
       padding: .8em 1em;
@@ -251,31 +251,31 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
+  
   <link rel="stylesheet" href="common.css" />
 </head>
 
 <body>
-<div class="container">
-  <div class="header">
-    <h1>rc-tree@1.3.6</h1>
+  <div class="container">
+    <div class="header">
+      <h1>rc-tree@1.3.6</h1>
 
-    <p>tree ui component for react</p>
-  </div>
-  <div class="example" id="__react-content"></div>
-  <script src="common.js?nowrap"></script>
-  <script src="util.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-loop-func: 0*/</span>
+      <p>tree ui component for react</p>
+    </div>
+    <div class="example" id="__react-content"></div>
 
-export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateData</span><span class="hljs-params">(x = 3, y = 2, z = 1, gData = [])</span> </span>{
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-loop-func: 0*/</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateData</span>(<span class="hljs-params">x = 3, y = 2, z = 1, gData = []</span>) </span>{
   <span class="hljs-comment">// x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_loop</span><span class="hljs-params">(_level, _preKey, _tns)</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_loop</span>(<span class="hljs-params">_level, _preKey, _tns</span>) </span>{
     <span class="hljs-keyword">const</span> preKey = _preKey || <span class="hljs-string">'0'</span>;
     <span class="hljs-keyword">const</span> tns = _tns || gData;
 
     <span class="hljs-keyword">const</span> children = [];
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; x; i++) {
-      <span class="hljs-keyword">const</span> key = `${preKey}-${i}`;
-      tns.push({title: key + <span class="hljs-string">'-label'</span>, key: key + <span class="hljs-string">'-key'</span>});
+      <span class="hljs-keyword">const</span> key = <span class="hljs-string">`<span class="hljs-subst">${preKey}</span>-<span class="hljs-subst">${i}</span>`</span>;
+      tns.push({ title: <span class="hljs-string">`<span class="hljs-subst">${key}</span>-label`</span>, key: <span class="hljs-string">`<span class="hljs-subst">${key}</span>-key`</span> });
       <span class="hljs-keyword">if</span> (i &lt; y) {
         children.push(key);
       }
@@ -292,7 +292,7 @@ export <span class="hljs-function"><span class="hljs-keyword">function</span> <s
   _loop(z);
   <span class="hljs-keyword">return</span> gData;
 }
-export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calcTotal</span><span class="hljs-params">(x = 3, y = 2, z = 1)</span> </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calcTotal</span>(<span class="hljs-params">x = 3, y = 2, z = 1</span>) </span>{
   <span class="hljs-comment">/* eslint no-param-reassign:0*/</span>
   <span class="hljs-keyword">const</span> rec = (n) =&gt; n &gt;= <span class="hljs-number">0</span> ? x * <span class="hljs-built_in">Math</span>.pow(y, n--) + rec(n) : <span class="hljs-number">0</span>;
   <span class="hljs-keyword">return</span> rec(z + <span class="hljs-number">1</span>);
@@ -300,9 +300,9 @@ export <span class="hljs-function"><span class="hljs-keyword">function</span> <s
 <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'总节点数（单个tree）：'</span>, calcTotal());
 <span class="hljs-comment">// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。</span>
 
-export <span class="hljs-keyword">const</span> gData = generateData();
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> gData = generateData();
 
-export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isInclude</span><span class="hljs-params">(smallArray, bigArray)</span> </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isInclude</span>(<span class="hljs-params">smallArray, bigArray</span>) </span>{
   <span class="hljs-keyword">return</span> smallArray.every((ii, i) =&gt; {
     <span class="hljs-keyword">return</span> ii === bigArray[i];
   });
@@ -311,7 +311,7 @@ export <span class="hljs-function"><span class="hljs-keyword">function</span> <s
 
 
 <span class="hljs-comment">// arr.length === 628, use time: ~20ms</span>
-export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filterParentPosition</span><span class="hljs-params">(arr)</span> </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filterParentPosition</span>(<span class="hljs-params">arr</span>) </span>{
   <span class="hljs-keyword">const</span> levelObj = {};
   arr.forEach((item) =&gt; {
     <span class="hljs-keyword">const</span> posLen = item.split(<span class="hljs-string">'-'</span>).length;
@@ -341,13 +341,15 @@ export <span class="hljs-function"><span class="hljs-keyword">function</span> <s
   });
   <span class="hljs-keyword">return</span> nArr;
 }
-<span class="hljs-comment">// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));</span>
+<span class="hljs-comment">// console.log(filterParentPosition(</span>
+<span class="hljs-comment">//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']</span>
+<span class="hljs-comment">// ));</span>
 
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loopData</span><span class="hljs-params">(data, callback)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loopData</span>(<span class="hljs-params">data, callback</span>) </span>{
   <span class="hljs-keyword">const</span> loop = (d, level = <span class="hljs-number">0</span>) =&gt; {
     d.forEach((item, index) =&gt; {
-      <span class="hljs-keyword">const</span> pos = `${level}-${index}`;
+      <span class="hljs-keyword">const</span> pos = <span class="hljs-string">`<span class="hljs-subst">${level}</span>-<span class="hljs-subst">${index}</span>`</span>;
       <span class="hljs-keyword">if</span> (item.children) {
         loop(item.children, pos);
       }
@@ -357,14 +359,14 @@ export <span class="hljs-function"><span class="hljs-keyword">function</span> <s
   loop(data);
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">spl</span><span class="hljs-params">(str)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">spl</span>(<span class="hljs-params">str</span>) </span>{
   <span class="hljs-keyword">return</span> str.split(<span class="hljs-string">'-'</span>);
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">splitLen</span><span class="hljs-params">(str)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">splitLen</span>(<span class="hljs-params">str</span>) </span>{
   <span class="hljs-keyword">return</span> str.split(<span class="hljs-string">'-'</span>).length;
 }
 
-export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFilterExpandedKeys</span><span class="hljs-params">(data, expandedKeys)</span> </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFilterExpandedKeys</span>(<span class="hljs-params">data, expandedKeys</span>) </span>{
   <span class="hljs-keyword">const</span> expandedPosArr = [];
   loopData(data, (item, index, pos) =&gt; {
     <span class="hljs-keyword">if</span> (expandedKeys.indexOf(item.key) &gt; -<span class="hljs-number">1</span>) {
@@ -384,13 +386,13 @@ export <span class="hljs-function"><span class="hljs-keyword">function</span> <s
   <span class="hljs-keyword">return</span> filterExpandedKeys;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSibling</span><span class="hljs-params">(pos, pos1)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSibling</span>(<span class="hljs-params">pos, pos1</span>) </span>{
   pos.pop();
   pos1.pop();
   <span class="hljs-keyword">return</span> pos.join(<span class="hljs-string">','</span>) === pos1.join(<span class="hljs-string">','</span>);
 }
 
-export <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRadioSelectKeys</span><span class="hljs-params">(data, selectedKeys, key)</span> </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRadioSelectKeys</span>(<span class="hljs-params">data, selectedKeys, key</span>) </span>{
   <span class="hljs-keyword">const</span> res = [];
   <span class="hljs-keyword">const</span> pkObjArr = [];
   <span class="hljs-keyword">const</span> selPkObjArr = [];
@@ -435,13 +437,16 @@ export <span class="hljs-function"><span class="hljs-keyword">function</span> <s
   <span class="hljs-keyword">return</span> res;
 }
 </code></pre></div>
-</div>
-<a href="http://github.com/react-component/tree">
-  <img style="position: absolute; top: 0; right: 0; border: 0;"
-       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-       alt="Fork me on GitHub"
-       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
+  </div>
+  <a href="http://github.com/react-component/tree">
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+         alt="Fork me on GitHub"
+         data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+  </a>
+  
+  <script src="common.js?nowrap"></script>
+  <script src="util.js?nowrap"></script>
 </body>
 
 </html>

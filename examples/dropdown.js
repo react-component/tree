@@ -3,19 +3,17 @@ webpackJsonp([6],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(229);
+	module.exports = __webpack_require__(231);
 
 
 /***/ },
 
-/***/ 190:
+/***/ 192:
 /***/ function(module, exports) {
 
-	/* eslint no-loop-func: 0*/
-	
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.generateData = generateData;
@@ -24,6 +22,7 @@ webpackJsonp([6],{
 	exports.filterParentPosition = filterParentPosition;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 	exports.getRadioSelectKeys = getRadioSelectKeys;
+	/* eslint no-loop-func: 0*/
 	
 	function generateData() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
@@ -56,7 +55,6 @@ webpackJsonp([6],{
 	  _loop(z);
 	  return gData;
 	}
-	
 	function calcTotal() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
 	  var y = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
@@ -68,24 +66,20 @@ webpackJsonp([6],{
 	  };
 	  return rec(z + 1);
 	}
-	
 	console.log('总节点数（单个tree）：', calcTotal());
 	// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 	
-	var gData = generateData();
-	
-	exports.gData = gData;
+	var gData = exports.gData = generateData();
 	
 	function isInclude(smallArray, bigArray) {
 	  return smallArray.every(function (ii, i) {
 	    return ii === bigArray[i];
 	  });
 	}
-	
 	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
 	
-	// arr.length === 628, use time: ~20ms
 	
+	// arr.length === 628, use time: ~20ms
 	function filterParentPosition(arr) {
 	  var levelObj = {};
 	  arr.forEach(function (item) {
@@ -97,10 +91,10 @@ webpackJsonp([6],{
 	  });
 	  var levelArr = Object.keys(levelObj).sort();
 	
-	  var _loop2 = function (i) {
+	  var _loop2 = function _loop2(i) {
 	    if (levelArr[i + 1]) {
 	      levelObj[levelArr[i]].forEach(function (ii) {
-	        var _loop3 = function (j) {
+	        var _loop3 = function _loop3(j) {
 	          levelObj[levelArr[j]].forEach(function (_i, index) {
 	            if (isInclude(ii.split('-'), _i.split('-'))) {
 	              levelObj[levelArr[j]][index] = null;
@@ -127,8 +121,10 @@ webpackJsonp([6],{
 	  });
 	  return nArr;
 	}
+	// console.log(filterParentPosition(
+	//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
+	// ));
 	
-	// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 	
 	function loopData(data, callback) {
 	  var loop = function loop(d) {
@@ -223,16 +219,116 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 204:
+/***/ 199:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(205);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports["default"] = getContainerRenderMixin;
+	
+	var _reactDom = __webpack_require__(35);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function defaultGetContainer() {
+	  var container = document.createElement('div');
+	  document.body.appendChild(container);
+	  return container;
+	}
+	
+	function getContainerRenderMixin(config) {
+	  var _config$autoMount = config.autoMount;
+	  var autoMount = _config$autoMount === undefined ? true : _config$autoMount;
+	  var _config$autoDestroy = config.autoDestroy;
+	  var autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy;
+	  var isVisible = config.isVisible;
+	  var getComponent = config.getComponent;
+	  var _config$getContainer = config.getContainer;
+	  var getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
+	
+	
+	  var mixin = void 0;
+	
+	  function _renderComponent(instance, componentArg, ready) {
+	    if (!isVisible || instance._component || isVisible(instance)) {
+	      if (!instance._container) {
+	        instance._container = getContainer(instance);
+	      }
+	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, getComponent(instance, componentArg), instance._container, function callback() {
+	        instance._component = this;
+	        if (ready) {
+	          ready.call(this);
+	        }
+	      });
+	    }
+	  }
+	
+	  if (autoMount) {
+	    mixin = _extends({}, mixin, {
+	      componentDidMount: function componentDidMount() {
+	        _renderComponent(this);
+	      },
+	      componentDidUpdate: function componentDidUpdate() {
+	        _renderComponent(this);
+	      }
+	    });
+	  }
+	
+	  if (!autoMount || !autoDestroy) {
+	    mixin = _extends({}, mixin, {
+	      renderComponent: function renderComponent(componentArg, ready) {
+	        _renderComponent(this, componentArg, ready);
+	      }
+	    });
+	  }
+	
+	  function _removeContainer(instance) {
+	    if (instance._container) {
+	      var container = instance._container;
+	      _reactDom2["default"].unmountComponentAtNode(container);
+	      container.parentNode.removeChild(container);
+	      instance._container = null;
+	    }
+	  }
+	
+	  if (autoDestroy) {
+	    mixin = _extends({}, mixin, {
+	      componentWillUnmount: function componentWillUnmount() {
+	        _removeContainer(this);
+	      }
+	    });
+	  } else {
+	    mixin = _extends({}, mixin, {
+	      removeContainer: function removeContainer() {
+	        _removeContainer(this);
+	      }
+	    });
+	  }
+	
+	  return mixin;
+	}
+	module.exports = exports['default'];
 
 /***/ },
 
-/***/ 205:
+/***/ 207:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	module.exports = __webpack_require__(208);
+
+/***/ },
+
+/***/ 208:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -251,23 +347,23 @@ webpackJsonp([6],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _createChainedFunction = __webpack_require__(206);
-	
-	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
-	
-	var _contains = __webpack_require__(207);
+	var _contains = __webpack_require__(209);
 	
 	var _contains2 = _interopRequireDefault(_contains);
 	
-	var _addEventListener = __webpack_require__(208);
+	var _addEventListener = __webpack_require__(210);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _Popup = __webpack_require__(212);
+	var _Popup = __webpack_require__(214);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(226);
+	var _utils = __webpack_require__(228);
+	
+	var _getContainerRenderMixin = __webpack_require__(199);
+	
+	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -283,7 +379,8 @@ webpackJsonp([6],{
 	  displayName: 'Trigger',
 	
 	  propTypes: {
-	    action: _react.PropTypes.any,
+	    children: _react.PropTypes.any,
+	    action: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
 	    showAction: _react.PropTypes.any,
 	    hideAction: _react.PropTypes.any,
 	    getPopupClassNameFromAlign: _react.PropTypes.any,
@@ -311,6 +408,55 @@ webpackJsonp([6],{
 	    maskTransitionName: _react.PropTypes.string,
 	    maskAnimation: _react.PropTypes.string
 	  },
+	
+	  mixins: [(0, _getContainerRenderMixin2["default"])({
+	    autoMount: false,
+	
+	    isVisible: function isVisible(instance) {
+	      return instance.state.popupVisible;
+	    },
+	    getContainer: function getContainer(instance) {
+	      var popupContainer = document.createElement('div');
+	      var mountNode = instance.props.getPopupContainer ? instance.props.getPopupContainer((0, _reactDom.findDOMNode)(instance)) : document.body;
+	      mountNode.appendChild(popupContainer);
+	      return popupContainer;
+	    },
+	    getComponent: function getComponent(instance) {
+	      var props = instance.props;
+	      var state = instance.state;
+	
+	      var mouseProps = {};
+	      if (instance.isMouseEnterToShow()) {
+	        mouseProps.onMouseEnter = instance.onPopupMouseEnter;
+	      }
+	      if (instance.isMouseLeaveToHide()) {
+	        mouseProps.onMouseLeave = instance.onPopupMouseLeave;
+	      }
+	      return _react2["default"].createElement(
+	        _Popup2["default"],
+	        _extends({
+	          prefixCls: props.prefixCls,
+	          destroyPopupOnHide: props.destroyPopupOnHide,
+	          visible: state.popupVisible,
+	          className: props.popupClassName,
+	          action: props.action,
+	          align: instance.getPopupAlign(),
+	          onAlign: props.onPopupAlign,
+	          animation: props.popupAnimation,
+	          getClassNameFromAlign: instance.getPopupClassNameFromAlign
+	        }, mouseProps, {
+	          getRootDomNode: instance.getRootDomNode,
+	          style: props.popupStyle,
+	          mask: props.mask,
+	          zIndex: props.zIndex,
+	          transitionName: props.popupTransitionName,
+	          maskAnimation: props.maskAnimation,
+	          maskTransitionName: props.maskTransitionName
+	        }),
+	        typeof props.popup === 'function' ? props.popup() : props.popup
+	      );
+	    }
+	  })],
 	
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -346,52 +492,54 @@ webpackJsonp([6],{
 	      popupVisible: popupVisible
 	    };
 	  },
+	  componentWillMount: function componentWillMount() {
+	    var _this = this;
+	
+	    ALL_HANDLERS.forEach(function (h) {
+	      _this['fire' + h] = function (e) {
+	        _this.fireEvents(h, e);
+	      };
+	    });
+	  },
 	  componentDidMount: function componentDidMount() {
 	    this.componentDidUpdate({}, {
 	      popupVisible: this.state.popupVisible
 	    });
 	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if ('popupVisible' in nextProps) {
+	  componentWillReceiveProps: function componentWillReceiveProps(_ref) {
+	    var popupVisible = _ref.popupVisible;
+	
+	    if (popupVisible !== undefined) {
 	      this.setState({
-	        popupVisible: !!nextProps.popupVisible
+	        popupVisible: popupVisible
 	      });
 	    }
 	  },
-	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	  componentDidUpdate: function componentDidUpdate(_, prevState) {
 	    var props = this.props;
 	    var state = this.state;
-	    if (this.popupRendered) {
-	      var self = this;
-	      self.popupInstance = _reactDom2["default"].unstable_renderSubtreeIntoContainer(this, this.getPopupElement(), this.getPopupContainer(), function () {
-	        if (prevState.popupVisible !== state.popupVisible) {
-	          props.afterPopupVisibleChange(state.popupVisible);
-	        }
-	      });
-	      if (this.isClickToHide()) {
-	        if (state.popupVisible) {
-	          if (!this.clickOutsideHandler) {
-	            this.clickOutsideHandler = (0, _addEventListener2["default"])(document, 'mousedown', this.onDocumentClick);
-	            this.touchOutsideHandler = (0, _addEventListener2["default"])(document, 'touchstart', this.onDocumentClick);
-	          }
-	          return;
-	        }
+	    this.renderComponent(function () {
+	      if (prevState.popupVisible !== state.popupVisible) {
+	        props.afterPopupVisibleChange(state.popupVisible);
 	      }
-	      if (this.clickOutsideHandler) {
-	        this.clickOutsideHandler.remove();
-	        this.touchOutsideHandler.remove();
-	        this.clickOutsideHandler = null;
-	        this.touchOutsideHandler = null;
+	    });
+	    if (this.isClickToHide()) {
+	      if (state.popupVisible) {
+	        if (!this.clickOutsideHandler) {
+	          this.clickOutsideHandler = (0, _addEventListener2["default"])(document, 'mousedown', this.onDocumentClick);
+	          this.touchOutsideHandler = (0, _addEventListener2["default"])(document, 'touchstart', this.onDocumentClick);
+	        }
+	        return;
 	      }
+	    }
+	    if (this.clickOutsideHandler) {
+	      this.clickOutsideHandler.remove();
+	      this.touchOutsideHandler.remove();
+	      this.clickOutsideHandler = null;
+	      this.touchOutsideHandler = null;
 	    }
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
-	    var popupContainer = this.popupContainer;
-	    if (popupContainer) {
-	      _reactDom2["default"].unmountComponentAtNode(popupContainer);
-	      popupContainer.parentNode.removeChild(popupContainer);
-	      this.popupContainer = null;
-	    }
 	    this.clearDelayTimer();
 	    if (this.clickOutsideHandler) {
 	      this.clickOutsideHandler.remove();
@@ -400,18 +548,27 @@ webpackJsonp([6],{
 	      this.touchOutsideHandler = null;
 	    }
 	  },
-	  onMouseEnter: function onMouseEnter() {
+	  onMouseEnter: function onMouseEnter(e) {
+	    this.fireEvents('onMouseEnter', e);
 	    this.delaySetPopupVisible(true, this.props.mouseEnterDelay);
 	  },
 	  onMouseLeave: function onMouseLeave(e) {
+	    this.fireEvents('onMouseLeave', e);
+	    this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);
+	  },
+	  onPopupMouseEnter: function onPopupMouseEnter() {
+	    this.clearDelayTimer();
+	  },
+	  onPopupMouseLeave: function onPopupMouseLeave(e) {
 	    // https://github.com/react-component/trigger/pull/13
 	    // react bug?
-	    if (e.relatedTarget && !e.relatedTarget.setTimeout && (0, _contains2["default"])(this.popupContainer, e.relatedTarget)) {
+	    if (e.relatedTarget && !e.relatedTarget.setTimeout && this._component && (0, _contains2["default"])(this._component.getPopupDomNode(), e.relatedTarget)) {
 	      return;
 	    }
 	    this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);
 	  },
-	  onFocus: function onFocus() {
+	  onFocus: function onFocus(e) {
+	    this.fireEvents('onFocus', e);
 	    // incase focusin and focusout
 	    this.clearDelayTimer();
 	    if (this.isFocusToShow()) {
@@ -419,19 +576,23 @@ webpackJsonp([6],{
 	      this.delaySetPopupVisible(true, this.props.focusDelay);
 	    }
 	  },
-	  onMouseDown: function onMouseDown() {
+	  onMouseDown: function onMouseDown(e) {
+	    this.fireEvents('onMouseDown', e);
 	    this.preClickTime = Date.now();
 	  },
-	  onTouchStart: function onTouchStart() {
+	  onTouchStart: function onTouchStart(e) {
+	    this.fireEvents('onTouchStart', e);
 	    this.preTouchTime = Date.now();
 	  },
-	  onBlur: function onBlur() {
+	  onBlur: function onBlur(e) {
+	    this.fireEvents('onBlur', e);
 	    this.clearDelayTimer();
 	    if (this.isBlurToHide()) {
 	      this.delaySetPopupVisible(false, this.props.blurDelay);
 	    }
 	  },
 	  onClick: function onClick(event) {
+	    this.fireEvents('onClick', event);
 	    // focus will trigger click
 	    if (this.focusTime) {
 	      var preTime = void 0;
@@ -465,18 +626,13 @@ webpackJsonp([6],{
 	  },
 	  getPopupDomNode: function getPopupDomNode() {
 	    // for test
-	    return this.popupInstance.isMounted() ? this.popupInstance.getPopupDomNode() : null;
+	    if (this._component) {
+	      return this._component.isMounted() ? this._component.getPopupDomNode() : null;
+	    }
+	    return null;
 	  },
 	  getRootDomNode: function getRootDomNode() {
 	    return _reactDom2["default"].findDOMNode(this);
-	  },
-	  getPopupContainer: function getPopupContainer() {
-	    if (!this.popupContainer) {
-	      this.popupContainer = document.createElement('div');
-	      var mountNode = this.props.getPopupContainer ? this.props.getPopupContainer((0, _reactDom.findDOMNode)(this)) : document.body;
-	      mountNode.appendChild(this.popupContainer);
-	    }
-	    return this.popupContainer;
 	  },
 	  getPopupClassNameFromAlign: function getPopupClassNameFromAlign(align) {
 	    var className = [];
@@ -504,41 +660,6 @@ webpackJsonp([6],{
 	    }
 	    return popupAlign;
 	  },
-	  getPopupElement: function getPopupElement() {
-	    var props = this.props;
-	    var state = this.state;
-	
-	    var mouseProps = {};
-	    if (this.isMouseEnterToShow()) {
-	      mouseProps.onMouseEnter = this.onMouseEnter;
-	    }
-	    if (this.isMouseLeaveToHide()) {
-	      mouseProps.onMouseLeave = this.onMouseLeave;
-	    }
-	    return _react2["default"].createElement(
-	      _Popup2["default"],
-	      _extends({
-	        prefixCls: props.prefixCls,
-	        destroyPopupOnHide: props.destroyPopupOnHide,
-	        visible: state.popupVisible,
-	        className: props.popupClassName,
-	        action: props.action,
-	        align: this.getPopupAlign(),
-	        onAlign: props.onPopupAlign,
-	        animation: props.popupAnimation,
-	        getClassNameFromAlign: this.getPopupClassNameFromAlign
-	      }, mouseProps, {
-	        getRootDomNode: this.getRootDomNode,
-	        style: props.popupStyle,
-	        mask: props.mask,
-	        zIndex: props.zIndex,
-	        transitionName: props.popupTransitionName,
-	        maskAnimation: props.maskAnimation,
-	        maskTransitionName: props.maskTransitionName
-	      }),
-	      typeof props.popup === 'function' ? props.popup() : props.popup
-	    );
-	  },
 	  setPopupVisible: function setPopupVisible(popupVisible) {
 	    this.clearDelayTimer();
 	    if (this.state.popupVisible !== popupVisible) {
@@ -551,14 +672,14 @@ webpackJsonp([6],{
 	    }
 	  },
 	  delaySetPopupVisible: function delaySetPopupVisible(visible, delayS) {
-	    var _this = this;
+	    var _this2 = this;
 	
 	    var delay = delayS * 1000;
 	    this.clearDelayTimer();
 	    if (delay) {
 	      this.delayTimer = setTimeout(function () {
-	        _this.setPopupVisible(visible);
-	        _this.clearDelayTimer();
+	        _this2.setPopupVisible(visible);
+	        _this2.clearDelayTimer();
 	      }, delay);
 	    } else {
 	      this.setPopupVisible(visible);
@@ -569,6 +690,14 @@ webpackJsonp([6],{
 	      clearTimeout(this.delayTimer);
 	      this.delayTimer = null;
 	    }
+	  },
+	  createTwoChains: function createTwoChains(event) {
+	    var childPros = this.props.children.props;
+	    var props = this.props;
+	    if (childPros[event] && props[event]) {
+	      return this['fire' + event];
+	    }
+	    return childPros[event] || props[event];
 	  },
 	  isClickToShow: function isClickToShow() {
 	    var _props = this.props;
@@ -617,41 +746,48 @@ webpackJsonp([6],{
 	      this.popupInstance.alignInstance.forceAlign();
 	    }
 	  },
+	  fireEvents: function fireEvents(type, e) {
+	    var childCallback = this.props.children.props[type];
+	    if (childCallback) {
+	      childCallback(e);
+	    }
+	    var callback = this.props[type];
+	    if (callback) {
+	      callback(e);
+	    }
+	  },
 	  render: function render() {
-	    this.popupRendered = this.popupRendered || this.state.popupVisible;
 	    var props = this.props;
 	    var children = props.children;
 	    var child = _react2["default"].Children.only(children);
-	    var childProps = child.props || {};
 	    var newChildProps = {};
 	
 	    if (this.isClickToHide() || this.isClickToShow()) {
-	      newChildProps.onClick = (0, _createChainedFunction2["default"])(this.onClick, childProps.onClick);
-	      newChildProps.onMouseDown = (0, _createChainedFunction2["default"])(this.onMouseDown, childProps.onMouseDown);
-	      newChildProps.onTouchStart = (0, _createChainedFunction2["default"])(this.onTouchStart, childProps.onTouchStart);
+	      newChildProps.onClick = this.onClick;
+	      newChildProps.onMouseDown = this.onMouseDown;
+	      newChildProps.onTouchStart = this.onTouchStart;
+	    } else {
+	      newChildProps.onClick = this.createTwoChains('onClick');
+	      newChildProps.onMouseDown = this.createTwoChains('onMouseDown');
+	      newChildProps.onTouchStart = this.createTwoChains('onTouchStart');
 	    }
 	    if (this.isMouseEnterToShow()) {
-	      newChildProps.onMouseEnter = (0, _createChainedFunction2["default"])(this.onMouseEnter, childProps.onMouseEnter);
+	      newChildProps.onMouseEnter = this.onMouseEnter;
+	    } else {
+	      newChildProps.onMouseEnter = this.createTwoChains('onMouseEnter');
 	    }
 	    if (this.isMouseLeaveToHide()) {
-	      newChildProps.onMouseLeave = (0, _createChainedFunction2["default"])(this.onMouseLeave, childProps.onMouseLeave);
+	      newChildProps.onMouseLeave = this.onMouseLeave;
+	    } else {
+	      newChildProps.onMouseLeave = this.createTwoChains('onMouseLeave');
 	    }
 	    if (this.isFocusToShow() || this.isBlurToHide()) {
-	      newChildProps.onFocus = (0, _createChainedFunction2["default"])(this.onFocus, childProps.onFocus);
-	      newChildProps.onBlur = (0, _createChainedFunction2["default"])(this.onBlur, childProps.onBlur);
+	      newChildProps.onFocus = this.onFocus;
+	      newChildProps.onBlur = this.onBlur;
+	    } else {
+	      newChildProps.onFocus = this.createTwoChains('onFocus');
+	      newChildProps.onBlur = this.createTwoChains('onBlur');
 	    }
-	
-	    ALL_HANDLERS.forEach(function (handler) {
-	      var newFn = void 0;
-	      if (props[handler] && newChildProps[handler]) {
-	        newFn = (0, _createChainedFunction2["default"])(props[handler], newChildProps[handler]);
-	      } else {
-	        newFn = props[handler] || newChildProps[handler];
-	      }
-	      if (newFn) {
-	        newChildProps[handler] = newFn;
-	      }
-	    });
 	
 	    return _react2["default"].cloneElement(child, newChildProps);
 	  }
@@ -662,35 +798,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 206:
-/***/ function(module, exports) {
-
-	/**
-	 * Safe chained function
-	 *
-	 * Will only create a new function if needed,
-	 * otherwise will pass back existing functions or null.
-	 *
-	 * @returns {function|null}
-	 */
-	"use strict";
-	
-	function createChainedFunction() {
-	  var args = arguments;
-	  return function chainedFunction() {
-	    for (var i = 0; i < args.length; i++) {
-	      if (args[i] && args[i].apply) {
-	        args[i].apply(this, arguments);
-	      }
-	    }
-	  };
-	}
-	
-	module.exports = createChainedFunction;
-
-/***/ },
-
-/***/ 207:
+/***/ 209:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -709,19 +817,17 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 208:
+/***/ 210:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports['default'] = addEventListenerWrap;
+	exports["default"] = addEventListenerWrap;
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _addDomEventListener = __webpack_require__(209);
+	var _addDomEventListener = __webpack_require__(211);
 	
 	var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 	
@@ -729,19 +835,20 @@ webpackJsonp([6],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
 	function addEventListenerWrap(target, eventType, cb) {
 	  /* eslint camelcase: 2 */
-	  var callback = _reactDom2['default'].unstable_batchedUpdates ? function run(e) {
-	    _reactDom2['default'].unstable_batchedUpdates(cb, e);
+	  var callback = _reactDom2["default"].unstable_batchedUpdates ? function run(e) {
+	    _reactDom2["default"].unstable_batchedUpdates(cb, e);
 	  } : cb;
-	  return (0, _addDomEventListener2['default'])(target, eventType, callback);
+	  return (0, _addDomEventListener2["default"])(target, eventType, callback);
 	}
-	
 	module.exports = exports['default'];
 
 /***/ },
 
-/***/ 209:
+/***/ 211:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -753,7 +860,7 @@ webpackJsonp([6],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventObject = __webpack_require__(210);
+	var _EventObject = __webpack_require__(212);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
@@ -784,7 +891,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 210:
+/***/ 212:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -801,7 +908,7 @@ webpackJsonp([6],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventBaseObject = __webpack_require__(211);
+	var _EventBaseObject = __webpack_require__(213);
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
@@ -1068,7 +1175,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 211:
+/***/ 213:
 /***/ function(module, exports) {
 
 	/**
@@ -1137,7 +1244,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 212:
+/***/ 214:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1156,19 +1263,19 @@ webpackJsonp([6],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAlign = __webpack_require__(213);
+	var _rcAlign = __webpack_require__(215);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcAnimate = __webpack_require__(178);
+	var _rcAnimate = __webpack_require__(180);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _PopupInner = __webpack_require__(224);
+	var _PopupInner = __webpack_require__(226);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
-	var _LazyRenderBox = __webpack_require__(225);
+	var _LazyRenderBox = __webpack_require__(227);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -1367,7 +1474,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 213:
+/***/ 215:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1376,7 +1483,7 @@ webpackJsonp([6],{
 	  value: true
 	});
 	
-	var _Align = __webpack_require__(214);
+	var _Align = __webpack_require__(216);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -1388,7 +1495,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 214:
+/***/ 216:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1405,15 +1512,15 @@ webpackJsonp([6],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _domAlign = __webpack_require__(215);
+	var _domAlign = __webpack_require__(217);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
-	var _addEventListener = __webpack_require__(208);
+	var _addEventListener = __webpack_require__(210);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _isWindow = __webpack_require__(223);
+	var _isWindow = __webpack_require__(225);
 	
 	var _isWindow2 = _interopRequireDefault(_isWindow);
 	
@@ -1421,12 +1528,22 @@ webpackJsonp([6],{
 	
 	function buffer(fn, ms) {
 	  var timer = void 0;
-	  return function bufferFn() {
+	
+	  function clear() {
 	    if (timer) {
 	      clearTimeout(timer);
+	      timer = null;
 	    }
+	  }
+	
+	  function bufferFn() {
+	    clear();
 	    timer = setTimeout(fn, ms);
-	  };
+	  }
+	
+	  bufferFn.clear = clear;
+	
+	  return bufferFn;
 	}
 	
 	var Align = _react2["default"].createClass({
@@ -1496,11 +1613,13 @@ webpackJsonp([6],{
 	  },
 	  startMonitorWindowResize: function startMonitorWindowResize() {
 	    if (!this.resizeHandler) {
-	      this.resizeHandler = (0, _addEventListener2["default"])(window, 'resize', buffer(this.forceAlign, this.props.monitorBufferTime));
+	      this.bufferMonitor = buffer(this.forceAlign, this.props.monitorBufferTime);
+	      this.resizeHandler = (0, _addEventListener2["default"])(window, 'resize', this.bufferMonitor);
 	    }
 	  },
 	  stopMonitorWindowResize: function stopMonitorWindowResize() {
 	    if (this.resizeHandler) {
+	      this.bufferMonitor.clear();
 	      this.resizeHandler.remove();
 	      this.resizeHandler = null;
 	    }
@@ -1536,7 +1655,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 215:
+/***/ 217:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1552,27 +1671,27 @@ webpackJsonp([6],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(216);
+	var _utils = __webpack_require__(218);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(217);
+	var _getOffsetParent = __webpack_require__(219);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
-	var _getVisibleRectForElement = __webpack_require__(218);
+	var _getVisibleRectForElement = __webpack_require__(220);
 	
 	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
 	
-	var _adjustForViewport = __webpack_require__(219);
+	var _adjustForViewport = __webpack_require__(221);
 	
 	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
 	
-	var _getRegion = __webpack_require__(220);
+	var _getRegion = __webpack_require__(222);
 	
 	var _getRegion2 = _interopRequireDefault(_getRegion);
 	
-	var _getElFuturePos = __webpack_require__(221);
+	var _getElFuturePos = __webpack_require__(223);
 	
 	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
 	
@@ -1760,7 +1879,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 216:
+/***/ 218:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2259,7 +2378,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 217:
+/***/ 219:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2270,7 +2389,7 @@ webpackJsonp([6],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(216);
+	var _utils = __webpack_require__(218);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -2318,7 +2437,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 218:
+/***/ 220:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2329,11 +2448,11 @@ webpackJsonp([6],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(216);
+	var _utils = __webpack_require__(218);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(217);
+	var _getOffsetParent = __webpack_require__(219);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
@@ -2400,7 +2519,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 219:
+/***/ 221:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2411,7 +2530,7 @@ webpackJsonp([6],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(216);
+	var _utils = __webpack_require__(218);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -2461,7 +2580,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 220:
+/***/ 222:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2472,7 +2591,7 @@ webpackJsonp([6],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(216);
+	var _utils = __webpack_require__(218);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -2503,7 +2622,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 221:
+/***/ 223:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2514,7 +2633,7 @@ webpackJsonp([6],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _getAlignOffset = __webpack_require__(222);
+	var _getAlignOffset = __webpack_require__(224);
 	
 	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
 	
@@ -2545,7 +2664,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 222:
+/***/ 224:
 /***/ function(module, exports) {
 
 	/**
@@ -2591,7 +2710,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 223:
+/***/ 225:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2609,7 +2728,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 224:
+/***/ 226:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2622,7 +2741,7 @@ webpackJsonp([6],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _LazyRenderBox = __webpack_require__(225);
+	var _LazyRenderBox = __webpack_require__(227);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -2667,7 +2786,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 225:
+/***/ 227:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2719,7 +2838,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 226:
+/***/ 228:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2755,17 +2874,14 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 229:
+/***/ 231:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint react/no-multi-comp:0 */
 	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(230);
+	__webpack_require__(232);
 	
 	var _react = __webpack_require__(3);
 	
@@ -2775,15 +2891,17 @@ webpackJsonp([6],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(172);
+	var _rcTree = __webpack_require__(174);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _rcTrigger = __webpack_require__(204);
+	var _rcTrigger = __webpack_require__(207);
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
-	var _util = __webpack_require__(190);
+	var _util = __webpack_require__(192);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var placements = {
 	  topLeft: {
@@ -2804,8 +2922,9 @@ webpackJsonp([6],{
 	    offset: [0, 3],
 	    targetOffset: [0, 0]
 	  }
-	};
-	var DropdownTree = _react2['default'].createClass({
+	}; /* eslint react/no-multi-comp:0 */
+	
+	var DropdownTree = _react2.default.createClass({
 	  displayName: 'DropdownTree',
 	
 	  propTypes: {
@@ -2830,6 +2949,7 @@ webpackJsonp([6],{
 	      overlayStyle: {},
 	      defaultVisible: false,
 	      onVisibleChange: function onVisibleChange() {},
+	
 	      placement: 'bottomLeft'
 	    };
 	  },
@@ -2880,7 +3000,7 @@ webpackJsonp([6],{
 	  },
 	  getPopupElement: function getPopupElement() {
 	    var props = this.props;
-	    return _react2['default'].cloneElement(props.overlay, {
+	    return _react2.default.cloneElement(props.overlay, {
 	      // prefixCls: `${props.prefixCls}-menu`,
 	      onClick: this.onClick
 	    });
@@ -2888,7 +3008,7 @@ webpackJsonp([6],{
 	  afterVisibleChange: function afterVisibleChange(visible) {
 	    if (visible && this.props.minOverlayWidthMatchTrigger) {
 	      var overlayNode = this.refs.trigger.getPopupDomNode();
-	      var rootNode = _reactDom2['default'].findDOMNode(this);
+	      var rootNode = _reactDom2.default.findDOMNode(this);
 	      if (rootNode.offsetWidth > overlayNode.offsetWidth) {
 	        overlayNode.style.width = rootNode.offsetWidth + 'px';
 	      }
@@ -2906,8 +3026,8 @@ webpackJsonp([6],{
 	    var overlayStyle = _props.overlayStyle;
 	    var trigger = _props.trigger;
 	
-	    return _react2['default'].createElement(
-	      _rcTrigger2['default'],
+	    return _react2.default.createElement(
+	      _rcTrigger2.default,
 	      {
 	        prefixCls: prefixCls,
 	        ref: 'trigger',
@@ -2929,9 +3049,8 @@ webpackJsonp([6],{
 	  }
 	});
 	
-	var Demo = _react2['default'].createClass({
+	var Demo = _react2.default.createClass({
 	  displayName: 'Demo',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      visible: false,
@@ -2989,13 +3108,13 @@ webpackJsonp([6],{
 	          _this.filterKeys.push(item.key);
 	        }
 	        if (item.children) {
-	          return _react2['default'].createElement(
+	          return _react2.default.createElement(
 	            _rcTree.TreeNode,
 	            { key: item.key, title: item.key },
 	            loop(item.children)
 	          );
 	        }
-	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.key });
+	        return _react2.default.createElement(_rcTree.TreeNode, { key: item.key, title: item.key });
 	      });
 	    };
 	    var expandedKeys = this.state.expandedKeys;
@@ -3005,12 +3124,12 @@ webpackJsonp([6],{
 	      autoExpandParent = true;
 	    }
 	
-	    var overlay = _react2['default'].createElement(
+	    var overlay = _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2['default'].createElement('input', { placeholder: '请筛选', value: this.state.inputValue, onChange: this.onChange }),
-	      _react2['default'].createElement(
-	        _rcTree2['default'],
+	      _react2.default.createElement('input', { placeholder: '请筛选', value: this.state.inputValue, onChange: this.onChange }),
+	      _react2.default.createElement(
+	        _rcTree2.default,
 	        {
 	          onExpand: this.onExpand, expandedKeys: expandedKeys,
 	          autoExpandParent: autoExpandParent,
@@ -3020,15 +3139,15 @@ webpackJsonp([6],{
 	      )
 	    );
 	
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { style: { padding: '10px 30px' } },
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'h3',
 	        null,
 	        'tree in dropdown'
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        DropdownTree,
 	        {
 	          trigger: ['click'],
@@ -3037,7 +3156,7 @@ webpackJsonp([6],{
 	          closeOnSelect: false,
 	          overlay: overlay, animation: 'slide-up'
 	        },
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'div',
 	          { className: 'demo-dropdown-trigger' },
 	          this.state.sel
@@ -3047,16 +3166,12 @@ webpackJsonp([6],{
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ },
 
-/***/ 230:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ }
+/***/ 232:
+2
 
 });
 //# sourceMappingURL=dropdown.js.map

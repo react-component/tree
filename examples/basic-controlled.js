@@ -3,19 +3,15 @@ webpackJsonp([2],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(189);
+	module.exports = __webpack_require__(191);
 
 
 /***/ },
 
-/***/ 189:
+/***/ 191:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 	
 	__webpack_require__(2);
 	
@@ -27,19 +23,23 @@ webpackJsonp([2],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(172);
+	var _rcTree = __webpack_require__(174);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _util = __webpack_require__(190);
+	var _util = __webpack_require__(192);
 	
-	__webpack_require__(191);
+	__webpack_require__(193);
 	
-	var _rcDialog = __webpack_require__(192);
+	var _rcDialog = __webpack_require__(194);
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
-	var Demo = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var Demo = _react2.default.createClass({
 	  displayName: 'Demo',
 	
 	  propTypes: {
@@ -91,7 +91,6 @@ webpackJsonp([2],{
 	      checkStrictlyKeys: cks
 	    });
 	  },
-	  // checkStrictlyKeys: checkedKeys,
 	  onSelect: function onSelect(selectedKeys, info) {
 	    console.log('onSelect', selectedKeys, info);
 	    this.setState({
@@ -141,38 +140,40 @@ webpackJsonp([2],{
 	    var loop = function loop(data) {
 	      return data.map(function (item) {
 	        if (item.children) {
-	          return _react2['default'].createElement(
+	          return _react2.default.createElement(
 	            _rcTree.TreeNode,
-	            { key: item.key, title: item.title,
-	              disableCheckbox: item.key === '0-0-0-key' ? true : false },
+	            {
+	              key: item.key, title: item.title,
+	              disableCheckbox: item.key === '0-0-0-key'
+	            },
 	            loop(item.children)
 	          );
 	        }
-	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.title });
+	        return _react2.default.createElement(_rcTree.TreeNode, { key: item.key, title: item.title });
 	      });
 	    };
 	    // console.log(getRadioSelectKeys(gData, this.state.selectedKeys));
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { style: { padding: '0 20px' } },
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'h2',
 	        null,
 	        'dialog'
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'button',
 	        { className: 'btn btn-primary', onClick: this.showModal },
 	        'show dialog'
 	      ),
-	      _react2['default'].createElement(
-	        _rcDialog2['default'],
+	      _react2.default.createElement(
+	        _rcDialog2.default,
 	        {
 	          title: 'TestDemo', visible: this.state.visible,
 	          onOk: this.handleOk, onClose: this.onClose
 	        },
-	        this.state.treeData.length ? _react2['default'].createElement(
-	          _rcTree2['default'],
+	        this.state.treeData.length ? _react2.default.createElement(
+	          _rcTree2.default,
 	          {
 	            checkable: true, className: 'dialog-tree',
 	            onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
@@ -182,13 +183,13 @@ webpackJsonp([2],{
 	          loop(this.state.treeData)
 	        ) : 'loading...'
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'h2',
 	        null,
 	        'controlled'
 	      ),
-	      _react2['default'].createElement(
-	        _rcTree2['default'],
+	      _react2.default.createElement(
+	        _rcTree2.default,
 	        {
 	          checkable: true,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
@@ -198,18 +199,18 @@ webpackJsonp([2],{
 	        },
 	        loop(_util.gData)
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'button',
 	        { onClick: this.triggerChecked },
 	        'trigger checked'
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'h2',
 	        null,
 	        'checkStrictly'
 	      ),
-	      _react2['default'].createElement(
-	        _rcTree2['default'],
+	      _react2.default.createElement(
+	        _rcTree2.default,
 	        {
 	          checkable: true, multiple: this.props.multiple, defaultExpandAll: true,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
@@ -219,13 +220,13 @@ webpackJsonp([2],{
 	        },
 	        loop(_util.gData)
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'h2',
 	        null,
 	        'radio\'s behavior select (in the same level)'
 	      ),
-	      _react2['default'].createElement(
-	        _rcTree2['default'],
+	      _react2.default.createElement(
+	        _rcTree2.default,
 	        {
 	          multiple: true, defaultExpandAll: true,
 	          onSelect: this.onRbSelect,
@@ -237,19 +238,16 @@ webpackJsonp([2],{
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
-	/* filterParentPosition, getFilterExpandedKeys,*/
+	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ },
 
-/***/ 190:
+/***/ 192:
 /***/ function(module, exports) {
 
-	/* eslint no-loop-func: 0*/
-	
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.generateData = generateData;
@@ -258,6 +256,7 @@ webpackJsonp([2],{
 	exports.filterParentPosition = filterParentPosition;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 	exports.getRadioSelectKeys = getRadioSelectKeys;
+	/* eslint no-loop-func: 0*/
 	
 	function generateData() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
@@ -290,7 +289,6 @@ webpackJsonp([2],{
 	  _loop(z);
 	  return gData;
 	}
-	
 	function calcTotal() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
 	  var y = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
@@ -302,24 +300,20 @@ webpackJsonp([2],{
 	  };
 	  return rec(z + 1);
 	}
-	
 	console.log('总节点数（单个tree）：', calcTotal());
 	// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 	
-	var gData = generateData();
-	
-	exports.gData = gData;
+	var gData = exports.gData = generateData();
 	
 	function isInclude(smallArray, bigArray) {
 	  return smallArray.every(function (ii, i) {
 	    return ii === bigArray[i];
 	  });
 	}
-	
 	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
 	
-	// arr.length === 628, use time: ~20ms
 	
+	// arr.length === 628, use time: ~20ms
 	function filterParentPosition(arr) {
 	  var levelObj = {};
 	  arr.forEach(function (item) {
@@ -331,10 +325,10 @@ webpackJsonp([2],{
 	  });
 	  var levelArr = Object.keys(levelObj).sort();
 	
-	  var _loop2 = function (i) {
+	  var _loop2 = function _loop2(i) {
 	    if (levelArr[i + 1]) {
 	      levelObj[levelArr[i]].forEach(function (ii) {
-	        var _loop3 = function (j) {
+	        var _loop3 = function _loop3(j) {
 	          levelObj[levelArr[j]].forEach(function (_i, index) {
 	            if (isInclude(ii.split('-'), _i.split('-'))) {
 	              levelObj[levelArr[j]][index] = null;
@@ -361,8 +355,10 @@ webpackJsonp([2],{
 	  });
 	  return nArr;
 	}
+	// console.log(filterParentPosition(
+	//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
+	// ));
 	
-	// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 	
 	function loopData(data, callback) {
 	  var loop = function loop(d) {
@@ -457,212 +453,102 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 191:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-
-/***/ 192:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	module.exports = __webpack_require__(193);
-
-/***/ },
-
 /***/ 193:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(35);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _Dialog = __webpack_require__(194);
-	
-	var _Dialog2 = _interopRequireDefault(_Dialog);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	function noop() {}
-	
-	function copy(obj, fields) {
-	  var ret = {};
-	  fields.forEach(function (f) {
-	    if (obj[f] !== undefined) {
-	      ret[f] = obj[f];
-	    }
-	  });
-	  return ret;
-	}
-	
-	var DialogWrap = function (_React$Component) {
-	  _inherits(DialogWrap, _React$Component);
-	
-	  function DialogWrap(props) {
-	    _classCallCheck(this, DialogWrap);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DialogWrap).call(this, props));
-	
-	    _this.state = {
-	      visible: props.visible
-	    };
-	    ['onClose', 'cleanDialogContainer'].forEach(function (m) {
-	      _this[m] = _this[m].bind(_this);
-	    });
-	    return _this;
-	  }
-	
-	  _createClass(DialogWrap, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.componentDidUpdate();
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(props) {
-	      if ('visible' in props) {
-	        this.setState({
-	          visible: props.visible
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return !!(this.state.visible || nextState.visible);
-	    }
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      if (this.dialogRendered) {
-	        this.dialogInstance = _reactDom2["default"].unstable_renderSubtreeIntoContainer(this, this.getDialogElement(), this.getDialogContainer());
-	      }
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      if (this.dialogContainer) {
-	        if (this.state.visible) {
-	          _reactDom2["default"].unstable_renderSubtreeIntoContainer(this, this.getDialogElement({
-	            onAfterClose: this.cleanDialogContainer,
-	            onClose: noop,
-	            visible: false
-	          }), this.dialogContainer);
-	        } else {
-	          this.cleanDialogContainer();
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'onClose',
-	    value: function onClose(e) {
-	      this.props.onClose(e);
-	    }
-	  }, {
-	    key: 'getDialogContainer',
-	    value: function getDialogContainer() {
-	      if (!this.dialogContainer) {
-	        this.dialogContainer = document.createElement('div');
-	        document.body.appendChild(this.dialogContainer);
-	      }
-	      return this.dialogContainer;
-	    }
-	  }, {
-	    key: 'getDialogElement',
-	    value: function getDialogElement(extra) {
-	      var props = this.props;
-	      var dialogProps = copy(props, ['className', 'closable', 'maskClosable', 'title', 'footer', 'mask', 'keyboard', 'animation', 'transitionName', 'maskAnimation', 'maskTransitionName', 'mousePosition', 'prefixCls', 'style', 'width', 'wrapStyle', 'height', 'zIndex', 'bodyStyle', 'wrapClassName']);
-	      dialogProps = _extends({}, dialogProps, {
-	        onClose: this.onClose,
-	        visible: this.state.visible
-	      }, extra);
-	      return _react2["default"].createElement(
-	        _Dialog2["default"],
-	        _extends({}, dialogProps, { key: 'dialog' }),
-	        props.children
-	      );
-	    }
-	  }, {
-	    key: 'getElement',
-	    value: function getElement(part) {
-	      return this.dialogInstance.getElement(part);
-	    }
-	  }, {
-	    key: 'cleanDialogContainer',
-	    value: function cleanDialogContainer() {
-	      if (this.dialogContainer) {
-	        _reactDom2["default"].unmountComponentAtNode(this.dialogContainer);
-	        document.body.removeChild(this.dialogContainer);
-	        this.dialogContainer = null;
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      this.dialogRendered = this.dialogRendered || this.state.visible;
-	      return null;
-	    }
-	  }]);
-	
-	  return DialogWrap;
-	}(_react2["default"].Component);
-	
-	DialogWrap.defaultProps = {
-	  className: '',
-	  mask: true,
-	  keyboard: true,
-	  closable: true,
-	  maskClosable: true,
-	  prefixCls: 'rc-dialog',
-	  onClose: noop
-	};
-	
-	DialogWrap.propTypes = {
-	  className: _react.PropTypes.string,
-	  keyboard: _react.PropTypes.bool,
-	  wrapStyle: _react.PropTypes.object,
-	  style: _react.PropTypes.object,
-	  mask: _react.PropTypes.bool,
-	  closable: _react.PropTypes.bool,
-	  maskClosable: _react.PropTypes.bool,
-	  prefixCls: _react.PropTypes.string,
-	  visible: _react.PropTypes.bool,
-	  onClose: _react.PropTypes.func
-	};
-	
-	exports["default"] = DialogWrap;
-	module.exports = exports['default'];
-
-/***/ },
+2,
 
 /***/ 194:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
+	module.exports = __webpack_require__(195);
+
+/***/ },
+
+/***/ 195:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(3);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Dialog = __webpack_require__(196);
+	
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+	
+	var _getContainerRenderMixin = __webpack_require__(199);
+	
+	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	var DialogWrap = _react2["default"].createClass({
+	  displayName: 'DialogWrap',
+	
+	  propTypes: {
+	    visible: _react.PropTypes.bool
+	  },
+	  mixins: [(0, _getContainerRenderMixin2["default"])({
+	    isVisible: function isVisible(instance) {
+	      return instance.props.visible;
+	    },
+	
+	    autoDestroy: false,
+	    getComponent: function getComponent(instance, extra) {
+	      return _react2["default"].createElement(_Dialog2["default"], _extends({}, instance.props, extra, {
+	        key: 'dialog'
+	      }));
+	    }
+	  })],
+	
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      visible: false
+	    };
+	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(_ref) {
+	    var visible = _ref.visible;
+	
+	    return !!(this.props.visible || visible);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    if (this.props.visible) {
+	      this.renderComponent({
+	        onAfterClose: this.removeContainer,
+	        onClose: function onClose() {},
+	
+	        visible: false
+	      });
+	    } else {
+	      this.removeContainer();
+	    }
+	  },
+	  getElement: function getElement(part) {
+	    return this._component.getElement(part);
+	  },
+	  render: function render() {
+	    return null;
+	  }
+	});
+	
+	exports["default"] = DialogWrap;
+	module.exports = exports['default'];
+
+/***/ },
+
+/***/ 196:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -677,15 +563,15 @@ webpackJsonp([2],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _KeyCode = __webpack_require__(195);
+	var _KeyCode = __webpack_require__(197);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _rcAnimate = __webpack_require__(178);
+	var _rcAnimate = __webpack_require__(180);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _LazyRenderBox = __webpack_require__(196);
+	var _LazyRenderBox = __webpack_require__(198);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -745,6 +631,11 @@ webpackJsonp([2],{
 	  displayName: 'Dialog',
 	
 	  propTypes: {
+	    className: _react.PropTypes.string,
+	    keyboard: _react.PropTypes.bool,
+	    style: _react.PropTypes.object,
+	    mask: _react.PropTypes.bool,
+	    children: _react.PropTypes.any,
 	    onAfterClose: _react.PropTypes.func,
 	    onClose: _react.PropTypes.func,
 	    closable: _react.PropTypes.bool,
@@ -759,6 +650,13 @@ webpackJsonp([2],{
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      onAfterClose: noop,
+	      className: '',
+	      mask: true,
+	      visible: false,
+	      keyboard: true,
+	      closable: true,
+	      maskClosable: true,
+	      prefixCls: 'rc-dialog',
 	      onClose: noop
 	    };
 	  },
@@ -1088,16 +986,16 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 195:
+/***/ 197:
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	/**
 	 * @ignore
 	 * some key-codes definition and utils from closure-library
 	 * @author yiminghe@gmail.com
 	 */
-	
-	'use strict';
 	
 	var KeyCode = {
 	  /**
@@ -1614,7 +1512,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 196:
+/***/ 198:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1656,6 +1554,106 @@ webpackJsonp([2],{
 	});
 	
 	exports["default"] = LazyRenderBox;
+	module.exports = exports['default'];
+
+/***/ },
+
+/***/ 199:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports["default"] = getContainerRenderMixin;
+	
+	var _reactDom = __webpack_require__(35);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function defaultGetContainer() {
+	  var container = document.createElement('div');
+	  document.body.appendChild(container);
+	  return container;
+	}
+	
+	function getContainerRenderMixin(config) {
+	  var _config$autoMount = config.autoMount;
+	  var autoMount = _config$autoMount === undefined ? true : _config$autoMount;
+	  var _config$autoDestroy = config.autoDestroy;
+	  var autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy;
+	  var isVisible = config.isVisible;
+	  var getComponent = config.getComponent;
+	  var _config$getContainer = config.getContainer;
+	  var getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
+	
+	
+	  var mixin = void 0;
+	
+	  function _renderComponent(instance, componentArg, ready) {
+	    if (!isVisible || instance._component || isVisible(instance)) {
+	      if (!instance._container) {
+	        instance._container = getContainer(instance);
+	      }
+	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, getComponent(instance, componentArg), instance._container, function callback() {
+	        instance._component = this;
+	        if (ready) {
+	          ready.call(this);
+	        }
+	      });
+	    }
+	  }
+	
+	  if (autoMount) {
+	    mixin = _extends({}, mixin, {
+	      componentDidMount: function componentDidMount() {
+	        _renderComponent(this);
+	      },
+	      componentDidUpdate: function componentDidUpdate() {
+	        _renderComponent(this);
+	      }
+	    });
+	  }
+	
+	  if (!autoMount || !autoDestroy) {
+	    mixin = _extends({}, mixin, {
+	      renderComponent: function renderComponent(componentArg, ready) {
+	        _renderComponent(this, componentArg, ready);
+	      }
+	    });
+	  }
+	
+	  function _removeContainer(instance) {
+	    if (instance._container) {
+	      var container = instance._container;
+	      _reactDom2["default"].unmountComponentAtNode(container);
+	      container.parentNode.removeChild(container);
+	      instance._container = null;
+	    }
+	  }
+	
+	  if (autoDestroy) {
+	    mixin = _extends({}, mixin, {
+	      componentWillUnmount: function componentWillUnmount() {
+	        _removeContainer(this);
+	      }
+	    });
+	  } else {
+	    mixin = _extends({}, mixin, {
+	      removeContainer: function removeContainer() {
+	        _removeContainer(this);
+	      }
+	    });
+	  }
+	
+	  return mixin;
+	}
 	module.exports = exports['default'];
 
 /***/ }

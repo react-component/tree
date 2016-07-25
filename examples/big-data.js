@@ -3,19 +3,17 @@ webpackJsonp([3],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(197);
+	module.exports = __webpack_require__(200);
 
 
 /***/ },
 
-/***/ 190:
+/***/ 192:
 /***/ function(module, exports) {
 
-	/* eslint no-loop-func: 0*/
-	
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.generateData = generateData;
@@ -24,6 +22,7 @@ webpackJsonp([3],{
 	exports.filterParentPosition = filterParentPosition;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 	exports.getRadioSelectKeys = getRadioSelectKeys;
+	/* eslint no-loop-func: 0*/
 	
 	function generateData() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
@@ -56,7 +55,6 @@ webpackJsonp([3],{
 	  _loop(z);
 	  return gData;
 	}
-	
 	function calcTotal() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
 	  var y = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
@@ -68,24 +66,20 @@ webpackJsonp([3],{
 	  };
 	  return rec(z + 1);
 	}
-	
 	console.log('总节点数（单个tree）：', calcTotal());
 	// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 	
-	var gData = generateData();
-	
-	exports.gData = gData;
+	var gData = exports.gData = generateData();
 	
 	function isInclude(smallArray, bigArray) {
 	  return smallArray.every(function (ii, i) {
 	    return ii === bigArray[i];
 	  });
 	}
-	
 	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
 	
-	// arr.length === 628, use time: ~20ms
 	
+	// arr.length === 628, use time: ~20ms
 	function filterParentPosition(arr) {
 	  var levelObj = {};
 	  arr.forEach(function (item) {
@@ -97,10 +91,10 @@ webpackJsonp([3],{
 	  });
 	  var levelArr = Object.keys(levelObj).sort();
 	
-	  var _loop2 = function (i) {
+	  var _loop2 = function _loop2(i) {
 	    if (levelArr[i + 1]) {
 	      levelObj[levelArr[i]].forEach(function (ii) {
-	        var _loop3 = function (j) {
+	        var _loop3 = function _loop3(j) {
 	          levelObj[levelArr[j]].forEach(function (_i, index) {
 	            if (isInclude(ii.split('-'), _i.split('-'))) {
 	              levelObj[levelArr[j]][index] = null;
@@ -127,8 +121,10 @@ webpackJsonp([3],{
 	  });
 	  return nArr;
 	}
+	// console.log(filterParentPosition(
+	//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
+	// ));
 	
-	// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 	
 	function loopData(data, callback) {
 	  var loop = function loop(d) {
@@ -223,12 +219,10 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 197:
+/***/ 200:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	__webpack_require__(2);
 	
@@ -240,15 +234,17 @@ webpackJsonp([3],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(172);
+	var _rcTree = __webpack_require__(174);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _bigDataGenerator = __webpack_require__(198);
+	var _bigDataGenerator = __webpack_require__(201);
 	
 	var _bigDataGenerator2 = _interopRequireDefault(_bigDataGenerator);
 	
-	var Demo = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Demo = _react2.default.createClass({
 	  displayName: 'Demo',
 	
 	  propTypes: {
@@ -307,18 +303,18 @@ webpackJsonp([3],{
 	    var loop = function loop(data) {
 	      return data.map(function (item) {
 	        if (item.children) {
-	          return _react2['default'].createElement(
+	          return _react2.default.createElement(
 	            _rcTree.TreeNode,
 	            { key: item.key, title: item.title },
 	            loop(item.children)
 	          );
 	        }
-	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.title });
+	        return _react2.default.createElement(_rcTree.TreeNode, { key: item.key, title: item.title });
 	      });
 	    };
 	    // const s = Date.now();
 	    // const treeNodes = loop(this.state.gData);
-	    var treeNodes = undefined;
+	    var treeNodes = void 0;
 	    if (this.treeNodes && this.notReRender) {
 	      treeNodes = this.treeNodes;
 	    } else {
@@ -326,36 +322,36 @@ webpackJsonp([3],{
 	      this.treeNodes = treeNodes;
 	    }
 	    // console.log(Date.now()-s);
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { style: { padding: '0 20px' } },
-	      _react2['default'].createElement(_bigDataGenerator2['default'], { onGen: this.onGen }),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(_bigDataGenerator2.default, { onGen: this.onGen }),
+	      _react2.default.createElement(
 	        'div',
 	        { style: { border: '1px solid red', width: 700, padding: 10 } },
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'h5',
 	          { style: { margin: 10 } },
 	          '大数据量下优化建议：'
 	        ),
 	        '初始展开的节点少，向dom中插入节点就会少，速度更快。 ',
-	        _react2['default'].createElement('br', null),
+	        _react2.default.createElement('br', null),
 	        'treeNodes 总数据量尽量少变化，缓存并复用计算出的 treeNodes，可在 componentWillUpdate 等时机做判断。 ',
-	        _react2['default'].createElement('br', null)
+	        _react2.default.createElement('br', null)
 	      ),
-	      this.state.gData.length ? _react2['default'].createElement(
+	      this.state.gData.length ? _react2.default.createElement(
 	        'div',
 	        { style: { display: 'flex' } },
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'div',
 	          { style: { marginRight: 20 } },
-	          _react2['default'].createElement(
+	          _react2.default.createElement(
 	            'h3',
 	            null,
 	            'normal check'
 	          ),
-	          _react2['default'].createElement(
-	            _rcTree2['default'],
+	          _react2.default.createElement(
+	            _rcTree2.default,
 	            {
 	              checkable: true, multiple: this.props.multiple,
 	              defaultExpandedKeys: this.state.expandedKeys,
@@ -365,16 +361,16 @@ webpackJsonp([3],{
 	            treeNodes
 	          )
 	        ),
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2['default'].createElement(
+	          _react2.default.createElement(
 	            'h3',
 	            null,
 	            'checkStrictly'
 	          ),
-	          _react2['default'].createElement(
-	            _rcTree2['default'],
+	          _react2.default.createElement(
+	            _rcTree2.default,
 	            {
 	              checkable: true, checkStrictly: true, multiple: this.props.multiple,
 	              defaultExpandedKeys: this.state.expandedKeys,
@@ -389,28 +385,28 @@ webpackJsonp([3],{
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ },
 
-/***/ 198:
+/***/ 201:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _util = __webpack_require__(190);
+	var _util = __webpack_require__(192);
 	
-	var Gen = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Gen = _react2.default.createClass({
 	  displayName: 'Gen',
 	
 	  propTypes: {
@@ -457,48 +453,48 @@ webpackJsonp([3],{
 	    var y = _props.y;
 	    var z = _props.z;
 	
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { style: { padding: '0 20px' } },
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'h2',
 	        null,
 	        'big data generator'
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'form',
 	        { onSubmit: this.onGen },
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'span',
 	          { style: { marginRight: 10 } },
 	          'x: ',
-	          _react2['default'].createElement('input', { ref: 'x', defaultValue: x, type: 'number', min: '1', required: true, style: { width: 50 } })
+	          _react2.default.createElement('input', { ref: 'x', defaultValue: x, type: 'number', min: '1', required: true, style: { width: 50 } })
 	        ),
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'span',
 	          { style: { marginRight: 10 } },
 	          'y: ',
-	          _react2['default'].createElement('input', { ref: 'y', defaultValue: y, type: 'number', min: '1', required: true, style: { width: 50 } })
+	          _react2.default.createElement('input', { ref: 'y', defaultValue: y, type: 'number', min: '1', required: true, style: { width: 50 } })
 	        ),
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'span',
 	          { style: { marginRight: 10 } },
 	          'z: ',
-	          _react2['default'].createElement('input', { ref: 'z', defaultValue: z, type: 'number', min: '1', required: true, style: { width: 50 } })
+	          _react2.default.createElement('input', { ref: 'z', defaultValue: z, type: 'number', min: '1', required: true, style: { width: 50 } })
 	        ),
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'button',
 	          { type: 'submit' },
 	          'Generate'
 	        ),
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'p',
 	          null,
 	          'total nodes: ',
 	          this.state.nums || (0, _util.calcTotal)(x, y, z)
 	        )
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'p',
 	        { style: { fontSize: 12 } },
 	        'x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）'
@@ -506,7 +502,7 @@ webpackJsonp([3],{
 	    );
 	  }
 	});
-	exports['default'] = Gen;
+	exports.default = Gen;
 	module.exports = exports['default'];
 
 /***/ }

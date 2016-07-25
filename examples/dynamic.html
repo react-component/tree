@@ -7,7 +7,7 @@
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
+  <link href="https://a.alipayobjects.com/normalize.css/3.0.1/normalize.css" rel="stylesheet"/>
   <style>
     .highlight pre {
       padding: .8em 1em;
@@ -251,34 +251,34 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
+  
   <link rel="stylesheet" href="common.css" />
 </head>
 
 <body>
-<div class="container">
-  <div class="header">
-    <h1>rc-tree@1.3.6</h1>
+  <div class="container">
+    <div class="header">
+      <h1>rc-tree@1.3.6</h1>
 
-    <p>tree ui component for react</p>
-  </div>
-  <div class="example" id="__react-content"></div>
-  <script src="common.js?nowrap"></script>
-  <script src="dynamic.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js">import <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-import React from <span class="hljs-string">'react'</span>;
-import ReactDOM from <span class="hljs-string">'react-dom'</span>;
-import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
+      <p>tree ui component for react</p>
+    </div>
+    <div class="example" id="__react-content"></div>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateTreeNodes</span><span class="hljs-params">(treeNode)</span> </span>{
+    <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> Tree, { TreeNode } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateTreeNodes</span>(<span class="hljs-params">treeNode</span>) </span>{
   <span class="hljs-keyword">const</span> arr = [];
   <span class="hljs-keyword">const</span> key = treeNode.props.eventKey;
   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) {
-    arr.push({name: `leaf ${key}-${i}`, key: `${key}-${i}`});
+    arr.push({ name: <span class="hljs-string">`leaf <span class="hljs-subst">${key}</span>-<span class="hljs-subst">${i}</span>`</span>, key: <span class="hljs-string">`<span class="hljs-subst">${key}</span>-<span class="hljs-subst">${i}</span>`</span> });
   }
   <span class="hljs-keyword">return</span> arr;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setLeaf</span><span class="hljs-params">(treeData, curKey, level)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setLeaf</span>(<span class="hljs-params">treeData, curKey, level</span>) </span>{
   <span class="hljs-keyword">const</span> loopLeaf = (data, lev) =&gt; {
     <span class="hljs-keyword">const</span> l = lev - <span class="hljs-number">1</span>;
     data.forEach((item) =&gt; {
@@ -296,7 +296,7 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
   loopLeaf(treeData, level + <span class="hljs-number">1</span>);
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getNewTreeData</span><span class="hljs-params">(treeData, curKey, child, level)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getNewTreeData</span>(<span class="hljs-params">treeData, curKey, child, level</span>) </span>{
   <span class="hljs-keyword">const</span> loop = (data) =&gt; {
     <span class="hljs-keyword">if</span> (level &lt; <span class="hljs-number">1</span> || curKey.length - <span class="hljs-number">3</span> &gt; level * <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span>;
     data.forEach((item) =&gt; {
@@ -325,9 +325,9 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
     setTimeout(() =&gt; {
       <span class="hljs-keyword">this</span>.setState({
         treeData: [
-          {name: <span class="hljs-string">'pNode 01'</span>, key: <span class="hljs-string">'0-0'</span>},
-          {name: <span class="hljs-string">'pNode 02'</span>, key: <span class="hljs-string">'0-1'</span>},
-          {name: <span class="hljs-string">'pNode 03'</span>, key: <span class="hljs-string">'0-2'</span>, isLeaf: <span class="hljs-literal">true</span>},
+          { name: <span class="hljs-string">'pNode 01'</span>, key: <span class="hljs-string">'0-0'</span> },
+          { name: <span class="hljs-string">'pNode 02'</span>, key: <span class="hljs-string">'0-1'</span> },
+          { name: <span class="hljs-string">'pNode 03'</span>, key: <span class="hljs-string">'0-2'</span>, isLeaf: <span class="hljs-literal">true</span> },
         ],
         checkedKeys: [<span class="hljs-string">'0-0'</span>],
       });
@@ -343,11 +343,11 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
     });
   },
   onLoadData(treeNode) {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Promise((resolve) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve) =&gt; {
       setTimeout(() =&gt; {
         <span class="hljs-keyword">const</span> treeData = [...this.state.treeData];
         getNewTreeData(treeData, treeNode.props.eventKey, generateTreeNodes(treeNode), <span class="hljs-number">2</span>);
-        <span class="hljs-keyword">this</span>.setState({treeData});
+        <span class="hljs-keyword">this</span>.setState({ treeData });
         resolve();
       }, <span class="hljs-number">500</span>);
     });
@@ -358,7 +358,11 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
         <span class="hljs-keyword">if</span> (item.children) {
           <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.name}</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span>&gt;</span>{loop(item.children)}<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>;</span>
         }
-        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.name}</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">isLeaf</span>=<span class="hljs-value">{item.isLeaf}</span> <span class="hljs-attribute">disabled</span>=<span class="hljs-value">{item.key</span> =<span class="hljs-value">==</span> '<span class="hljs-attribute">0-0-0</span>' ? <span class="hljs-attribute">true</span> <span class="hljs-attribute">:</span> <span class="hljs-attribute">false</span>} /&gt;</span>;</span>
+        <span class="hljs-keyword">return</span> (
+          <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.name}</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">isLeaf</span>=<span class="hljs-value">{item.isLeaf}</span>
+            <span class="hljs-attribute">disabled</span>=<span class="hljs-value">{item.key</span> =<span class="hljs-value">==</span> '<span class="hljs-attribute">0-0-0</span>'}
+          /&gt;</span>
+        )</span>;
       });
     };
     <span class="hljs-keyword">const</span> treeNodes = loop(<span class="hljs-keyword">this</span>.state.treeData);
@@ -373,19 +377,22 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
           {treeNodes}
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    );
+    )</span>;
   },
 });
 
-ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
-</div>
-<a href="http://github.com/react-component/tree">
-  <img style="position: absolute; top: 0; right: 0; border: 0;"
-       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-       alt="Fork me on GitHub"
-       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
+  </div>
+  <a href="http://github.com/react-component/tree">
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+         alt="Fork me on GitHub"
+         data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+  </a>
+  
+  <script src="common.js?nowrap"></script>
+  <script src="dynamic.js?nowrap"></script>
 </body>
 
 </html>

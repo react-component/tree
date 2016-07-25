@@ -7,7 +7,7 @@
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
+  <link href="https://a.alipayobjects.com/normalize.css/3.0.1/normalize.css" rel="stylesheet"/>
   <style>
     .highlight pre {
       padding: .8em 1em;
@@ -251,27 +251,27 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
+  
   <link rel="stylesheet" href="common.css" /><link rel="stylesheet" href="dropdown.css" />
 </head>
 
 <body>
-<div class="container">
-  <div class="header">
-    <h1>rc-tree@1.3.6</h1>
+  <div class="container">
+    <div class="header">
+      <h1>rc-tree@1.3.6</h1>
 
-    <p>tree ui component for react</p>
-  </div>
-  <div class="example" id="__react-content"></div>
-  <script src="common.js?nowrap"></script>
-  <script src="dropdown.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint react/no-multi-comp:0 */</span>
-import <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-import <span class="hljs-string">'./dropdown.less'</span>;
-import React, {PropTypes} from <span class="hljs-string">'react'</span>;
-import ReactDOM from <span class="hljs-string">'react-dom'</span>;
-import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
-import Trigger from <span class="hljs-string">'rc-trigger'</span>;
-import { gData } from <span class="hljs-string">'./util'</span>;
+      <p>tree ui component for react</p>
+    </div>
+    <div class="example" id="__react-content"></div>
+
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint react/no-multi-comp:0 */</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./dropdown.less'</span>;
+<span class="hljs-keyword">import</span> React, { PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> Tree, { TreeNode } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
+<span class="hljs-keyword">import</span> Trigger <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-trigger'</span>;
+<span class="hljs-keyword">import</span> { gData } <span class="hljs-keyword">from</span> <span class="hljs-string">'./util'</span>;
 
 <span class="hljs-keyword">const</span> placements = {
   topLeft: {
@@ -377,16 +377,16 @@ import { gData } from <span class="hljs-string">'./util'</span>;
       <span class="hljs-keyword">const</span> overlayNode = <span class="hljs-keyword">this</span>.refs.trigger.getPopupDomNode();
       <span class="hljs-keyword">const</span> rootNode = ReactDOM.findDOMNode(<span class="hljs-keyword">this</span>);
       <span class="hljs-keyword">if</span> (rootNode.offsetWidth &gt; overlayNode.offsetWidth) {
-        overlayNode.style.width = rootNode.offsetWidth + <span class="hljs-string">'px'</span>;
+        overlayNode.style.width = <span class="hljs-string">`<span class="hljs-subst">${rootNode.offsetWidth}</span>px`</span>;
       }
     }
   },
   render() {
-    <span class="hljs-keyword">const</span> {prefixCls, children,
+    <span class="hljs-keyword">const</span> { prefixCls, children,
       transitionName, animation,
       align, placement,
       overlayClassName, overlayStyle,
-      trigger} = <span class="hljs-keyword">this</span>.props;
+      trigger } = <span class="hljs-keyword">this</span>.props;
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Trigger</span>
         <span class="hljs-attribute">prefixCls</span>=<span class="hljs-value">{prefixCls}</span>
@@ -404,67 +404,67 @@ import { gData } from <span class="hljs-string">'./util'</span>;
         <span class="hljs-attribute">popup</span>=<span class="hljs-value">{this.getPopupElement()}</span>
         <span class="hljs-attribute">onPopupVisibleChange</span>=<span class="hljs-value">{this.onVisibleChange}</span>
       &gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-title">Trigger</span>&gt;</span>
-    );
+    )</span>;
   },
 });
 
-const Demo = React.createClass({
+<span class="hljs-keyword">const</span> Demo = React.createClass({
   getInitialState() {
-    return {
-      visible: false,
-      inputValue: '',
-      sel: '',
+    <span class="hljs-keyword">return</span> {
+      visible: <span class="hljs-literal">false</span>,
+      inputValue: <span class="hljs-string">''</span>,
+      sel: <span class="hljs-string">''</span>,
       expandedKeys: [],
-      autoExpandParent: true,
+      autoExpandParent: <span class="hljs-literal">true</span>,
     };
   },
   onChange(event) {
-    this.filterKeys = [];
-    this.setState({
+    <span class="hljs-keyword">this</span>.filterKeys = [];
+    <span class="hljs-keyword">this</span>.setState({
       inputValue: event.target.value,
     });
   },
   onVisibleChange(visible) {
-    this.setState({
-      visible: visible,
+    <span class="hljs-keyword">this</span>.setState({
+      visible,
     });
   },
   onSelect(selectedKeys, info) {
-    console.log('selected: ', info);
-    this.setState({
-      visible: false,
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected: '</span>, info);
+    <span class="hljs-keyword">this</span>.setState({
+      visible: <span class="hljs-literal">false</span>,
       sel: info.node.props.title,
     });
   },
   onExpand(expandedKeys) {
-    this.filterKeys = undefined;
-    console.log('onExpand', arguments);
-    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-    // or, you can remove all expanded chilren keys.
-    this.setState({
+    <span class="hljs-keyword">this</span>.filterKeys = <span class="hljs-literal">undefined</span>;
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, <span class="hljs-built_in">arguments</span>);
+    <span class="hljs-comment">// if not set autoExpandParent to false, if children expanded, parent can not collapse.</span>
+    <span class="hljs-comment">// or, you can remove all expanded chilren keys.</span>
+    <span class="hljs-keyword">this</span>.setState({
       expandedKeys,
-      autoExpandParent: false,
+      autoExpandParent: <span class="hljs-literal">false</span>,
     });
   },
   filterTreeNode(treeNode) {
-    console.log(treeNode);
-    // 根据 key 进行搜索，可以根据其他数据，如 value
-    return this.filterFn(treeNode.props.eventKey);
+    <span class="hljs-built_in">console</span>.log(treeNode);
+    <span class="hljs-comment">// 根据 key 进行搜索，可以根据其他数据，如 value</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.filterFn(treeNode.props.eventKey);
   },
   filterFn(key) {
-    if (this.state.inputValue &amp;&amp; key.indexOf(this.state.inputValue) &gt; -1) {
-      return true;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.inputValue &amp;&amp; key.indexOf(<span class="hljs-keyword">this</span>.state.inputValue) &gt; -<span class="hljs-number">1</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     }
-    return false;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
   },
   render() {
-    const loop = data =&gt; {
-      return data.map((item) =&gt; {
-        if (this.filterKeys &amp;&amp; this.filterFn(item.key)) {
-          this.filterKeys.push(item.key);
+    <span class="hljs-keyword">const</span> loop = data =&gt; {
+      <span class="hljs-keyword">return</span> data.map((item) =&gt; {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.filterKeys &amp;&amp; <span class="hljs-keyword">this</span>.filterFn(item.key)) {
+          <span class="hljs-keyword">this</span>.filterKeys.push(item.key);
         }
-        if (item.children) {
-          return <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span>&gt;</span>{loop(item.children)}<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>;</span>
+        <span class="hljs-keyword">if</span> (item.children) {
+          <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span>&gt;</span>{loop(item.children)}<span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>;</span>
         }
         <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.key}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{item.key}</span> /&gt;</span>;</span>
       });
@@ -485,9 +485,9 @@ const Demo = React.createClass({
       &gt;</span>
         {loop(gData)}
       <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>);
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
 
-    return (<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{padding:</span> '<span class="hljs-attribute">10px</span> <span class="hljs-attribute">30px</span>'}}&gt;</span>
+    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">padding:</span> '<span class="hljs-attribute">10px</span> <span class="hljs-attribute">30px</span>' }}&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>tree in dropdown<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">DropdownTree</span>
         <span class="hljs-attribute">trigger</span>=<span class="hljs-value">{['click']}</span>
@@ -498,19 +498,22 @@ const Demo = React.createClass({
       &gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"demo-dropdown-trigger"</span>&gt;</span>{this.state.sel}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">DropdownTree</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>);
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
   },
 });
 
-ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
-</div>
-<a href="http://github.com/react-component/tree">
-  <img style="position: absolute; top: 0; right: 0; border: 0;"
-       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-       alt="Fork me on GitHub"
-       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
+  </div>
+  <a href="http://github.com/react-component/tree">
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+         alt="Fork me on GitHub"
+         data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+  </a>
+  
+  <script src="common.js?nowrap"></script>
+  <script src="dropdown.js?nowrap"></script>
 </body>
 
 </html>

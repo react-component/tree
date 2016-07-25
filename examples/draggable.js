@@ -3,19 +3,17 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(227);
+	module.exports = __webpack_require__(229);
 
 
 /***/ },
 
-/***/ 190:
+/***/ 192:
 /***/ function(module, exports) {
 
-	/* eslint no-loop-func: 0*/
-	
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.generateData = generateData;
@@ -24,6 +22,7 @@ webpackJsonp([5],{
 	exports.filterParentPosition = filterParentPosition;
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 	exports.getRadioSelectKeys = getRadioSelectKeys;
+	/* eslint no-loop-func: 0*/
 	
 	function generateData() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
@@ -56,7 +55,6 @@ webpackJsonp([5],{
 	  _loop(z);
 	  return gData;
 	}
-	
 	function calcTotal() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
 	  var y = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
@@ -68,24 +66,20 @@ webpackJsonp([5],{
 	  };
 	  return rec(z + 1);
 	}
-	
 	console.log('总节点数（单个tree）：', calcTotal());
 	// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
 	
-	var gData = generateData();
-	
-	exports.gData = gData;
+	var gData = exports.gData = generateData();
 	
 	function isInclude(smallArray, bigArray) {
 	  return smallArray.every(function (ii, i) {
 	    return ii === bigArray[i];
 	  });
 	}
-	
 	// console.log(isInclude(['0', '1'], ['0', '10', '1']));
 	
-	// arr.length === 628, use time: ~20ms
 	
+	// arr.length === 628, use time: ~20ms
 	function filterParentPosition(arr) {
 	  var levelObj = {};
 	  arr.forEach(function (item) {
@@ -97,10 +91,10 @@ webpackJsonp([5],{
 	  });
 	  var levelArr = Object.keys(levelObj).sort();
 	
-	  var _loop2 = function (i) {
+	  var _loop2 = function _loop2(i) {
 	    if (levelArr[i + 1]) {
 	      levelObj[levelArr[i]].forEach(function (ii) {
-	        var _loop3 = function (j) {
+	        var _loop3 = function _loop3(j) {
 	          levelObj[levelArr[j]].forEach(function (_i, index) {
 	            if (isInclude(ii.split('-'), _i.split('-'))) {
 	              levelObj[levelArr[j]][index] = null;
@@ -127,8 +121,10 @@ webpackJsonp([5],{
 	  });
 	  return nArr;
 	}
+	// console.log(filterParentPosition(
+	//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
+	// ));
 	
-	// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
 	
 	function loopData(data, callback) {
 	  var loop = function loop(d) {
@@ -223,18 +219,14 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 227:
+/***/ 229:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-	
 	__webpack_require__(2);
 	
-	__webpack_require__(228);
+	__webpack_require__(230);
 	
 	var _react = __webpack_require__(3);
 	
@@ -244,15 +236,18 @@ webpackJsonp([5],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(172);
+	var _rcTree = __webpack_require__(174);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _util = __webpack_require__(190);
+	var _util = __webpack_require__(192);
 	
-	var Demo = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var Demo = _react2.default.createClass({
 	  displayName: 'Demo',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      gData: _util.gData,
@@ -282,14 +277,14 @@ webpackJsonp([5],{
 	      });
 	    };
 	    var data = [].concat(_toConsumableArray(this.state.gData));
-	    var dragObj = undefined;
+	    var dragObj = void 0;
 	    loop(data, dragKey, function (item, index, arr) {
 	      arr.splice(index, 1);
 	      dragObj = item;
 	    });
 	    if (info.dropToGap) {
-	      var ar = undefined;
-	      var i = undefined;
+	      var ar = void 0;
+	      var i = void 0;
 	      loop(data, dropKey, function (item, index, arr) {
 	        ar = arr;
 	        i = index;
@@ -318,33 +313,33 @@ webpackJsonp([5],{
 	    var loop = function loop(data) {
 	      return data.map(function (item) {
 	        if (item.children) {
-	          return _react2['default'].createElement(
+	          return _react2.default.createElement(
 	            _rcTree.TreeNode,
 	            { key: item.key, title: item.title },
 	            loop(item.children)
 	          );
 	        }
-	        return _react2['default'].createElement(_rcTree.TreeNode, { key: item.key, title: item.title });
+	        return _react2.default.createElement(_rcTree.TreeNode, { key: item.key, title: item.title });
 	      });
 	    };
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { className: 'draggable-demo' },
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'h2',
 	        null,
 	        'draggable '
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'p',
 	        null,
 	        'drag a node into another node'
 	      ),
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'div',
 	        { className: 'draggable-container' },
-	        _react2['default'].createElement(
-	          _rcTree2['default'],
+	        _react2.default.createElement(
+	          _rcTree2.default,
 	          {
 	            expandedKeys: this.state.expandedKeys,
 	            onExpand: this.onExpand, autoExpandParent: this.state.autoExpandParent,
@@ -360,16 +355,12 @@ webpackJsonp([5],{
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ },
 
-/***/ 228:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ }
+/***/ 230:
+2
 
 });
 //# sourceMappingURL=draggable.js.map
