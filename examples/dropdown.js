@@ -121,21 +121,24 @@ const DropdownTree = React.createClass({
       align, placement,
       overlayClassName, overlayStyle,
       trigger} = this.props;
-    return (<Trigger prefixCls={prefixCls}
-                     ref="trigger"
-                     popupClassName={overlayClassName}
-                     popupStyle={overlayStyle}
-                     builtinPlacements={placements}
-                     action={trigger}
-                     popupPlacement={placement}
-                     popupAlign={align}
-                     popupTransitionName={transitionName}
-                     popupAnimation={animation}
-                     popupVisible={this.state.visible}
-                     afterPopupVisibleChange={this.afterVisibleChange}
-                     popup={this.getPopupElement()}
-                     onPopupVisibleChange={this.onVisibleChange}
-      >{children}</Trigger>);
+    return (
+      <Trigger
+        prefixCls={prefixCls}
+        ref="trigger"
+        popupClassName={overlayClassName}
+        popupStyle={overlayStyle}
+        builtinPlacements={placements}
+        action={trigger}
+        popupPlacement={placement}
+        popupAlign={align}
+        popupTransitionName={transitionName}
+        popupAnimation={animation}
+        popupVisible={this.state.visible}
+        afterPopupVisibleChange={this.afterVisibleChange}
+        popup={this.getPopupElement()}
+        onPopupVisibleChange={this.onVisibleChange}
+      >{children}</Trigger>
+    );
   },
 });
 
@@ -212,18 +215,21 @@ const Demo = React.createClass({
       <Tree
         onExpand={this.onExpand} expandedKeys={expandedKeys}
         autoExpandParent={autoExpandParent}
-        onSelect={this.onSelect} filterTreeNode={this.filterTreeNode}>
+        onSelect={this.onSelect} filterTreeNode={this.filterTreeNode}
+      >
         {loop(gData)}
       </Tree>
     </div>);
 
     return (<div style={{padding: '10px 30px'}}>
       <h3>tree in dropdown</h3>
-      <DropdownTree trigger={['click']}
-         onVisibleChange={this.onVisibleChange}
-         visible={this.state.visible}
-         closeOnSelect={false}
-         overlay={overlay} animation="slide-up">
+      <DropdownTree
+        trigger={['click']}
+        onVisibleChange={this.onVisibleChange}
+        visible={this.state.visible}
+        closeOnSelect={false}
+        overlay={overlay} animation="slide-up"
+      >
         <div className="demo-dropdown-trigger">{this.state.sel}</div>
       </DropdownTree>
     </div>);

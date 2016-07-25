@@ -81,13 +81,14 @@ const Demo = React.createClass({
       <h2>draggable </h2>
       <p>drag a node into another node</p>
       <div className="draggable-container">
-        <Tree expandedKeys={this.state.expandedKeys}
-              onExpand={this.onExpand} autoExpandParent={this.state.autoExpandParent}
-              draggable
-              onDragStart={this.onDragStart}
-              onDragEnter={this.onDragEnter}
-              onDrop={this.onDrop}
-              >
+        <Tree
+          expandedKeys={this.state.expandedKeys}
+          onExpand={this.onExpand} autoExpandParent={this.state.autoExpandParent}
+          draggable
+          onDragStart={this.onDragStart}
+          onDragEnter={this.onDragEnter}
+          onDrop={this.onDrop}
+        >
           {loop(this.state.gData)}
         </Tree>
       </div>

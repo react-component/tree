@@ -75,9 +75,11 @@ const Demo = React.createClass({
     return (
       <div>
         <h2>right click contextmenu</h2>
-        <Tree onRightClick={this.onRightClick} onSelect={this.onSelect}
+        <Tree
+          onRightClick={this.onRightClick} onSelect={this.onSelect}
           defaultSelectedKeys={['0-1', '0-1-1']}
-          multiple defaultExpandAll showLine>
+          multiple defaultExpandAll showLine
+        >
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
               <TreeNode title="leaf0" />
@@ -90,8 +92,11 @@ const Demo = React.createClass({
           </TreeNode>
         </Tree>
         <h2>hover popup contextmenu</h2>
-        <Tree onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onSelect={this.onSelect}
-           multiple defaultExpandAll showLine>
+        <Tree
+          onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
+          onSelect={this.onSelect}
+          multiple defaultExpandAll showLine
+        >
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
               <TreeNode title="leaf" />

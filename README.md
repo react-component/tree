@@ -102,6 +102,14 @@ see examples
 |key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
 |isLeaf | whether it's leaf node | bool | false |
 
+## note
+
+The number of treeNodes can be very large, but when enable `checkable`, 
+it will spend more computing time, so we cached some calculations(e.g. `this.treeNodesStates`), 
+to avoid double computing. But, this bring some restrictions, 
+**when you async load treeNodes, you should render tree like this** 
+`{this.state.treeData.length ? <Tree ...>{this.state.treeData.map(t => <TreeNode ... />)}</Tree> : 'loading tree'}`
+
 
 ## Development
 
