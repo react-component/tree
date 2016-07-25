@@ -356,10 +356,12 @@ webpackJsonp([3],{
 	          ),
 	          _react2['default'].createElement(
 	            _rcTree2['default'],
-	            { checkable: true, multiple: this.props.multiple,
+	            {
+	              checkable: true, multiple: this.props.multiple,
 	              defaultExpandedKeys: this.state.expandedKeys,
 	              onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
-	              onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
+	              onSelect: this.onSelect, selectedKeys: this.state.selectedKeys
+	            },
 	            treeNodes
 	          )
 	        ),
@@ -373,10 +375,12 @@ webpackJsonp([3],{
 	          ),
 	          _react2['default'].createElement(
 	            _rcTree2['default'],
-	            { checkable: true, checkStrictly: true, multiple: this.props.multiple,
+	            {
+	              checkable: true, checkStrictly: true, multiple: this.props.multiple,
 	              defaultExpandedKeys: this.state.expandedKeys,
 	              onCheck: this.onCheckStrictly, checkedKeys: this.state.checkedKeys1,
-	              onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
+	              onSelect: this.onSelect, selectedKeys: this.state.selectedKeys
+	            },
 	            treeNodes
 	          )
 	        )

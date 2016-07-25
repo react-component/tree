@@ -347,13 +347,14 @@ import { gData } from <span class="hljs-string">'./util'</span>;
       <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>draggable <span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>drag a node into another node<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"draggable-container"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
-              <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">autoExpandParent</span>=<span class="hljs-value">{this.state.autoExpandParent}</span>
-              <span class="hljs-attribute">draggable</span>
-              <span class="hljs-attribute">onDragStart</span>=<span class="hljs-value">{this.onDragStart}</span>
-              <span class="hljs-attribute">onDragEnter</span>=<span class="hljs-value">{this.onDragEnter}</span>
-              <span class="hljs-attribute">onDrop</span>=<span class="hljs-value">{this.onDrop}</span>
-              &gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
+          <span class="hljs-attribute">expandedKeys</span>=<span class="hljs-value">{this.state.expandedKeys}</span>
+          <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span> <span class="hljs-attribute">autoExpandParent</span>=<span class="hljs-value">{this.state.autoExpandParent}</span>
+          <span class="hljs-attribute">draggable</span>
+          <span class="hljs-attribute">onDragStart</span>=<span class="hljs-value">{this.onDragStart}</span>
+          <span class="hljs-attribute">onDragEnter</span>=<span class="hljs-value">{this.onDragEnter}</span>
+          <span class="hljs-attribute">onDrop</span>=<span class="hljs-value">{this.onDrop}</span>
+        &gt;</span>
           {loop(this.state.gData)}
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>

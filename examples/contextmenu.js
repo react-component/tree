@@ -123,9 +123,11 @@ webpackJsonp([4],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { onRightClick: this.onRightClick, onSelect: this.onSelect,
+	        {
+	          onRightClick: this.onRightClick, onSelect: this.onSelect,
 	          defaultSelectedKeys: ['0-1', '0-1-1'],
-	          multiple: true, defaultExpandAll: true, showLine: true },
+	          multiple: true, defaultExpandAll: true, showLine: true
+	        },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          { title: 'parent 1', key: '0-1' },
@@ -150,8 +152,11 @@ webpackJsonp([4],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { onMouseEnter: this.onMouseEnter, onMouseLeave: this.onMouseLeave, onSelect: this.onSelect,
-	          multiple: true, defaultExpandAll: true, showLine: true },
+	        {
+	          onMouseEnter: this.onMouseEnter, onMouseLeave: this.onMouseLeave,
+	          onSelect: this.onSelect,
+	          multiple: true, defaultExpandAll: true, showLine: true
+	        },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          { title: 'parent 1', key: '0-1' },

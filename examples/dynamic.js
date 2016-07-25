@@ -139,9 +139,11 @@ webpackJsonp([7],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { onSelect: this.onSelect,
+	        {
+	          onSelect: this.onSelect,
 	          checkable: true, onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
-	          loadData: this.onLoadData },
+	          loadData: this.onLoadData
+	        },
 	        treeNodes
 	      )
 	    );

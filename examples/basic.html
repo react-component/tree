@@ -317,12 +317,14 @@ import Tree, {TreeNode} from <span class="hljs-string">'rc-tree'</span>;
     <span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>);
     return (<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{margin:</span> '<span class="hljs-attribute">0</span> <span class="hljs-attribute">20px</span>'}}&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>simple<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"myCls"</span> <span class="hljs-attribute">showLine</span> <span class="hljs-attribute">checkable</span>
-          <span class="hljs-attribute">defaultExpandedKeys</span>=<span class="hljs-value">{this.state.defaultExpandedKeys}</span>
-          <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span>
-          <span class="hljs-attribute">defaultSelectedKeys</span>=<span class="hljs-value">{this.state.defaultSelectedKeys}</span>
-          <span class="hljs-attribute">defaultCheckedKeys</span>=<span class="hljs-value">{this.state.defaultCheckedKeys}</span>
-          <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
+        <span class="hljs-attribute">className</span>=<span class="hljs-value">"myCls"</span> <span class="hljs-attribute">showLine</span> <span class="hljs-attribute">checkable</span>
+        <span class="hljs-attribute">defaultExpandedKeys</span>=<span class="hljs-value">{this.state.defaultExpandedKeys}</span>
+        <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span>
+        <span class="hljs-attribute">defaultSelectedKeys</span>=<span class="hljs-value">{this.state.defaultSelectedKeys}</span>
+        <span class="hljs-attribute">defaultCheckedKeys</span>=<span class="hljs-value">{this.state.defaultCheckedKeys}</span>
+        <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span> <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span>
+      &gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0"</span>&gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">{customLabel}</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-0"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-0-0"</span> /&gt;</span>

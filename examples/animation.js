@@ -77,8 +77,11 @@ webpackJsonp([0],[
 	  _react2['default'].createElement('style', { dangerouslySetInnerHTML: { __html: STYLE } }),
 	  _react2['default'].createElement(
 	    _rcTree2['default'],
-	    { defaultExpandAll: false, defaultExpandedKeys: ['p1'],
-	      openAnimation: animation },
+	    {
+	      defaultExpandAll: false,
+	      defaultExpandedKeys: ['p1'],
+	      openAnimation: animation
+	    },
 	    _react2['default'].createElement(
 	      _rcTree.TreeNode,
 	      { title: 'parent 1', key: 'p1' },

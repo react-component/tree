@@ -318,8 +318,11 @@ import cssAnimation from <span class="hljs-string">'css-animation'</span>;
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>expanded<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">dangerouslySetInnerHTML</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">__html:</span> <span class="hljs-attribute">STYLE</span> }}/&gt;</span><span class="css">
-    &lt;<span class="hljs-tag">Tree</span> <span class="hljs-tag">defaultExpandAll</span>=<span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">false} defaultExpandedKeys={['p1']}
-          openAnimation={animation}&gt;
+    &lt;<span class="hljs-tag">Tree</span>
+      <span class="hljs-tag">defaultExpandAll</span>=<span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">false}
+      defaultExpandedKeys={['p1']}
+      openAnimation={animation}
+    &gt;
       &lt;TreeNode title="parent 1" key="p1"&gt;
         &lt;TreeNode key="p10" title="leaf"/&gt;
         &lt;TreeNode title="parent 1-1" key="p11"&gt;

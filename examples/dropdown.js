@@ -2908,7 +2908,8 @@ webpackJsonp([6],{
 	
 	    return _react2['default'].createElement(
 	      _rcTrigger2['default'],
-	      { prefixCls: prefixCls,
+	      {
+	        prefixCls: prefixCls,
 	        ref: 'trigger',
 	        popupClassName: overlayClassName,
 	        popupStyle: overlayStyle,
@@ -3013,7 +3014,8 @@ webpackJsonp([6],{
 	        {
 	          onExpand: this.onExpand, expandedKeys: expandedKeys,
 	          autoExpandParent: autoExpandParent,
-	          onSelect: this.onSelect, filterTreeNode: this.filterTreeNode },
+	          onSelect: this.onSelect, filterTreeNode: this.filterTreeNode
+	        },
 	        loop(_util.gData)
 	      )
 	    );
@@ -3028,11 +3030,13 @@ webpackJsonp([6],{
 	      ),
 	      _react2['default'].createElement(
 	        DropdownTree,
-	        { trigger: ['click'],
+	        {
+	          trigger: ['click'],
 	          onVisibleChange: this.onVisibleChange,
 	          visible: this.state.visible,
 	          closeOnSelect: false,
-	          overlay: overlay, animation: 'slide-up' },
+	          overlay: overlay, animation: 'slide-up'
+	        },
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'demo-dropdown-trigger' },

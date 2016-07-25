@@ -105,12 +105,14 @@ webpackJsonp([1],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { className: 'myCls', showLine: true, checkable: true,
+	        {
+	          className: 'myCls', showLine: true, checkable: true,
 	          defaultExpandedKeys: this.state.defaultExpandedKeys,
 	          onExpand: this.onExpand,
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,
 	          defaultCheckedKeys: this.state.defaultCheckedKeys,
-	          onSelect: this.onSelect, onCheck: this.onCheck },
+	          onSelect: this.onSelect, onCheck: this.onCheck
+	        },
 	        _react2['default'].createElement(
 	          _rcTree.TreeNode,
 	          { title: 'parent 1', key: '0-0' },

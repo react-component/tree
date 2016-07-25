@@ -345,7 +345,8 @@ webpackJsonp([5],{
 	        { className: 'draggable-container' },
 	        _react2['default'].createElement(
 	          _rcTree2['default'],
-	          { expandedKeys: this.state.expandedKeys,
+	          {
+	            expandedKeys: this.state.expandedKeys,
 	            onExpand: this.onExpand, autoExpandParent: this.state.autoExpandParent,
 	            draggable: true,
 	            onDragStart: this.onDragStart,

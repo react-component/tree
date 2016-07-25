@@ -15,6 +15,8 @@ webpackJsonp([2],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	
 	__webpack_require__(2);
 	
 	var _react = __webpack_require__(3);
@@ -57,7 +59,8 @@ webpackJsonp([2],{
 	      // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
 	      checkedKeys: ['0-0-0-key'],
 	      checkStrictlyKeys: { checked: ['0-0-1-key'], halfChecked: [] },
-	      selectedKeys: []
+	      selectedKeys: [],
+	      treeData: []
 	    };
 	  },
 	  onExpand: function onExpand(expandedKeys) {
@@ -115,11 +118,19 @@ webpackJsonp([2],{
 	    });
 	  },
 	  showModal: function showModal() {
+	    var _this = this;
+	
 	    this.setState({
 	      expandedKeys: ['0-0-0-key', '0-0-1-key'],
 	      checkedKeys: ['0-0-0-key'],
 	      visible: true
 	    });
+	    // simulate Ajax
+	    setTimeout(function () {
+	      _this.setState({
+	        treeData: [].concat(_toConsumableArray(_util.gData))
+	      });
+	    }, 2000);
 	  },
 	  triggerChecked: function triggerChecked() {
 	    this.setState({
@@ -156,16 +167,20 @@ webpackJsonp([2],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcDialog2['default'],
-	        { title: 'TestDemo', visible: this.state.visible,
-	          onOk: this.handleOk, onClose: this.onClose },
-	        _react2['default'].createElement(
+	        {
+	          title: 'TestDemo', visible: this.state.visible,
+	          onOk: this.handleOk, onClose: this.onClose
+	        },
+	        this.state.treeData.length ? _react2['default'].createElement(
 	          _rcTree2['default'],
-	          { checkable: true, className: 'dialog-tree',
+	          {
+	            checkable: true, className: 'dialog-tree',
 	            onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
 	            autoExpandParent: this.state.autoExpandParent,
-	            onCheck: this.onCheck, checkedKeys: this.state.checkedKeys },
-	          loop(_util.gData)
-	        )
+	            onCheck: this.onCheck, checkedKeys: this.state.checkedKeys
+	          },
+	          loop(this.state.treeData)
+	        ) : 'loading...'
 	      ),
 	      _react2['default'].createElement(
 	        'h2',
@@ -174,11 +189,13 @@ webpackJsonp([2],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { checkable: true,
+	        {
+	          checkable: true,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
 	          autoExpandParent: this.state.autoExpandParent,
 	          onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
-	          onSelect: this.onSelect, selectedKeys: this.state.selectedKeys },
+	          onSelect: this.onSelect, selectedKeys: this.state.selectedKeys
+	        },
 	        loop(_util.gData)
 	      ),
 	      _react2['default'].createElement(
@@ -193,11 +210,13 @@ webpackJsonp([2],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { checkable: true, multiple: this.props.multiple, defaultExpandAll: true,
+	        {
+	          checkable: true, multiple: this.props.multiple, defaultExpandAll: true,
 	          onExpand: this.onExpand, expandedKeys: this.state.expandedKeys,
 	          onCheck: this.onCheckStrictly,
 	          checkedKeys: this.state.checkStrictlyKeys,
-	          checkStrictly: true },
+	          checkStrictly: true
+	        },
 	        loop(_util.gData)
 	      ),
 	      _react2['default'].createElement(
@@ -207,9 +226,11 @@ webpackJsonp([2],{
 	      ),
 	      _react2['default'].createElement(
 	        _rcTree2['default'],
-	        { multiple: true, defaultExpandAll: true,
+	        {
+	          multiple: true, defaultExpandAll: true,
 	          onSelect: this.onRbSelect,
-	          selectedKeys: (0, _util.getRadioSelectKeys)(_util.gData, this.state.selectedKeys) },
+	          selectedKeys: (0, _util.getRadioSelectKeys)(_util.gData, this.state.selectedKeys)
+	        },
 	        loop(_util.gData)
 	      )
 	    );

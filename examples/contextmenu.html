@@ -341,9 +341,11 @@ import Tooltip from <span class="hljs-string">'rc-tooltip'</span>;
     return (
       <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>right click contextmenu<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">onRightClick</span>=<span class="hljs-value">{this.onRightClick}</span> <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
+          <span class="hljs-attribute">onRightClick</span>=<span class="hljs-value">{this.onRightClick}</span> <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span>
           <span class="hljs-attribute">defaultSelectedKeys</span>=<span class="hljs-value">{['0-1',</span> '<span class="hljs-attribute">0-1-1</span>']}
-          <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">defaultExpandAll</span> <span class="hljs-attribute">showLine</span>&gt;</span>
+          <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">defaultExpandAll</span> <span class="hljs-attribute">showLine</span>
+        &gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-1"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-0"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-1-1"</span>&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf0"</span> /&gt;</span>
@@ -356,8 +358,11 @@ import Tooltip from <span class="hljs-string">'rc-tooltip'</span>;
           <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>hover popup contextmenu<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span> <span class="hljs-attribute">onMouseEnter</span>=<span class="hljs-value">{this.onMouseEnter}</span> <span class="hljs-attribute">onMouseLeave</span>=<span class="hljs-value">{this.onMouseLeave}</span> <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span>
-           <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">defaultExpandAll</span> <span class="hljs-attribute">showLine</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
+          <span class="hljs-attribute">onMouseEnter</span>=<span class="hljs-value">{this.onMouseEnter}</span> <span class="hljs-attribute">onMouseLeave</span>=<span class="hljs-value">{this.onMouseLeave}</span>
+          <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span>
+          <span class="hljs-attribute">multiple</span> <span class="hljs-attribute">defaultExpandAll</span> <span class="hljs-attribute">showLine</span>
+        &gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-1"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-0"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-1-1"</span>&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> /&gt;</span>

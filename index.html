@@ -1031,6 +1031,11 @@
 </tr>
 </tbody>
 </table>
+<h2>note<a id="user-content-note" name="note" class="anchor" aria-hidden="true" href="#note"><span class="octicon octicon-link"></span></a></h2><p>The number of treeNodes can be very large, but when enable <code>checkable</code>, 
+it will spend more computing time, so we cached some calculations(e.g. <code>this.treeNodesStates</code>), 
+to avoid double computing. But, this bring some restrictions, 
+<strong>when you async load treeNodes, you should render tree like this</strong> 
+<code>{this.state.treeData.length ? &lt;Tree ...&gt;{this.state.treeData.map(t =&gt; &lt;TreeNode ... /&gt;)}&lt;/Tree&gt; : &#39;loading tree&#39;}</code></p>
 <h2>Development<a id="user-content-development" name="development" class="anchor" aria-hidden="true" href="#development"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm install
 npm start</code></pre></div><h2>Test Case<a id="user-content-test-case" name="test-case" class="anchor" aria-hidden="true" href="#test-case"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8018/tests/runner.html?coverage" title="null">http://localhost:8018/tests/runner.html?coverage</a></p>
 <h2>Coverage<a id="user-content-coverage" name="coverage" class="anchor" aria-hidden="true" href="#coverage"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8018/tests/runner.html?coverage" title="null">http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8018/tests/runner.html?coverage</a></p>
