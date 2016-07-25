@@ -1,8 +1,8 @@
 import 'rc-tree/assets/index.less';
 import './basic.less';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Tree, {TreeNode} from 'rc-tree';
+import Tree, { TreeNode } from 'rc-tree';
 
 const Demo = React.createClass({
   propTypes: {
@@ -46,10 +46,10 @@ const Demo = React.createClass({
   render() {
     const customLabel = (<span className="cus-label">
       <span>operations: </span>
-      <span style={{color: 'blue'}} onClick={this.onEdit}>Edit</span>&nbsp;
-      <span style={{color: 'red'}} onClick={this.onDel}>Delete</span>
+      <span style={{ color: 'blue' }} onClick={this.onEdit}>Edit</span>&nbsp;
+      <span style={{ color: 'red' }} onClick={this.onDel}>Delete</span>
     </span>);
-    return (<div style={{margin: '0 20px'}}>
+    return (<div style={{ margin: '0 20px' }}>
       <h2>simple</h2>
       <Tree
         className="myCls" showLine checkable

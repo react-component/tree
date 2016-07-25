@@ -1,8 +1,10 @@
 language: node_js
 
+sudo: false
+
 notifications:
   email:
-  - yiminghe@gmail.com
+  - hualei5280@gmail.com
 
 node_js:
 - 4.0.0
@@ -14,7 +16,8 @@ before_install:
       echo "Only docs were updated, stopping build process."
       exit
     fi
-
+    npm install npm@3.x -g
+    phantomjs --version
 script:
 - |
     if [ "$TEST_TYPE" = test ]; then
@@ -22,16 +25,11 @@ script:
     else
       npm run $TEST_TYPE
     fi
-
 env:
   matrix:
   - TEST_TYPE=lint
-  - TEST_TYPE=browser-test
-  - TEST_TYPE=browser-test-cover
-  - TEST_TYPE=saucelabs
-  global:
-  - secure: GNfm+vqR2uIrikZs4wNYqWCp2StdmdMq9LbXHkS/FVYW1ZToeDpWjYj42ZlIXm6EUQTs2rR6/uRA4SACogMnr/rJXE6pDceiLpAxoWG0UlHQm4crGe4aR+R+oOf1FH+jyxTTInempKWtMJQeYW5yvyYNxn5eYO6bzqq9XRuuf68=
-  - secure: JeMcf6F+Z7I+Q6gAEujsP4EbI4grmj+Bn0Gou4A3MmWJFrzEb6y7RZVt1+yZKZgNnZWgxlTUpCDz1pNpgZG+hK8fO8var/Ij1dzOxNWDluK+tcrXsgHxgD87Fv5nl/VmyB0Bs5Z6eOkhDThikVhuSk8UeqJMXncZvoYvCf1Lvzo=
+  - TEST_TYPE=test
+  - TEST_TYPE=coverage
 
 
 matrix:

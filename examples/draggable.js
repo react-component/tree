@@ -2,13 +2,13 @@ import 'rc-tree/assets/index.less';
 import './draggable.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tree, {TreeNode} from 'rc-tree';
+import Tree, { TreeNode } from 'rc-tree';
 import { gData } from './util';
 
 const Demo = React.createClass({
   getInitialState() {
     return {
-      gData: gData,
+      gData,
       autoExpandParent: true,
       expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
     };

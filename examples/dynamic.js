@@ -1,13 +1,13 @@
 import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tree, {TreeNode} from 'rc-tree';
+import Tree, { TreeNode } from 'rc-tree';
 
 function generateTreeNodes(treeNode) {
   const arr = [];
   const key = treeNode.props.eventKey;
   for (let i = 0; i < 3; i++) {
-    arr.push({name: `leaf ${key}-${i}`, key: `${key}-${i}`});
+    arr.push({ name: `leaf ${key}-${i}`, key: `${key}-${i}` });
   }
   return arr;
 }
@@ -59,9 +59,9 @@ const Demo = React.createClass({
     setTimeout(() => {
       this.setState({
         treeData: [
-          {name: 'pNode 01', key: '0-0'},
-          {name: 'pNode 02', key: '0-1'},
-          {name: 'pNode 03', key: '0-2', isLeaf: true},
+          { name: 'pNode 01', key: '0-0' },
+          { name: 'pNode 02', key: '0-1' },
+          { name: 'pNode 03', key: '0-2', isLeaf: true },
         ],
         checkedKeys: ['0-0'],
       });
@@ -81,7 +81,7 @@ const Demo = React.createClass({
       setTimeout(() => {
         const treeData = [...this.state.treeData];
         getNewTreeData(treeData, treeNode.props.eventKey, generateTreeNodes(treeNode), 2);
-        this.setState({treeData});
+        this.setState({ treeData });
         resolve();
       }, 500);
     });
@@ -92,7 +92,11 @@ const Demo = React.createClass({
         if (item.children) {
           return <TreeNode title={item.name} key={item.key}>{loop(item.children)}</TreeNode>;
         }
-        return <TreeNode title={item.name} key={item.key} isLeaf={item.isLeaf} disabled={item.key === '0-0-0' ? true : false} />;
+        return (
+          <TreeNode title={item.name} key={item.key} isLeaf={item.isLeaf}
+            disabled={item.key === '0-0-0'}
+          />
+        );
       });
     };
     const treeNodes = loop(this.state.treeData);

@@ -7,11 +7,7 @@ tree ui component for react
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
-[![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
-[![Sauce Test Status](https://saucelabs.com/buildstatus/rc-tree)](https://saucelabs.com/u/rc-tree)
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc-tree.svg)](https://saucelabs.com/u/rc-tree)
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree

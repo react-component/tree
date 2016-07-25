@@ -6,7 +6,7 @@ const Simulate = TestUtils.Simulate;
 const Tree = require('../');
 const TreeNode = Tree.TreeNode;
 const $ = require('jquery');
-import {Promise} from 'es6-promise';
+import { Promise } from 'es6-promise';
 
 describe('simple tree', () => {
   let instance;
@@ -41,7 +41,7 @@ describe('simple tree', () => {
         </TreeNode>
       </Tree>, div);
 
-    setTimeout(()=> {
+    setTimeout(() => {
       const dom = $(ReactDOM.findDOMNode(instance));
       // have checkbox
       expect(dom.find('.rc-tree-checkbox').length).to.be(5);
@@ -61,9 +61,11 @@ describe('simple tree', () => {
     }, 50);
   });
 
-  it('should set default expandedKeys, selectedKeys and checkedKeys', function() {
+  it('should set default expandedKeys, selectedKeys and checkedKeys', () => {
     instance = ReactDOM.render(
-      <Tree checkable defaultExpandedKeys={['0-0']} defaultSelectedKeys={['0-0']} defaultCheckedKeys={['0-0']}>
+      <Tree defaultExpandedKeys={['0-0']} defaultSelectedKeys={['0-0']}
+        checkable defaultCheckedKeys={['0-0']}
+      >
         <TreeNode title="parent 1" key="0-0">
           <TreeNode title="leaf 1" key="0-0-0">
             <TreeNode title="leaf" key="0-0-0-0" />
@@ -78,7 +80,7 @@ describe('simple tree', () => {
     expect(li.find('.rc-tree-node-selected').length).to.be(1);
   });
 
-  it('should set expandedKeys, selectedKeys, checkedKeys and controlled', function() {
+  it('should set expandedKeys, selectedKeys, checkedKeys and controlled', () => {
     instance = ReactDOM.render(
       <Tree checkable expandedKeys={['0-0']} selectedKeys={['0-0']} checkedKeys={['0-0']}>
         <TreeNode title="parent 1" key="0-0">
@@ -95,10 +97,12 @@ describe('simple tree', () => {
     expect(li.find('.rc-tree-node-selected').length).to.be(1);
   });
 
-  it('should expand specific treeNode', function(done) {
+  it('should expand specific treeNode', (done) => {
     function cb() {
       setTimeout(() => {
-        expect($(instance.refs['treeNode-0-0'].refs.li).find('.rc-tree-switcher')[0].className).to.contain('open');
+        expect(
+          $(instance.refs['treeNode-0-0'].refs.li).find('.rc-tree-switcher')[0].className
+        ).to.contain('open');
         done();
       });
     }
@@ -135,7 +139,7 @@ describe('simple tree', () => {
     Simulate.click(instance.refs['treeNode-0-0'].refs['treeNode-0-0-1'].refs.selectHandle);
   });
 
-  it('should fire check event', function(done) {
+  it('should fire check event', (done) => {
     function cb(checkedKeys) {
       expect(checkedKeys.indexOf('0-0-0-1') > -1).to.be(true);
       done();
@@ -151,11 +155,12 @@ describe('simple tree', () => {
         </TreeNode>
       </Tree>, div
     );
-    const ele = ReactDOM.findDOMNode(instance.refs['treeNode-0-0'].refs['treeNode-0-0-0'].refs.checkbox);
+    const ele = ReactDOM.findDOMNode(
+      instance.refs['treeNode-0-0'].refs['treeNode-0-0-0'].refs.checkbox);
     Simulate.click(ele);
   });
 
-  it('should fire rightClick callback', function(done) {
+  it('should fire rightClick callback', (done) => {
     function cb(info) {
       expect(info.node.props.title).to.be('parent 1');
       done();
@@ -174,7 +179,7 @@ describe('simple tree', () => {
     Simulate.contextMenu(instance.refs['treeNode-0-0'].refs.selectHandle);
   });
 
-  it('should filter treeNode', function() {
+  it('should filter treeNode', () => {
     function filterTreeNode(treeNode) {
       return treeNode.props.title.indexOf('parent') > -1;
     }

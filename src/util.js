@@ -8,7 +8,7 @@ export function browser(navigator) {
   let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
   if (/trident/i.test(M[1])) {
     tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-    return 'IE ' + (tem[1] || '');
+    return `IE ${tem[1] || ''}`;
   }
   if (M[1] === 'Chrome') {
     tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
@@ -147,7 +147,9 @@ export function filterParentPosition(arr) {
   });
   return nArr;
 }
-// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
+// console.log(filterParentPosition(
+//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
+// ));
 
 
 function stripTail(str) {
@@ -250,7 +252,7 @@ export function getCheck(treeNodesStates) {
     if (itemObj.checked) {
       checkedKeys.push(itemObj.key);
       checkedNodes.push(itemObj.node);
-      checkedNodesPositions.push({node: itemObj.node, pos: item});
+      checkedNodesPositions.push({ node: itemObj.node, pos: item });
     } else if (itemObj.halfChecked) {
       halfCheckedKeys.push(itemObj.key);
     }
@@ -269,7 +271,9 @@ export function getStrictlyValue(checkedKeys, halfChecked) {
 
 export function arraysEqual(a, b) {
   if (a === b) return true;
-  if (a === null || typeof a === 'undefined' || b === null || typeof b === 'undefined') return false;
+  if (a === null || typeof a === 'undefined' || b === null || typeof b === 'undefined') {
+    return false;
+  }
   if (a.length !== b.length) return false;
 
   // If you don't care about the order of the elements inside

@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { generateData, calcTotal } from './util';
 
 const Gen = React.createClass({
@@ -42,7 +42,7 @@ const Gen = React.createClass({
   },
   render() {
     const { x, y, z } = this.props;
-    return (<div style={{padding: '0 20px'}}>
+    return (<div style={{ padding: '0 20px' }}>
       <h2>big data generator</h2>
       <form onSubmit={this.onGen}>
         <span style={{ marginRight: 10 }}>

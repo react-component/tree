@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import assign from 'object-assign';
 import classNames from 'classnames';
 import {
@@ -13,7 +13,7 @@ function noop() {
 class Tree extends React.Component {
   constructor(props) {
     super(props);
-    ['onKeyDown', 'onCheck'].forEach((m)=> {
+    ['onKeyDown', 'onCheck'].forEach((m) => {
       this[m] = this[m].bind(this);
     });
     this.contextmenuKeys = [];
@@ -112,11 +112,11 @@ class Tree extends React.Component {
   }
 
   onDragOver(e, treeNode) {
-    this.props.onDragOver({event: e, node: treeNode});
+    this.props.onDragOver({ event: e, node: treeNode });
   }
 
   onDragLeave(e, treeNode) {
-    this.props.onDragLeave({event: e, node: treeNode});
+    this.props.onDragLeave({ event: e, node: treeNode });
   }
 
   onDrop(e, treeNode) {
@@ -160,7 +160,7 @@ class Tree extends React.Component {
       expandedKeys.splice(index, 1);
     }
     if (!controlled) {
-      this.setState({expandedKeys});
+      this.setState({ expandedKeys });
     }
     this.props.onExpand(expandedKeys, { node: treeNode, expanded });
 
@@ -168,7 +168,7 @@ class Tree extends React.Component {
     if (expanded && this.props.loadData) {
       return this.props.loadData(treeNode).then(() => {
         if (!controlled) {
-          this.setState({expandedKeys});
+          this.setState({ expandedKeys });
         }
       });
     }
@@ -252,7 +252,7 @@ class Tree extends React.Component {
     }
     const selectedNodes = [];
     if (selectedKeys.length) {
-      loopAllChildren(this.props.children, (item)=> {
+      loopAllChildren(this.props.children, (item) => {
         if (selectedKeys.indexOf(item.key) !== -1) {
           selectedNodes.push(item);
         }
@@ -273,11 +273,11 @@ class Tree extends React.Component {
   }
 
   onMouseEnter(e, treeNode) {
-    this.props.onMouseEnter({event: e, node: treeNode});
+    this.props.onMouseEnter({ event: e, node: treeNode });
   }
 
   onMouseLeave(e, treeNode) {
-    this.props.onMouseLeave({event: e, node: treeNode});
+    this.props.onMouseLeave({ event: e, node: treeNode });
   }
 
   onContextMenu(e, treeNode) {
@@ -298,7 +298,7 @@ class Tree extends React.Component {
     this.setState({
       selectedKeys,
     });
-    this.props.onRightClick({event: e, node: treeNode});
+    this.props.onRightClick({ event: e, node: treeNode });
   }
 
   // all keyboard events callbacks run from here at first
@@ -440,11 +440,11 @@ class Tree extends React.Component {
     }
 
     const cloneProps = {
-      ref: 'treeNode-' + key,
+      ref: `treeNode-${key}`,
       root: this,
       eventKey: key,
       pos,
-      selectable: selectable,
+      selectable,
       loadData: props.loadData,
       onMouseEnter: props.onMouseEnter,
       onMouseLeave: props.onMouseLeave,

@@ -9,7 +9,7 @@ export function generateData(x = 3, y = 2, z = 1, gData = []) {
     const children = [];
     for (let i = 0; i < x; i++) {
       const key = `${preKey}-${i}`;
-      tns.push({title: key + '-label', key: key + '-key'});
+      tns.push({ title: `${key}-label`, key: `${key}-key` });
       if (i < y) {
         children.push(key);
       }
@@ -75,7 +75,9 @@ export function filterParentPosition(arr) {
   });
   return nArr;
 }
-// console.log(filterParentPosition(['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']));
+// console.log(filterParentPosition(
+//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
+// ));
 
 
 function loopData(data, callback) {

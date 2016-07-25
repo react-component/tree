@@ -1,7 +1,7 @@
 import 'rc-tree/assets/index.less';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Tree, {TreeNode} from 'rc-tree';
+import Tree, { TreeNode } from 'rc-tree';
 import Gen from './big-data-generator';
 
 const Demo = React.createClass({
@@ -79,9 +79,9 @@ const Demo = React.createClass({
       this.treeNodes = treeNodes;
     }
     // console.log(Date.now()-s);
-    return (<div style={{padding: '0 20px'}}>
+    return (<div style={{ padding: '0 20px' }}>
       <Gen onGen={this.onGen} />
-      <div style={{ border: '1px solid red', width: 700, padding: 10}}>
+      <div style={{ border: '1px solid red', width: 700, padding: 10 }}>
         <h5 style={{ margin: 10 }}>大数据量下优化建议：</h5>
         初始展开的节点少，向dom中插入节点就会少，速度更快。 <br />
         treeNodes 总数据量尽量少变化，缓存并复用计算出的 treeNodes，可在 componentWillUpdate 等时机做判断。 <br />

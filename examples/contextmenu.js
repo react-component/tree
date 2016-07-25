@@ -2,7 +2,7 @@ import 'rc-tree/assets/index.less';
 import './contextmenu.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tree, {TreeNode} from 'rc-tree';
+import Tree, { TreeNode } from 'rc-tree';
 import assign from 'object-assign';
 import Tooltip from 'rc-tooltip';
 
@@ -57,16 +57,20 @@ const Demo = React.createClass({
       ReactDOM.unmountComponentAtNode(this.cmContainer);
       this.toolTip = null;
     }
-    this.toolTip = (<Tooltip trigger="click" placement="bottomRight" prefixCls="rc-tree-contextmenu"
-             defaultVisible overlay={<h4>{info.node.props.title}</h4>}>
+    this.toolTip = (
+      <Tooltip
+        trigger="click" placement="bottomRight" prefixCls="rc-tree-contextmenu"
+        defaultVisible overlay={<h4>{info.node.props.title}</h4>}
+      >
         <span></span>
-    </Tooltip>);
+      </Tooltip>
+    );
 
     const container = this.getContainer();
     assign(this.cmContainer.style, {
       position: 'absolute',
-      left: info.event.pageX + 'px',
-      top: info.event.pageY + 'px',
+      left: `${info.event.pageX}px`,
+      top: `${info.event.pageY}px`,
     });
 
     ReactDOM.render(this.toolTip, container);

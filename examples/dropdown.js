@@ -1,9 +1,9 @@
 /* eslint react/no-multi-comp:0 */
 import 'rc-tree/assets/index.less';
 import './dropdown.less';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Tree, {TreeNode} from 'rc-tree';
+import Tree, { TreeNode } from 'rc-tree';
 import Trigger from 'rc-trigger';
 import { gData } from './util';
 
@@ -111,16 +111,16 @@ const DropdownTree = React.createClass({
       const overlayNode = this.refs.trigger.getPopupDomNode();
       const rootNode = ReactDOM.findDOMNode(this);
       if (rootNode.offsetWidth > overlayNode.offsetWidth) {
-        overlayNode.style.width = rootNode.offsetWidth + 'px';
+        overlayNode.style.width = `${rootNode.offsetWidth}px`;
       }
     }
   },
   render() {
-    const {prefixCls, children,
+    const { prefixCls, children,
       transitionName, animation,
       align, placement,
       overlayClassName, overlayStyle,
-      trigger} = this.props;
+      trigger } = this.props;
     return (
       <Trigger
         prefixCls={prefixCls}
@@ -160,7 +160,7 @@ const Demo = React.createClass({
   },
   onVisibleChange(visible) {
     this.setState({
-      visible: visible,
+      visible,
     });
   },
   onSelect(selectedKeys, info) {
@@ -221,7 +221,7 @@ const Demo = React.createClass({
       </Tree>
     </div>);
 
-    return (<div style={{padding: '10px 30px'}}>
+    return (<div style={{ padding: '10px 30px' }}>
       <h3>tree in dropdown</h3>
       <DropdownTree
         trigger={['click']}

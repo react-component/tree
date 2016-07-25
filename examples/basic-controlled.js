@@ -1,8 +1,9 @@
 import 'rc-tree/assets/index.less';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Tree, {TreeNode} from 'rc-tree';
-import { gData, /* filterParentPosition, getFilterExpandedKeys,*/ getRadioSelectKeys } from './util';
+import Tree, { TreeNode } from 'rc-tree';
+import { gData,
+  /* filterParentPosition, getFilterExpandedKeys,*/ getRadioSelectKeys } from './util';
 import 'rc-dialog/assets/index.css';
 import Modal from 'rc-dialog';
 
@@ -104,16 +105,20 @@ const Demo = React.createClass({
     const loop = data => {
       return data.map((item) => {
         if (item.children) {
-          return (<TreeNode key={item.key} title={item.title}
-                            disableCheckbox={item.key === '0-0-0-key' ? true : false}>
-            {loop(item.children)}
-          </TreeNode>);
+          return (
+            <TreeNode
+              key={item.key} title={item.title}
+              disableCheckbox={item.key === '0-0-0-key'}
+            >
+              {loop(item.children)}
+            </TreeNode>
+          );
         }
-        return <TreeNode key={item.key} title={item.title}/>;
+        return <TreeNode key={item.key} title={item.title} />;
       });
     };
     // console.log(getRadioSelectKeys(gData, this.state.selectedKeys));
-    return (<div style={{padding: '0 20px'}}>
+    return (<div style={{ padding: '0 20px' }}>
       <h2>dialog</h2>
       <button className="btn btn-primary" onClick={this.showModal}>show dialog</button>
       <Modal

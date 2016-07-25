@@ -29,13 +29,14 @@
   "scripts": {
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
-    "start": "rc-server",
+    "start": "rc-tools run server",
     "pub": "rc-tools run pub",
     "lint": "rc-tools run lint",
     "karma": "rc-tools run karma",
     "saucelabs": "rc-tools run saucelabs",
-    "browser-test": "rc-tools run browser-test",
-    "browser-test-cover": "rc-tools run browser-test-cover"
+    "test": "rc-tools run test",
+    "chrome-test": "rc-tools run chrome-test",
+    "coverage": "rc-tools run coverage"
   },
   "devDependencies": {
     "css-animation": "^1.2.0",
@@ -44,8 +45,7 @@
     "jquery": "~2.1.4",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
-    "rc-server": "3.x",
-    "rc-tools": "4.x",
+    "rc-tools": "^5.3.4",
     "rc-tooltip": "3.x",
     "rc-trigger": "^1.0.6",
     "react": "^15.2.0",

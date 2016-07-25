@@ -10,22 +10,24 @@ const TreeNode = Tree.TreeNode;
 describe('draggable tree', () => {
   let instance;
   let div;
-  beforeEach(function() {
+  beforeEach(() => {
     div = document.createElement('div');
     document.body.appendChild(div);
   });
-  afterEach(function() {
+  afterEach(() => {
     ReactDOM.unmountComponentAtNode(div);
     document.body.removeChild(div);
   });
 
-  it('should fire drag and drop event', function() {
+  it('should fire drag and drop event', () => {
     function cb(info) {
       console.log(info);
       expect(true).to.be(true);
     }
     instance = ReactDOM.render(
-      <Tree draggable onDragStart={cb} onDragEnter={cb} onDragOver={cb} onDragLeave={cb} onDrop={cb}>
+      <Tree
+        draggable onDragStart={cb} onDragEnter={cb} onDragOver={cb} onDragLeave={cb} onDrop={cb}
+      >
         <TreeNode title="parent 1" key="0-0">
           <TreeNode title="leaf 1" key="0-0-0">
             <TreeNode title="leaf" key="0-0-0-0" />
