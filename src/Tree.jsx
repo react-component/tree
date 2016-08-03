@@ -308,6 +308,9 @@ class Tree extends React.Component {
 
   getFilterExpandedKeys(props, expandKeyProp, expandAll) {
     const keys = props[expandKeyProp];
+    if (!expandAll && !props.autoExpandParent) {
+      return keys || [];
+    }
     const expandedPositionArr = [];
     if (props.autoExpandParent) {
       loopAllChildren(props.children, (item, index, pos, newKey) => {
@@ -335,7 +338,8 @@ class Tree extends React.Component {
 
   getDefaultExpandedKeys(props, willReceiveProps) {
     let expandedKeys = willReceiveProps ? undefined :
-      this.getFilterExpandedKeys(props, 'defaultExpandedKeys', props.defaultExpandAll);
+      this.getFilterExpandedKeys(props, 'defaultExpandedKeys',
+        props.defaultExpandedKeys.length ? false : props.defaultExpandAll);
     if ('expandedKeys' in props) {
       expandedKeys = (props.autoExpandParent ?
         this.getFilterExpandedKeys(props, 'expandedKeys', false) :

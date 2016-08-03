@@ -10,7 +10,7 @@ const Demo = React.createClass({
   },
   getDefaultProps() {
     return {
-      keys: ['0-0-0-0', '0-0-1'],
+      keys: ['0-0-0-0'],
     };
   },
   getInitialState() {
@@ -52,7 +52,7 @@ const Demo = React.createClass({
     return (<div style={{ margin: '0 20px' }}>
       <h2>simple</h2>
       <Tree
-        className="myCls" showLine checkable
+        className="myCls" showLine checkable defaultExpandAll
         defaultExpandedKeys={this.state.defaultExpandedKeys}
         onExpand={this.onExpand}
         defaultSelectedKeys={this.state.defaultSelectedKeys}
@@ -64,7 +64,7 @@ const Demo = React.createClass({
             <TreeNode title="leaf" key="0-0-0-0" />
             <TreeNode title="leaf" key="0-0-0-1" />
           </TreeNode>
-          <TreeNode title="parent 1-1" key="0-0-1" disabled>
+          <TreeNode title="parent 1-1" key="0-0-1">
             <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
             <TreeNode title="parent 1-1-1" key="0-0-1-1" />
           </TreeNode>
