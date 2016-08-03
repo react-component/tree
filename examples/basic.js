@@ -3,29 +3,29 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(189);
+	module.exports = __webpack_require__(192);
 
 
 /***/ },
 
-/***/ 189:
+/***/ 192:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(190);
+	__webpack_require__(193);
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(35);
+	var _reactDom = __webpack_require__(37);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(174);
+	var _rcTree = __webpack_require__(177);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
@@ -39,7 +39,7 @@ webpackJsonp([1],{
 	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      keys: ['0-0-0-0', '0-0-1']
+	      keys: ['0-0-0-0']
 	    };
 	  },
 	  getInitialState: function getInitialState() {
@@ -106,7 +106,7 @@ webpackJsonp([1],{
 	      _react2.default.createElement(
 	        _rcTree2.default,
 	        {
-	          className: 'myCls', showLine: true, checkable: true,
+	          className: 'myCls', showLine: true, checkable: true, defaultExpandAll: true,
 	          defaultExpandedKeys: this.state.defaultExpandedKeys,
 	          onExpand: this.onExpand,
 	          defaultSelectedKeys: this.state.defaultSelectedKeys,
@@ -124,7 +124,7 @@ webpackJsonp([1],{
 	          ),
 	          _react2.default.createElement(
 	            _rcTree.TreeNode,
-	            { title: 'parent 1-1', key: '0-0-1', disabled: true },
+	            { title: 'parent 1-1', key: '0-0-1' },
 	            _react2.default.createElement(_rcTree.TreeNode, { title: 'parent 1-1-0', key: '0-0-1-0', disableCheckbox: true }),
 	            _react2.default.createElement(_rcTree.TreeNode, { title: 'parent 1-1-1', key: '0-0-1-1' })
 	          )
@@ -138,7 +138,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 190:
+/***/ 193:
 2
 
 });
