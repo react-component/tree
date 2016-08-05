@@ -222,6 +222,7 @@ class Tree extends React.Component {
       const checkKeys = getCheck(this.treeNodesStates);
       newSt.checkedNodes = checkKeys.checkedNodes;
       newSt.checkedNodesPositions = checkKeys.checkedNodesPositions;
+      newSt.halfCheckedKeys = checkKeys.halfCheckedKeys;
       this.checkKeys = checkKeys;
 
       this._checkedKeys = checkedKeys = checkKeys.checkedKeys;
