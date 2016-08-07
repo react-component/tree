@@ -312,7 +312,7 @@ webpackJsonp([5],{
 	  render: function render() {
 	    var loop = function loop(data) {
 	      return data.map(function (item) {
-	        if (item.children) {
+	        if (item.children && item.children.length) {
 	          return _react2.default.createElement(
 	            _rcTree.TreeNode,
 	            { key: item.key, title: item.title },
