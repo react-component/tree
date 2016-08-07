@@ -71,7 +71,7 @@ const Demo = React.createClass({
   render() {
     const loop = data => {
       return data.map((item) => {
-        if (item.children) {
+        if (item.children && item.children.length) {
           return <TreeNode key={item.key} title={item.title}>{loop(item.children)}</TreeNode>;
         }
         return <TreeNode key={item.key} title={item.title} />;
