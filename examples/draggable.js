@@ -255,14 +255,17 @@ webpackJsonp([5],{
 	      expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key']
 	    };
 	  },
-	  onDragStart: function onDragStart() {},
+	  onDragStart: function onDragStart(info) {
+	    console.log('start', info);
+	  },
 	  onDragEnter: function onDragEnter(info) {
-	    // console.log(info);
+	    console.log('enter', info);
 	    this.setState({
 	      expandedKeys: info.expandedKeys
 	    });
 	  },
 	  onDrop: function onDrop(info) {
+	    console.log('drop', info);
 	    var dropKey = info.node.props.eventKey;
 	    var dragKey = info.dragNode.props.eventKey;
 	    // const dragNodesKeys = info.dragNodesKeys;

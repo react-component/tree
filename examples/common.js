@@ -21658,6 +21658,7 @@
 	      event: e,
 	      node: treeNode
 	    });
+	    this._dropTrigger = false;
 	  };
 	
 	  Tree.prototype.onDragEnterGap = function onDragEnterGap(e, treeNode) {
@@ -21737,6 +21738,7 @@
 	      res.rawExpandedKeys = [].concat(_toConsumableArray(this._rawExpandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys));
 	    }
 	    this.props.onDrop(res);
+	    this._dropTrigger = true;
 	  };
 	
 	  Tree.prototype.onExpand = function onExpand(treeNode) {
@@ -22055,6 +22057,7 @@
 	      dragOver: state.dragOverNodeKey === key && this.dropPosition === 0,
 	      dragOverGapTop: state.dragOverNodeKey === key && this.dropPosition === -1,
 	      dragOverGapBottom: state.dragOverNodeKey === key && this.dropPosition === 1,
+	      _dropTrigger: this._dropTrigger,
 	      expanded: state.expandedKeys.indexOf(key) !== -1,
 	      selected: state.selectedKeys.indexOf(key) !== -1,
 	      openTransitionName: this.getOpenTransitionName(),
@@ -22911,7 +22914,7 @@
 	      );
 	      var domProps = {};
 	      if (!props.disabled) {
-	        if (props.selected || _this3.state.dragNodeHighlight) {
+	        if (props.selected || !props._dropTrigger && _this3.state.dragNodeHighlight) {
 	          domProps.className = prefixCls + '-node-selected';
 	        }
 	        domProps.onClick = function (e) {
