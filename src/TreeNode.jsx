@@ -262,7 +262,7 @@ class TreeNode extends React.Component {
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
       const domProps = {};
       if (!props.disabled) {
-        if (props.selected || this.state.dragNodeHighlight) {
+        if (props.selected || !props._dropTrigger && this.state.dragNodeHighlight) {
           domProps.className = `${prefixCls}-node-selected`;
         }
         domProps.onClick = (e) => {

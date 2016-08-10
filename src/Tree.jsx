@@ -68,6 +68,7 @@ class Tree extends React.Component {
       event: e,
       node: treeNode,
     });
+    this._dropTrigger = false;
   }
 
   onDragEnterGap(e, treeNode) {
@@ -147,6 +148,7 @@ class Tree extends React.Component {
       res.rawExpandedKeys = [...this._rawExpandedKeys] || [...this.state.expandedKeys];
     }
     this.props.onDrop(res);
+    this._dropTrigger = true;
   }
 
   onExpand(treeNode) {
@@ -461,6 +463,7 @@ class Tree extends React.Component {
       dragOver: state.dragOverNodeKey === key && this.dropPosition === 0,
       dragOverGapTop: state.dragOverNodeKey === key && this.dropPosition === -1,
       dragOverGapBottom: state.dragOverNodeKey === key && this.dropPosition === 1,
+      _dropTrigger: this._dropTrigger,
       expanded: state.expandedKeys.indexOf(key) !== -1,
       selected: state.selectedKeys.indexOf(key) !== -1,
       openTransitionName: this.getOpenTransitionName(),

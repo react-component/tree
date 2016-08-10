@@ -13,15 +13,17 @@ const Demo = React.createClass({
       expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
     };
   },
-  onDragStart() {
+  onDragStart(info) {
+    console.log('start', info);
   },
   onDragEnter(info) {
-    // console.log(info);
+    console.log('enter', info);
     this.setState({
       expandedKeys: info.expandedKeys,
     });
   },
   onDrop(info) {
+    console.log('drop', info);
     const dropKey = info.node.props.eventKey;
     const dragKey = info.dragNode.props.eventKey;
     // const dragNodesKeys = info.dragNodesKeys;
