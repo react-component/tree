@@ -47,6 +47,7 @@ const Demo = React.createClass({
     const customLabel = (<span className="cus-label">
       <span>operations: </span>
       <span style={{ color: 'blue' }} onClick={this.onEdit}>Edit</span>&nbsp;
+      <label onClick={(e) => e.stopPropagation()}><input type="checkbox" /> checked</label> &nbsp;
       <span style={{ color: 'red' }} onClick={this.onDel}>Delete</span>
     </span>);
     return (<div style={{ margin: '0 20px' }}>
