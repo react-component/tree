@@ -80,7 +80,8 @@ class TreeNode extends React.Component {
     this.props.root.onDragStart(e, this);
     try {
       // ie throw error
-      e.dataTransfer.setData('text/plain', 'firefox-need-it');
+      // firefox-need-it
+      e.dataTransfer.setData('text/plain', '');
     } finally {
       // empty
     }
@@ -260,10 +261,12 @@ class TreeNode extends React.Component {
       const icon = (props.showIcon || props.loadData && this.state.dataLoading) ?
         <span className={classNames(iconEleCls)}></span> : null;
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
-      const domProps = {};
+      const domProps = {
+        className: `${prefixCls}-node-content-wrapper`,
+      };
       if (!props.disabled) {
         if (props.selected || !props._dropTrigger && this.state.dragNodeHighlight) {
-          domProps.className = `${prefixCls}-node-selected`;
+          domProps.className += ` ${prefixCls}-node-selected`;
         }
         domProps.onClick = (e) => {
           e.preventDefault();
@@ -285,6 +288,7 @@ class TreeNode extends React.Component {
           domProps.onMouseLeave = this.onMouseLeave;
         }
         if (props.draggable) {
+          domProps.className += ' draggable';
           if (ieOrEdge) {
             // ie bug!
             domProps.href = '#';
