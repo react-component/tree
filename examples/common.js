@@ -22723,7 +22723,8 @@
 	    this.props.root.onDragStart(e, this);
 	    try {
 	      // ie throw error
-	      e.dataTransfer.setData('text/plain', 'firefox-need-it');
+	      // firefox-need-it
+	      e.dataTransfer.setData('text/plain', '');
 	    } finally {
 	      // empty
 	    }
@@ -22912,10 +22913,12 @@
 	        { className: prefixCls + '-title' },
 	        content
 	      );
-	      var domProps = {};
+	      var domProps = {
+	        className: prefixCls + '-node-content-wrapper'
+	      };
 	      if (!props.disabled) {
 	        if (props.selected || !props._dropTrigger && _this3.state.dragNodeHighlight) {
-	          domProps.className = prefixCls + '-node-selected';
+	          domProps.className += ' ' + prefixCls + '-node-selected';
 	        }
 	        domProps.onClick = function (e) {
 	          e.preventDefault();
@@ -22937,6 +22940,7 @@
 	          domProps.onMouseLeave = _this3.onMouseLeave;
 	        }
 	        if (props.draggable) {
+	          domProps.className += ' draggable';
 	          if (ieOrEdge) {
 	            // ie bug!
 	            domProps.href = '#';

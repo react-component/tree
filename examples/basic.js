@@ -90,6 +90,15 @@ webpackJsonp([1],{
 	      ),
 	      ' ',
 	      _react2.default.createElement(
+	        'label',
+	        { onClick: function onClick(e) {
+	            return e.stopPropagation();
+	          } },
+	        _react2.default.createElement('input', { type: 'checkbox' }),
+	        ' checked'
+	      ),
+	      '  ',
+	      _react2.default.createElement(
 	        'span',
 	        { style: { color: 'red' }, onClick: this.onDel },
 	        'Delete'

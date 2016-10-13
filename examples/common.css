@@ -9,8 +9,7 @@
   white-space: nowrap;
   outline: 0;
 }
-.rc-tree li a[draggable],
-.rc-tree li a[draggable="true"] {
+.rc-tree li .draggable {
   color: #333;
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -21,19 +20,19 @@
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
-.rc-tree li.drag-over > a[draggable] {
+.rc-tree li.drag-over > .draggable {
   background-color: #316ac5;
   color: white;
   border: 1px #316ac5 solid;
   opacity: 0.8;
 }
-.rc-tree li.drag-over-gap-top > a[draggable] {
+.rc-tree li.drag-over-gap-top > .draggable {
   border-top: 2px blue solid;
 }
-.rc-tree li.drag-over-gap-bottom > a[draggable] {
+.rc-tree li.drag-over-gap-bottom > .draggable {
   border-bottom: 2px blue solid;
 }
-.rc-tree li.filter-node > a {
+.rc-tree li.filter-node > .rc-tree-node-content-wrapper {
   color: #a60000!important;
   font-weight: bold!important;
 }
@@ -44,7 +43,7 @@
 .rc-tree li ul.rc-tree-line {
   background: url("https://t.alipayobjects.com/images/T13BtfXl0mXXXXXXXX.gif") 0 0 repeat-y;
 }
-.rc-tree li a {
+.rc-tree li .rc-tree-node-content-wrapper {
   display: inline-block;
   padding: 1px 3px 0 0;
   margin: 0;
@@ -74,6 +73,9 @@
   margin-right: 2px;
   vertical-align: top;
   background: url(https://t.alipayobjects.com/images/rmsweb/T1YxhiXgJbXXXXXXXX.gif) no-repeat scroll 0 0 transparent;
+}
+.rc-tree li span.rc-tree-switcher.rc-tree-switcher-noop {
+  cursor: auto;
 }
 .rc-tree li span.rc-tree-switcher.rc-tree-roots_open {
   background-position: -93px -56px;
