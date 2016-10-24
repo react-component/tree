@@ -21741,6 +21741,13 @@
 	    this._dropTrigger = true;
 	  };
 	
+	  Tree.prototype.onDragEnd = function onDragEnd(e, treeNode) {
+	    this.setState({
+	      dragOverNodeKey: ''
+	    });
+	    this.props.onDragEnd({ event: e, node: treeNode });
+	  };
+	
 	  Tree.prototype.onExpand = function onExpand(treeNode) {
 	    var _this2 = this;
 	
@@ -22190,6 +22197,7 @@
 	  onDragOver: _react.PropTypes.func,
 	  onDragLeave: _react.PropTypes.func,
 	  onDrop: _react.PropTypes.func,
+	  onDragEnd: _react.PropTypes.func,
 	  filterTreeNode: _react.PropTypes.func,
 	  openTransitionName: _react.PropTypes.string,
 	  openAnimation: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object])
@@ -22216,7 +22224,8 @@
 	  onDragEnter: noop,
 	  onDragOver: noop,
 	  onDragLeave: noop,
-	  onDrop: noop
+	  onDrop: noop,
+	  onDragEnd: noop
 	};
 	
 	exports.default = Tree;
@@ -22667,7 +22676,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
-	    ['onExpand', 'onCheck', 'onContextMenu', 'onMouseEnter', 'onMouseLeave', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDragLeave', 'onDrop'].forEach(function (m) {
+	    ['onExpand', 'onCheck', 'onContextMenu', 'onMouseEnter', 'onMouseLeave', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDragLeave', 'onDrop', 'onDragEnd'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	    _this.state = {
@@ -22731,14 +22740,14 @@
 	  };
 	
 	  TreeNode.prototype.onDragEnter = function onDragEnter(e) {
-	    // console.log('dragenter', this.props.eventKey, e);
+	    // console.log('onDragEnter', this.props.eventKey);
 	    e.preventDefault();
 	    e.stopPropagation();
 	    this.props.root.onDragEnter(e, this);
 	  };
 	
 	  TreeNode.prototype.onDragOver = function onDragOver(e) {
-	    // console.log(this.props.eventKey, e);
+	    // console.log('onDragOver', this.props.eventKey);
 	    // todo disabled
 	    e.preventDefault();
 	    e.stopPropagation();
@@ -22747,18 +22756,28 @@
 	  };
 	
 	  TreeNode.prototype.onDragLeave = function onDragLeave(e) {
-	    // console.log(this.props.eventKey, e);
+	    // console.log('onDragLeave', this.props.eventKey);
 	    e.stopPropagation();
 	    this.props.root.onDragLeave(e, this);
 	  };
 	
 	  TreeNode.prototype.onDrop = function onDrop(e) {
+	    // console.log('onDrop', this.props.eventKey);
 	    e.preventDefault();
 	    e.stopPropagation();
 	    this.setState({
 	      dragNodeHighlight: false
 	    });
 	    this.props.root.onDrop(e, this);
+	  };
+	
+	  TreeNode.prototype.onDragEnd = function onDragEnd(e) {
+	    // console.log('onDragEnd', this.props.eventKey);
+	    e.stopPropagation();
+	    this.setState({
+	      dragNodeHighlight: false
+	    });
+	    this.props.root.onDragEnd(e, this);
 	  };
 	
 	  TreeNode.prototype.onExpand = function onExpand() {
@@ -22964,6 +22983,7 @@
 	      liProps.onDragOver = this.onDragOver;
 	      liProps.onDragLeave = this.onDragLeave;
 	      liProps.onDrop = this.onDrop;
+	      liProps.onDragEnd = this.onDragEnd;
 	    }
 	
 	    var disabledCls = '';
