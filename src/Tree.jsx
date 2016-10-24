@@ -151,6 +151,13 @@ class Tree extends React.Component {
     this._dropTrigger = true;
   }
 
+  onDragEnd(e, treeNode) {
+    this.setState({
+      dragOverNodeKey: '',
+    });
+    this.props.onDragEnd({ event: e, node: treeNode });
+  }
+
   onExpand(treeNode) {
     const expanded = !treeNode.props.expanded;
     const controlled = 'expandedKeys' in this.props;
@@ -595,6 +602,7 @@ Tree.propTypes = {
   onDragOver: PropTypes.func,
   onDragLeave: PropTypes.func,
   onDrop: PropTypes.func,
+  onDragEnd: PropTypes.func,
   filterTreeNode: PropTypes.func,
   openTransitionName: PropTypes.string,
   openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -622,6 +630,7 @@ Tree.defaultProps = {
   onDragOver: noop,
   onDragLeave: noop,
   onDrop: noop,
+  onDragEnd: noop,
 };
 
 export default Tree;

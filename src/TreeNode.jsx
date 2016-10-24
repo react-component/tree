@@ -25,6 +25,7 @@ class TreeNode extends React.Component {
       'onDragOver',
       'onDragLeave',
       'onDrop',
+      'onDragEnd',
     ].forEach((m) => {
       this[m] = this[m].bind(this);
     });
@@ -88,14 +89,14 @@ class TreeNode extends React.Component {
   }
 
   onDragEnter(e) {
-    // console.log('dragenter', this.props.eventKey, e);
+    // console.log('onDragEnter', this.props.eventKey);
     e.preventDefault();
     e.stopPropagation();
     this.props.root.onDragEnter(e, this);
   }
 
   onDragOver(e) {
-    // console.log(this.props.eventKey, e);
+    // console.log('onDragOver', this.props.eventKey);
     // todo disabled
     e.preventDefault();
     e.stopPropagation();
@@ -104,18 +105,28 @@ class TreeNode extends React.Component {
   }
 
   onDragLeave(e) {
-    // console.log(this.props.eventKey, e);
+    // console.log('onDragLeave', this.props.eventKey);
     e.stopPropagation();
     this.props.root.onDragLeave(e, this);
   }
 
   onDrop(e) {
+    // console.log('onDrop', this.props.eventKey);
     e.preventDefault();
     e.stopPropagation();
     this.setState({
       dragNodeHighlight: false,
     });
     this.props.root.onDrop(e, this);
+  }
+
+  onDragEnd(e) {
+    // console.log('onDragEnd', this.props.eventKey);
+    e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: false,
+    });
+    this.props.root.onDragEnd(e, this);
   }
 
   onExpand() {
@@ -311,6 +322,7 @@ class TreeNode extends React.Component {
       liProps.onDragOver = this.onDragOver;
       liProps.onDragLeave = this.onDragLeave;
       liProps.onDrop = this.onDrop;
+      liProps.onDragEnd = this.onDragEnd;
     }
 
     let disabledCls = '';

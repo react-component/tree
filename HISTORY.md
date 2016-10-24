@@ -1,6 +1,9 @@
 # History
 ---
 
+## 1.4.0 / 2016-10-24
+- add `onDragEnd` API and fix related issues.
+
 ## 1.3.0 / 2016-04-15
 - make `autoExpandParent` also work in controlled mode.(Before just work in uncontrolled mode)
 - change `onExpand` params
