@@ -83,6 +83,7 @@ see examples
 |onDragOver | it execs when fire the tree's dragover event | function({event,node}) | - |
 |onDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
 |onDrop | it execs when fire the tree's drop event | function({event, node, dragNode, dragNodesKeys}) | - |
+|onDragEnd | it execs when fire the tree's dragend event | function({event,node}) | - |
 
 ### TreeNode props
 > note: if you have a lot of TreeNode, like more than 1000,   
