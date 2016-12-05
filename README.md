@@ -55,7 +55,7 @@ see examples
 |----------|----------------|----------|--------------|
 |className | additional css class of root dom node | String | '' |
 |prefixCls | prefix class | String | '' |
-|showLine | whether show line | bool | true |
+|showLine | whether show line | bool | false |
 |showIcon | whether show icon | bool | true |
 |selectable | whether can be selected | bool | true |
 |multiple | whether multiple select | bool | false |

@@ -494,10 +494,9 @@ class Tree extends React.Component {
         }
         cloneProps.halfChecked = this.halfCheckedKeys.indexOf(key) !== -1;
       }
-
-      if (this.treeNodesStates[pos]) {
-        assign(cloneProps, this.treeNodesStates[pos].siblingPosition);
-      }
+    }
+    if (this.treeNodesStates && this.treeNodesStates[pos]) {
+      assign(cloneProps, this.treeNodesStates[pos].siblingPosition);
     }
     return React.cloneElement(child, cloneProps);
   }
@@ -512,15 +511,20 @@ class Tree extends React.Component {
       domProps.tabIndex = '0';
       domProps.onKeyDown = this.onKeyDown;
     }
-    // console.log(this.state.expandedKeys, this._rawExpandedKeys, props.children);
+    const getTreeNodesStates = () => {
+      this.treeNodesStates = {};
+      loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition) => {
+        this.treeNodesStates[pos] = {
+          siblingPosition,
+        };
+      });
+    };
+    if (props.showLine && !props.checkable) {
+      getTreeNodesStates();
+    }
     if (props.checkable && (this.checkedKeysChange || props.loadData)) {
       if (props.checkStrictly) {
-        this.treeNodesStates = {};
-        loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition) => {
-          this.treeNodesStates[pos] = {
-            siblingPosition,
-          };
-        });
+        getTreeNodesStates();
       } else if (props._treeNodesStates) {
         this.treeNodesStates = props._treeNodesStates.treeNodesStates;
         this.halfCheckedKeys = props._treeNodesStates.halfCheckedKeys;

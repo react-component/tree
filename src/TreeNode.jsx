@@ -89,14 +89,12 @@ class TreeNode extends React.Component {
   }
 
   onDragEnter(e) {
-    // console.log('onDragEnter', this.props.eventKey);
     e.preventDefault();
     e.stopPropagation();
     this.props.root.onDragEnter(e, this);
   }
 
   onDragOver(e) {
-    // console.log('onDragOver', this.props.eventKey);
     // todo disabled
     e.preventDefault();
     e.stopPropagation();
@@ -105,13 +103,11 @@ class TreeNode extends React.Component {
   }
 
   onDragLeave(e) {
-    // console.log('onDragLeave', this.props.eventKey);
     e.stopPropagation();
     this.props.root.onDragLeave(e, this);
   }
 
   onDrop(e) {
-    // console.log('onDrop', this.props.eventKey);
     e.preventDefault();
     e.stopPropagation();
     this.setState({
@@ -121,7 +117,6 @@ class TreeNode extends React.Component {
   }
 
   onDragEnd(e) {
-    // console.log('onDragEnd', this.props.eventKey);
     e.stopPropagation();
     this.setState({
       dragNodeHighlight: false,
