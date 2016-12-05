@@ -241,12 +241,7 @@ class TreeNode extends React.Component {
     const props = this.props;
     const prefixCls = props.prefixCls;
     const expandedState = props.expanded ? 'open' : 'close';
-
-    const iconEleCls = {
-      [`${prefixCls}-iconEle`]: true,
-      [`${prefixCls}-icon_loading`]: this.state.dataLoading,
-      [`${prefixCls}-icon__${expandedState}`]: true,
-    };
+    let iconState = expandedState;
 
     let canRenderSwitcher = true;
     const content = props.title;
@@ -256,6 +251,7 @@ class TreeNode extends React.Component {
       newChildren = null;
       if (!props.loadData || props.isLeaf) {
         canRenderSwitcher = false;
+        iconState = 'docu';
       }
     }
     // For performance, does't render children into dom when `!props.expanded` (move to Animate)
@@ -263,12 +259,19 @@ class TreeNode extends React.Component {
     //   newChildren = null;
     // }
 
+    const iconEleCls = {
+      [`${prefixCls}-iconEle`]: true,
+      [`${prefixCls}-icon_loading`]: this.state.dataLoading,
+      [`${prefixCls}-icon__${iconState}`]: true,
+    };
+
     const selectHandle = () => {
       const icon = (props.showIcon || props.loadData && this.state.dataLoading) ?
         <span className={classNames(iconEleCls)}></span> : null;
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
+      const wrap = `${prefixCls}-node-content-wrapper`;
       const domProps = {
-        className: `${prefixCls}-node-content-wrapper`,
+        className: `${wrap} ${wrap}-${iconState === expandedState ? iconState : 'normal'}`,
       };
       if (!props.disabled) {
         if (props.selected || !props._dropTrigger && this.state.dragNodeHighlight) {

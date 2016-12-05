@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 import 'rc-tree/assets/index.less';
 import './contextmenu.less';
 import React from 'react';
@@ -86,12 +87,12 @@ const Demo = React.createClass({
         >
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
-              <TreeNode title="leaf0" />
-              <TreeNode title="leaf1" />
-              <TreeNode title="leaf2" />
+              <TreeNode title="leaf0" isLeaf />
+              <TreeNode title="leaf1" isLeaf />
+              <TreeNode title="leaf2" isLeaf />
             </TreeNode>
             <TreeNode title="parent 1-1">
-              <TreeNode title="leaf" />
+              <TreeNode title="leaf" isLeaf />
             </TreeNode>
           </TreeNode>
         </Tree>
@@ -103,7 +104,7 @@ const Demo = React.createClass({
         >
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
-              <TreeNode title="leaf" />
+              <TreeNode title="leaf" isLeaf />
               <TreeNode title="leaf" />
             </TreeNode>
             <TreeNode title="parent 1-1">

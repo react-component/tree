@@ -1,4 +1,5 @@
 /* eslint no-loop-func: 0*/
+/* eslint no-console:0 */
 
 export function generateData(x = 3, y = 2, z = 1, gData = []) {
   // x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）

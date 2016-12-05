@@ -1,4 +1,5 @@
 /* eslint react/no-multi-comp:0 */
+/* eslint no-console:0 */
 import 'rc-tree/assets/index.less';
 import './dropdown.less';
 import React, { PropTypes } from 'react';

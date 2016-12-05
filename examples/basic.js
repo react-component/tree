@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+/* eslint no-alert:0 */
 import 'rc-tree/assets/index.less';
 import './basic.less';
 import React, { PropTypes } from 'react';

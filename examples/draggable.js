@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 import 'rc-tree/assets/index.less';
 import './draggable.less';
 import React from 'react';
