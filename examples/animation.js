@@ -31,7 +31,8 @@ webpackJsonp([0],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var STYLE = '\n.collapse {\n  overflow: hidden;\n  display: block;\n}\n\n.collapse-active {\n  transition: height 0.3s ease-out;\n}\n';
+	var STYLE = '\n.collapse {\n  overflow: hidden;\n  display: block;\n}\n\n.collapse-active {\n  transition: height 0.3s ease-out;\n}\n'; /* eslint no-console:0 */
+	
 	
 	function animate(node, show, done) {
 	  var height = node.offsetHeight;

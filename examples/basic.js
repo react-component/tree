@@ -141,7 +141,9 @@ webpackJsonp([1],{
 	      )
 	    );
 	  }
-	});
+	}); /* eslint no-console:0 */
+	/* eslint no-alert:0 */
+	
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 

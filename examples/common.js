@@ -21590,7 +21590,8 @@
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /* eslint no-console:0 */
+	
 	
 	function noop() {}
 	
@@ -22088,10 +22089,9 @@
 	        }
 	        cloneProps.halfChecked = this.halfCheckedKeys.indexOf(key) !== -1;
 	      }
-	
-	      if (this.treeNodesStates[pos]) {
-	        (0, _objectAssign2.default)(cloneProps, this.treeNodesStates[pos].siblingPosition);
-	      }
+	    }
+	    if (this.treeNodesStates && this.treeNodesStates[pos]) {
+	      (0, _objectAssign2.default)(cloneProps, this.treeNodesStates[pos].siblingPosition);
 	    }
 	    return _react2.default.cloneElement(child, cloneProps);
 	  };
@@ -22108,15 +22108,20 @@
 	      domProps.tabIndex = '0';
 	      domProps.onKeyDown = this.onKeyDown;
 	    }
-	    // console.log(this.state.expandedKeys, this._rawExpandedKeys, props.children);
+	    var getTreeNodesStates = function getTreeNodesStates() {
+	      _this4.treeNodesStates = {};
+	      (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
+	        _this4.treeNodesStates[pos] = {
+	          siblingPosition: siblingPosition
+	        };
+	      });
+	    };
+	    if (props.showLine && !props.checkable) {
+	      getTreeNodesStates();
+	    }
 	    if (props.checkable && (this.checkedKeysChange || props.loadData)) {
 	      if (props.checkStrictly) {
-	        this.treeNodesStates = {};
-	        (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
-	          _this4.treeNodesStates[pos] = {
-	            siblingPosition: siblingPosition
-	          };
-	        });
+	        getTreeNodesStates();
 	      } else if (props._treeNodesStates) {
 	        this.treeNodesStates = props._treeNodesStates.treeNodesStates;
 	        this.halfCheckedKeys = props._treeNodesStates.halfCheckedKeys;
@@ -22740,14 +22745,12 @@
 	  };
 	
 	  TreeNode.prototype.onDragEnter = function onDragEnter(e) {
-	    // console.log('onDragEnter', this.props.eventKey);
 	    e.preventDefault();
 	    e.stopPropagation();
 	    this.props.root.onDragEnter(e, this);
 	  };
 	
 	  TreeNode.prototype.onDragOver = function onDragOver(e) {
-	    // console.log('onDragOver', this.props.eventKey);
 	    // todo disabled
 	    e.preventDefault();
 	    e.stopPropagation();
@@ -22756,13 +22759,11 @@
 	  };
 	
 	  TreeNode.prototype.onDragLeave = function onDragLeave(e) {
-	    // console.log('onDragLeave', this.props.eventKey);
 	    e.stopPropagation();
 	    this.props.root.onDragLeave(e, this);
 	  };
 	
 	  TreeNode.prototype.onDrop = function onDrop(e) {
-	    // console.log('onDrop', this.props.eventKey);
 	    e.preventDefault();
 	    e.stopPropagation();
 	    this.setState({
@@ -22772,7 +22773,6 @@
 	  };
 	
 	  TreeNode.prototype.onDragEnd = function onDragEnd(e) {
-	    // console.log('onDragEnd', this.props.eventKey);
 	    e.stopPropagation();
 	    this.setState({
 	      dragNodeHighlight: false
@@ -22907,8 +22907,7 @@
 	    var props = this.props;
 	    var prefixCls = props.prefixCls;
 	    var expandedState = props.expanded ? 'open' : 'close';
-	
-	    var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon_loading', this.state.dataLoading), _defineProperty(_iconEleCls, prefixCls + '-icon__' + expandedState, true), _iconEleCls);
+	    var iconState = expandedState;
 	
 	    var canRenderSwitcher = true;
 	    var content = props.title;
@@ -22918,12 +22917,15 @@
 	      newChildren = null;
 	      if (!props.loadData || props.isLeaf) {
 	        canRenderSwitcher = false;
+	        iconState = 'docu';
 	      }
 	    }
 	    // For performance, does't render children into dom when `!props.expanded` (move to Animate)
 	    // if (!props.expanded) {
 	    //   newChildren = null;
 	    // }
+	
+	    var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon_loading', this.state.dataLoading), _defineProperty(_iconEleCls, prefixCls + '-icon__' + iconState, true), _iconEleCls);
 	
 	    var selectHandle = function selectHandle() {
 	      var icon = props.showIcon || props.loadData && _this3.state.dataLoading ? _react2.default.createElement('span', { className: (0, _classnames2.default)(iconEleCls) }) : null;
@@ -22932,8 +22934,9 @@
 	        { className: prefixCls + '-title' },
 	        content
 	      );
+	      var wrap = prefixCls + '-node-content-wrapper';
 	      var domProps = {
-	        className: prefixCls + '-node-content-wrapper'
+	        className: wrap + ' ' + wrap + '-' + (iconState === expandedState ? iconState : 'normal')
 	      };
 	      if (!props.disabled) {
 	        if (props.selected || !props._dropTrigger && _this3.state.dragNodeHighlight) {

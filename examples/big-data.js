@@ -23,6 +23,7 @@ webpackJsonp([3],{
 	exports.getFilterExpandedKeys = getFilterExpandedKeys;
 	exports.getRadioSelectKeys = getRadioSelectKeys;
 	/* eslint no-loop-func: 0*/
+	/* eslint no-console:0 */
 	
 	function generateData() {
 	  var x = arguments.length <= 0 || arguments[0] === undefined ? 3 : arguments[0];
@@ -383,7 +384,8 @@ webpackJsonp([3],{
 	      ) : null
 	    );
 	  }
-	});
+	}); /* eslint no-console:0 */
+	
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 

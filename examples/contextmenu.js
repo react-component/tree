@@ -148,7 +148,8 @@ webpackJsonp([4],{
 	    node = node.parentNode;
 	  }
 	  return false;
-	}
+	} /* eslint no-console:0 */
+	
 	
 	var Demo = _react2.default.createClass({
 	  displayName: 'Demo',
@@ -228,7 +229,7 @@ webpackJsonp([4],{
 	        {
 	          onRightClick: this.onRightClick, onSelect: this.onSelect,
 	          defaultSelectedKeys: ['0-1', '0-1-1'],
-	          multiple: true, defaultExpandAll: true, showLine: true
+	          multiple: true, defaultExpandAll: true, showLine: true, showIcon: false
 	        },
 	        _react2.default.createElement(
 	          _rcTree.TreeNode,
@@ -236,14 +237,14 @@ webpackJsonp([4],{
 	          _react2.default.createElement(
 	            _rcTree.TreeNode,
 	            { title: 'parent 1-0', key: '0-1-1' },
-	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf0' }),
-	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf1' }),
-	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf2' })
+	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf0', isLeaf: true }),
+	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf1', isLeaf: true }),
+	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf2', isLeaf: true })
 	          ),
 	          _react2.default.createElement(
 	            _rcTree.TreeNode,
 	            { title: 'parent 1-1' },
-	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf' })
+	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf', isLeaf: true })
 	          )
 	        )
 	      ),
@@ -265,7 +266,7 @@ webpackJsonp([4],{
 	          _react2.default.createElement(
 	            _rcTree.TreeNode,
 	            { title: 'parent 1-0', key: '0-1-1' },
-	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf' }),
+	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf', isLeaf: true }),
 	            _react2.default.createElement(_rcTree.TreeNode, { title: 'leaf' })
 	          ),
 	          _react2.default.createElement(

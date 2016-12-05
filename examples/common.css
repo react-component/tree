@@ -173,5 +173,10 @@
   background-position: -110px 0;
   vertical-align: top;
 }
+.rc-tree-icon__docu {
+  margin-right: 2px;
+  background-position: -110px -32px;
+  vertical-align: top;
+}
 
 /*# sourceMappingURL=common.css.map*/
