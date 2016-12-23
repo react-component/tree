@@ -83,7 +83,7 @@ class TreeNode extends React.Component {
       // ie throw error
       // firefox-need-it
       e.dataTransfer.setData('text/plain', '');
-    } finally {
+    } catch (error) {
       // empty
     }
   }
