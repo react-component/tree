@@ -1,0 +1,101 @@
+exports[`Tree renders correctly 1`] = `
+<ul
+  class="forTest rc-tree"
+  role="tree-node"
+  tabindex="0"
+  unselectable="true">
+  <li
+    class="spe">
+    <span
+      class="rc-tree-switcher rc-tree-roots_open" />
+    <span
+      class="rc-tree-checkbox" />
+    <a
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="parent 1">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open" />
+      <span
+        class="rc-tree-title">
+        parent 1
+      </span>
+    </a>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="rc-tree-treenode-disabled">
+        <span
+          class="rc-tree-switcher rc-tree-center_open rc-tree-switcher-disabled" />
+        <span
+          class="rc-tree-checkbox rc-tree-checkbox-disabled" />
+        <a
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="leaf 1">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open" />
+          <span
+            class="rc-tree-title">
+            leaf 1
+          </span>
+        </a>
+        <ul
+          class="rc-tree-child-tree rc-tree-child-tree-open rc-tree-line"
+          data-expanded="true">
+          <li
+            class="">
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop rc-tree-center_docu" />
+            <span
+              class="rc-tree-checkbox" />
+            <a
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="leaf">
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu" />
+              <span
+                class="rc-tree-title">
+                leaf
+              </span>
+            </a>
+          </li>
+          <li
+            class="">
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop rc-tree-bottom_docu" />
+            <span
+              class="rc-tree-checkbox" />
+            <a
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="leaf">
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu" />
+              <span
+                class="rc-tree-title">
+                leaf
+              </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop rc-tree-bottom_docu" />
+        <span
+          class="rc-tree-checkbox rc-tree-checkbox-disabled" />
+        <a
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="leaf 2">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu" />
+          <span
+            class="rc-tree-title">
+            leaf 2
+          </span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
