@@ -1,131 +1,236 @@
-webpackJsonp([4],{
-
-/***/ 0:
+webpackJsonp([4],[
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(243);
+	module.exports = __webpack_require__(208);
 
 
 /***/ },
-
-/***/ 240:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	exports["default"] = getContainerRenderMixin;
-	
-	var _reactDom = __webpack_require__(37);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function defaultGetContainer() {
-	  var container = document.createElement('div');
-	  document.body.appendChild(container);
-	  return container;
-	}
-	
-	function getContainerRenderMixin(config) {
-	  var _config$autoMount = config.autoMount;
-	  var autoMount = _config$autoMount === undefined ? true : _config$autoMount;
-	  var _config$autoDestroy = config.autoDestroy;
-	  var autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy;
-	  var isVisible = config.isVisible;
-	  var getComponent = config.getComponent;
-	  var _config$getContainer = config.getContainer;
-	  var getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
-	
-	
-	  var mixin = void 0;
-	
-	  function _renderComponent(instance, componentArg, ready) {
-	    if (!isVisible || instance._component || isVisible(instance)) {
-	      if (!instance._container) {
-	        instance._container = getContainer(instance);
-	      }
-	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, getComponent(instance, componentArg), instance._container, function callback() {
-	        instance._component = this;
-	        if (ready) {
-	          ready.call(this);
-	        }
-	      });
-	    }
-	  }
-	
-	  if (autoMount) {
-	    mixin = _extends({}, mixin, {
-	      componentDidMount: function componentDidMount() {
-	        _renderComponent(this);
-	      },
-	      componentDidUpdate: function componentDidUpdate() {
-	        _renderComponent(this);
-	      }
-	    });
-	  }
-	
-	  if (!autoMount || !autoDestroy) {
-	    mixin = _extends({}, mixin, {
-	      renderComponent: function renderComponent(componentArg, ready) {
-	        _renderComponent(this, componentArg, ready);
-	      }
-	    });
-	  }
-	
-	  function _removeContainer(instance) {
-	    if (instance._container) {
-	      var container = instance._container;
-	      _reactDom2["default"].unmountComponentAtNode(container);
-	      container.parentNode.removeChild(container);
-	      instance._container = null;
-	    }
-	  }
-	
-	  if (autoDestroy) {
-	    mixin = _extends({}, mixin, {
-	      componentWillUnmount: function componentWillUnmount() {
-	        _removeContainer(this);
-	      }
-	    });
-	  } else {
-	    mixin = _extends({}, mixin, {
-	      removeContainer: function removeContainer() {
-	        _removeContainer(this);
-	      }
-	    });
-	  }
-	
-	  return mixin;
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 243:
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	__webpack_require__(2);
 	
-	__webpack_require__(244);
+	__webpack_require__(209);
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(34);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(177);
+	var _rcTree = __webpack_require__(180);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
@@ -133,7 +238,7 @@ webpackJsonp([4],{
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _rcTooltip = __webpack_require__(245);
+	var _rcTooltip = __webpack_require__(210);
 	
 	var _rcTooltip2 = _interopRequireDefault(_rcTooltip);
 	
@@ -282,20 +387,17 @@ webpackJsonp([4],{
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ },
-
-/***/ 244:
+/* 209 */
 2,
-
-/***/ 245:
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(246);
+	module.exports = __webpack_require__(211);
 
 /***/ },
-
-/***/ 246:
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -310,9 +412,9 @@ webpackJsonp([4],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _placements = __webpack_require__(247);
+	var _placements = __webpack_require__(212);
 	
-	var _rcTrigger = __webpack_require__(248);
+	var _rcTrigger = __webpack_require__(213);
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
@@ -430,8 +532,7 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 247:
+/* 212 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -524,17 +625,15 @@ webpackJsonp([4],{
 	exports["default"] = placements;
 
 /***/ },
-
-/***/ 248:
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(249);
+	module.exports = __webpack_require__(214);
 
 /***/ },
-
-/***/ 249:
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -543,31 +642,33 @@ webpackJsonp([4],{
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var _extends2 = __webpack_require__(215);
+	
+	var _extends3 = _interopRequireDefault(_extends2);
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(34);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _contains = __webpack_require__(250);
+	var _contains = __webpack_require__(253);
 	
 	var _contains2 = _interopRequireDefault(_contains);
 	
-	var _addEventListener = __webpack_require__(251);
+	var _addEventListener = __webpack_require__(254);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _Popup = __webpack_require__(255);
+	var _Popup = __webpack_require__(258);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(269);
+	var _utils = __webpack_require__(275);
 	
-	var _getContainerRenderMixin = __webpack_require__(240);
+	var _getContainerRenderMixin = __webpack_require__(276);
 	
 	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
 	
@@ -608,6 +709,7 @@ webpackJsonp([4],{
 	    getPopupContainer: _react.PropTypes.func,
 	    destroyPopupOnHide: _react.PropTypes.bool,
 	    mask: _react.PropTypes.bool,
+	    maskClosable: _react.PropTypes.bool,
 	    onPopupAlign: _react.PropTypes.func,
 	    popupAlign: _react.PropTypes.object,
 	    popupVisible: _react.PropTypes.bool,
@@ -626,41 +728,6 @@ webpackJsonp([4],{
 	      var mountNode = instance.props.getPopupContainer ? instance.props.getPopupContainer((0, _reactDom.findDOMNode)(instance)) : document.body;
 	      mountNode.appendChild(popupContainer);
 	      return popupContainer;
-	    },
-	    getComponent: function getComponent(instance) {
-	      var props = instance.props;
-	      var state = instance.state;
-	
-	      var mouseProps = {};
-	      if (instance.isMouseEnterToShow()) {
-	        mouseProps.onMouseEnter = instance.onPopupMouseEnter;
-	      }
-	      if (instance.isMouseLeaveToHide()) {
-	        mouseProps.onMouseLeave = instance.onPopupMouseLeave;
-	      }
-	      return _react2["default"].createElement(
-	        _Popup2["default"],
-	        _extends({
-	          prefixCls: props.prefixCls,
-	          destroyPopupOnHide: props.destroyPopupOnHide,
-	          visible: state.popupVisible,
-	          className: props.popupClassName,
-	          action: props.action,
-	          align: instance.getPopupAlign(),
-	          onAlign: props.onPopupAlign,
-	          animation: props.popupAnimation,
-	          getClassNameFromAlign: instance.getPopupClassNameFromAlign
-	        }, mouseProps, {
-	          getRootDomNode: instance.getRootDomNode,
-	          style: props.popupStyle,
-	          mask: props.mask,
-	          zIndex: props.zIndex,
-	          transitionName: props.popupTransitionName,
-	          maskAnimation: props.maskAnimation,
-	          maskTransitionName: props.maskTransitionName
-	        }),
-	        typeof props.popup === 'function' ? props.popup() : props.popup
-	      );
 	    }
 	  })],
 	
@@ -681,6 +748,7 @@ webpackJsonp([4],{
 	      popupAlign: {},
 	      defaultPopupVisible: false,
 	      mask: false,
+	      maskClosable: true,
 	      action: [],
 	      showAction: [],
 	      hideAction: []
@@ -823,11 +891,14 @@ webpackJsonp([4],{
 	    }
 	  },
 	  onDocumentClick: function onDocumentClick(event) {
+	    if (this.props.mask && !this.props.maskClosable) {
+	      return;
+	    }
 	    var target = event.target;
 	    var root = (0, _reactDom.findDOMNode)(this);
 	    var popupNode = this.getPopupDomNode();
 	    if (!(0, _contains2["default"])(root, target) && !(0, _contains2["default"])(popupNode, target)) {
-	      this.setPopupVisible(false);
+	      this.close();
 	    }
 	  },
 	  getPopupDomNode: function getPopupDomNode() {
@@ -843,9 +914,9 @@ webpackJsonp([4],{
 	  getPopupClassNameFromAlign: function getPopupClassNameFromAlign(align) {
 	    var className = [];
 	    var props = this.props;
-	    var popupPlacement = props.popupPlacement;
-	    var builtinPlacements = props.builtinPlacements;
-	    var prefixCls = props.prefixCls;
+	    var popupPlacement = props.popupPlacement,
+	        builtinPlacements = props.builtinPlacements,
+	        prefixCls = props.prefixCls;
 	
 	    if (popupPlacement && builtinPlacements) {
 	      className.push((0, _utils.getPopupClassNameFromAlign)(builtinPlacements, prefixCls, align));
@@ -857,14 +928,49 @@ webpackJsonp([4],{
 	  },
 	  getPopupAlign: function getPopupAlign() {
 	    var props = this.props;
-	    var popupPlacement = props.popupPlacement;
-	    var popupAlign = props.popupAlign;
-	    var builtinPlacements = props.builtinPlacements;
+	    var popupPlacement = props.popupPlacement,
+	        popupAlign = props.popupAlign,
+	        builtinPlacements = props.builtinPlacements;
 	
 	    if (popupPlacement && builtinPlacements) {
 	      return (0, _utils.getAlignFromPlacement)(builtinPlacements, popupPlacement, popupAlign);
 	    }
 	    return popupAlign;
+	  },
+	  getComponent: function getComponent() {
+	    var props = this.props,
+	        state = this.state;
+	
+	    var mouseProps = {};
+	    if (this.isMouseEnterToShow()) {
+	      mouseProps.onMouseEnter = this.onPopupMouseEnter;
+	    }
+	    if (this.isMouseLeaveToHide()) {
+	      mouseProps.onMouseLeave = this.onPopupMouseLeave;
+	    }
+	    return _react2["default"].createElement(
+	      _Popup2["default"],
+	      (0, _extends3["default"])({
+	        prefixCls: props.prefixCls,
+	        destroyPopupOnHide: props.destroyPopupOnHide,
+	        visible: state.popupVisible,
+	        className: props.popupClassName,
+	        action: props.action,
+	        align: this.getPopupAlign(),
+	        onAlign: props.onPopupAlign,
+	        animation: props.popupAnimation,
+	        getClassNameFromAlign: this.getPopupClassNameFromAlign
+	      }, mouseProps, {
+	        getRootDomNode: this.getRootDomNode,
+	        style: props.popupStyle,
+	        mask: props.mask,
+	        zIndex: props.zIndex,
+	        transitionName: props.popupTransitionName,
+	        maskAnimation: props.maskAnimation,
+	        maskTransitionName: props.maskTransitionName
+	      }),
+	      typeof props.popup === 'function' ? props.popup() : props.popup
+	    );
 	  },
 	  setPopupVisible: function setPopupVisible(popupVisible) {
 	    this.clearDelayTimer();
@@ -906,44 +1012,44 @@ webpackJsonp([4],{
 	    return childPros[event] || props[event];
 	  },
 	  isClickToShow: function isClickToShow() {
-	    var _props = this.props;
-	    var action = _props.action;
-	    var showAction = _props.showAction;
+	    var _props = this.props,
+	        action = _props.action,
+	        showAction = _props.showAction;
 	
 	    return action.indexOf('click') !== -1 || showAction.indexOf('click') !== -1;
 	  },
 	  isClickToHide: function isClickToHide() {
-	    var _props2 = this.props;
-	    var action = _props2.action;
-	    var hideAction = _props2.hideAction;
+	    var _props2 = this.props,
+	        action = _props2.action,
+	        hideAction = _props2.hideAction;
 	
 	    return action.indexOf('click') !== -1 || hideAction.indexOf('click') !== -1;
 	  },
 	  isMouseEnterToShow: function isMouseEnterToShow() {
-	    var _props3 = this.props;
-	    var action = _props3.action;
-	    var showAction = _props3.showAction;
+	    var _props3 = this.props,
+	        action = _props3.action,
+	        showAction = _props3.showAction;
 	
 	    return action.indexOf('hover') !== -1 || showAction.indexOf('mouseEnter') !== -1;
 	  },
 	  isMouseLeaveToHide: function isMouseLeaveToHide() {
-	    var _props4 = this.props;
-	    var action = _props4.action;
-	    var hideAction = _props4.hideAction;
+	    var _props4 = this.props,
+	        action = _props4.action,
+	        hideAction = _props4.hideAction;
 	
 	    return action.indexOf('hover') !== -1 || hideAction.indexOf('mouseLeave') !== -1;
 	  },
 	  isFocusToShow: function isFocusToShow() {
-	    var _props5 = this.props;
-	    var action = _props5.action;
-	    var showAction = _props5.showAction;
+	    var _props5 = this.props,
+	        action = _props5.action,
+	        showAction = _props5.showAction;
 	
 	    return action.indexOf('focus') !== -1 || showAction.indexOf('focus') !== -1;
 	  },
 	  isBlurToHide: function isBlurToHide() {
-	    var _props6 = this.props;
-	    var action = _props6.action;
-	    var hideAction = _props6.hideAction;
+	    var _props6 = this.props,
+	        action = _props6.action,
+	        hideAction = _props6.hideAction;
 	
 	    return action.indexOf('focus') !== -1 || hideAction.indexOf('blur') !== -1;
 	  },
@@ -961,6 +1067,9 @@ webpackJsonp([4],{
 	    if (callback) {
 	      callback(e);
 	    }
+	  },
+	  close: function close() {
+	    this.setPopupVisible(false);
 	  },
 	  render: function render() {
 	    var props = this.props;
@@ -1003,13 +1112,549 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
+/* 215 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 250:
+	"use strict";
+	
+	exports.__esModule = true;
+	
+	var _assign = __webpack_require__(216);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _assign2.default || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];
+	
+	    for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }
+	
+	  return target;
+	};
+
+/***/ },
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(217), __esModule: true };
+
+/***/ },
+/* 217 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(218);
+	module.exports = __webpack_require__(221).Object.assign;
+
+/***/ },
+/* 218 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $export = __webpack_require__(219);
+	
+	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(234)});
+
+/***/ },
+/* 219 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global    = __webpack_require__(220)
+	  , core      = __webpack_require__(221)
+	  , ctx       = __webpack_require__(222)
+	  , hide      = __webpack_require__(224)
+	  , PROTOTYPE = 'prototype';
+	
+	var $export = function(type, name, source){
+	  var IS_FORCED = type & $export.F
+	    , IS_GLOBAL = type & $export.G
+	    , IS_STATIC = type & $export.S
+	    , IS_PROTO  = type & $export.P
+	    , IS_BIND   = type & $export.B
+	    , IS_WRAP   = type & $export.W
+	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+	    , expProto  = exports[PROTOTYPE]
+	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+	    , key, own, out;
+	  if(IS_GLOBAL)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !IS_FORCED && target && target[key] !== undefined;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+	    // bind timers to global for call from export context
+	    : IS_BIND && own ? ctx(out, global)
+	    // wrap global constructors for prevent change them in library
+	    : IS_WRAP && target[key] == out ? (function(C){
+	      var F = function(a, b, c){
+	        if(this instanceof C){
+	          switch(arguments.length){
+	            case 0: return new C;
+	            case 1: return new C(a);
+	            case 2: return new C(a, b);
+	          } return new C(a, b, c);
+	        } return C.apply(this, arguments);
+	      };
+	      F[PROTOTYPE] = C[PROTOTYPE];
+	      return F;
+	    // make static versions for prototype methods
+	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+	    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+	    if(IS_PROTO){
+	      (exports.virtual || (exports.virtual = {}))[key] = out;
+	      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+	      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
+	    }
+	  }
+	};
+	// type bitmap
+	$export.F = 1;   // forced
+	$export.G = 2;   // global
+	$export.S = 4;   // static
+	$export.P = 8;   // proto
+	$export.B = 16;  // bind
+	$export.W = 32;  // wrap
+	$export.U = 64;  // safe
+	$export.R = 128; // real proto method for `library` 
+	module.exports = $export;
+
+/***/ },
+/* 220 */
+/***/ function(module, exports) {
+
+	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+	var global = module.exports = typeof window != 'undefined' && window.Math == Math
+	  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ },
+/* 221 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 222 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// optional / simple context binding
+	var aFunction = __webpack_require__(223);
+	module.exports = function(fn, that, length){
+	  aFunction(fn);
+	  if(that === undefined)return fn;
+	  switch(length){
+	    case 1: return function(a){
+	      return fn.call(that, a);
+	    };
+	    case 2: return function(a, b){
+	      return fn.call(that, a, b);
+	    };
+	    case 3: return function(a, b, c){
+	      return fn.call(that, a, b, c);
+	    };
+	  }
+	  return function(/* ...args */){
+	    return fn.apply(that, arguments);
+	  };
+	};
+
+/***/ },
+/* 223 */
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+	  return it;
+	};
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var dP         = __webpack_require__(225)
+	  , createDesc = __webpack_require__(233);
+	module.exports = __webpack_require__(229) ? function(object, key, value){
+	  return dP.f(object, key, createDesc(1, value));
+	} : function(object, key, value){
+	  object[key] = value;
+	  return object;
+	};
+
+/***/ },
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var anObject       = __webpack_require__(226)
+	  , IE8_DOM_DEFINE = __webpack_require__(228)
+	  , toPrimitive    = __webpack_require__(232)
+	  , dP             = Object.defineProperty;
+	
+	exports.f = __webpack_require__(229) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+	  anObject(O);
+	  P = toPrimitive(P, true);
+	  anObject(Attributes);
+	  if(IE8_DOM_DEFINE)try {
+	    return dP(O, P, Attributes);
+	  } catch(e){ /* empty */ }
+	  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+	  if('value' in Attributes)O[P] = Attributes.value;
+	  return O;
+	};
+
+/***/ },
+/* 226 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(227);
+	module.exports = function(it){
+	  if(!isObject(it))throw TypeError(it + ' is not an object!');
+	  return it;
+	};
+
+/***/ },
+/* 227 */
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  return typeof it === 'object' ? it !== null : typeof it === 'function';
+	};
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = !__webpack_require__(229) && !__webpack_require__(230)(function(){
+	  return Object.defineProperty(__webpack_require__(231)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Thank's IE8 for his funny defineProperty
+	module.exports = !__webpack_require__(230)(function(){
+	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 230 */
+/***/ function(module, exports) {
+
+	module.exports = function(exec){
+	  try {
+	    return !!exec();
+	  } catch(e){
+	    return true;
+	  }
+	};
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(227)
+	  , document = __webpack_require__(220).document
+	  // in old IE typeof document.createElement is 'object'
+	  , is = isObject(document) && isObject(document.createElement);
+	module.exports = function(it){
+	  return is ? document.createElement(it) : {};
+	};
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.1 ToPrimitive(input [, PreferredType])
+	var isObject = __webpack_require__(227);
+	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+	// and the second argument - flag - preferred type is a string
+	module.exports = function(it, S){
+	  if(!isObject(it))return it;
+	  var fn, val;
+	  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  throw TypeError("Can't convert object to primitive value");
+	};
+
+/***/ },
+/* 233 */
+/***/ function(module, exports) {
+
+	module.exports = function(bitmap, value){
+	  return {
+	    enumerable  : !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable    : !(bitmap & 4),
+	    value       : value
+	  };
+	};
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 19.1.2.1 Object.assign(target, source, ...)
+	var getKeys  = __webpack_require__(235)
+	  , gOPS     = __webpack_require__(250)
+	  , pIE      = __webpack_require__(251)
+	  , toObject = __webpack_require__(252)
+	  , IObject  = __webpack_require__(239)
+	  , $assign  = Object.assign;
+	
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = !$assign || __webpack_require__(230)(function(){
+	  var A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+	  var T     = toObject(target)
+	    , aLen  = arguments.length
+	    , index = 1
+	    , getSymbols = gOPS.f
+	    , isEnum     = pIE.f;
+	  while(aLen > index){
+	    var S      = IObject(arguments[index++])
+	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+	  } return T;
+	} : $assign;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+	var $keys       = __webpack_require__(236)
+	  , enumBugKeys = __webpack_require__(249);
+	
+	module.exports = Object.keys || function keys(O){
+	  return $keys(O, enumBugKeys);
+	};
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var has          = __webpack_require__(237)
+	  , toIObject    = __webpack_require__(238)
+	  , arrayIndexOf = __webpack_require__(242)(false)
+	  , IE_PROTO     = __webpack_require__(246)('IE_PROTO');
+	
+	module.exports = function(object, names){
+	  var O      = toIObject(object)
+	    , i      = 0
+	    , result = []
+	    , key;
+	  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
+	  // Don't enum bug & hidden keys
+	  while(names.length > i)if(has(O, key = names[i++])){
+	    ~arrayIndexOf(result, key) || result.push(key);
+	  }
+	  return result;
+	};
+
+/***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	var hasOwnProperty = {}.hasOwnProperty;
+	module.exports = function(it, key){
+	  return hasOwnProperty.call(it, key);
+	};
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// to indexed object, toObject with fallback for non-array-like ES3 strings
+	var IObject = __webpack_require__(239)
+	  , defined = __webpack_require__(241);
+	module.exports = function(it){
+	  return IObject(defined(it));
+	};
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// fallback for non-array-like ES3 and non-enumerable old V8 strings
+	var cof = __webpack_require__(240);
+	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
+	  return cof(it) == 'String' ? it.split('') : Object(it);
+	};
+
+/***/ },
+/* 240 */
+/***/ function(module, exports) {
+
+	var toString = {}.toString;
+	
+	module.exports = function(it){
+	  return toString.call(it).slice(8, -1);
+	};
+
+/***/ },
+/* 241 */
+/***/ function(module, exports) {
+
+	// 7.2.1 RequireObjectCoercible(argument)
+	module.exports = function(it){
+	  if(it == undefined)throw TypeError("Can't call method on  " + it);
+	  return it;
+	};
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// false -> Array#indexOf
+	// true  -> Array#includes
+	var toIObject = __webpack_require__(238)
+	  , toLength  = __webpack_require__(243)
+	  , toIndex   = __webpack_require__(245);
+	module.exports = function(IS_INCLUDES){
+	  return function($this, el, fromIndex){
+	    var O      = toIObject($this)
+	      , length = toLength(O.length)
+	      , index  = toIndex(fromIndex, length)
+	      , value;
+	    // Array#includes uses SameValueZero equality algorithm
+	    if(IS_INCLUDES && el != el)while(length > index){
+	      value = O[index++];
+	      if(value != value)return true;
+	    // Array#toIndex ignores holes, Array#includes - not
+	    } else for(;length > index; index++)if(IS_INCLUDES || index in O){
+	      if(O[index] === el)return IS_INCLUDES || index || 0;
+	    } return !IS_INCLUDES && -1;
+	  };
+	};
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.15 ToLength
+	var toInteger = __webpack_require__(244)
+	  , min       = Math.min;
+	module.exports = function(it){
+	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+	};
+
+/***/ },
+/* 244 */
+/***/ function(module, exports) {
+
+	// 7.1.4 ToInteger
+	var ceil  = Math.ceil
+	  , floor = Math.floor;
+	module.exports = function(it){
+	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+	};
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toInteger = __webpack_require__(244)
+	  , max       = Math.max
+	  , min       = Math.min;
+	module.exports = function(index, length){
+	  index = toInteger(index);
+	  return index < 0 ? max(index + length, 0) : min(index, length);
+	};
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var shared = __webpack_require__(247)('keys')
+	  , uid    = __webpack_require__(248);
+	module.exports = function(key){
+	  return shared[key] || (shared[key] = uid(key));
+	};
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global = __webpack_require__(220)
+	  , SHARED = '__core-js_shared__'
+	  , store  = global[SHARED] || (global[SHARED] = {});
+	module.exports = function(key){
+	  return store[key] || (store[key] = {});
+	};
+
+/***/ },
+/* 248 */
+/***/ function(module, exports) {
+
+	var id = 0
+	  , px = Math.random();
+	module.exports = function(key){
+	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+	};
+
+/***/ },
+/* 249 */
+/***/ function(module, exports) {
+
+	// IE 8- don't enum bug keys
+	module.exports = (
+	  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+	).split(',');
+
+/***/ },
+/* 250 */
+/***/ function(module, exports) {
+
+	exports.f = Object.getOwnPropertySymbols;
+
+/***/ },
+/* 251 */
+/***/ function(module, exports) {
+
+	exports.f = {}.propertyIsEnumerable;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.13 ToObject(argument)
+	var defined = __webpack_require__(241);
+	module.exports = function(it){
+	  return Object(defined(it));
+	};
+
+/***/ },
+/* 253 */
 /***/ function(module, exports) {
 
 	"use strict";
 	
-	module.exports = function contains(root, n) {
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = contains;
+	function contains(root, n) {
 	  var node = n;
 	  while (node) {
 	    if (node === root) {
@@ -1019,11 +1664,11 @@ webpackJsonp([4],{
 	  }
 	
 	  return false;
-	};
+	}
+	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 251:
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1033,11 +1678,11 @@ webpackJsonp([4],{
 	});
 	exports["default"] = addEventListenerWrap;
 	
-	var _addDomEventListener = __webpack_require__(252);
+	var _addDomEventListener = __webpack_require__(255);
 	
 	var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(34);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
@@ -1053,8 +1698,7 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 252:
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1066,7 +1710,7 @@ webpackJsonp([4],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventObject = __webpack_require__(253);
+	var _EventObject = __webpack_require__(256);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
@@ -1096,8 +1740,7 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 253:
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1114,7 +1757,7 @@ webpackJsonp([4],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventBaseObject = __webpack_require__(254);
+	var _EventBaseObject = __webpack_require__(257);
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
@@ -1380,8 +2023,7 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 254:
+/* 257 */
 /***/ function(module, exports) {
 
 	/**
@@ -1449,8 +2091,7 @@ webpackJsonp([4],{
 	module.exports = exports["default"];
 
 /***/ },
-
-/***/ 255:
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1459,29 +2100,31 @@ webpackJsonp([4],{
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var _extends2 = __webpack_require__(215);
+	
+	var _extends3 = _interopRequireDefault(_extends2);
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(34);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAlign = __webpack_require__(256);
+	var _rcAlign = __webpack_require__(259);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcAnimate = __webpack_require__(183);
+	var _rcAnimate = __webpack_require__(186);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _PopupInner = __webpack_require__(267);
+	var _PopupInner = __webpack_require__(272);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
-	var _LazyRenderBox = __webpack_require__(268);
+	var _LazyRenderBox = __webpack_require__(273);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -1545,18 +2188,18 @@ webpackJsonp([4],{
 	  },
 	  getPopupElement: function getPopupElement() {
 	    var props = this.props;
-	    var align = props.align;
-	    var style = props.style;
-	    var visible = props.visible;
-	    var prefixCls = props.prefixCls;
-	    var destroyPopupOnHide = props.destroyPopupOnHide;
+	    var align = props.align,
+	        style = props.style,
+	        visible = props.visible,
+	        prefixCls = props.prefixCls,
+	        destroyPopupOnHide = props.destroyPopupOnHide;
 	
 	    var className = this.getClassName(this.currentAlignClassName || props.getClassNameFromAlign(align));
 	    var hiddenClassName = prefixCls + '-hidden';
 	    if (!visible) {
 	      this.currentAlignClassName = null;
 	    }
-	    var newStyle = _extends({}, style, this.getZIndexStyle());
+	    var newStyle = (0, _extends3["default"])({}, style, this.getZIndexStyle());
 	    var popupInnerProps = {
 	      className: className,
 	      prefixCls: prefixCls,
@@ -1586,7 +2229,7 @@ webpackJsonp([4],{
 	          },
 	          _react2["default"].createElement(
 	            _PopupInner2["default"],
-	            _extends({
+	            (0, _extends3["default"])({
 	              visible: true
 	            }, popupInnerProps),
 	            props.children
@@ -1618,7 +2261,7 @@ webpackJsonp([4],{
 	        },
 	        _react2["default"].createElement(
 	          _PopupInner2["default"],
-	          _extends({
+	          (0, _extends3["default"])({
 	            hiddenClassName: hiddenClassName
 	          }, popupInnerProps),
 	          props.children
@@ -1679,8 +2322,7 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 256:
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1689,7 +2331,7 @@ webpackJsonp([4],{
 	  value: true
 	});
 	
-	var _Align = __webpack_require__(257);
+	var _Align = __webpack_require__(260);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -1700,8 +2342,7 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 257:
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1714,19 +2355,19 @@ webpackJsonp([4],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(34);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _domAlign = __webpack_require__(258);
+	var _domAlign = __webpack_require__(261);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
-	var _addEventListener = __webpack_require__(251);
+	var _addEventListener = __webpack_require__(270);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _isWindow = __webpack_require__(266);
+	var _isWindow = __webpack_require__(271);
 	
 	var _isWindow2 = _interopRequireDefault(_isWindow);
 	
@@ -1838,9 +2479,9 @@ webpackJsonp([4],{
 	    }
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var childrenProps = _props.childrenProps;
-	    var children = _props.children;
+	    var _props = this.props,
+	        childrenProps = _props.childrenProps,
+	        children = _props.children;
 	
 	    var child = _react2["default"].Children.only(children);
 	    if (childrenProps) {
@@ -1860,48 +2501,47 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 258:
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _utils = __webpack_require__(262);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	var _getOffsetParent = __webpack_require__(264);
+	
+	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
+	
+	var _getVisibleRectForElement = __webpack_require__(265);
+	
+	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
+	
+	var _adjustForViewport = __webpack_require__(266);
+	
+	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
+	
+	var _getRegion = __webpack_require__(267);
+	
+	var _getRegion2 = _interopRequireDefault(_getRegion);
+	
+	var _getElFuturePos = __webpack_require__(268);
+	
+	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	// http://yiminghe.iteye.com/blog/1124720
+	
 	/**
 	 * align dom node flexibly
 	 * @author yiminghe@gmail.com
 	 */
-	
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _utils = __webpack_require__(259);
-	
-	var _utils2 = _interopRequireDefault(_utils);
-	
-	var _getOffsetParent = __webpack_require__(260);
-	
-	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
-	
-	var _getVisibleRectForElement = __webpack_require__(261);
-	
-	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
-	
-	var _adjustForViewport = __webpack_require__(262);
-	
-	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
-	
-	var _getRegion = __webpack_require__(263);
-	
-	var _getRegion2 = _interopRequireDefault(_getRegion);
-	
-	var _getElFuturePos = __webpack_require__(264);
-	
-	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
-	
-	// http://yiminghe.iteye.com/blog/1124720
 	
 	function isFailX(elFuturePos, elRegion, visibleRect) {
 	  return elFuturePos.left < visibleRect.left || elFuturePos.left + elRegion.width > visibleRect.right;
@@ -1921,7 +2561,7 @@ webpackJsonp([4],{
 	
 	function flip(points, reg, map) {
 	  var ret = [];
-	  _utils2['default'].each(points, function (p) {
+	  _utils2["default"].each(points, function (p) {
 	    ret.push(p.replace(reg, function (m) {
 	      return map[m];
 	    }));
@@ -1935,7 +2575,7 @@ webpackJsonp([4],{
 	}
 	
 	function convertOffset(str, offsetLen) {
-	  var n = undefined;
+	  var n = void 0;
 	  if (/%$/.test(str)) {
 	    n = parseInt(str.substring(0, str.length - 1), 10) / 100 * offsetLen;
 	  } else {
@@ -1963,18 +2603,18 @@ webpackJsonp([4],{
 	
 	  var fail = 0;
 	  // 当前节点可以被放置的显示区域
-	  var visibleRect = (0, _getVisibleRectForElement2['default'])(source);
+	  var visibleRect = (0, _getVisibleRectForElement2["default"])(source);
 	  // 当前节点所占的区域, left/top/width/height
-	  var elRegion = (0, _getRegion2['default'])(source);
+	  var elRegion = (0, _getRegion2["default"])(source);
 	  // 参照节点所占的区域, left/top/width/height
-	  var refNodeRegion = (0, _getRegion2['default'])(target);
+	  var refNodeRegion = (0, _getRegion2["default"])(target);
 	  // 将 offset 转换成数值，支持百分比
 	  normalizeOffset(offset, elRegion);
 	  normalizeOffset(targetOffset, refNodeRegion);
 	  // 当前节点将要被放置的位置
-	  var elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
+	  var elFuturePos = (0, _getElFuturePos2["default"])(elRegion, refNodeRegion, points, offset, targetOffset);
 	  // 当前节点将要所处的区域
-	  var newElRegion = _utils2['default'].merge(elRegion, elFuturePos);
+	  var newElRegion = _utils2["default"].merge(elRegion, elFuturePos);
 	
 	  // 如果可视区域不能完全放置当前节点时允许调整
 	  if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
@@ -1989,7 +2629,7 @@ webpackJsonp([4],{
 	        // 偏移量也反下
 	        var newOffset = flipOffset(offset, 0);
 	        var newTargetOffset = flipOffset(targetOffset, 0);
-	        var newElFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, newPoints, newOffset, newTargetOffset);
+	        var newElFuturePos = (0, _getElFuturePos2["default"])(elRegion, refNodeRegion, newPoints, newOffset, newTargetOffset);
 	        if (!isCompleteFailX(newElFuturePos, elRegion, visibleRect)) {
 	          fail = 1;
 	          points = newPoints;
@@ -2003,27 +2643,27 @@ webpackJsonp([4],{
 	      // 如果纵向不能放下
 	      if (isFailY(elFuturePos, elRegion, visibleRect)) {
 	        // 对齐位置反下
-	        var newPoints = flip(points, /[tb]/ig, {
+	        var _newPoints = flip(points, /[tb]/ig, {
 	          t: 'b',
 	          b: 't'
 	        });
 	        // 偏移量也反下
-	        var newOffset = flipOffset(offset, 1);
-	        var newTargetOffset = flipOffset(targetOffset, 1);
-	        var newElFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, newPoints, newOffset, newTargetOffset);
-	        if (!isCompleteFailY(newElFuturePos, elRegion, visibleRect)) {
+	        var _newOffset = flipOffset(offset, 1);
+	        var _newTargetOffset = flipOffset(targetOffset, 1);
+	        var _newElFuturePos = (0, _getElFuturePos2["default"])(elRegion, refNodeRegion, _newPoints, _newOffset, _newTargetOffset);
+	        if (!isCompleteFailY(_newElFuturePos, elRegion, visibleRect)) {
 	          fail = 1;
-	          points = newPoints;
-	          offset = newOffset;
-	          targetOffset = newTargetOffset;
+	          points = _newPoints;
+	          offset = _newOffset;
+	          targetOffset = _newTargetOffset;
 	        }
 	      }
 	    }
 	
 	    // 如果失败，重新计算当前节点将要被放置的位置
 	    if (fail) {
-	      elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
-	      _utils2['default'].mix(newElRegion, elFuturePos);
+	      elFuturePos = (0, _getElFuturePos2["default"])(elRegion, refNodeRegion, points, offset, targetOffset);
+	      _utils2["default"].mix(newElRegion, elFuturePos);
 	    }
 	
 	    // 检查反下后的位置是否可以放下了
@@ -2034,29 +2674,29 @@ webpackJsonp([4],{
 	
 	    // 确实要调整，甚至可能会调整高度宽度
 	    if (newOverflowCfg.adjustX || newOverflowCfg.adjustY) {
-	      newElRegion = (0, _adjustForViewport2['default'])(elFuturePos, elRegion, visibleRect, newOverflowCfg);
+	      newElRegion = (0, _adjustForViewport2["default"])(elFuturePos, elRegion, visibleRect, newOverflowCfg);
 	    }
 	  }
 	
 	  // need judge to in case set fixed with in css on height auto element
 	  if (newElRegion.width !== elRegion.width) {
-	    _utils2['default'].css(source, 'width', source.width() + newElRegion.width - elRegion.width);
+	    _utils2["default"].css(source, 'width', _utils2["default"].width(source) + newElRegion.width - elRegion.width);
 	  }
 	
 	  if (newElRegion.height !== elRegion.height) {
-	    _utils2['default'].css(source, 'height', source.height() + newElRegion.height - elRegion.height);
+	    _utils2["default"].css(source, 'height', _utils2["default"].height(source) + newElRegion.height - elRegion.height);
 	  }
 	
 	  // https://github.com/kissyteam/kissy/issues/190
-	  // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
 	  // 相对于屏幕位置没变，而 left/top 变了
 	  // 例如 <div 'relative'><el absolute></div>
-	  _utils2['default'].offset(source, {
+	  _utils2["default"].offset(source, {
 	    left: newElRegion.left,
 	    top: newElRegion.top
 	  }, {
 	    useCssRight: align.useCssRight,
-	    useCssBottom: align.useCssBottom
+	    useCssBottom: align.useCssBottom,
+	    useCssTransform: align.useCssTransform
 	  });
 	
 	  return {
@@ -2067,12 +2707,11 @@ webpackJsonp([4],{
 	  };
 	}
 	
-	domAlign.__getOffsetParent = _getOffsetParent2['default'];
+	domAlign.__getOffsetParent = _getOffsetParent2["default"];
 	
-	domAlign.__getVisibleRectForElement = _getVisibleRectForElement2['default'];
+	domAlign.__getVisibleRectForElement = _getVisibleRectForElement2["default"];
 	
-	exports['default'] = domAlign;
-	
+	exports["default"] = domAlign;
 	/**
 	 *  2012-04-26 yiminghe@gmail.com
 	 *   - 优化智能对齐算法
@@ -2081,25 +2720,34 @@ webpackJsonp([4],{
 	 *  2011-07-13 yiminghe@gmail.com note:
 	 *   - 增加智能对齐，以及大小调整选项
 	 **/
+	
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 259:
-/***/ function(module, exports) {
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var _propertyUtils = __webpack_require__(263);
+	
 	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
 	
-	var getComputedStyleX = undefined;
+	var getComputedStyleX = void 0;
+	
+	function force(x, y) {
+	  return x + y;
+	}
 	
 	function css(el, name, v) {
 	  var value = v;
-	  if (typeof name === 'object') {
+	  if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
 	    for (var i in name) {
 	      if (name.hasOwnProperty(i)) {
 	        css(el, i, name[i]);
@@ -2118,9 +2766,9 @@ webpackJsonp([4],{
 	}
 	
 	function getClientPosition(elem) {
-	  var box = undefined;
-	  var x = undefined;
-	  var y = undefined;
+	  var box = void 0;
+	  var x = void 0;
+	  var y = void 0;
 	  var doc = elem.ownerDocument;
 	  var body = doc.body;
 	  var docElem = doc && doc.documentElement;
@@ -2157,7 +2805,10 @@ webpackJsonp([4],{
 	  x -= docElem.clientLeft || body.clientLeft || 0;
 	  y -= docElem.clientTop || body.clientTop || 0;
 	
-	  return { left: x, top: y };
+	  return {
+	    left: x,
+	    top: y
+	  };
 	}
 	
 	function getScroll(w, top) {
@@ -2272,7 +2923,7 @@ webpackJsonp([4],{
 	}
 	
 	// 设置 elem 相对 elem.ownerDocument 的坐标
-	function setOffset(elem, offset, option) {
+	function setLeftTop(elem, offset, option) {
 	  // set position first, in-case top/left are set even on static elem
 	  if (css(elem, 'position') === 'static') {
 	    elem.style.position = 'relative';
@@ -2291,7 +2942,12 @@ webpackJsonp([4],{
 	  if (verticalProperty !== 'top') {
 	    presetV = 999;
 	  }
-	
+	  var originalTransition = '';
+	  var originalOffset = getOffset(elem);
+	  if ('left' in offset || 'top' in offset) {
+	    originalTransition = (0, _propertyUtils.getTransitionProperty)(elem) || '';
+	    (0, _propertyUtils.setTransitionProperty)(elem, 'none');
+	  }
 	  if ('left' in offset) {
 	    elem.style[oppositeHorizontalProperty] = '';
 	    elem.style[horizontalProperty] = presetH + 'px';
@@ -2301,20 +2957,61 @@ webpackJsonp([4],{
 	    elem.style[verticalProperty] = presetV + 'px';
 	  }
 	  var old = getOffset(elem);
-	  var ret = {};
-	  var key = undefined;
-	  for (key in offset) {
+	  var originalStyle = {};
+	  for (var key in offset) {
 	    if (offset.hasOwnProperty(key)) {
 	      var dir = getOffsetDirection(key, option);
 	      var preset = key === 'left' ? presetH : presetV;
+	      var off = originalOffset[key] - old[key];
 	      if (dir === key) {
-	        ret[dir] = preset + offset[key] - old[key];
+	        originalStyle[dir] = preset + off;
 	      } else {
-	        ret[dir] = preset + old[key] - offset[key];
+	        originalStyle[dir] = preset - off;
+	      }
+	    }
+	  }
+	  css(elem, originalStyle);
+	  // force relayout
+	  force(elem.offsetTop, elem.offsetLeft);
+	  if ('left' in offset || 'top' in offset) {
+	    (0, _propertyUtils.setTransitionProperty)(elem, originalTransition);
+	  }
+	  var ret = {};
+	  for (var _key in offset) {
+	    if (offset.hasOwnProperty(_key)) {
+	      var _dir = getOffsetDirection(_key, option);
+	      var _off = offset[_key] - originalOffset[_key];
+	      if (_key === _dir) {
+	        ret[_dir] = originalStyle[_dir] + _off;
+	      } else {
+	        ret[_dir] = originalStyle[_dir] - _off;
 	      }
 	    }
 	  }
 	  css(elem, ret);
+	}
+	
+	function setTransform(elem, offset) {
+	  var originalOffset = getOffset(elem);
+	  var originalXY = (0, _propertyUtils.getTransformXY)(elem);
+	  var resultXY = { x: originalXY.x, y: originalXY.y };
+	  if ('left' in offset) {
+	    resultXY.x = originalXY.x + offset.left - originalOffset.left;
+	  }
+	  if ('top' in offset) {
+	    resultXY.y = originalXY.y + offset.top - originalOffset.top;
+	  }
+	  (0, _propertyUtils.setTransformXY)(elem, resultXY);
+	}
+	
+	function setOffset(elem, offset, option) {
+	  if (option.useCssRight || option.useCssBottom) {
+	    setLeftTop(elem, offset, option);
+	  } else if (option.useCssTransform && (0, _propertyUtils.getTransformName)() in document.body.style) {
+	    setTransform(elem, offset, option);
+	  } else {
+	    setLeftTop(elem, offset, option);
+	  }
 	}
 	
 	function each(arr, fn) {
@@ -2336,7 +3033,7 @@ webpackJsonp([4],{
 	function swap(elem, options, callback) {
 	  var old = {};
 	  var style = elem.style;
-	  var name = undefined;
+	  var name = void 0;
 	
 	  // Remember the old values, and insert the new ones
 	  for (name in options) {
@@ -2358,16 +3055,16 @@ webpackJsonp([4],{
 	
 	function getPBMWidth(elem, props, which) {
 	  var value = 0;
-	  var prop = undefined;
-	  var j = undefined;
-	  var i = undefined;
+	  var prop = void 0;
+	  var j = void 0;
+	  var i = void 0;
 	  for (j = 0; j < props.length; j++) {
 	    prop = props[j];
 	    if (prop) {
 	      for (i = 0; i < which.length; i++) {
-	        var cssProp = undefined;
+	        var cssProp = void 0;
 	        if (prop === 'border') {
-	          cssProp = prop + which[i] + 'Width';
+	          cssProp = '' + prop + which[i] + 'Width';
 	        } else {
 	          cssProp = prop + which[i];
 	        }
@@ -2463,15 +3160,19 @@ webpackJsonp([4],{
 	  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
 	}
 	
-	var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
+	var cssShow = {
+	  position: 'absolute',
+	  visibility: 'hidden',
+	  display: 'block'
+	};
 	
 	// fix #119 : https://github.com/kissyteam/kissy/issues/119
 	function getWHIgnoreDisplay() {
-	  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	    args[_key] = arguments[_key];
+	  for (var _len = arguments.length, args = Array(_len), _key2 = 0; _key2 < _len; _key2++) {
+	    args[_key2] = arguments[_key2];
 	  }
 	
-	  var val = undefined;
+	  var val = void 0;
 	  var elem = args[0];
 	  // in case elem is window
 	  // elem.offsetWidth === undefined
@@ -2533,11 +3234,12 @@ webpackJsonp([4],{
 	      return getOffset(el);
 	    }
 	  },
+	
 	  isWindow: isWindow,
 	  each: each,
 	  css: css,
 	  clone: function clone(obj) {
-	    var i = undefined;
+	    var i = void 0;
 	    var ret = {};
 	    for (i in obj) {
 	      if (obj.hasOwnProperty(i)) {
@@ -2554,6 +3256,7 @@ webpackJsonp([4],{
 	    }
 	    return ret;
 	  },
+	
 	  mix: mix,
 	  getWindowScrollLeft: function getWindowScrollLeft(w) {
 	    return getScrollLeft(w);
@@ -2564,8 +3267,8 @@ webpackJsonp([4],{
 	  merge: function merge() {
 	    var ret = {};
 	
-	    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	      args[_key2] = arguments[_key2];
+	    for (var _len2 = arguments.length, args = Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
+	      args[_key3] = arguments[_key3];
 	    }
 	
 	    for (var i = 0; i < args.length; i++) {
@@ -2573,31 +3276,146 @@ webpackJsonp([4],{
 	    }
 	    return ret;
 	  },
+	
 	  viewportWidth: 0,
 	  viewportHeight: 0
 	};
 	
 	mix(utils, domUtils);
 	
-	exports['default'] = utils;
+	exports["default"] = utils;
 	module.exports = exports['default'];
 
 /***/ },
+/* 263 */
+/***/ function(module, exports) {
 
-/***/ 260:
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.getTransformName = getTransformName;
+	exports.setTransitionProperty = setTransitionProperty;
+	exports.getTransitionProperty = getTransitionProperty;
+	exports.getTransformXY = getTransformXY;
+	exports.setTransformXY = setTransformXY;
+	var vendorPrefix = void 0;
+	
+	var jsCssMap = {
+	  Webkit: '-webkit-',
+	  Moz: '-moz-',
+	  // IE did it wrong again ...
+	  ms: '-ms-',
+	  O: '-o-'
+	};
+	
+	function getVendorPrefix() {
+	  if (vendorPrefix !== undefined) {
+	    return vendorPrefix;
+	  }
+	  vendorPrefix = '';
+	  var style = document.createElement('p').style;
+	  var testProp = 'Transform';
+	  for (var key in jsCssMap) {
+	    if (key + testProp in style) {
+	      vendorPrefix = key;
+	    }
+	  }
+	  return vendorPrefix;
+	}
+	
+	function getTransitionName() {
+	  return getVendorPrefix() ? getVendorPrefix() + 'TransitionProperty' : 'transitionProperty';
+	}
+	
+	function getTransformName() {
+	  return getVendorPrefix() ? getVendorPrefix() + 'Transform' : 'transform';
+	}
+	
+	function setTransitionProperty(node, value) {
+	  var name = getTransitionName();
+	  if (name) {
+	    node.style[name] = value;
+	    if (name !== 'transitionProperty') {
+	      node.style.transitionProperty = value;
+	    }
+	  }
+	}
+	
+	function setTransform(node, value) {
+	  var name = getTransformName();
+	  if (name) {
+	    node.style[name] = value;
+	    if (name !== 'transform') {
+	      node.style.transform = value;
+	    }
+	  }
+	}
+	
+	function getTransitionProperty(node) {
+	  return node.style.transitionProperty || node.style[getTransitionName()];
+	}
+	
+	function getTransformXY(node) {
+	  var style = window.getComputedStyle(node, null);
+	  var transform = style.getPropertyValue('transform') || style.getPropertyValue(getTransformName());
+	  if (transform && transform !== 'none') {
+	    var matrix = transform.replace(/[^0-9\-.,]/g, '').split(',');
+	    return { x: parseFloat(matrix[12] || matrix[4], 0), y: parseFloat(matrix[13] || matrix[5], 0) };
+	  }
+	  return {
+	    x: 0,
+	    y: 0
+	  };
+	}
+	
+	var matrix2d = /matrix\((.*)\)/;
+	var matrix3d = /matrix3d\((.*)\)/;
+	
+	function setTransformXY(node, xy) {
+	  var style = window.getComputedStyle(node, null);
+	  var transform = style.getPropertyValue('transform') || style.getPropertyValue(getTransformName());
+	  if (transform && transform !== 'none') {
+	    var arr = void 0;
+	    var match2d = transform.match(matrix2d);
+	    if (match2d) {
+	      match2d = match2d[1];
+	      arr = match2d.split(',').map(function (item) {
+	        return parseFloat(item, 10);
+	      });
+	      arr[4] = xy.x;
+	      arr[5] = xy.y;
+	      setTransform(node, 'matrix(' + arr.join(',') + ')');
+	    } else {
+	      var match3d = transform.match(matrix3d)[1];
+	      arr = match3d.split(',').map(function (item) {
+	        return parseFloat(item, 10);
+	      });
+	      arr[12] = xy.x;
+	      arr[13] = xy.y;
+	      setTransform(node, 'matrix3d(' + arr.join(',') + ')');
+	    }
+	  } else {
+	    setTransform(node, 'translateX(' + xy.x + 'px) translateY(' + xy.y + 'px) translateZ(0)');
+	  }
+	}
+
+/***/ },
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _utils = __webpack_require__(259);
+	var _utils = __webpack_require__(262);
 	
 	var _utils2 = _interopRequireDefault(_utils);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	/**
 	 * 得到会导致元素显示不全的祖先元素
@@ -2621,8 +3439,8 @@ webpackJsonp([4],{
 	  // 统一的 offsetParent 方法
 	  var doc = element.ownerDocument;
 	  var body = doc.body;
-	  var parent = undefined;
-	  var positionStyle = _utils2['default'].css(element, 'position');
+	  var parent = void 0;
+	  var positionStyle = _utils2["default"].css(element, 'position');
 	  var skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute';
 	
 	  if (!skipStatic) {
@@ -2630,7 +3448,7 @@ webpackJsonp([4],{
 	  }
 	
 	  for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
-	    positionStyle = _utils2['default'].css(parent, 'position');
+	    positionStyle = _utils2["default"].css(parent, 'position');
 	    if (positionStyle !== 'static') {
 	      return parent;
 	    }
@@ -2638,29 +3456,28 @@ webpackJsonp([4],{
 	  return null;
 	}
 	
-	exports['default'] = getOffsetParent;
+	exports["default"] = getOffsetParent;
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 261:
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _utils = __webpack_require__(259);
+	var _utils = __webpack_require__(262);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(260);
+	var _getOffsetParent = __webpack_require__(264);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	/**
 	 * 获得元素的显示部分的区域
@@ -2672,10 +3489,10 @@ webpackJsonp([4],{
 	    top: 0,
 	    bottom: Infinity
 	  };
-	  var el = (0, _getOffsetParent2['default'])(element);
-	  var scrollX = undefined;
-	  var scrollY = undefined;
-	  var winSize = undefined;
+	  var el = (0, _getOffsetParent2["default"])(element);
+	  var scrollX = void 0;
+	  var scrollY = void 0;
+	  var winSize = void 0;
 	  var doc = element.ownerDocument;
 	  var win = doc.defaultView || doc.parentWindow;
 	  var body = doc.body;
@@ -2689,8 +3506,8 @@ webpackJsonp([4],{
 	    // body may have overflow set on it, yet we still get the entire
 	    // viewport. In some browsers, el.offsetParent may be
 	    // document.documentElement, so check for that too.
-	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible') {
-	      var pos = _utils2['default'].offset(el);
+	    el !== body && el !== documentElement && _utils2["default"].css(el, 'overflow') !== 'visible') {
+	      var pos = _utils2["default"].offset(el);
 	      // add border
 	      pos.left += el.clientLeft;
 	      pos.top += el.clientTop;
@@ -2703,45 +3520,44 @@ webpackJsonp([4],{
 	    } else if (el === body || el === documentElement) {
 	      break;
 	    }
-	    el = (0, _getOffsetParent2['default'])(el);
+	    el = (0, _getOffsetParent2["default"])(el);
 	  }
 	
 	  // Clip by window's viewport.
-	  scrollX = _utils2['default'].getWindowScrollLeft(win);
-	  scrollY = _utils2['default'].getWindowScrollTop(win);
+	  scrollX = _utils2["default"].getWindowScrollLeft(win);
+	  scrollY = _utils2["default"].getWindowScrollTop(win);
 	  visibleRect.left = Math.max(visibleRect.left, scrollX);
 	  visibleRect.top = Math.max(visibleRect.top, scrollY);
 	  winSize = {
-	    width: _utils2['default'].viewportWidth(win),
-	    height: _utils2['default'].viewportHeight(win)
+	    width: _utils2["default"].viewportWidth(win),
+	    height: _utils2["default"].viewportHeight(win)
 	  };
 	  visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
 	  visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
 	  return visibleRect.top >= 0 && visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left ? visibleRect : null;
 	}
 	
-	exports['default'] = getVisibleRectForElement;
+	exports["default"] = getVisibleRectForElement;
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 262:
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _utils = __webpack_require__(259);
+	var _utils = __webpack_require__(262);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
 	function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
-	  var pos = _utils2['default'].clone(elFuturePos);
+	  var pos = _utils2["default"].clone(elFuturePos);
 	  var size = {
 	    width: elRegion.width,
 	    height: elRegion.height
@@ -2778,84 +3594,82 @@ webpackJsonp([4],{
 	    pos.top = Math.max(visibleRect.bottom - size.height, visibleRect.top);
 	  }
 	
-	  return _utils2['default'].mix(pos, size);
+	  return _utils2["default"].mix(pos, size);
 	}
 	
-	exports['default'] = adjustForViewport;
+	exports["default"] = adjustForViewport;
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 263:
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _utils = __webpack_require__(259);
+	var _utils = __webpack_require__(262);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
 	function getRegion(node) {
-	  var offset = undefined;
-	  var w = undefined;
-	  var h = undefined;
-	  if (!_utils2['default'].isWindow(node) && node.nodeType !== 9) {
-	    offset = _utils2['default'].offset(node);
-	    w = _utils2['default'].outerWidth(node);
-	    h = _utils2['default'].outerHeight(node);
+	  var offset = void 0;
+	  var w = void 0;
+	  var h = void 0;
+	  if (!_utils2["default"].isWindow(node) && node.nodeType !== 9) {
+	    offset = _utils2["default"].offset(node);
+	    w = _utils2["default"].outerWidth(node);
+	    h = _utils2["default"].outerHeight(node);
 	  } else {
-	    var win = _utils2['default'].getWindow(node);
+	    var win = _utils2["default"].getWindow(node);
 	    offset = {
-	      left: _utils2['default'].getWindowScrollLeft(win),
-	      top: _utils2['default'].getWindowScrollTop(win)
+	      left: _utils2["default"].getWindowScrollLeft(win),
+	      top: _utils2["default"].getWindowScrollTop(win)
 	    };
-	    w = _utils2['default'].viewportWidth(win);
-	    h = _utils2['default'].viewportHeight(win);
+	    w = _utils2["default"].viewportWidth(win);
+	    h = _utils2["default"].viewportHeight(win);
 	  }
 	  offset.width = w;
 	  offset.height = h;
 	  return offset;
 	}
 	
-	exports['default'] = getRegion;
+	exports["default"] = getRegion;
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 264:
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _getAlignOffset = __webpack_require__(265);
+	var _getAlignOffset = __webpack_require__(269);
 	
 	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
 	function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset) {
-	  var xy = undefined;
-	  var diff = undefined;
-	  var p1 = undefined;
-	  var p2 = undefined;
+	  var xy = void 0;
+	  var diff = void 0;
+	  var p1 = void 0;
+	  var p2 = void 0;
 	
 	  xy = {
 	    left: elRegion.left,
 	    top: elRegion.top
 	  };
 	
-	  p1 = (0, _getAlignOffset2['default'])(refNodeRegion, points[1]);
-	  p2 = (0, _getAlignOffset2['default'])(elRegion, points[0]);
+	  p1 = (0, _getAlignOffset2["default"])(refNodeRegion, points[1]);
+	  p2 = (0, _getAlignOffset2["default"])(elRegion, points[0]);
 	
 	  diff = [p2.left - p1.left, p2.top - p1.top];
 	
@@ -2865,30 +3679,29 @@ webpackJsonp([4],{
 	  };
 	}
 	
-	exports['default'] = getElFuturePos;
+	exports["default"] = getElFuturePos;
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 265:
+/* 269 */
 /***/ function(module, exports) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	/**
 	 * 获取 node 上的 align 对齐点 相对于页面的坐标
 	 */
 	
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
 	function getAlignOffset(region, align) {
 	  var V = align.charAt(0);
 	  var H = align.charAt(1);
 	  var w = region.width;
 	  var h = region.height;
-	  var x = undefined;
-	  var y = undefined;
+	  var x = void 0;
+	  var y = void 0;
 	
 	  x = region.left;
 	  y = region.top;
@@ -2911,12 +3724,13 @@ webpackJsonp([4],{
 	  };
 	}
 	
-	exports['default'] = getAlignOffset;
+	exports["default"] = getAlignOffset;
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 266:
+/* 270 */
+254,
+/* 271 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2933,8 +3747,7 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 267:
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2947,7 +3760,7 @@ webpackJsonp([4],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _LazyRenderBox = __webpack_require__(268);
+	var _LazyRenderBox = __webpack_require__(273);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -2991,8 +3804,7 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 268:
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3001,13 +3813,15 @@ webpackJsonp([4],{
 	  value: true
 	});
 	
+	var _objectWithoutProperties2 = __webpack_require__(274);
+	
+	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 	
 	var LazyRenderBox = _react2["default"].createClass({
 	  displayName: 'LazyRenderBox',
@@ -3022,11 +3836,11 @@ webpackJsonp([4],{
 	    return nextProps.hiddenClassName || nextProps.visible;
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var hiddenClassName = _props.hiddenClassName;
-	    var visible = _props.visible;
+	    var _props = this.props,
+	        hiddenClassName = _props.hiddenClassName,
+	        visible = _props.visible,
+	        props = (0, _objectWithoutProperties3["default"])(_props, ['hiddenClassName', 'visible']);
 	
-	    var props = _objectWithoutProperties(_props, ['hiddenClassName', 'visible']);
 	
 	    if (hiddenClassName || _react2["default"].Children.count(props.children) > 1) {
 	      if (!visible && hiddenClassName) {
@@ -3043,9 +3857,28 @@ webpackJsonp([4],{
 	module.exports = exports['default'];
 
 /***/ },
-
-/***/ 269:
+/* 274 */
 /***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	
+	exports.default = function (obj, keys) {
+	  var target = {};
+	
+	  for (var i in obj) {
+	    if (keys.indexOf(i) >= 0) continue;
+	    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+	    target[i] = obj[i];
+	  }
+	
+	  return target;
+	};
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -3053,17 +3886,22 @@ webpackJsonp([4],{
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var _extends2 = __webpack_require__(215);
+	
+	var _extends3 = _interopRequireDefault(_extends2);
 	
 	exports.getAlignFromPlacement = getAlignFromPlacement;
 	exports.getPopupClassNameFromAlign = getPopupClassNameFromAlign;
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
 	function isPointsEq(a1, a2) {
 	  return a1[0] === a2[0] && a1[1] === a2[1];
 	}
 	
 	function getAlignFromPlacement(builtinPlacements, placementStr, align) {
 	  var baseAlign = builtinPlacements[placementStr] || {};
-	  return _extends({}, baseAlign, align);
+	  return (0, _extends3["default"])({}, baseAlign, align);
 	}
 	
 	function getPopupClassNameFromAlign(builtinPlacements, prefixCls, align) {
@@ -3078,7 +3916,111 @@ webpackJsonp([4],{
 	  return '';
 	}
 
-/***/ }
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
 
-});
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports["default"] = getContainerRenderMixin;
+	
+	var _reactDom = __webpack_require__(34);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function defaultGetContainer() {
+	  var container = document.createElement('div');
+	  document.body.appendChild(container);
+	  return container;
+	}
+	
+	function getContainerRenderMixin(config) {
+	  var _config$autoMount = config.autoMount,
+	      autoMount = _config$autoMount === undefined ? true : _config$autoMount,
+	      _config$autoDestroy = config.autoDestroy,
+	      autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy,
+	      isVisible = config.isVisible,
+	      getComponent = config.getComponent,
+	      _config$getContainer = config.getContainer,
+	      getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
+	
+	
+	  var mixin = void 0;
+	
+	  function _renderComponent(instance, componentArg, ready) {
+	    if (!isVisible || instance._component || isVisible(instance)) {
+	      if (!instance._container) {
+	        instance._container = getContainer(instance);
+	      }
+	      var component = void 0;
+	      if (instance.getComponent) {
+	        component = instance.getComponent(componentArg);
+	      } else {
+	        component = getComponent(instance, componentArg);
+	      }
+	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, component, instance._container, function callback() {
+	        instance._component = this;
+	        if (ready) {
+	          ready.call(this);
+	        }
+	      });
+	    }
+	  }
+	
+	  if (autoMount) {
+	    mixin = _extends({}, mixin, {
+	      componentDidMount: function componentDidMount() {
+	        _renderComponent(this);
+	      },
+	      componentDidUpdate: function componentDidUpdate() {
+	        _renderComponent(this);
+	      }
+	    });
+	  }
+	
+	  if (!autoMount || !autoDestroy) {
+	    mixin = _extends({}, mixin, {
+	      renderComponent: function renderComponent(componentArg, ready) {
+	        _renderComponent(this, componentArg, ready);
+	      }
+	    });
+	  }
+	
+	  function _removeContainer(instance) {
+	    if (instance._container) {
+	      var container = instance._container;
+	      _reactDom2["default"].unmountComponentAtNode(container);
+	      container.parentNode.removeChild(container);
+	      instance._container = null;
+	    }
+	  }
+	
+	  if (autoDestroy) {
+	    mixin = _extends({}, mixin, {
+	      componentWillUnmount: function componentWillUnmount() {
+	        _removeContainer(this);
+	      }
+	    });
+	  } else {
+	    mixin = _extends({}, mixin, {
+	      removeContainer: function removeContainer() {
+	        _removeContainer(this);
+	      }
+	    });
+	  }
+	
+	  return mixin;
+	}
+	module.exports = exports['default'];
+
+/***/ }
+]);
 //# sourceMappingURL=contextmenu.js.map
