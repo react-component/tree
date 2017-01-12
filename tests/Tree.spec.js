@@ -241,8 +241,7 @@ describe('Tree', () => {
     });
 
     describe('strictly', () => {
-      // https://github.com/react-component/tree/issues/50
-      xit('checks strictly', () => {
+      it('checks strictly', () => {
         const wrapper = mount(
           <Tree checkable checkStrictly>
             <TreeNode title="parent 1" key="0-0">
