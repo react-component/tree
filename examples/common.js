@@ -22414,9 +22414,9 @@
 	    }
 	    var children = props.children;
 	    var newChildren = children;
-	    if (children && (children.type === TreeNode || Array.isArray(children) && children.every(function (item) {
-	      return item.type === TreeNode;
-	    }))) {
+	    if (children && (Array.isArray(children) && children.every(function (item) {
+	      return item.type.isTreeNode;
+	    }) || children.type.isTreeNode)) {
 	      var _cls;
 	
 	      var cls = (_cls = {}, _defineProperty(_cls, props.prefixCls + '-child-tree', true), _defineProperty(_cls, props.prefixCls + '-child-tree-open', props.expanded), _cls);
