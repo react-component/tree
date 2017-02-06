@@ -638,6 +638,7 @@ webpackJsonp([2],{
 	        };
 	    },
 	    componentWillMount: function componentWillMount() {
+	        this.inTransition = false;
 	        this.titleId = 'rcDialogTitle' + uuid++;
 	    },
 	    componentDidMount: function componentDidMount() {
@@ -662,6 +663,7 @@ webpackJsonp([2],{
 	                }
 	            }
 	        } else if (prevProps.visible) {
+	            this.inTransition = true;
 	            if (props.mask && this.lastOutSideFocusNode) {
 	                try {
 	                    this.lastOutSideFocusNode.focus();
@@ -673,7 +675,7 @@ webpackJsonp([2],{
 	        }
 	    },
 	    componentWillUnmount: function componentWillUnmount() {
-	        if (this.props.visible) {
+	        if (this.props.visible || this.inTransition) {
 	            this.removeScrollingEffect();
 	        }
 	    },
@@ -683,6 +685,7 @@ webpackJsonp([2],{
 	        if (this.refs.wrap) {
 	            this.refs.wrap.style.display = 'none';
 	        }
+	        this.inTransition = false;
 	        this.removeScrollingEffect();
 	        this.props.afterClose();
 	    },
