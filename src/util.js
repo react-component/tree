@@ -126,7 +126,7 @@ export function filterParentPosition(arr) {
     }
     levelObj[posLen].push(item);
   });
-  const levelArr = Object.keys(levelObj).sort();
+  const levelArr = Object.keys(levelObj).sort((a, b) => Number(a) - Number(b));
   for (let i = 0; i < levelArr.length; i++) {
     if (levelArr[i + 1]) {
       levelObj[levelArr[i]].forEach(ii => {
