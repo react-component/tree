@@ -1,5 +1,8 @@
 # History
 ---
+## 1.5.0 / 2017-02-10
+- add `onDoubleClick` API
+- add `toggleSelect` option for changing how selection works
 
 ## 1.4.0 / 2016-10-24
 - add `onDragEnd` API and fix related issues.
