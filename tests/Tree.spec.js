@@ -335,10 +335,10 @@ describe('Tree', () => {
       ).toBe(true);
     });
 
-    it('fires select event', () => {
+    it('fires select event with toggle', () => {
       const handleSelect = jest.fn();
       const wrapper = mount(
-        <Tree selectable onSelect={handleSelect}>
+        <Tree selectable onSelect={handleSelect} toggleSelect>
           <TreeNode title="parent 1" key="0-0">
             <TreeNode title="leaf 1" key="0-0-0" />
           </TreeNode>
@@ -364,6 +364,50 @@ describe('Tree', () => {
         selectedNodes: [],
       });
     });
+
+    it('fires select event without toggle', () => {
+      const handleSelect = jest.fn();
+      const wrapper = mount(
+          <Tree selectable onSelect={handleSelect}>
+            <TreeNode title="parent 1" key="0-0">
+              <TreeNode title="leaf 1" key="0-0-0" />
+            </TreeNode>
+          </Tree>
+      );
+      const nodeContent = wrapper.find('.rc-tree-node-content-wrapper');
+      const node = wrapper.find(TreeNode).first().node;
+      const nodeElm = wrapper.find(Tree).props().children;
+
+      nodeContent.simulate('click');
+      expect(handleSelect).toBeCalledWith(['0-0'], {
+        event: 'select',
+        node,
+        selected: true,
+        selectedNodes: [nodeElm],
+      });
+
+      nodeContent.simulate('click');
+      expect(handleSelect).toBeCalledWith(['0-0'], {
+        event: 'select',
+        node,
+        selected: true,
+        selectedNodes: [nodeElm],
+      });
+    });
+  });
+
+  it('fires doubleClick event', () => {
+    const handleDoubleClick = jest.fn();
+    const wrapper = mount(
+        <Tree onDoubleClick={handleDoubleClick}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>
+    );
+    const nodeElm = wrapper.find('.rc-tree-node-content-wrapper');
+    nodeElm.simulate('doubleclick');
+    expect(handleDoubleClick.mock.calls[0][0].node).toBe(wrapper.find(TreeNode).node);
   });
 
   it('fires rightClick event', () => {

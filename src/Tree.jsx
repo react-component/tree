@@ -251,12 +251,23 @@ class Tree extends React.Component {
     }
   }
 
+  onDoubleClick(treeNode) {
+    this.props.onDoubleClick({ node: treeNode });
+  }
+
   onSelect(treeNode) {
     const props = this.props;
     const selectedKeys = [...this.state.selectedKeys];
     const eventKey = treeNode.props.eventKey;
     const index = selectedKeys.indexOf(eventKey);
     let selected;
+
+    if (!props.toggleSelect && index > -1) {
+      // If we are not allowing select/click to toggle then return
+      // since this node is already selected
+      return;
+    }
+
     if (index !== -1) {
       selected = false;
       selectedKeys.splice(index, 1);
@@ -470,6 +481,7 @@ class Tree extends React.Component {
       onMouseEnter: props.onMouseEnter,
       onMouseLeave: props.onMouseLeave,
       onRightClick: props.onRightClick,
+      onDoubleClick: props.onDoubleClick,
       prefixCls: props.prefixCls,
       showLine: props.showLine,
       showIcon: props.showIcon,
@@ -605,6 +617,7 @@ Tree.propTypes = {
   onCheck: PropTypes.func,
   onSelect: PropTypes.func,
   loadData: PropTypes.func,
+  onDoubleClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onRightClick: PropTypes.func,
@@ -636,6 +649,7 @@ Tree.defaultProps = {
   onExpand: noop,
   onCheck: noop,
   onSelect: noop,
+  onDoubleClick: noop,
   onDragStart: noop,
   onDragEnter: noop,
   onDragOver: noop,
