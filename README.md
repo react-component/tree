@@ -58,6 +58,7 @@ see examples
 |showLine | whether show line | bool | false |
 |showIcon | whether show icon | bool | true |
 |selectable | whether can be selected | bool | true |
+|toggleSelect | whether additional clicks will toggle selection | bool | false |
 |multiple | whether multiple select | bool | false |
 |checkable | whether support checked | bool/React Node | false |
 |defaultExpandAll | expand all treeNodes | bool | false |
@@ -72,6 +73,7 @@ see examples
 |onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node}) | - |
 |onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event}) | - |
 |onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event}) | - |
+|onDoubleClick | double click the treeNode to fire | function({node}) | - |
 |filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
 |loadData | load data asynchronously and the return value should be a promise | function(node) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
@@ -117,11 +119,15 @@ npm start
 
 ## Test Case
 
-http://localhost:8018/tests/runner.html?coverage
+```
+npm test
+```
 
 ## Coverage
 
-http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8018/tests/runner.html?coverage
+```
+npm run coverage
+```
 
 ## License
 rc-tree is released under the MIT license.
