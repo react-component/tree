@@ -11,8 +11,17 @@
   "main": "lib/index",
   "files": [
     "assets/*.css",
+    "assets/*.png",
+    "assets/*.gif",
+    "dist",
     "lib"
   ],
+  "entry": {
+    "rc-tree": [
+      "./assets/index.less",
+      "./src/index.js"
+    ]
+  },
   "homepage": "http://github.com/react-component/tree",
   "author": "hualei5280@gmail.com",
   "repository": {
@@ -28,6 +37,8 @@
   },
   "scripts": {
     "build": "rc-tools run build",
+    "dist": "rc-tools run dist",
+    "compile": "rc-tools run compile",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
     "pub": "rc-tools run pub",
@@ -52,7 +63,7 @@
     "jest": "^18.0.0",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
-    "rc-tools": "^5.3.4",
+    "rc-tools": "^5.9.2",
     "rc-tooltip": "3.x",
     "rc-trigger": "^1.0.6",
     "react": "^15.2.0",
