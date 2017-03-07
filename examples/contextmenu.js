@@ -680,6 +680,10 @@ webpackJsonp([4],[
 	  return '';
 	}
 	
+	function returnDocument() {
+	  return window.document;
+	}
+	
 	var ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter', 'onMouseLeave', 'onFocus', 'onBlur'];
 	
 	var Trigger = _react2["default"].createClass({
@@ -707,6 +711,7 @@ webpackJsonp([4],[
 	    focusDelay: _react.PropTypes.number,
 	    blurDelay: _react.PropTypes.number,
 	    getPopupContainer: _react.PropTypes.func,
+	    getDocument: _react.PropTypes.func,
 	    destroyPopupOnHide: _react.PropTypes.bool,
 	    mask: _react.PropTypes.bool,
 	    maskClosable: _react.PropTypes.bool,
@@ -724,8 +729,16 @@ webpackJsonp([4],[
 	      return instance.state.popupVisible;
 	    },
 	    getContainer: function getContainer(instance) {
+	      var props = instance.props;
+	
 	      var popupContainer = document.createElement('div');
-	      var mountNode = instance.props.getPopupContainer ? instance.props.getPopupContainer((0, _reactDom.findDOMNode)(instance)) : document.body;
+	      // Make sure default popup container will never cause scrollbar appearing
+	      // https://github.com/react-component/trigger/issues/41
+	      popupContainer.style.position = 'absolute';
+	      popupContainer.style.top = '0';
+	      popupContainer.style.left = '0';
+	      popupContainer.style.width = '100%';
+	      var mountNode = props.getPopupContainer ? props.getPopupContainer((0, _reactDom.findDOMNode)(instance)) : props.getDocument().body;
 	      mountNode.appendChild(popupContainer);
 	      return popupContainer;
 	    }
@@ -735,6 +748,7 @@ webpackJsonp([4],[
 	    return {
 	      prefixCls: 'rc-trigger-popup',
 	      getPopupClassNameFromAlign: returnEmptyString,
+	      getDocument: returnDocument,
 	      onPopupVisibleChange: noop,
 	      afterPopupVisibleChange: noop,
 	      onPopupAlign: noop,
@@ -797,30 +811,26 @@ webpackJsonp([4],[
 	        props.afterPopupVisibleChange(state.popupVisible);
 	      }
 	    });
-	    if (this.isClickToHide()) {
-	      if (state.popupVisible) {
-	        if (!this.clickOutsideHandler) {
-	          this.clickOutsideHandler = (0, _addEventListener2["default"])(document, 'mousedown', this.onDocumentClick);
-	          this.touchOutsideHandler = (0, _addEventListener2["default"])(document, 'touchstart', this.onDocumentClick);
-	        }
-	        return;
+	
+	    if (state.popupVisible) {
+	      var currentDocument = void 0;
+	      if (!this.clickOutsideHandler && this.isClickToHide()) {
+	        currentDocument = props.getDocument();
+	        this.clickOutsideHandler = (0, _addEventListener2["default"])(currentDocument, 'mousedown', this.onDocumentClick);
 	      }
+	      // always hide on mobile
+	      if (!this.touchOutsideHandler) {
+	        currentDocument = currentDocument || props.getDocument();
+	        this.touchOutsideHandler = (0, _addEventListener2["default"])(currentDocument, 'touchstart', this.onDocumentClick);
+	      }
+	      return;
 	    }
-	    if (this.clickOutsideHandler) {
-	      this.clickOutsideHandler.remove();
-	      this.touchOutsideHandler.remove();
-	      this.clickOutsideHandler = null;
-	      this.touchOutsideHandler = null;
-	    }
+	
+	    this.clearOutsideHandler();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.clearDelayTimer();
-	    if (this.clickOutsideHandler) {
-	      this.clickOutsideHandler.remove();
-	      this.touchOutsideHandler.remove();
-	      this.clickOutsideHandler = null;
-	      this.touchOutsideHandler = null;
-	    }
+	    this.clearOutsideHandler();
 	  },
 	  onMouseEnter: function onMouseEnter(e) {
 	    this.fireEvents('onMouseEnter', e);
@@ -1003,6 +1013,17 @@ webpackJsonp([4],[
 	      this.delayTimer = null;
 	    }
 	  },
+	  clearOutsideHandler: function clearOutsideHandler() {
+	    if (this.clickOutsideHandler) {
+	      this.clickOutsideHandler.remove();
+	      this.clickOutsideHandler = null;
+	    }
+	
+	    if (this.touchOutsideHandler) {
+	      this.touchOutsideHandler.remove();
+	      this.touchOutsideHandler = null;
+	    }
+	  },
 	  createTwoChains: function createTwoChains(event) {
 	    var childPros = this.props.children.props;
 	    var props = this.props;
@@ -1076,7 +1097,6 @@ webpackJsonp([4],[
 	    var children = props.children;
 	    var child = _react2["default"].Children.only(children);
 	    var newChildProps = {};
-	
 	    if (this.isClickToHide() || this.isClickToShow()) {
 	      newChildProps.onClick = this.onClick;
 	      newChildProps.onMouseDown = this.onMouseDown;

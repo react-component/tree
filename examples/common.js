@@ -21411,16 +21411,14 @@
 	      this.props.onCheck((0, _util.getStrictlyValue)(checkedKeys, halfChecked), newSt);
 	    } else {
 	      if (checked && index === -1) {
-	        (function () {
-	          _this3.treeNodesStates[treeNode.props.pos].checked = true;
-	          var checkedPositions = [];
-	          Object.keys(_this3.treeNodesStates).forEach(function (i) {
-	            if (_this3.treeNodesStates[i].checked) {
-	              checkedPositions.push(i);
-	            }
-	          });
-	          (0, _util.handleCheckState)(_this3.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
-	        })();
+	        this.treeNodesStates[treeNode.props.pos].checked = true;
+	        var checkedPositions = [];
+	        Object.keys(this.treeNodesStates).forEach(function (i) {
+	          if (_this3.treeNodesStates[i].checked) {
+	            checkedPositions.push(i);
+	          }
+	        });
+	        (0, _util.handleCheckState)(this.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
 	      }
 	      if (!checked) {
 	        this.treeNodesStates[treeNode.props.pos].checked = false;
@@ -21729,37 +21727,33 @@
 	        this.halfCheckedKeys = props._treeNodesStates.halfCheckedKeys;
 	        this.checkedKeys = props._treeNodesStates.checkedKeys;
 	      } else {
-	        (function () {
-	          var checkedKeys = _this4.state.checkedKeys;
-	          var checkKeys = void 0;
-	          if (!props.loadData && _this4.checkKeys && _this4._checkedKeys && (0, _util.arraysEqual)(_this4._checkedKeys, checkedKeys)) {
-	            // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
-	            checkKeys = _this4.checkKeys;
-	          } else {
-	            (function () {
-	              var checkedPositions = [];
-	              _this4.treeNodesStates = {};
-	              (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
-	                _this4.treeNodesStates[pos] = {
-	                  node: item,
-	                  key: keyOrPos,
-	                  checked: false,
-	                  halfChecked: false,
-	                  siblingPosition: siblingPosition
-	                };
-	                if (checkedKeys.indexOf(keyOrPos) !== -1) {
-	                  _this4.treeNodesStates[pos].checked = true;
-	                  checkedPositions.push(pos);
-	                }
-	              });
-	              // if the parent node's key exists, it all children node will be checked
-	              (0, _util.handleCheckState)(_this4.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
-	              checkKeys = (0, _util.getCheck)(_this4.treeNodesStates);
-	            })();
-	          }
-	          _this4.halfCheckedKeys = checkKeys.halfCheckedKeys;
-	          _this4.checkedKeys = checkKeys.checkedKeys;
-	        })();
+	        var checkedKeys = this.state.checkedKeys;
+	        var checkKeys = void 0;
+	        if (!props.loadData && this.checkKeys && this._checkedKeys && (0, _util.arraysEqual)(this._checkedKeys, checkedKeys)) {
+	          // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
+	          checkKeys = this.checkKeys;
+	        } else {
+	          var checkedPositions = [];
+	          this.treeNodesStates = {};
+	          (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
+	            _this4.treeNodesStates[pos] = {
+	              node: item,
+	              key: keyOrPos,
+	              checked: false,
+	              halfChecked: false,
+	              siblingPosition: siblingPosition
+	            };
+	            if (checkedKeys.indexOf(keyOrPos) !== -1) {
+	              _this4.treeNodesStates[pos].checked = true;
+	              checkedPositions.push(pos);
+	            }
+	          });
+	          // if the parent node's key exists, it all children node will be checked
+	          (0, _util.handleCheckState)(this.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
+	          checkKeys = (0, _util.getCheck)(this.treeNodesStates);
+	        }
+	        this.halfCheckedKeys = checkKeys.halfCheckedKeys;
+	        this.checkedKeys = checkKeys.checkedKeys;
 	      }
 	    }
 	
@@ -22046,7 +22040,9 @@
 	    }
 	    levelObj[posLen].push(item);
 	  });
-	  var levelArr = Object.keys(levelObj).sort();
+	  var levelArr = Object.keys(levelObj).sort(function (a, b) {
+	    return Number(a) - Number(b);
+	  });
 	
 	  var _loop = function _loop(i) {
 	    if (levelArr[i + 1]) {
@@ -22387,17 +22383,15 @@
 	
 	    var callbackPromise = this.props.root.onExpand(this);
 	    if (callbackPromise && (typeof callbackPromise === 'undefined' ? 'undefined' : _typeof(callbackPromise)) === 'object') {
-	      (function () {
-	        var setLoading = function setLoading(dataLoading) {
-	          _this2.setState({ dataLoading: dataLoading });
-	        };
-	        setLoading(true);
-	        callbackPromise.then(function () {
-	          setLoading(false);
-	        }, function () {
-	          setLoading(false);
-	        });
-	      })();
+	      var setLoading = function setLoading(dataLoading) {
+	        _this2.setState({ dataLoading: dataLoading });
+	      };
+	      setLoading(true);
+	      callbackPromise.then(function () {
+	        setLoading(false);
+	      }, function () {
+	        setLoading(false);
+	      });
 	    }
 	  };
 	
@@ -22466,8 +22460,8 @@
 	    var children = props.children;
 	    var newChildren = children;
 	    if (children && (Array.isArray(children) && children.every(function (item) {
-	      return item.type.isTreeNode;
-	    }) || children.type.isTreeNode)) {
+	      return item.type && item.type.isTreeNode;
+	    }) || children.type && children.type.isTreeNode)) {
 	      var _cls;
 	
 	      var cls = (_cls = {}, _defineProperty(_cls, props.prefixCls + '-child-tree', true), _defineProperty(_cls, props.prefixCls + '-child-tree-open', props.expanded), _cls);
@@ -22671,6 +22665,8 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -22711,6 +22707,7 @@
 	
 	  propTypes: {
 	    component: _react2["default"].PropTypes.any,
+	    componentProps: _react2["default"].PropTypes.object,
 	    animation: _react2["default"].PropTypes.object,
 	    transitionName: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.string, _react2["default"].PropTypes.object]),
 	    transitionEnter: _react2["default"].PropTypes.bool,
@@ -22728,6 +22725,7 @@
 	    return {
 	      animation: {},
 	      component: 'span',
+	      componentProps: {},
 	      transitionEnter: true,
 	      transitionLeave: true,
 	      transitionAppear: false,
@@ -22975,10 +22973,10 @@
 	    if (Component) {
 	      var passedProps = props;
 	      if (typeof Component === 'string') {
-	        passedProps = {
+	        passedProps = _extends({
 	          className: props.className,
 	          style: props.style
-	        };
+	        }, props.componentProps);
 	      }
 	      return _react2["default"].createElement(
 	        Component,
@@ -23125,7 +23123,7 @@
 	  value: true
 	});
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	var _react = __webpack_require__(3);
 	
@@ -23257,8 +23255,8 @@
 	var prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
 	
 	function getStyleProperty(node, name) {
-	  var style = window.getComputedStyle(node);
-	
+	  // old ff need null, https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
+	  var style = window.getComputedStyle(node, null);
 	  var ret = '';
 	  for (var i = 0; i < prefixes.length; i++) {
 	    ret = style.getPropertyValue(prefixes[i] + name);
