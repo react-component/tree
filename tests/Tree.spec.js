@@ -507,4 +507,19 @@ describe('Tree', () => {
       expect(event.node).toBe(wrapper.find(TreeNode).at(1).node);
     });
   });
+
+  it('renders without errors', () => {
+    expect(() => {
+      mount(
+        <Tree>
+          {[0, 1].map(i => (
+            <TreeNode title={i} key={i}>
+              {[2, 3].map(j => <TreeNode title={j} key={j} />)}
+              <TreeNode title="4" key="4" />
+            </TreeNode>
+          ))}
+        </Tree>
+      );
+    }).not.toThrow();
+  });
 });

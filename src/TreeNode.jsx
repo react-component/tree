@@ -200,8 +200,8 @@ class TreeNode extends React.Component {
     let newChildren = children;
     if (children &&
       (Array.isArray(children) &&
-        children.every((item) => item.type.isTreeNode) ||
-        children.type.isTreeNode)) {
+        children.every((item) => item.type && item.type.isTreeNode) ||
+        (children.type && children.type.isTreeNode))) {
       const cls = {
         [`${props.prefixCls}-child-tree`]: true,
         [`${props.prefixCls}-child-tree-open`]: props.expanded,
