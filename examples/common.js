@@ -725,7 +725,7 @@
 
 /***/ },
 /* 8 */
-[281, 9],
+[282, 9],
 /* 9 */
 /***/ function(module, exports) {
 
@@ -6437,7 +6437,7 @@
 
 /***/ },
 /* 52 */
-[281, 37],
+[282, 37],
 /* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -22252,6 +22252,10 @@
 	
 	var _util = __webpack_require__(184);
 	
+	var _toArray = __webpack_require__(195);
+	
+	var _toArray2 = _interopRequireDefault(_toArray);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -22457,7 +22461,7 @@
 	    if (!renderFirst && props.expanded) {
 	      transitionAppear = false;
 	    }
-	    var children = props.children;
+	    var children = props.children ? (0, _toArray2.default)(props.children) : props.children;
 	    var newChildren = children;
 	    if (children && (Array.isArray(children) && children.every(function (item) {
 	      return item.type && item.type.isTreeNode;
@@ -23754,7 +23758,32 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 195 */,
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = toArray;
+	
+	var _react = __webpack_require__(3);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function toArray(children) {
+	  var ret = [];
+	  _react2["default"].Children.forEach(children, function (c) {
+	    ret.push(c);
+	  });
+	  return ret;
+	}
+	module.exports = exports['default'];
+
+/***/ },
 /* 196 */,
 /* 197 */,
 /* 198 */,
@@ -23840,7 +23869,8 @@
 /* 278 */,
 /* 279 */,
 /* 280 */,
-/* 281 */
+/* 281 */,
+/* 282 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
