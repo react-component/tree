@@ -3,6 +3,7 @@ import assign from 'object-assign';
 import classNames from 'classnames';
 import Animate from 'rc-animate';
 import { browser } from './util';
+import toArray from 'rc-util/lib/Children/toArray';
 
 const browserUa = typeof window !== 'undefined' ? browser(window.navigator) : '';
 const ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
@@ -196,7 +197,7 @@ class TreeNode extends React.Component {
     if (!renderFirst && props.expanded) {
       transitionAppear = false;
     }
-    const children = props.children;
+    const children = props.children ? toArray(props.children) : props.children;
     let newChildren = children;
     if (children &&
       (Array.isArray(children) &&

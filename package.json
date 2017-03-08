@@ -73,7 +73,8 @@
   "dependencies": {
     "classnames": "2.x",
     "object-assign": "4.x",
-    "rc-animate": "2.x"
+    "rc-animate": "2.x",
+    "rc-util": "^4.0.2"
   },
   "pre-commit": [
     "lint"

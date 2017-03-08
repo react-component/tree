@@ -522,4 +522,19 @@ describe('Tree', () => {
       );
     }).not.toThrow();
   });
+
+  it('renders opaque children correctly', () => {
+    const wrapper = render(
+      <Tree>
+        <TreeNode title="0" key="0">
+          {[1, 2].map(i =>
+            <TreeNode title={i} key={i} />
+          )}
+          <TreeNode title="3" key="3" />
+        </TreeNode>
+      </Tree>
+    );
+
+    expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
 });
