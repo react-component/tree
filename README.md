@@ -29,7 +29,7 @@ tree ui component for react
 
 ## Feature
 
-* support ie8,ie8+,chrome,firefox,safari
+* Support all popular browsers, including Internet Explorer 9 and above.
 
 
 ## Example
