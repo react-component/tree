@@ -33,6 +33,8 @@ class TreeNode extends React.Component {
     this.state = {
       dataLoading: false,
       dragNodeHighlight: false,
+      selected: props.selected,
+      expanded: props.expanded,
     };
   }
 
@@ -48,6 +50,20 @@ class TreeNode extends React.Component {
   //   }
   //   return true;
   // }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selected !== this.props.selected) {
+      this.setState({
+        selected: nextProps.selected,
+      });
+    }
+
+    if (nextProps.expanded !== this.props.expanded) {
+      this.setState({
+        expanded: nextProps.expanded,
+      });
+    }
+  }
 
   onCheck() {
     this.props.root.onCheck(this);
@@ -194,7 +210,7 @@ class TreeNode extends React.Component {
     const renderFirst = this.renderFirst;
     this.renderFirst = 1;
     let transitionAppear = true;
-    if (!renderFirst && props.expanded) {
+    if (!renderFirst && this.state.expanded) {
       transitionAppear = false;
     }
     const children = props.children ? toArray(props.children) : props.children;
@@ -205,7 +221,7 @@ class TreeNode extends React.Component {
         (children.type && children.type.isTreeNode))) {
       const cls = {
         [`${props.prefixCls}-child-tree`]: true,
-        [`${props.prefixCls}-child-tree-open`]: props.expanded,
+        [`${props.prefixCls}-child-tree-open`]: this.state.expanded,
       };
       if (props.showLine) {
         cls[`${props.prefixCls}-line`] = !props.last;
@@ -225,11 +241,15 @@ class TreeNode extends React.Component {
           transitionAppear={transitionAppear}
           component=""
         >
-          {!props.expanded ? null : <ul className={classNames(cls)} data-expanded={props.expanded}>
-            {React.Children.map(children, (item, index) => {
-              return props.root.renderTreeNode(item, index, props.pos);
-            }, props.root)}
-          </ul>}
+          {
+            !this.state.expanded ?
+            null :
+            <ul className={classNames(cls)} data-expanded={this.state.expanded}>
+              {React.Children.map(children, (item, index) => {
+                return props.root.renderTreeNode(item, index, props.pos);
+              }, props.root)}
+            </ul>
+          }
         </Animate>
       );
     }
@@ -239,7 +259,7 @@ class TreeNode extends React.Component {
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
-    const expandedState = props.expanded ? 'open' : 'close';
+    const expandedState = this.state.expanded ? 'open' : 'close';
     let iconState = expandedState;
 
     let canRenderSwitcher = true;
@@ -273,7 +293,7 @@ class TreeNode extends React.Component {
         className: `${wrap} ${wrap}-${iconState === expandedState ? iconState : 'normal'}`,
       };
       if (!props.disabled) {
-        if (props.selected || !props._dropTrigger && this.state.dragNodeHighlight) {
+        if (this.state.selected || !props._dropTrigger && this.state.dragNodeHighlight) {
           domProps.className += ` ${prefixCls}-node-selected`;
         }
         domProps.onClick = (e) => {
@@ -369,6 +389,7 @@ TreeNode.propTypes = {
   prefixCls: PropTypes.string,
   disabled: PropTypes.bool,
   disableCheckbox: PropTypes.bool,
+  selected: PropTypes.bool,
   expanded: PropTypes.bool,
   isLeaf: PropTypes.bool,
   root: PropTypes.object,

@@ -19,6 +19,7 @@ class Tree extends React.Component {
     });
     this.contextmenuKeys = [];
     this.checkedKeysChange = true;
+    this.treeView = null;
 
     this.state = {
       expandedKeys: this.getDefaultExpandedKeys(props),
@@ -50,6 +51,58 @@ class Tree extends React.Component {
       st.selectedKeys = selectedKeys;
     }
     this.setState(st);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    this.noReRender = false;
+
+    const findTreeNode = (ref) => {
+      let treeNode = this;
+      let runningKey = 'treeNode';
+
+      for (const key of ref.split('-')) {
+        runningKey = `${runningKey}-${key}`;
+        treeNode = treeNode.refs[runningKey];
+      }
+
+      return treeNode;
+    };
+
+    const updateKeys = (nextKeys, keys, name) => {
+      if (nextKeys !== keys) {
+        for (const key of keys) {
+          if (nextKeys.includes(key)) { continue; }
+          const treeNode = findTreeNode(key);
+          if (treeNode === undefined) { continue; }
+          const state = {};
+          state[name] = false;
+          treeNode.setState(state);
+        }
+
+        for (const key of nextKeys) {
+          if (keys.includes(key)) { continue; }
+          const treeNode = findTreeNode(key);
+          if (treeNode === undefined) { continue; }
+          const state = {};
+          state[name] = true;
+          treeNode.setState(state);
+        }
+
+        this.noReRender = true;
+      }
+    };
+
+    updateKeys(nextState.selectedKeys, this.state.selectedKeys, 'selected');
+    updateKeys(nextState.expandedKeys, this.state.expandedKeys, 'expanded');
+
+    if (
+      nextState.checkedKeys !== this.state.checkedKeys ||
+      nextState.dragNodesKeys !== this.state.dragNodesKeys ||
+      nextState.dragOverNodeKey !== this.state.dragOverNodeKey ||
+      nextState.dropNodeKey !== this.state.dropNodeKey
+    ) {
+      this.noReRender = false;
+    }
   }
 
   onDragStart(e, treeNode) {
@@ -505,10 +558,15 @@ class Tree extends React.Component {
     if (this.treeNodesStates && this.treeNodesStates[pos]) {
       assign(cloneProps, this.treeNodesStates[pos].siblingPosition);
     }
+
     return React.cloneElement(child, cloneProps);
   }
 
   render() {
+    if (this.noReRender && this.treeView !== null) {
+      return this.treeView;
+    }
+
     const props = this.props;
     const domProps = {
       className: classNames(props.className, props.prefixCls),
@@ -568,11 +626,13 @@ class Tree extends React.Component {
       }
     }
 
-    return (
+    this.treeView = (
       <ul {...domProps} unselectable ref="tree">
         {React.Children.map(props.children, this.renderTreeNode, this)}
       </ul>
     );
+
+    return this.treeView;
   }
 }
 
