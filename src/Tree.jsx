@@ -61,6 +61,7 @@ class Tree extends React.Component {
       let runningKey = 'treeNode';
 
       for (const key of ref.split('-')) {
+        if (treeNode === undefined) { break; }
         runningKey = `${runningKey}-${key}`;
         treeNode = treeNode.refs[runningKey];
       }
