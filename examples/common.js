@@ -21166,6 +21166,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _propTypes = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"prop-types\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
 	var _objectAssign = __webpack_require__(6);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
@@ -21768,40 +21772,40 @@
 	}(_react2.default.Component);
 	
 	Tree.propTypes = {
-	  prefixCls: _react.PropTypes.string,
-	  children: _react.PropTypes.any,
-	  showLine: _react.PropTypes.bool,
-	  showIcon: _react.PropTypes.bool,
-	  selectable: _react.PropTypes.bool,
-	  multiple: _react.PropTypes.bool,
-	  checkable: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.node]),
-	  _treeNodesStates: _react.PropTypes.object,
-	  checkStrictly: _react.PropTypes.bool,
-	  draggable: _react.PropTypes.bool,
-	  autoExpandParent: _react.PropTypes.bool,
-	  defaultExpandAll: _react.PropTypes.bool,
-	  defaultExpandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  expandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  defaultCheckedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  checkedKeys: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.object]),
-	  defaultSelectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  selectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	  onExpand: _react.PropTypes.func,
-	  onCheck: _react.PropTypes.func,
-	  onSelect: _react.PropTypes.func,
-	  loadData: _react.PropTypes.func,
-	  onMouseEnter: _react.PropTypes.func,
-	  onMouseLeave: _react.PropTypes.func,
-	  onRightClick: _react.PropTypes.func,
-	  onDragStart: _react.PropTypes.func,
-	  onDragEnter: _react.PropTypes.func,
-	  onDragOver: _react.PropTypes.func,
-	  onDragLeave: _react.PropTypes.func,
-	  onDrop: _react.PropTypes.func,
-	  onDragEnd: _react.PropTypes.func,
-	  filterTreeNode: _react.PropTypes.func,
-	  openTransitionName: _react.PropTypes.string,
-	  openAnimation: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object])
+	  prefixCls: _propTypes2.default.string,
+	  children: _propTypes2.default.any,
+	  showLine: _propTypes2.default.bool,
+	  showIcon: _propTypes2.default.bool,
+	  selectable: _propTypes2.default.bool,
+	  multiple: _propTypes2.default.bool,
+	  checkable: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.node]),
+	  _treeNodesStates: _propTypes2.default.object,
+	  checkStrictly: _propTypes2.default.bool,
+	  draggable: _propTypes2.default.bool,
+	  autoExpandParent: _propTypes2.default.bool,
+	  defaultExpandAll: _propTypes2.default.bool,
+	  defaultExpandedKeys: _propTypes2.default.arrayOf(_propTypes2.default.string),
+	  expandedKeys: _propTypes2.default.arrayOf(_propTypes2.default.string),
+	  defaultCheckedKeys: _propTypes2.default.arrayOf(_propTypes2.default.string),
+	  checkedKeys: _propTypes2.default.oneOfType([_propTypes2.default.arrayOf(_propTypes2.default.string), _propTypes2.default.object]),
+	  defaultSelectedKeys: _propTypes2.default.arrayOf(_propTypes2.default.string),
+	  selectedKeys: _propTypes2.default.arrayOf(_propTypes2.default.string),
+	  onExpand: _propTypes2.default.func,
+	  onCheck: _propTypes2.default.func,
+	  onSelect: _propTypes2.default.func,
+	  loadData: _propTypes2.default.func,
+	  onMouseEnter: _propTypes2.default.func,
+	  onMouseLeave: _propTypes2.default.func,
+	  onRightClick: _propTypes2.default.func,
+	  onDragStart: _propTypes2.default.func,
+	  onDragEnter: _propTypes2.default.func,
+	  onDragOver: _propTypes2.default.func,
+	  onDragLeave: _propTypes2.default.func,
+	  onDrop: _propTypes2.default.func,
+	  onDragEnd: _propTypes2.default.func,
+	  filterTreeNode: _propTypes2.default.func,
+	  openTransitionName: _propTypes2.default.string,
+	  openAnimation: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object])
 	};
 	
 	Tree.defaultProps = {
@@ -22238,6 +22242,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _propTypes = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"prop-types\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
 	var _objectAssign = __webpack_require__(6);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
@@ -22634,13 +22642,13 @@
 	TreeNode.isTreeNode = 1;
 	
 	TreeNode.propTypes = {
-	  prefixCls: _react.PropTypes.string,
-	  disabled: _react.PropTypes.bool,
-	  disableCheckbox: _react.PropTypes.bool,
-	  expanded: _react.PropTypes.bool,
-	  isLeaf: _react.PropTypes.bool,
-	  root: _react.PropTypes.object,
-	  onSelect: _react.PropTypes.func
+	  prefixCls: _propTypes2.default.string,
+	  disabled: _propTypes2.default.bool,
+	  disableCheckbox: _propTypes2.default.bool,
+	  expanded: _propTypes2.default.bool,
+	  isLeaf: _propTypes2.default.bool,
+	  root: _propTypes2.default.object,
+	  onSelect: _propTypes2.default.func
 	};
 	
 	TreeNode.defaultProps = {

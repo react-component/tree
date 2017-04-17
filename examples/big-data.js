@@ -476,13 +476,13 @@ webpackJsonp([3],{
 	          'span',
 	          { style: { marginRight: 10 } },
 	          'y: ',
-	          _react2.default.createElement('input', { ref: 'y', defaultValue: y, type: 'number', min: '1', required: true, style: { width: 50 } })
+	          _react2.default.createElement('input', { ref: 'y', defaultValue: y, type: 'number', min: '0', required: true, style: { width: 50 } })
 	        ),
 	        _react2.default.createElement(
 	          'span',
 	          { style: { marginRight: 10 } },
 	          'z: ',
-	          _react2.default.createElement('input', { ref: 'z', defaultValue: z, type: 'number', min: '1', required: true, style: { width: 50 } })
+	          _react2.default.createElement('input', { ref: 'z', defaultValue: z, type: 'number', min: '0', required: true, style: { width: 50 } })
 	        ),
 	        _react2.default.createElement(
 	          'button',
