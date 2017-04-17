@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -73,6 +73,7 @@
   "dependencies": {
     "classnames": "2.x",
     "object-assign": "4.x",
+    "prop-types": "^15.5.8",
     "rc-animate": "2.x",
     "rc-util": "^4.0.2"
   },

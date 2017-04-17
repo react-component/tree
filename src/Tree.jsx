@@ -1,5 +1,6 @@
 /* eslint no-console:0 */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import classNames from 'classnames';
 import {
