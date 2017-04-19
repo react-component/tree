@@ -1,15 +1,15 @@
 webpackJsonp([2],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(198);
+	module.exports = __webpack_require__(204);
 
 
-/***/ },
+/***/ }),
 
-/***/ 198:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 204:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -19,19 +19,19 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _reactDom = __webpack_require__(38);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(180);
+	var _rcTree = __webpack_require__(184);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _util = __webpack_require__(199);
+	var _util = __webpack_require__(205);
 	
-	__webpack_require__(200);
+	__webpack_require__(206);
 	
-	var _rcDialog = __webpack_require__(201);
+	var _rcDialog = __webpack_require__(207);
 	
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 	
@@ -241,10 +241,10 @@ webpackJsonp([2],{
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
-/***/ },
+/***/ }),
 
-/***/ 199:
-/***/ function(module, exports) {
+/***/ 205:
+/***/ (function(module, exports) {
 
 	'use strict';
 	
@@ -453,13 +453,13 @@ webpackJsonp([2],{
 	  return res;
 	}
 
-/***/ },
+/***/ }),
 
-/***/ 200:
+/***/ 206:
 2,
 
-/***/ 201:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 207:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -471,11 +471,11 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Dialog = __webpack_require__(202);
+	var _Dialog = __webpack_require__(208);
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
-	var _getContainerRenderMixin = __webpack_require__(206);
+	var _getContainerRenderMixin = __webpack_require__(212);
 	
 	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
 	
@@ -502,6 +502,14 @@ webpackJsonp([2],{
 	        autoDestroy: false,
 	        getComponent: function getComponent(instance, extra) {
 	            return _react2["default"].createElement(_Dialog2["default"], __assign({}, instance.props, extra, { key: "dialog" }));
+	        },
+	        getContainer: function getContainer(instance) {
+	            if (instance.props.getContainer) {
+	                return instance.props.getContainer();
+	            }
+	            var container = document.createElement('div');
+	            document.body.appendChild(container);
+	            return container;
 	        }
 	    })],
 	    getDefaultProps: function getDefaultProps() {
@@ -536,10 +544,10 @@ webpackJsonp([2],{
 	exports["default"] = DialogWrap;
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 
-/***/ 202:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 208:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -551,23 +559,23 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _reactDom = __webpack_require__(38);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _KeyCode = __webpack_require__(203);
+	var _KeyCode = __webpack_require__(209);
 	
 	var _KeyCode2 = _interopRequireDefault(_KeyCode);
 	
-	var _rcAnimate = __webpack_require__(186);
+	var _rcAnimate = __webpack_require__(192);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _LazyRenderBox = __webpack_require__(204);
+	var _LazyRenderBox = __webpack_require__(210);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
-	var _getScrollBarSize = __webpack_require__(205);
+	var _getScrollBarSize = __webpack_require__(211);
 	
 	var _getScrollBarSize2 = _interopRequireDefault(_getScrollBarSize);
 	
@@ -864,13 +872,16 @@ webpackJsonp([2],{
 	exports["default"] = Dialog;
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 
-/***/ 203:
-/***/ function(module, exports) {
+/***/ 209:
+/***/ (function(module, exports) {
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	/**
 	 * @ignore
 	 * some key-codes definition and utils from closure-library
@@ -1388,12 +1399,13 @@ webpackJsonp([2],{
 	  }
 	};
 	
-	module.exports = KeyCode;
+	exports["default"] = KeyCode;
+	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 
-/***/ 204:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 210:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -1441,13 +1453,17 @@ webpackJsonp([2],{
 	exports["default"] = LazyRenderBox;
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 
-/***/ 205:
-/***/ function(module, exports) {
+/***/ 211:
+/***/ (function(module, exports) {
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = getScrollBarSize;
 	var cached = void 0;
 	
 	function getScrollBarSize(fresh) {
@@ -1486,13 +1502,12 @@ webpackJsonp([2],{
 	  }
 	  return cached;
 	}
-	
-	module.exports = getScrollBarSize;
+	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 
-/***/ 206:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 212:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -1504,7 +1519,7 @@ webpackJsonp([2],{
 	
 	exports["default"] = getContainerRenderMixin;
 	
-	var _reactDom = __webpack_require__(34);
+	var _reactDom = __webpack_require__(38);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
@@ -1517,14 +1532,14 @@ webpackJsonp([2],{
 	}
 	
 	function getContainerRenderMixin(config) {
-	  var _config$autoMount = config.autoMount;
-	  var autoMount = _config$autoMount === undefined ? true : _config$autoMount;
-	  var _config$autoDestroy = config.autoDestroy;
-	  var autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy;
-	  var isVisible = config.isVisible;
-	  var getComponent = config.getComponent;
-	  var _config$getContainer = config.getContainer;
-	  var getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
+	  var _config$autoMount = config.autoMount,
+	      autoMount = _config$autoMount === undefined ? true : _config$autoMount,
+	      _config$autoDestroy = config.autoDestroy,
+	      autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy,
+	      isVisible = config.isVisible,
+	      getComponent = config.getComponent,
+	      _config$getContainer = config.getContainer,
+	      getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
 	
 	
 	  var mixin = void 0;
@@ -1534,7 +1549,13 @@ webpackJsonp([2],{
 	      if (!instance._container) {
 	        instance._container = getContainer(instance);
 	      }
-	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, getComponent(instance, componentArg), instance._container, function callback() {
+	      var component = void 0;
+	      if (instance.getComponent) {
+	        component = instance.getComponent(componentArg);
+	      } else {
+	        component = getComponent(instance, componentArg);
+	      }
+	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, component, instance._container, function callback() {
 	        instance._component = this;
 	        if (ready) {
 	          ready.call(this);
@@ -1589,7 +1610,7 @@ webpackJsonp([2],{
 	}
 	module.exports = exports['default'];
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=basic-controlled.js.map

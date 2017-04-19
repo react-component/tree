@@ -1,13 +1,13 @@
 webpackJsonp([0],[
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -17,15 +17,15 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _reactDom = __webpack_require__(38);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(180);
+	var _rcTree = __webpack_require__(184);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _cssAnimation = __webpack_require__(190);
+	var _cssAnimation = __webpack_require__(196);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
@@ -104,6 +104,6 @@ webpackJsonp([0],[
 	
 	_reactDom2.default.render(demo, document.getElementById('__react-content'));
 
-/***/ }
+/***/ })
 ]);
 //# sourceMappingURL=animation.js.map

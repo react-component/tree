@@ -1,15 +1,15 @@
 webpackJsonp([3],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(207);
+	module.exports = __webpack_require__(213);
 
 
-/***/ },
+/***/ }),
 
-/***/ 199:
-/***/ function(module, exports) {
+/***/ 205:
+/***/ (function(module, exports) {
 
 	'use strict';
 	
@@ -218,10 +218,10 @@ webpackJsonp([3],{
 	  return res;
 	}
 
-/***/ },
+/***/ }),
 
-/***/ 207:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 213:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -231,15 +231,15 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _reactDom = __webpack_require__(38);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcTree = __webpack_require__(180);
+	var _rcTree = __webpack_require__(184);
 	
 	var _rcTree2 = _interopRequireDefault(_rcTree);
 	
-	var _bigDataGenerator = __webpack_require__(208);
+	var _bigDataGenerator = __webpack_require__(214);
 	
 	var _bigDataGenerator2 = _interopRequireDefault(_bigDataGenerator);
 	
@@ -389,10 +389,10 @@ webpackJsonp([3],{
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
-/***/ },
+/***/ }),
 
-/***/ 208:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 214:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -404,7 +404,7 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _util = __webpack_require__(199);
+	var _util = __webpack_require__(205);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -507,7 +507,7 @@ webpackJsonp([3],{
 	exports.default = Gen;
 	module.exports = exports['default'];
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=big-data.js.map
