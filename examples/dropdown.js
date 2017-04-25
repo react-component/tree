@@ -2143,8 +2143,7 @@ webpackJsonp([6],[
 	  return window.document;
 	}
 	
-	// use fastclick for mobile touch
-	var ALL_HANDLERS = ['onClick', 'onMouseDown', 'onMouseEnter', 'onMouseLeave', 'onFocus', 'onBlur'];
+	var ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter', 'onMouseLeave', 'onFocus', 'onBlur'];
 	
 	var Trigger = (0, _createReactClass2["default"])({
 	  displayName: 'Trigger',
@@ -2275,7 +2274,12 @@ webpackJsonp([6],[
 	      var currentDocument = void 0;
 	      if (!this.clickOutsideHandler && this.isClickToHide()) {
 	        currentDocument = props.getDocument();
-	        this.clickOutsideHandler = (0, _addEventListener2["default"])(currentDocument, 'click', this.onDocumentClick);
+	        this.clickOutsideHandler = (0, _addEventListener2["default"])(currentDocument, 'mousedown', this.onDocumentClick);
+	      }
+	      // always hide on mobile
+	      if (!this.touchOutsideHandler) {
+	        currentDocument = currentDocument || props.getDocument();
+	        this.touchOutsideHandler = (0, _addEventListener2["default"])(currentDocument, 'touchstart', this.onDocumentClick);
 	      }
 	      return;
 	    }
@@ -2318,6 +2322,10 @@ webpackJsonp([6],[
 	    this.fireEvents('onMouseDown', e);
 	    this.preClickTime = Date.now();
 	  },
+	  onTouchStart: function onTouchStart(e) {
+	    this.fireEvents('onTouchStart', e);
+	    this.preTouchTime = Date.now();
+	  },
 	  onBlur: function onBlur(e) {
 	    this.fireEvents('onBlur', e);
 	    this.clearDelayTimer();
@@ -2330,8 +2338,12 @@ webpackJsonp([6],[
 	    // focus will trigger click
 	    if (this.focusTime) {
 	      var preTime = void 0;
-	      if (this.preClickTime) {
+	      if (this.preClickTime && this.preTouchTime) {
+	        preTime = Math.min(this.preClickTime, this.preTouchTime);
+	      } else if (this.preClickTime) {
 	        preTime = this.preClickTime;
+	      } else if (this.preTouchTime) {
+	        preTime = this.preTouchTime;
 	      }
 	      if (Math.abs(preTime - this.focusTime) < 20) {
 	        return;
@@ -2339,6 +2351,7 @@ webpackJsonp([6],[
 	      this.focusTime = 0;
 	    }
 	    this.preClickTime = 0;
+	    this.preTouchTime = 0;
 	    event.preventDefault();
 	    var nextVisible = !this.state.popupVisible;
 	    if (this.isClickToHide() && !nextVisible || nextVisible && this.isClickToShow()) {
@@ -2463,6 +2476,11 @@ webpackJsonp([6],[
 	      this.clickOutsideHandler.remove();
 	      this.clickOutsideHandler = null;
 	    }
+	
+	    if (this.touchOutsideHandler) {
+	      this.touchOutsideHandler.remove();
+	      this.touchOutsideHandler = null;
+	    }
 	  },
 	  createTwoChains: function createTwoChains(event) {
 	    var childPros = this.props.children.props;
@@ -2540,9 +2558,11 @@ webpackJsonp([6],[
 	    if (this.isClickToHide() || this.isClickToShow()) {
 	      newChildProps.onClick = this.onClick;
 	      newChildProps.onMouseDown = this.onMouseDown;
+	      newChildProps.onTouchStart = this.onTouchStart;
 	    } else {
 	      newChildProps.onClick = this.createTwoChains('onClick');
 	      newChildProps.onMouseDown = this.createTwoChains('onMouseDown');
+	      newChildProps.onTouchStart = this.createTwoChains('onTouchStart');
 	    }
 	    if (this.isMouseEnterToShow()) {
 	      newChildProps.onMouseEnter = this.onMouseEnter;
