@@ -456,7 +456,7 @@ describe('Tree', () => {
     it('fires drageStart event', () => {
       const onDragStart = jest.fn();
       const wrapper = mount(createTree({ onDragStart }));
-      const treeNode = wrapper.find('.dragTarget > a');
+      const treeNode = wrapper.find('.dragTarget > .rc-tree-node-content-wrapper');
       treeNode.simulate('dragStart');
       const event = onDragStart.mock.calls[0][0];
       expect(event.node).toBe(wrapper.find(TreeNode).at(1).node);
@@ -465,7 +465,7 @@ describe('Tree', () => {
     it('fires dragEnter event', () => {
       const onDragEnter = jest.fn();
       const wrapper = mount(createTree({ onDragEnter }));
-      wrapper.find('.dragTarget > a').simulate('dragStart');
+      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
       wrapper.find('.dropTarget').simulate('dragEnter');
       const event = onDragEnter.mock.calls[0][0];
       expect(event.node).toBe(wrapper.find(TreeNode).at(2).node);
@@ -491,7 +491,7 @@ describe('Tree', () => {
     it('fires drop event', () => {
       const onDrop = jest.fn();
       const wrapper = mount(createTree({ onDrop }));
-      wrapper.find('.dragTarget > a').simulate('dragStart');
+      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
       wrapper.find('.dropTarget').simulate('drop');
       const event = onDrop.mock.calls[0][0];
       expect(event.node).toBe(wrapper.find(TreeNode).at(2).node);
@@ -502,7 +502,7 @@ describe('Tree', () => {
     it('fires dropEnd event', () => {
       const onDragEnd = jest.fn();
       const wrapper = mount(createTree({ onDragEnd }));
-      wrapper.find('.dragTarget > a').simulate('dragEnd');
+      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragEnd');
       const event = onDragEnd.mock.calls[0][0];
       expect(event.node).toBe(wrapper.find(TreeNode).at(1).node);
     });
