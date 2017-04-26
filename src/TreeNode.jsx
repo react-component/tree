@@ -308,9 +308,9 @@ class TreeNode extends React.Component {
         }
       }
       return (
-        <span ref="selectHandle" title={typeof content === 'string' ? content : ''} {...domProps}>
+        <a ref="selectHandle" title={typeof content === 'string' ? content : ''} {...domProps}>
           {icon}{title}
-        </span>
+        </a>
       );
     };
 

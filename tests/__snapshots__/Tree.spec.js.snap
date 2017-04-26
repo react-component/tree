@@ -10,7 +10,7 @@ exports[`Tree renders correctly 1`] = `
       class="rc-tree-switcher rc-tree-roots_open" />
     <span
       class="rc-tree-checkbox" />
-    <span
+    <a
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
       title="parent 1">
       <span
@@ -19,7 +19,7 @@ exports[`Tree renders correctly 1`] = `
         class="rc-tree-title">
         parent 1
       </span>
-    </span>
+    </a>
     <ul
       class="rc-tree-child-tree rc-tree-child-tree-open"
       data-expanded="true">
@@ -29,7 +29,7 @@ exports[`Tree renders correctly 1`] = `
           class="rc-tree-switcher rc-tree-center_open rc-tree-switcher-disabled" />
         <span
           class="rc-tree-checkbox rc-tree-checkbox-disabled" />
-        <span
+        <a
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
           title="leaf 1">
           <span
@@ -38,7 +38,7 @@ exports[`Tree renders correctly 1`] = `
             class="rc-tree-title">
             leaf 1
           </span>
-        </span>
+        </a>
         <ul
           class="rc-tree-child-tree rc-tree-child-tree-open rc-tree-line"
           data-expanded="true">
@@ -48,7 +48,7 @@ exports[`Tree renders correctly 1`] = `
               class="rc-tree-switcher rc-tree-switcher-noop rc-tree-center_docu" />
             <span
               class="rc-tree-checkbox" />
-            <span
+            <a
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
               title="leaf">
               <span
@@ -57,7 +57,7 @@ exports[`Tree renders correctly 1`] = `
                 class="rc-tree-title">
                 leaf
               </span>
-            </span>
+            </a>
           </li>
           <li
             class="">
@@ -65,7 +65,7 @@ exports[`Tree renders correctly 1`] = `
               class="rc-tree-switcher rc-tree-switcher-noop rc-tree-bottom_docu" />
             <span
               class="rc-tree-checkbox" />
-            <span
+            <a
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
               title="leaf">
               <span
@@ -74,7 +74,7 @@ exports[`Tree renders correctly 1`] = `
                 class="rc-tree-title">
                 leaf
               </span>
-            </span>
+            </a>
           </li>
         </ul>
       </li>
@@ -84,7 +84,7 @@ exports[`Tree renders correctly 1`] = `
           class="rc-tree-switcher rc-tree-switcher-noop rc-tree-bottom_docu" />
         <span
           class="rc-tree-checkbox rc-tree-checkbox-disabled" />
-        <span
+        <a
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="leaf 2">
           <span
@@ -93,7 +93,7 @@ exports[`Tree renders correctly 1`] = `
             class="rc-tree-title">
             leaf 2
           </span>
-        </span>
+        </a>
       </li>
     </ul>
   </li>
@@ -109,7 +109,7 @@ exports[`Tree renders opaque children correctly 1`] = `
     class="">
     <span
       class="rc-tree-switcher rc-tree-noline_close" />
-    <span
+    <a
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
       title="0">
       <span
@@ -118,7 +118,7 @@ exports[`Tree renders opaque children correctly 1`] = `
         class="rc-tree-title">
         0
       </span>
-    </span>
+    </a>
   </li>
 </ul>
 `;
