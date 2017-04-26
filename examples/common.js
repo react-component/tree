@@ -22972,7 +22972,7 @@
 	        }
 	      }
 	      return _react2.default.createElement(
-	        'span',
+	        'a',
 	        _extends({ ref: 'selectHandle', title: typeof content === 'string' ? content : '' }, domProps),
 	        icon,
 	        title
