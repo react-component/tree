@@ -101,11 +101,21 @@ class Tree extends React.Component {
     const st = {
       dragOverNodeKey: treeNode.props.eventKey,
     };
-    const expandedKeys = this.getExpandedKeys(treeNode, true);
-    if (expandedKeys) {
-      this.getRawExpandedKeys();
-      st.expandedKeys = expandedKeys;
+    let expandedKeys;
+    if(this.props.expandOnDrag)
+    {
+      expandedKeys = this.getExpandedKeys(treeNode, true);
+      if (expandedKeys) {
+        this.getRawExpandedKeys();
+        st.expandedKeys = expandedKeys;
+      }
+
     }
+    else{
+       expandedKeys= this.state.expandedKeys;
+
+    }
+
     this.setState(st);
     this.props.onDragEnter({
       event: e,
@@ -624,6 +634,7 @@ Tree.defaultProps = {
   prefixCls: 'rc-tree',
   showLine: false,
   showIcon: true,
+  expandOnDrag:true,
   selectable: true,
   multiple: false,
   checkable: false,
