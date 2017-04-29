@@ -125,7 +125,7 @@ describe('Tree', () => {
     const handleExpand = jest.fn();
     const wrapper = mount(
       <Tree onExpand={handleExpand}>
-        <TreeNode title="parent 1" key="0-0" disabled allowExpandOnDisableNode={true}>
+        <TreeNode title="parent 1" key="0-0" disabled allowExpandOnDisableNode>
           <TreeNode title="leaf 1" key="0-0-0" />
         </TreeNode>
       </Tree>
@@ -143,7 +143,7 @@ describe('Tree', () => {
     const handleExpand = jest.fn();
     const wrapper = mount(
       <Tree onExpand={handleExpand}>
-        <TreeNode title="parent 1" key="0-0" disabled allowExpandOnDisableNode={false}>
+        <TreeNode title="parent 1" key="0-0" disabled>
           <TreeNode title="leaf 1" key="0-0-0" />
         </TreeNode>
       </Tree>
@@ -152,7 +152,6 @@ describe('Tree', () => {
 
     switcher.simulate('click');
     expect(handleExpand).not.toHaveBeenCalled();
-
   });
   describe('check', () => {
     it('checks default checked keys', () => {
