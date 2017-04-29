@@ -102,18 +102,14 @@ class Tree extends React.Component {
       dragOverNodeKey: treeNode.props.eventKey,
     };
     let expandedKeys;
-    if(this.props.expandOnDrag)
-    {
+    if (this.props.expandOnDrag) {
       expandedKeys = this.getExpandedKeys(treeNode, true);
       if (expandedKeys) {
         this.getRawExpandedKeys();
         st.expandedKeys = expandedKeys;
       }
-
-    }
-    else{
-       expandedKeys= this.state.expandedKeys;
-
+    } else {
+      expandedKeys = this.state.expandedKeys;
     }
 
     this.setState(st);
@@ -628,13 +624,14 @@ Tree.propTypes = {
   filterTreeNode: PropTypes.func,
   openTransitionName: PropTypes.string,
   openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  expandOnDrag: PropTypes.bool,
 };
 
 Tree.defaultProps = {
   prefixCls: 'rc-tree',
   showLine: false,
   showIcon: true,
-  expandOnDrag:true,
+  expandOnDrag: true,
   selectable: true,
   multiple: false,
   checkable: false,

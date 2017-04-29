@@ -369,7 +369,7 @@ TreeNode.isTreeNode = 1;
 TreeNode.propTypes = {
   prefixCls: PropTypes.string,
   disabled: PropTypes.bool,
-  allowExpandOnDisableNode:PropTypes.bool,
+  allowExpandOnDisableNode: PropTypes.bool,
   disableCheckbox: PropTypes.bool,
   expanded: PropTypes.bool,
   isLeaf: PropTypes.bool,
@@ -379,7 +379,7 @@ TreeNode.propTypes = {
 
 TreeNode.defaultProps = {
   title: defaultTitle,
-  allowExpandOnDisable:false
+  allowExpandOnDisable: false,
 };
 
 export default TreeNode;
