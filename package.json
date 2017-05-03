@@ -1,6 +1,6 @@
 {
-  "name": "rc-tree",
-  "version": "1.0.0",
+  "name": "rc-stree",
+  "version": "1.0.5",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -17,7 +17,7 @@
     "lib"
   ],
   "entry": {
-    "rc-tree": [
+    "rc-stree": [
       "./assets/index.less",
       "./src/index.js"
     ]

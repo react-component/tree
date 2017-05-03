@@ -1,9 +1,9 @@
 /* eslint no-console:0 */
-import 'rc-tree/assets/index.less';
+import 'rc-stree/assets/index.less';
 import './draggable.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from 'rc-stree';
 import { gData } from './util';
 
 const Demo = React.createClass({
@@ -51,7 +51,15 @@ const Demo = React.createClass({
         ar = arr;
         i = index;
       });
-      ar.splice(i, 0, dragObj);
+      if(info.dropPosition>0)
+      {
+        ar.splice(i+1, 0, dragObj);
+
+      }else
+      {
+        ar.splice(i, 0, dragObj);
+
+      }
     } else {
       loop(data, dropKey, (item) => {
         item.children = item.children || [];
