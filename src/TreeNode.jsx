@@ -159,7 +159,7 @@ class TreeNode extends React.Component {
       switcherCls[`${prefixCls}-center_${expandedState}`] = !props.last;
       switcherCls[`${prefixCls}-bottom_${expandedState}`] = props.last;
     }
-    if (props.disabled) {
+    if (props.disabled && !props.allowExpandOnDisableNode) {
       switcherCls[`${prefixCls}-switcher-disabled`] = true;
       return <span className={classNames(switcherCls)}></span>;
     }
@@ -369,6 +369,7 @@ TreeNode.isTreeNode = 1;
 TreeNode.propTypes = {
   prefixCls: PropTypes.string,
   disabled: PropTypes.bool,
+  allowExpandOnDisableNode: PropTypes.bool,
   disableCheckbox: PropTypes.bool,
   expanded: PropTypes.bool,
   isLeaf: PropTypes.bool,
@@ -378,6 +379,7 @@ TreeNode.propTypes = {
 
 TreeNode.defaultProps = {
   title: defaultTitle,
+  allowExpandOnDisable: false,
 };
 
 export default TreeNode;

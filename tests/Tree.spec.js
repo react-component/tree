@@ -121,7 +121,38 @@ describe('Tree', () => {
       expect(handleExpand).toBeCalledWith([], { expanded: false, node });
     });
   });
+  it('fires expand event event on disabled node', () => {
+    const handleExpand = jest.fn();
+    const wrapper = mount(
+      <Tree onExpand={handleExpand}>
+        <TreeNode title="parent 1" key="0-0" disabled allowExpandOnDisableNode>
+          <TreeNode title="leaf 1" key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+    const switcher = wrapper.find('.rc-tree-switcher');
+    const node = wrapper.find(TreeNode).first().node;
 
+    switcher.simulate('click');
+    expect(handleExpand).toBeCalledWith(['0-0'], { expanded: true, node });
+
+    switcher.simulate('click');
+    expect(handleExpand).toBeCalledWith([], { expanded: false, node });
+  });
+  it('it does not fire expand event event on disabled node', () => {
+    const handleExpand = jest.fn();
+    const wrapper = mount(
+      <Tree onExpand={handleExpand}>
+        <TreeNode title="parent 1" key="0-0" disabled>
+          <TreeNode title="leaf 1" key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+    const switcher = wrapper.find('.rc-tree-switcher');
+
+    switcher.simulate('click');
+    expect(handleExpand).not.toHaveBeenCalled();
+  });
   describe('check', () => {
     it('checks default checked keys', () => {
       const wrapper = mount(

@@ -4,8 +4,19 @@
   .draggable-container {
     margin: 10px 30px;
     width: 200px;
-    height: 200px;
+    height: 500px;
     overflow: auto;
     border: 1px solid #ccc;
+  }
+
+}
+.drag-over-gap-top {
+  > .draggable {
+    border-top: 2px blue solid;
+  }
+}
+.drag-over-gap-bottom {
+  > .draggable {
+    border-bottom: 5px blue solid;
   }
 }
