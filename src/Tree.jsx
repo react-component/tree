@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import classNames from 'classnames';
+import equal from 'deep-is';
 import {
   loopAllChildren, isInclude, getOffset,
   filterParentPosition, handleCheckState, getCheck,
@@ -55,7 +56,7 @@ class Tree extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    this.noReRender = false;
+    this.noReRender = equal(nextProps, this.props) && equal(nextState, this.state);
 
     const findTreeNode = (ref) => {
       let treeNode = this;

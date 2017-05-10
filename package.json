@@ -72,6 +72,7 @@
   },
   "dependencies": {
     "classnames": "2.x",
+    "deep-is": "^0.1.3",
     "object-assign": "4.x",
     "prop-types": "^15.5.8",
     "rc-animate": "2.x",
