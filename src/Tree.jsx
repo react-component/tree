@@ -56,7 +56,10 @@ class Tree extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    this.noReRender = equal(nextProps, this.props) && equal(nextState, this.state);
+    this.noReRender = (
+      equal(nextProps, this.props) &&
+      equal(nextState, this.state)
+    );
 
     const findTreeNode = (ref) => {
       let treeNode = this;
@@ -97,15 +100,6 @@ class Tree extends React.Component {
 
     updateKeys(nextState.selectedKeys, this.state.selectedKeys, 'selected');
     updateKeys(nextState.expandedKeys, this.state.expandedKeys, 'expanded');
-
-    if (
-      nextState.checkedKeys !== this.state.checkedKeys ||
-      nextState.dragNodesKeys !== this.state.dragNodesKeys ||
-      nextState.dragOverNodeKey !== this.state.dragOverNodeKey ||
-      nextState.dropNodeKey !== this.state.dropNodeKey
-    ) {
-      this.noReRender = false;
-    }
   }
 
   onDragStart(e, treeNode) {
