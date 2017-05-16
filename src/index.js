@@ -3,3 +3,4 @@ import TreeNode from './TreeNode';
 Tree.TreeNode = TreeNode;
 
 export default Tree;
+export { TreeNode };

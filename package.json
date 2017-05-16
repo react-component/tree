@@ -9,11 +9,13 @@
     "tree"
   ],
   "main": "lib/index",
+  "module": "./es/index",
   "files": [
     "assets/*.css",
     "assets/*.png",
     "assets/*.gif",
     "dist",
+    "es",
     "lib"
   ],
   "entry": {
@@ -38,21 +40,21 @@
   "scripts": {
     "build": "rc-tools run build",
     "dist": "rc-tools run dist",
-    "compile": "rc-tools run compile",
+    "compile": "rc-tools run compile --babel-runtime",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
-    "pub": "rc-tools run pub",
+    "pub": "rc-tools run pub --babel-runtime",
     "lint": "rc-tools run lint",
-    "karma": "rc-tools run karma",
-    "saucelabs": "rc-tools run saucelabs",
     "test": "jest",
-    "chrome-test": "rc-tools run chrome-test",
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*"
-    ]
+    ],
+    "transform": {
+      "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
+    }
   },
   "devDependencies": {
     "coveralls": "^2.11.15",
@@ -63,19 +65,20 @@
     "jest": "^18.0.0",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
-    "rc-tools": "^5.9.2",
+    "rc-tools": "^6.x",
     "rc-tooltip": "3.x",
     "rc-trigger": "^1.0.6",
     "react": "^15.2.0",
-    "react-addons-test-utils": "^15.2.0",
-    "react-dom": "^15.2.0"
+    "react-dom": "^15.2.0",
+    "react-test-renderer": "^15.5.4"
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "classnames": "2.x",
     "object-assign": "4.x",
     "prop-types": "^15.5.8",
     "rc-animate": "2.x",
-    "rc-util": "^4.0.2"
+    "rc-util": "^4.0.4"
   },
   "pre-commit": [
     "lint"
