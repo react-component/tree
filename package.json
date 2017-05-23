@@ -33,7 +33,7 @@
   "bugs": {
     "url": "http://github.com/react-component/tree/issues"
   },
-  "licenses": "MIT",
+  "license": "MIT",
   "config": {
     "port": 8018
   },
