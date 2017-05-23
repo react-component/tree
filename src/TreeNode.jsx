@@ -58,6 +58,10 @@ class TreeNode extends React.Component {
     this.props.root.onSelect(this);
   }
 
+  onDoubleClick() {
+    this.props.root.onDoubleClick(this);
+  }
+
   onMouseEnter(e) {
     e.preventDefault();
     this.props.root.onMouseEnter(e, this);
@@ -286,6 +290,12 @@ class TreeNode extends React.Component {
           // if (props.checkable) {
           //   this.onCheck();
           // }
+        };
+        domProps.onDoubleClick = (e) => {
+          e.preventDefault();
+          if (props.onDoubleClick) {
+            this.onDoubleClick();
+          }
         };
         if (props.onRightClick) {
           domProps.onContextMenu = this.onContextMenu;
