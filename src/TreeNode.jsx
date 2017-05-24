@@ -16,21 +16,7 @@ const defaultTitle = '---';
 class TreeNode extends React.Component {
   constructor(props) {
     super(props);
-    [
-      'onExpand',
-      'onCheck',
-      'onContextMenu',
-      'onMouseEnter',
-      'onMouseLeave',
-      'onDragStart',
-      'onDragEnter',
-      'onDragOver',
-      'onDragLeave',
-      'onDrop',
-      'onDragEnd',
-    ].forEach((m) => {
-      this[m] = this[m].bind(this);
-    });
+
     this.state = {
       dataLoading: false,
       dragNodeHighlight: false,
@@ -50,7 +36,7 @@ class TreeNode extends React.Component {
   //   return true;
   // }
 
-  onCheck() {
+  onCheck = () => {
     this.props.root.onCheck(this);
   }
 
@@ -58,22 +44,22 @@ class TreeNode extends React.Component {
     this.props.root.onSelect(this);
   }
 
-  onMouseEnter(e) {
+  onMouseEnter = (e) => {
     e.preventDefault();
     this.props.root.onMouseEnter(e, this);
   }
 
-  onMouseLeave(e) {
+  onMouseLeave = (e) => {
     e.preventDefault();
     this.props.root.onMouseLeave(e, this);
   }
 
-  onContextMenu(e) {
+  onContextMenu = (e) => {
     e.preventDefault();
     this.props.root.onContextMenu(e, this);
   }
 
-  onDragStart(e) {
+  onDragStart = (e) => {
     // console.log('dragstart', this.props.eventKey, e);
     // e.preventDefault();
     e.stopPropagation();
@@ -90,13 +76,13 @@ class TreeNode extends React.Component {
     }
   }
 
-  onDragEnter(e) {
+  onDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
     this.props.root.onDragEnter(e, this);
   }
 
-  onDragOver(e) {
+  onDragOver = (e) => {
     // todo disabled
     e.preventDefault();
     e.stopPropagation();
@@ -104,12 +90,12 @@ class TreeNode extends React.Component {
     return false;
   }
 
-  onDragLeave(e) {
+  onDragLeave = (e) => {
     e.stopPropagation();
     this.props.root.onDragLeave(e, this);
   }
 
-  onDrop(e) {
+  onDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
     this.setState({
@@ -118,7 +104,7 @@ class TreeNode extends React.Component {
     this.props.root.onDrop(e, this);
   }
 
-  onDragEnd(e) {
+  onDragEnd = (e) => {
     e.stopPropagation();
     this.setState({
       dragNodeHighlight: false,
@@ -126,7 +112,7 @@ class TreeNode extends React.Component {
     this.props.root.onDragEnd(e, this);
   }
 
-  onExpand() {
+  onExpand = () => {
     const callbackPromise = this.props.root.onExpand(this);
     if (callbackPromise && typeof callbackPromise === 'object') {
       const setLoading = (dataLoading) => {
