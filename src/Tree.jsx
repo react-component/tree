@@ -15,9 +15,7 @@ function noop() {
 class Tree extends React.Component {
   constructor(props) {
     super(props);
-    ['onKeyDown', 'onCheck'].forEach((m) => {
-      this[m] = this[m].bind(this);
-    });
+
     this.contextmenuKeys = [];
     this.checkedKeysChange = true;
 
@@ -185,7 +183,7 @@ class Tree extends React.Component {
     }
   }
 
-  onCheck(treeNode) {
+  onCheck = (treeNode) => {
     let checked = !treeNode.props.checked;
     if (treeNode.props.halfChecked) {
       checked = true;
@@ -320,7 +318,7 @@ class Tree extends React.Component {
   }
 
   // all keyboard events callbacks run from here at first
-  onKeyDown(e) {
+  onKeyDown = (e) => {
     e.preventDefault();
   }
 
