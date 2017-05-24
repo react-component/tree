@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Animate from 'rc-animate';
 import { browser } from './util';
 import toArray from 'rc-util/lib/Children/toArray';
+import Checkbox from './Checkbox';
 
 const browserUa = typeof window !== 'undefined' ? browser(window.navigator) : '';
 const ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
@@ -24,11 +25,13 @@ class TreeNode extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.root._treeNodeInstances) {
-      this.props.root._treeNodeInstances = [];
+    const { root } = this.props;
+    if (!root._treeNodeInstances) {
+      root._treeNodeInstances = [];
     }
-    this.props.root._treeNodeInstances.push(this);
+    root._treeNodeInstances.push(this);
   }
+
   // shouldComponentUpdate(nextProps) {
   //   if (!nextProps.expanded) {
   //     return false;
@@ -36,8 +39,8 @@ class TreeNode extends React.Component {
   //   return true;
   // }
 
-  onCheck = () => {
-    this.props.root.onCheck(this);
+  onCheck = (checked) => {
+    this.props.root.onCheck(this, checked);
   }
 
   onSelect() {
@@ -150,31 +153,6 @@ class TreeNode extends React.Component {
       return <span className={classNames(switcherCls)}></span>;
     }
     return <span className={classNames(switcherCls)} onClick={this.onExpand}></span>;
-  }
-
-  renderCheckbox(props) {
-    const prefixCls = props.prefixCls;
-    const checkboxCls = {
-      [`${prefixCls}-checkbox`]: true,
-    };
-    if (props.checked) {
-      checkboxCls[`${prefixCls}-checkbox-checked`] = true;
-    } else if (props.halfChecked) {
-      checkboxCls[`${prefixCls}-checkbox-indeterminate`] = true;
-    }
-    let customEle = null;
-    if (typeof props.checkable !== 'boolean') {
-      customEle = props.checkable;
-    }
-    if (props.disabled || props.disableCheckbox) {
-      checkboxCls[`${prefixCls}-checkbox-disabled`] = true;
-      return <span ref="checkbox" className={classNames(checkboxCls)}>{customEle}</span>;
-    }
-    return (
-      <span ref="checkbox"
-        className={classNames(checkboxCls) }
-        onClick={this.onCheck}
-      >{customEle}</span>);
   }
 
   renderChildren(props) {
@@ -342,7 +320,17 @@ class TreeNode extends React.Component {
         className={classNames(props.className, disabledCls, dragOverCls, filterCls) }
       >
         {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : noopSwitcher()}
-        {props.checkable ? this.renderCheckbox(props) : null}
+        { props.checkable ? (
+          <Checkbox
+            prefixCls={prefixCls}
+            checkable={props.checkable}
+            disabled={props.disabled}
+            disableCheckbox={props.disableCheckbox}
+            onCheck={this.onCheck}
+            eventKey={props.eventKey}
+            checkStrictly={props.checkStrictly}
+          />
+        ) : null }
         {selectHandle()}
         {newChildren}
       </li>
