@@ -230,12 +230,14 @@ class Tree extends React.Component {
       if (!checked && index > -1) {
         checkedKeys.splice(index, 1);
       }
-      newSt.checkedNodes = [];
-      loopAllChildren(this.props.children, (item, ind, pos, keyOrPos) => {
-        if (checkedKeys.indexOf(keyOrPos) !== -1) {
-          newSt.checkedNodes.push(item);
-        }
-      });
+      newSt.checkedNodes = this.checkedNodes;
+      const nodeElement = treeNode._reactInternalInstance._currentElement;
+      if (checked) {
+        newSt.checkedNodes.push(nodeElement);
+      } else {
+        const i = newSt.checkedNodes.indexOf(nodeElement);
+        newSt.checkedNodes.splice(i, 1);
+      }
       if (!('checkedKeys' in this.props)) {
         this.store.setState({
           checkedKeys,
@@ -467,7 +469,13 @@ class Tree extends React.Component {
 
   computeCheckKeys(props) {
     if (props.checkStrictly) {
-      // getTreeNodesStates();
+      const checkedKeys = this.store.getState().checkedKeys;
+      this.checkedNodes = [];
+      loopAllChildren(this.props.children, (item, ind, pos, keyOrPos) => {
+        if (checkedKeys.indexOf(keyOrPos) !== -1) {
+          this.checkedNodes.push(item);
+        }
+      });
     } else if (props._treeNodesStates) {
       this.treeNodesStates = props._treeNodesStates.treeNodesStates;
       this.halfCheckedKeys = props._treeNodesStates.halfCheckedKeys;
