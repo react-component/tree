@@ -120,7 +120,7 @@ export function isInclude(smallArray, bigArray) {
 export function filterParentPosition(arr) {
   const levelObj = {};
   arr.forEach((item) => {
-    const posLen = item.split('-').length;
+    const posLen = splitPosition(item).length;
     if (!levelObj[posLen]) {
       levelObj[posLen] = [];
     }
@@ -132,7 +132,7 @@ export function filterParentPosition(arr) {
       levelObj[levelArr[i]].forEach(ii => {
         for (let j = i + 1; j < levelArr.length; j++) {
           levelObj[levelArr[j]].forEach((_i, index) => {
-            if (isInclude(ii.split('-'), _i.split('-'))) {
+            if (isInclude(splitPosition(ii), splitPosition(_i))) {
               levelObj[levelArr[j]][index] = null;
             }
           });
@@ -160,8 +160,14 @@ function stripTail(str) {
   }
   return st;
 }
+
+let splitCache = {};
 function splitPosition(pos) {
-  return pos.split('-');
+  if (!splitCache[pos]) {
+    splitCache[pos] = pos.split('-');
+  }
+
+  return splitCache[pos]
 }
 
 export function handleCheckState(obj, checkedPositionArr, checkIt) {
