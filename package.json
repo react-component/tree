@@ -1,6 +1,6 @@
 {
-  "name": "rc-tree",
-  "version": "1.5.0",
+  "name": "paragon-rc-tree",
+  "version": "1.5.1",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -24,11 +24,11 @@
       "./src/index.js"
     ]
   },
-  "homepage": "http://github.com/react-component/tree",
-  "author": "hualei5280@gmail.com",
+  "homepage": "http://github.com/davidboy/rc-tree",
+  "author": "davidr@paragontruss.com",
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/tree.git"
+    "url": "git@github.com:davidboy/rc-tree.git"
   },
   "bugs": {
     "url": "http://github.com/react-component/tree/issues"
