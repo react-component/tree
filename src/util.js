@@ -115,6 +115,14 @@ export function isInclude(smallArray, bigArray) {
 }
 // console.log(isInclude(['0', '1'], ['0', '10', '1']));
 
+const splitCache = {};
+function splitPosition(pos) {
+  if (!splitCache[pos]) {
+    splitCache[pos] = pos.split('-');
+  }
+
+  return splitCache[pos];
+}
 
 // arr.length === 628, use time: ~20ms
 export function filterParentPosition(arr) {
@@ -159,15 +167,6 @@ function stripTail(str) {
     st = arr[1];
   }
   return st;
-}
-
-let splitCache = {};
-function splitPosition(pos) {
-  if (!splitCache[pos]) {
-    splitCache[pos] = pos.split('-');
-  }
-
-  return splitCache[pos]
 }
 
 export function handleCheckState(obj, checkedPositionArr, checkIt) {

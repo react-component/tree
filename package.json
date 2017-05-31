@@ -41,6 +41,7 @@
     "build": "rc-tools run build",
     "dist": "rc-tools run dist",
     "compile": "rc-tools run compile --babel-runtime",
+    "compile-noruntime": "rc-tools run compile",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
     "pub": "rc-tools run pub --babel-runtime",
