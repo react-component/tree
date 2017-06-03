@@ -99,7 +99,8 @@ export function loopAllChildren(childs, callback, parent) {
     const len = getChildrenlength(children);
     React.Children.forEach(children, (item, index) => {
       const pos = `${level}-${index}`;
-      const posArray = levelArray.push(index);
+      const posArray = levelArray.slice();
+      posArray.push(index);
       if (item.props.children && item.type && item.type.isTreeNode) {
         loop(item.props.children, pos, posArray, { node: item, pos, posArray });
       }
@@ -162,20 +163,17 @@ function stripTail(str) {
   }
   return st;
 }
-function splitPosition(pos) {
-  return pos.split('-');
-}
 
 export function handleCheckState(obj, checkedPositionArr, checkIt) {
   // console.log(stripTail('0-101-000'));
   let objKeys = Object.keys(obj);
   // let s = Date.now();
   objKeys.forEach((i, index) => {
-    const iArr = splitPosition(i);
+    const iArr = obj[i].posArray;
     let saved = false;
     checkedPositionArr.forEach((_pos) => {
       // 设置子节点，全选或全不选
-      const _posArr = splitPosition(_pos);
+      const _posArr = obj[_pos].posArray;
       if (iArr.length > _posArr.length && isInclude(_posArr, iArr)) {
         obj[i].halfChecked = false;
         obj[i].checked = checkIt;
@@ -197,7 +195,7 @@ export function handleCheckState(obj, checkedPositionArr, checkIt) {
   for (let pIndex = 0; pIndex < checkedPositionArr.length; pIndex++) {
     // 循环设置父节点的 选中 或 半选状态
     const loop = (__pos) => {
-      const _posLen = splitPosition(__pos).length;
+      const _posLen = obj[__pos].posArray.length;
       if (_posLen <= 2) { // e.g. '0-0', '0-1'
         return;
       }
@@ -205,8 +203,8 @@ export function handleCheckState(obj, checkedPositionArr, checkIt) {
       let siblingChecked = 0;
       const parentPosition = stripTail(__pos);
       objKeys.forEach((i /* , index*/) => {
-        const iArr = splitPosition(i);
-        if (iArr.length === _posLen && isInclude(splitPosition(parentPosition), iArr)) {
+        const iArr = obj[i].posArray;
+        if (iArr.length === _posLen && isInclude(obj[parentPosition].posArray, iArr)) {
           sibling++;
           if (obj[i].checked) {
             siblingChecked++;
