@@ -221,12 +221,6 @@ class Tree extends React.Component {
     } else {
       if (checked && index === -1) {
         this.treeNodesStates[treeNode.props.pos].checked = true;
-        const checkedPositions = [];
-        Object.keys(this.treeNodesStates).forEach(i => {
-          if (this.treeNodesStates[i].checked) {
-            checkedPositions.push(i);
-          }
-        });
         handleCheckState(this.treeNodesStates, treeNode.props.pos, true);
       }
       if (!checked) {
