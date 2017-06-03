@@ -95,20 +95,22 @@ function getSiblingPosition(index, len, siblingPosition) {
 }
 
 export function loopAllChildren(childs, callback, parent) {
-  const loop = (children, level, levelArray, _parent) => {
+  const loop = (children, level, levelArray, _parent, parentsChildrenPos) => {
     const len = getChildrenlength(children);
     React.Children.forEach(children, (item, index) => {
       const pos = `${level}-${index}`;
+      parentsChildrenPos.push(pos);
       const posArray = levelArray.slice();
       posArray.push(index);
+      const childrenPos = [];
       if (item.props.children && item.type && item.type.isTreeNode) {
-        loop(item.props.children, pos, posArray, { node: item, pos, posArray });
+        loop(item.props.children, pos, posArray, { node: item, pos, posArray }, childrenPos);
       }
       callback(item, index, pos, item.key || pos,
-        getSiblingPosition(index, len, {}), _parent, posArray);
+        getSiblingPosition(index, len, {}), _parent, posArray, childrenPos);
     });
   };
-  loop(childs, 0, [0], parent);
+  loop(childs, 0, [0], parent, []);
 }
 
 export function isInclude(smallArray, bigArray) {
@@ -165,31 +167,23 @@ function stripTail(str) {
 }
 
 export function handleCheckState(obj, checkedPositionArr, checkIt) {
-  // console.log(stripTail('0-101-000'));
   let objKeys = Object.keys(obj);
-  // let s = Date.now();
-  objKeys.forEach((i, index) => {
-    const iArr = obj[i].posArray;
-    let saved = false;
-    checkedPositionArr.forEach((_pos) => {
-      // 设置子节点，全选或全不选
-      const _posArr = obj[_pos].posArray;
-      if (iArr.length > _posArr.length && isInclude(_posArr, iArr)) {
-        obj[i].halfChecked = false;
-        obj[i].checked = checkIt;
-        objKeys[index] = null;
-      }
-      if (iArr[0] === _posArr[0] && iArr[1] === _posArr[1]) {
-        // 如果
-        saved = true;
-      }
+
+  const childrenLoop = (parentObj) => {
+    parentObj.childrenPos.forEach(childPos => {
+      const childObj = obj[childPos];
+      childObj.halfChecked = false;
+      childObj.checked = checkIt;
+      objKeys[childPos] = null;
+      childrenLoop(childObj);
     });
-    if (!saved) {
-      objKeys[index] = null;
-    }
+  };
+
+  checkedPositionArr.forEach(checkedPosition => {
+    const checkedObj = obj[checkedPosition];
+    childrenLoop(checkedObj);
   });
-  // TODO: 循环 2470000 次耗时约 1400 ms。 性能瓶颈！
-  // console.log(Date.now()-s, checkedPositionArr.length * objKeys.length);
+
   objKeys = objKeys.filter(i => i); // filter non null;
 
   for (let pIndex = 0; pIndex < checkedPositionArr.length; pIndex++) {
