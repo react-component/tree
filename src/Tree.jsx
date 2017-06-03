@@ -227,7 +227,7 @@ class Tree extends React.Component {
             checkedPositions.push(i);
           }
         });
-        handleCheckState(this.treeNodesStates, filterParentPosition(checkedPositions), true);
+        handleCheckState(this.treeNodesStates, [treeNode.props.pos], true);
       }
       if (!checked) {
         this.treeNodesStates[treeNode.props.pos].checked = false;
@@ -546,14 +546,13 @@ class Tree extends React.Component {
           const checkedPositions = [];
           this.treeNodesStates = {};
           loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition,
-                                           parent, posArray, childrenPos, parentPos) => {
+                                           childrenPos, parentPos) => {
             this.treeNodesStates[pos] = {
               node: item,
               key: keyOrPos,
               checked: false,
               halfChecked: false,
               siblingPosition,
-              posArray,
               childrenPos,
               parentPos,
             };

@@ -94,23 +94,21 @@ function getSiblingPosition(index, len, siblingPosition) {
   return siblingPosition;
 }
 
-export function loopAllChildren(childs, callback, parent) {
-  const loop = (children, level, levelArray, _parent, parentsChildrenPos, parentPos) => {
+export function loopAllChildren(childs, callback) {
+  const loop = (children, level, parentsChildrenPos, parentPos) => {
     const len = getChildrenlength(children);
     React.Children.forEach(children, (item, index) => {
       const pos = `${level}-${index}`;
       parentsChildrenPos.push(pos);
-      const posArray = levelArray.slice();
-      posArray.push(index);
       const childrenPos = [];
       if (item.props.children && item.type && item.type.isTreeNode) {
-        loop(item.props.children, pos, posArray, { node: item, pos, posArray }, childrenPos, pos);
+        loop(item.props.children, pos, childrenPos, pos);
       }
       callback(item, index, pos, item.key || pos,
-        getSiblingPosition(index, len, {}), _parent, posArray, childrenPos, parentPos);
+        getSiblingPosition(index, len, {}), childrenPos, parentPos);
     });
   };
-  loop(childs, 0, [0], parent, []);
+  loop(childs, 0, []);
 }
 
 export function isInclude(smallArray, bigArray) {
