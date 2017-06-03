@@ -1,7 +1,6 @@
 /* eslint no-console:0 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import assign from 'object-assign';
 import classNames from 'classnames';
 import {
   loopAllChildren, isInclude, getOffset,
@@ -221,12 +220,6 @@ class Tree extends React.Component {
     } else {
       if (checked && index === -1) {
         this.treeNodesStates[treeNode.props.pos].checked = true;
-        const checkedPositions = [];
-        Object.keys(this.treeNodesStates).forEach(i => {
-          if (this.treeNodesStates[i].checked) {
-            checkedPositions.push(i);
-          }
-        });
         handleCheckState(this.treeNodesStates, treeNode.props.pos, true);
       }
       if (!checked) {
@@ -501,9 +494,6 @@ class Tree extends React.Component {
         cloneProps.halfChecked = this.halfCheckedKeys.indexOf(key) !== -1;
       }
     }
-    if (this.treeNodesStates && this.treeNodesStates[pos]) {
-      assign(cloneProps, this.treeNodesStates[pos].siblingPosition);
-    }
     return React.cloneElement(child, cloneProps);
   }
 
@@ -519,10 +509,8 @@ class Tree extends React.Component {
     }
     const getTreeNodesStates = () => {
       this.treeNodesStates = {};
-      loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition) => {
-        this.treeNodesStates[pos] = {
-          siblingPosition,
-        };
+      loopAllChildren(props.children, (item, index, pos) => {
+        this.treeNodesStates[pos] = {};
       });
     };
     if (props.showLine && !props.checkable) {
@@ -545,14 +533,12 @@ class Tree extends React.Component {
         } else {
           const checkedPositions = [];
           this.treeNodesStates = {};
-          loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition,
-                                           childrenPos, parentPos) => {
+          loopAllChildren(props.children, (item, index, pos, keyOrPos, childrenPos, parentPos) => {
             this.treeNodesStates[pos] = {
               node: item,
               key: keyOrPos,
               checked: false,
               halfChecked: false,
-              siblingPosition,
               childrenPos,
               parentPos,
             };
