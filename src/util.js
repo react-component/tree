@@ -118,43 +118,7 @@ export function isInclude(smallArray, bigArray) {
 }
 // console.log(isInclude(['0', '1'], ['0', '10', '1']));
 
-
-// arr.length === 628, use time: ~20ms
-export function filterParentPosition(arr) {
-  const levelObj = {};
-  arr.forEach((item) => {
-    const posLen = item.split('-').length;
-    if (!levelObj[posLen]) {
-      levelObj[posLen] = [];
-    }
-    levelObj[posLen].push(item);
-  });
-  const levelArr = Object.keys(levelObj).sort((a, b) => Number(a) - Number(b));
-  for (let i = 0; i < levelArr.length; i++) {
-    if (levelArr[i + 1]) {
-      levelObj[levelArr[i]].forEach(ii => {
-        for (let j = i + 1; j < levelArr.length; j++) {
-          levelObj[levelArr[j]].forEach((_i, index) => {
-            if (isInclude(ii.split('-'), _i.split('-'))) {
-              levelObj[levelArr[j]][index] = null;
-            }
-          });
-          levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(p => p);
-        }
-      });
-    }
-  }
-  let nArr = [];
-  levelArr.forEach(i => {
-    nArr = nArr.concat(levelObj[i]);
-  });
-  return nArr;
-}
-// console.log(filterParentPosition(
-//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
-// ));
-
-export function handleCheckState(obj, checkedPositionArr, checkIt) {
+export function handleCheckState(obj, checkedPosition, checkIt) {
   const childrenLoop = (parentObj) => {
     parentObj.childrenPos.forEach(childPos => {
       const childObj = obj[childPos];
@@ -164,10 +128,7 @@ export function handleCheckState(obj, checkedPositionArr, checkIt) {
     });
   };
 
-  checkedPositionArr.forEach(checkedPosition => {
-    const checkedObj = obj[checkedPosition];
-    childrenLoop(checkedObj);
-  });
+  childrenLoop(obj[checkedPosition]);
 
   const parentLoop = (childObj) => {
     if (!childObj.parentPos) return;
@@ -194,10 +155,7 @@ export function handleCheckState(obj, checkedPositionArr, checkIt) {
     parentLoop(parentObj);
   };
 
-  checkedPositionArr.forEach(checkedPosition => {
-    const checkedObj = obj[checkedPosition];
-    parentLoop(checkedObj);
-  });
+  parentLoop(obj[checkedPosition]);
 }
 
 export function getCheck(treeNodesStates) {
