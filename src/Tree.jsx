@@ -545,8 +545,8 @@ class Tree extends React.Component {
         } else {
           const checkedPositions = [];
           this.treeNodesStates = {};
-          loopAllChildren(props.children, (item, index, pos, keyOrPos,
-                                           siblingPosition, parent, posArray, childrenPos) => {
+          loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition,
+                                           parent, posArray, childrenPos, parentPos) => {
             this.treeNodesStates[pos] = {
               node: item,
               key: keyOrPos,
@@ -555,6 +555,7 @@ class Tree extends React.Component {
               siblingPosition,
               posArray,
               childrenPos,
+              parentPos,
             };
             if (checkedKeys.indexOf(keyOrPos) !== -1) {
               this.treeNodesStates[pos].checked = true;
