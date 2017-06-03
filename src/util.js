@@ -74,8 +74,29 @@ export function getOffset(ele) {
   return rect;
 }
 /* eslint-enable */
+
+function getChildrenlength(children) {
+  let len = 1;
+  if (Array.isArray(children)) {
+    len = children.length;
+  }
+  return len;
+}
+
+function getSiblingPosition(index, len, siblingPosition) {
+  if (len === 1) {
+    siblingPosition.first = true;
+    siblingPosition.last = true;
+  } else {
+    siblingPosition.first = index === 0;
+    siblingPosition.last = index === len - 1;
+  }
+  return siblingPosition;
+}
+
 export function loopAllChildren(childs, callback) {
   const loop = (children, level, parentsChildrenPos, parentPos) => {
+    const len = getChildrenlength(children);
     React.Children.forEach(children, (item, index) => {
       const pos = `${level}-${index}`;
       parentsChildrenPos.push(pos);
@@ -83,7 +104,8 @@ export function loopAllChildren(childs, callback) {
       if (item.props.children && item.type && item.type.isTreeNode) {
         loop(item.props.children, pos, childrenPos, pos);
       }
-      callback(item, index, pos, item.key || pos, childrenPos, parentPos);
+      callback(item, index, pos, item.key || pos,
+        getSiblingPosition(index, len, {}), childrenPos, parentPos);
     });
   };
   loop(childs, 0, []);
