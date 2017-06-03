@@ -125,7 +125,7 @@ class TreeNode extends React.Component {
         setLoading(false);
       });
     }
-  }
+  };
 
   // keyboard event support
   onKeyDown(e) {
