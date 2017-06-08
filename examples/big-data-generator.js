@@ -11,7 +11,7 @@ const Gen = React.createClass({
   getDefaultProps() {
     return {
       onGen: () => {},
-      x: 20,
+      x: 1,
       y: 18,
       z: 1,
     };

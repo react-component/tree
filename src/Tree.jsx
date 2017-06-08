@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import classNames from 'classnames';
+import omit from 'lodash.omit';
+import shallowequal from 'shallowequal';
 import {
   loopAllChildren, isInclude, getOffset,
   filterParentPosition, handleCheckState, getCheck,
@@ -47,6 +49,11 @@ class Tree extends React.Component {
     return {
       store: this.store,
     };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !shallowequal(omit(this.props, 'checkedKeys'), omit(nextProps, 'checkedKeys')) ||
+      !shallowequal(this.state, nextState );
   }
 
   componentWillReceiveProps(nextProps) {
