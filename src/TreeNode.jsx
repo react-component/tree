@@ -245,15 +245,16 @@ class TreeNode extends React.Component {
     //   newChildren = null;
     // }
 
-    const iconEleCls = {
-      [`${prefixCls}-iconEle`]: true,
+    const iconEleCls = classNames(`${prefixCls}-iconEle`, `${prefixCls}-icon__${iconState}`, {
       [`${prefixCls}-icon_loading`]: this.state.dataLoading,
-      [`${prefixCls}-icon__${iconState}`]: true,
-    };
+    });
 
     const selectHandle = () => {
-      const icon = (props.showIcon || props.loadData && this.state.dataLoading) ?
-        <span className={classNames(iconEleCls)}></span> : null;
+      const icon = (props.showIcon || props.loadData && this.state.dataLoading) ? (
+        <span className={iconEleCls}>
+          {React.isValidElement(props.showIcon) && props.showIcon}
+        </span>
+      ) : null;
       const title = <span className={`${prefixCls}-title`}>{content}</span>;
       const wrap = `${prefixCls}-node-content-wrapper`;
       const domProps = {
