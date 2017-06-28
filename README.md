@@ -56,7 +56,7 @@ see examples
 |className | additional css class of root dom node | String | '' |
 |prefixCls | prefix class | String | '' |
 |showLine | whether show line | bool | false |
-|showIcon | whether show icon | bool | true |
+|showIcon | whether show icon, and you can use a customized node | bool \| React.ReactNode | true |
 |selectable | whether can be selected | bool | true |
 |multiple | whether multiple select | bool | false |
 |checkable | whether support checked | bool/React Node | false |
