@@ -57,8 +57,10 @@ export function updateCheckState(obj, checkedPosition, checkIt) {
   const childrenLoop = (parentObj) => {
     parentObj.childrenPos.forEach(childPos => {
       const childObj = obj[childPos];
-      childObj.halfChecked = false;
-      childObj.checked = checkIt;
+      if (!childObj.disableCheckbox) {
+        childObj.halfChecked = false;
+        childObj.checked = checkIt;
+      }
       childrenLoop(childObj);
     });
   };
@@ -69,10 +71,13 @@ export function updateCheckState(obj, checkedPosition, checkIt) {
     if (!childObj.parentPos) return;
     const parentObj = obj[childObj.parentPos];
 
-    const childrenCount = parentObj.childrenPos.length;
+    let childrenCount = parentObj.childrenPos.length;
 
     let checkedChildrenCount = 0;
     parentObj.childrenPos.forEach(childPos => {
+      if (obj[childPos].disableCheckbox) {
+        childrenCount -= 1;
+      }
       if (obj[childPos].checked === true) checkedChildrenCount++;
       else if (obj[childPos].halfChecked === true) checkedChildrenCount += 0.5;
     });

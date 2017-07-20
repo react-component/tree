@@ -622,6 +622,7 @@ class Tree extends React.Component {
                 key,
                 checked: false,
                 halfChecked: false,
+                disableCheckbox: item.props.disableCheckbox,
                 positionFlag,
                 childrenPos,
                 parentPos,
