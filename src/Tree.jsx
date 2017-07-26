@@ -96,20 +96,28 @@ class Tree extends React.Component {
       });
       return;
     }
-    const st = {
+    this.setState({
       dragOverNodeKey: treeNode.props.eventKey,
-    };
-    const expandedKeys = this.getExpandedKeys(treeNode, true);
-    if (expandedKeys) {
-      this.getRawExpandedKeys();
-      st.expandedKeys = expandedKeys;
-    }
-    this.setState(st);
-    this.props.onDragEnter({
-      event: e,
-      node: treeNode,
-      expandedKeys: expandedKeys && [...expandedKeys] || [...this.state.expandedKeys],
     });
+
+    if (!this.delayedDragEnterLogic) {
+      this.delayedDragEnterLogic = {};
+    }
+    Object.keys(this.delayedDragEnterLogic).forEach((key) => {
+      clearTimeout(this.delayedDragEnterLogic[key]);
+    });
+    this.delayedDragEnterLogic[treeNode.props.pos] = setTimeout(() => {
+      const expandedKeys = this.getExpandedKeys(treeNode, true);
+      if (expandedKeys) {
+        this.getRawExpandedKeys();
+        this.setState({ expandedKeys });
+      }
+      this.props.onDragEnter({
+        event: e,
+        node: treeNode,
+        expandedKeys: expandedKeys && [...expandedKeys] || [...this.state.expandedKeys],
+      });
+    }, 400);
   }
 
   onDragOver(e, treeNode) {
