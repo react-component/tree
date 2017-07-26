@@ -460,7 +460,6 @@ class Tree extends React.Component {
     }
 
     const cloneProps = {
-      ref: `treeNode-${key}`,
       root: this,
       eventKey: key,
       pos,
@@ -568,7 +567,7 @@ class Tree extends React.Component {
     }
 
     return (
-      <ul {...domProps} unselectable ref="tree">
+      <ul {...domProps} unselectable>
         {React.Children.map(props.children, this.renderTreeNode, this)}
       </ul>
     );
