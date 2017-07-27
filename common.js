@@ -9251,6 +9251,7 @@ var Tree = function (_React$Component) {
                 key: key,
                 checked: false,
                 halfChecked: false,
+                disableCheckbox: item.props.disableCheckbox,
                 positionFlag: positionFlag,
                 childrenPos: childrenPos,
                 parentPos: parentPos
@@ -14062,8 +14063,10 @@ function updateCheckState(obj, checkedPosition, checkIt) {
   var childrenLoop = function childrenLoop(parentObj) {
     parentObj.childrenPos.forEach(function (childPos) {
       var childObj = obj[childPos];
-      childObj.halfChecked = false;
-      childObj.checked = checkIt;
+      if (!childObj.disableCheckbox) {
+        childObj.halfChecked = false;
+        childObj.checked = checkIt;
+      }
       childrenLoop(childObj);
     });
   };
@@ -14078,6 +14081,9 @@ function updateCheckState(obj, checkedPosition, checkIt) {
 
     var checkedChildrenCount = 0;
     parentObj.childrenPos.forEach(function (childPos) {
+      if (obj[childPos].disableCheckbox) {
+        childrenCount -= 1;
+      }
       if (obj[childPos].checked === true) checkedChildrenCount++;else if (obj[childPos].halfChecked === true) checkedChildrenCount += 0.5;
     });
 
