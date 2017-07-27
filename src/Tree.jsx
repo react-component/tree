@@ -12,8 +12,14 @@ import {
   arraysEqual,
 } from './util';
 
-function noop() {
-}
+function noop() {}
+
+export const contextTypes = {
+  rcTree: PropTypes.shape({
+    showLine: PropTypes.bool,
+    selectable: PropTypes.bool,
+  }),
+};
 
 class Tree extends React.Component {
   static propTypes = {
@@ -58,6 +64,8 @@ class Tree extends React.Component {
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   };
 
+  static childContextTypes = contextTypes;
+
   static defaultProps = {
     prefixCls: 'rc-tree',
     showLine: false,
@@ -81,6 +89,9 @@ class Tree extends React.Component {
     onDragLeave: noop,
     onDrop: noop,
     onDragEnd: noop,
+    onMouseEnter: noop,
+    onMouseLeave: noop,
+    onRightClick: noop,
   };
 
   constructor(props) {
@@ -96,6 +107,17 @@ class Tree extends React.Component {
       dropNodeKey: '',
     };
   }
+
+  getChildContext() {
+    const { showLine, selectable } = this.props;
+    return {
+      rcTree: {
+        showLine,
+        selectable,
+      },
+    };
+  }
+
 
   componentWillReceiveProps(nextProps) {
     const expandedKeys = this.getDefaultExpandedKeys(nextProps, true);
@@ -509,23 +531,12 @@ class Tree extends React.Component {
     const pos = `${level}-${index}`;
     const key = child.key || pos;
 
-    // prefer to child's own selectable property if passed
-    let selectable = props.selectable;
-    if (child.props.hasOwnProperty('selectable')) {
-      selectable = child.props.selectable;
-    }
-
     const cloneProps = {
       root: this,
       eventKey: key,
       pos,
-      selectable,
       loadData: props.loadData,
-      onMouseEnter: props.onMouseEnter,
-      onMouseLeave: props.onMouseLeave,
-      onRightClick: props.onRightClick,
       prefixCls: props.prefixCls,
-      showLine: props.showLine,
       showIcon: props.showIcon,
       draggable: props.draggable,
       dragOver: state.dragOverNodeKey === key && this.dropPosition === 0,

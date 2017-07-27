@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
+import { contextTypes } from './Tree';
 
 const defaultTitle = '---';
 
@@ -16,6 +17,8 @@ class TreeNode extends React.Component {
     root: PropTypes.object,
     onSelect: PropTypes.func,
   };
+
+  static contextTypes = contextTypes;
 
   static defaultProps = {
     title: defaultTitle,
@@ -131,12 +134,21 @@ class TreeNode extends React.Component {
     e.preventDefault();
   }
 
+  isShowLine() {
+    return this.context.rcTree.showLine;
+  }
+
+  isSelectable() {
+    const { props, context } = this;
+    return 'selectable' in props ? props.selectable : context.rcTree.selectable;
+  }
+
   renderSwitcher(props, expandedState) {
     const prefixCls = props.prefixCls;
     const switcherCls = {
       [`${prefixCls}-switcher`]: true,
     };
-    if (!props.showLine) {
+    if (!this.isShowLine()) {
       switcherCls[`${prefixCls}-noline_${expandedState}`] = true;
     } else if (props.pos === '0-0') {
       switcherCls[`${prefixCls}-roots_${expandedState}`] = true;
@@ -193,7 +205,7 @@ class TreeNode extends React.Component {
         [`${props.prefixCls}-child-tree`]: true,
         [`${props.prefixCls}-child-tree-open`]: props.expanded,
       };
-      if (props.showLine) {
+      if (this.isShowLine()) {
         cls[`${props.prefixCls}-line`] = !props.last;
       }
       const animProps = {};
@@ -223,7 +235,7 @@ class TreeNode extends React.Component {
   }
 
   render() {
-    const props = this.props;
+    const { props } = this;
     const prefixCls = props.prefixCls;
     const expandedState = props.expanded ? 'open' : 'close';
     let iconState = expandedState;
@@ -257,6 +269,9 @@ class TreeNode extends React.Component {
       const wrap = `${prefixCls}-node-content-wrapper`;
       const domProps = {
         className: `${wrap} ${wrap}-${iconState === expandedState ? iconState : 'normal'}`,
+        onMouseEnter: this.onMouseEnter,
+        onMouseLeave: this.onMouseLeave,
+        onContextMenu: this.onContextMenu,
       };
       if (!props.disabled) {
         if (props.selected || !props._dropTrigger && this.state.dragNodeHighlight) {
@@ -264,23 +279,10 @@ class TreeNode extends React.Component {
         }
         domProps.onClick = (e) => {
           e.preventDefault();
-          if (props.selectable) {
+          if (this.isSelectable()) {
             this.onSelect();
           }
-          // not fire check event
-          // if (props.checkable) {
-          //   this.onCheck();
-          // }
         };
-        if (props.onRightClick) {
-          domProps.onContextMenu = this.onContextMenu;
-        }
-        if (props.onMouseEnter) {
-          domProps.onMouseEnter = this.onMouseEnter;
-        }
-        if (props.onMouseLeave) {
-          domProps.onMouseLeave = this.onMouseLeave;
-        }
         if (props.draggable) {
           domProps.className += ' draggable';
           domProps.draggable = true;
@@ -323,7 +325,7 @@ class TreeNode extends React.Component {
         [`${prefixCls}-switcher`]: true,
         [`${prefixCls}-switcher-noop`]: true,
       };
-      if (props.showLine) {
+      if (this.isShowLine()) {
         cls[`${prefixCls}-center_docu`] = !props.last;
         cls[`${prefixCls}-bottom_docu`] = props.last;
       } else {
