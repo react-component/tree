@@ -1,7 +1,7 @@
-/* eslint no-console:0 */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import warning from 'warning';
 import {
   loopAllChildren, isInclude, getOffset,
   handleCheckState, getCheck,
@@ -134,9 +134,7 @@ class Tree extends React.Component {
       dropNodeKey: key,
     });
     if (this.dragNodesKeys.indexOf(key) > -1) {
-      if (console.warn) {
-        console.warn('can not drop to dragNode(include it\'s children node)');
-      }
+      warning(false, 'can not drop to dragNode(include it\'s children node)');
       return false;
     }
 

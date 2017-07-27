@@ -77,7 +77,8 @@
     "classnames": "2.x",
     "prop-types": "^15.5.8",
     "rc-animate": "2.x",
-    "rc-util": "^4.0.4"
+    "rc-util": "^4.0.4",
+    "warning": "^3.0.0"
   },
   "pre-commit": [
     "lint"
