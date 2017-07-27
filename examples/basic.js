@@ -1,10 +1,11 @@
 /* eslint no-console:0 */
 /* eslint no-alert:0 */
-import 'rc-tree/assets/index.less';
-import './basic.less';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
+import 'rc-tree/assets/index.less';
+import './basic.less';
 
 const Demo = React.createClass({
   propTypes: {

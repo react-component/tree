@@ -1,6 +1,6 @@
 exports[`Tree renders correctly 1`] = `
 <ul
-  class="forTest rc-tree"
+  class="rc-tree forTest"
   role="tree-node"
   tabindex="0"
   unselectable="true">
