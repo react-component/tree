@@ -2,30 +2,26 @@
 
 import React from 'react';
 
-/* eslint-disable */
 export function getOffset(ele) {
-  let doc, win, docElem, rect;
-
   if (!ele.getClientRects().length) {
     return { top: 0, left: 0 };
   }
 
-  rect = ele.getBoundingClientRect();
+  const rect = ele.getBoundingClientRect();
 
   if (rect.width || rect.height) {
-    doc = ele.ownerDocument;
-    win = doc.defaultView;
-    docElem = doc.documentElement;
+    const doc = ele.ownerDocument;
+    const win = doc.defaultView;
+    const docElem = doc.documentElement;
 
     return {
       top: rect.top + win.pageYOffset - docElem.clientTop,
-      left: rect.left + win.pageXOffset - docElem.clientLeft
+      left: rect.left + win.pageXOffset - docElem.clientLeft,
     };
   }
 
   return rect;
 }
-/* eslint-enable */
 
 function getChildrenlength(children) {
   let len = 1;

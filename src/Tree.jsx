@@ -12,6 +12,74 @@ function noop() {
 }
 
 class Tree extends React.Component {
+  static propTypes = {
+    prefixCls: PropTypes.string,
+    children: PropTypes.any,
+    showLine: PropTypes.bool,
+    showIcon: PropTypes.bool,
+    selectable: PropTypes.bool,
+    multiple: PropTypes.bool,
+    checkable: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.node,
+    ]),
+    _treeNodesStates: PropTypes.object,
+    checkStrictly: PropTypes.bool,
+    draggable: PropTypes.bool,
+    autoExpandParent: PropTypes.bool,
+    defaultExpandAll: PropTypes.bool,
+    defaultExpandedKeys: PropTypes.arrayOf(PropTypes.string),
+    expandedKeys: PropTypes.arrayOf(PropTypes.string),
+    defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
+    checkedKeys: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.object,
+    ]),
+    defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
+    selectedKeys: PropTypes.arrayOf(PropTypes.string),
+    onExpand: PropTypes.func,
+    onCheck: PropTypes.func,
+    onSelect: PropTypes.func,
+    loadData: PropTypes.func,
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+    onRightClick: PropTypes.func,
+    onDragStart: PropTypes.func,
+    onDragEnter: PropTypes.func,
+    onDragOver: PropTypes.func,
+    onDragLeave: PropTypes.func,
+    onDrop: PropTypes.func,
+    onDragEnd: PropTypes.func,
+    filterTreeNode: PropTypes.func,
+    openTransitionName: PropTypes.string,
+    openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  };
+
+  static defaultProps = {
+    prefixCls: 'rc-tree',
+    showLine: false,
+    showIcon: true,
+    selectable: true,
+    multiple: false,
+    checkable: false,
+    checkStrictly: false,
+    draggable: false,
+    autoExpandParent: true,
+    defaultExpandAll: false,
+    defaultExpandedKeys: [],
+    defaultCheckedKeys: [],
+    defaultSelectedKeys: [],
+    onExpand: noop,
+    onCheck: noop,
+    onSelect: noop,
+    onDragStart: noop,
+    onDragEnter: noop,
+    onDragOver: noop,
+    onDragLeave: noop,
+    onDrop: noop,
+    onDragEnd: noop,
+  };
+
   constructor(props) {
     super(props);
 
@@ -577,73 +645,5 @@ class Tree extends React.Component {
     );
   }
 }
-
-Tree.propTypes = {
-  prefixCls: PropTypes.string,
-  children: PropTypes.any,
-  showLine: PropTypes.bool,
-  showIcon: PropTypes.bool,
-  selectable: PropTypes.bool,
-  multiple: PropTypes.bool,
-  checkable: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.node,
-  ]),
-  _treeNodesStates: PropTypes.object,
-  checkStrictly: PropTypes.bool,
-  draggable: PropTypes.bool,
-  autoExpandParent: PropTypes.bool,
-  defaultExpandAll: PropTypes.bool,
-  defaultExpandedKeys: PropTypes.arrayOf(PropTypes.string),
-  expandedKeys: PropTypes.arrayOf(PropTypes.string),
-  defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
-  checkedKeys: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.object,
-  ]),
-  defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
-  selectedKeys: PropTypes.arrayOf(PropTypes.string),
-  onExpand: PropTypes.func,
-  onCheck: PropTypes.func,
-  onSelect: PropTypes.func,
-  loadData: PropTypes.func,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  onRightClick: PropTypes.func,
-  onDragStart: PropTypes.func,
-  onDragEnter: PropTypes.func,
-  onDragOver: PropTypes.func,
-  onDragLeave: PropTypes.func,
-  onDrop: PropTypes.func,
-  onDragEnd: PropTypes.func,
-  filterTreeNode: PropTypes.func,
-  openTransitionName: PropTypes.string,
-  openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-};
-
-Tree.defaultProps = {
-  prefixCls: 'rc-tree',
-  showLine: false,
-  showIcon: true,
-  selectable: true,
-  multiple: false,
-  checkable: false,
-  checkStrictly: false,
-  draggable: false,
-  autoExpandParent: true,
-  defaultExpandAll: false,
-  defaultExpandedKeys: [],
-  defaultCheckedKeys: [],
-  defaultSelectedKeys: [],
-  onExpand: noop,
-  onCheck: noop,
-  onSelect: noop,
-  onDragStart: noop,
-  onDragEnter: noop,
-  onDragOver: noop,
-  onDragLeave: noop,
-  onDrop: noop,
-  onDragEnd: noop,
-};
 
 export default Tree;

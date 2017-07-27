@@ -7,6 +7,20 @@ import toArray from 'rc-util/lib/Children/toArray';
 const defaultTitle = '---';
 
 class TreeNode extends React.Component {
+  static propTypes = {
+    prefixCls: PropTypes.string,
+    disabled: PropTypes.bool,
+    disableCheckbox: PropTypes.bool,
+    expanded: PropTypes.bool,
+    isLeaf: PropTypes.bool,
+    root: PropTypes.object,
+    onSelect: PropTypes.func,
+  };
+
+  static defaultProps = {
+    title: defaultTitle,
+  };
+
   constructor(props) {
     super(props);
 
@@ -47,8 +61,6 @@ class TreeNode extends React.Component {
   }
 
   onDragStart = (e) => {
-    // console.log('dragstart', this.props.eventKey, e);
-    // e.preventDefault();
     e.stopPropagation();
     this.setState({
       dragNodeHighlight: true,
@@ -334,19 +346,5 @@ class TreeNode extends React.Component {
 }
 
 TreeNode.isTreeNode = 1;
-
-TreeNode.propTypes = {
-  prefixCls: PropTypes.string,
-  disabled: PropTypes.bool,
-  disableCheckbox: PropTypes.bool,
-  expanded: PropTypes.bool,
-  isLeaf: PropTypes.bool,
-  root: PropTypes.object,
-  onSelect: PropTypes.func,
-};
-
-TreeNode.defaultProps = {
-  title: defaultTitle,
-};
 
 export default TreeNode;
