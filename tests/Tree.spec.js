@@ -462,14 +462,18 @@ describe('Tree', () => {
       expect(event.node).toBe(wrapper.find(TreeNode).at(1).node);
     });
 
-    it('fires dragEnter event', () => {
+    it('fires dragEnter event', (done) => {
       const onDragEnter = jest.fn();
       const wrapper = mount(createTree({ onDragEnter }));
       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
       wrapper.find('.dropTarget').simulate('dragEnter');
-      const event = onDragEnter.mock.calls[0][0];
-      expect(event.node).toBe(wrapper.find(TreeNode).at(2).node);
-      expect(event.expandedKeys).toEqual(['0-0-0-1', '0-0']);
+      expect(onDragEnter).not.toBeCalled();
+      setTimeout(() => {
+        const event = onDragEnter.mock.calls[0][0];
+        expect(event.node).toBe(wrapper.find(TreeNode).at(2).node);
+        expect(event.expandedKeys).toEqual(['0-0-0-1', '0-0']);
+        done();
+      }, 400);
     });
 
     it('fires dragOver event', () => {
