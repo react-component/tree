@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import assign from 'object-assign';
 import classNames from 'classnames';
 import Animate from 'rc-animate';
 import { browser } from './util';
@@ -201,7 +200,7 @@ class TreeNode extends React.Component {
       if (props.openTransitionName) {
         animProps.transitionName = props.openTransitionName;
       } else if (typeof props.openAnimation === 'object') {
-        animProps.animation = assign({}, props.openAnimation);
+        animProps.animation = { ...props.openAnimation };
         if (!transitionAppear) {
           delete animProps.animation.appear;
         }

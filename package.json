@@ -75,7 +75,6 @@
   "dependencies": {
     "babel-runtime": "^6.23.0",
     "classnames": "2.x",
-    "object-assign": "4.x",
     "prop-types": "^15.5.8",
     "rc-animate": "2.x",
     "rc-util": "^4.0.4"
