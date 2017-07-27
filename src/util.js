@@ -1,6 +1,5 @@
 /* eslint no-loop-func: 0*/
-
-import React from 'react';
+import { Children } from 'react';
 
 export function getOffset(ele) {
   if (!ele.getClientRects().length) {
@@ -8,7 +7,6 @@ export function getOffset(ele) {
   }
 
   const rect = ele.getBoundingClientRect();
-
   if (rect.width || rect.height) {
     const doc = ele.ownerDocument;
     const win = doc.defaultView;
@@ -23,14 +21,6 @@ export function getOffset(ele) {
   return rect;
 }
 
-function getChildrenlength(children) {
-  let len = 1;
-  if (Array.isArray(children)) {
-    len = children.length;
-  }
-  return len;
-}
-
 function getSiblingPosition(index, len, siblingPosition) {
   if (len === 1) {
     siblingPosition.first = true;
@@ -42,29 +32,30 @@ function getSiblingPosition(index, len, siblingPosition) {
   return siblingPosition;
 }
 
-export function loopAllChildren(childs, callback) {
-  const loop = (children, level, parentsChildrenPos, parentPos) => {
-    const len = getChildrenlength(children);
-    React.Children.forEach(children, (item, index) => {
+export function traverseTreeNodes(treeNodes, callback) {
+  const traverse = (subTreeNodes, level, parentsChildrenPos, parentPos) => {
+    const len = Children.count(subTreeNodes);
+    Children.forEach(subTreeNodes, (item, index) => {
       const pos = `${level}-${index}`;
-      parentsChildrenPos.push(pos);
+      parentsChildrenPos.push(pos); // Note: side effect
+
       const childrenPos = [];
       if (item.props.children && item.type && item.type.isTreeNode) {
-        loop(item.props.children, pos, childrenPos, pos);
+        traverse(item.props.children, pos, childrenPos, pos);
       }
-      callback(item, index, pos, item.key || pos,
-        getSiblingPosition(index, len, {}), childrenPos, parentPos);
+      callback(
+        item,
+        index,
+        pos,
+        item.key || pos,
+        getSiblingPosition(index, len, {}),
+        childrenPos,
+        parentPos
+      );
     });
   };
-  loop(childs, 0, []);
+  traverse(treeNodes, 0, []);
 }
-
-export function isInclude(smallArray, bigArray) {
-  return smallArray.every((ii, i) => {
-    return ii === bigArray[i];
-  });
-}
-// console.log(isInclude(['0', '1'], ['0', '10', '1']));
 
 export function handleCheckState(obj, checkedPosition, checkIt) {
   const childrenLoop = (parentObj) => {
@@ -133,6 +124,12 @@ export function getStrictlyValue(checkedKeys, halfChecked) {
   return checkedKeys;
 }
 
+export function isInclude(smallArray, bigArray) {
+  return smallArray.every((item, index) => {
+    return item === bigArray[index];
+  });
+}
+
 export function arraysEqual(a, b) {
   if (a === b) return true;
   if (a === null || typeof a === 'undefined' || b === null || typeof b === 'undefined') {
@@ -142,7 +139,6 @@ export function arraysEqual(a, b) {
 
   // If you don't care about the order of the elements inside
   // the array, you should sort both arrays here.
-
   for (let i = 0; i < a.length; ++i) {
     if (a[i] !== b[i]) return false;
   }

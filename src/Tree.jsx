@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
 import {
-  loopAllChildren, isInclude, getOffset,
-  handleCheckState, getCheck,
-  getStrictlyValue, arraysEqual,
+  traverseTreeNodes,
+  isInclude,
+  getOffset,
+  handleCheckState,
+  getCheck,
+  getStrictlyValue,
+  arraysEqual,
 } from './util';
 
 function noop() {
@@ -139,7 +143,7 @@ class Tree extends React.Component {
   }
 
   onDragEnterGap(e, treeNode) {
-    const offsetTop = (0, getOffset)(treeNode.refs.selectHandle).top;
+    const offsetTop = getOffset(treeNode.refs.selectHandle).top;
     const offsetHeight = treeNode.refs.selectHandle.offsetHeight;
     const pageY = e.pageY;
     const gapHeight = 2;
@@ -279,8 +283,8 @@ class Tree extends React.Component {
         checkedKeys.splice(index, 1);
       }
       newSt.checkedNodes = [];
-      loopAllChildren(this.props.children, (item, ind, pos, keyOrPos) => {
-        if (checkedKeys.indexOf(keyOrPos) !== -1) {
+      traverseTreeNodes(this.props.children, (item, idx, pos, k) => {
+        if (checkedKeys.indexOf(k) !== -1) {
           newSt.checkedNodes.push(item);
         }
       });
@@ -335,7 +339,7 @@ class Tree extends React.Component {
     }
     const selectedNodes = [];
     if (selectedKeys.length) {
-      loopAllChildren(this.props.children, (item) => {
+      traverseTreeNodes(this.props.children, (item) => {
         if (selectedKeys.indexOf(item.key) !== -1) {
           selectedNodes.push(item);
         }
@@ -396,22 +400,22 @@ class Tree extends React.Component {
     }
     const expandedPositionArr = [];
     if (props.autoExpandParent) {
-      loopAllChildren(props.children, (item, index, pos, newKey) => {
-        if (keys.indexOf(newKey) > -1) {
+      traverseTreeNodes(props.children, (item, index, pos, key) => {
+        if (keys.indexOf(key) > -1) {
           expandedPositionArr.push(pos);
         }
       });
     }
     const filterExpandedKeys = [];
-    loopAllChildren(props.children, (item, index, pos, newKey) => {
+    traverseTreeNodes(props.children, (item, index, pos, key) => {
       if (expandAll) {
-        filterExpandedKeys.push(newKey);
+        filterExpandedKeys.push(key);
       } else if (props.autoExpandParent) {
         expandedPositionArr.forEach(p => {
           if ((p.split('-').length > pos.split('-').length
             && isInclude(pos.split('-'), p.split('-')) || pos === p)
-            && filterExpandedKeys.indexOf(newKey) === -1) {
-            filterExpandedKeys.push(newKey);
+            && filterExpandedKeys.indexOf(key) === -1) {
+            filterExpandedKeys.push(key);
           }
         });
       }
@@ -482,10 +486,10 @@ class Tree extends React.Component {
   getDragNodes(treeNode) {
     const dragNodesKeys = [];
     const tPArr = treeNode.props.pos.split('-');
-    loopAllChildren(this.props.children, (item, index, pos, newKey) => {
+    traverseTreeNodes(this.props.children, (item, index, pos, key) => {
       const pArr = pos.split('-');
       if (treeNode.props.pos === pos || tPArr.length < pArr.length && isInclude(tPArr, pArr)) {
-        dragNodesKeys.push(newKey);
+        dragNodesKeys.push(key);
       }
     });
     return dragNodesKeys;
@@ -585,7 +589,7 @@ class Tree extends React.Component {
     }
     const getTreeNodesStates = () => {
       this.treeNodesStates = {};
-      loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition) => {
+      traverseTreeNodes(props.children, (item, index, pos, key, siblingPosition) => {
         this.treeNodesStates[pos] = {
           siblingPosition,
         };
@@ -611,22 +615,23 @@ class Tree extends React.Component {
         } else {
           const checkedPositions = [];
           this.treeNodesStates = {};
-          loopAllChildren(props.children, (item, index, pos, keyOrPos, siblingPosition,
-                                           childrenPos, parentPos) => {
-            this.treeNodesStates[pos] = {
-              node: item,
-              key: keyOrPos,
-              checked: false,
-              halfChecked: false,
-              siblingPosition,
-              childrenPos,
-              parentPos,
-            };
-            if (checkedKeys.indexOf(keyOrPos) !== -1) {
-              this.treeNodesStates[pos].checked = true;
-              checkedPositions.push(pos);
-            }
-          });
+          traverseTreeNodes(
+            props.children,
+            (item, index, pos, key, siblingPosition, childrenPos, parentPos) => {
+              this.treeNodesStates[pos] = {
+                node: item,
+                key,
+                checked: false,
+                halfChecked: false,
+                siblingPosition,
+                childrenPos,
+                parentPos,
+              };
+              if (checkedKeys.indexOf(key) !== -1) {
+                this.treeNodesStates[pos].checked = true;
+                checkedPositions.push(pos);
+              }
+            });
           // if the parent node's key exists, it all children node will be checked
           checkedPositions.forEach(checkedPosition => {
             handleCheckState(this.treeNodesStates, checkedPosition, true);
