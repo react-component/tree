@@ -94,18 +94,21 @@ function getSiblingPosition(index, len, siblingPosition) {
   return siblingPosition;
 }
 
-export function loopAllChildren(childs, callback, parent) {
-  const loop = (children, level, _parent) => {
+export function loopAllChildren(childs, callback) {
+  const loop = (children, level, parentsChildrenPos, parentPos) => {
     const len = getChildrenlength(children);
     React.Children.forEach(children, (item, index) => {
       const pos = `${level}-${index}`;
+      parentsChildrenPos.push(pos);
+      const childrenPos = [];
       if (item.props.children && item.type && item.type.isTreeNode) {
-        loop(item.props.children, pos, { node: item, pos });
+        loop(item.props.children, pos, childrenPos, pos);
       }
-      callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}), _parent);
+      callback(item, index, pos, item.key || pos,
+        getSiblingPosition(index, len, {}), childrenPos, parentPos);
     });
   };
-  loop(childs, 0, parent);
+  loop(childs, 0, []);
 }
 
 export function isInclude(smallArray, bigArray) {
@@ -115,131 +118,44 @@ export function isInclude(smallArray, bigArray) {
 }
 // console.log(isInclude(['0', '1'], ['0', '10', '1']));
 
-
-// arr.length === 628, use time: ~20ms
-export function filterParentPosition(arr) {
-  const levelObj = {};
-  arr.forEach((item) => {
-    const posLen = item.split('-').length;
-    if (!levelObj[posLen]) {
-      levelObj[posLen] = [];
-    }
-    levelObj[posLen].push(item);
-  });
-  const levelArr = Object.keys(levelObj).sort((a, b) => Number(a) - Number(b));
-  for (let i = 0; i < levelArr.length; i++) {
-    if (levelArr[i + 1]) {
-      levelObj[levelArr[i]].forEach(ii => {
-        for (let j = i + 1; j < levelArr.length; j++) {
-          levelObj[levelArr[j]].forEach((_i, index) => {
-            if (isInclude(ii.split('-'), _i.split('-'))) {
-              levelObj[levelArr[j]][index] = null;
-            }
-          });
-          levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(p => p);
-        }
-      });
-    }
-  }
-  let nArr = [];
-  levelArr.forEach(i => {
-    nArr = nArr.concat(levelObj[i]);
-  });
-  return nArr;
-}
-// console.log(filterParentPosition(
-//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
-// ));
-
-
-function stripTail(str) {
-  const arr = str.match(/(.+)(-[^-]+)$/);
-  let st = '';
-  if (arr && arr.length === 3) {
-    st = arr[1];
-  }
-  return st;
-}
-function splitPosition(pos) {
-  return pos.split('-');
-}
-
-export function handleCheckState(obj, checkedPositionArr, checkIt) {
-  // console.log(stripTail('0-101-000'));
-  let objKeys = Object.keys(obj);
-  // let s = Date.now();
-  objKeys.forEach((i, index) => {
-    const iArr = splitPosition(i);
-    let saved = false;
-    checkedPositionArr.forEach((_pos) => {
-      // 设置子节点，全选或全不选
-      const _posArr = splitPosition(_pos);
-      if (iArr.length > _posArr.length && isInclude(_posArr, iArr)) {
-        obj[i].halfChecked = false;
-        obj[i].checked = checkIt;
-        objKeys[index] = null;
-      }
-      if (iArr[0] === _posArr[0] && iArr[1] === _posArr[1]) {
-        // 如果
-        saved = true;
-      }
+export function handleCheckState(obj, checkedPosition, checkIt) {
+  const childrenLoop = (parentObj) => {
+    parentObj.childrenPos.forEach(childPos => {
+      const childObj = obj[childPos];
+      childObj.halfChecked = false;
+      childObj.checked = checkIt;
+      childrenLoop(childObj);
     });
-    if (!saved) {
-      objKeys[index] = null;
-    }
-  });
-  // TODO: 循环 2470000 次耗时约 1400 ms。 性能瓶颈！
-  // console.log(Date.now()-s, checkedPositionArr.length * objKeys.length);
-  objKeys = objKeys.filter(i => i); // filter non null;
+  };
 
-  for (let pIndex = 0; pIndex < checkedPositionArr.length; pIndex++) {
-    // 循环设置父节点的 选中 或 半选状态
-    const loop = (__pos) => {
-      const _posLen = splitPosition(__pos).length;
-      if (_posLen <= 2) { // e.g. '0-0', '0-1'
-        return;
-      }
-      let sibling = 0;
-      let siblingChecked = 0;
-      const parentPosition = stripTail(__pos);
-      objKeys.forEach((i /* , index*/) => {
-        const iArr = splitPosition(i);
-        if (iArr.length === _posLen && isInclude(splitPosition(parentPosition), iArr)) {
-          sibling++;
-          if (obj[i].checked) {
-            siblingChecked++;
-            const _i = checkedPositionArr.indexOf(i);
-            if (_i > -1) {
-              checkedPositionArr.splice(_i, 1);
-              if (_i <= pIndex) {
-                pIndex--;
-              }
-            }
-          } else if (obj[i].halfChecked) {
-            siblingChecked += 0.5;
-          }
-          // objKeys[index] = null;
-        }
-      });
-      // objKeys = objKeys.filter(i => i); // filter non null;
-      const parent = obj[parentPosition];
-      // sibling 不会等于0
-      // 全不选 - 全选 - 半选
-      if (siblingChecked === 0) {
-        parent.checked = false;
-        parent.halfChecked = false;
-      } else if (siblingChecked === sibling) {
-        parent.checked = true;
-        parent.halfChecked = false;
-      } else {
-        parent.halfChecked = true;
-        parent.checked = false;
-      }
-      loop(parentPosition);
-    };
-    loop(checkedPositionArr[pIndex], pIndex);
-  }
-  // console.log(Date.now()-s, objKeys.length, checkIt);
+  childrenLoop(obj[checkedPosition]);
+
+  const parentLoop = (childObj) => {
+    if (!childObj.parentPos) return;
+    const parentObj = obj[childObj.parentPos];
+
+    const childrenCount = parentObj.childrenPos.length;
+
+    let checkedChildrenCount = 0;
+    parentObj.childrenPos.forEach(childPos => {
+      if (obj[childPos].checked === true) checkedChildrenCount++;
+      else if (obj[childPos].halfChecked === true) checkedChildrenCount += 0.5;
+    });
+
+    if (checkedChildrenCount === childrenCount) {
+      parentObj.checked = true;
+      parentObj.halfChecked = false;
+    } else if (checkedChildrenCount > 0) {
+      parentObj.halfChecked = true;
+      parentObj.checked = false;
+    } else {
+      parentObj.checked = false;
+      parentObj.halfChecked = false;
+    }
+    parentLoop(parentObj);
+  };
+
+  parentLoop(obj[checkedPosition]);
 }
 
 export function getCheck(treeNodesStates) {
