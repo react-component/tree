@@ -21,15 +21,11 @@ export function getOffset(ele) {
   return rect;
 }
 
-function getSiblingPosition(index, len, siblingPosition) {
-  if (len === 1) {
-    siblingPosition.first = true;
-    siblingPosition.last = true;
-  } else {
-    siblingPosition.first = index === 0;
-    siblingPosition.last = index === len - 1;
-  }
-  return siblingPosition;
+function getPositionFlag(index, len) {
+  return {
+    first: index === 0,
+    last: index === len - 1,
+  };
 }
 
 export function traverseTreeNodes(treeNodes, callback) {
@@ -48,7 +44,7 @@ export function traverseTreeNodes(treeNodes, callback) {
         index,
         pos,
         item.key || pos,
-        getSiblingPosition(index, len, {}),
+        getPositionFlag(index, len),
         childrenPos,
         parentPos
       );
@@ -57,7 +53,7 @@ export function traverseTreeNodes(treeNodes, callback) {
   traverse(treeNodes, 0, []);
 }
 
-export function handleCheckState(obj, checkedPosition, checkIt) {
+export function updateCheckState(obj, checkedPosition, checkIt) {
   const childrenLoop = (parentObj) => {
     parentObj.childrenPos.forEach(childPos => {
       const childObj = obj[childPos];
@@ -113,7 +109,10 @@ export function getCheck(treeNodesStates) {
     }
   });
   return {
-    halfCheckedKeys, checkedKeys, checkedNodes, checkedNodesPositions, treeNodesStates,
+    halfCheckedKeys,
+    checkedKeys,
+    checkedNodes,
+    checkedNodesPositions,
   };
 }
 

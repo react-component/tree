@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import warning from 'warning';
 import {
   traverseTreeNodes,
-  isInclude,
+  updateCheckState,
   getOffset,
-  handleCheckState,
   getCheck,
   getStrictlyValue,
+  isInclude,
   arraysEqual,
 } from './util';
 
@@ -27,7 +27,6 @@ class Tree extends React.Component {
       PropTypes.bool,
       PropTypes.node,
     ]),
-    _treeNodesStates: PropTypes.object,
     checkStrictly: PropTypes.bool,
     draggable: PropTypes.bool,
     autoExpandParent: PropTypes.bool,
@@ -298,12 +297,12 @@ class Tree extends React.Component {
     } else {
       if (checked && index === -1) {
         this.treeNodesStates[treeNode.props.pos].checked = true;
-        handleCheckState(this.treeNodesStates, treeNode.props.pos, true);
+        updateCheckState(this.treeNodesStates, treeNode.props.pos, true);
       }
       if (!checked) {
         this.treeNodesStates[treeNode.props.pos].checked = false;
         this.treeNodesStates[treeNode.props.pos].halfChecked = false;
-        handleCheckState(this.treeNodesStates, treeNode.props.pos, false);
+        updateCheckState(this.treeNodesStates, treeNode.props.pos, false);
       }
       const checkKeys = getCheck(this.treeNodesStates);
       newSt.checkedNodes = checkKeys.checkedNodes;
@@ -572,7 +571,7 @@ class Tree extends React.Component {
       }
     }
     if (this.treeNodesStates && this.treeNodesStates[pos]) {
-      Object.assign(cloneProps, this.treeNodesStates[pos].siblingPosition);
+      Object.assign(cloneProps, this.treeNodesStates[pos].positionFlag);
     }
     return React.cloneElement(child, cloneProps);
   }
@@ -589,9 +588,9 @@ class Tree extends React.Component {
     }
     const getTreeNodesStates = () => {
       this.treeNodesStates = {};
-      traverseTreeNodes(props.children, (item, index, pos, key, siblingPosition) => {
+      traverseTreeNodes(props.children, (item, index, pos, key, positionFlag) => {
         this.treeNodesStates[pos] = {
-          siblingPosition,
+          positionFlag,
         };
       });
     };
@@ -601,15 +600,15 @@ class Tree extends React.Component {
     if (props.checkable && (this.checkedKeysChange || props.loadData)) {
       if (props.checkStrictly) {
         getTreeNodesStates();
-      } else if (props._treeNodesStates) {
-        this.treeNodesStates = props._treeNodesStates.treeNodesStates;
-        this.halfCheckedKeys = props._treeNodesStates.halfCheckedKeys;
-        this.checkedKeys = props._treeNodesStates.checkedKeys;
       } else {
         const checkedKeys = this.state.checkedKeys;
         let checkKeys;
-        if (!props.loadData && this.checkKeys && this._checkedKeys &&
-          arraysEqual(this._checkedKeys, checkedKeys)) {
+        if (
+          !props.loadData &&
+            this.checkKeys &&
+            this._checkedKeys &&
+            arraysEqual(this._checkedKeys, checkedKeys)
+        ) {
           // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
           checkKeys = this.checkKeys;
         } else {
@@ -617,13 +616,13 @@ class Tree extends React.Component {
           this.treeNodesStates = {};
           traverseTreeNodes(
             props.children,
-            (item, index, pos, key, siblingPosition, childrenPos, parentPos) => {
+            (item, index, pos, key, positionFlag, childrenPos, parentPos) => {
               this.treeNodesStates[pos] = {
                 node: item,
                 key,
                 checked: false,
                 halfChecked: false,
-                siblingPosition,
+                positionFlag,
                 childrenPos,
                 parentPos,
               };
@@ -634,7 +633,7 @@ class Tree extends React.Component {
             });
           // if the parent node's key exists, it all children node will be checked
           checkedPositions.forEach(checkedPosition => {
-            handleCheckState(this.treeNodesStates, checkedPosition, true);
+            updateCheckState(this.treeNodesStates, checkedPosition, true);
           });
           checkKeys = getCheck(this.treeNodesStates);
         }
