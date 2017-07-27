@@ -306,7 +306,7 @@ describe('Tree', () => {
     // https://github.com/ant-design/ant-design/issues/6891
     it('should ignore disableCheckbox children items when check parent', () => {
       const wrapper = mount(
-        <Tree checkable>
+        <Tree checkable defaultExpandAll>
           <TreeNode title="parent 1" key="0-0">
             <TreeNode title="node" key="0-0-0" disableCheckbox>
               <TreeNode title="node" key="0-0-0-0" disableCheckbox />
@@ -317,7 +317,7 @@ describe('Tree', () => {
           </TreeNode>
         </Tree>
       );
-      const node = wrapper.find(TreeNode).first().find('.rc-tree-checkbox');
+      const node = wrapper.find(TreeNode).first().find('.rc-tree-checkbox').first();
       node.simulate('click');
       expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
       expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
@@ -326,6 +326,32 @@ describe('Tree', () => {
       expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
       expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
       expect(wrapper.state().checkedKeys).toEqual([]);
+    });
+
+    // https://github.com/react-component/tree/pull/106#issuecomment-316779889
+    it('should render parent check state correctly', () => {
+      const wrapper = mount(
+        <Tree checkable defaultExpandAll>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="node" key="0-0-0">
+              <TreeNode title="node" key="0-0-0-0" />
+              <TreeNode title="node" key="0-0-0-1" disableCheckbox />
+            </TreeNode>
+            <TreeNode title="node" key="0-0-1" />
+            <TreeNode title="node" key="0-0-2" />
+          </TreeNode>
+        </Tree>
+      );
+      const parent = wrapper.find(TreeNode).at(1).find('.rc-tree-checkbox').first();
+      const node = wrapper.find(TreeNode).at(2).find('.rc-tree-checkbox').first();
+      node.simulate('click');
+      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
+      expect(parent.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(parent.hasClass('rc-tree-checkbox-checked')).toBe(true);
+      node.simulate('click');
+      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
+      expect(parent.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(parent.hasClass('rc-tree-checkbox-checked')).toBe(false);
     });
   });
 
