@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Animate from 'rc-animate';
-import { browser } from './util';
 import toArray from 'rc-util/lib/Children/toArray';
-
-const browserUa = typeof window !== 'undefined' ? browser(window.navigator) : '';
-const ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
-// const uaArray = browserUa.split(' ');
-// const gtIE8 = uaArray.length !== 2 || uaArray[0].indexOf('IE') === -1 || Number(uaArray[1]) > 8;
 
 const defaultTitle = '---';
 
@@ -28,12 +22,6 @@ class TreeNode extends React.Component {
     }
     this.props.root._treeNodeInstances.push(this);
   }
-  // shouldComponentUpdate(nextProps) {
-  //   if (!nextProps.expanded) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
 
   onCheck = () => {
     this.props.root.onCheck(this);
@@ -283,10 +271,6 @@ class TreeNode extends React.Component {
         }
         if (props.draggable) {
           domProps.className += ' draggable';
-          if (ieOrEdge) {
-            // ie bug!
-            domProps.href = '#';
-          }
           domProps.draggable = true;
           domProps['aria-grabbed'] = true;
           domProps.onDragStart = this.onDragStart;
