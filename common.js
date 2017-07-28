@@ -8774,12 +8774,12 @@ var Tree = function (_React$Component) {
       } else {
         if (checked && index === -1) {
           _this.treeNodesStates[treeNode.props.pos].checked = true;
-          __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_11__util__["c" /* updateCheckState */])(_this.treeNodesStates, treeNode.props.pos, true, true);
+          __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_11__util__["c" /* updateCheckState */])(_this.treeNodesStates, treeNode.props.pos, true);
         }
         if (!checked) {
           _this.treeNodesStates[treeNode.props.pos].checked = false;
           _this.treeNodesStates[treeNode.props.pos].halfChecked = false;
-          __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_11__util__["c" /* updateCheckState */])(_this.treeNodesStates, treeNode.props.pos, false, true);
+          __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_11__util__["c" /* updateCheckState */])(_this.treeNodesStates, treeNode.props.pos, false);
         }
         var checkKeys = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_11__util__["d" /* getCheck */])(_this.treeNodesStates);
         newSt.checkedNodes = checkKeys.checkedNodes;
@@ -14003,12 +14003,12 @@ function traverseTreeNodes(treeNodes, callback) {
   traverse(treeNodes, 0, []);
 }
 
-function updateCheckState(obj, checkedPosition, checkIt, interactive) {
+function updateCheckState(obj, checkedPosition, checkIt) {
   var childrenLoop = function childrenLoop(parentObj) {
     parentObj.childrenPos.forEach(function (childPos) {
       var childObj = obj[childPos];
       // User click don't change disabled item checked state
-      if (!childObj.disableCheckbox && !childObj.disabled || !interactive) {
+      if (!childObj.disableCheckbox && !childObj.disabled) {
         childObj.halfChecked = false;
         childObj.checked = checkIt;
       }
