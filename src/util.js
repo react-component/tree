@@ -44,12 +44,12 @@ export function traverseTreeNodes(treeNodes, callback) {
   traverse(treeNodes, 0, []);
 }
 
-export function updateCheckState(obj, checkedPosition, checkIt, interactive) {
+export function updateCheckState(obj, checkedPosition, checkIt) {
   const childrenLoop = (parentObj) => {
     parentObj.childrenPos.forEach(childPos => {
       const childObj = obj[childPos];
       // User click don't change disabled item checked state
-      if ((!childObj.disableCheckbox && !childObj.disabled) || !interactive) {
+      if (!childObj.disableCheckbox && !childObj.disabled) {
         childObj.halfChecked = false;
         childObj.checked = checkIt;
       }
