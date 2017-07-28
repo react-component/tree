@@ -328,6 +328,30 @@ describe('Tree', () => {
       expect(wrapper.state().checkedKeys).toEqual([]);
     });
 
+    it('should ignore disabled children items when check parent', () => {
+      const wrapper = mount(
+        <Tree checkable defaultExpandAll>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="node" key="0-0-0" disabled>
+              <TreeNode title="node" key="0-0-0-0" disabled />
+              <TreeNode title="node" key="0-0-0-1" disabled />
+            </TreeNode>
+            <TreeNode title="node" key="0-0-1" />
+            <TreeNode title="node" key="0-0-2" />
+          </TreeNode>
+        </Tree>
+      );
+      const node = wrapper.find(TreeNode).first().find('.rc-tree-checkbox').first();
+      node.simulate('click');
+      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
+      expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(wrapper.state().checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0']);
+      node.simulate('click');
+      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
+      expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(wrapper.state().checkedKeys).toEqual([]);
+    });
+
     // https://github.com/react-component/tree/pull/106#issuecomment-316779889
     it('should render parent check state correctly', () => {
       const wrapper = mount(
