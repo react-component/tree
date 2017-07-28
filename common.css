@@ -40,9 +40,6 @@
   margin: 0;
   padding: 0 0 0 18px;
 }
-.rc-tree li ul.rc-tree-line {
-  background: url('data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7') 0 0 repeat-y;
-}
 .rc-tree li .rc-tree-node-content-wrapper {
   display: inline-block;
   padding: 1px 3px 0 0;
@@ -77,38 +74,11 @@
 .rc-tree li span.rc-tree-switcher.rc-tree-switcher-noop {
   cursor: auto;
 }
-.rc-tree li span.rc-tree-switcher.rc-tree-roots_open {
+.rc-tree li span.rc-tree-switcher.rc-tree-switcher_open {
   background-position: -93px -56px;
 }
-.rc-tree li span.rc-tree-switcher.rc-tree-roots_close {
+.rc-tree li span.rc-tree-switcher.rc-tree-switcher_close {
   background-position: -75px -56px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-center_open {
-  background-position: -92px -18px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-center_close {
-  background-position: -74px -18px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-bottom_open {
-  background-position: -92px -36px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-bottom_close {
-  background-position: -74px -36px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-noline_open {
-  background-position: -92px -72px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-noline_close {
-  background-position: -74px -72px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-center_docu {
-  background-position: -56px -18px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-bottom_docu {
-  background-position: -56px -36px;
-}
-.rc-tree li span.rc-tree-switcher.rc-tree-noline_docu {
-  background: none;
 }
 .rc-tree li span.rc-tree-checkbox {
   width: 13px;
@@ -145,6 +115,18 @@
   border: 2px solid #fff;
   border-top: 0;
   border-left: 0;
+}
+.rc-tree:not(.rc-tree-show-line) .rc-tree-switcher-noop {
+  background: none;
+}
+.rc-tree.rc-tree-show-line li:not(:last-child) > ul {
+  background: url('data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7') 0 0 repeat-y;
+}
+.rc-tree.rc-tree-show-line li:not(:last-child) > .rc-tree-switcher-noop {
+  background-position: -56px -18px;
+}
+.rc-tree.rc-tree-show-line li:last-child > .rc-tree-switcher-noop {
+  background-position: -56px -36px;
 }
 .rc-tree-child-tree {
   display: none;
