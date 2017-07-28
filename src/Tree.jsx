@@ -315,12 +315,12 @@ class Tree extends React.Component {
     } else {
       if (checked && index === -1) {
         this.treeNodesStates[treeNode.props.pos].checked = true;
-        updateCheckState(this.treeNodesStates, treeNode.props.pos, true, true);
+        updateCheckState(this.treeNodesStates, treeNode.props.pos, true);
       }
       if (!checked) {
         this.treeNodesStates[treeNode.props.pos].checked = false;
         this.treeNodesStates[treeNode.props.pos].halfChecked = false;
-        updateCheckState(this.treeNodesStates, treeNode.props.pos, false, true);
+        updateCheckState(this.treeNodesStates, treeNode.props.pos, false);
       }
       const checkKeys = getCheck(this.treeNodesStates);
       newSt.checkedNodes = checkKeys.checkedNodes;
