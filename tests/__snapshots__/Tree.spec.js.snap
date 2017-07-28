@@ -1,13 +1,13 @@
 exports[`Tree renders correctly 1`] = `
 <ul
-  class="rc-tree forTest"
+  class="rc-tree forTest rc-tree-show-line"
   role="tree-node"
   tabindex="0"
   unselectable="true">
   <li
     class="spe">
     <span
-      class="rc-tree-switcher rc-tree-roots_open" />
+      class="rc-tree-switcher rc-tree-switcher_open" />
     <span
       class="rc-tree-checkbox" />
     <span
@@ -26,7 +26,7 @@ exports[`Tree renders correctly 1`] = `
       <li
         class="rc-tree-treenode-disabled">
         <span
-          class="rc-tree-switcher rc-tree-center_open rc-tree-switcher-disabled" />
+          class="rc-tree-switcher rc-tree-switcher_open rc-tree-switcher-disabled" />
         <span
           class="rc-tree-checkbox rc-tree-checkbox-disabled" />
         <span
@@ -40,12 +40,12 @@ exports[`Tree renders correctly 1`] = `
           </span>
         </span>
         <ul
-          class="rc-tree-child-tree rc-tree-child-tree-open rc-tree-line"
+          class="rc-tree-child-tree rc-tree-child-tree-open"
           data-expanded="true">
           <li
             class="">
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop rc-tree-center_docu" />
+              class="rc-tree-switcher rc-tree-switcher-noop" />
             <span
               class="rc-tree-checkbox" />
             <span
@@ -62,7 +62,7 @@ exports[`Tree renders correctly 1`] = `
           <li
             class="">
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop rc-tree-bottom_docu" />
+              class="rc-tree-switcher rc-tree-switcher-noop" />
             <span
               class="rc-tree-checkbox" />
             <span
@@ -81,7 +81,7 @@ exports[`Tree renders correctly 1`] = `
       <li
         class="">
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop rc-tree-bottom_docu" />
+          class="rc-tree-switcher rc-tree-switcher-noop" />
         <span
           class="rc-tree-checkbox rc-tree-checkbox-disabled" />
         <span
@@ -108,7 +108,7 @@ exports[`Tree renders opaque children correctly 1`] = `
   <li
     class="">
     <span
-      class="rc-tree-switcher rc-tree-noline_close" />
+      class="rc-tree-switcher rc-tree-switcher_close" />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
       title="0">

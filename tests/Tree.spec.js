@@ -6,7 +6,7 @@ import Tree from '..';
 
 const { TreeNode } = Tree;
 
-const OPEN_CLASSNAME = '.rc-tree-noline_open';
+const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
 const SELECTED_CLASSNAME = '.rc-tree-node-selected';
 

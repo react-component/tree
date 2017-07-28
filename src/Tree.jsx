@@ -16,7 +16,6 @@ function noop() {}
 
 export const contextTypes = {
   rcTree: PropTypes.shape({
-    showLine: PropTypes.bool,
     selectable: PropTypes.bool,
   }),
 };
@@ -109,10 +108,9 @@ class Tree extends React.Component {
   }
 
   getChildContext() {
-    const { showLine, selectable } = this.props;
+    const { selectable } = this.props;
     return {
       rcTree: {
-        showLine,
         selectable,
       },
     };
@@ -567,81 +565,67 @@ class Tree extends React.Component {
         cloneProps.halfChecked = this.halfCheckedKeys.indexOf(key) !== -1;
       }
     }
-    if (this.treeNodesStates && this.treeNodesStates[pos]) {
-      Object.assign(cloneProps, this.treeNodesStates[pos].positionFlag);
-    }
     return React.cloneElement(child, cloneProps);
   }
 
   render() {
     const props = this.props;
-    const domProps = {
-      className: classNames(props.prefixCls, props.className),
-      role: 'tree-node',
-    };
+    const className = classNames(props.prefixCls, props.className, {
+      [`${props.prefixCls}-show-line`]: props.showLine,
+    });
+    const domProps = {};
     if (props.focusable) {
       domProps.tabIndex = '0';
       domProps.onKeyDown = this.onKeyDown;
     }
-    const updateTreeNodesStates = () => {
-      this.treeNodesStates = {};
-      traverseTreeNodes(props.children, (item, index, pos, key, positionFlag) => {
-        this.treeNodesStates[pos] = {
-          positionFlag,
-        };
-      });
-    };
-    if (props.showLine && !props.checkable) {
-      updateTreeNodesStates();
-    }
     if (props.checkable && (this.checkedKeysChange || props.loadData)) {
-      if (props.checkStrictly) {
-        updateTreeNodesStates();
+      const checkedKeys = this.state.checkedKeys;
+      let checkKeys;
+      if (
+        !props.loadData &&
+          this.checkKeys &&
+          this._checkedKeys &&
+          arraysEqual(this._checkedKeys, checkedKeys)
+      ) {
+        // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
+        checkKeys = this.checkKeys;
       } else {
-        const checkedKeys = this.state.checkedKeys;
-        let checkKeys;
-        if (
-          !props.loadData &&
-            this.checkKeys &&
-            this._checkedKeys &&
-            arraysEqual(this._checkedKeys, checkedKeys)
-        ) {
-          // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
-          checkKeys = this.checkKeys;
-        } else {
-          const checkedPositions = [];
-          this.treeNodesStates = {};
-          traverseTreeNodes(
-            props.children,
-            (item, index, pos, key, positionFlag, childrenPos, parentPos) => {
-              this.treeNodesStates[pos] = {
-                node: item,
-                key,
-                checked: false,
-                halfChecked: false,
-                disableCheckbox: item.props.disableCheckbox,
-                positionFlag,
-                childrenPos,
-                parentPos,
-              };
-              if (checkedKeys.indexOf(key) !== -1) {
-                this.treeNodesStates[pos].checked = true;
-                checkedPositions.push(pos);
-              }
-            });
-          // if the parent node's key exists, it all children node will be checked
-          checkedPositions.forEach(checkedPosition => {
-            updateCheckState(this.treeNodesStates, checkedPosition, true);
+        const checkedPositions = [];
+        this.treeNodesStates = {};
+        traverseTreeNodes(
+          props.children,
+          (item, index, pos, key, childrenPos, parentPos) => {
+            this.treeNodesStates[pos] = {
+              node: item,
+              key,
+              checked: false,
+              halfChecked: false,
+              disableCheckbox: item.props.disableCheckbox,
+              childrenPos,
+              parentPos,
+            };
+            if (checkedKeys.indexOf(key) !== -1) {
+              this.treeNodesStates[pos].checked = true;
+              checkedPositions.push(pos);
+            }
           });
-          checkKeys = getCheck(this.treeNodesStates);
-        }
-        this.halfCheckedKeys = checkKeys.halfCheckedKeys;
-        this.checkedKeys = checkKeys.checkedKeys;
+        // if the parent node's key exists, it all children node will be checked
+        checkedPositions.forEach(checkedPosition => {
+          updateCheckState(this.treeNodesStates, checkedPosition, true);
+        });
+        checkKeys = getCheck(this.treeNodesStates);
       }
+      this.halfCheckedKeys = checkKeys.halfCheckedKeys;
+      this.checkedKeys = checkKeys.checkedKeys;
     }
 
     return (
-      <ul {...domProps} unselectable>
+      <ul
+        {...domProps}
+        className={className}
+        role="tree-node"
+        unselectable
+      >
         {React.Children.map(props.children, this.renderTreeNode, this)}
       </ul>
     );

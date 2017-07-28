@@ -134,10 +134,6 @@ class TreeNode extends React.Component {
     e.preventDefault();
   }
 
-  isShowLine() {
-    return this.context.rcTree.showLine;
-  }
-
   isSelectable() {
     const { props, context } = this;
     return 'selectable' in props ? props.selectable : context.rcTree.selectable;
@@ -145,22 +141,12 @@ class TreeNode extends React.Component {
 
   renderSwitcher(props, expandedState) {
     const prefixCls = props.prefixCls;
-    const switcherCls = {
-      [`${prefixCls}-switcher`]: true,
-    };
-    if (!this.isShowLine()) {
-      switcherCls[`${prefixCls}-noline_${expandedState}`] = true;
-    } else if (props.pos === '0-0') {
-      switcherCls[`${prefixCls}-roots_${expandedState}`] = true;
-    } else {
-      switcherCls[`${prefixCls}-center_${expandedState}`] = !props.last;
-      switcherCls[`${prefixCls}-bottom_${expandedState}`] = props.last;
-    }
-    if (props.disabled) {
-      switcherCls[`${prefixCls}-switcher-disabled`] = true;
-      return <span className={classNames(switcherCls)}></span>;
-    }
-    return <span className={classNames(switcherCls)} onClick={this.onExpand}></span>;
+    const switcherCls = classNames(
+      `${prefixCls}-switcher`,
+      `${prefixCls}-switcher_${expandedState}`, {
+        [`${prefixCls}-switcher-disabled`]: props.disabled,
+      });
+    return <span className={switcherCls} onClick={props.disabled ? null : this.onExpand} />;
   }
 
   renderCheckbox(props) {
@@ -201,13 +187,6 @@ class TreeNode extends React.Component {
       (Array.isArray(children) && children.length &&
         children.every((item) => item.type && item.type.isTreeNode) ||
         (children.type && children.type.isTreeNode))) {
-      const cls = {
-        [`${props.prefixCls}-child-tree`]: true,
-        [`${props.prefixCls}-child-tree-open`]: props.expanded,
-      };
-      if (this.isShowLine()) {
-        cls[`${props.prefixCls}-line`] = !props.last;
-      }
       const animProps = {};
       if (props.openTransitionName) {
         animProps.transitionName = props.openTransitionName;
@@ -217,17 +196,23 @@ class TreeNode extends React.Component {
           delete animProps.animation.appear;
         }
       }
+      const cls = classNames(`${props.prefixCls}-child-tree`, {
+        [`${props.prefixCls}-child-tree-open`]: props.expanded,
+      });
       newChildren = (
-        <Animate {...animProps}
+        <Animate
+          {...animProps}
           showProp="data-expanded"
           transitionAppear={transitionAppear}
           component=""
         >
-          {!props.expanded ? null : <ul className={classNames(cls)} data-expanded={props.expanded}>
-            {React.Children.map(children, (item, index) => {
-              return props.root.renderTreeNode(item, index, props.pos);
-            }, props.root)}
-          </ul>}
+          {!props.expanded ? null : (
+            <ul className={cls} data-expanded={props.expanded}>
+              {React.Children.map(children, (item, index) => {
+                return props.root.renderTreeNode(item, index, props.pos);
+              }, props.root)}
+            </ul>
+          )}
         </Animate>
       );
     }
@@ -320,25 +305,16 @@ class TreeNode extends React.Component {
 
     const filterCls = props.filterTreeNode(this) ? 'filter-node' : '';
 
-    const noopSwitcher = () => {
-      const cls = {
-        [`${prefixCls}-switcher`]: true,
-        [`${prefixCls}-switcher-noop`]: true,
-      };
-      if (this.isShowLine()) {
-        cls[`${prefixCls}-center_docu`] = !props.last;
-        cls[`${prefixCls}-bottom_docu`] = props.last;
-      } else {
-        cls[`${prefixCls}-noline_docu`] = true;
-      }
-      return <span className={classNames(cls)}></span>;
-    };
+    const renderNoopSwitcher = () => (
+      <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />
+    );
 
     return (
-      <li {...liProps}
+      <li
+        {...liProps}
         className={classNames(props.className, disabledCls, dragOverCls, filterCls) }
       >
-        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : noopSwitcher()}
+        {canRenderSwitcher ? this.renderSwitcher(props, expandedState) : renderNoopSwitcher()}
         {props.checkable ? this.renderCheckbox(props) : null}
         {selectHandle()}
         {newChildren}

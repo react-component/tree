@@ -21,16 +21,8 @@ export function getOffset(ele) {
   return rect;
 }
 
-function getPositionFlag(index, len) {
-  return {
-    first: index === 0,
-    last: index === len - 1,
-  };
-}
-
 export function traverseTreeNodes(treeNodes, callback) {
   const traverse = (subTreeNodes, level, parentsChildrenPos, parentPos) => {
-    const len = Children.count(subTreeNodes);
     Children.forEach(subTreeNodes, (item, index) => {
       const pos = `${level}-${index}`;
       parentsChildrenPos.push(pos); // Note: side effect
@@ -44,7 +36,6 @@ export function traverseTreeNodes(treeNodes, callback) {
         index,
         pos,
         item.key || pos,
-        getPositionFlag(index, len),
         childrenPos,
         parentPos
       );
