@@ -40,6 +40,12 @@ class TreeNode extends React.Component {
     this.props.root._treeNodeInstances.push(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if ((nextProps.disableCheckbox || nextProps.disabled) && nextProps.checked) {
+      this.onCheck();
+    }
+  }
+
   onCheck = () => {
     this.props.root.onCheck(this);
   }
