@@ -492,7 +492,7 @@ class Tree extends React.Component {
   getDragNodes(treeNode) {
     const dragNodesKeys = [];
     const tPArr = treeNode.props.pos.split('-');
-    traverseTreeNodes(this.props.children, (item, index, pos, key) => {
+    traverseTreeNodes(treeNode.props.children, (item, index, pos, key) => {
       const pArr = pos.split('-');
       if (treeNode.props.pos === pos || tPArr.length < pArr.length && isInclude(tPArr, pArr)) {
         dragNodesKeys.push(key);
