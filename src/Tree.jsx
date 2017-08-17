@@ -498,6 +498,7 @@ class Tree extends React.Component {
         dragNodesKeys.push(key);
       }
     });
+    dragNodesKeys.push(treeNode.props.eventKey || treeNode.props.pos);
     return dragNodesKeys;
   }
 
