@@ -14,7 +14,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_tree__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rc_tree__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_css_animation__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_css_animation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_css_animation__);
 /* eslint no-console:0 */
 
 
@@ -26,7 +25,7 @@ var STYLE = '\n.collapse {\n  overflow: hidden;\n  display: block;\n}\n\n.collap
 
 function animate(node, show, done) {
   var height = node.offsetHeight;
-  return __WEBPACK_IMPORTED_MODULE_4_css_animation___default()(node, 'collapse', {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4_css_animation__["b" /* default */])(node, 'collapse', {
     start: function start() {
       if (!show) {
         node.style.height = node.offsetHeight + 'px';
