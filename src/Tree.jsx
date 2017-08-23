@@ -385,8 +385,6 @@ class Tree extends React.Component {
   }
 
   onContextMenu(e, treeNode) {
-    const eventKey = treeNode.props.eventKey;
-    this.setState({ selectedKeys: [eventKey] });
     this.props.onRightClick({ event: e, node: treeNode });
   }
 
