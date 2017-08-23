@@ -454,6 +454,19 @@ describe('Tree', () => {
     expect(handleRightClick.mock.calls[0][0].node).toBe(wrapper.find(TreeNode).node);
   });
 
+  it('fires rightClick should not change selected item', () => {
+    const handleRightClick = jest.fn();
+    const wrapper = mount(
+      <Tree onRightClick={handleRightClick}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+    wrapper.find('.rc-tree-node-content-wrapper').simulate('contextMenu');
+    expect(wrapper.state().selectedKeys.length).toBe(0);
+  });
+
   it('fires mouseEnter events', () => {
     const handleMouseEnter = jest.fn();
     const wrapper = mount(

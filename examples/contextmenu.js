@@ -4,7 +4,6 @@ import './contextmenu.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
-import assign from 'object-assign';
 import Tooltip from 'rc-tooltip';
 
 function contains(root, n) {
@@ -18,41 +17,44 @@ function contains(root, n) {
   return false;
 }
 
-const Demo = React.createClass({
-  propTypes: {},
+class Demo extends React.Component {
+  state = {
+    selectedKeys: ['0-1', '0-1-1'],
+  };
   componentDidMount() {
     this.getContainer();
     // console.log(ReactDOM.findDOMNode(this), this.cmContainer);
     console.log(contains(ReactDOM.findDOMNode(this), this.cmContainer));
-  },
+  }
   componentWillUnmount() {
     if (this.cmContainer) {
       ReactDOM.unmountComponentAtNode(this.cmContainer);
       document.body.removeChild(this.cmContainer);
       this.cmContainer = null;
     }
-  },
-  onSelect(info) {
-    console.log('selected', info);
-  },
-  onRightClick(info) {
+  }
+  onSelect = (selectedKeys) => {
+    this.setState({ selectedKeys });
+  }
+  onRightClick = (info) => {
     console.log('right click', info);
+    this.setState({ selectedKeys: [info.node.props.eventKey] });
     this.renderCm(info);
-  },
-  onMouseEnter(info) {
+  }
+  onMouseEnter = (info) => {
     console.log('enter', info);
     this.renderCm(info);
-  },
-  onMouseLeave(info) {
+  }
+  onMouseLeave = (info) => {
     console.log('leave', info);
-  },
+  }
   getContainer() {
     if (!this.cmContainer) {
       this.cmContainer = document.createElement('div');
       document.body.appendChild(this.cmContainer);
     }
     return this.cmContainer;
-  },
+  }
   renderCm(info) {
     if (this.toolTip) {
       ReactDOM.unmountComponentAtNode(this.cmContainer);
@@ -68,22 +70,26 @@ const Demo = React.createClass({
     );
 
     const container = this.getContainer();
-    assign(this.cmContainer.style, {
+    Object.assign(this.cmContainer.style, {
       position: 'absolute',
       left: `${info.event.pageX}px`,
       top: `${info.event.pageY}px`,
     });
 
     ReactDOM.render(this.toolTip, container);
-  },
+  }
   render() {
     return (
       <div>
         <h2>right click contextmenu</h2>
         <Tree
-          onRightClick={this.onRightClick} onSelect={this.onSelect}
-          defaultSelectedKeys={['0-1', '0-1-1']}
-          multiple defaultExpandAll showLine showIcon={false}
+          onRightClick={this.onRightClick}
+          onSelect={this.onSelect}
+          selectedKeys={this.state.selectedKeys}
+          multiple
+          defaultExpandAll
+          showLine
+          showIcon={false}
         >
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
@@ -114,6 +120,7 @@ const Demo = React.createClass({
         </Tree>
       </div>
     );
-  },
-});
+  }
+}
+
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));
