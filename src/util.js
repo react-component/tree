@@ -23,6 +23,9 @@ export function getOffset(ele) {
 
 export function traverseTreeNodes(treeNodes, callback) {
   const traverse = (subTreeNodes, level, parentsChildrenPos, parentPos) => {
+    if (Array.isArray(subTreeNodes)) {
+      subTreeNodes = subTreeNodes.filter(item => !!item);
+    }
     Children.forEach(subTreeNodes, (item, index) => {
       const pos = `${level}-${index}`;
       parentsChildrenPos.push(pos); // Note: side effect
