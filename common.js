@@ -14072,6 +14072,7 @@ function updateCheckState(obj, checkedPosition, checkIt) {
     parentObj.childrenPos.forEach(function (childPos) {
       if (obj[childPos].disableCheckbox) {
         childrenCount -= 1;
+        return;
       }
       if (obj[childPos].checked === true) checkedChildrenCount++;else if (obj[childPos].halfChecked === true) checkedChildrenCount += 0.5;
     });
