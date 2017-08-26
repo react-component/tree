@@ -27,6 +27,7 @@ describe('Tree', () => {
           <TreeNode title="leaf 1" key="0-0-0" disabled>
             <TreeNode title="leaf" key="random"/>
             <TreeNode title="leaf"/>
+            {null}
           </TreeNode>
           <TreeNode title="leaf 2" key="0-0-1" disableCheckbox />
         </TreeNode>
@@ -135,6 +136,20 @@ describe('Tree', () => {
       wrapper.find('.rc-tree-checkbox').forEach((checkbox) => {
         expect(checkbox.is(CHECKED_CLASSNAME)).toBe(true);
       });
+    });
+
+    it('ignore disabled children when calculate parent\'s checked status', () => {
+      const wrapper = mount(
+        <Tree checkable defaultCheckedKeys={['0-0-0']}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" disableCheckbox />
+            <TreeNode title="leaf 1" key="0-0-1" />
+          </TreeNode>
+        </Tree>
+      );
+      const firstCheckboxClassNames = wrapper.find('.rc-tree-checkbox').get(0).classList;
+      expect([].slice.call(firstCheckboxClassNames).includes(CHECKED_CLASSNAME.slice(1)))
+        .toBe(false);
     });
 
     it('controlled by checkedKeys', () => {
