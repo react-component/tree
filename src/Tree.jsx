@@ -582,6 +582,7 @@ class Tree extends React.Component {
       let checkKeys;
       if (
         !props.loadData &&
+          !props.draggable &&
           this.checkKeys &&
           this._checkedKeys &&
           arraysEqual(this._checkedKeys, checkedKeys)
