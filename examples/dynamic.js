@@ -135,6 +135,12 @@ const Demo = React.createClass({
 
 ReactDOM.render(<Demo />, document.getElementById("__react-content"));
 
+///////////////////////////////////////
+
+// Version using class
+///////////////////////////////////
+/*
+
 import React, { Component } from "react";
 import Tree, { TreeNode } from "rc-tree";
 import "rc-tree/assets/index.css";
@@ -186,9 +192,6 @@ function getNewTreeData(treeData, curKey, child, level) {
   setLeaf(treeData, curKey, level);
 }
 
-// Version using class
-
-/*
 class RCtree extends Component {
   constructor(props) {
     super(props);
