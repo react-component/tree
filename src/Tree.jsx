@@ -9,7 +9,6 @@ import {
   getCheck,
   getStrictlyValue,
   isInclude,
-  arraysEqual,
 } from './util';
 
 function noop() {}
@@ -96,11 +95,12 @@ class Tree extends React.Component {
   constructor(props) {
     super(props);
 
-    this.checkedKeysChange = true;
+    const checkedKeys = this.calcCheckedKeys(props);
     this.state = {
-      expandedKeys: this.getDefaultExpandedKeys(props),
-      checkedKeys: this.getDefaultCheckedKeys(props),
-      selectedKeys: this.getDefaultSelectedKeys(props),
+      expandedKeys: this.calcExpandedKeys(props),
+      checkedKeys: checkedKeys.checkedKeys,
+      halfCheckedKeys: checkedKeys.halfCheckedKeys,
+      selectedKeys: this.calcSelectedKeys(props),
       dragNodesKeys: '',
       dragOverNodeKey: '',
       dropNodeKey: '',
@@ -118,25 +118,27 @@ class Tree extends React.Component {
 
 
   componentWillReceiveProps(nextProps) {
-    const expandedKeys = this.getDefaultExpandedKeys(nextProps, true);
-    const checkedKeys = this.getDefaultCheckedKeys(nextProps, true);
-    const selectedKeys = this.getDefaultSelectedKeys(nextProps, true);
-    const st = {};
+    const { props } = this;
+    const newState = {};
+    const expandedKeys = nextProps.expandedKeys !== props.expandedKeys ?
+      this.calcExpandedKeys(nextProps, true) : undefined;
     if (expandedKeys) {
-      st.expandedKeys = expandedKeys;
+      newState.expandedKeys = expandedKeys;
     }
+
+    const checkedKeys = nextProps.checkedKeys !== props.checkedKeys ?
+      this.calcCheckedKeys(nextProps, true) : undefined;
     if (checkedKeys) {
-      if (nextProps.checkedKeys === this.props.checkedKeys) {
-        this.checkedKeysChange = false;
-      } else {
-        this.checkedKeysChange = true;
-      }
-      st.checkedKeys = checkedKeys;
+      newState.checkedKeys = checkedKeys.checkedKeys;
+      newState.halfCheckedKeys = checkedKeys.halfCheckedKeys;
     }
+
+    const selectedKeys = nextProps.selectedKeys !== props.selectedKeys ?
+      this.calcSelectedKeys(nextProps, true) : undefined;
     if (selectedKeys) {
-      st.selectedKeys = selectedKeys;
+      newState.selectedKeys = selectedKeys;
     }
-    this.setState(st);
+    this.setState(newState);
   }
 
   onDragStart(e, treeNode) {
@@ -278,63 +280,76 @@ class Tree extends React.Component {
   }
 
   onCheck = (treeNode) => {
-    let checked = !treeNode.props.checked;
-    if (treeNode.props.halfChecked) {
-      checked = true;
-    }
+    const { props, state } = this;
+    const checked = !treeNode.props.checked || treeNode.props.halfChecked;
     const key = treeNode.props.eventKey;
-    let checkedKeys = [...this.state.checkedKeys];
+    const checkedKeys = [...state.checkedKeys];
     const index = checkedKeys.indexOf(key);
 
-    const newSt = {
+    const eventObj = {
       event: 'check',
       node: treeNode,
       checked,
     };
 
-    if (this.props.checkStrictly) {
+    if (props.checkStrictly) {
       if (checked && index === -1) {
         checkedKeys.push(key);
       }
       if (!checked && index > -1) {
         checkedKeys.splice(index, 1);
       }
-      newSt.checkedNodes = [];
-      traverseTreeNodes(this.props.children, (item, idx, pos, k) => {
+      eventObj.checkedNodes = [];
+      traverseTreeNodes(props.children, (item, idx, pos, k) => {
         if (checkedKeys.indexOf(k) !== -1) {
-          newSt.checkedNodes.push(item);
+          eventObj.checkedNodes.push(item);
         }
       });
-      if (!('checkedKeys' in this.props)) {
+      if (!('checkedKeys' in props)) {
         this.setState({
           checkedKeys,
         });
       }
-      const halfChecked = this.props.checkedKeys ? this.props.checkedKeys.halfChecked : [];
-      this.props.onCheck(getStrictlyValue(checkedKeys, halfChecked), newSt);
+      props.onCheck(getStrictlyValue(checkedKeys, state.halfCheckedKeys), eventObj);
     } else {
-      if (checked && index === -1) {
-        this.treeNodesStates[treeNode.props.pos].checked = true;
-        updateCheckState(this.treeNodesStates, treeNode.props.pos, true);
-      }
-      if (!checked) {
-        this.treeNodesStates[treeNode.props.pos].checked = false;
-        this.treeNodesStates[treeNode.props.pos].halfChecked = false;
-        updateCheckState(this.treeNodesStates, treeNode.props.pos, false);
-      }
-      const checkKeys = getCheck(this.treeNodesStates);
-      newSt.checkedNodes = checkKeys.checkedNodes;
-      newSt.checkedNodesPositions = checkKeys.checkedNodesPositions;
-      newSt.halfCheckedKeys = checkKeys.halfCheckedKeys;
-      this.checkKeys = checkKeys;
+      // TODO
+      const checkedPositions = [];
+      const treeNodesStates = {};
+      traverseTreeNodes(props.children, (item, _, pos, k, childrenPos, parentPos) => {
+        treeNodesStates[pos] = {
+          node: item,
+          key: k,
+          checked: false,
+          halfChecked: false,
+          disabled: item.props.disabled,
+          disableCheckbox: item.props.disableCheckbox,
+          childrenPos,
+          parentPos,
+        };
+        if (state.checkedKeys.indexOf(k) !== -1) {
+          treeNodesStates[pos].checked = true;
+          checkedPositions.push(pos);
+        }
+      });
+      checkedPositions.forEach(checkedPosition => {
+        updateCheckState(treeNodesStates, checkedPosition, true);
+      });
+      treeNodesStates[treeNode.props.pos].checked = checked;
+      treeNodesStates[treeNode.props.pos].halfChecked = false;
+      updateCheckState(treeNodesStates, treeNode.props.pos, checked);
 
-      this._checkedKeys = checkedKeys = checkKeys.checkedKeys;
-      if (!('checkedKeys' in this.props)) {
+      const checkKeys = getCheck(treeNodesStates);
+      eventObj.checkedNodes = checkKeys.checkedNodes;
+      eventObj.checkedNodesPositions = checkKeys.checkedNodesPositions; // TODO: not in API
+      eventObj.halfCheckedKeys = checkKeys.halfCheckedKeys; // TODO: not in API
+
+      if (!('checkedKeys' in props)) {
         this.setState({
-          checkedKeys,
+          checkedKeys: checkKeys.checkedKeys,
+          halfCheckedKeys: checkKeys.halfCheckedKeys,
         });
       }
-      this.props.onCheck(checkedKeys, newSt);
+      props.onCheck(checkKeys.checkedKeys, eventObj);
     }
   }
 
@@ -393,84 +408,6 @@ class Tree extends React.Component {
     e.preventDefault();
   }
 
-  getFilterExpandedKeys(props, expandKeyProp, expandAll) {
-    const keys = props[expandKeyProp];
-    if (!expandAll && !props.autoExpandParent) {
-      return keys || [];
-    }
-    const expandedPositionArr = [];
-    if (props.autoExpandParent) {
-      traverseTreeNodes(props.children, (item, index, pos, key) => {
-        if (keys.indexOf(key) > -1) {
-          expandedPositionArr.push(pos);
-        }
-      });
-    }
-    const filterExpandedKeysSet = {};
-    traverseTreeNodes(props.children, (item, index, pos, key) => {
-      if (expandAll) {
-        filterExpandedKeysSet[key] = true;
-      } else if (props.autoExpandParent) {
-        const isCurrentParentOfExpanded =
-                expandedPositionArr.some(p => isInclude(pos.split('-'), p.split('-')));
-        if (isCurrentParentOfExpanded) {
-          filterExpandedKeysSet[key] = true;
-        }
-      }
-    });
-    const filterExpandedKeys = Object.keys(filterExpandedKeysSet);
-    return filterExpandedKeys.length ? filterExpandedKeys : keys;
-  }
-
-  getDefaultExpandedKeys(props, willReceiveProps) {
-    let expandedKeys = willReceiveProps ? undefined :
-          this.getFilterExpandedKeys(
-            props,
-            'defaultExpandedKeys',
-            props.defaultExpandedKeys.length ? false : props.defaultExpandAll
-          );
-    if ('expandedKeys' in props) {
-      expandedKeys = (
-        props.autoExpandParent ?
-          this.getFilterExpandedKeys(props, 'expandedKeys', false) :
-          props.expandedKeys
-      ) || [];
-    }
-    return expandedKeys;
-  }
-
-  getDefaultCheckedKeys(props, willReceiveProps) {
-    let checkedKeys = willReceiveProps ? undefined : props.defaultCheckedKeys;
-    if ('checkedKeys' in props) {
-      checkedKeys = props.checkedKeys || [];
-      if (props.checkStrictly) {
-        if (props.checkedKeys.checked) {
-          checkedKeys = props.checkedKeys.checked;
-        } else if (!Array.isArray(props.checkedKeys)) {
-          checkedKeys = [];
-        }
-      }
-    }
-    return checkedKeys;
-  }
-
-  getDefaultSelectedKeys(props, willReceiveProps) {
-    const getKeys = (keys) => {
-      if (props.multiple) {
-        return [...keys];
-      }
-      if (keys.length) {
-        return [keys[0]];
-      }
-      return keys;
-    };
-    let selectedKeys = willReceiveProps ? undefined : getKeys(props.defaultSelectedKeys);
-    if ('selectedKeys' in props) {
-      selectedKeys = getKeys(props.selectedKeys);
-    }
-    return selectedKeys;
-  }
-
   getRawExpandedKeys() {
     if (!this._rawExpandedKeys && ('expandedKeys' in this.props)) {
       this._rawExpandedKeys = [...this.state.expandedKeys];
@@ -515,6 +452,100 @@ class Tree extends React.Component {
     }
   }
 
+  calcExpandedKeys(props, isNotInit) {
+    const expandedKeys = props.expandedKeys || (isNotInit ? undefined : props.defaultExpandedKeys);
+    if (!expandedKeys) {
+      return undefined;
+    }
+    const expandAll = isNotInit ? false : props.defaultExpandAll;
+    if (!expandAll && !props.autoExpandParent) {
+      return expandedKeys;
+    }
+
+    const expandedPositionArr = [];
+    if (props.autoExpandParent) {
+      traverseTreeNodes(props.children, (item, index, pos, key) => {
+        if (expandedKeys.indexOf(key) > -1) {
+          expandedPositionArr.push(pos);
+        }
+      });
+    }
+    const filterExpandedKeysSet = {};
+    traverseTreeNodes(props.children, (item, index, pos, key) => {
+      if (expandAll) {
+        filterExpandedKeysSet[key] = true;
+      } else if (props.autoExpandParent) {
+        const isCurrentParentOfExpanded =
+                expandedPositionArr.some(p => isInclude(pos.split('-'), p.split('-')));
+        if (isCurrentParentOfExpanded) {
+          filterExpandedKeysSet[key] = true;
+        }
+      }
+    });
+    const filterExpandedKeys = Object.keys(filterExpandedKeysSet);
+    return filterExpandedKeys.length ? filterExpandedKeys : expandedKeys;
+  }
+
+  calcCheckedKeys(props, isNotInit) {
+    if (!props.checkable) {
+      return { checkedKeys: [], halfCheckedKeys: [] };
+    }
+
+    let checkedKeys = props.checkedKeys || (isNotInit ? undefined : props.defaultCheckedKeys);
+    if (!checkedKeys) {
+      return undefined;
+    }
+    if (Array.isArray(checkedKeys)) {
+      checkedKeys = { checkedKeys, halfCheckedKeys: [] };
+    } else if (typeof checkedKeys === 'object') {
+      checkedKeys = { checkedKeys: checkedKeys.checked, halfCheckedKeys: checkedKeys.halfChecked };
+    }
+
+    if (!props.checkStrictly) {
+      const checked = checkedKeys.checkedKeys || [];
+
+      const checkedPositions = [];
+      const treeNodesStates = {};
+      traverseTreeNodes(props.children, (item, index, pos, key, childrenPos, parentPos) => {
+        treeNodesStates[pos] = {
+          node: item,
+          key,
+          checked: false,
+          halfChecked: false,
+          disabled: item.props.disabled,
+          disableCheckbox: item.props.disableCheckbox,
+          childrenPos,
+          parentPos,
+        };
+        if (checked.indexOf(key) !== -1) {
+          treeNodesStates[pos].checked = true;
+          checkedPositions.push(pos);
+        }
+      });
+      checkedPositions.forEach(checkedPosition => {
+        updateCheckState(treeNodesStates, checkedPosition, true);
+      });
+
+      return getCheck(treeNodesStates);
+    }
+
+    return checkedKeys;
+  }
+
+  calcSelectedKeys(props, isNotInit) {
+    const selectedKeys = props.selectedKeys || (isNotInit ? undefined : props.defaultSelectedKeys);
+    if (!selectedKeys) {
+      return undefined;
+    }
+    if (props.multiple) {
+      return [...selectedKeys];
+    }
+    if (selectedKeys.length) {
+      return [selectedKeys[0]];
+    }
+    return selectedKeys;
+  }
+
   filterTreeNode(treeNode) {
     const filterTreeNode = this.props.filterTreeNode;
     if (typeof filterTreeNode !== 'function' || treeNode.props.disabled) {
@@ -528,7 +559,7 @@ class Tree extends React.Component {
     const pos = `${level}-${index}`;
     const key = child.key || pos;
 
-    const cloneProps = {
+    const childProps = {
       root: this,
       eventKey: key,
       pos,
@@ -547,24 +578,11 @@ class Tree extends React.Component {
       filterTreeNode: this.filterTreeNode.bind(this),
     };
     if (props.checkable) {
-      cloneProps.checkable = props.checkable;
-      if (props.checkStrictly) {
-        if (state.checkedKeys) {
-          cloneProps.checked = state.checkedKeys.indexOf(key) !== -1;
-        }
-        if (props.checkedKeys && props.checkedKeys.halfChecked) {
-          cloneProps.halfChecked = props.checkedKeys.halfChecked.indexOf(key) !== -1;
-        } else {
-          cloneProps.halfChecked = false;
-        }
-      } else {
-        if (this.checkedKeys) {
-          cloneProps.checked = this.checkedKeys.indexOf(key) !== -1;
-        }
-        cloneProps.halfChecked = this.halfCheckedKeys.indexOf(key) !== -1;
-      }
+      childProps.checkable = props.checkable;
+      childProps.checked = state.checkedKeys.indexOf(key) !== -1;
+      childProps.halfChecked = state.halfCheckedKeys.indexOf(key) !== -1;
     }
-    return React.cloneElement(child, cloneProps);
+    return React.cloneElement(child, childProps);
   }
 
   render() {
@@ -576,47 +594,6 @@ class Tree extends React.Component {
     if (props.focusable) {
       domProps.tabIndex = '0';
       domProps.onKeyDown = this.onKeyDown;
-    }
-    if (props.checkable && (this.checkedKeysChange || props.loadData)) {
-      const checkedKeys = this.state.checkedKeys;
-      let checkKeys;
-      if (
-        !props.loadData &&
-          this.checkKeys &&
-          this._checkedKeys &&
-          arraysEqual(this._checkedKeys, checkedKeys)
-      ) {
-        // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
-        checkKeys = this.checkKeys;
-      } else {
-        const checkedPositions = [];
-        this.treeNodesStates = {};
-        traverseTreeNodes(
-          props.children,
-          (item, index, pos, key, childrenPos, parentPos) => {
-            this.treeNodesStates[pos] = {
-              node: item,
-              key,
-              checked: false,
-              halfChecked: false,
-              disabled: item.props.disabled,
-              disableCheckbox: item.props.disableCheckbox,
-              childrenPos,
-              parentPos,
-            };
-            if (checkedKeys.indexOf(key) !== -1) {
-              this.treeNodesStates[pos].checked = true;
-              checkedPositions.push(pos);
-            }
-          });
-        // if the parent node's key exists, it all children node will be checked
-        checkedPositions.forEach(checkedPosition => {
-          updateCheckState(this.treeNodesStates, checkedPosition, true);
-        });
-        checkKeys = getCheck(this.treeNodesStates);
-      }
-      this.halfCheckedKeys = checkKeys.halfCheckedKeys;
-      this.checkedKeys = checkKeys.checkedKeys;
     }
 
     return (
