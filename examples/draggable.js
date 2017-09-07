@@ -61,7 +61,6 @@ const Demo = React.createClass({
     }
     this.setState({
       gData: data,
-      expandedKeys: info.rawExpandedKeys.concat([info.node.props.eventKey]),
     });
   },
   onExpand(expandedKeys) {

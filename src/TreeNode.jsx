@@ -33,13 +33,6 @@ class TreeNode extends React.Component {
     };
   }
 
-  componentDidMount() {
-    if (!this.props.root._treeNodeInstances) {
-      this.props.root._treeNodeInstances = [];
-    }
-    this.props.root._treeNodeInstances.push(this);
-  }
-
   onCheck = () => {
     this.props.root.onCheck(this);
   }
@@ -85,11 +78,9 @@ class TreeNode extends React.Component {
   }
 
   onDragOver = (e) => {
-    // todo disabled
     e.preventDefault();
     e.stopPropagation();
     this.props.root.onDragOver(e, this);
-    return false;
   }
 
   onDragLeave = (e) => {
@@ -266,7 +257,7 @@ class TreeNode extends React.Component {
         onContextMenu: this.onContextMenu,
       };
       if (!props.disabled) {
-        if (props.selected || !props._dropTrigger && this.state.dragNodeHighlight) {
+        if (props.selected || this.state.dragNodeHighlight) {
           domProps.className += ` ${prefixCls}-node-selected`;
         }
         domProps.onClick = (e) => {
