@@ -27,7 +27,7 @@ describe('Tree', () => {
           <TreeNode title="leaf 1" key="0-0-0" disabled>
             <TreeNode title="leaf" key="random"/>
             <TreeNode title="leaf"/>
-            {null}
+            {null /* Supports conditional rendering */}
           </TreeNode>
           <TreeNode title="leaf 2" key="0-0-1" disableCheckbox />
         </TreeNode>
@@ -253,6 +253,68 @@ describe('Tree', () => {
         halfCheckedKeys: [],
         node: treeNode2.node,
       });
+    });
+
+    // https://github.com/react-component/tree/issues/117
+    it('check works correctly after dragging children under another node', () => {
+      const wrapper = mount(
+        <Tree defaultExpandAll checkable>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+            <TreeNode title="leaf 2" key="0-0-1" />
+          </TreeNode>
+        </Tree>
+      );
+      wrapper.find('.rc-tree-checkbox').at(1).simulate('click');
+      wrapper.setProps({ children: (
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 2" key="0-0-1">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </TreeNode>
+      ) });
+      expect(() => wrapper.find('.rc-tree-checkbox').at(2).simulate('click')).not.toThrow();
+    });
+    // https://github.com/react-component/tree/issues/90
+    it('check works correctly after adding children dynamically', () => {
+      const wrapper = mount(
+        <Tree defaultExpandAll checkable>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>
+      );
+      wrapper.find('.rc-tree-checkbox').at(1).simulate('click');
+      wrapper.setProps({ children: (
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0" />
+          <TreeNode title="leaf 2" key="0-0-1" />
+        </TreeNode>
+      ) });
+      expect(() => wrapper.find('.rc-tree-checkbox').at(2).simulate('click')).not.toThrow();
+    });
+
+    // https://github.com/ant-design/ant-design/issues/7353
+    it('check children after changing from children[disableCheckbox] from true to false', () => {
+      let checkedKeys = null;
+      const mockHandleCheck = (keys) => checkedKeys = keys;
+      function Test({ disableCheckbox }) {
+        return (
+          <Tree checkable onCheck={mockHandleCheck}>
+            <TreeNode title="parent 1" key="0-0">
+              <TreeNode title="leaf 1" key="0-0-1" disableCheckbox={disableCheckbox} />
+              <TreeNode title="leaf 2" key="0-0-2" disableCheckbox={disableCheckbox} />
+              <TreeNode title="leaf 3" key="0-0-3" disableCheckbox={disableCheckbox} />
+            </TreeNode>
+          </Tree>
+        );
+      }
+      const wrapper = mount(<Test disableCheckbox />);
+      wrapper.find('.rc-tree-checkbox').first().simulate('click');
+      expect(checkedKeys).toEqual(['0-0']);
+      wrapper.setProps({ disableCheckbox: false });
+      wrapper.find('.rc-tree-checkbox').first().simulate('click').simulate('click');
+      expect(checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0-3', '0-0']);
     });
 
     describe('strictly', () => {
