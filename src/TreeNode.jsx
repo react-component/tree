@@ -139,6 +139,10 @@ class TreeNode extends React.Component {
     return 'selectable' in props ? props.selectable : context.rcTree.selectable;
   }
 
+  saveSelectHandle = (node) => {
+    this.selectHandle = node;
+  }
+
   renderSwitcher(props, expandedState) {
     const prefixCls = props.prefixCls;
     const switcherCls = classNames(
@@ -279,7 +283,11 @@ class TreeNode extends React.Component {
         }
       }
       return (
-        <span ref="selectHandle" title={typeof content === 'string' ? content : ''} {...domProps}>
+        <span
+          ref={this.saveSelectHandle}
+          title={typeof content === 'string' ? content : ''}
+          {...domProps}
+        >
           {icon}{title}
         </span>
       );

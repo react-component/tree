@@ -160,8 +160,8 @@ class Tree extends React.Component {
   }
 
   onDragEnterGap(e, treeNode) {
-    const offsetTop = getOffset(treeNode.refs.selectHandle).top;
-    const offsetHeight = treeNode.refs.selectHandle.offsetHeight;
+    const offsetTop = getOffset(treeNode.selectHandle).top;
+    const offsetHeight = treeNode.selectHandle.offsetHeight;
     const pageY = e.pageY;
     const gapHeight = 2; // TODO: remove hard code
     if (pageY > offsetTop + offsetHeight - gapHeight) {
