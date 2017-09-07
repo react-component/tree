@@ -317,6 +317,24 @@ describe('Tree', () => {
       expect(checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0-3', '0-0']);
     });
 
+    it('check dynamic children when their parent is checked', () => {
+      function mockLoadData() {}
+      const wrapper = mount(
+        <Tree checkable defaultCheckedKeys={['0-0']} loadData={mockLoadData}>
+          <TreeNode title="parent 1" key="0-0" />
+        </Tree>
+      );
+      wrapper.setProps({
+        children: (
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+            <TreeNode title="leaf 2" key="0-0-1" />
+          </TreeNode>
+        ),
+      });
+      expect(wrapper.state('checkedKeys')).toEqual(['0-0-0', '0-0-1', '0-0']);
+    });
+
     describe('strictly', () => {
       it('checks strictly', () => {
         const wrapper = mount(

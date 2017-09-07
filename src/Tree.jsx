@@ -126,8 +126,8 @@ class Tree extends React.Component {
       newState.expandedKeys = expandedKeys;
     }
 
-    const checkedKeys = nextProps.checkedKeys !== props.checkedKeys ?
-      this.calcCheckedKeys(nextProps, true) : undefined;
+    const checkedKeys = nextProps.checkedKeys !== props.checkedKeys || props.loadData ?
+            this.calcCheckedKeys(nextProps, true) : undefined;
     if (checkedKeys) {
       newState.checkedKeys = checkedKeys.checkedKeys;
       newState.halfCheckedKeys = checkedKeys.halfCheckedKeys;
@@ -478,7 +478,8 @@ class Tree extends React.Component {
       return { checkedKeys: [], halfCheckedKeys: [] };
     }
 
-    let checkedKeys = props.checkedKeys || (isNotInit ? undefined : props.defaultCheckedKeys);
+    let checkedKeys = props.checkedKeys ||
+      (isNotInit && !props.loadData ? undefined : props.defaultCheckedKeys);
     if (!checkedKeys) {
       return undefined;
     }
