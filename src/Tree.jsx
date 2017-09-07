@@ -97,6 +97,7 @@ class Tree extends React.Component {
     super(props);
 
     this.checkedKeysChange = true;
+    this.reRender = false;
     this.state = {
       expandedKeys: this.getDefaultExpandedKeys(props),
       checkedKeys: this.getDefaultCheckedKeys(props),
@@ -137,6 +138,13 @@ class Tree extends React.Component {
       st.selectedKeys = selectedKeys;
     }
     this.setState(st);
+    this.reRender = true;
+  }
+
+  componentDidUpdate() {
+    if (this.reRender) {
+      this.reRender = false;
+    }
   }
 
   onDragStart(e, treeNode) {
@@ -283,7 +291,7 @@ class Tree extends React.Component {
       checked = true;
     }
     const key = treeNode.props.eventKey;
-    let checkedKeys = [...this.state.checkedKeys];
+    let checkedKeys = this.checkedKeys;
     const index = checkedKeys.indexOf(key);
 
     const newSt = {
@@ -315,12 +323,12 @@ class Tree extends React.Component {
     } else {
       if (checked && index === -1) {
         this.treeNodesStates[treeNode.props.pos].checked = true;
-        updateCheckState(this.treeNodesStates, treeNode.props.pos, true);
+        updateCheckState(this.treeNodesStates, treeNode.props.pos, true, false);
       }
       if (!checked) {
         this.treeNodesStates[treeNode.props.pos].checked = false;
         this.treeNodesStates[treeNode.props.pos].halfChecked = false;
-        updateCheckState(this.treeNodesStates, treeNode.props.pos, false);
+        updateCheckState(this.treeNodesStates, treeNode.props.pos, false, false);
       }
       const checkKeys = getCheck(this.treeNodesStates);
       newSt.checkedNodes = checkKeys.checkedNodes;
@@ -584,7 +592,8 @@ class Tree extends React.Component {
         !props.loadData &&
           this.checkKeys &&
           this._checkedKeys &&
-          arraysEqual(this._checkedKeys, checkedKeys)
+          arraysEqual(this._checkedKeys, checkedKeys) &&
+          !this.reRender
       ) {
         // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
         checkKeys = this.checkKeys;
@@ -611,7 +620,7 @@ class Tree extends React.Component {
           });
         // if the parent node's key exists, it all children node will be checked
         checkedPositions.forEach(checkedPosition => {
-          updateCheckState(this.treeNodesStates, checkedPosition, true);
+          updateCheckState(this.treeNodesStates, checkedPosition, true, true);
         });
         checkKeys = getCheck(this.treeNodesStates);
       }
