@@ -5,11 +5,11 @@ webpackJsonp([3],{
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_tree_assets_index_less__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_tree_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rc_tree_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__draggable_less__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__draggable_less__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__draggable_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__draggable_less__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
@@ -82,8 +82,7 @@ var Demo = __WEBPACK_IMPORTED_MODULE_3_react___default.a.createClass({
       });
     }
     this.setState({
-      gData: data,
-      expandedKeys: info.rawExpandedKeys.concat([info.node.props.eventKey])
+      gData: data
     });
   },
   onExpand: function onExpand(expandedKeys) {
@@ -143,7 +142,7 @@ __WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
-/***/ 235:
+/***/ 234:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -359,7 +358,7 @@ function getRadioSelectKeys(data, selectedKeys, key) {
 
 /***/ }),
 
-/***/ 354:
+/***/ 353:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(176);
@@ -367,5 +366,5 @@ module.exports = __webpack_require__(176);
 
 /***/ })
 
-},[354]);
+},[353]);
 //# sourceMappingURL=draggable.js.map
