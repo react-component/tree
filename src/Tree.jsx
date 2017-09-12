@@ -322,6 +322,11 @@ class Tree extends React.Component {
     const eventKey = treeNode.props.eventKey;
     const selected = !treeNode.props.selected;
 
+    if (props.checkable) {
+      this.onCheck(treeNode);
+      return;
+    }
+
     let selectedKeys = [...state.selectedKeys];
     if (!selected) {
       const index = selectedKeys.indexOf(eventKey);
