@@ -102,6 +102,11 @@ const Demo = React.createClass({
       checkedKeys: [`0-0-${parseInt(Math.random() * 3, 10)}-key`],
     });
   },
+  toggleCheckOnSelect() {
+    this.setState({
+      checkOnSelect: !this.state.checkOnSelect,
+    });
+  },
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -141,6 +146,7 @@ const Demo = React.createClass({
       <h2>controlled</h2>
       <Tree
         checkable
+        checkOnSelect={this.state.checkOnSelect}
         onExpand={this.onExpand} expandedKeys={this.state.expandedKeys}
         autoExpandParent={this.state.autoExpandParent}
         onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
@@ -149,6 +155,9 @@ const Demo = React.createClass({
         {loop(gData)}
       </Tree>
       <button onClick={this.triggerChecked}>trigger checked</button>
+      <button onClick={this.toggleCheckOnSelect}>
+        toggle checkOnSelect ({`${this.state.checkOnSelect}`})
+      </button>
 
       <h2>checkStrictly</h2>
       <Tree
