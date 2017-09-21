@@ -31,6 +31,7 @@ class Tree extends React.Component {
       PropTypes.bool,
       PropTypes.node,
     ]),
+    checkOnSelect: PropTypes.bool,
     checkStrictly: PropTypes.bool,
     draggable: PropTypes.bool,
     autoExpandParent: PropTypes.bool,
@@ -71,6 +72,7 @@ class Tree extends React.Component {
     selectable: true,
     multiple: false,
     checkable: false,
+    checkOnSelect: false,
     checkStrictly: false,
     draggable: false,
     autoExpandParent: true,
@@ -321,6 +323,10 @@ class Tree extends React.Component {
     const { props, state } = this;
     const eventKey = treeNode.props.eventKey;
     const selected = !treeNode.props.selected;
+
+    if (props.checkable && props.checkOnSelect) {
+      this.onCheck(treeNode);
+    }
 
     let selectedKeys = [...state.selectedKeys];
     if (!selected) {
