@@ -3,7 +3,7 @@ exports[`Tree renders correctly 1`] = `
   class="rc-tree forTest rc-tree-show-line"
   role="tree-node"
   tabindex="0"
-  unselectable="true">
+  unselectable="on">
   <li
     class="spe">
     <span
@@ -104,7 +104,7 @@ exports[`Tree renders opaque children correctly 1`] = `
 <ul
   class="rc-tree"
   role="tree-node"
-  unselectable="true">
+  unselectable="on">
   <li
     class="">
     <span
