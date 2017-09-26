@@ -264,6 +264,8 @@ class TreeNode extends React.Component {
           e.preventDefault();
           if (this.isSelectable()) {
             this.onSelect();
+          } else if (props.checkable && !props.disabled && !props.disableCheckbox) {
+            this.onCheck();
           }
         };
         if (props.draggable) {
