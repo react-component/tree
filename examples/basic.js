@@ -82,7 +82,6 @@ const Demo = React.createClass({
         checkable
         selectable={ false }
         defaultExpandAll
-        defaultExpandedKeys={this.state.defaultExpandedKeys}
         onExpand={this.onExpand}
         defaultSelectedKeys={this.state.defaultSelectedKeys}
         defaultCheckedKeys={this.state.defaultCheckedKeys}
