@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>basic.js - example - rc-tree@1.7.4</title>
+  <title>basic.js - example - rc-tree@1.7.5</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.7.4</h1>
+      <h1>rc-tree@1.7.5</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -339,6 +339,27 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
             <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-0-0"</span> /&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"leaf"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-0-1"</span> /&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-1"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1-0"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-1-0"</span> <span class="hljs-attribute">disableCheckbox</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-1-1"</span> /&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Check on Click TreeNode<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
+        <span class="hljs-attribute">className</span>=<span class="hljs-value">"myCls"</span>
+        <span class="hljs-attribute">showLine</span>
+        <span class="hljs-attribute">checkable</span>
+        <span class="hljs-attribute">selectable</span>=<span class="hljs-value">{</span> <span class="hljs-attribute">false</span> }
+        <span class="hljs-attribute">defaultExpandAll</span>
+        <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span>
+        <span class="hljs-attribute">defaultSelectedKeys</span>=<span class="hljs-value">{this.state.defaultSelectedKeys}</span>
+        <span class="hljs-attribute">defaultCheckedKeys</span>=<span class="hljs-value">{this.state.defaultCheckedKeys}</span>
+        <span class="hljs-attribute">onSelect</span>=<span class="hljs-value">{this.onSelect}</span>
+        <span class="hljs-attribute">onCheck</span>=<span class="hljs-value">{this.onCheck}</span>
+      &gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0"</span>&gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-1"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1-0"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-1-0"</span> <span class="hljs-attribute">disableCheckbox</span> /&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"parent 1-1-1"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"0-0-1-1"</span> /&gt;</span>

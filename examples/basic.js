@@ -1,6 +1,6 @@
 webpackJsonp([5],{
 
-/***/ 173:
+/***/ 174:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15,7 +15,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rc_tree__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_tree_assets_index_less__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_tree_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rc_tree_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__basic_less__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__basic_less__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__basic_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__basic_less__);
 /* eslint no-console:0 */
 /* eslint no-alert:0 */
@@ -133,6 +133,36 @@ var Demo = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createClass({
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_rc_tree__["TreeNode"], { title: 'parent 1-1-1', key: '0-0-1-1' })
           )
         )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'h2',
+        null,
+        'Check on Click TreeNode'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_3_rc_tree___default.a,
+        {
+          className: 'myCls',
+          showLine: true,
+          checkable: true,
+          selectable: false,
+          defaultExpandAll: true,
+          onExpand: this.onExpand,
+          defaultSelectedKeys: this.state.defaultSelectedKeys,
+          defaultCheckedKeys: this.state.defaultCheckedKeys,
+          onSelect: this.onSelect,
+          onCheck: this.onCheck
+        },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_3_rc_tree__["TreeNode"],
+          { title: 'parent 1', key: '0-0' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_3_rc_tree__["TreeNode"],
+            { title: 'parent 1-1', key: '0-0-1' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_rc_tree__["TreeNode"], { title: 'parent 1-1-0', key: '0-0-1-0', disableCheckbox: true }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_rc_tree__["TreeNode"], { title: 'parent 1-1-1', key: '0-0-1-1' })
+          )
+        )
       )
     );
   }
@@ -142,20 +172,20 @@ __WEBPACK_IMPORTED_MODULE_2_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
-/***/ 232:
+/***/ 233:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 350:
+/***/ 351:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(173);
+module.exports = __webpack_require__(174);
 
 
 /***/ })
 
-},[350]);
+},[351]);
 //# sourceMappingURL=basic.js.map
