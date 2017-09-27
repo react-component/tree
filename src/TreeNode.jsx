@@ -52,7 +52,6 @@ class TreeNode extends React.Component {
   }
 
   onContextMenu = (e) => {
-    e.preventDefault();
     this.props.root.onContextMenu(e, this);
   }
 
