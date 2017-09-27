@@ -536,6 +536,49 @@ describe('Tree', () => {
     });
   });
 
+
+  describe('checkable but not selectable', () => {
+    it('fires check event when click on TreeNode', () => {
+      const handleCheck = jest.fn();
+      const wrapper = mount(
+        <Tree checkable selectable={ false } onCheck={handleCheck}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>
+      );
+      wrapper.find('.rc-tree-switcher').simulate('click');
+      const treeNode1 = wrapper.find(TreeNode).first();
+      const treeNode2 = wrapper.find(TreeNode).last();
+      const treeElm1 = wrapper.find(Tree).props().children;
+      const treeElm2 = treeNode1.props().children;
+
+      wrapper.find('.rc-tree-node-content-wrapper').first().simulate('click');
+      expect(handleCheck).toBeCalledWith(['0-0-0', '0-0'], {
+        checked: true,
+        checkedNodes: [treeElm2, treeElm1],
+        checkedNodesPositions: [
+          { node: treeElm2, pos: '0-0-0' },
+          { node: treeElm1, pos: '0-0' },
+        ],
+        event: 'check',
+        halfCheckedKeys: [],
+        node: treeNode1.node,
+      });
+
+      wrapper.find('.rc-tree-node-content-wrapper').last().simulate('click');
+      expect(handleCheck).toBeCalledWith([], {
+        checked: false,
+        checkedNodes: [],
+        checkedNodesPositions: [],
+        event: 'check',
+        halfCheckedKeys: [],
+        node: treeNode2.node,
+      });
+    });
+  });
+
+
   it('fires rightClick event', () => {
     const handleRightClick = jest.fn();
     const wrapper = mount(
