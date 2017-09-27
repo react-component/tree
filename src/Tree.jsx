@@ -89,7 +89,6 @@ class Tree extends React.Component {
     onDragEnd: noop,
     onMouseEnter: noop,
     onMouseLeave: noop,
-    onRightClick: noop,
   };
 
   constructor(props) {
@@ -366,7 +365,10 @@ class Tree extends React.Component {
   }
 
   onContextMenu(e, treeNode) {
-    this.props.onRightClick({ event: e, node: treeNode });
+    if (this.props.onRightClick) {
+      e.preventDefault();
+      this.props.onRightClick({ event: e, node: treeNode });
+    }
   }
 
   // all keyboard events callbacks run from here at first
