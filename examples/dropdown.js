@@ -2,8 +2,9 @@
 /* eslint no-console:0 */
 import 'rc-tree/assets/index.less';
 import './dropdown.less';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import Tree, { TreeNode } from 'rc-tree';
 import Trigger from 'rc-trigger';
 import { gData } from './util';
@@ -28,9 +29,8 @@ const placements = {
     targetOffset: [0, 0],
   },
 };
-const DropdownTree = React.createClass({
-  propTypes: {
-    minOverlayWidthMatchTrigger: PropTypes.bool,
+class DropdownTree extends React.Component {
+  static propTypes = {
     onVisibleChange: PropTypes.func,
     prefixCls: PropTypes.string,
     children: PropTypes.any,
@@ -41,45 +41,45 @@ const DropdownTree = React.createClass({
     overlayStyle: PropTypes.object,
     placement: PropTypes.string,
     trigger: PropTypes.array,
-  },
-  getDefaultProps() {
-    return {
-      minOverlayWidthMatchTrigger: true,
-      prefixCls: 'demo-dropdown-tree',
-      trigger: ['hover'],
-      overlayClassName: '',
-      overlayStyle: {},
-      defaultVisible: false,
-      onVisibleChange() {
-      },
-      placement: 'bottomLeft',
-    };
-  },
-  getInitialState() {
-    const props = this.props;
+    defaultVisible: PropTypes.bool,
+    visible: PropTypes.bool,
+  };
+  static defaultProps = {
+    prefixCls: 'demo-dropdown-tree',
+    trigger: ['hover'],
+    overlayClassName: '',
+    overlayStyle: {},
+    defaultVisible: false,
+    onVisibleChange() {
+    },
+    placement: 'bottomLeft',
+  };
+  constructor(props) {
+    super(props);
     if ('visible' in props) {
-      return {
+      this.state = {
         visible: props.visible,
       };
+      return;
     }
-    return {
+    this.state = {
       visible: props.defaultVisible,
     };
-  },
+  }
   componentWillReceiveProps(props) {
     if ('visible' in props) {
       this.setState({
         visible: props.visible,
       });
     }
-  },
-  onChange(value) {
+  }
+  onChange = (value) => {
     console.log('change', value);
-  },
-  onSelect(value) {
+  }
+  onSelect = (value) => {
     console.log('select ', value);
-  },
-  onClick(e) {
+  }
+  onClick = (e) => {
     const props = this.props;
     const overlayProps = props.overlay.props;
     if (!('visible' in props)) {
@@ -90,8 +90,8 @@ const DropdownTree = React.createClass({
     if (overlayProps.onClick) {
       overlayProps.onClick(e);
     }
-  },
-  onVisibleChange(v) {
+  }
+  onVisibleChange = (v) => {
     const props = this.props;
     if (!('visible' in props)) {
       this.setState({
@@ -99,23 +99,14 @@ const DropdownTree = React.createClass({
       });
     }
     props.onVisibleChange(v);
-  },
-  getPopupElement() {
+  }
+  getPopupElement = () => {
     const props = this.props;
     return React.cloneElement(props.overlay, {
       // prefixCls: `${props.prefixCls}-menu`,
       onClick: this.onClick,
     });
-  },
-  afterVisibleChange(visible) {
-    if (visible && this.props.minOverlayWidthMatchTrigger) {
-      const overlayNode = this.refs.trigger.getPopupDomNode();
-      const rootNode = ReactDOM.findDOMNode(this);
-      if (rootNode.offsetWidth > overlayNode.offsetWidth) {
-        overlayNode.style.width = `${rootNode.offsetWidth}px`;
-      }
-    }
-  },
+  }
   render() {
     const { prefixCls, children,
       transitionName, animation,
@@ -135,43 +126,40 @@ const DropdownTree = React.createClass({
         popupTransitionName={transitionName}
         popupAnimation={animation}
         popupVisible={this.state.visible}
-        afterPopupVisibleChange={this.afterVisibleChange}
         popup={this.getPopupElement()}
         onPopupVisibleChange={this.onVisibleChange}
       >{children}</Trigger>
     );
-  },
-});
+  }
+}
 
-const Demo = React.createClass({
-  getInitialState() {
-    return {
-      visible: false,
-      inputValue: '',
-      sel: '',
-      expandedKeys: [],
-      autoExpandParent: true,
-    };
-  },
-  onChange(event) {
+class Demo extends React.Component {
+  state = {
+    visible: false,
+    inputValue: '',
+    sel: '',
+    expandedKeys: [],
+    autoExpandParent: true,
+  };
+  onChange = (event) => {
     this.filterKeys = [];
     this.setState({
       inputValue: event.target.value,
     });
-  },
-  onVisibleChange(visible) {
+  }
+  onVisibleChange = (visible) => {
     this.setState({
       visible,
     });
-  },
-  onSelect(selectedKeys, info) {
+  }
+  onSelect = (selectedKeys, info) => {
     console.log('selected: ', info);
     this.setState({
       visible: false,
       sel: info.node.props.title,
     });
-  },
-  onExpand(expandedKeys) {
+  }
+  onExpand = (expandedKeys) => {
     this.filterKeys = undefined;
     console.log('onExpand', arguments);
     // if not set autoExpandParent to false, if children expanded, parent can not collapse.
@@ -180,18 +168,18 @@ const Demo = React.createClass({
       expandedKeys,
       autoExpandParent: false,
     });
-  },
-  filterTreeNode(treeNode) {
+  }
+  filterTreeNode = (treeNode) => {
     console.log(treeNode);
     // 根据 key 进行搜索，可以根据其他数据，如 value
     return this.filterFn(treeNode.props.eventKey);
-  },
-  filterFn(key) {
+  }
+  filterFn = (key) => {
     if (this.state.inputValue && key.indexOf(this.state.inputValue) > -1) {
       return true;
     }
     return false;
-  },
+  }
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -234,7 +222,7 @@ const Demo = React.createClass({
         <div className="demo-dropdown-trigger">{this.state.sel}</div>
       </DropdownTree>
     </div>);
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

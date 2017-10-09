@@ -1,36 +1,33 @@
 /* eslint no-console:0 */
 import 'rc-tree/assets/index.less';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import Tree, { TreeNode } from 'rc-tree';
 import { gData,
   /* filterParentPosition, getFilterExpandedKeys,*/ getRadioSelectKeys } from './util';
 import 'rc-dialog/assets/index.css';
 import Modal from 'rc-dialog';
 
-const Demo = React.createClass({
-  propTypes: {
+class Demo extends React.Component {
+  static propTypes = {
     multiple: PropTypes.bool,
-  },
-  getDefaultProps() {
-    return {
-      visible: false,
-      multiple: true,
-    };
-  },
-  getInitialState() {
-    return {
-      // expandedKeys: getFilterExpandedKeys(gData, ['0-0-0-key']),
-      expandedKeys: ['0-0-0-key'],
-      autoExpandParent: true,
-      // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
-      checkedKeys: ['0-0-0-key'],
-      checkStrictlyKeys: { checked: ['0-0-1-key'], halfChecked: [] },
-      selectedKeys: [],
-      treeData: [],
-    };
-  },
-  onExpand(expandedKeys) {
+  };
+  static defaultProps = {
+    visible: false,
+    multiple: true,
+  };
+  state = {
+    // expandedKeys: getFilterExpandedKeys(gData, ['0-0-0-key']),
+    expandedKeys: ['0-0-0-key'],
+    autoExpandParent: true,
+    // checkedKeys: ['0-0-0-0-key', '0-0-1-0-key', '0-1-0-0-key'],
+    checkedKeys: ['0-0-0-key'],
+    checkStrictlyKeys: { checked: ['0-0-1-key'], halfChecked: [] },
+    selectedKeys: [],
+    treeData: [],
+  };
+  onExpand = (expandedKeys) => {
     console.log('onExpand', arguments);
     // if not set autoExpandParent to false, if children expanded, parent can not collapse.
     // or, you can remove all expanded chilren keys.
@@ -38,13 +35,13 @@ const Demo = React.createClass({
       expandedKeys,
       autoExpandParent: false,
     });
-  },
-  onCheck(checkedKeys) {
+  }
+  onCheck = (checkedKeys) => {
     this.setState({
       checkedKeys,
     });
-  },
-  onCheckStrictly(checkedKeys, /* extra*/) {
+  }
+  onCheckStrictly = (checkedKeys, /* extra*/) => {
     console.log(arguments);
     // const { checkedNodesPositions } = extra;
     // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
@@ -58,14 +55,14 @@ const Demo = React.createClass({
       checkStrictlyKeys: cks,
       // checkStrictlyKeys: checkedKeys,
     });
-  },
-  onSelect(selectedKeys, info) {
+  }
+  onSelect = (selectedKeys, info) => {
     console.log('onSelect', selectedKeys, info);
     this.setState({
       selectedKeys,
     });
-  },
-  onRbSelect(selectedKeys, info) {
+  }
+  onRbSelect = (selectedKeys, info) => {
     let _selectedKeys = selectedKeys;
     if (info.selected) {
       _selectedKeys = getRadioSelectKeys(gData, selectedKeys, info.node.props.eventKey);
@@ -73,18 +70,18 @@ const Demo = React.createClass({
     this.setState({
       selectedKeys: _selectedKeys,
     });
-  },
-  onClose() {
+  }
+  onClose = () => {
     this.setState({
       visible: false,
     });
-  },
-  handleOk() {
+  }
+  handleOk = () => {
     this.setState({
       visible: false,
     });
-  },
-  showModal() {
+  }
+  showModal = () => {
     this.setState({
       expandedKeys: ['0-0-0-key', '0-0-1-key'],
       checkedKeys: ['0-0-0-key'],
@@ -96,12 +93,12 @@ const Demo = React.createClass({
         treeData: [...gData],
       });
     }, 2000);
-  },
-  triggerChecked() {
+  }
+  triggerChecked = () => {
     this.setState({
       checkedKeys: [`0-0-${parseInt(Math.random() * 3, 10)}-key`],
     });
-  },
+  }
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -170,7 +167,7 @@ const Demo = React.createClass({
         {loop(gData)}
       </Tree>
     </div>);
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

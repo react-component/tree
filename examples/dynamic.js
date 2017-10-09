@@ -48,14 +48,11 @@ function getNewTreeData(treeData, curKey, child, level) {
   setLeaf(treeData, curKey, level);
 }
 
-const Demo = React.createClass({
-  propTypes: {},
-  getInitialState() {
-    return {
-      treeData: [],
-      checkedKeys: [],
-    };
-  },
+class Demo extends React.Component {
+  state = {
+    treeData: [],
+    checkedKeys: [],
+  };
   componentDidMount() {
     setTimeout(() => {
       this.setState({
@@ -67,17 +64,17 @@ const Demo = React.createClass({
         checkedKeys: ['0-0'],
       });
     }, 100);
-  },
-  onSelect(info) {
+  }
+  onSelect = (info) => {
     console.log('selected', info);
-  },
-  onCheck(checkedKeys) {
+  }
+  onCheck = (checkedKeys) => {
     console.log(checkedKeys);
     this.setState({
       checkedKeys,
     });
-  },
-  onLoadData(treeNode) {
+  }
+  onLoadData = (treeNode) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         const treeData = [...this.state.treeData];
@@ -86,7 +83,7 @@ const Demo = React.createClass({
         resolve();
       }, 500);
     });
-  },
+  }
   render() {
     const loop = (data) => {
       return data.map((item) => {
@@ -113,7 +110,7 @@ const Demo = React.createClass({
         </Tree>
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

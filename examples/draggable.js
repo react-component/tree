@@ -6,24 +6,22 @@ import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
 import { gData } from './util';
 
-const Demo = React.createClass({
-  getInitialState() {
-    return {
-      gData,
-      autoExpandParent: true,
-      expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
-    };
-  },
-  onDragStart(info) {
+class Demo extends React.Component {
+  state = {
+    gData,
+    autoExpandParent: true,
+    expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
+  };
+  onDragStart = (info) => {
     console.log('start', info);
-  },
-  onDragEnter(info) {
+  }
+  onDragEnter = (info) => {
     console.log('enter', info);
     this.setState({
       expandedKeys: info.expandedKeys,
     });
-  },
-  onDrop(info) {
+  }
+  onDrop = (info) => {
     console.log('drop', info);
     const dropKey = info.node.props.eventKey;
     const dragKey = info.dragNode.props.eventKey;
@@ -62,14 +60,14 @@ const Demo = React.createClass({
     this.setState({
       gData: data,
     });
-  },
-  onExpand(expandedKeys) {
+  }
+  onExpand = (expandedKeys) => {
     console.log('onExpand', arguments);
     this.setState({
       expandedKeys,
       autoExpandParent: false,
     });
-  },
+  }
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -95,7 +93,7 @@ const Demo = React.createClass({
         </Tree>
       </div>
     </div>);
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

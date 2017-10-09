@@ -49,6 +49,9 @@
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
+    "setupFiles": [
+      "./tests/setup.js"
+    ],
     "collectCoverageFrom": [
       "src/**/*"
     ],
@@ -59,18 +62,19 @@
   "devDependencies": {
     "coveralls": "^2.11.15",
     "css-animation": "^1.2.0",
-    "enzyme": "^2.6.0",
-    "enzyme-to-json": "^1.4.5",
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-16": "^1.0.1",
+    "enzyme-to-json": "^3.0.0",
     "es6-promise": "^3.1.2",
     "jest": "^18.0.0",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
     "rc-tools": "^6.x",
     "rc-tooltip": "3.x",
-    "rc-trigger": "^1.0.6",
-    "react": "^15.2.0",
-    "react-dom": "^15.2.0",
-    "react-test-renderer": "^15.5.4"
+    "rc-trigger": "^2.0.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-test-renderer": "^16.0.0"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",

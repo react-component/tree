@@ -72,7 +72,9 @@ describe('Tree', () => {
       const switcher = wrapper.find('.rc-tree-switcher').first();
       expect(switcher.is(OPEN_CLASSNAME)).toBe(false);
       wrapper.setProps({ expandedKeys: ['0-0'] });
-      expect(switcher.is(OPEN_CLASSNAME)).toBe(true);
+      setTimeout(() => {
+        expect(switcher.is(OPEN_CLASSNAME)).toBe(true);
+      }, 10);
     });
 
     it('expands parent node when child node is expanded', () => {
@@ -113,7 +115,7 @@ describe('Tree', () => {
         </Tree>
       );
       const switcher = wrapper.find('.rc-tree-switcher');
-      const node = wrapper.find(TreeNode).first().node;
+      const node = wrapper.find(TreeNode).instance();
 
       switcher.simulate('click');
       expect(handleExpand).toBeCalledWith(['0-0'], { expanded: true, node });
@@ -147,7 +149,7 @@ describe('Tree', () => {
           </TreeNode>
         </Tree>
       );
-      const firstCheckboxClassNames = wrapper.find('.rc-tree-checkbox').get(0).classList;
+      const firstCheckboxClassNames = wrapper.find('.rc-tree-checkbox').instance().classList;
       expect([].slice.call(firstCheckboxClassNames).includes(CHECKED_CLASSNAME.slice(1)))
         .toBe(false);
     });
@@ -163,7 +165,9 @@ describe('Tree', () => {
       const checkbox = wrapper.find('.rc-tree-checkbox');
       expect(checkbox.is(CHECKED_CLASSNAME)).toBe(false);
       wrapper.setProps({ checkedKeys: ['0-0'] });
-      expect(checkbox.is(CHECKED_CLASSNAME)).toBe(true);
+      setTimeout(() => {
+        expect(checkbox.is(CHECKED_CLASSNAME)).toBe(true);
+      }, 10);
     });
 
     it('trurns parent node to checked when all children are checked', () => {
@@ -241,7 +245,7 @@ describe('Tree', () => {
         ],
         event: 'check',
         halfCheckedKeys: [],
-        node: treeNode1.node,
+        node: treeNode1.instance(),
       });
 
       wrapper.find('.rc-tree-checkbox').last().simulate('click');
@@ -251,7 +255,7 @@ describe('Tree', () => {
         checkedNodesPositions: [],
         event: 'check',
         halfCheckedKeys: [],
-        node: treeNode2.node,
+        node: treeNode2.instance(),
       });
     });
 
@@ -414,13 +418,17 @@ describe('Tree', () => {
       );
       const node = wrapper.find(TreeNode).first().find('.rc-tree-checkbox').first();
       node.simulate('click');
-      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
-      expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-      expect(wrapper.state().checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0']);
-      node.simulate('click');
-      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
-      expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-      expect(wrapper.state().checkedKeys).toEqual([]);
+      setTimeout(() => {
+        expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
+        expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+        expect(wrapper.state().checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0']);
+        node.simulate('click');
+        setTimeout(() => {
+          expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
+          expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+          expect(wrapper.state().checkedKeys).toEqual([]);
+        }, 10);
+      }, 10);
     });
 
     it('should ignore disabled children items when check parent', () => {
@@ -438,13 +446,17 @@ describe('Tree', () => {
       );
       const node = wrapper.find(TreeNode).first().find('.rc-tree-checkbox').first();
       node.simulate('click');
-      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
-      expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-      expect(wrapper.state().checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0']);
-      node.simulate('click');
-      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
-      expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-      expect(wrapper.state().checkedKeys).toEqual([]);
+      setTimeout(() => {
+        expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
+        expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+        expect(wrapper.state().checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0']);
+        node.simulate('click');
+        setTimeout(() => {
+          expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
+          expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+          expect(wrapper.state().checkedKeys).toEqual([]);
+        }, 10);
+      }, 10);
     });
 
     // https://github.com/react-component/tree/pull/106#issuecomment-316779889
@@ -464,13 +476,17 @@ describe('Tree', () => {
       const parent = wrapper.find(TreeNode).at(1).find('.rc-tree-checkbox').first();
       const node = wrapper.find(TreeNode).at(2).find('.rc-tree-checkbox').first();
       node.simulate('click');
-      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
-      expect(parent.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-      expect(parent.hasClass('rc-tree-checkbox-checked')).toBe(true);
-      node.simulate('click');
-      expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
-      expect(parent.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-      expect(parent.hasClass('rc-tree-checkbox-checked')).toBe(false);
+      setTimeout(() => {
+        expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
+        expect(parent.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+        expect(parent.hasClass('rc-tree-checkbox-checked')).toBe(true);
+        node.simulate('click');
+        setTimeout(() => {
+          expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
+          expect(parent.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+          expect(parent.hasClass('rc-tree-checkbox-checked')).toBe(false);
+        }, 10);
+      }, 10);
     });
   });
 
@@ -515,7 +531,7 @@ describe('Tree', () => {
         </Tree>
       );
       const nodeContent = wrapper.find('.rc-tree-node-content-wrapper');
-      const node = wrapper.find(TreeNode).first().node;
+      const node = wrapper.find(TreeNode).first().instance();
       const nodeElm = wrapper.find(Tree).props().children;
 
       nodeContent.simulate('click');
@@ -563,7 +579,7 @@ describe('Tree', () => {
         ],
         event: 'check',
         halfCheckedKeys: [],
-        node: treeNode1.node,
+        node: treeNode1.instance(),
       });
 
       wrapper.find('.rc-tree-node-content-wrapper').last().simulate('click');
@@ -573,7 +589,7 @@ describe('Tree', () => {
         checkedNodesPositions: [],
         event: 'check',
         halfCheckedKeys: [],
-        node: treeNode2.node,
+        node: treeNode2.instance(),
       });
     });
   });
@@ -589,7 +605,7 @@ describe('Tree', () => {
       </Tree>
     );
     wrapper.find('.rc-tree-node-content-wrapper').simulate('contextMenu');
-    expect(handleRightClick.mock.calls[0][0].node).toBe(wrapper.find(TreeNode).node);
+    expect(handleRightClick.mock.calls[0][0].node).toBe(wrapper.find(TreeNode).instance());
   });
 
   it('fires rightClick should not change selected item', () => {
@@ -615,7 +631,7 @@ describe('Tree', () => {
       </Tree>
     );
     wrapper.find('.rc-tree-node-content-wrapper').simulate('mouseEnter');
-    expect(handleMouseEnter.mock.calls[0][0].node).toBe(wrapper.find(TreeNode).node);
+    expect(handleMouseEnter.mock.calls[0][0].node).toBe(wrapper.find(TreeNode).instance());
   });
 
   it('fires mouseLeave events', () => {
@@ -628,7 +644,7 @@ describe('Tree', () => {
       </Tree>
     );
     wrapper.find('.rc-tree-node-content-wrapper').simulate('mouseLeave');
-    expect(handleMouseLeave.mock.calls[0][0].node).toBe(wrapper.find(TreeNode).node);
+    expect(handleMouseLeave.mock.calls[0][0].node).toBe(wrapper.find(TreeNode).instance());
   });
 
   it('filters nodes', () => {
@@ -659,7 +675,7 @@ describe('Tree', () => {
       </Tree>
     );
     wrapper.find('.rc-tree-switcher').simulate('click');
-    expect(loadData).toBeCalledWith(wrapper.find(TreeNode).node);
+    expect(loadData).toBeCalledWith(wrapper.find(TreeNode).instance());
     expect(then).toBeCalled();
   });
 
@@ -685,18 +701,18 @@ describe('Tree', () => {
       const treeNode = wrapper.find('.dragTarget > .rc-tree-node-content-wrapper');
       treeNode.simulate('dragStart');
       const event = onDragStart.mock.calls[0][0];
-      expect(event.node).toBe(wrapper.find(TreeNode).at(1).node);
+      expect(event.node).toBe(wrapper.find(TreeNode).at(1).instance());
     });
 
     it('fires dragEnter event', (done) => {
       const onDragEnter = jest.fn();
       const wrapper = mount(createTree({ onDragEnter }));
       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
-      wrapper.find('.dropTarget').simulate('dragEnter');
+      wrapper.find('.dropTarget').at(0).simulate('dragEnter');
       expect(onDragEnter).not.toBeCalled();
       setTimeout(() => {
         const event = onDragEnter.mock.calls[0][0];
-        expect(event.node).toBe(wrapper.find(TreeNode).at(2).node);
+        expect(event.node).toBe(wrapper.find(TreeNode).at(2).instance());
         expect(event.expandedKeys).toEqual(['0-0-0-1', '0-0']);
         done();
       }, 400);
@@ -705,27 +721,27 @@ describe('Tree', () => {
     it('fires dragOver event', () => {
       const onDragOver = jest.fn();
       const wrapper = mount(createTree({ onDragOver }));
-      wrapper.find('.dropTarget').simulate('dragOver');
+      wrapper.find('.dropTarget').at(0).simulate('dragOver');
       const event = onDragOver.mock.calls[0][0];
-      expect(event.node).toBe(wrapper.find(TreeNode).at(2).node);
+      expect(event.node).toBe(wrapper.find(TreeNode).at(2).instance());
     });
 
     it('fires dragLeave event', () => {
       const onDragLeave = jest.fn();
       const wrapper = mount(createTree({ onDragLeave }));
-      wrapper.find('.dropTarget').simulate('dragLeave');
+      wrapper.find('.dropTarget').at(0).simulate('dragLeave');
       const event = onDragLeave.mock.calls[0][0];
-      expect(event.node).toBe(wrapper.find(TreeNode).at(2).node);
+      expect(event.node).toBe(wrapper.find(TreeNode).at(2).instance());
     });
 
     it('fires drop event', () => {
       const onDrop = jest.fn();
       const wrapper = mount(createTree({ onDrop }));
       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
-      wrapper.find('.dropTarget').simulate('drop');
+      wrapper.find('.dropTarget').at(0).simulate('drop');
       const event = onDrop.mock.calls[0][0];
-      expect(event.node).toBe(wrapper.find(TreeNode).at(2).node);
-      expect(event.dragNode).toBe(wrapper.find(TreeNode).at(1).node);
+      expect(event.node).toBe(wrapper.find(TreeNode).at(2).instance());
+      expect(event.dragNode).toBe(wrapper.find(TreeNode).at(1).instance());
       expect(event.dragNodesKeys).toEqual(['0-0-0-0']);
     });
 
@@ -734,7 +750,7 @@ describe('Tree', () => {
       const wrapper = mount(createTree({ onDragEnd }));
       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragEnd');
       const event = onDragEnd.mock.calls[0][0];
-      expect(event.node).toBe(wrapper.find(TreeNode).at(1).node);
+      expect(event.node).toBe(wrapper.find(TreeNode).at(1).instance());
     });
   });
 

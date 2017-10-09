@@ -7,45 +7,44 @@ import Tree, { TreeNode } from 'rc-tree';
 import 'rc-tree/assets/index.less';
 import './basic.less';
 
-const Demo = React.createClass({
-  propTypes: {
+class Demo extends React.Component {
+  static propTypes = {
     keys: PropTypes.array,
-  },
-  getDefaultProps() {
-    return {
-      keys: ['0-0-0-0'],
-    };
-  },
-  getInitialState() {
-    const keys = this.props.keys;
-    return {
+  };
+  static defaultProps = {
+    keys: ['0-0-0-0'],
+  };
+  constructor(props) {
+    super(props);
+    const keys = props.keys;
+    this.state = {
       defaultExpandedKeys: keys,
       defaultSelectedKeys: keys,
       defaultCheckedKeys: keys,
       switchIt: true,
     };
-  },
+  }
   onExpand(expandedKeys) {
     console.log('onExpand', expandedKeys, arguments);
-  },
+  }
   onSelect(selectedKeys, info) {
     console.log('selected', selectedKeys, info);
     this.selKey = info.node.props.eventKey;
-  },
+  }
   onCheck(checkedKeys, info) {
     console.log('onCheck', checkedKeys, info);
-  },
+  }
   onEdit() {
     setTimeout(() => {
       console.log('current key: ', this.selKey);
     }, 0);
-  },
+  }
   onDel(e) {
     if (!window.confirm('sure to delete?')) {
       return;
     }
     e.stopPropagation();
-  },
+  }
   render() {
     const customLabel = (<span className="cus-label">
       <span>operations: </span>
@@ -96,7 +95,7 @@ const Demo = React.createClass({
         </TreeNode>
       </Tree>
     </div>);
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

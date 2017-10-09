@@ -7,14 +7,20 @@ exports[`Tree renders correctly 1`] = `
   <li
     class="spe">
     <span
-      class="rc-tree-switcher rc-tree-switcher_open" />
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
     <span
-      class="rc-tree-checkbox" />
+      class="rc-tree-checkbox">
+      
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
       title="parent 1">
       <span
-        class="rc-tree-iconEle rc-tree-icon__open" />
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
       <span
         class="rc-tree-title">
         parent 1
@@ -26,14 +32,20 @@ exports[`Tree renders correctly 1`] = `
       <li
         class="rc-tree-treenode-disabled">
         <span
-          class="rc-tree-switcher rc-tree-switcher_open rc-tree-switcher-disabled" />
+          class="rc-tree-switcher rc-tree-switcher_open rc-tree-switcher-disabled">
+          
+        </span>
         <span
-          class="rc-tree-checkbox rc-tree-checkbox-disabled" />
+          class="rc-tree-checkbox rc-tree-checkbox-disabled">
+          
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
           title="leaf 1">
           <span
-            class="rc-tree-iconEle rc-tree-icon__open" />
+            class="rc-tree-iconEle rc-tree-icon__open">
+            
+          </span>
           <span
             class="rc-tree-title">
             leaf 1
@@ -45,14 +57,20 @@ exports[`Tree renders correctly 1`] = `
           <li
             class="">
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop" />
+              class="rc-tree-switcher rc-tree-switcher-noop">
+              
+            </span>
             <span
-              class="rc-tree-checkbox" />
+              class="rc-tree-checkbox">
+              
+            </span>
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
               title="leaf">
               <span
-                class="rc-tree-iconEle rc-tree-icon__docu" />
+                class="rc-tree-iconEle rc-tree-icon__docu">
+                
+              </span>
               <span
                 class="rc-tree-title">
                 leaf
@@ -62,14 +80,20 @@ exports[`Tree renders correctly 1`] = `
           <li
             class="">
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop" />
+              class="rc-tree-switcher rc-tree-switcher-noop">
+              
+            </span>
             <span
-              class="rc-tree-checkbox" />
+              class="rc-tree-checkbox">
+              
+            </span>
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
               title="leaf">
               <span
-                class="rc-tree-iconEle rc-tree-icon__docu" />
+                class="rc-tree-iconEle rc-tree-icon__docu">
+                
+              </span>
               <span
                 class="rc-tree-title">
                 leaf
@@ -81,14 +105,20 @@ exports[`Tree renders correctly 1`] = `
       <li
         class="">
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop" />
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
         <span
-          class="rc-tree-checkbox rc-tree-checkbox-disabled" />
+          class="rc-tree-checkbox rc-tree-checkbox-disabled">
+          
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="leaf 2">
           <span
-            class="rc-tree-iconEle rc-tree-icon__docu" />
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
           <span
             class="rc-tree-title">
             leaf 2
@@ -108,12 +138,16 @@ exports[`Tree renders opaque children correctly 1`] = `
   <li
     class="">
     <span
-      class="rc-tree-switcher rc-tree-switcher_close" />
+      class="rc-tree-switcher rc-tree-switcher_close">
+      
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
       title="0">
       <span
-        class="rc-tree-iconEle rc-tree-icon__close" />
+        class="rc-tree-iconEle rc-tree-icon__close">
+        
+      </span>
       <span
         class="rc-tree-title">
         0

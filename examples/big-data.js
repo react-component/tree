@@ -1,27 +1,22 @@
 /* eslint no-console:0 */
 import 'rc-tree/assets/index.less';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
 import Gen from './big-data-generator';
 
-const Demo = React.createClass({
-  propTypes: {
+class Demo extends React.Component {
+  static propTypes = {
     multiple: PropTypes.bool,
-  },
-  getDefaultProps() {
-    return {
-    };
-  },
-  getInitialState() {
-    return {
-      gData: [],
-      expandedKeys: [],
-      checkedKeys: [],
-      checkedKeys1: [],
-      selectedKeys: [],
-    };
-  },
+  };
+  state = {
+    gData: [],
+    expandedKeys: [],
+    checkedKeys: [],
+    checkedKeys1: [],
+    selectedKeys: [],
+  };
   componentWillUpdate(nextProps, nextState) {
     // invoked immediately before rendering with new props or state, not for initial 'render'
     // see componentWillReceiveProps if you need to call setState
@@ -31,25 +26,25 @@ const Demo = React.createClass({
     } else {
       this.notReRender = false;
     }
-  },
-  onCheck(checkedKeys) {
+  }
+  onCheck = (checkedKeys) => {
     this.setState({
       checkedKeys,
     });
-  },
-  onCheckStrictly(checkedKeys1, /* extra*/) {
+  }
+  onCheckStrictly = (checkedKeys1, /* extra*/) => {
     console.log(arguments);
     this.setState({
       checkedKeys1,
     });
-  },
-  onSelect(selectedKeys, info) {
+  }
+  onSelect = (selectedKeys, info) => {
     console.log('onSelect', selectedKeys, info);
     this.setState({
       selectedKeys,
     });
-  },
-  onGen(data) {
+  }
+  onGen = (data) => {
     this.setState({
       gData: data,
       expandedKeys: ['0-0-0-key'],
@@ -58,7 +53,7 @@ const Demo = React.createClass({
       checkedKeys1: ['0-0-0-key'],
       selectedKeys: [],
     });
-  },
+  }
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -112,7 +107,7 @@ const Demo = React.createClass({
         </div>
       </div> : null}
     </div>);
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));
