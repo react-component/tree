@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>dropdown.js - example - rc-tree@1.7.7</title>
+  <title>dropdown.js - example - rc-tree@1.7.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.7.7</h1>
+      <h1>rc-tree@1.7.8</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -273,8 +273,9 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-comment">/* eslint no-console:0 */</span>
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./dropdown.less'</span>;
-<span class="hljs-keyword">import</span> React, { PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
 <span class="hljs-keyword">import</span> Tree, { TreeNode } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
 <span class="hljs-keyword">import</span> Trigger <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-trigger'</span>;
 <span class="hljs-keyword">import</span> { gData } <span class="hljs-keyword">from</span> <span class="hljs-string">'./util'</span>;
@@ -299,9 +300,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     targetOffset: [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
   },
 };
-<span class="hljs-keyword">const</span> DropdownTree = React.createClass({
-  propTypes: {
-    minOverlayWidthMatchTrigger: PropTypes.bool,
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DropdownTree</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  static propTypes = {
     onVisibleChange: PropTypes.func,
     prefixCls: PropTypes.string,
     children: PropTypes.any,
@@ -312,45 +312,45 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     overlayStyle: PropTypes.object,
     placement: PropTypes.string,
     trigger: PropTypes.array,
-  },
-  getDefaultProps() {
-    <span class="hljs-keyword">return</span> {
-      minOverlayWidthMatchTrigger: <span class="hljs-literal">true</span>,
-      prefixCls: <span class="hljs-string">'demo-dropdown-tree'</span>,
-      trigger: [<span class="hljs-string">'hover'</span>],
-      overlayClassName: <span class="hljs-string">''</span>,
-      overlayStyle: {},
-      defaultVisible: <span class="hljs-literal">false</span>,
-      onVisibleChange() {
-      },
-      placement: <span class="hljs-string">'bottomLeft'</span>,
-    };
-  },
-  getInitialState() {
-    <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
+    defaultVisible: PropTypes.bool,
+    visible: PropTypes.bool,
+  };
+  static defaultProps = {
+    prefixCls: <span class="hljs-string">'demo-dropdown-tree'</span>,
+    trigger: [<span class="hljs-string">'hover'</span>],
+    overlayClassName: <span class="hljs-string">''</span>,
+    overlayStyle: {},
+    defaultVisible: <span class="hljs-literal">false</span>,
+    onVisibleChange() {
+    },
+    placement: <span class="hljs-string">'bottomLeft'</span>,
+  };
+  constructor(props) {
+    <span class="hljs-keyword">super</span>(props);
     <span class="hljs-keyword">if</span> (<span class="hljs-string">'visible'</span> <span class="hljs-keyword">in</span> props) {
-      <span class="hljs-keyword">return</span> {
+      <span class="hljs-keyword">this</span>.state = {
         visible: props.visible,
       };
+      <span class="hljs-keyword">return</span>;
     }
-    <span class="hljs-keyword">return</span> {
+    <span class="hljs-keyword">this</span>.state = {
       visible: props.defaultVisible,
     };
-  },
+  }
   componentWillReceiveProps(props) {
     <span class="hljs-keyword">if</span> (<span class="hljs-string">'visible'</span> <span class="hljs-keyword">in</span> props) {
       <span class="hljs-keyword">this</span>.setState({
         visible: props.visible,
       });
     }
-  },
-  onChange(value) {
+  }
+  onChange = (value) =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'change'</span>, value);
-  },
-  onSelect(value) {
+  }
+  onSelect = (value) =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'select '</span>, value);
-  },
-  onClick(e) {
+  }
+  onClick = (e) =&gt; {
     <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
     <span class="hljs-keyword">const</span> overlayProps = props.overlay.props;
     <span class="hljs-keyword">if</span> (!(<span class="hljs-string">'visible'</span> <span class="hljs-keyword">in</span> props)) {
@@ -361,8 +361,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-keyword">if</span> (overlayProps.onClick) {
       overlayProps.onClick(e);
     }
-  },
-  onVisibleChange(v) {
+  }
+  onVisibleChange = (v) =&gt; {
     <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
     <span class="hljs-keyword">if</span> (!(<span class="hljs-string">'visible'</span> <span class="hljs-keyword">in</span> props)) {
       <span class="hljs-keyword">this</span>.setState({
@@ -370,23 +370,14 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       });
     }
     props.onVisibleChange(v);
-  },
-  getPopupElement() {
+  }
+  getPopupElement = () =&gt; {
     <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
     <span class="hljs-keyword">return</span> React.cloneElement(props.overlay, {
       <span class="hljs-comment">// prefixCls: `${props.prefixCls}-menu`,</span>
       onClick: <span class="hljs-keyword">this</span>.onClick,
     });
-  },
-  afterVisibleChange(visible) {
-    <span class="hljs-keyword">if</span> (visible &amp;&amp; <span class="hljs-keyword">this</span>.props.minOverlayWidthMatchTrigger) {
-      <span class="hljs-keyword">const</span> overlayNode = <span class="hljs-keyword">this</span>.refs.trigger.getPopupDomNode();
-      <span class="hljs-keyword">const</span> rootNode = ReactDOM.findDOMNode(<span class="hljs-keyword">this</span>);
-      <span class="hljs-keyword">if</span> (rootNode.offsetWidth &gt; overlayNode.offsetWidth) {
-        overlayNode.style.width = <span class="hljs-string">`<span class="hljs-subst">${rootNode.offsetWidth}</span>px`</span>;
-      }
-    }
-  },
+  }
   render() {
     <span class="hljs-keyword">const</span> { prefixCls, children,
       transitionName, animation,
@@ -406,43 +397,40 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-attribute">popupTransitionName</span>=<span class="hljs-value">{transitionName}</span>
         <span class="hljs-attribute">popupAnimation</span>=<span class="hljs-value">{animation}</span>
         <span class="hljs-attribute">popupVisible</span>=<span class="hljs-value">{this.state.visible}</span>
-        <span class="hljs-attribute">afterPopupVisibleChange</span>=<span class="hljs-value">{this.afterVisibleChange}</span>
         <span class="hljs-attribute">popup</span>=<span class="hljs-value">{this.getPopupElement()}</span>
         <span class="hljs-attribute">onPopupVisibleChange</span>=<span class="hljs-value">{this.onVisibleChange}</span>
       &gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-title">Trigger</span>&gt;</span>
     )</span>;
-  },
-});
+  }
+}
 
-<span class="hljs-keyword">const</span> Demo = React.createClass({
-  getInitialState() {
-    <span class="hljs-keyword">return</span> {
-      visible: <span class="hljs-literal">false</span>,
-      inputValue: <span class="hljs-string">''</span>,
-      sel: <span class="hljs-string">''</span>,
-      expandedKeys: [],
-      autoExpandParent: <span class="hljs-literal">true</span>,
-    };
-  },
-  onChange(event) {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    visible: <span class="hljs-literal">false</span>,
+    inputValue: <span class="hljs-string">''</span>,
+    sel: <span class="hljs-string">''</span>,
+    expandedKeys: [],
+    autoExpandParent: <span class="hljs-literal">true</span>,
+  };
+  onChange = (event) =&gt; {
     <span class="hljs-keyword">this</span>.filterKeys = [];
     <span class="hljs-keyword">this</span>.setState({
       inputValue: event.target.value,
     });
-  },
-  onVisibleChange(visible) {
+  }
+  onVisibleChange = (visible) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       visible,
     });
-  },
-  onSelect(selectedKeys, info) {
+  }
+  onSelect = (selectedKeys, info) =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected: '</span>, info);
     <span class="hljs-keyword">this</span>.setState({
       visible: <span class="hljs-literal">false</span>,
       sel: info.node.props.title,
     });
-  },
-  onExpand(expandedKeys) {
+  }
+  onExpand = (expandedKeys) =&gt; {
     <span class="hljs-keyword">this</span>.filterKeys = <span class="hljs-literal">undefined</span>;
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, <span class="hljs-built_in">arguments</span>);
     <span class="hljs-comment">// if not set autoExpandParent to false, if children expanded, parent can not collapse.</span>
@@ -451,18 +439,18 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       expandedKeys,
       autoExpandParent: <span class="hljs-literal">false</span>,
     });
-  },
-  filterTreeNode(treeNode) {
+  }
+  filterTreeNode = (treeNode) =&gt; {
     <span class="hljs-built_in">console</span>.log(treeNode);
     <span class="hljs-comment">// 根据 key 进行搜索，可以根据其他数据，如 value</span>
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.filterFn(treeNode.props.eventKey);
-  },
-  filterFn(key) {
+  }
+  filterFn = (key) =&gt; {
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.inputValue &amp;&amp; key.indexOf(<span class="hljs-keyword">this</span>.state.inputValue) &gt; -<span class="hljs-number">1</span>) {
       <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     }
     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-  },
+  }
   render() {
     <span class="hljs-keyword">const</span> loop = data =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
@@ -505,8 +493,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"demo-dropdown-trigger"</span>&gt;</span>{this.state.sel}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">DropdownTree</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  },
-});
+  }
+}
 
 ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>

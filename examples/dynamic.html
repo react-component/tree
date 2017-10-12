@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>dynamic.js - example - rc-tree@1.7.7</title>
+  <title>dynamic.js - example - rc-tree@1.7.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.7.7</h1>
+      <h1>rc-tree@1.7.8</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -319,14 +319,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   setLeaf(treeData, curKey, level);
 }
 
-<span class="hljs-keyword">const</span> Demo = React.createClass({
-  propTypes: {},
-  getInitialState() {
-    <span class="hljs-keyword">return</span> {
-      treeData: [],
-      checkedKeys: [],
-    };
-  },
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    treeData: [],
+    checkedKeys: [],
+  };
   componentDidMount() {
     setTimeout(() =&gt; {
       <span class="hljs-keyword">this</span>.setState({
@@ -338,17 +335,17 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         checkedKeys: [<span class="hljs-string">'0-0'</span>],
       });
     }, <span class="hljs-number">100</span>);
-  },
-  onSelect(info) {
+  }
+  onSelect = (info) =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected'</span>, info);
-  },
-  onCheck(checkedKeys) {
+  }
+  onCheck = (checkedKeys) =&gt; {
     <span class="hljs-built_in">console</span>.log(checkedKeys);
     <span class="hljs-keyword">this</span>.setState({
       checkedKeys,
     });
-  },
-  onLoadData(treeNode) {
+  }
+  onLoadData = (treeNode) =&gt; {
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve) =&gt; {
       setTimeout(() =&gt; {
         <span class="hljs-keyword">const</span> treeData = [...this.state.treeData];
@@ -357,7 +354,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         resolve();
       }, <span class="hljs-number">500</span>);
     });
-  },
+  }
   render() {
     <span class="hljs-keyword">const</span> loop = (data) =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
@@ -384,8 +381,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
-  },
-});
+  }
+}
 
 ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>

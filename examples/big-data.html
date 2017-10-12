@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>big-data.js - example - rc-tree@1.7.7</title>
+  <title>big-data.js - example - rc-tree@1.7.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.7.7</h1>
+      <h1>rc-tree@1.7.8</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -271,28 +271,23 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
     <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0 */</span>
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> React, { PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, { TreeNode } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
 <span class="hljs-keyword">import</span> Gen <span class="hljs-keyword">from</span> <span class="hljs-string">'./big-data-generator'</span>;
 
-<span class="hljs-keyword">const</span> Demo = React.createClass({
-  propTypes: {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  static propTypes = {
     multiple: PropTypes.bool,
-  },
-  getDefaultProps() {
-    <span class="hljs-keyword">return</span> {
-    };
-  },
-  getInitialState() {
-    <span class="hljs-keyword">return</span> {
-      gData: [],
-      expandedKeys: [],
-      checkedKeys: [],
-      checkedKeys1: [],
-      selectedKeys: [],
-    };
-  },
+  };
+  state = {
+    gData: [],
+    expandedKeys: [],
+    checkedKeys: [],
+    checkedKeys1: [],
+    selectedKeys: [],
+  };
   componentWillUpdate(nextProps, nextState) {
     <span class="hljs-comment">// invoked immediately before rendering with new props or state, not for initial 'render'</span>
     <span class="hljs-comment">// see componentWillReceiveProps if you need to call setState</span>
@@ -302,25 +297,25 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     } <span class="hljs-keyword">else</span> {
       <span class="hljs-keyword">this</span>.notReRender = <span class="hljs-literal">false</span>;
     }
-  },
-  onCheck(checkedKeys) {
+  }
+  onCheck = (checkedKeys) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       checkedKeys,
     });
-  },
-  onCheckStrictly(checkedKeys1, <span class="hljs-comment">/* extra*/</span>) {
+  }
+  onCheckStrictly = (checkedKeys1, <span class="hljs-comment">/* extra*/</span>) =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">arguments</span>);
     <span class="hljs-keyword">this</span>.setState({
       checkedKeys1,
     });
-  },
-  onSelect(selectedKeys, info) {
+  }
+  onSelect = (selectedKeys, info) =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onSelect'</span>, selectedKeys, info);
     <span class="hljs-keyword">this</span>.setState({
       selectedKeys,
     });
-  },
-  onGen(data) {
+  }
+  onGen = (data) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       gData: data,
       expandedKeys: [<span class="hljs-string">'0-0-0-key'</span>],
@@ -329,7 +324,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       checkedKeys1: [<span class="hljs-string">'0-0-0-key'</span>],
       selectedKeys: [],
     });
-  },
+  }
   render() {
     <span class="hljs-keyword">const</span> loop = data =&gt; {
       <span class="hljs-keyword">return</span> data.map((item) =&gt; {
@@ -383,8 +378,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span> : null}
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  },
-});
+  }
+}
 
 ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>

@@ -7,17 +7,29 @@ webpackJsonp([3],{
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_tree_assets_index_less__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_tree_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rc_tree_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__draggable_less__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__draggable_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__draggable_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tree__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_tree__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tree_assets_index_less__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tree_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_tree_assets_index_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__draggable_less__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__draggable_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__draggable_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_dom__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_tree__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rc_tree__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__util__ = __webpack_require__(29);
+
+
+
+
 
 /* eslint no-console:0 */
 
@@ -27,118 +39,132 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var Demo = __WEBPACK_IMPORTED_MODULE_3_react___default.a.createClass({
-  displayName: 'Demo',
-  getInitialState: function getInitialState() {
-    return {
-      gData: __WEBPACK_IMPORTED_MODULE_6__util__["a" /* gData */],
+var Demo = function (_React$Component) {
+  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Demo, _React$Component);
+
+  function Demo() {
+    var _ref,
+        _arguments = arguments;
+
+    var _temp, _this, _ret;
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Demo);
+
+    return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      gData: __WEBPACK_IMPORTED_MODULE_10__util__["a" /* gData */],
       autoExpandParent: true,
       expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key']
-    };
-  },
-  onDragStart: function onDragStart(info) {
-    console.log('start', info);
-  },
-  onDragEnter: function onDragEnter(info) {
-    console.log('enter', info);
-    this.setState({
-      expandedKeys: info.expandedKeys
-    });
-  },
-  onDrop: function onDrop(info) {
-    console.log('drop', info);
-    var dropKey = info.node.props.eventKey;
-    var dragKey = info.dragNode.props.eventKey;
-    // const dragNodesKeys = info.dragNodesKeys;
-    var loop = function loop(data, key, callback) {
-      data.forEach(function (item, index, arr) {
-        if (item.key === key) {
-          return callback(item, index, arr);
-        }
-        if (item.children) {
-          return loop(item.children, key, callback);
-        }
+    }, _this.onDragStart = function (info) {
+      console.log('start', info);
+    }, _this.onDragEnter = function (info) {
+      console.log('enter', info);
+      _this.setState({
+        expandedKeys: info.expandedKeys
       });
-    };
-    var data = [].concat(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default()(this.state.gData));
-    var dragObj = void 0;
-    loop(data, dragKey, function (item, index, arr) {
-      arr.splice(index, 1);
-      dragObj = item;
-    });
-    if (info.dropToGap) {
-      var ar = void 0;
-      var i = void 0;
-      loop(data, dropKey, function (item, index, arr) {
-        ar = arr;
-        i = index;
+    }, _this.onDrop = function (info) {
+      console.log('drop', info);
+      var dropKey = info.node.props.eventKey;
+      var dragKey = info.dragNode.props.eventKey;
+      // const dragNodesKeys = info.dragNodesKeys;
+      var loop = function loop(data, key, callback) {
+        data.forEach(function (item, index, arr) {
+          if (item.key === key) {
+            return callback(item, index, arr);
+          }
+          if (item.children) {
+            return loop(item.children, key, callback);
+          }
+        });
+      };
+      var data = [].concat(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default()(_this.state.gData));
+      var dragObj = void 0;
+      loop(data, dragKey, function (item, index, arr) {
+        arr.splice(index, 1);
+        dragObj = item;
       });
-      ar.splice(i, 0, dragObj);
-    } else {
-      loop(data, dropKey, function (item) {
-        item.children = item.children || [];
-        // where to insert 示例添加到尾部，可以是随意位置
-        item.children.push(dragObj);
+      if (info.dropToGap) {
+        var ar = void 0;
+        var i = void 0;
+        loop(data, dropKey, function (item, index, arr) {
+          ar = arr;
+          i = index;
+        });
+        ar.splice(i, 0, dragObj);
+      } else {
+        loop(data, dropKey, function (item) {
+          item.children = item.children || [];
+          // where to insert 示例添加到尾部，可以是随意位置
+          item.children.push(dragObj);
+        });
+      }
+      _this.setState({
+        gData: data
       });
-    }
-    this.setState({
-      gData: data
-    });
-  },
-  onExpand: function onExpand(expandedKeys) {
-    console.log('onExpand', arguments);
-    this.setState({
-      expandedKeys: expandedKeys,
-      autoExpandParent: false
-    });
-  },
-  render: function render() {
-    var loop = function loop(data) {
-      return data.map(function (item) {
-        if (item.children && item.children.length) {
-          return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_5_rc_tree__["TreeNode"],
-            { key: item.key, title: item.title },
-            loop(item.children)
-          );
-        }
-        return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_rc_tree__["TreeNode"], { key: item.key, title: item.title });
+    }, _this.onExpand = function (expandedKeys) {
+      console.log('onExpand', _arguments);
+      _this.setState({
+        expandedKeys: expandedKeys,
+        autoExpandParent: false
       });
-    };
-    return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-      'div',
-      { className: 'draggable-demo' },
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-        'h2',
-        null,
-        'draggable '
-      ),
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-        'p',
-        null,
-        'drag a node into another node'
-      ),
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-        'div',
-        { className: 'draggable-container' },
-        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_5_rc_tree___default.a,
-          {
-            expandedKeys: this.state.expandedKeys,
-            onExpand: this.onExpand, autoExpandParent: this.state.autoExpandParent,
-            draggable: true,
-            onDragStart: this.onDragStart,
-            onDragEnter: this.onDragEnter,
-            onDrop: this.onDrop
-          },
-          loop(this.state.gData)
-        )
-      )
-    );
+    }, _temp), __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
   }
-});
 
-__WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Demo, [{
+    key: 'render',
+    value: function render() {
+      var loop = function loop(data) {
+        return data.map(function (item) {
+          if (item.children && item.children.length) {
+            return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_9_rc_tree__["TreeNode"],
+              { key: item.key, title: item.title },
+              loop(item.children)
+            );
+          }
+          return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9_rc_tree__["TreeNode"], { key: item.key, title: item.title });
+        });
+      };
+      return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+        'div',
+        { className: 'draggable-demo' },
+        __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+          'h2',
+          null,
+          'draggable '
+        ),
+        __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+          'p',
+          null,
+          'drag a node into another node'
+        ),
+        __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+          'div',
+          { className: 'draggable-container' },
+          __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_9_rc_tree___default.a,
+            {
+              expandedKeys: this.state.expandedKeys,
+              onExpand: this.onExpand, autoExpandParent: this.state.autoExpandParent,
+              draggable: true,
+              onDragStart: this.onDragStart,
+              onDragEnter: this.onDragEnter,
+              onDrop: this.onDrop
+            },
+            loop(this.state.gData)
+          )
+        )
+      );
+    }
+  }]);
+
+  return Demo;
+}(__WEBPACK_IMPORTED_MODULE_7_react___default.a.Component);
+
+__WEBPACK_IMPORTED_MODULE_8_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }),
 

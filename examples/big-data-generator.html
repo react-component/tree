@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>big-data-generator.js - example - rc-tree@1.7.7</title>
+  <title>big-data-generator.js - example - rc-tree@1.7.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,54 +263,51 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.7.7</h1>
+      <h1>rc-tree@1.7.8</h1>
 
       <p>tree ui component for react</p>
     </div>
     <div class="example" id="__react-content"></div>
 
-    <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> React, { PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+    <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
 <span class="hljs-keyword">import</span> { generateData, calcTotal } <span class="hljs-keyword">from</span> <span class="hljs-string">'./util'</span>;
 
-<span class="hljs-keyword">const</span> Gen = React.createClass({
-  propTypes: {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gen</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  static propTypes = {
     onGen: PropTypes.func,
     x: PropTypes.number,
     y: PropTypes.number,
     z: PropTypes.number,
-  },
-  getDefaultProps() {
-    <span class="hljs-keyword">return</span> {
-      onGen: () =&gt; {},
-      x: <span class="hljs-number">20</span>,
-      y: <span class="hljs-number">18</span>,
-      z: <span class="hljs-number">1</span>,
-    };
-  },
-  getInitialState() {
-    <span class="hljs-keyword">return</span> {
-      nums: <span class="hljs-string">''</span>,
-    };
-  },
+  };
+  static defaultProps = {
+    onGen: () =&gt; {},
+    x: <span class="hljs-number">20</span>,
+    y: <span class="hljs-number">18</span>,
+    z: <span class="hljs-number">1</span>,
+  };
+  state = {
+    nums: <span class="hljs-string">''</span>,
+  };
   componentDidMount() {
     <span class="hljs-keyword">const</span> vals = <span class="hljs-keyword">this</span>.getVals();
     <span class="hljs-keyword">this</span>.props.onGen(generateData(vals.x, vals.y, vals.z));
-  },
-  onGen(e) {
+  }
+  onGen = (e) =&gt; {
     e.preventDefault();
     <span class="hljs-keyword">const</span> vals = <span class="hljs-keyword">this</span>.getVals();
     <span class="hljs-keyword">this</span>.props.onGen(generateData(vals.x, vals.y, vals.z));
     <span class="hljs-keyword">this</span>.setState({
       nums: calcTotal(vals.x, vals.y, vals.z),
     });
-  },
+  }
   getVals() {
     <span class="hljs-keyword">return</span> {
       x: <span class="hljs-built_in">parseInt</span>(<span class="hljs-keyword">this</span>.refs.x.value, <span class="hljs-number">10</span>),
       y: <span class="hljs-built_in">parseInt</span>(<span class="hljs-keyword">this</span>.refs.y.value, <span class="hljs-number">10</span>),
       z: <span class="hljs-built_in">parseInt</span>(<span class="hljs-keyword">this</span>.refs.z.value, <span class="hljs-number">10</span>),
     };
-  },
+  }
   render() {
     <span class="hljs-keyword">const</span> { x, y, z } = <span class="hljs-keyword">this</span>.props;
     <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">padding:</span> '<span class="hljs-attribute">0</span> <span class="hljs-attribute">20px</span>' }}&gt;</span>
@@ -332,8 +329,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
       <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  },
-});
+  }
+}
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Gen;
 </code></pre></div>
   </div>

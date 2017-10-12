@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>basic.js - example - rc-tree@1.7.7</title>
+  <title>basic.js - example - rc-tree@1.7.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.7.7</h1>
+      <h1>rc-tree@1.7.8</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -278,45 +278,44 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./basic.less'</span>;
 
-<span class="hljs-keyword">const</span> Demo = React.createClass({
-  propTypes: {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  static propTypes = {
     keys: PropTypes.array,
-  },
-  getDefaultProps() {
-    <span class="hljs-keyword">return</span> {
-      keys: [<span class="hljs-string">'0-0-0-0'</span>],
-    };
-  },
-  getInitialState() {
-    <span class="hljs-keyword">const</span> keys = <span class="hljs-keyword">this</span>.props.keys;
-    <span class="hljs-keyword">return</span> {
+  };
+  static defaultProps = {
+    keys: [<span class="hljs-string">'0-0-0-0'</span>],
+  };
+  constructor(props) {
+    <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-keyword">const</span> keys = props.keys;
+    <span class="hljs-keyword">this</span>.state = {
       defaultExpandedKeys: keys,
       defaultSelectedKeys: keys,
       defaultCheckedKeys: keys,
       switchIt: <span class="hljs-literal">true</span>,
     };
-  },
+  }
   onExpand(expandedKeys) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expandedKeys, <span class="hljs-built_in">arguments</span>);
-  },
+  }
   onSelect(selectedKeys, info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected'</span>, selectedKeys, info);
     <span class="hljs-keyword">this</span>.selKey = info.node.props.eventKey;
-  },
+  }
   onCheck(checkedKeys, info) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onCheck'</span>, checkedKeys, info);
-  },
+  }
   onEdit() {
     setTimeout(() =&gt; {
       <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'current key: '</span>, <span class="hljs-keyword">this</span>.selKey);
     }, <span class="hljs-number">0</span>);
-  },
+  }
   onDel(e) {
     <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">window</span>.confirm(<span class="hljs-string">'sure to delete?'</span>)) {
       <span class="hljs-keyword">return</span>;
     }
     e.stopPropagation();
-  },
+  }
   render() {
     <span class="hljs-keyword">const</span> customLabel = (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"cus-label"</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>operations: <span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
@@ -367,8 +366,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  },
-});
+  }
+}
 
 ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
