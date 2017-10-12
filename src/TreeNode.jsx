@@ -260,10 +260,11 @@ class TreeNode extends React.Component {
           domProps.className += ` ${prefixCls}-node-selected`;
         }
         domProps.onClick = (e) => {
-          e.preventDefault();
           if (this.isSelectable()) {
+            e.preventDefault();
             this.onSelect();
           } else if (props.checkable && !props.disableCheckbox) {
+            e.preventDefault();
             // && !props.disabled is checked on line 259
             this.onCheck();
           }
