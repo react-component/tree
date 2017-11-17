@@ -124,8 +124,13 @@ export function getStrictlyValue(checkedKeys, halfChecked) {
   return checkedKeys;
 }
 
-export function isInclude(smallArray, bigArray) {
-  return smallArray.every((item, index) => {
-    return item === bigArray[index];
-  });
+export function isPositionPrefix(smallPos, bigPos) {
+  if (bigPos.length < smallPos.length) {
+    return false;
+  }
+  // attention: "0-0-1" "0-0-10"
+  if ((bigPos.length > smallPos.length) && (bigPos.charAt(smallPos.length) !== '-')) {
+    return false;
+  }
+  return bigPos.substr(0, smallPos.length) === smallPos;
 }

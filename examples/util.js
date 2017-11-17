@@ -37,12 +37,17 @@ console.log('总节点数（单个tree）：', calcTotal());
 
 export const gData = generateData();
 
-export function isInclude(smallArray, bigArray) {
-  return smallArray.every((ii, i) => {
-    return ii === bigArray[i];
-  });
+function isPositionPrefix(smallPos, bigPos) {
+  if (bigPos.length < smallPos.length) {
+    return false;
+  }
+  // attention: "0-0-1" "0-0-10"
+  if ((bigPos.length > smallPos.length) && (bigPos.charAt(smallPos.length) !== '-')) {
+    return false;
+  }
+  return bigPos.substr(0, smallPos.length) === smallPos;
 }
-// console.log(isInclude(['0', '1'], ['0', '10', '1']));
+// console.log(isPositionPrefix("0-1", "0-10-1"));
 
 
 // arr.length === 628, use time: ~20ms
@@ -61,7 +66,7 @@ export function filterParentPosition(arr) {
       levelObj[levelArr[i]].forEach(ii => {
         for (let j = i + 1; j < levelArr.length; j++) {
           levelObj[levelArr[j]].forEach((_i, index) => {
-            if (isInclude(ii.split('-'), _i.split('-'))) {
+            if (isPositionPrefix(ii, _i)) {
               levelObj[levelArr[j]][index] = null;
             }
           });

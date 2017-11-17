@@ -8,7 +8,7 @@ import {
   getOffset,
   getCheck,
   getStrictlyValue,
-  isInclude,
+  isPositionPrefix,
 } from './util';
 
 function noop() {}
@@ -388,13 +388,8 @@ class Tree extends React.Component {
 
   getDragNodesKeys(treeNode) {
     const dragNodesKeys = [];
-    const treeNodePosArr = treeNode.props.pos.split('-');
     traverseTreeNodes(treeNode.props.children, (item, index, pos, key) => {
-      const childPosArr = pos.split('-');
-      if (
-        treeNode.props.pos === pos ||
-        treeNodePosArr.length < childPosArr.length && isInclude(treeNodePosArr, childPosArr)
-      ) {
+      if (isPositionPrefix(treeNode.props.pos, pos)) {
         dragNodesKeys.push(key);
       }
     });
@@ -465,7 +460,7 @@ class Tree extends React.Component {
         filterExpandedKeysSet[key] = true;
       } else if (props.autoExpandParent) {
         const isCurrentParentOfExpanded =
-                expandedPositionArr.some(p => isInclude(pos.split('-'), p.split('-')));
+                expandedPositionArr.some(p => isPositionPrefix(pos, p));
         if (isCurrentParentOfExpanded) {
           filterExpandedKeysSet[key] = true;
         }
