@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "1.7.9",
+  "version": "1.7.10",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -18,12 +18,6 @@
     "es",
     "lib"
   ],
-  "entry": {
-    "rc-tree": [
-      "./assets/index.less",
-      "./src/index.js"
-    ]
-  },
   "homepage": "http://github.com/react-component/tree",
   "author": "hualei5280@gmail.com",
   "repository": {
@@ -35,7 +29,13 @@
   },
   "license": "MIT",
   "config": {
-    "port": 8018
+    "port": 8018,
+    "entry": {
+      "rc-tree": [
+        "./assets/index.less",
+        "./src/index.js"
+      ]
+    }
   },
   "scripts": {
     "build": "rc-tools run build",
@@ -69,7 +69,7 @@
     "jest": "^18.0.0",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
-    "rc-tools": "^6.x",
+    "rc-tools": "^7.x",
     "rc-tooltip": "3.x",
     "rc-trigger": "^2.0.0",
     "react": "^16.0.0",
