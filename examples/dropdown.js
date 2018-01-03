@@ -187,7 +187,7 @@ class Demo extends React.Component {
           this.filterKeys.push(item.key);
         }
         if (item.children) {
-          return <TreeNode key={item.key} title={item.key}>{loop(item.children)}</TreeNode>;
+          return <TreeNode key={item.key} title={item.key} disabled={item.disabled}>{loop(item.children)}</TreeNode>;
         }
         return <TreeNode key={item.key} title={item.key} />;
       });
