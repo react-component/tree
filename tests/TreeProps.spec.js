@@ -32,7 +32,7 @@ describe('Tree Props', () => {
 
   // showIcon
   it('showIcon', () => {
-    const wrapper = render(
+    const withIcon = render(
       <Tree>
         <TreeNode>
           <TreeNode>
@@ -43,6 +43,32 @@ describe('Tree Props', () => {
         <TreeNode />
       </Tree>
     );
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(renderToJson(withIcon)).toMatchSnapshot();
+
+    const withoutIcon = render(
+      <Tree showIcon={false}>
+        <TreeNode>
+          <TreeNode>
+            <TreeNode />
+          </TreeNode>
+          <TreeNode />
+        </TreeNode>
+        <TreeNode />
+      </Tree>
+    );
+    expect(renderToJson(withoutIcon)).toMatchSnapshot();
+
+    const withOpenIcon = render(
+      <Tree defaultExpandedKeys={['0-0']}>
+        <TreeNode>
+          <TreeNode key="0-0">
+            <TreeNode />
+          </TreeNode>
+          <TreeNode />
+        </TreeNode>
+        <TreeNode />
+      </Tree>
+    );
+    expect(renderToJson(withOpenIcon)).toMatchSnapshot();
   });
 });

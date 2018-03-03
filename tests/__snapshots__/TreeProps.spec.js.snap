@@ -62,6 +62,155 @@ exports[`Tree Props showIcon 1`] = `
 </ul>
 `;
 
+exports[`Tree Props showIcon 2`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_close">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
+      title="---">
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---">
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props showIcon 3`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+        <ul
+          class="rc-tree-child-tree rc-tree-child-tree-open"
+          data-expanded="true">
+          <li
+            class="">
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop">
+              
+            </span>
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="---">
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu">
+                
+              </span>
+              <span
+                class="rc-tree-title">
+                ---
+              </span>
+            </span>
+          </li>
+        </ul>
+      </li>
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
 exports[`Tree Props showLine 1`] = `
 <ul
   class="rc-tree rc-tree-show-line"
