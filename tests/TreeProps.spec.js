@@ -248,4 +248,40 @@ describe('Tree Props', () => {
       expect(handleOnSelect).not.toBeCalled();
     });
   });
+
+  // checkStrictly
+  it('checkStrictly', () => {
+    const handleOnCheck = jest.fn();
+
+    const withCheckStrictlyBase = (
+      <Tree
+        onCheck={handleOnCheck}
+        defaultExpandedKeys={['0-0']}
+        checkable
+        checkStrictly
+      >
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    expect(renderToJson(render(withCheckStrictlyBase))).toMatchSnapshot();
+
+    const withCheckStrictly = mount(withCheckStrictlyBase);
+    const parentNode = withCheckStrictly.find(TreeNode).first();
+    const targetNode = parentNode.find(TreeNode).last();
+
+    // Click Leaf
+    targetNode.find('.rc-tree-checkbox').simulate('click');
+    expect(handleOnCheck).toBeCalledWith({
+      checked: ['0-0-0'],
+      halfChecked: [],
+    }, expect.objectContaining({
+      event: 'check',
+      checked: true,
+      node: targetNode.instance(),
+      checkedNodes: [parentNode.props().children],
+    }));
+  });
 });

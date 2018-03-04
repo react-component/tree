@@ -1,4 +1,4 @@
-exports[`Tree Props checkable 1`] = `
+exports[`Tree Props checkStrictly 1`] = `
 <ul
   class="rc-tree"
   role="tree-node"
