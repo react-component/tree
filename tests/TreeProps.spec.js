@@ -284,4 +284,21 @@ describe('Tree Props', () => {
       checkedNodes: [parentNode.props().children],
     }));
   });
+
+  // draggable - is already full test in Tree.spec.js
+
+  // autoExpandParent - is already full test in Tree.spec.js
+
+  // defaultExpandAll
+  it('defaultExpandAll', () => {
+    const wrapper = render(
+      <Tree defaultExpandAll>
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
 });
