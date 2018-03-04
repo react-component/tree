@@ -286,7 +286,6 @@ describe('Tree Props', () => {
   });
 
   // draggable - is already full test in Tree.spec.js
-
   // autoExpandParent - is already full test in Tree.spec.js
 
   // defaultExpandAll
@@ -301,4 +300,7 @@ describe('Tree Props', () => {
 
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
+
+  // defaultCheckedKeys - is already full test in Tree.spec.js
+  // defaultSelectedKeys - is already full test in Tree.spec.js
 });
