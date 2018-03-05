@@ -137,10 +137,8 @@ class TreeNode extends React.Component {
     const prefixCls = props.prefixCls;
     const switcherCls = classNames(
       `${prefixCls}-switcher`,
-      `${prefixCls}-switcher_${expandedState}`, {
-        [`${prefixCls}-switcher-disabled`]: props.disabled,
-      });
-    return <span className={switcherCls} onClick={props.disabled ? null : this.onExpand} />;
+      `${prefixCls}-switcher_${expandedState}`);
+    return <span className={switcherCls} onClick={this.onExpand} />;
   }
 
   renderCheckbox(props) {

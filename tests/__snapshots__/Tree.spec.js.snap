@@ -32,7 +32,7 @@ exports[`Tree renders correctly 1`] = `
       <li
         class="rc-tree-treenode-disabled">
         <span
-          class="rc-tree-switcher rc-tree-switcher_open rc-tree-switcher-disabled">
+          class="rc-tree-switcher rc-tree-switcher_open">
           
         </span>
         <span
