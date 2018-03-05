@@ -1,0 +1,595 @@
+exports[`Tree Props checkStrictly 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-checkbox">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-checkbox">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props checkable default 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-checkbox">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-checkbox">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props checkable without selectable 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-checkbox">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-checkbox">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props defaultExpandAll 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props multiple 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props prefixCls 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  
+</ul>
+`;
+
+exports[`Tree Props prefixCls 2`] = `
+<ul
+  class="test-prefix"
+  role="tree-node"
+  unselectable="on">
+  
+</ul>
+`;
+
+exports[`Tree Props selectable with selectable 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props selectable without selectable 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props showIcon 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_close">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__close">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props showIcon 2`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_close">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
+      title="---">
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---">
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props showIcon 3`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true">
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+        <ul
+          class="rc-tree-child-tree rc-tree-child-tree-open"
+          data-expanded="true">
+          <li
+            class="">
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop">
+              
+            </span>
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="---">
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu">
+                
+              </span>
+              <span
+                class="rc-tree-title">
+                ---
+              </span>
+            </span>
+          </li>
+        </ul>
+      </li>
+      <li
+        class="">
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop">
+          
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---">
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu">
+            
+          </span>
+          <span
+            class="rc-tree-title">
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props showLine 1`] = `
+<ul
+  class="rc-tree rc-tree-show-line"
+  role="tree-node"
+  unselectable="on">
+  
+</ul>
+`;
