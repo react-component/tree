@@ -157,9 +157,56 @@ describe('Tree Props', () => {
     });
   });
 
-  // multiple
+  // multiple - this prop works with selectable
   it('multiple', () => {
-    // TODO: Placeholder
+    const handleOnSelect = jest.fn();
+
+    const multipleBase = (
+      <Tree
+        onSelect={handleOnSelect}
+        defaultExpandAll
+        multiple
+      >
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    expect(renderToJson(render(multipleBase))).toMatchSnapshot();
+
+    const wrapper = mount(multipleBase);
+    const parentNode = wrapper.find(TreeNode).first();
+    const targetNode = parentNode.find(TreeNode).last();
+
+    // Leaf select
+    targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
+    expect(handleOnSelect).toBeCalledWith(['0-0-0'], {
+      event: 'select',
+      selected: true,
+      node: targetNode.instance(),
+      selectedNodes: [parentNode.props().children],
+    });
+    handleOnSelect.mockReset();
+
+    // Parent select
+    parentNode.find('.rc-tree-node-content-wrapper').first().simulate('click');
+    expect(handleOnSelect).toBeCalledWith(['0-0-0', '0-0'], {
+      event: 'select',
+      selected: true,
+      node: parentNode.instance(),
+      selectedNodes: [parentNode.props().children, wrapper.find(Tree).props().children],
+    });
+    handleOnSelect.mockReset();
+
+    // Leaf un-select
+    targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
+    expect(handleOnSelect).toBeCalledWith(['0-0'], {
+      event: 'select',
+      selected: false,
+      node: targetNode.instance(),
+      selectedNodes: [wrapper.find(Tree).props().children],
+    });
   });
 
   // checkable
