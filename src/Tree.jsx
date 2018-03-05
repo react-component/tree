@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import warning from 'warning';
+// import warning from 'warning';
 import { getFullKeyList } from './util';
 
 /**
@@ -31,9 +31,11 @@ export const contextTypes = {
 class Tree extends React.Component {
   static propTypes = {
     prefixCls: PropTypes.string,
+    className: PropTypes.string,
     children: PropTypes.any,
     showLine: PropTypes.bool,
     showIcon: PropTypes.bool,
+    focusable: PropTypes.bool,
     selectable: PropTypes.bool,
     multiple: PropTypes.bool,
     checkable: PropTypes.oneOfType([
@@ -105,9 +107,9 @@ class Tree extends React.Component {
 
     const {
       defaultExpandAll,
-      defaultExpandedKeys,
-      defaultCheckedKeys,
-      defaultSelectedKeys,
+      // defaultExpandedKeys,
+      // defaultCheckedKeys,
+      // defaultSelectedKeys,
     } = props;
 
     // Sync state with props
@@ -118,11 +120,6 @@ class Tree extends React.Component {
 
       ...(this.getSyncProps(props) || {}),
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // React 16 will not trigger update if new state is null
-    this.setState(this.getSyncProps(nextProps));
   }
 
   getChildContext() {
@@ -151,6 +148,11 @@ class Tree extends React.Component {
         onExpand: this.onExpand,
       },
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // React 16 will not trigger update if new state is null
+    this.setState(this.getSyncProps(nextProps));
   }
 
   onExpand = () => {

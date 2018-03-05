@@ -30,6 +30,11 @@ class TreeNode extends React.Component {
     expanded: PropTypes.bool,
     selected: PropTypes.bool,
     children: PropTypes.node,
+    title: PropTypes.node,
+    pos: PropTypes.string,
+    dragOver: PropTypes.bool,
+    dragOverGapTop: PropTypes.bool,
+    dragOverGapBottom: PropTypes.bool,
 
     // By user
     isLeaf: PropTypes.bool,
@@ -268,7 +273,7 @@ class TreeNode extends React.Component {
         onDragEnd={this.onDragEnd}
       >
         {this.renderSwitcher()}
-        {/*{props.checkable ? this.renderCheckbox(props) : null}*/}
+        {/* {props.checkable ? this.renderCheckbox(props) : null} */}
         {this.renderSelector()}
         {this.renderChildren()}
       </li>
