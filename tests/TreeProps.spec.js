@@ -128,8 +128,9 @@ describe('Tree Props', () => {
         node: targetNode.instance(),
         selectedNodes: [parentNode.props().children],
       });
+      handleOnSelect.mockReset();
 
-      // Unselect leaf
+      // un-select leaf
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
       expect(handleOnSelect).toBeCalledWith([], {
         event: 'select',
@@ -137,6 +138,7 @@ describe('Tree Props', () => {
         node: targetNode.instance(),
         selectedNodes: [],
       });
+      handleOnSelect.mockReset();
 
       // Select leaf and then parent
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
@@ -146,6 +148,7 @@ describe('Tree Props', () => {
         node: targetNode.instance(),
         selectedNodes: [parentNode.props().children],
       });
+      handleOnSelect.mockReset();
 
       parentNode.find('.rc-tree-node-content-wrapper').first().simulate('click');
       expect(handleOnSelect).toBeCalledWith(['0-0'], {
@@ -195,7 +198,7 @@ describe('Tree Props', () => {
       event: 'select',
       selected: true,
       node: parentNode.instance(),
-      selectedNodes: [parentNode.props().children, wrapper.find(Tree).props().children],
+      selectedNodes: [wrapper.find(Tree).props().children, parentNode.props().children],
     });
     handleOnSelect.mockReset();
 
@@ -255,7 +258,7 @@ describe('Tree Props', () => {
         event: 'check',
         checked: true,
         node: targetNode.instance(),
-        checkedNodes: [parentNode.props().children, withCheckable.find(Tree).props().children],
+        checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
       }));
       expect(handleOnSelect).not.toBeCalled();
     });
@@ -290,7 +293,7 @@ describe('Tree Props', () => {
         event: 'check',
         checked: true,
         node: targetNode.instance(),
-        checkedNodes: [parentNode.props().children, withCheckable.find(Tree).props().children],
+        checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
       }));
       expect(handleOnSelect).not.toBeCalled();
     });

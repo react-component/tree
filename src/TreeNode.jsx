@@ -18,6 +18,14 @@ const defaultTitle = '---';
 
 let onlyTreeNodeWarned = false; // Only accept TreeNode
 
+
+export const nodeContextTypes = {
+  ...contextTypes,
+  rcTreeNode: PropTypes.shape({
+    onUpCheckConduct: PropTypes.func,
+  }),
+};
+
 class TreeNode extends React.Component {
   static propTypes = {
     eventKey: PropTypes.string, // Pass by parent `cloneElement`
@@ -45,9 +53,9 @@ class TreeNode extends React.Component {
     disableCheckbox: PropTypes.bool,
   };
 
-  static contextTypes = contextTypes;
+  static contextTypes = nodeContextTypes;
 
-  static childContextTypes = contextTypes;
+  static childContextTypes = nodeContextTypes;
 
   static defaultProps = {
     title: defaultTitle,
@@ -63,20 +71,20 @@ class TreeNode extends React.Component {
   }
 
   getChildContext() {
-    const { rcTree = {} } = this.context || {};
     return {
-      rcTree: {
-        ...rcTree,
+      ...this.context,
+      rcTreeNode: {
         onUpCheckConduct: this.onUpCheckConduct,
       },
     };
   }
 
-  onUpCheckConduct = (treeNode, nodeChecked) => {
+  onUpCheckConduct = (treeNode, nodeChecked, nodeHalfChecked) => {
     const { pos: nodePos } = treeNode.props;
     const { eventKey, pos, checked, halfChecked } = this.props;
     const {
-      rcTree: { checkStrictly, isKeyChecked, onUpCheckConduct, onBatchNodeCheck },
+      rcTree: { checkStrictly, isKeyChecked, onBatchNodeCheck, onCheckConductFinished },
+      rcTreeNode: { onUpCheckConduct } = {},
     } = this.context;
 
     // Ignore disabled children
@@ -96,16 +104,22 @@ class TreeNode extends React.Component {
 
     // checkStrictly will not conduct check status
     const nextChecked = checkStrictly ? checked : children.length === checkedCount;
-    const nextHalfChecked = !!children.length && !nextChecked;
+    const nextHalfChecked = checkStrictly ? // propagated or child checked
+      halfChecked : (nodeHalfChecked || (children.length > 0 && !nextChecked));
 
     // Add into batch update
     if (checked !== nextChecked || halfChecked !== nextHalfChecked) {
       onBatchNodeCheck(eventKey, nextChecked, nextHalfChecked);
-    }
 
-    // Check if need parent conduct
-    if (checked !== nextChecked) {
-      onUpCheckConduct(this, checked);
+      if (onUpCheckConduct) {
+        onUpCheckConduct(this, nextChecked, nextHalfChecked);
+      } else {
+        // Flush all the update
+        onCheckConductFinished();
+      }
+    } else {
+      // Flush all the update
+      onCheckConductFinished();
     }
   };
 
@@ -143,7 +157,8 @@ class TreeNode extends React.Component {
 
     const { disableCheckbox, checked, eventKey } = this.props;
     const {
-      rcTree: { checkable, onBatchNodeCheck, onUpCheckConduct },
+      rcTree: { checkable, onBatchNodeCheck, onCheckConductFinished },
+      rcTreeNode: { onUpCheckConduct } = {},
     } = this.context;
 
     if (!checkable || disableCheckbox) return;
@@ -151,7 +166,11 @@ class TreeNode extends React.Component {
     e.preventDefault();
     const targetChecked = !checked;
     onBatchNodeCheck(eventKey, targetChecked, false, this);
-    onUpCheckConduct(this, targetChecked);
+    if (onUpCheckConduct) {
+      onUpCheckConduct(this, targetChecked, false);
+    } else {
+      onCheckConductFinished();
+    }
     this.onDownCheckConduct(targetChecked);
   };
 

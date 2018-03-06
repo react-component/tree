@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
 import {
-  traverseTreeNodes, isPositionPrefix,
-  getFullKeyList, getPosition,
+  traverseTreeNodes, getStrictlyValue,
+  getFullKeyList, getPosition, getNodesStatistic,
+  isParent,
 } from './util';
 
 /**
@@ -37,7 +38,7 @@ export const contextTypes = {
     onExpand: PropTypes.func,
     onNodeSelect: PropTypes.func,
     onBatchNodeCheck: PropTypes.func,
-    onUpCheckConduct: PropTypes.func,
+    onCheckConductFinished: PropTypes.func,
   }),
 };
 
@@ -123,19 +124,22 @@ class Tree extends React.Component {
     const {
       defaultExpandAll,
       defaultExpandedKeys,
-      // defaultCheckedKeys,
+      defaultCheckedKeys,
       // defaultSelectedKeys,
     } = props;
 
     // Sync state with props
     // TODO: Default logic
+    const { checkedKeys = [], halfCheckedKeys = [] } =
+      this.calcCheckedKeys(defaultCheckedKeys, props);
+
     this.state = {
       expandedKeys: defaultExpandAll ?
         getFullKeyList(props.children) :
         this.calcExpandedKeys(defaultExpandedKeys, props),
       selectedKeys: [],
-      checkedKeys: [],
-      halfCheckedKeys: [],
+      checkedKeys,
+      halfCheckedKeys,
 
       ...(this.getSyncProps(props) || {}),
     };
@@ -173,7 +177,7 @@ class Tree extends React.Component {
         onExpand: this.onExpand,
         onNodeSelect: this.onNodeSelect,
         onBatchNodeCheck: this.onBatchNodeCheck,
-        onUpCheckConduct: this.onUpCheckConduct,
+        onCheckConductFinished: this.onCheckConductFinished,
       },
     };
   }
@@ -225,7 +229,7 @@ class Tree extends React.Component {
 
   /**
    * This will cache node check status to optimize update process.
-   * When Tree get trigger `onUpCheckConduct` will flush all the update.
+   * When Tree get trigger `onCheckConductFinished` will flush all the update.
    */
   onBatchNodeCheck = (key, checked, halfChecked, startNode) => {
     if (startNode) {
@@ -251,10 +255,10 @@ class Tree extends React.Component {
   };
 
   /**
-   * When top `onUpCheckConduct` called, will execute all batch update.
+   * When top `onCheckConductFinished` called, will execute all batch update.
    * And trigger `onCheck` event.
    */
-  onUpCheckConduct = () => {
+  onCheckConductFinished = () => {
     const { checkedKeys, halfCheckedKeys } = this.state;
     const { onCheck, checkStrictly, children } = this.props;
 
@@ -287,14 +291,22 @@ class Tree extends React.Component {
     };
 
     if (checkStrictly) {
-      // TODO: Handle on this
+      selectedObj = getStrictlyValue(newCheckedKeys, newHalfCheckedKeys);
+
+      // TODO: add optimize prop to skip node process
+      eventObj.checkedNodes = [];
+      traverseTreeNodes(children, (node, index, pos, key) => {
+        if (checkedKeySet[key]) {
+          eventObj.checkedNodes.push(node);
+        }
+      });
     } else {
       selectedObj = newCheckedKeys;
 
       // TODO: add optimize prop to skip node process
       eventObj.checkedNodes = [];
-      eventObj.checkedNodesPositions = []; // TODO: not in API
-      eventObj.halfCheckedKeys = newHalfCheckedKeys; // TODO: not in API
+      eventObj.checkedNodesPositions = []; // [Legacy] TODO: not in API
+      eventObj.halfCheckedKeys = newHalfCheckedKeys; // [Legacy] TODO: not in API
       traverseTreeNodes(children, (node, index, pos, key) => {
         if (checkedKeySet[key]) {
           eventObj.checkedNodes.push(node);
@@ -364,7 +376,7 @@ class Tree extends React.Component {
 
   calcExpandedKeys = (keyList, props) => {
     if (!keyList) {
-      return undefined;
+      return [];
     }
 
     const { autoExpandParent, children } = props || this.props || {};
@@ -387,7 +399,7 @@ class Tree extends React.Component {
     // Expand the path for matching position
     const needExpandKeys = {};
     traverseTreeNodes(children, (item, index, pos, key) => {
-      if (needExpandPathList.some(bigPos => isPositionPrefix(pos, bigPos))) {
+      if (needExpandPathList.some(childPos => isParent(pos, childPos))) {
         needExpandKeys[key] = true;
       }
     });
@@ -395,6 +407,64 @@ class Tree extends React.Component {
 
     // [Legacy] Return origin keyList if calc list is empty
     return calcExpandedKeyList.length ? calcExpandedKeyList : keyList;
+  };
+
+  /**
+   * Calculate the value of checked and halfChecked keys.
+   * This should be only run in init or props changed.
+   * @param keys
+   * @param props
+   */
+    // TODO: Need test
+  calcCheckedKeys = (keys, props) => {
+    const { checkable, children } = props;
+
+    if (!checkable || !keys) {
+      return { checkedKeys: [], halfCheckedKeys: [] };
+    }
+
+    // Convert keys to object format
+    let keyProps;
+    if (Array.isArray(keys)) {
+      // [Legacy] Follow the api doc
+      keyProps = {
+        checkedKeys: keys,
+        halfCheckedKeys: undefined,
+      };
+    } else if (typeof keys === 'object') {
+      keyProps = {
+        checkedKeys: keys.checked || undefined,
+        halfCheckedKeys: keys.halfChecked || undefined,
+      };
+    } else {
+      warning(false, '`CheckedKeys` is not an array or an object');
+      return {};
+    }
+
+    const { checkedKeys, halfCheckedKeys } = keyProps;
+
+    // It's strange if user set the `halfChecked` which not sync with `checked`.
+    // But let's just keep the logic to since it's state controlled.
+    // Skip when checked is empty or halfChecked is set.
+    if (!checkedKeys || checkedKeys.length === 0 || halfCheckedKeys) {
+      return keyProps;
+    }
+
+    // Calculate
+    const { keyNodes, nodeList } = getNodesStatistic(children);
+    const checkedPosList = checkedKeys.map(key => keyNodes[key].pos);
+
+    const calcHalfCheckedKeys = nodeList
+      .filter(({ pos }) => !checkedPosList.includes(pos))
+      .filter(({ pos }) => (
+        checkedPosList.some(checkedPos => isParent(pos, checkedPos))
+      ))
+      .map(({ key }) => key);
+
+    return {
+      checkedKeys,
+      halfCheckedKeys: calcHalfCheckedKeys,
+    };
   };
 
   // TODO: Remove `key` dep to support HOC.

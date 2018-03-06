@@ -41,20 +41,16 @@ export function traverseTreeNodes(treeNodes, callback) {
 }
 
 /**
- * [Legacy] Calculate is smallPos in the bigPos
- * @param smallPos
- * @param bigPos
- * @returns {boolean}
+ * [Legacy] Return halfChecked when it has value.
+ * @param checkedKeys
+ * @param halfChecked
+ * @returns {*}
  */
-export function isPositionPrefix(smallPos, bigPos) {
-  if (bigPos.length < smallPos.length) {
-    return false;
+export function getStrictlyValue(checkedKeys, halfChecked) {
+  if (halfChecked) {
+    return { checked: checkedKeys, halfChecked };
   }
-  // attention: "0-0-1" "0-0-10"
-  if ((bigPos.length > smallPos.length) && (bigPos.charAt(smallPos.length) !== '-')) {
-    return false;
-  }
-  return bigPos.substr(0, smallPos.length) === smallPos;
+  return checkedKeys;
 }
 
 export function getFullKeyList(treeNodes) {
@@ -63,4 +59,50 @@ export function getFullKeyList(treeNodes) {
     keyList.push(key);
   });
   return keyList;
+}
+
+/**
+ * Check position relation.
+ * @param parentPos
+ * @param childPos
+ * @param directly only directly parent can be true
+ * @returns {boolean}
+ */
+export function isParent(parentPos, childPos, directly = false) {
+  if (!parentPos || !childPos || parentPos.length <= childPos.length) return false;
+
+  const parentPath = parentPos.split('-');
+  const childPath = childPos.split('-');
+
+  // Directly check
+  if (directly && parentPath.length !== childPath.length - 1) return false;
+
+  const len = parentPath.length;
+  for (let i = 0; i < len; i += 1) {
+    if (parentPath[i] !== childPath[i]) return false;
+  }
+
+  return true;
+}
+
+/**
+ * Statistic TreeNodes info
+ * @param treeNodes
+ * @returns {{}}
+ */
+export function getNodesStatistic(treeNodes) {
+  const statistic = {
+    keyNodes: {},
+    posNodes: {},
+    nodeList: [],
+  };
+
+  traverseTreeNodes(treeNodes, (node, index, pos, key) => {
+    const data = { node, index, pos, key };
+    statistic.keyNodes[key] = data;
+    statistic.posNodes[pos] = data;
+    statistic.nodeList.push(data);
+  });
+
+  return statistic;
 }
