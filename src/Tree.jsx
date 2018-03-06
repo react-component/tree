@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 // import warning from 'warning';
-import { getFullKeyList } from './util';
+import {
+  traverseTreeNodes, getFullKeyList, isPositionPrefix,
+} from './util';
 
 /**
  * Thought we still use `cloneElement` to pass `key`,
@@ -107,7 +109,7 @@ class Tree extends React.Component {
 
     const {
       defaultExpandAll,
-      // defaultExpandedKeys,
+      defaultExpandedKeys,
       // defaultCheckedKeys,
       // defaultSelectedKeys,
     } = props;
@@ -115,7 +117,9 @@ class Tree extends React.Component {
     // Sync state with props
     // TODO: Default logic
     this.state = {
-      expandedKeys: defaultExpandAll ? getFullKeyList(props.children) : [],
+      expandedKeys: defaultExpandAll ?
+        getFullKeyList(props.children) :
+        this.calcExpandedKeys(defaultExpandedKeys, props),
       selectedKeys: [],
 
       ...(this.getSyncProps(props) || {}),
@@ -179,17 +183,40 @@ class Tree extends React.Component {
     return needSync ? newState : null;
   };
 
-
-  /**
-   * Since component is both affected by state & props,
-   * use unique method to get high priority value
-   */
-  /* uniqueVal = (name) => {
-    if (name in this.props) {
-      return this.props[name];
+  calcExpandedKeys = (keyList, props) => {
+    if (!keyList) {
+      return undefined;
     }
-    return this.state[name];
-  }; */
+
+    const { autoExpandParent, children } = props || this.props || {};
+
+    // Do nothing if not auto expand parent
+    if (!autoExpandParent) {
+      return keyList;
+    }
+
+    // Collect the TreeNode list which need be expanded by path
+    const needExpandPathList = [];
+    if (autoExpandParent) {
+      traverseTreeNodes(children, (item, index, pos, key) => {
+        if (keyList.indexOf(key) > -1) {
+          needExpandPathList.push(pos);
+        }
+      });
+    }
+
+    // Expand the path for matching position
+    const needExpandKeys = {};
+    traverseTreeNodes(children, (item, index, pos, key) => {
+      if (needExpandPathList.some(bigPos => isPositionPrefix(pos, bigPos))) {
+        needExpandKeys[key] = true;
+      }
+    });
+    const calcExpandedKeyList = Object.keys(needExpandKeys);
+
+    // [Legacy] Return origin keyList if calc list is empty
+    return calcExpandedKeyList.length ? calcExpandedKeyList : keyList;
+  };
 
   // TODO: Remove `key` dep to support HOC.
   /**

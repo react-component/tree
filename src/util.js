@@ -34,6 +34,23 @@ export function traverseTreeNodes(treeNodes, callback) {
   traverse(treeNodes, 0, []);
 }
 
+/**
+ * [Legacy] Calculate is smallPos in the bigPos
+ * @param smallPos
+ * @param bigPos
+ * @returns {boolean}
+ */
+export function isPositionPrefix(smallPos, bigPos) {
+  if (bigPos.length < smallPos.length) {
+    return false;
+  }
+  // attention: "0-0-1" "0-0-10"
+  if ((bigPos.length > smallPos.length) && (bigPos.charAt(smallPos.length) !== '-')) {
+    return false;
+  }
+  return bigPos.substr(0, smallPos.length) === smallPos;
+}
+
 export function getFullKeyList(treeNodes) {
   const keyList = [];
   traverseTreeNodes(treeNodes, (item, index, pos, key) => {
