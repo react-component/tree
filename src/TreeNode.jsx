@@ -5,6 +5,7 @@ import warning from 'warning';
 import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
 import { contextTypes } from './Tree';
+import { getPosition, traverseTreeNodes } from './util';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -39,11 +40,14 @@ class TreeNode extends React.Component {
 
     // By user
     isLeaf: PropTypes.bool,
+    selectable: PropTypes.bool,
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
   };
 
   static contextTypes = contextTypes;
+
+  static childContextTypes = contextTypes;
 
   static defaultProps = {
     title: defaultTitle,
@@ -57,6 +61,99 @@ class TreeNode extends React.Component {
       dragNodeHighlight: false,
     };
   }
+
+  getChildContext() {
+    const { rcTree = {} } = this.context || {};
+    return {
+      rcTree: {
+        ...rcTree,
+        onUpCheckConduct: this.onUpCheckConduct,
+      },
+    };
+  }
+
+  onUpCheckConduct = (treeNode, nodeChecked) => {
+    const { pos: nodePos } = treeNode.props;
+    const { eventKey, pos, checked, halfChecked } = this.props;
+    const {
+      rcTree: { checkStrictly, isKeyChecked, onUpCheckConduct, onBatchNodeCheck },
+    } = this.context;
+
+    // Ignore disabled children
+    // TODO: check child disabled in `componentWillReceiveProps`
+    const children = this.getNodeChildren().filter(node => !node.props.disabled);
+
+    let checkedCount = nodeChecked ? 1 : 0;
+
+    children.forEach((node, index) => {
+      const childPos = getPosition(pos, index);
+      if (nodePos === childPos) return;
+
+      if (isKeyChecked(childPos)) {
+        checkedCount += 1;
+      }
+    });
+
+    // checkStrictly will not conduct check status
+    const nextChecked = checkStrictly ? checked : children.length === checkedCount;
+    const nextHalfChecked = !!children.length && !nextChecked;
+
+    // Add into batch update
+    if (checked !== nextChecked || halfChecked !== nextHalfChecked) {
+      onBatchNodeCheck(eventKey, nextChecked, nextHalfChecked);
+    }
+
+    // Check if need parent conduct
+    if (checked !== nextChecked) {
+      onUpCheckConduct(this, checked);
+    }
+  };
+
+  onDownCheckConduct = (nodeChecked) => {
+    const { rcTree: { checkStrictly, isKeyChecked, onBatchNodeCheck } } = this.context;
+    if (checkStrictly) return;
+
+    traverseTreeNodes(this.getNodeChildren(), (node, index, pos, key) => {
+      if (node.disabled) return;
+
+      if (nodeChecked !== isKeyChecked(key)) {
+        onBatchNodeCheck(key, nodeChecked, false);
+      }
+    });
+  };
+
+  onSelectorClick = (e) => {
+    if (this.isSelectable()) {
+      this.onSelect(e);
+    } else {
+      this.onCheck(e);
+    }
+  };
+
+  onSelect = (e) => {
+    if (this.isDisabled()) return;
+
+    const { rcTree: { onNodeSelect } } = this.context;
+    e.preventDefault();
+    onNodeSelect(e, this);
+  };
+
+  onCheck = (e) => {
+    if (this.isDisabled()) return;
+
+    const { disableCheckbox, checked, eventKey } = this.props;
+    const {
+      rcTree: { checkable, onBatchNodeCheck, onUpCheckConduct },
+    } = this.context;
+
+    if (!checkable || disableCheckbox) return;
+
+    e.preventDefault();
+    const targetChecked = !checked;
+    onBatchNodeCheck(eventKey, targetChecked, false, this);
+    onUpCheckConduct(this, targetChecked);
+    this.onDownCheckConduct(targetChecked);
+  };
 
   onExpand = () => {
     const disabled = this.isDisabled();
@@ -113,8 +210,25 @@ class TreeNode extends React.Component {
     const { disabled } = this.props;
     const { rcTree: { disabled: treeDisabled } } = this.context;
 
+    // Follow the logic of Selectable
+    if (disabled === false) {
+      return false;
+    }
+
     return treeDisabled || disabled;
   };
+
+  isSelectable() {
+    const { selectable } = this.props;
+    const { rcTree: { selectable: treeSelectable } } = this.context;
+
+    // Ignore when selectable is undefined or null
+    if (typeof selectable === 'boolean') {
+      return selectable;
+    }
+
+    return treeSelectable;
+  }
 
   // Switcher
   renderSwitcher = () => {
@@ -211,7 +325,7 @@ class TreeNode extends React.Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
-        onClick={this.onClick}
+        onClick={this.onSelectorClick}
         onDragStart={this.onDragStart}
       >
           {$icon}{$title}
@@ -293,11 +407,8 @@ class TreeNode extends React.Component {
     } } = this.context;
     const disabled = this.isDisabled();
 
-    const domProps = {};
-
     return (
       <li
-        {...domProps}
         className={classNames(className, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           'drag-over': !disabled && dragOver,
@@ -314,7 +425,6 @@ class TreeNode extends React.Component {
       >
         {this.renderSwitcher()}
         {this.renderCheckbox()}
-        {/* {props.checkable ? this.renderCheckbox(props) : null} */}
         {this.renderSelector()}
         {this.renderChildren()}
       </li>

@@ -1,6 +1,10 @@
 /* eslint no-loop-func: 0*/
 import { Children } from 'react';
 
+export function getPosition(level, index) {
+  return `${level}-${index}`;
+}
+
 // TODO: Refactor this when TreeNode is not tacked by `key`
 /**
  * [Legacy] Loop the TreeNode by children.
@@ -14,21 +18,23 @@ export function traverseTreeNodes(treeNodes, callback) {
       subTreeNodes = subTreeNodes.filter(item => !!item);
     }
     Children.forEach(subTreeNodes, (item, index) => {
-      const pos = `${level}-${index}`;
+      const pos = getPosition(level, index);
       parentsChildrenPos.push(pos); // Note: side effect
 
       const childrenPos = [];
-      if (item.props.children && item.type && item.type.isTreeNode) {
-        traverse(item.props.children, pos, childrenPos, pos);
-      }
-      callback(
+      const stopTraverse = callback(
         item,
         index,
         pos,
         item.key || pos,
         childrenPos,
         parentPos
-      );
+      ) === false;
+      if (!stopTraverse && (
+        item.props.children && item.type && item.type.isTreeNode
+      )) {
+        traverse(item.props.children, pos, childrenPos, pos);
+      }
     });
   };
   traverse(treeNodes, 0, []);

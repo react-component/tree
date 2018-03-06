@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-// import warning from 'warning';
+import warning from 'warning';
 import {
   traverseTreeNodes, isPositionPrefix,
-  getFullKeyList,
+  getFullKeyList, getPosition,
 } from './util';
 
 /**
@@ -19,7 +19,11 @@ export const contextTypes = {
     selectable: PropTypes.bool,
     showIcon: PropTypes.bool,
     draggable: PropTypes.bool,
-    checkable: PropTypes.bool,
+    checkable: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.node,
+    ]),
+    checkStrictly: PropTypes.bool,
     disabled: PropTypes.bool,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -28,7 +32,12 @@ export const contextTypes = {
     filterTreeNode: PropTypes.func,
     renderTreeNode: PropTypes.func,
 
+    isKeyChecked: PropTypes.func,
+
     onExpand: PropTypes.func,
+    onNodeSelect: PropTypes.func,
+    onBatchNodeCheck: PropTypes.func,
+    onUpCheckConduct: PropTypes.func,
   }),
 };
 
@@ -130,24 +139,28 @@ class Tree extends React.Component {
 
       ...(this.getSyncProps(props) || {}),
     };
+
+    // Cache for check status to optimize
+    this.checkedBatch = null;
   }
 
   getChildContext() {
     const {
-      prefixCls, selectable, showIcon, draggable, checkable, disabled,
+      prefixCls, selectable, showIcon, draggable, checkable, checkStrictly, disabled,
       loadData, filterTreeNode,
       openTransitionName, openAnimation,
     } = this.props;
 
     return {
       rcTree: {
-        root: this,
+        // root: this,
 
         prefixCls,
         selectable,
         showIcon,
         draggable,
         checkable,
+        checkStrictly,
         disabled,
         openTransitionName,
         openAnimation,
@@ -155,8 +168,12 @@ class Tree extends React.Component {
         loadData,
         filterTreeNode,
         renderTreeNode: this.renderTreeNode,
+        isKeyChecked: this.isKeyChecked,
 
         onExpand: this.onExpand,
+        onNodeSelect: this.onNodeSelect,
+        onBatchNodeCheck: this.onBatchNodeCheck,
+        onUpCheckConduct: this.onUpCheckConduct,
       },
     };
   }
@@ -165,6 +182,134 @@ class Tree extends React.Component {
     // React 16 will not trigger update if new state is null
     this.setState(this.getSyncProps(nextProps, this.props));
   }
+
+  onNodeSelect = (e, treeNode) => {
+    const { onSelect, multiple, children } = this.props;
+    const { selected, eventKey } = treeNode.props;
+    const targetSelected = !selected;
+
+    // Update selected keys
+    let selectedKeys = this.state.selectedKeys.slice();
+    if (!targetSelected) {
+      const index = selectedKeys.indexOf(eventKey);
+      selectedKeys.splice(index, 1);
+    } else if (!multiple) {
+      selectedKeys = [eventKey];
+    } else {
+      selectedKeys.push(eventKey);
+    }
+
+    // [Legacy] Not found related usage in doc or upper libs
+    // [Legacy] TODO: can be optimized if we remove selectedNodes in API
+    const selectedNodes = [];
+    if (selectedKeys.length) {
+      traverseTreeNodes(children, (item) => {
+        if (selectedKeys.indexOf(item.key) !== -1) {
+          selectedNodes.push(item);
+        }
+      });
+    }
+
+    this.setUncontrolledState({ selectedKeys });
+
+    if (onSelect) {
+      const eventObj = {
+        event: 'select',
+        selected: targetSelected,
+        node: treeNode,
+        selectedNodes,
+      };
+      onSelect(selectedKeys, eventObj);
+    }
+  };
+
+  /**
+   * This will cache node check status to optimize update process.
+   * When Tree get trigger `onUpCheckConduct` will flush all the update.
+   */
+  onBatchNodeCheck = (key, checked, halfChecked, startNode) => {
+    if (startNode) {
+      this.checkedBatch = {
+        treeNode: startNode,
+        checked,
+        list: [],
+      };
+    }
+
+    // This code should never called
+    if (!this.checkedBatch) {
+      this.checkedBatch = {
+        list: [],
+      };
+      warning(
+        false,
+        'Checked batch not init. This should be a bug. Please fire a issue.'
+      );
+    }
+
+    this.checkedBatch.list.push({ key, checked, halfChecked });
+  };
+
+  /**
+   * When top `onUpCheckConduct` called, will execute all batch update.
+   * And trigger `onCheck` event.
+   */
+  onUpCheckConduct = () => {
+    const { checkedKeys, halfCheckedKeys } = this.state;
+    const { onCheck, checkStrictly, children } = this.props;
+
+    // Use map to optimize update speed
+    const checkedKeySet = {};
+    const halfCheckedKeySet = {};
+
+    checkedKeys.forEach(key => {
+      checkedKeySet[key] = true;
+    });
+    halfCheckedKeys.forEach(key => {
+      halfCheckedKeySet[key] = true;
+    });
+
+    // Batch process
+    this.checkedBatch.list.forEach(({ key, checked, halfChecked }) => {
+      checkedKeySet[key] = checked;
+      halfCheckedKeySet[key] = halfChecked;
+    });
+    const newCheckedKeys = Object.keys(checkedKeySet).filter(key => checkedKeySet[key]);
+    const newHalfCheckedKeys = Object.keys(halfCheckedKeySet).filter(key => halfCheckedKeySet[key]);
+
+    // Trigger onChecked
+    let selectedObj;
+
+    const eventObj = {
+      event: 'check',
+      node: this.checkedBatch.treeNode,
+      checked: this.checkedBatch.checked,
+    };
+
+    if (checkStrictly) {
+      // TODO: Handle on this
+    } else {
+      selectedObj = newCheckedKeys;
+
+      // TODO: add optimize prop to skip node process
+      eventObj.checkedNodes = [];
+      eventObj.checkedNodesPositions = []; // TODO: not in API
+      eventObj.halfCheckedKeys = newHalfCheckedKeys; // TODO: not in API
+      traverseTreeNodes(children, (node, index, pos, key) => {
+        if (checkedKeySet[key]) {
+          eventObj.checkedNodes.push(node);
+          eventObj.checkedNodesPositions.push({ node, pos });
+        }
+      });
+    }
+
+    if (onCheck) {
+      onCheck(selectedObj, eventObj);
+    }
+
+    // Clean up
+    this.checkedBatch = null;
+  };
 
   onExpand = () => {
     // TODO: Palceholder
@@ -192,6 +337,29 @@ class Tree extends React.Component {
     // TODO: SelectKeys
 
     return needSync ? newState : null;
+  };
+
+  /**
+   * Only update the value which is not in props
+   * @param state
+   */
+  setUncontrolledState = (state) => {
+    let needSync = false;
+    const newState = {};
+
+    Object.keys(state).forEach(name => {
+      if (name in this.props) return;
+
+      needSync = true;
+      newState[name] = state[name];
+    });
+
+    this.setState(needSync ? newState : null);
+  };
+
+  isKeyChecked = (key) => {
+    const { checkedKeys } = this.state;
+    return checkedKeys.includes(key);
   };
 
   calcExpandedKeys = (keyList, props) => {
@@ -239,9 +407,9 @@ class Tree extends React.Component {
    * @returns {*}
    */
   renderTreeNode = (child, index, level = 0) => {
-    const { expandedKeys, selectedKeys, checkedKeys, halfCheckedKeys } = this.state;
+    const { expandedKeys, selectedKeys, halfCheckedKeys } = this.state;
     const {} = this.props;
-    const pos = `${level}-${index}`;
+    const pos = getPosition(level, index);
     const key = child.key || pos;
 
     /* const childProps = {
@@ -265,7 +433,7 @@ class Tree extends React.Component {
       eventKey: key,
       expanded: expandedKeys.includes(key),
       selected: selectedKeys.includes(key),
-      checked: checkedKeys.includes(key),
+      checked: this.isKeyChecked(key),
       halfChecked: halfCheckedKeys.includes(key),
       pos,
     });
