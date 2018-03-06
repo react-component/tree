@@ -134,7 +134,7 @@
 .rc-tree-child-tree-open {
   display: block;
 }
-.rc-tree-treenode-disabled > span,
+.rc-tree-treenode-disabled > span:not(.rc-tree-switcher),
 .rc-tree-treenode-disabled > a,
 .rc-tree-treenode-disabled > a span {
   color: #ccc;
