@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 // import warning from 'warning';
 import {
-  traverseTreeNodes, getFullKeyList, isPositionPrefix,
+  traverseTreeNodes, isPositionPrefix,
+  getFullKeyList,
 } from './util';
 
 /**
@@ -19,6 +20,7 @@ export const contextTypes = {
     showIcon: PropTypes.bool,
     draggable: PropTypes.bool,
     checkable: PropTypes.bool,
+    disabled: PropTypes.bool,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
@@ -39,6 +41,7 @@ class Tree extends React.Component {
     showIcon: PropTypes.bool,
     focusable: PropTypes.bool,
     selectable: PropTypes.bool,
+    disabled: PropTypes.bool,
     multiple: PropTypes.bool,
     checkable: PropTypes.oneOfType([
       PropTypes.bool,
@@ -84,6 +87,7 @@ class Tree extends React.Component {
     selectable: true,
     multiple: false,
     checkable: false,
+    disabled: false,
     checkStrictly: false,
     draggable: false,
     autoExpandParent: true,
@@ -121,6 +125,8 @@ class Tree extends React.Component {
         getFullKeyList(props.children) :
         this.calcExpandedKeys(defaultExpandedKeys, props),
       selectedKeys: [],
+      checkedKeys: [],
+      halfCheckedKeys: [],
 
       ...(this.getSyncProps(props) || {}),
     };
@@ -128,7 +134,7 @@ class Tree extends React.Component {
 
   getChildContext() {
     const {
-      prefixCls, selectable, showIcon, draggable, checkable,
+      prefixCls, selectable, showIcon, draggable, checkable, disabled,
       loadData, filterTreeNode,
       openTransitionName, openAnimation,
     } = this.props;
@@ -142,6 +148,7 @@ class Tree extends React.Component {
         showIcon,
         draggable,
         checkable,
+        disabled,
         openTransitionName,
         openAnimation,
 
@@ -156,7 +163,7 @@ class Tree extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // React 16 will not trigger update if new state is null
-    this.setState(this.getSyncProps(nextProps));
+    this.setState(this.getSyncProps(nextProps, this.props));
   }
 
   onExpand = () => {
@@ -166,19 +173,23 @@ class Tree extends React.Component {
   /**
    * Sync state with props if needed
    */
-  getSyncProps = (props) => {
+  getSyncProps = (props = {}, prevProps = {}) => {
     let needSync = false;
-    const oriState = this.state || {};
-    const oriProps = props || this.props || {};
     const newState = {};
 
-    const syncList = ['expandedKeys', 'selectedKeys'];
-    syncList.forEach((name) => {
-      if (oriState[name] !== oriProps[name]) {
-        newState[name] = props[name];
+    function checkSync(name) {
+      if (props[name] !== prevProps[name]) {
         needSync = true;
+        return true;
       }
-    });
+      return false;
+    }
+
+    if (checkSync('expandedKeys')) {
+      newState.expandedKeys = this.calcExpandedKeys(props.expandedKeys, props);
+    }
+
+    // TODO: SelectKeys
 
     return needSync ? newState : null;
   };
@@ -228,7 +239,7 @@ class Tree extends React.Component {
    * @returns {*}
    */
   renderTreeNode = (child, index, level = 0) => {
-    const { expandedKeys, selectedKeys } = this.state;
+    const { expandedKeys, selectedKeys, checkedKeys, halfCheckedKeys } = this.state;
     const {} = this.props;
     const pos = `${level}-${index}`;
     const key = child.key || pos;
@@ -250,14 +261,14 @@ class Tree extends React.Component {
       childProps.halfChecked = state.halfCheckedKeys.indexOf(key) !== -1;
     } */
 
-    const clone = React.cloneElement(child, {
+    return React.cloneElement(child, {
       eventKey: key,
       expanded: expandedKeys.includes(key),
       selected: selectedKeys.includes(key),
+      checked: checkedKeys.includes(key),
+      halfChecked: halfCheckedKeys.includes(key),
       pos,
     });
-
-    return clone;
   };
 
   render() {

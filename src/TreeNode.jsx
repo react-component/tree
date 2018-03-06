@@ -22,13 +22,14 @@ class TreeNode extends React.Component {
     eventKey: PropTypes.string, // Pass by parent `cloneElement`
     prefixCls: PropTypes.string,
     className: PropTypes.string,
-    disableCheckbox: PropTypes.bool,
     root: PropTypes.object,
     onSelect: PropTypes.func,
 
     // By parent
     expanded: PropTypes.bool,
     selected: PropTypes.bool,
+    checked: PropTypes.bool,
+    halfChecked: PropTypes.bool,
     children: PropTypes.node,
     title: PropTypes.node,
     pos: PropTypes.string,
@@ -39,6 +40,7 @@ class TreeNode extends React.Component {
     // By user
     isLeaf: PropTypes.bool,
     disabled: PropTypes.bool,
+    disableCheckbox: PropTypes.bool,
   };
 
   static contextTypes = contextTypes;
@@ -57,7 +59,7 @@ class TreeNode extends React.Component {
   }
 
   onExpand = () => {
-    const { disabled } = this.props;
+    const disabled = this.isDisabled();
     const { rcTree: { onExpand } } = this.context;
 
     if (disabled || !onExpand) return;
@@ -107,10 +109,19 @@ class TreeNode extends React.Component {
     );
   };
 
+  isDisabled = () => {
+    const { disabled } = this.props;
+    const { rcTree: { disabled: treeDisabled } } = this.context;
+
+    return treeDisabled || disabled;
+  };
+
+  // Switcher
   renderSwitcher = () => {
     const { loadStatus } = this.state;
-    const { expanded, disabled } = this.props;
+    const { expanded } = this.props;
     const { rcTree: { prefixCls } } = this.context;
+    const disabled = this.isDisabled();
 
     if (this.isLeaf() || loadStatus === LOAD_STATUS_LOADING) {
       return <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />;
@@ -128,11 +139,38 @@ class TreeNode extends React.Component {
     );
   };
 
+  // Checkbox
+  renderCheckbox = () => {
+    const { checked, halfChecked, disableCheckbox } = this.props;
+    const { rcTree: { prefixCls, checkable } } = this.context;
+    const disabled = this.isDisabled();
+
+    if (!checkable) return null;
+
+    // [Legacy] Custom element should be separate with `checkable` in future
+    const $custom = typeof checkable !== 'boolean' ? checkable : null;
+
+    return (
+      <span
+        className={classNames(
+          `${prefixCls}-checkbox`,
+          checked && `${prefixCls}-checkbox-checked`,
+          halfChecked && `${prefixCls}-checkbox-indeterminate`,
+          (disabled || disableCheckbox) && `${prefixCls}-checkbox-disabled`,
+        )}
+        onClick={this.onCheck}
+      >
+        {$custom}
+      </span>
+    );
+  };
+
   // Icon + Title
   renderSelector = () => {
     const { loadStatus, dragNodeHighlight } = this.state;
-    const { title, disabled, selected } = this.props;
+    const { title, selected } = this.props;
     const { rcTree: { prefixCls, showIcon, draggable, loadData } } = this.context;
+    const disabled = this.isDisabled();
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
 
@@ -181,6 +219,7 @@ class TreeNode extends React.Component {
     );
   };
 
+  // Children list wrapped with `Animation`
   renderChildren = () => {
     const { expanded, pos } = this.props;
     const { rcTree: {
@@ -245,13 +284,14 @@ class TreeNode extends React.Component {
 
   render() {
     const {
-      className, disabled,
+      className,
       dragOver, dragOverGapTop, dragOverGapBottom,
     } = this.props;
     const { rcTree: {
       prefixCls,
       filterTreeNode,
     } } = this.context;
+    const disabled = this.isDisabled();
 
     const domProps = {};
 
@@ -273,6 +313,7 @@ class TreeNode extends React.Component {
         onDragEnd={this.onDragEnd}
       >
         {this.renderSwitcher()}
+        {this.renderCheckbox()}
         {/* {props.checkable ? this.renderCheckbox(props) : null} */}
         {this.renderSelector()}
         {this.renderChildren()}
