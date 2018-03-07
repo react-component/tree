@@ -175,10 +175,10 @@ class TreeNode extends React.Component {
   };
 
   onExpand = () => {
-    const disabled = this.isDisabled();
+    // Disabled item still can be switch
     const { rcTree: { onExpand } } = this.context;
 
-    if (disabled || !onExpand) return;
+    if (!onExpand) return;
     // TODO: palceholder
   };
 
@@ -254,7 +254,6 @@ class TreeNode extends React.Component {
     const { loadStatus } = this.state;
     const { expanded } = this.props;
     const { rcTree: { prefixCls } } = this.context;
-    const disabled = this.isDisabled();
 
     if (this.isLeaf() || loadStatus === LOAD_STATUS_LOADING) {
       return <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />;
@@ -265,7 +264,6 @@ class TreeNode extends React.Component {
         className={classNames(
           `${prefixCls}-switcher`,
           `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
-          disabled && `${prefixCls}-switcher-disabled`,
         )}
         onClick={this.onExpand}
       />
