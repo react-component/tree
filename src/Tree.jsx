@@ -131,7 +131,7 @@ class Tree extends React.Component {
     // Sync state with props
     // TODO: Default logic
     const { checkedKeys = [], halfCheckedKeys = [] } =
-      this.calcCheckedKeys(defaultCheckedKeys, props);
+      this.calcCheckedKeys(defaultCheckedKeys, props) || {};
 
     this.state = {
       expandedKeys: defaultExpandAll ?
@@ -417,10 +417,10 @@ class Tree extends React.Component {
    */
     // TODO: Need test
   calcCheckedKeys = (keys, props) => {
-    const { checkable, children } = props;
+    const { checkable, children, checkStrictly } = props;
 
     if (!checkable || !keys) {
-      return { checkedKeys: [], halfCheckedKeys: [] };
+      return null;
     }
 
     // Convert keys to object format
@@ -438,21 +438,25 @@ class Tree extends React.Component {
       };
     } else {
       warning(false, '`CheckedKeys` is not an array or an object');
-      return {};
+      return null;
     }
 
-    const { checkedKeys, halfCheckedKeys } = keyProps;
-
-    // It's strange if user set the `halfChecked` which not sync with `checked`.
-    // But let's just keep the logic to since it's state controlled.
-    // Skip when checked is empty or halfChecked is set.
-    if (!checkedKeys || checkedKeys.length === 0 || halfCheckedKeys) {
+    // Do nothing if is checkStrictly mode
+    if (checkStrictly) {
       return keyProps;
     }
 
+    // [Legacy] Since `halfChecked` not provided in `checkStrictly` mod.
+    // And origin code will regenerate `halfChecked`.
+    // It's little tricky when `checkStrictly` mod change.
+    // Let's add additional check when `checkStrictly` changed.
+    const { checkedKeys = [] } = keyProps;
+
     // Calculate
     const { keyNodes, nodeList } = getNodesStatistic(children);
-    const checkedPosList = checkedKeys.map(key => keyNodes[key].pos);
+    const checkedPosList = checkedKeys
+      .filter(key => keyNodes[key])
+      .map(key => keyNodes[key].pos);
 
     const calcHalfCheckedKeys = nodeList
       .filter(({ pos }) => !checkedPosList.includes(pos))

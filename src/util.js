@@ -22,19 +22,17 @@ export function traverseTreeNodes(treeNodes, callback) {
       parentsChildrenPos.push(pos); // Note: side effect
 
       const childrenPos = [];
-      const stopTraverse = callback(
+      if (item.props.children && item.type && item.type.isTreeNode) {
+        traverse(item.props.children, pos, childrenPos, pos);
+      }
+      callback(
         item,
         index,
         pos,
         item.key || pos,
         childrenPos,
         parentPos
-      ) === false;
-      if (!stopTraverse && (
-        item.props.children && item.type && item.type.isTreeNode
-      )) {
-        traverse(item.props.children, pos, childrenPos, pos);
-      }
+      );
     });
   };
   traverse(treeNodes, 0, []);
@@ -97,8 +95,8 @@ export function getNodesStatistic(treeNodes) {
     nodeList: [],
   };
 
-  traverseTreeNodes(treeNodes, (node, index, pos, key) => {
-    const data = { node, index, pos, key };
+  traverseTreeNodes(treeNodes, (node, index, pos, key, childrenPos, parentPos) => {
+    const data = { node, index, pos, key, childrenPos, parentPos };
     statistic.keyNodes[key] = data;
     statistic.posNodes[pos] = data;
     statistic.nodeList.push(data);

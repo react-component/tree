@@ -124,10 +124,11 @@ class TreeNode extends React.Component {
   };
 
   onDownCheckConduct = (nodeChecked) => {
+    const { children } = this.props;
     const { rcTree: { checkStrictly, isKeyChecked, onBatchNodeCheck } } = this.context;
     if (checkStrictly) return;
 
-    traverseTreeNodes(this.getNodeChildren(), (node, index, pos, key) => {
+    traverseTreeNodes(children, (node, index, pos, key) => {
       if (node.disabled) return;
 
       if (nodeChecked !== isKeyChecked(key)) {
