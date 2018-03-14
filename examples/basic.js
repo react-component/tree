@@ -24,27 +24,27 @@ class Demo extends React.Component {
       switchIt: true,
     };
   }
-  onExpand(expandedKeys) {
+  onExpand = (expandedKeys) => {
     console.log('onExpand', expandedKeys, arguments);
-  }
-  onSelect(selectedKeys, info) {
+  };
+  onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
     this.selKey = info.node.props.eventKey;
-  }
-  onCheck(checkedKeys, info) {
+  };
+  onCheck = (checkedKeys, info) => {
     console.log('onCheck', checkedKeys, info);
-  }
-  onEdit() {
+  };
+  onEdit = () => {
     setTimeout(() => {
       console.log('current key: ', this.selKey);
     }, 0);
-  }
-  onDel(e) {
+  };
+  onDel = (e) => {
     if (!window.confirm('sure to delete?')) {
       return;
     }
     e.stopPropagation();
-  }
+  };
   render() {
     const customLabel = (<span className="cus-label">
       <span>operations: </span>
