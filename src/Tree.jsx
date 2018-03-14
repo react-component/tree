@@ -300,6 +300,8 @@ class Tree extends React.Component {
           eventObj.checkedNodes.push(node);
         }
       });
+
+      this.setUncontrolledState({ checkedKeys: newCheckedKeys });
     } else {
       selectedObj = newCheckedKeys;
 
@@ -312,6 +314,11 @@ class Tree extends React.Component {
           eventObj.checkedNodes.push(node);
           eventObj.checkedNodesPositions.push({ node, pos });
         }
+      });
+
+      this.setUncontrolledState({
+        checkedKeys: newCheckedKeys,
+        halfCheckedKeys: newHalfCheckedKeys,
       });
     }
 
