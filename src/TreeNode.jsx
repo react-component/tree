@@ -18,6 +18,10 @@ const defaultTitle = '---';
 
 let onlyTreeNodeWarned = false; // Only accept TreeNode
 
+function isCheckDisabled(node) {
+  const { disabled, disableCheckbox } = node.props || {};
+  return disabled || disableCheckbox;
+}
 
 export const nodeContextTypes = {
   ...contextTypes,
@@ -87,19 +91,22 @@ class TreeNode extends React.Component {
       rcTreeNode: { onUpCheckConduct } = {},
     } = this.context;
 
-    // Ignore disabled or disableChecked children
+    // Stop conduct when current node is disabled
+    if (isCheckDisabled(this)) {
+      onCheckConductFinished();
+      return;
+    }
+
     // TODO: check child disabled in `componentWillReceiveProps`
     const children = this.getNodeChildren();
-      // .filter(({ props: { disabled, disableCheckbox } }) => !disabled && !disableCheckbox);
 
     let checkedCount = nodeChecked ? 1 : 0;
 
     // Statistic checked count
     children.forEach((node, index) => {
-      const { disabled, disableCheckbox } = node.props;
       const childPos = getPosition(pos, index);
 
-      if (nodePos === childPos || disabled || disableCheckbox) {
+      if (nodePos === childPos || isCheckDisabled(node)) {
         return;
       }
 
@@ -110,7 +117,7 @@ class TreeNode extends React.Component {
 
     // Static enabled children count
     const enabledChildrenCount = children
-      .filter(({ props: { disabled, disableCheckbox } }) => !disabled && !disableCheckbox)
+      .filter(node => !isCheckDisabled(node))
       .length;
 
     // checkStrictly will not conduct check status
@@ -139,9 +146,8 @@ class TreeNode extends React.Component {
     const { rcTree: { checkStrictly, isKeyChecked, onBatchNodeCheck } } = this.context;
     if (checkStrictly) return;
 
-    traverseTreeNodes(children, (node, index, pos, key) => {
-      const { disabled, disableCheckbox } = node.props;
-      if (disabled || disableCheckbox) return;
+    traverseTreeNodes(children, ({ node, key }) => {
+      if (isCheckDisabled(node)) return false;
 
       if (nodeChecked !== isKeyChecked(key)) {
         onBatchNodeCheck(key, nodeChecked, false);

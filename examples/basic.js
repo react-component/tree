@@ -71,6 +71,10 @@ class Demo extends React.Component {
             <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
             <TreeNode title="parent 1-1-1" key="0-0-1-1" />
           </TreeNode>
+          <TreeNode title="parent 1-2" key="0-0-2" disabled>
+            <TreeNode title="parent 1-2-0" key="0-0-2-0" disabled />
+            <TreeNode title="parent 1-2-1" key="0-0-2-1" />
+          </TreeNode>
         </TreeNode>
       </Tree>
 
@@ -91,7 +95,6 @@ class Demo extends React.Component {
           <TreeNode title="parent 1-1" key="0-0-1">
             <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
             <TreeNode title="parent 1-1-1" key="0-0-1-1" />
-            <TreeNode title="parent 1-1-2" key="0-0-1-2" disabled />
           </TreeNode>
         </TreeNode>
       </Tree>

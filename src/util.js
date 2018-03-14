@@ -5,37 +5,57 @@ export function getPosition(level, index) {
   return `${level}-${index}`;
 }
 
-// TODO: Refactor this when TreeNode is not tacked by `key`
-/**
- * [Legacy] Loop the TreeNode by children.
- * `pos` re-calculation can't avoid since Tree children is by `cloneElement`.
- * @param treeNodes
- * @param callback
- */
-export function traverseTreeNodes(treeNodes, callback) {
-  const traverse = (subTreeNodes, level, parentsChildrenPos, parentPos) => {
-    if (Array.isArray(subTreeNodes)) {
-      subTreeNodes = subTreeNodes.filter(item => !!item);
-    }
-    Children.forEach(subTreeNodes, (item, index) => {
-      const pos = getPosition(level, index);
-      parentsChildrenPos.push(pos); // Note: side effect
+// TODO: replace traverseTreeNodes
+export function traverseTreeNodes(treeNodes, subTreeData, callback) {
+  if (typeof subTreeData === 'function') {
+    callback = subTreeData;
+    subTreeData = false;
+  }
 
-      const childrenPos = [];
-      if (item.props.children && item.type && item.type.isTreeNode) {
-        traverse(item.props.children, pos, childrenPos, pos);
-      }
-      callback(
-        item,
+  function processNode(node, index, parentPos) {
+    const children = node ? node.props.children : treeNodes;
+    const pos = node ? getPosition(parentPos, index) : 0;
+
+    // Filter children
+    const childList = (Array.isArray(children) ? children : [children])
+      .filter(child => child && child.type && child.type.isTreeNode);
+
+    // Process node if is not root
+    if (node) {
+      const data = {
+        node,
         index,
         pos,
-        item.key || pos,
-        childrenPos,
-        parentPos
-      );
+        key: node.key || pos,
+        parentPos,
+      };
+
+      // Children data is not must have
+      if (subTreeData) {
+        // Statistic children
+        const subTree = [];
+        Children.forEach(childList, (subNode, subIndex) => {
+          subTree.push({
+            node: subNode,
+            index: subIndex,
+          });
+        });
+        data.subTree = subTree;
+      }
+
+      // Can break traverse by return false
+      if (callback(data) === false) {
+        return;
+      }
+    }
+
+    // Process children node
+    Children.forEach(childList, (subNode, subIndex) => {
+      processNode(subNode, subIndex, pos);
     });
-  };
-  traverse(treeNodes, 0, []);
+  }
+
+  processNode(null);
 }
 
 /**
@@ -53,7 +73,7 @@ export function getStrictlyValue(checkedKeys, halfChecked) {
 
 export function getFullKeyList(treeNodes) {
   const keyList = [];
-  traverseTreeNodes(treeNodes, (item, index, pos, key) => {
+  traverseTreeNodes(treeNodes, ({ key }) => {
     keyList.push(key);
   });
   return keyList;
@@ -67,7 +87,7 @@ export function getFullKeyList(treeNodes) {
  * @returns {boolean}
  */
 export function isParent(parentPos, childPos, directly = false) {
-  if (!parentPos || !childPos || parentPos.length <= childPos.length) return false;
+  if (!parentPos || !childPos || parentPos.length > childPos.length) return false;
 
   const parentPath = parentPos.split('-');
   const childPath = childPos.split('-');
@@ -95,7 +115,7 @@ export function getNodesStatistic(treeNodes) {
     nodeList: [],
   };
 
-  traverseTreeNodes(treeNodes, (node, index, pos, key, childrenPos, parentPos) => {
+  traverseTreeNodes(treeNodes, true, ({ node, index, pos, key, childrenPos, parentPos }) => {
     const data = { node, index, pos, key, childrenPos, parentPos };
     statistic.keyNodes[key] = data;
     statistic.posNodes[pos] = data;

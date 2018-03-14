@@ -207,9 +207,9 @@ class Tree extends React.Component {
     // [Legacy] TODO: can be optimized if we remove selectedNodes in API
     const selectedNodes = [];
     if (selectedKeys.length) {
-      traverseTreeNodes(children, (item) => {
-        if (selectedKeys.indexOf(item.key) !== -1) {
-          selectedNodes.push(item);
+      traverseTreeNodes(children, ({ node, key }) => {
+        if (selectedKeys.indexOf(key) !== -1) {
+          selectedNodes.push(node);
         }
       });
     }
@@ -295,7 +295,7 @@ class Tree extends React.Component {
 
       // TODO: add optimize prop to skip node process
       eventObj.checkedNodes = [];
-      traverseTreeNodes(children, (node, index, pos, key) => {
+      traverseTreeNodes(children, ({ node, key }) => {
         if (checkedKeySet[key]) {
           eventObj.checkedNodes.push(node);
         }
@@ -309,7 +309,7 @@ class Tree extends React.Component {
       eventObj.checkedNodes = [];
       eventObj.checkedNodesPositions = []; // [Legacy] TODO: not in API
       eventObj.halfCheckedKeys = newHalfCheckedKeys; // [Legacy] TODO: not in API
-      traverseTreeNodes(children, (node, index, pos, key) => {
+      traverseTreeNodes(children, ({ node, pos, key }) => {
         if (checkedKeySet[key]) {
           eventObj.checkedNodes.push(node);
           eventObj.checkedNodesPositions.push({ node, pos });
@@ -393,10 +393,10 @@ class Tree extends React.Component {
       return keyList;
     }
 
-    // Collect the TreeNode list which need be expanded by path
+    // Collect the TreeNode position list which need be expanded by path
     const needExpandPathList = [];
     if (autoExpandParent) {
-      traverseTreeNodes(children, (item, index, pos, key) => {
+      traverseTreeNodes(children, ({ pos, key }) => {
         if (keyList.indexOf(key) > -1) {
           needExpandPathList.push(pos);
         }
@@ -405,7 +405,7 @@ class Tree extends React.Component {
 
     // Expand the path for matching position
     const needExpandKeys = {};
-    traverseTreeNodes(children, (item, index, pos, key) => {
+    traverseTreeNodes(children, ({ pos, key }) => {
       if (needExpandPathList.some(childPos => isParent(pos, childPos))) {
         needExpandKeys[key] = true;
       }
@@ -422,7 +422,7 @@ class Tree extends React.Component {
    * @param keys
    * @param props
    */
-    // TODO: Need test
+    // TODO: Process the logic as TreeNode check logic!
   calcCheckedKeys = (keys, props) => {
     const { checkable, children, checkStrictly } = props;
 
