@@ -5,7 +5,7 @@ import warning from 'warning';
 import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
 import { contextTypes } from './Tree';
-import { getPosition, traverseTreeNodes } from './util';
+import { getPosition, getNodeChildren, isCheckDisabled, traverseTreeNodes } from './util';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -17,11 +17,6 @@ const LOAD_STATUS_LOADED = 2;
 const defaultTitle = '---';
 
 let onlyTreeNodeWarned = false; // Only accept TreeNode
-
-function isCheckDisabled(node) {
-  const { disabled, disableCheckbox } = node.props || {};
-  return disabled || disableCheckbox;
-}
 
 export const nodeContextTypes = {
   ...contextTypes,
@@ -197,12 +192,53 @@ class TreeNode extends React.Component {
     }
   };
 
-  onExpand = () => {
-    // Disabled item still can be switch
-    const { rcTree: { onExpand } } = this.context;
+  onMouseEnter = (e) => {
+    const { rcTree: { onNodeMouseEnter } } = this.context;
+    onNodeMouseEnter(e, this);
+  };
 
-    if (!onExpand) return;
-    // TODO: palceholder
+  onMouseLeave = (e) => {
+    const { rcTree: { onNodeMouseLeave } } = this.context;
+    onNodeMouseLeave(e, this);
+  };
+
+  onContextMenu = (e) => {
+    const { rcTree: { onNodeContextMenu } } = this.context;
+    onNodeContextMenu(e, this);
+  };
+
+  onDragStart = (e) => {
+    const { rcTree: { onNodeDragStart } } = this.context;
+
+    e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: true,
+    });
+    onNodeDragStart(e, this);
+
+    try {
+      // ie throw error
+      // firefox-need-it
+      e.dataTransfer.setData('text/plain', '');
+    } catch (error) {
+      // empty
+    }
+  };
+
+  onDragEnter = (e) => {
+    const { rcTree: { onNodeDragEnter } } = this.context;
+
+    e.preventDefault();
+    e.stopPropagation();
+    onNodeDragEnter(e, this);
+  };
+
+  onExpand = (e) => {
+    // Disabled item still can be switch
+    const { rcTree: { onNodeExpand } } = this.context;
+
+    e.preventDefault();
+    onNodeExpand(e, this);
   };
 
   setSelectHandle = (node) => {
@@ -212,9 +248,7 @@ class TreeNode extends React.Component {
   getNodeChildren = () => {
     const { children } = this.props;
     const originList = toArray(children).filter(node => node);
-    const targetList = originList.filter((node) => (
-      node.type && node.type.isTreeNode
-    ));
+    const targetList = getNodeChildren(originList);
 
     if (originList.length !== targetList.length && !onlyTreeNodeWarned) {
       onlyTreeNodeWarned = true;
