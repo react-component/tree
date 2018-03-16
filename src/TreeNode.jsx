@@ -416,10 +416,7 @@ class TreeNode extends React.Component {
     // Title
     const $title = <span className={`${prefixCls}-title`}>{title}</span>;
 
-    // TODO: ref it
-    // TODO: Event handler
     // TODO: Accessibility: `disabled` prop need map to dom attr.
-
     return (
       <span
         ref={this.setSelectHandle}

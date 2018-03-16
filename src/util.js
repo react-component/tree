@@ -228,8 +228,6 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
     const { subNodes = [], parentPos, node } = keyNodes[key];
     if (isCheckDisabled(node)) return;
 
-    calcCheckedKeys[key] = true;
-
     const allSubChecked = subNodes
       .filter(sub => !isCheckDisabled(sub))
       .every(sub => calcCheckedKeys[sub.key]);
