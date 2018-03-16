@@ -140,7 +140,6 @@ class Tree extends React.Component {
     } = props;
 
     // Sync state with props
-    // TODO: Default logic
     const { checkedKeys = [], halfCheckedKeys = [] } =
       this.calcCheckedKeys(defaultCheckedKeys, props) || {};
 
@@ -345,7 +344,7 @@ class Tree extends React.Component {
     }
 
     // [Legacy] Not found related usage in doc or upper libs
-    // [Legacy] TODO: can be optimized if we remove selectedNodes in API
+    // [Legacy] TODO: add optimize prop to skip node process
     const selectedNodes = [];
     if (selectedKeys.length) {
       traverseTreeNodes(children, ({ node, key }) => {
@@ -434,7 +433,7 @@ class Tree extends React.Component {
     if (checkStrictly) {
       selectedObj = getStrictlyValue(newCheckedKeys, newHalfCheckedKeys);
 
-      // TODO: add optimize prop to skip node process
+      // [Legacy] TODO: add optimize prop to skip node process
       eventObj.checkedNodes = [];
       traverseTreeNodes(children, ({ node, key }) => {
         if (checkedKeySet[key]) {
@@ -446,7 +445,7 @@ class Tree extends React.Component {
     } else {
       selectedObj = newCheckedKeys;
 
-      // TODO: add optimize prop to skip node process
+      // [Legacy] TODO: add optimize prop to skip node process
       eventObj.checkedNodes = [];
       eventObj.checkedNodesPositions = []; // [Legacy] TODO: not in API
       eventObj.halfCheckedKeys = newHalfCheckedKeys; // [Legacy] TODO: not in API

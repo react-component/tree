@@ -13,6 +13,7 @@ const ICON_CLOSE = 'close';
 const LOAD_STATUS_NONE = 0;
 const LOAD_STATUS_LOADING = 1;
 const LOAD_STATUS_LOADED = 2;
+const LOAD_STATUS_FAILED = 3;
 
 const defaultTitle = '---';
 
@@ -269,12 +270,22 @@ class TreeNode extends React.Component {
     onNodeDrop(e, this);
   };
 
+  // Disabled item still can be switch
+  // TODO: Next version can support failure load status
   onExpand = (e) => {
-    // Disabled item still can be switch
     const { rcTree: { onNodeExpand } } = this.context;
+    const callbackPromise = onNodeExpand(e, this);
 
-    e.preventDefault();
-    onNodeExpand(e, this);
+    // Promise like
+    if (callbackPromise && callbackPromise.then) {
+      this.setState({ loadStatus: LOAD_STATUS_LOADING });
+
+      callbackPromise.then(() => {
+        this.setState({ loadStatus: LOAD_STATUS_LOADED });
+      }).catch(() => {
+        this.setState({ loadStatus: LOAD_STATUS_FAILED });
+      });
+    }
   };
 
   // Drag usage
