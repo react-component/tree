@@ -668,7 +668,7 @@ describe('Tree', () => {
   });
 
   it('loads nodes asynchronously', () => {
-    const then = jest.fn();
+    const then = jest.fn(() => Promise.resolve());
     const loadData = jest.fn(() => ({ then }));
     const wrapper = mount(
       <Tree loadData={loadData}>

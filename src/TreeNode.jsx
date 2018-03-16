@@ -102,7 +102,6 @@ class TreeNode extends React.Component {
       return;
     }
 
-    // TODO: check child disabled in `componentWillReceiveProps`
     const children = this.getNodeChildren();
 
     let checkedCount = nodeChecked ? 1 : 0;
@@ -565,7 +564,6 @@ class TreeNode extends React.Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         onDragEnd={this.onDragEnd}
-        disabled={disabled}
       >
         {this.renderSwitcher()}
         {this.renderCheckbox()}

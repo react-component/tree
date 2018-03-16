@@ -634,7 +634,6 @@ class Tree extends React.Component {
    * Calculate the value of checked and halfChecked keys.
    * This should be only run in init or props changed.
    */
-    // TODO: Process the logic as TreeNode check logic!
   calcCheckedKeys = (keys, props) => {
     const { checkable, children, checkStrictly } = props;
 

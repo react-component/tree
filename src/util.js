@@ -229,7 +229,7 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
     if (isCheckDisabled(node)) return;
 
     const allSubChecked = !halfChecked && subNodes
-      .filter(sub => !isCheckDisabled(sub))
+      .filter(sub => !isCheckDisabled(sub.node))
       .every(sub => calcCheckedKeys[sub.key]);
 
     if (allSubChecked) {
@@ -270,7 +270,7 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
 
     // Conduct down
     subNodes
-      .filter(sub => !isCheckDisabled(sub))
+      .filter(sub => !isCheckDisabled(sub.node))
       .forEach((sub) => {
         conductDown(sub.key);
       });
