@@ -79,6 +79,15 @@ class TreeNode extends React.Component {
     };
   }
 
+  // Isomorphic needn't load data in server side
+  componentDidMount() {
+    this.syncLoadData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.syncLoadData(nextProps);
+  }
+
   onUpCheckConduct = (treeNode, nodeChecked, nodeHalfChecked) => {
     const { pos: nodePos } = treeNode.props;
     const { eventKey, pos, checked, halfChecked } = this.props;
@@ -354,13 +363,29 @@ class TreeNode extends React.Component {
     return treeSelectable;
   }
 
+  // Load data to avoid default expanded tree without data
+  syncLoadData = (props) => {
+    const { loadStatus } = this.state;
+    const { expanded } = props;
+    const { rcTree: { loadData } } = this.context;
+
+    if (loadData && loadStatus === LOAD_STATUS_NONE && expanded && !this.isLeaf()) {
+      this.setState({ loadStatus: LOAD_STATUS_LOADING });
+
+      loadData(this).then(() => {
+        this.setState({ loadStatus: LOAD_STATUS_LOADED });
+      }).catch(() => {
+        this.setState({ loadStatus: LOAD_STATUS_FAILED });
+      });
+    }
+  };
+
   // Switcher
   renderSwitcher = () => {
-    const { loadStatus } = this.state;
     const { expanded } = this.props;
     const { rcTree: { prefixCls } } = this.context;
 
-    if (this.isLeaf() || loadStatus === LOAD_STATUS_LOADING) {
+    if (this.isLeaf()) {
       return <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />;
     }
 
