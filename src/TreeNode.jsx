@@ -328,7 +328,7 @@ class TreeNode extends React.Component {
       return false;
     }
 
-    return treeDisabled || disabled;
+    return !!(treeDisabled || disabled);
   };
 
   isSelectable() {

@@ -287,10 +287,13 @@ class Tree extends React.Component {
     }
   };
   onNodeDragEnd = (event, node) => {
+    const { onDragEnd } = this.props;
     this.setState({
       dragOverNodeKey: '',
     });
-    this.props.onDragEnd({ event, node });
+    if (onDragEnd) {
+      onDragEnd({ event, node });
+    }
   };
   onNodeDrop = (event, node) => {
     const { dragNodesKeys, dropPosition } = this.state;
@@ -678,27 +681,22 @@ class Tree extends React.Component {
    * We have to use `cloneElement` to pass `key`.
    */
   renderTreeNode = (child, index, level = 0) => {
-    const { expandedKeys = [], selectedKeys = [], halfCheckedKeys = [] } = this.state;
+    const {
+      expandedKeys = [], selectedKeys = [], halfCheckedKeys = [],
+      dragOverNodeKey, dropPosition,
+    } = this.state;
     const {} = this.props;
     const pos = getPosition(level, index);
     const key = child.key || pos;
 
     /* const childProps = {
       root: this,
-      dragOver: state.dragOverNodeKey === key && state.dropPosition === 0,
-      dragOverGapTop: state.dragOverNodeKey === key && state.dropPosition === -1,
-      dragOverGapBottom: state.dragOverNodeKey === key && state.dropPosition === 1,
-      expanded: state.expandedKeys.indexOf(key) !== -1,
-      selected: state.selectedKeys.indexOf(key) !== -1,
+
       openTransitionName: this.getOpenTransitionName(),
       openAnimation: props.openAnimation,
       filterTreeNode: this.filterTreeNode,
     };
-    if (props.checkable) {
-      childProps.checkable = props.checkable;
-      childProps.checked = state.checkedKeys.indexOf(key) !== -1;
-      childProps.halfChecked = state.halfCheckedKeys.indexOf(key) !== -1;
-    } */
+    */
 
     return React.cloneElement(child, {
       eventKey: key,
@@ -707,6 +705,11 @@ class Tree extends React.Component {
       checked: this.isKeyChecked(key),
       halfChecked: halfCheckedKeys.includes(key),
       pos,
+
+      // [Legacy] Drag props
+      dragOver: dragOverNodeKey === key && dropPosition === 0,
+      dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
+      dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
     });
   };
 
