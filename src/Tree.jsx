@@ -561,6 +561,13 @@ class Tree extends React.Component {
       newState.selectedKeys = props.selectedKeys;
     }
 
+    if (checkSync('checkedKeys')) {
+      const { checkedKeys = [], halfCheckedKeys = [] } =
+      this.calcCheckedKeys(props.checkedKeys, props) || {};
+      newState.checkedKeys = checkedKeys;
+      newState.halfCheckedKeys = halfCheckedKeys;
+    }
+
     return needSync ? newState : null;
   };
 
