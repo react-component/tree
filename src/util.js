@@ -222,22 +222,24 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
   const calcHalfCheckedKeys = {};
 
   // Conduct up
-  function conductUp(key) {
+  function conductUp(key, halfChecked) {
     if (calcCheckedKeys[key]) return;
 
     const { subNodes = [], parentPos, node } = keyNodes[key];
     if (isCheckDisabled(node)) return;
 
-    const allSubChecked = subNodes
+    const allSubChecked = !halfChecked && subNodes
       .filter(sub => !isCheckDisabled(sub))
       .every(sub => calcCheckedKeys[sub.key]);
 
     if (allSubChecked) {
       calcCheckedKeys[key] = true;
+    } else {
+      calcHalfCheckedKeys[key] = true;
+    }
 
-      if (parentPos !== null) {
-        conductUp(posNodes[parentPos].key);
-      }
+    if (parentPos !== null) {
+      conductUp(posNodes[parentPos].key, !allSubChecked);
     }
   }
 
@@ -283,10 +285,9 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
     conduct(key);
   });
 
-  // TODO: half checked
-
   return {
     checkedKeys: Object.keys(calcCheckedKeys),
-    halfCheckedKeys: Object.keys(calcHalfCheckedKeys),
+    halfCheckedKeys: Object.keys(calcHalfCheckedKeys)
+      .filter(key => !calcCheckedKeys[key]),
   };
 }
