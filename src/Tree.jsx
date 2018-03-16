@@ -5,9 +5,9 @@ import warning from 'warning';
 import {
   traverseTreeNodes, getStrictlyValue,
   getFullKeyList, getPosition, getDragNodesKeys,
-  calcCheckStateConduct,
+  calcCheckStateConduct, calcDropPosition,
   isParent,
-  arrAdd, arrDel,
+  arrAdd, arrDel, posToArr,
 } from './util';
 
 /**
@@ -46,8 +46,8 @@ export const contextTypes = {
     onNodeDragEnter: PropTypes.func,
     onNodeDragOver: PropTypes.func,
     onNodeDragLeave: PropTypes.func,
-    onNodeDrop: PropTypes.func,
     onNodeDragEnd: PropTypes.func,
+    onNodeDrop: PropTypes.func,
     onBatchNodeCheck: PropTypes.func,
     onCheckConductFinished: PropTypes.func,
   }),
@@ -92,8 +92,8 @@ class Tree extends React.Component {
     onDragEnter: PropTypes.func,
     onDragOver: PropTypes.func,
     onDragLeave: PropTypes.func,
-    onDrop: PropTypes.func,
     onDragEnd: PropTypes.func,
+    onDrop: PropTypes.func,
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -194,6 +194,7 @@ class Tree extends React.Component {
         onNodeDragEnter: this.onNodeDragEnter,
         onNodeDragOver: this.onNodeDragOver,
         onNodeDragLeave: this.onNodeDragLeave,
+        onNodeDragEnd: this.onNodeDragEnd,
         onNodeDrop: this.onNodeDrop,
         onBatchNodeCheck: this.onBatchNodeCheck,
         onCheckConductFinished: this.onCheckConductFinished,
@@ -208,8 +209,8 @@ class Tree extends React.Component {
 
   onNodeDragStart = (event, node) => {
     const { expandedKeys } = this.state;
-    const { onDragStart, children } = this.props;
-    const { eventKey } = node.props;
+    const { onDragStart } = this.props;
+    const { eventKey, children } = node.props;
 
     this.dragNode = node;
 
@@ -222,16 +223,24 @@ class Tree extends React.Component {
       onDragStart({ event, node });
     }
   };
+
+  /**
+   * [Legacy] Select handler is less small than node,
+   * so that this will trigger when drag enter node or select handler.
+   * This is a little tricky if customize css without padding.
+   * Better for use mouse move event to refresh drag state.
+   * But let's just keep it to avoid event trigger logic change.
+   */
   onNodeDragEnter = (event, node) => {
+    const { expandedKeys } = this.state;
     const { onDragEnter } = this.props;
-    if (onDragEnter) {
-      onDragEnter({ event, node });
-    }
+    const { pos, eventKey } = node.props;
 
+    const dropPosition = calcDropPosition(event, node);
 
-    /* const dropPosition = this.calcDropPosition(e, treeNode);
+    // Skip if drag node is self
     if (
-      this.dragNode.props.eventKey === treeNode.props.eventKey &&
+      this.dragNode.props.eventKey === eventKey &&
       dropPosition === 0
     ) {
       this.setState({
@@ -240,28 +249,30 @@ class Tree extends React.Component {
       });
       return;
     }
+
+    // Update drag over node
     this.setState({
-      dragOverNodeKey: treeNode.props.eventKey,
+      dragOverNodeKey: eventKey,
       dropPosition,
     });
 
+    // Side effect for delay drag
     if (!this.delayedDragEnterLogic) {
       this.delayedDragEnterLogic = {};
     }
     Object.keys(this.delayedDragEnterLogic).forEach((key) => {
       clearTimeout(this.delayedDragEnterLogic[key]);
     });
-    this.delayedDragEnterLogic[treeNode.props.pos] = setTimeout(() => {
-      const expandedKeys = this.getExpandedKeys(treeNode, true);
-      if (expandedKeys) {
-        this.setState({ expandedKeys });
-      }
-      this.props.onDragEnter({
-        event: e,
-        node: treeNode,
-        expandedKeys: expandedKeys && [...expandedKeys] || [...this.state.expandedKeys],
+    this.delayedDragEnterLogic[pos] = setTimeout(() => {
+      const newExpandedKeys = arrAdd(expandedKeys, eventKey);
+      this.setState({
+        expandedKeys: newExpandedKeys,
       });
-    }, 400); */
+
+      if (onDragEnter) {
+        onDragEnter({ event, node, expandedKeys: newExpandedKeys });
+      }
+    }, 400);
   };
   onNodeDragOver = (event, node) => {
     const { onDragOver } = this.props;
@@ -275,10 +286,43 @@ class Tree extends React.Component {
       onDragLeave({ event, node });
     }
   };
+  onNodeDragEnd = (event, node) => {
+    this.setState({
+      dragOverNodeKey: '',
+    });
+    this.props.onDragEnd({ event, node });
+  };
   onNodeDrop = (event, node) => {
+    const { dragNodesKeys, dropPosition } = this.state;
     const { onDrop } = this.props;
+    const { eventKey, pos } = node.props;
+
+    this.setState({
+      dragOverNodeKey: '',
+      dropNodeKey: eventKey,
+    });
+
+    if (dragNodesKeys.includes(eventKey)) {
+      warning(false, 'Can not drop to dragNode(include it\'s children node)');
+      return;
+    }
+
+    const posArr = posToArr(pos);
+
+    const dropResult = {
+      event,
+      node,
+      dragNode: this.dragNode,
+      dragNodesKeys: dragNodesKeys.slice(),
+      dropPosition: dropPosition + Number(posArr[posArr.length - 1]),
+    };
+
+    if (dropPosition !== 0) {
+      dropResult.dropToGap = true;
+    }
+
     if (onDrop) {
-      onDrop({ event, node });
+      onDrop(dropResult);
     }
   };
 
@@ -518,7 +562,6 @@ class Tree extends React.Component {
 
   /**
    * Only update the value which is not in props
-   * @param state
    */
   setUncontrolledState = (state) => {
     let needSync = false;
@@ -577,8 +620,6 @@ class Tree extends React.Component {
   /**
    * Calculate the value of checked and halfChecked keys.
    * This should be only run in init or props changed.
-   * @param keys
-   * @param props
    */
     // TODO: Process the logic as TreeNode check logic!
   calcCheckedKeys = (keys, props) => {
@@ -645,10 +686,6 @@ class Tree extends React.Component {
   /**
    * [Legacy] Original logic use `key` as tracking clue.
    * We have to use `cloneElement` to pass `key`.
-   * @param child
-   * @param index
-   * @param level
-   * @returns {*}
    */
   renderTreeNode = (child, index, level = 0) => {
     const { expandedKeys, selectedKeys, halfCheckedKeys } = this.state;

@@ -233,6 +233,42 @@ class TreeNode extends React.Component {
     onNodeDragEnter(e, this);
   };
 
+  onDragOver = (e) => {
+    const { rcTree: { onNodeDragOver } } = this.context;
+
+    e.preventDefault();
+    e.stopPropagation();
+    onNodeDragOver(e, this);
+  };
+
+  onDragLeave = (e) => {
+    const { rcTree: { onNodeDragLeave } } = this.context;
+
+    e.stopPropagation();
+    onNodeDragLeave(e, this);
+  };
+
+  onDragEnd = (e) => {
+    const { rcTree: { onNodeDragEnd } } = this.context;
+
+    e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: false,
+    });
+    onNodeDragEnd(e, this);
+  }
+
+  onDrop = (e) => {
+    const { rcTree: { onNodeDrop } } = this.context;
+
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: false,
+    });
+    onNodeDrop(e, this);
+  };
+
   onExpand = (e) => {
     // Disabled item still can be switch
     const { rcTree: { onNodeExpand } } = this.context;
@@ -241,6 +277,7 @@ class TreeNode extends React.Component {
     onNodeExpand(e, this);
   };
 
+  // Drag usage
   setSelectHandle = (node) => {
     this.selectHandle = node;
   };

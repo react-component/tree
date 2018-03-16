@@ -18,6 +18,10 @@ export function arrAdd(list, value) {
   return clone;
 }
 
+export function posToArr(pos) {
+  return pos.split('-');
+}
+
 // Only used when drag, not affect SSR.
 export function getOffset(ele) {
   if (!ele.getClientRects().length) {
@@ -140,8 +144,8 @@ export function getFullKeyList(treeNodes) {
 export function isParent(parentPos, childPos, directly = false) {
   if (!parentPos || !childPos || parentPos.length > childPos.length) return false;
 
-  const parentPath = parentPos.split('-');
-  const childPath = childPos.split('-');
+  const parentPath = posToArr(parentPos);
+  const childPath = posToArr(childPos);
 
   // Directly check
   if (directly && parentPath.length !== childPath.length - 1) return false;
@@ -179,6 +183,7 @@ export function getNodesStatistic(treeNodes) {
 export function getDragNodesKeys(treeNodes, node) {
   const { eventKey, pos } = node.props;
   const dragNodesKeys = [];
+
   traverseTreeNodes(treeNodes, ({ pos: nodePos, key }) => {
     if (isParent(pos, nodePos)) {
       dragNodesKeys.push(key);
@@ -188,7 +193,6 @@ export function getDragNodesKeys(treeNodes, node) {
   return dragNodesKeys;
 }
 
-// FIXME: 做到这里，把位置计算出来
 export function calcDropPosition(event, treeNode) {
   const offsetTop = getOffset(treeNode.selectHandle).top;
   const offsetHeight = treeNode.selectHandle.offsetHeight;
