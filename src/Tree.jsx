@@ -508,12 +508,16 @@ class Tree extends React.Component {
 
   onNodeMouseEnter = (event, node) => {
     const { onMouseEnter } = this.props;
-    onMouseEnter({ event, node });
+    if (onMouseEnter) {
+      onMouseEnter({ event, node });
+    }
   };
 
   onNodeMouseLeave = (event, node) => {
     const { onMouseLeave } = this.props;
-    onMouseLeave({ event, node });
+    if (onMouseLeave) {
+      onMouseLeave({ event, node });
+    }
   };
 
   onNodeContextMenu = (event, node) => {

@@ -1,5 +1,6 @@
 /* eslint no-loop-func: 0*/
 import { Children } from 'react';
+import warning from 'warning';
 
 export function arrDel(list, value) {
   const clone = list.slice();
@@ -255,6 +256,11 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
   }
 
   function conduct(key) {
+    if (!keyNodes[key]) {
+      warning(false, `'${key}' does not exist in the tree.`);
+      return;
+    }
+
     const { subNodes = [], parentPos, node } = keyNodes[key];
     if (isCheckDisabled(node)) return;
 
