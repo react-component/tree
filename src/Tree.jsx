@@ -689,15 +689,6 @@ class Tree extends React.Component {
     const pos = getPosition(level, index);
     const key = child.key || pos;
 
-    /* const childProps = {
-      root: this,
-
-      openTransitionName: this.getOpenTransitionName(),
-      openAnimation: props.openAnimation,
-      filterTreeNode: this.filterTreeNode,
-    };
-    */
-
     return React.cloneElement(child, {
       eventKey: key,
       expanded: expandedKeys.includes(key),
