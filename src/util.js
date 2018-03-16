@@ -198,7 +198,7 @@ export function calcDropPosition(event, treeNode) {
   const offsetTop = getOffset(treeNode.selectHandle).top;
   const offsetHeight = treeNode.selectHandle.offsetHeight;
   const pageY = event.pageY;
-  const gapHeight = 2; // TODO: remove hard code
+  const gapHeight = 2; // [Legacy] TODO: remove hard code
   if (pageY > offsetTop + offsetHeight - gapHeight) {
     return 1;
   }

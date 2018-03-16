@@ -452,7 +452,6 @@ class TreeNode extends React.Component {
     // Title
     const $title = <span className={`${prefixCls}-title`}>{title}</span>;
 
-    // TODO: Accessibility: `disabled` prop need map to dom attr.
     return (
       <span
         ref={this.setSelectHandle}
@@ -566,6 +565,7 @@ class TreeNode extends React.Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         onDragEnd={this.onDragEnd}
+        disabled={disabled}
       >
         {this.renderSwitcher()}
         {this.renderCheckbox()}
