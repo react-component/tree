@@ -547,7 +547,7 @@ class Tree extends React.Component {
     // Children change will affect check box status.
     // And no need to check when prev props not provided
     if (prevProps && checkSync('children')) {
-      const { checkedKeys, halfCheckedKeys } =
+      const { checkedKeys = [], halfCheckedKeys = [] } =
         this.calcCheckedKeys(props.checkedKeys || this.state.checkedKeys, props) || {};
       newState.checkedKeys = checkedKeys;
       newState.halfCheckedKeys = halfCheckedKeys;
