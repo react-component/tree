@@ -548,7 +548,7 @@ class Tree extends React.Component {
     // And no need to check when prev props not provided
     if (prevProps && checkSync('children')) {
       const { checkedKeys, halfCheckedKeys } =
-        this.calcCheckedKeys(props.checkedKeys || this.state.checkedKeys, props);
+        this.calcCheckedKeys(props.checkedKeys || this.state.checkedKeys, props) || {};
       newState.checkedKeys = checkedKeys;
       newState.halfCheckedKeys = halfCheckedKeys;
     }
@@ -582,7 +582,7 @@ class Tree extends React.Component {
   };
 
   isKeyChecked = (key) => {
-    const { checkedKeys } = this.state;
+    const { checkedKeys = [] } = this.state;
     return checkedKeys.includes(key);
   };
 
@@ -663,27 +663,6 @@ class Tree extends React.Component {
     const { checkedKeys = [] } = keyProps;
 
     return calcCheckStateConduct(children, checkedKeys);
-
-    // Calculate
-    /* const { keyNodes, nodeList } = getNodesStatistic(children);
-    const checkedPosList = checkedKeys
-      .filter(key => keyNodes[key])
-      .map(key => keyNodes[key].pos);
-
-    const calcCheckedKeys = [];
-    const calcHalfCheckedKeys = [];
-
-    const calcHalfCheckedKeys = nodeList
-      .filter(({ pos }) => !checkedPosList.includes(pos))
-      .filter(({ pos }) => (
-        checkedPosList.some(checkedPos => isParent(pos, checkedPos))
-      ))
-      .map(({ key }) => key);
-
-    return {
-      checkedKeys,
-      halfCheckedKeys: calcHalfCheckedKeys,
-    }; */
   };
 
   // TODO: Remove `key` dep to support HOC.
@@ -692,7 +671,7 @@ class Tree extends React.Component {
    * We have to use `cloneElement` to pass `key`.
    */
   renderTreeNode = (child, index, level = 0) => {
-    const { expandedKeys, selectedKeys, halfCheckedKeys } = this.state;
+    const { expandedKeys = [], selectedKeys = [], halfCheckedKeys = [] } = this.state;
     const {} = this.props;
     const pos = getPosition(level, index);
     const key = child.key || pos;

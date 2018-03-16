@@ -56,7 +56,7 @@ export function getNodeChildren(children) {
 
 export function isCheckDisabled(node) {
   const { disabled, disableCheckbox } = node.props || {};
-  return disabled || disableCheckbox;
+  return !!(disabled || disableCheckbox);
 }
 
 export function traverseTreeNodes(treeNodes, subTreeData, callback) {
@@ -246,7 +246,9 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
   // Conduct down
   function conductDown(key) {
     if (calcCheckedKeys[key]) return;
-    const { subNodes = [] } = keyNodes[key];
+    const { subNodes = [], node } = keyNodes[key];
+
+    if (isCheckDisabled(node)) return;
 
     calcCheckedKeys[key] = true;
 
