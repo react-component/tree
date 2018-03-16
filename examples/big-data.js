@@ -28,6 +28,7 @@ class Demo extends React.Component {
     }
   }
   onCheck = (checkedKeys) => {
+    console.log('--->', checkedKeys);
     this.setState({
       checkedKeys,
     });
