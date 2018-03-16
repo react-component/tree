@@ -194,12 +194,12 @@ describe('Tree Props', () => {
 
     // Parent select
     parentNode.find('.rc-tree-node-content-wrapper').first().simulate('click');
-    expect(handleOnSelect).toBeCalledWith(['0-0-0', '0-0'], {
+    expect(handleOnSelect).toBeCalledWith(['0-0-0', '0-0'], expect.objectContaining({
       event: 'select',
       selected: true,
       node: parentNode.instance(),
       selectedNodes: [wrapper.find(Tree).props().children, parentNode.props().children],
-    });
+    }));
     handleOnSelect.mockReset();
 
     // Leaf un-select

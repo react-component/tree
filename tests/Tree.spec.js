@@ -87,6 +87,7 @@ describe('Tree', () => {
           </TreeNode>
         </Tree>
       );
+
       const switcher = wrapper.find('.rc-tree-switcher').first();
       expect(switcher.is(OPEN_CLASSNAME)).toBe(true);
     });
@@ -236,12 +237,12 @@ describe('Tree', () => {
       const treeElm2 = treeNode1.props().children;
 
       wrapper.find('.rc-tree-checkbox').first().simulate('click');
-      expect(handleCheck).toBeCalledWith(['0-0-0', '0-0'], {
+      expect(handleCheck).toBeCalledWith(['0-0', '0-0-0'], {
         checked: true,
-        checkedNodes: [treeElm2, treeElm1],
+        checkedNodes: [treeElm1, treeElm2],
         checkedNodesPositions: [
-          { node: treeElm2, pos: '0-0-0' },
           { node: treeElm1, pos: '0-0' },
+          { node: treeElm2, pos: '0-0-0' },
         ],
         event: 'check',
         halfCheckedKeys: [],
@@ -318,7 +319,7 @@ describe('Tree', () => {
       expect(checkedKeys).toEqual(['0-0']);
       wrapper.setProps({ disableCheckbox: false });
       wrapper.find('.rc-tree-checkbox').first().simulate('click').simulate('click');
-      expect(checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0-3', '0-0']);
+      expect(checkedKeys).toEqual(['0-0', '0-0-1', '0-0-2', '0-0-3']);
     });
 
     it('check dynamic children when their parent is checked', () => {
@@ -336,7 +337,7 @@ describe('Tree', () => {
           </TreeNode>
         ),
       });
-      expect(wrapper.state('checkedKeys')).toEqual(['0-0-0', '0-0-1', '0-0']);
+      expect(wrapper.state('checkedKeys')).toEqual(['0-0', '0-0-0', '0-0-1']);
     });
 
     describe('strictly', () => {
@@ -570,12 +571,12 @@ describe('Tree', () => {
       const treeElm2 = treeNode1.props().children;
 
       wrapper.find('.rc-tree-node-content-wrapper').first().simulate('click');
-      expect(handleCheck).toBeCalledWith(['0-0-0', '0-0'], {
+      expect(handleCheck).toBeCalledWith(['0-0', '0-0-0'], {
         checked: true,
-        checkedNodes: [treeElm2, treeElm1],
+        checkedNodes: [treeElm1, treeElm2],
         checkedNodesPositions: [
-          { node: treeElm2, pos: '0-0-0' },
           { node: treeElm1, pos: '0-0' },
+          { node: treeElm2, pos: '0-0-0' },
         ],
         event: 'check',
         halfCheckedKeys: [],
@@ -695,7 +696,7 @@ describe('Tree', () => {
       );
     }
 
-    it('fires drageStart event', () => {
+    it('fires dragStart event', () => {
       const onDragStart = jest.fn();
       const wrapper = mount(createTree({ onDragStart }));
       const treeNode = wrapper.find('.dragTarget > .rc-tree-node-content-wrapper');
@@ -713,7 +714,7 @@ describe('Tree', () => {
       setTimeout(() => {
         const event = onDragEnter.mock.calls[0][0];
         expect(event.node).toBe(wrapper.find(TreeNode).at(2).instance());
-        expect(event.expandedKeys).toEqual(['0-0-0-1', '0-0']);
+        expect(event.expandedKeys).toEqual(['0-0', '0-0-0-1']);
         done();
       }, 400);
     });

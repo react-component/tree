@@ -130,6 +130,33 @@ exports[`Tree Mixed renders correctly 1`] = `
 </ul>
 `;
 
+exports[`Tree Mixed renders opaque children correctly 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher_close">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
+      title="0">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__close">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        0
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
 exports[`Tree renders correctly 1`] = `
 <ul
   class="rc-tree forTest rc-tree-show-line"
