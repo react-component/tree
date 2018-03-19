@@ -249,29 +249,36 @@ class Tree extends React.Component {
       return;
     }
 
-    // Update drag over node
-    this.setState({
-      dragOverNodeKey: eventKey,
-      dropPosition,
-    });
-
-    // Side effect for delay drag
-    if (!this.delayedDragEnterLogic) {
-      this.delayedDragEnterLogic = {};
-    }
-    Object.keys(this.delayedDragEnterLogic).forEach((key) => {
-      clearTimeout(this.delayedDragEnterLogic[key]);
-    });
-    this.delayedDragEnterLogic[pos] = setTimeout(() => {
-      const newExpandedKeys = arrAdd(expandedKeys, eventKey);
+    // Ref: https://github.com/react-component/tree/issues/132
+    // Add timeout to let onDragLevel fire before onDragEnter,
+    // so that we can clean drag props for onDragLeave node.
+    // Macro task for this:
+    // https://html.spec.whatwg.org/multipage/webappapis.html#clean-up-after-running-script
+    setTimeout(() => {
+      // Update drag over node
       this.setState({
-        expandedKeys: newExpandedKeys,
+        dragOverNodeKey: eventKey,
+        dropPosition,
       });
 
-      if (onDragEnter) {
-        onDragEnter({ event, node, expandedKeys: newExpandedKeys });
+      // Side effect for delay drag
+      if (!this.delayedDragEnterLogic) {
+        this.delayedDragEnterLogic = {};
       }
-    }, 400);
+      Object.keys(this.delayedDragEnterLogic).forEach((key) => {
+        clearTimeout(this.delayedDragEnterLogic[key]);
+      });
+      this.delayedDragEnterLogic[pos] = setTimeout(() => {
+        const newExpandedKeys = arrAdd(expandedKeys, eventKey);
+        this.setState({
+          expandedKeys: newExpandedKeys,
+        });
+
+        if (onDragEnter) {
+          onDragEnter({ event, node, expandedKeys: newExpandedKeys });
+        }
+      }, 400);
+    });
   };
   onNodeDragOver = (event, node) => {
     const { onDragOver } = this.props;
@@ -281,6 +288,11 @@ class Tree extends React.Component {
   };
   onNodeDragLeave = (event, node) => {
     const { onDragLeave } = this.props;
+
+    this.setState({
+      dragOverNodeKey: '',
+    });
+
     if (onDragLeave) {
       onDragLeave({ event, node });
     }
