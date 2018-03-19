@@ -226,23 +226,27 @@ export function calcExpandedKeys(keyList, props) {
     return keyList;
   }
 
-  // Collect the TreeNode position list which need be expanded by path
-  const needExpandPathList = [];
-  if (autoExpandParent) {
-    traverseTreeNodes(children, ({ pos, key }) => {
-      if (keyList.indexOf(key) > -1) {
-        needExpandPathList.push(pos);
-      }
-    });
-  }
-
-  // Expand the path for matching position
+  // Fill parent expanded keys
+  const { keyNodes, nodeList } = getNodesStatistic(children);
   const needExpandKeys = {};
-  traverseTreeNodes(children, ({ pos, key }) => {
+  const needExpandPathList = [];
+
+  // Fill expanded nodes
+  keyList.forEach((key) => {
+    const node = keyNodes[key];
+    if (node) {
+      needExpandKeys[key] = true;
+      needExpandPathList.push(node.pos);
+    }
+  });
+
+  // Match parent by path
+  nodeList.forEach(({ pos, key }) => {
     if (needExpandPathList.some(childPos => isParent(pos, childPos))) {
       needExpandKeys[key] = true;
     }
   });
+
   const calcExpandedKeyList = Object.keys(needExpandKeys);
 
   // [Legacy] Return origin keyList if calc list is empty
