@@ -278,7 +278,7 @@ class Tree extends React.Component {
           onDragEnter({ event, node, expandedKeys: newExpandedKeys });
         }
       }, 400);
-    });
+    }, 0);
   };
   onNodeDragOver = (event, node) => {
     const { onDragOver } = this.props;

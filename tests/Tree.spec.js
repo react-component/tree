@@ -716,7 +716,7 @@ describe('Tree', () => {
         expect(event.node).toBe(wrapper.find(TreeNode).at(2).instance());
         expect(event.expandedKeys).toEqual(['0-0', '0-0-0-1']);
         done();
-      }, 400);
+      }, 500);
     });
 
     it('fires dragOver event', () => {
