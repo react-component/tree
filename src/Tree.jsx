@@ -470,7 +470,6 @@ class Tree extends React.Component {
     this.checkedBatch = null;
   };
 
-  // TODO: Load data
   onNodeExpand = (e, treeNode) => {
     let { expandedKeys } = this.state;
     const { onExpand, loadData } = this.props;
@@ -497,7 +496,6 @@ class Tree extends React.Component {
     }
 
     // Async Load data
-    // TODO: Auto load data when node is expanded
     if (targetExpanded && loadData) {
       return loadData(treeNode).then(() => {
         // [Legacy] Refresh logic
@@ -673,7 +671,6 @@ class Tree extends React.Component {
     return calcCheckStateConduct(children, checkedKeys);
   };
 
-  // TODO: Remove `key` dep to support HOC.
   /**
    * [Legacy] Original logic use `key` as tracking clue.
    * We have to use `cloneElement` to pass `key`.

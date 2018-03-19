@@ -13,7 +13,7 @@ const ICON_CLOSE = 'close';
 const LOAD_STATUS_NONE = 0;
 const LOAD_STATUS_LOADING = 1;
 const LOAD_STATUS_LOADED = 2;
-const LOAD_STATUS_FAILED = 3;
+const LOAD_STATUS_FAILED = 0; // Action align, let's make failed same as init.
 
 const defaultTitle = '---';
 
@@ -279,7 +279,6 @@ class TreeNode extends React.Component {
   };
 
   // Disabled item still can be switch
-  // TODO: Next version can support failure load status
   onExpand = (e) => {
     const { rcTree: { onNodeExpand } } = this.context;
     const callbackPromise = onNodeExpand(e, this);
