@@ -209,6 +209,69 @@ export function calcDropPosition(event, treeNode) {
 }
 
 /**
+ * Auto expand all related node when sub node is expanded
+ * @param keyList
+ * @param props
+ * @returns [string]
+ */
+export function calcExpandedKeys(keyList, props) {
+  if (!keyList) {
+    return [];
+  }
+
+  const { autoExpandParent, children } = props;
+
+  // Do nothing if not auto expand parent
+  if (!autoExpandParent) {
+    return keyList;
+  }
+
+  // Collect the TreeNode position list which need be expanded by path
+  const needExpandPathList = [];
+  if (autoExpandParent) {
+    traverseTreeNodes(children, ({ pos, key }) => {
+      if (keyList.indexOf(key) > -1) {
+        needExpandPathList.push(pos);
+      }
+    });
+  }
+
+  // Expand the path for matching position
+  const needExpandKeys = {};
+  traverseTreeNodes(children, ({ pos, key }) => {
+    if (needExpandPathList.some(childPos => isParent(pos, childPos))) {
+      needExpandKeys[key] = true;
+    }
+  });
+  const calcExpandedKeyList = Object.keys(needExpandKeys);
+
+  // [Legacy] Return origin keyList if calc list is empty
+  return calcExpandedKeyList.length ? calcExpandedKeyList : keyList;
+}
+
+/**
+ * Return selectedKeys according with multiple prop
+ * @param selectedKeys
+ * @param props
+ * @returns [string]
+ */
+export function calcSelectedKeys(selectedKeys, props) {
+  if (!selectedKeys) {
+    return undefined;
+  }
+
+  const { multiple } = props;
+  if (multiple) {
+    return selectedKeys.slice();
+  }
+
+  if (selectedKeys.length) {
+    return [selectedKeys[0]];
+  }
+  return selectedKeys;
+}
+
+/**
  * Check conduct is by key level. It pass though up & down.
  * When conduct target node is check means already conducted will be skip.
  * @param treeNodes
@@ -218,24 +281,24 @@ export function calcDropPosition(event, treeNode) {
 export function calcCheckStateConduct(treeNodes, checkedKeys) {
   const { keyNodes, posNodes } = getNodesStatistic(treeNodes);
 
-  const calcCheckedKeys = {};
-  const calcHalfCheckedKeys = {};
+  const tgtCheckedKeys = {};
+  const tgtHalfCheckedKeys = {};
 
   // Conduct up
   function conductUp(key, halfChecked) {
-    if (calcCheckedKeys[key]) return;
+    if (tgtCheckedKeys[key]) return;
 
     const { subNodes = [], parentPos, node } = keyNodes[key];
     if (isCheckDisabled(node)) return;
 
     const allSubChecked = !halfChecked && subNodes
       .filter(sub => !isCheckDisabled(sub.node))
-      .every(sub => calcCheckedKeys[sub.key]);
+      .every(sub => tgtCheckedKeys[sub.key]);
 
     if (allSubChecked) {
-      calcCheckedKeys[key] = true;
+      tgtCheckedKeys[key] = true;
     } else {
-      calcHalfCheckedKeys[key] = true;
+      tgtHalfCheckedKeys[key] = true;
     }
 
     if (parentPos !== null) {
@@ -245,12 +308,12 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
 
   // Conduct down
   function conductDown(key) {
-    if (calcCheckedKeys[key]) return;
+    if (tgtCheckedKeys[key]) return;
     const { subNodes = [], node } = keyNodes[key];
 
     if (isCheckDisabled(node)) return;
 
-    calcCheckedKeys[key] = true;
+    tgtCheckedKeys[key] = true;
 
     subNodes.forEach((sub) => {
       conductDown(sub.key);
@@ -266,7 +329,7 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
     const { subNodes = [], parentPos, node } = keyNodes[key];
     if (isCheckDisabled(node)) return;
 
-    calcCheckedKeys[key] = true;
+    tgtCheckedKeys[key] = true;
 
     // Conduct down
     subNodes
@@ -286,8 +349,47 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
   });
 
   return {
-    checkedKeys: Object.keys(calcCheckedKeys),
-    halfCheckedKeys: Object.keys(calcHalfCheckedKeys)
-      .filter(key => !calcCheckedKeys[key]),
+    checkedKeys: Object.keys(tgtCheckedKeys),
+    halfCheckedKeys: Object.keys(tgtHalfCheckedKeys)
+      .filter(key => !tgtCheckedKeys[key]),
   };
+}
+
+/**
+ * Calculate the value of checked and halfChecked keys.
+ * This should be only run in init or props changed.
+ */
+export function calcCheckedKeys(keys, props) {
+  const { checkable, children, checkStrictly } = props;
+
+  if (!checkable || !keys) {
+    return null;
+  }
+
+  // Convert keys to object format
+  let keyProps;
+  if (Array.isArray(keys)) {
+    // [Legacy] Follow the api doc
+    keyProps = {
+      checkedKeys: keys,
+      halfCheckedKeys: undefined,
+    };
+  } else if (typeof keys === 'object') {
+    keyProps = {
+      checkedKeys: keys.checked || undefined,
+      halfCheckedKeys: keys.halfChecked || undefined,
+    };
+  } else {
+    warning(false, '`CheckedKeys` is not an array or an object');
+    return null;
+  }
+
+  // Do nothing if is checkStrictly mode
+  if (checkStrictly) {
+    return keyProps;
+  }
+
+  // Conduct calculate the check status
+  const { checkedKeys = [] } = keyProps;
+  return calcCheckStateConduct(children, checkedKeys);
 }

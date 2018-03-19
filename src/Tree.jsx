@@ -5,8 +5,8 @@ import warning from 'warning';
 import {
   traverseTreeNodes, getStrictlyValue,
   getFullKeyList, getPosition, getDragNodesKeys,
-  calcCheckStateConduct, calcDropPosition,
-  isParent,
+  calcExpandedKeys, calcSelectedKeys,
+  calcCheckedKeys, calcDropPosition,
   arrAdd, arrDel, posToArr,
 } from './util';
 
@@ -141,13 +141,13 @@ class Tree extends React.Component {
 
     // Sync state with props
     const { checkedKeys = [], halfCheckedKeys = [] } =
-      this.calcCheckedKeys(defaultCheckedKeys, props) || {};
+      calcCheckedKeys(defaultCheckedKeys, props) || {};
 
     this.state = {
       expandedKeys: defaultExpandAll ?
         getFullKeyList(props.children) :
-        this.calcExpandedKeys(defaultExpandedKeys, props),
-      selectedKeys: defaultSelectedKeys || [],
+        calcExpandedKeys(defaultExpandedKeys, props),
+      selectedKeys: calcSelectedKeys(defaultSelectedKeys, props),
       checkedKeys,
       halfCheckedKeys,
 
@@ -548,22 +548,22 @@ class Tree extends React.Component {
     // And no need to check when prev props not provided
     if (prevProps && checkSync('children')) {
       const { checkedKeys = [], halfCheckedKeys = [] } =
-        this.calcCheckedKeys(props.checkedKeys || this.state.checkedKeys, props) || {};
+        calcCheckedKeys(props.checkedKeys || this.state.checkedKeys, props) || {};
       newState.checkedKeys = checkedKeys;
       newState.halfCheckedKeys = halfCheckedKeys;
     }
 
     if (checkSync('expandedKeys')) {
-      newState.expandedKeys = this.calcExpandedKeys(props.expandedKeys, props);
+      newState.expandedKeys = calcExpandedKeys(props.expandedKeys, props);
     }
 
     if (checkSync('selectedKeys')) {
-      newState.selectedKeys = props.selectedKeys;
+      newState.selectedKeys = calcSelectedKeys(props.selectedKeys, props);
     }
 
     if (checkSync('checkedKeys')) {
       const { checkedKeys = [], halfCheckedKeys = [] } =
-      this.calcCheckedKeys(props.checkedKeys, props) || {};
+      calcCheckedKeys(props.checkedKeys, props) || {};
       newState.checkedKeys = checkedKeys;
       newState.halfCheckedKeys = halfCheckedKeys;
     }
@@ -591,84 +591,6 @@ class Tree extends React.Component {
   isKeyChecked = (key) => {
     const { checkedKeys = [] } = this.state;
     return checkedKeys.includes(key);
-  };
-
-  calcExpandedKeys = (keyList, props) => {
-    if (!keyList) {
-      return [];
-    }
-
-    const { autoExpandParent, children } = props || this.props || {};
-
-    // Do nothing if not auto expand parent
-    if (!autoExpandParent) {
-      return keyList;
-    }
-
-    // Collect the TreeNode position list which need be expanded by path
-    const needExpandPathList = [];
-    if (autoExpandParent) {
-      traverseTreeNodes(children, ({ pos, key }) => {
-        if (keyList.indexOf(key) > -1) {
-          needExpandPathList.push(pos);
-        }
-      });
-    }
-
-    // Expand the path for matching position
-    const needExpandKeys = {};
-    traverseTreeNodes(children, ({ pos, key }) => {
-      if (needExpandPathList.some(childPos => isParent(pos, childPos))) {
-        needExpandKeys[key] = true;
-      }
-    });
-    const calcExpandedKeyList = Object.keys(needExpandKeys);
-
-    // [Legacy] Return origin keyList if calc list is empty
-    return calcExpandedKeyList.length ? calcExpandedKeyList : keyList;
-  };
-
-  /**
-   * Calculate the value of checked and halfChecked keys.
-   * This should be only run in init or props changed.
-   */
-  calcCheckedKeys = (keys, props) => {
-    const { checkable, children, checkStrictly } = props;
-
-    if (!checkable || !keys) {
-      return null;
-    }
-
-    // Convert keys to object format
-    let keyProps;
-    if (Array.isArray(keys)) {
-      // [Legacy] Follow the api doc
-      keyProps = {
-        checkedKeys: keys,
-        halfCheckedKeys: undefined,
-      };
-    } else if (typeof keys === 'object') {
-      keyProps = {
-        checkedKeys: keys.checked || undefined,
-        halfCheckedKeys: keys.halfChecked || undefined,
-      };
-    } else {
-      warning(false, '`CheckedKeys` is not an array or an object');
-      return null;
-    }
-
-    // Do nothing if is checkStrictly mode
-    if (checkStrictly) {
-      return keyProps;
-    }
-
-    // [Legacy] Since `halfChecked` not provided in `checkStrictly` mod.
-    // And origin code will regenerate `halfChecked`.
-    // It's little tricky when `checkStrictly` mod change.
-    // Let's add additional check when `checkStrictly` changed.
-    const { checkedKeys = [] } = keyProps;
-
-    return calcCheckStateConduct(children, checkedKeys);
   };
 
   /**
