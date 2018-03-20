@@ -117,11 +117,11 @@ exports[`TreeNode Props isLeaf 1`] = `
   <li
     class="">
     <span
-      class="rc-tree-switcher rc-tree-switcher_open">
+      class="rc-tree-switcher rc-tree-switcher-noop">
       
     </span>
     <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---">
       <span
         class="rc-tree-title">
@@ -159,14 +159,14 @@ exports[`TreeNode Props isLeaf 2`] = `
   <li
     class="">
     <span
-      class="rc-tree-switcher rc-tree-switcher_open">
+      class="rc-tree-switcher rc-tree-switcher-noop">
       
     </span>
     <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---">
       <span
-        class="rc-tree-iconEle rc-tree-icon__open">
+        class="rc-tree-iconEle rc-tree-icon__docu">
         
       </span>
       <span

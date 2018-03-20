@@ -55,6 +55,7 @@ see examples
 |----------|----------------|----------|--------------|
 |prefixCls | prefix class | String | 'rc-tree' |
 |className | additional css class of root dom node | String | '' |
+|disabled | whether disabled the tree | bool | false |
 |showLine | whether show line | bool | false |
 |showIcon | whether show icon | bool | true |
 |selectable | whether can be selected | bool | true |

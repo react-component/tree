@@ -24,27 +24,27 @@ class Demo extends React.Component {
       switchIt: true,
     };
   }
-  onExpand(expandedKeys) {
+  onExpand = (expandedKeys) => {
     console.log('onExpand', expandedKeys, arguments);
-  }
-  onSelect(selectedKeys, info) {
+  };
+  onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
     this.selKey = info.node.props.eventKey;
-  }
-  onCheck(checkedKeys, info) {
+  };
+  onCheck = (checkedKeys, info) => {
     console.log('onCheck', checkedKeys, info);
-  }
-  onEdit() {
+  };
+  onEdit = () => {
     setTimeout(() => {
       console.log('current key: ', this.selKey);
     }, 0);
-  }
-  onDel(e) {
+  };
+  onDel = (e) => {
     if (!window.confirm('sure to delete?')) {
       return;
     }
     e.stopPropagation();
-  }
+  };
   render() {
     const customLabel = (<span className="cus-label">
       <span>operations: </span>
@@ -70,6 +70,10 @@ class Demo extends React.Component {
           <TreeNode title="parent 1-1" key="0-0-1">
             <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
             <TreeNode title="parent 1-1-1" key="0-0-1-1" />
+          </TreeNode>
+          <TreeNode title="parent 1-2" key="0-0-2" disabled>
+            <TreeNode title="parent 1-2-0" key="0-0-2-0" disabled />
+            <TreeNode title="parent 1-2-1" key="0-0-2-1" />
           </TreeNode>
         </TreeNode>
       </Tree>
