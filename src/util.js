@@ -13,7 +13,7 @@ export function arrDel(list, value) {
 
 export function arrAdd(list, value) {
   const clone = list.slice();
-  if (!clone.includes(value)) {
+  if (clone.indexOf(value) === -1) {
     clone.push(value);
   }
   return clone;

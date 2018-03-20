@@ -316,7 +316,7 @@ class Tree extends React.Component {
       dropNodeKey: eventKey,
     });
 
-    if (dragNodesKeys.includes(eventKey)) {
+    if (dragNodesKeys.indexOf(eventKey) !== -1) {
       warning(false, 'Can not drop to dragNode(include it\'s children node)');
       return;
     }
@@ -602,7 +602,7 @@ class Tree extends React.Component {
 
   isKeyChecked = (key) => {
     const { checkedKeys = [] } = this.state;
-    return checkedKeys.includes(key);
+    return checkedKeys.indexOf(key) !== -1;
   };
 
   /**
@@ -620,10 +620,10 @@ class Tree extends React.Component {
 
     return React.cloneElement(child, {
       eventKey: key,
-      expanded: expandedKeys.includes(key),
-      selected: selectedKeys.includes(key),
+      expanded: expandedKeys.indexOf(key) !== -1,
+      selected: selectedKeys.indexOf(key) !== -1,
       checked: this.isKeyChecked(key),
-      halfChecked: halfCheckedKeys.includes(key),
+      halfChecked: halfCheckedKeys.indexOf(key) !== -1,
       pos,
 
       // [Legacy] Drag props
