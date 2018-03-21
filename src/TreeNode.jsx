@@ -425,6 +425,21 @@ class TreeNode extends React.Component {
     );
   };
 
+  renderIcon = () => {
+    const { loadStatus } = this.state;
+    const { rcTree: { prefixCls } } = this.context;
+
+    return (
+      <span
+        className={classNames(
+          `${prefixCls}-iconEle`,
+          `${prefixCls}-icon__${this.getNodeState() || 'docu'}`,
+          (loadStatus === LOAD_STATUS_LOADING) && `${prefixCls}-icon_loading`,
+        )}
+      />
+    );
+  };
+
   // Icon + Title
   renderSelector = () => {
     const { loadStatus, dragNodeHighlight } = this.state;
@@ -436,22 +451,11 @@ class TreeNode extends React.Component {
 
     // Icon - Still show loading icon when loading without showIcon
     let $icon;
-    function getIcon() {
-      return (
-        <span
-          className={classNames(
-            `${prefixCls}-iconEle`,
-            `${prefixCls}-icon__${this.getNodeState() || 'docu'}`,
-            (loadStatus === LOAD_STATUS_LOADING) && `${prefixCls}-icon_loading`,
-          )}
-        />
-      );
-    }
 
     if (showIcon) {
-      $icon = icon || getIcon();
+      $icon = icon || this.renderIcon();
     } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {
-      $icon = getIcon();
+      $icon = this.renderIcon();
     }
 
     // Title
