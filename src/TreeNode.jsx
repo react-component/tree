@@ -51,6 +51,7 @@ class TreeNode extends React.Component {
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
+    icon: PropTypes.node,
   };
 
   static contextTypes = nodeContextTypes;
@@ -427,16 +428,16 @@ class TreeNode extends React.Component {
   // Icon + Title
   renderSelector = () => {
     const { loadStatus, dragNodeHighlight } = this.state;
-    const { title, selected } = this.props;
+    const { title, selected, icon } = this.props;
     const { rcTree: { prefixCls, showIcon, draggable, loadData } } = this.context;
     const disabled = this.isDisabled();
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
 
-    // Icon
+    // Icon - Still show loading icon when loading without showIcon
     let $icon;
-    if (showIcon || (loadData && loadStatus === LOAD_STATUS_LOADING)) {
-      $icon = (
+    function getIcon() {
+      return (
         <span
           className={classNames(
             `${prefixCls}-iconEle`,
@@ -445,6 +446,12 @@ class TreeNode extends React.Component {
           )}
         />
       );
+    }
+
+    if (showIcon) {
+      $icon = icon || getIcon();
+    } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {
+      $icon = getIcon();
     }
 
     // Title
