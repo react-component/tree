@@ -52,7 +52,7 @@ describe('TreeNode Props', () => {
     expect(renderToJson(withLoadData)).toMatchSnapshot();
   });
 
-  describe.only('customize icon', () => {
+  describe('customize icon', () => {
     it('element', () => {
       const withoutLoadData = render(
         <Tree defaultExpandAll>
