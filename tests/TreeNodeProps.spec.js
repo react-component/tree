@@ -51,4 +51,37 @@ describe('TreeNode Props', () => {
     );
     expect(renderToJson(withLoadData)).toMatchSnapshot();
   });
+
+  describe.only('customize icon', () => {
+    it('element', () => {
+      const withoutLoadData = render(
+        <Tree defaultExpandAll>
+          <TreeNode icon={<span className="cust-icon" />} />
+        </Tree>
+      );
+      expect(renderToJson(withoutLoadData)).toMatchSnapshot();
+    });
+
+    it('component', () => {
+      const Icon = () => (
+        <span className="cust-icon" />
+      );
+
+      const withoutLoadData = render(
+        <Tree defaultExpandAll>
+          <TreeNode icon={Icon} />
+        </Tree>
+      );
+      expect(renderToJson(withoutLoadData)).toMatchSnapshot();
+    });
+
+    it('hide icon', () => {
+      const withoutLoadData = render(
+        <Tree showIcon={false} defaultExpandAll>
+          <TreeNode icon={<span className="cust-icon" />} />
+        </Tree>
+      );
+      expect(renderToJson(withoutLoadData)).toMatchSnapshot();
+    });
+  });
 });

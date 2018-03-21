@@ -109,6 +109,89 @@ exports[`TreeNode Props className 1`] = `
 </ul>
 `;
 
+exports[`TreeNode Props customize icon component 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__customize">
+        <span
+          class="cust-icon">
+          
+        </span>
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`TreeNode Props customize icon element 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__customize">
+        <span
+          class="cust-icon">
+          
+        </span>
+      </span>
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`TreeNode Props customize icon hide icon 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---">
+      <span
+        class="rc-tree-title">
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
 exports[`TreeNode Props isLeaf 1`] = `
 <ul
   class="rc-tree"
