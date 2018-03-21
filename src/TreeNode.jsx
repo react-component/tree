@@ -51,7 +51,7 @@ class TreeNode extends React.Component {
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
-    icon: PropTypes.node,
+    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static contextTypes = nodeContextTypes;
@@ -453,7 +453,17 @@ class TreeNode extends React.Component {
     let $icon;
 
     if (showIcon) {
-      $icon = icon || this.renderIcon();
+      $icon = icon ? (
+        <span
+          className={classNames(
+            `${prefixCls}-iconEle`,
+            `${prefixCls}-icon__customize`,
+          )}
+        >
+          {typeof icon === 'function' ?
+            React.createElement(icon, this.props) : icon}
+        </span>
+      ) : this.renderIcon();
     } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {
       $icon = this.renderIcon();
     }
