@@ -51,6 +51,7 @@ class TreeNode extends React.Component {
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
+    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static contextTypes = nodeContextTypes;
@@ -424,27 +425,47 @@ class TreeNode extends React.Component {
     );
   };
 
+  renderIcon = () => {
+    const { loadStatus } = this.state;
+    const { rcTree: { prefixCls } } = this.context;
+
+    return (
+      <span
+        className={classNames(
+          `${prefixCls}-iconEle`,
+          `${prefixCls}-icon__${this.getNodeState() || 'docu'}`,
+          (loadStatus === LOAD_STATUS_LOADING) && `${prefixCls}-icon_loading`,
+        )}
+      />
+    );
+  };
+
   // Icon + Title
   renderSelector = () => {
     const { loadStatus, dragNodeHighlight } = this.state;
-    const { title, selected } = this.props;
+    const { title, selected, icon } = this.props;
     const { rcTree: { prefixCls, showIcon, draggable, loadData } } = this.context;
     const disabled = this.isDisabled();
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
 
-    // Icon
+    // Icon - Still show loading icon when loading without showIcon
     let $icon;
-    if (showIcon || (loadData && loadStatus === LOAD_STATUS_LOADING)) {
-      $icon = (
+
+    if (showIcon) {
+      $icon = icon ? (
         <span
           className={classNames(
             `${prefixCls}-iconEle`,
-            `${prefixCls}-icon__${this.getNodeState() || 'docu'}`,
-            (loadStatus === LOAD_STATUS_LOADING) && `${prefixCls}-icon_loading`,
+            `${prefixCls}-icon__customize`,
           )}
-        />
-      );
+        >
+          {typeof icon === 'function' ?
+            React.createElement(icon, this.props) : icon}
+        </span>
+      ) : this.renderIcon();
+    } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {
+      $icon = this.renderIcon();
     }
 
     // Title
