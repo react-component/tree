@@ -94,7 +94,7 @@ describe('Tree', () => {
 
     it('does not expand parent node when autoExpandParent is false', () => {
       const wrapper = mount(
-        <Tree expandedKeys={['0-0-0']} autoExpandParent={false}>
+        <Tree expandedKeys={['0-0-0']} defaultExpandParent={false}>
           <TreeNode title="parent 1" key="0-0">
             <TreeNode title="leaf 1" key="0-0-0">
               <TreeNode title="leaf" key="0-0-0-0" />
@@ -104,6 +104,27 @@ describe('Tree', () => {
       );
       const switcher = wrapper.find('.rc-tree-switcher').first();
       expect(switcher.is(OPEN_CLASSNAME)).toBe(false);
+    });
+
+    it('update to expand parent node with autoExpandParent', () => {
+      const wrapper = mount(
+        <Tree expandedKeys={['0-0-0']} defaultExpandParent={false}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0">
+              <TreeNode title="leaf" key="0-0-0-0" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>
+      );
+      let parentSwitcher = wrapper.find('.rc-tree-switcher').first();
+      expect(parentSwitcher.is(OPEN_CLASSNAME)).toBe(false);
+
+      wrapper.setProps({ autoExpandParent: true });
+
+      parentSwitcher = wrapper.find('.rc-tree-switcher').first();
+      const childSwitcher = wrapper.find('.rc-tree-switcher').at(1);
+      expect(parentSwitcher.is(OPEN_CLASSNAME)).toBe(true);
+      expect(childSwitcher.is(OPEN_CLASSNAME)).toBe(true);
     });
 
     it('fires expand event', () => {
