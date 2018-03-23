@@ -64,7 +64,8 @@ see examples
 |defaultExpandAll | expand all treeNodes | bool | false |
 |defaultExpandedKeys | expand specific treeNodes | String[] | - |
 |expandedKeys | Controlled expand specific treeNodes | String[] | - |
-|autoExpandParent | whether auto expand parent treeNodes | bool | true |
+|defaultExpandParent | auto expand parent treeNodes when init | bool | true |
+|autoExpandParent | whether auto expand parent treeNodes | bool | false |
 |defaultCheckedKeys | default checked treeNodes | String[] | [] |
 |checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array. | String[]/{checked:Array<String>,halfChecked:Array<String>} | [] |
 |checkStrictly| check node precisely, parent and children nodes are not associated| bool | false |
