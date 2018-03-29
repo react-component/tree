@@ -1,0 +1,31 @@
+@des: 2px;
+
+.customize-icon {
+  display: inline-block;
+  position: relative;
+  background: #2F54EB;
+  border-radius: 3px;
+  box-sizing: border-box;
+  width: 12px;
+  height: 12px;
+  vertical-align: top;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: @des;
+    right: @des;
+    top: @des;
+    bottom: @des;
+    background: #FFF;
+    border-radius: 100%;
+  }
+
+  &.sub-icon {
+    background: #FF4D4F;
+  }
+
+  &.selected-icon {
+    background: green;
+  }
+}

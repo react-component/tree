@@ -1,0 +1,28 @@
+.customize-icon {
+  display: inline-block;
+  position: relative;
+  background: #2F54EB;
+  border-radius: 3px;
+  box-sizing: border-box;
+  width: 12px;
+  height: 12px;
+  vertical-align: top;
+}
+.customize-icon:before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  background: #FFF;
+  border-radius: 100%;
+}
+.customize-icon.sub-icon {
+  background: #FF4D4F;
+}
+.customize-icon.selected-icon {
+  background: green;
+}
+
+/*# sourceMappingURL=icon.css.map*/
