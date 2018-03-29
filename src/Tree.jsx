@@ -70,6 +70,7 @@ class Tree extends React.Component {
     ]),
     checkStrictly: PropTypes.bool,
     draggable: PropTypes.bool,
+    defaultExpandParent: PropTypes.bool,
     autoExpandParent: PropTypes.bool,
     defaultExpandAll: PropTypes.bool,
     defaultExpandedKeys: PropTypes.arrayOf(PropTypes.string),
@@ -111,7 +112,8 @@ class Tree extends React.Component {
     disabled: false,
     checkStrictly: false,
     draggable: false,
-    autoExpandParent: true,
+    defaultExpandParent: true,
+    autoExpandParent: false,
     defaultExpandAll: false,
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
@@ -134,23 +136,33 @@ class Tree extends React.Component {
 
     const {
       defaultExpandAll,
+      defaultExpandParent,
       defaultExpandedKeys,
       defaultCheckedKeys,
       defaultSelectedKeys,
+      expandedKeys,
     } = props;
 
     // Sync state with props
     const { checkedKeys = [], halfCheckedKeys = [] } =
       calcCheckedKeys(defaultCheckedKeys, props) || {};
 
-    this.state = {
-      expandedKeys: defaultExpandAll ?
-        getFullKeyList(props.children) :
-        calcExpandedKeys(defaultExpandedKeys, props),
+    const state = {
       selectedKeys: calcSelectedKeys(defaultSelectedKeys, props),
       checkedKeys,
       halfCheckedKeys,
+    };
 
+    if (defaultExpandAll) {
+      state.expandedKeys = getFullKeyList(props.children);
+    } else if (defaultExpandParent) {
+      state.expandedKeys = calcExpandedKeys(expandedKeys || defaultExpandedKeys, props);
+    } else {
+      state.expandedKeys = defaultExpandedKeys;
+    }
+
+    this.state = {
+      ...state,
       ...(this.getSyncProps(props) || {}),
     };
 
@@ -565,8 +577,10 @@ class Tree extends React.Component {
       newState.halfCheckedKeys = halfCheckedKeys;
     }
 
-    if (checkSync('expandedKeys')) {
-      newState.expandedKeys = calcExpandedKeys(props.expandedKeys, props);
+    // Re-calculate when autoExpandParent or expandedKeys changed
+    if (prevProps && (checkSync('autoExpandParent') || checkSync('expandedKeys'))) {
+      newState.expandedKeys = props.autoExpandParent ?
+        calcExpandedKeys(props.expandedKeys, props) : props.expandedKeys;
     }
 
     if (checkSync('selectedKeys')) {

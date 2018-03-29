@@ -219,12 +219,7 @@ export function calcExpandedKeys(keyList, props) {
     return [];
   }
 
-  const { autoExpandParent, children } = props;
-
-  // Do nothing if not auto expand parent
-  if (!autoExpandParent) {
-    return keyList;
-  }
+  const { children } = props;
 
   // Fill parent expanded keys
   const { keyNodes, nodeList } = getNodesStatistic(children);
