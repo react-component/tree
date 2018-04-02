@@ -2,7 +2,8 @@
 import { Children } from 'react';
 import warning from 'warning';
 
-const DRAG_SIDE_RANGE = 0.3;
+const DRAG_SIDE_RANGE = 0.25;
+const DRAG_MIN_GAP = 2;
 
 export function arrDel(list, value) {
   const clone = list.slice();
@@ -176,10 +177,10 @@ export function getDragNodesKeys(treeNodes, node) {
 }
 
 // Only used when drag, not affect SSR.
-export function calcDropPosition(event) {
+export function calcDropPosition(event, treeNode) {
   const { clientY } = event;
-  const { top, bottom, height } = event.currentTarget.getBoundingClientRect();
-  const des = height * DRAG_SIDE_RANGE;
+  const { top, bottom, height } = treeNode.selectHandle.getBoundingClientRect();
+  const des = Math.max(height * DRAG_SIDE_RANGE, DRAG_MIN_GAP);
 
   if (clientY <= top + des) {
     return -1;
