@@ -294,6 +294,19 @@ class Tree extends React.Component {
   };
   onNodeDragOver = (event, node) => {
     const { onDragOver } = this.props;
+    const { eventKey } = node.props;
+
+    // Update drag position
+    if (this.dragNode && eventKey === this.state.dragOverNodeKey) {
+      const dropPosition = calcDropPosition(event, node);
+
+      if (dropPosition === this.state.dropPosition) return;
+
+      this.setState({
+        dropPosition,
+      });
+    }
+
     if (onDragOver) {
       onDragOver({ event, node });
     }

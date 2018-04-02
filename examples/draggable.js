@@ -25,6 +25,8 @@ class Demo extends React.Component {
     console.log('drop', info);
     const dropKey = info.node.props.eventKey;
     const dragKey = info.dragNode.props.eventKey;
+    const dropPos = info.node.props.pos.split('-');
+    const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
     // const dragNodesKeys = info.dragNodesKeys;
     const loop = (data, key, callback) => {
       data.forEach((item, index, arr) => {
@@ -49,7 +51,11 @@ class Demo extends React.Component {
         ar = arr;
         i = index;
       });
-      ar.splice(i, 0, dragObj);
+      if (dropPosition === -1) {
+        ar.splice(i, 0, dragObj);
+      } else {
+        ar.splice(i + 1, 0, dragObj);
+      }
     } else {
       loop(data, dropKey, (item) => {
         item.children = item.children || [];
@@ -78,7 +84,7 @@ class Demo extends React.Component {
       });
     };
     return (<div className="draggable-demo">
-      <h2>draggable </h2>
+      <h2>draggable</h2>
       <p>drag a node into another node</p>
       <div className="draggable-container">
         <Tree
