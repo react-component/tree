@@ -326,9 +326,9 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
     }
 
     const { subNodes = [], parentPos, node } = keyNodes[key];
-    if (isCheckDisabled(node)) return;
-
     tgtCheckedKeys[key] = true;
+
+    if (isCheckDisabled(node)) return;
 
     // Conduct down
     subNodes
