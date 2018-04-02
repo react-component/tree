@@ -1,6 +1,11 @@
 # History
 ---
 
+## 1.8.0 / 2018-3-29
+- code refactor and optimize logic
+- add `disabled` API
+- add `icon` API
+
 ## 1.4.0 / 2016-10-24
 - add `onDragEnd` API and fix related issues.
 
