@@ -8,6 +8,13 @@ import Tree, { TreeNode } from '..';
  * For refactor purpose. All the props should be passed by test
  */
 
+// Promisify timeout to let jest catch works
+function timeoutPromise(delay = 0) {
+  return new Promise(resolve => {
+    setTimeout(resolve, delay);
+  });
+}
+
 describe('Tree Props', () => {
   // prefixCls
   it('prefixCls', () => {
@@ -353,4 +360,49 @@ describe('Tree Props', () => {
 
   // defaultCheckedKeys - is already full test in Tree.spec.js
   // defaultSelectedKeys - is already full test in Tree.spec.js
+
+  it('loadData', () => {
+    let called = 0;
+
+    const handleLoadData = jest.fn();
+
+    class Demo extends React.Component {
+      state = {
+        loaded: false,
+      };
+
+      loadData = (...args) => {
+        called += 1;
+        handleLoadData(...args);
+
+        this.setState({ loaded: true });
+
+        return Promise.resolve();
+      };
+
+      render() {
+        return (
+          <Tree loadData={this.loadData}>
+            <TreeNode key="0-0">
+              {this.state.loaded ? <TreeNode key="0-0-0" /> : null}
+            </TreeNode>
+          </Tree>
+        );
+      }
+    }
+
+    const wrapper = mount(<Demo />);
+
+    expect(handleLoadData).not.toBeCalled();
+
+    const switcher = wrapper.find('.rc-tree-switcher');
+    const node = wrapper.find(TreeNode).instance();
+    switcher.simulate('click');
+
+    return timeoutPromise().then(() => {
+      expect(handleLoadData).toBeCalledWith(node);
+      expect(called).toBe(1);
+      expect(renderToJson(wrapper.render())).toMatchSnapshot();
+    });
+  });
 });

@@ -364,19 +364,23 @@ class TreeNode extends React.Component {
 
   // Load data to avoid default expanded tree without data
   syncLoadData = (props) => {
-    const { loadStatus } = this.state;
     const { expanded } = props;
     const { rcTree: { loadData } } = this.context;
 
-    if (loadData && loadStatus === LOAD_STATUS_NONE && expanded && !this.isLeaf()) {
-      this.setState({ loadStatus: LOAD_STATUS_LOADING });
+    // read from state to avoid loadData at same time
+    this.setState(({ loadStatus }) => {
+      if (loadData && loadStatus === LOAD_STATUS_NONE && expanded && !this.isLeaf()) {
+        loadData(this).then(() => {
+          this.setState({ loadStatus: LOAD_STATUS_LOADED });
+        }).catch(() => {
+          this.setState({ loadStatus: LOAD_STATUS_FAILED });
+        });
 
-      loadData(this).then(() => {
-        this.setState({ loadStatus: LOAD_STATUS_LOADED });
-      }).catch(() => {
-        this.setState({ loadStatus: LOAD_STATUS_FAILED });
-      });
-    }
+        return { loadStatus: LOAD_STATUS_LOADING };
+      }
+
+      return null;
+    });
   };
 
   // Switcher

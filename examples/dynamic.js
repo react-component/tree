@@ -75,6 +75,7 @@ class Demo extends React.Component {
     });
   }
   onLoadData = (treeNode) => {
+    console.log('load data...');
     return new Promise((resolve) => {
       setTimeout(() => {
         const treeData = [...this.state.treeData];
