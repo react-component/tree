@@ -266,7 +266,7 @@ class TreeNode extends React.Component {
       dragNodeHighlight: false,
     });
     onNodeDragEnd(e, this);
-  }
+  };
 
   onDrop = (e) => {
     const { rcTree: { onNodeDrop } } = this.context;
