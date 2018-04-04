@@ -405,4 +405,17 @@ describe('Tree Props', () => {
       expect(renderToJson(wrapper.render())).toMatchSnapshot();
     });
   });
+
+  it('icon', () => {
+    // Node icon has much higher priority
+    const wrapper = render(
+      <Tree defaultExpandAll icon={<span>ROOT ICON</span>}>
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" icon={<span>CUSTOMIZE ICON</span>} />
+        </TreeNode>
+      </Tree>
+    );
+
+    expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
 });
