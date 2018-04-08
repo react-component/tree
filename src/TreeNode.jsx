@@ -448,7 +448,7 @@ class TreeNode extends React.Component {
   renderSelector = () => {
     const { loadStatus, dragNodeHighlight } = this.state;
     const { title, selected, icon } = this.props;
-    const { rcTree: { prefixCls, showIcon, draggable, loadData } } = this.context;
+    const { rcTree: { prefixCls, showIcon, icon: treeIcon, draggable, loadData } } = this.context;
     const disabled = this.isDisabled();
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
@@ -457,15 +457,17 @@ class TreeNode extends React.Component {
     let $icon;
 
     if (showIcon) {
-      $icon = icon ? (
+      const currentIcon = icon || treeIcon;
+
+      $icon = currentIcon ? (
         <span
           className={classNames(
             `${prefixCls}-iconEle`,
             `${prefixCls}-icon__customize`,
           )}
         >
-          {typeof icon === 'function' ?
-            React.createElement(icon, this.props) : icon}
+          {typeof currentIcon === 'function' ?
+            React.createElement(currentIcon, this.props) : currentIcon}
         </span>
       ) : this.renderIcon();
     } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {

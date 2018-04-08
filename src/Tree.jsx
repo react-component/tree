@@ -21,6 +21,7 @@ export const contextTypes = {
     prefixCls: PropTypes.string,
     selectable: PropTypes.bool,
     showIcon: PropTypes.bool,
+    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     draggable: PropTypes.bool,
     checkable: PropTypes.oneOfType([
       PropTypes.bool,
@@ -60,6 +61,7 @@ class Tree extends React.Component {
     children: PropTypes.any,
     showLine: PropTypes.bool,
     showIcon: PropTypes.bool,
+    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     focusable: PropTypes.bool,
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -172,7 +174,7 @@ class Tree extends React.Component {
 
   getChildContext() {
     const {
-      prefixCls, selectable, showIcon, draggable, checkable, checkStrictly, disabled,
+      prefixCls, selectable, showIcon, icon, draggable, checkable, checkStrictly, disabled,
       loadData, filterTreeNode,
       openTransitionName, openAnimation,
     } = this.props;
@@ -184,6 +186,7 @@ class Tree extends React.Component {
         prefixCls,
         selectable,
         showIcon,
+        icon,
         draggable,
         checkable,
         checkStrictly,

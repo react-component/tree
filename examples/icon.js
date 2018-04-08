@@ -37,6 +37,16 @@ class Demo extends React.Component {
             <TreeNode icon={Icon} title="Child" />
           </TreeNode>
         </Tree>
+
+        <h2>Customize icon with Tree prop</h2>
+        <Tree
+          defaultExpandAll
+          icon={Icon}
+        >
+          <TreeNode title="Parent">
+            <TreeNode title="Child" />
+          </TreeNode>
+        </Tree>
       </div>
     );
   }
