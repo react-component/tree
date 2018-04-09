@@ -1,7 +1,14 @@
 # History
 ---
 
-## 1.8.0 / 2018-3-29
+## 1.9.0 / 2018-04-09
+- adjust `dragable` logic to make drag more smooth
+- fix `loadData` trigger twice when expand node
+- add `icon` prop on `Tree`
+- fix check by prop not work on `disabled` node
+
+
+## 1.8.0 / 2018-03-29
 - code refactor and optimize logic
 - add `disabled` API
 - add `icon` API

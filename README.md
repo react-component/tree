@@ -70,6 +70,7 @@ see examples
 |checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array. | String[]/{checked:Array<String>,halfChecked:Array<String>} | [] |
 |checkStrictly| check node precisely, parent and children nodes are not associated| bool | false |
 |defaultSelectedKeys | default selected treeNodes | String[] | [] |
+|icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
 |selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 |onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node}) | - |
 |onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event}) | - |
