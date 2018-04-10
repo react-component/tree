@@ -2861,7 +2861,9 @@ var _initialiseProps = function _initialiseProps() {
       newState[name] = state[name];
     });
 
-    _this2.setState(needSync ? newState : null);
+    if (needSync) {
+      _this2.setState(newState);
+    }
   };
 
   this.isKeyChecked = function (key) {
