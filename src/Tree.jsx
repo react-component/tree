@@ -627,7 +627,9 @@ class Tree extends React.Component {
       newState[name] = state[name];
     });
 
-    this.setState(needSync ? newState : null);
+    if (needSync) {
+      this.setState(newState);
+    }
   };
 
   isKeyChecked = (key) => {
