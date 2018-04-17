@@ -268,6 +268,7 @@ describe('Tree', () => {
         event: 'check',
         halfCheckedKeys: [],
         node: treeNode1.instance(),
+        nativeEvent: expect.objectContaining({}),
       });
 
       wrapper.find('.rc-tree-checkbox').last().simulate('click');
@@ -278,6 +279,7 @@ describe('Tree', () => {
         event: 'check',
         halfCheckedKeys: [],
         node: treeNode2.instance(),
+        nativeEvent: expect.objectContaining({}),
       });
     });
 
@@ -604,6 +606,7 @@ describe('Tree', () => {
         event: 'check',
         halfCheckedKeys: [],
         node: treeNode1.instance(),
+        nativeEvent: expect.objectContaining({}),
       });
 
       wrapper.find('.rc-tree-node-content-wrapper').last().simulate('click');
@@ -614,6 +617,7 @@ describe('Tree', () => {
         event: 'check',
         halfCheckedKeys: [],
         node: treeNode2.instance(),
+        nativeEvent: expect.objectContaining({}),
       });
     });
   });

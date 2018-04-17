@@ -274,6 +274,7 @@ describe('Tree Props', () => {
         checked: true,
         node: targetNode.instance(),
         checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
+        nativeEvent: expect.objectContaining({}),
       }));
       expect(handleOnSelect).not.toBeCalled();
     });
@@ -309,6 +310,7 @@ describe('Tree Props', () => {
         checked: true,
         node: targetNode.instance(),
         checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
+        nativeEvent: expect.objectContaining({}),
       }));
       expect(handleOnSelect).not.toBeCalled();
     });
@@ -347,6 +349,7 @@ describe('Tree Props', () => {
       checked: true,
       node: targetNode.instance(),
       checkedNodes: [parentNode.props().children],
+      nativeEvent: expect.objectContaining({}),
     }));
   });
 
