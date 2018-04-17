@@ -562,6 +562,7 @@ describe('Tree', () => {
         node,
         selected: true,
         selectedNodes: [nodeElm],
+        nativeEvent: expect.objectContaining({}),
       });
 
       nodeContent.simulate('click');
@@ -570,6 +571,7 @@ describe('Tree', () => {
         node,
         selected: false,
         selectedNodes: [],
+        nativeEvent: expect.objectContaining({}),
       });
     });
   });

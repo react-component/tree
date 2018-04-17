@@ -402,6 +402,7 @@ class Tree extends React.Component {
         selected: targetSelected,
         node: treeNode,
         selectedNodes,
+        nativeEvent: e.nativeEvent,
       };
       onSelect(selectedKeys, eventObj);
     }
