@@ -534,7 +534,11 @@ class Tree extends React.Component {
     this.setUncontrolledState({ expandedKeys });
 
     if (onExpand) {
-      onExpand(expandedKeys, { node: treeNode, expanded: targetExpanded });
+      onExpand(expandedKeys, {
+        node: treeNode,
+        expanded: targetExpanded,
+        nativeEvent: e.nativeEvent,
+      });
     }
 
     // Async Load data

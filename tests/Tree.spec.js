@@ -140,10 +140,18 @@ describe('Tree', () => {
       const node = wrapper.find(TreeNode).instance();
 
       switcher.simulate('click');
-      expect(handleExpand).toBeCalledWith(['0-0'], { expanded: true, node });
+      expect(handleExpand).toBeCalledWith(['0-0'], {
+        expanded: true,
+        node,
+        nativeEvent: expect.objectContaining({}),
+      });
 
       switcher.simulate('click');
-      expect(handleExpand).toBeCalledWith([], { expanded: false, node });
+      expect(handleExpand).toBeCalledWith([], {
+        expanded: false,
+        node,
+        nativeEvent: expect.objectContaining({}),
+      });
     });
   });
 
