@@ -89,7 +89,7 @@ class TreeNode extends React.Component {
     this.syncLoadData(nextProps);
   }
 
-  onUpCheckConduct = (treeNode, nodeChecked, nodeHalfChecked) => {
+  onUpCheckConduct = (treeNode, nodeChecked, nodeHalfChecked, e) => {
     const { pos: nodePos } = treeNode.props;
     const { eventKey, pos, checked, halfChecked } = this.props;
     const {
@@ -99,7 +99,7 @@ class TreeNode extends React.Component {
 
     // Stop conduct when current node is disabled
     if (isCheckDisabled(this)) {
-      onCheckConductFinished();
+      onCheckConductFinished(e);
       return;
     }
 
@@ -135,14 +135,14 @@ class TreeNode extends React.Component {
       onBatchNodeCheck(eventKey, nextChecked, nextHalfChecked);
 
       if (onUpCheckConduct) {
-        onUpCheckConduct(this, nextChecked, nextHalfChecked);
+        onUpCheckConduct(this, nextChecked, nextHalfChecked, e);
       } else {
         // Flush all the update
-        onCheckConductFinished();
+        onCheckConductFinished(e);
       }
     } else {
       // Flush all the update
-      onCheckConductFinished();
+      onCheckConductFinished(e);
     }
   };
 
@@ -196,9 +196,9 @@ class TreeNode extends React.Component {
 
     // Parent conduct
     if (onUpCheckConduct) {
-      onUpCheckConduct(this, targetChecked, false);
+      onUpCheckConduct(this, targetChecked, false, e);
     } else {
-      onCheckConductFinished();
+      onCheckConductFinished(e);
     }
   };
 

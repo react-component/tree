@@ -402,6 +402,7 @@ class Tree extends React.Component {
         selected: targetSelected,
         node: treeNode,
         selectedNodes,
+        nativeEvent: e.nativeEvent,
       };
       onSelect(selectedKeys, eventObj);
     }
@@ -438,7 +439,7 @@ class Tree extends React.Component {
    * When top `onCheckConductFinished` called, will execute all batch update.
    * And trigger `onCheck` event.
    */
-  onCheckConductFinished = () => {
+  onCheckConductFinished = (e) => {
     const { checkedKeys, halfCheckedKeys } = this.state;
     const { onCheck, checkStrictly, children } = this.props;
 
@@ -468,6 +469,7 @@ class Tree extends React.Component {
       event: 'check',
       node: this.checkedBatch.treeNode,
       checked: this.checkedBatch.checked,
+      nativeEvent: e.nativeEvent,
     };
 
     if (checkStrictly) {
@@ -532,7 +534,11 @@ class Tree extends React.Component {
     this.setUncontrolledState({ expandedKeys });
 
     if (onExpand) {
-      onExpand(expandedKeys, { node: treeNode, expanded: targetExpanded });
+      onExpand(expandedKeys, {
+        node: treeNode,
+        expanded: targetExpanded,
+        nativeEvent: e.nativeEvent,
+      });
     }
 
     // Async Load data

@@ -134,6 +134,7 @@ describe('Tree Props', () => {
         selected: true,
         node: targetNode.instance(),
         selectedNodes: [parentNode.props().children],
+        nativeEvent: expect.objectContaining({}),
       });
       handleOnSelect.mockReset();
 
@@ -144,6 +145,7 @@ describe('Tree Props', () => {
         selected: false,
         node: targetNode.instance(),
         selectedNodes: [],
+        nativeEvent: expect.objectContaining({}),
       });
       handleOnSelect.mockReset();
 
@@ -154,6 +156,7 @@ describe('Tree Props', () => {
         selected: true,
         node: targetNode.instance(),
         selectedNodes: [parentNode.props().children],
+        nativeEvent: expect.objectContaining({}),
       });
       handleOnSelect.mockReset();
 
@@ -163,6 +166,7 @@ describe('Tree Props', () => {
         selected: true,
         node: parentNode.instance(),
         selectedNodes: [withSelectable.find(Tree).props().children],
+        nativeEvent: expect.objectContaining({}),
       });
     });
   });
@@ -196,6 +200,7 @@ describe('Tree Props', () => {
       selected: true,
       node: targetNode.instance(),
       selectedNodes: [parentNode.props().children],
+      nativeEvent: expect.objectContaining({}),
     });
     handleOnSelect.mockReset();
 
@@ -206,6 +211,7 @@ describe('Tree Props', () => {
       selected: true,
       node: parentNode.instance(),
       selectedNodes: [wrapper.find(Tree).props().children, parentNode.props().children],
+      nativeEvent: expect.objectContaining({}),
     }));
     handleOnSelect.mockReset();
 
@@ -216,6 +222,7 @@ describe('Tree Props', () => {
       selected: false,
       node: targetNode.instance(),
       selectedNodes: [wrapper.find(Tree).props().children],
+      nativeEvent: expect.objectContaining({}),
     });
   });
 
@@ -251,6 +258,7 @@ describe('Tree Props', () => {
         selected: true,
         node: targetNode.instance(),
         selectedNodes: [parentNode.props().children],
+        nativeEvent: expect.objectContaining({}),
       });
       expect(handleOnCheck).not.toBeCalled();
       expect(handleOnSelect).toBeCalled();
@@ -266,6 +274,7 @@ describe('Tree Props', () => {
         checked: true,
         node: targetNode.instance(),
         checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
+        nativeEvent: expect.objectContaining({}),
       }));
       expect(handleOnSelect).not.toBeCalled();
     });
@@ -301,6 +310,7 @@ describe('Tree Props', () => {
         checked: true,
         node: targetNode.instance(),
         checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
+        nativeEvent: expect.objectContaining({}),
       }));
       expect(handleOnSelect).not.toBeCalled();
     });
@@ -339,6 +349,7 @@ describe('Tree Props', () => {
       checked: true,
       node: targetNode.instance(),
       checkedNodes: [parentNode.props().children],
+      nativeEvent: expect.objectContaining({}),
     }));
   });
 
