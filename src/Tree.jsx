@@ -38,6 +38,8 @@ export const contextTypes = {
 
     isKeyChecked: PropTypes.func,
 
+    onNodeClick: PropTypes.func,
+    onNodeDoubleClick: PropTypes.func,
     onNodeExpand: PropTypes.func,
     onNodeSelect: PropTypes.func,
     onNodeMouseEnter: PropTypes.func,
@@ -84,6 +86,8 @@ class Tree extends React.Component {
     ]),
     defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
     selectedKeys: PropTypes.arrayOf(PropTypes.string),
+    onClick: PropTypes.func,
+    onDoubleClick: PropTypes.func,
     onExpand: PropTypes.func,
     onCheck: PropTypes.func,
     onSelect: PropTypes.func,
@@ -120,17 +124,6 @@ class Tree extends React.Component {
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
     defaultSelectedKeys: [],
-    onExpand: null,
-    onCheck: null,
-    onSelect: null,
-    onDragStart: null,
-    onDragEnter: null,
-    onDragOver: null,
-    onDragLeave: null,
-    onDrop: null,
-    onDragEnd: null,
-    onMouseEnter: null,
-    onMouseLeave: null,
   };
 
   constructor(props) {
@@ -199,6 +192,8 @@ class Tree extends React.Component {
         renderTreeNode: this.renderTreeNode,
         isKeyChecked: this.isKeyChecked,
 
+        onNodeClick: this.onNodeClick,
+        onNodeDoubleClick: this.onNodeDoubleClick,
         onNodeExpand: this.onNodeExpand,
         onNodeSelect: this.onNodeSelect,
         onNodeMouseEnter: this.onNodeMouseEnter,
@@ -367,6 +362,20 @@ class Tree extends React.Component {
 
     if (onDrop) {
       onDrop(dropResult);
+    }
+  };
+
+  onNodeClick = (e, treeNode) => {
+    const { onClick } = this.props;
+    if (onClick) {
+      onClick(e, treeNode);
+    }
+  };
+
+  onNodeDoubleClick = (e, treeNode) => {
+    const { onDoubleClick } = this.props;
+    if (onDoubleClick) {
+      onDoubleClick(e, treeNode);
     }
   };
 
