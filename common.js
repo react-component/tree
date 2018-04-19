@@ -2619,7 +2619,8 @@ var _initialiseProps = function _initialiseProps() {
         event: 'select',
         selected: targetSelected,
         node: treeNode,
-        selectedNodes: selectedNodes
+        selectedNodes: selectedNodes,
+        nativeEvent: e.nativeEvent
       };
       onSelect(selectedKeys, eventObj);
     }
@@ -2645,7 +2646,7 @@ var _initialiseProps = function _initialiseProps() {
     _this3.checkedBatch.list.push({ key: key, checked: checked, halfChecked: halfChecked });
   };
 
-  this.onCheckConductFinished = function () {
+  this.onCheckConductFinished = function (e) {
     var _state2 = _this3.state,
         checkedKeys = _state2.checkedKeys,
         halfCheckedKeys = _state2.halfCheckedKeys;
@@ -2688,7 +2689,8 @@ var _initialiseProps = function _initialiseProps() {
     var eventObj = {
       event: 'check',
       node: _this3.checkedBatch.treeNode,
-      checked: _this3.checkedBatch.checked
+      checked: _this3.checkedBatch.checked,
+      nativeEvent: e.nativeEvent
     };
 
     if (checkStrictly) {
@@ -2763,7 +2765,11 @@ var _initialiseProps = function _initialiseProps() {
     _this3.setUncontrolledState({ expandedKeys: expandedKeys });
 
     if (onExpand) {
-      onExpand(expandedKeys, { node: treeNode, expanded: targetExpanded });
+      onExpand(expandedKeys, {
+        node: treeNode,
+        expanded: targetExpanded,
+        nativeEvent: e.nativeEvent
+      });
     }
 
     // Async Load data
@@ -24034,7 +24040,7 @@ TreeNode.defaultProps = {
 var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
-  this.onUpCheckConduct = function (treeNode, nodeChecked, nodeHalfChecked) {
+  this.onUpCheckConduct = function (treeNode, nodeChecked, nodeHalfChecked, e) {
     var nodePos = treeNode.props.pos;
     var _props2 = _this2.props,
         eventKey = _props2.eventKey,
@@ -24054,7 +24060,7 @@ var _initialiseProps = function _initialiseProps() {
     // Stop conduct when current node is disabled
 
     if (Object(__WEBPACK_IMPORTED_MODULE_11__util__["l" /* isCheckDisabled */])(_this2)) {
-      onCheckConductFinished();
+      onCheckConductFinished(e);
       return;
     }
 
@@ -24090,14 +24096,14 @@ var _initialiseProps = function _initialiseProps() {
       onBatchNodeCheck(eventKey, nextChecked, nextHalfChecked);
 
       if (onUpCheckConduct) {
-        onUpCheckConduct(_this2, nextChecked, nextHalfChecked);
+        onUpCheckConduct(_this2, nextChecked, nextHalfChecked, e);
       } else {
         // Flush all the update
-        onCheckConductFinished();
+        onCheckConductFinished(e);
       }
     } else {
       // Flush all the update
-      onCheckConductFinished();
+      onCheckConductFinished(e);
     }
   };
 
@@ -24167,9 +24173,9 @@ var _initialiseProps = function _initialiseProps() {
 
     // Parent conduct
     if (onUpCheckConduct) {
-      onUpCheckConduct(_this2, targetChecked, false);
+      onUpCheckConduct(_this2, targetChecked, false, e);
     } else {
-      onCheckConductFinished();
+      onCheckConductFinished(e);
     }
   };
 

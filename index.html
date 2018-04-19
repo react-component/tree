@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-tree@1.8.3 - tree ui component for react</title>
+  <title>rc-tree@1.10.1 - tree ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-tree@1.8.3</h1>
+  <h1>rc-tree@1.10.1</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -900,6 +900,12 @@
 <td>[]</td>
 </tr>
 <tr>
+<td>icon</td>
+<td>customize icon. When you pass component, whose render will receive full TreeNode props as component props</td>
+<td>element/Function(props)</td>
+<td>-</td>
+</tr>
+<tr>
 <td>selectedKeys</td>
 <td>Controlled selected treeNodes(After setting, defaultSelectedKeys will not work)</td>
 <td>String[]</td>
@@ -908,19 +914,19 @@
 <tr>
 <td>onExpand</td>
 <td>fire on treeNode expand or not</td>
-<td>function(expandedKeys, {expanded: bool, node})</td>
+<td>function(expandedKeys, {expanded: bool, node, nativeEvent})</td>
 <td>-</td>
 </tr>
 <tr>
 <td>onCheck</td>
 <td>click the treeNode/checkbox to fire</td>
-<td>function(checkedKeys, e:{checked: bool, checkedNodes, node, event})</td>
+<td>function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent})</td>
 <td>-</td>
 </tr>
 <tr>
 <td>onSelect</td>
 <td>click the treeNode to fire</td>
-<td>function(selectedKeys, e:{selected: bool, selectedNodes, node, event})</td>
+<td>function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent})</td>
 <td>-</td>
 </tr>
 <tr>
