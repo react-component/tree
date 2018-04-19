@@ -1,3 +1,34 @@
+exports[`Tree check check update when Tree trigger componentWillReceiveProps 1`] = `
+<ul
+  class="rc-tree"
+  role="tree-node"
+  unselectable="on">
+  <li
+    class="">
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop">
+      
+    </span>
+    <span
+      class="rc-tree-checkbox rc-tree-checkbox-checked">
+      
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="parent 1">
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu">
+        
+      </span>
+      <span
+        class="rc-tree-title">
+        parent 1
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
 exports[`Tree renders correctly 1`] = `
 <ul
   class="rc-tree forTest rc-tree-show-line"
