@@ -429,4 +429,52 @@ describe('Tree Props', () => {
 
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
+
+  it('onClick', () => {
+    const onClick = jest.fn();
+
+    const wrapper = mount(
+      <Tree onClick={onClick} defaultExpandedKeys={['0-0']}>
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    const parentNode = wrapper.find(TreeNode).first();
+    const targetNode = parentNode.find(TreeNode).last();
+
+    // Select leaf
+    targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
+
+    expect(onClick).toBeCalledWith(
+      expect.objectContaining({}),
+      targetNode.instance(),
+    );
+  });
+
+  it('onDoubleClick', () => {
+    const onClick = jest.fn();
+    const onDoubleClick = jest.fn();
+
+    const wrapper = mount(
+      <Tree onClick={onClick} onDoubleClick={onDoubleClick} defaultExpandedKeys={['0-0']}>
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    const parentNode = wrapper.find(TreeNode).first();
+    const targetNode = parentNode.find(TreeNode).last();
+
+    // Select leaf
+    targetNode.find('.rc-tree-node-content-wrapper').simulate('doubleclick');
+
+    expect(onClick).not.toBeCalled();
+    expect(onDoubleClick).toBeCalledWith(
+      expect.objectContaining({}),
+      targetNode.instance(),
+    );
+  });
 });
