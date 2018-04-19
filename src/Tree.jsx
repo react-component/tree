@@ -218,7 +218,9 @@ class Tree extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // React 16 will not trigger update if new state is null
-    this.setState(this.getSyncProps(nextProps, this.props));
+    this.setState((prevState) => (
+      this.getSyncProps(nextProps, this.props, prevState)
+    ));
   }
 
   onNodeDragStart = (event, node) => {
@@ -577,8 +579,9 @@ class Tree extends React.Component {
   /**
    * Sync state with props if needed
    */
-  getSyncProps = (props = {}, prevProps) => {
+  getSyncProps = (props = {}, prevProps, preState) => {
     let needSync = false;
+    const oriState = preState || this.state;
     const newState = {};
     const myPrevProps = prevProps || {};
 
@@ -593,8 +596,9 @@ class Tree extends React.Component {
     // Children change will affect check box status.
     // And no need to check when prev props not provided
     if (prevProps && checkSync('children')) {
-      const { checkedKeys = [], halfCheckedKeys = [] } =
-        calcCheckedKeys(props.checkedKeys || this.state.checkedKeys, props) || {};
+      const newCheckedKeys = calcCheckedKeys(props.checkedKeys || oriState.checkedKeys, props);
+
+      const { checkedKeys = [], halfCheckedKeys = [] } = newCheckedKeys || {};
       newState.checkedKeys = checkedKeys;
       newState.halfCheckedKeys = halfCheckedKeys;
     }

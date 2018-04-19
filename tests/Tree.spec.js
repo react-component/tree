@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef, react/no-multi-comp */
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
@@ -369,6 +369,28 @@ describe('Tree', () => {
         ),
       });
       expect(wrapper.state('checkedKeys')).toEqual(['0-0', '0-0-0', '0-0-1']);
+    });
+
+    // https://github.com/ant-design/ant-design/issues/10132
+    it('check update when Tree trigger componentWillReceiveProps', () => {
+      class Test extends React.Component {
+        state = {};
+        onCheck = () => {
+          this.setState({ whatever: 1 });
+        };
+
+        render() {
+          return (
+            <Tree checkable>
+              <TreeNode title="parent 1" key="0-0" />
+            </Tree>
+          );
+        }
+      }
+      const wrapper = mount(<Test />);
+      wrapper.find('.rc-tree-checkbox').first().simulate('click');
+
+      expect(renderToJson(wrapper.render())).toMatchSnapshot();
     });
 
     describe('strictly', () => {
