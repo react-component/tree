@@ -2272,8 +2272,12 @@ var Tree = function (_React$Component) {
   };
 
   Tree.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    var _this2 = this;
+
     // React 16 will not trigger update if new state is null
-    this.setState(this.getSyncProps(nextProps, this.props));
+    this.setState(function (prevState) {
+      return _this2.getSyncProps(nextProps, _this2.props, prevState);
+    });
   };
 
   /**
@@ -2416,19 +2420,19 @@ Tree.defaultProps = {
 };
 
 var _initialiseProps = function _initialiseProps() {
-  var _this2 = this;
+  var _this3 = this;
 
   this.onNodeDragStart = function (event, node) {
-    var expandedKeys = _this2.state.expandedKeys;
-    var onDragStart = _this2.props.onDragStart;
+    var expandedKeys = _this3.state.expandedKeys;
+    var onDragStart = _this3.props.onDragStart;
     var _node$props = node.props,
         eventKey = _node$props.eventKey,
         children = _node$props.children;
 
 
-    _this2.dragNode = node;
+    _this3.dragNode = node;
 
-    _this2.setState({
+    _this3.setState({
       dragNodesKeys: Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* getDragNodesKeys */])(children, node),
       expandedKeys: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* arrDel */])(expandedKeys, eventKey)
     });
@@ -2439,8 +2443,8 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeDragEnter = function (event, node) {
-    var expandedKeys = _this2.state.expandedKeys;
-    var onDragEnter = _this2.props.onDragEnter;
+    var expandedKeys = _this3.state.expandedKeys;
+    var onDragEnter = _this3.props.onDragEnter;
     var _node$props2 = node.props,
         pos = _node$props2.pos,
         eventKey = _node$props2.eventKey;
@@ -2449,8 +2453,8 @@ var _initialiseProps = function _initialiseProps() {
     var dropPosition = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* calcDropPosition */])(event, node);
 
     // Skip if drag node is self
-    if (_this2.dragNode.props.eventKey === eventKey && dropPosition === 0) {
-      _this2.setState({
+    if (_this3.dragNode.props.eventKey === eventKey && dropPosition === 0) {
+      _this3.setState({
         dragOverNodeKey: '',
         dropPosition: null
       });
@@ -2464,21 +2468,21 @@ var _initialiseProps = function _initialiseProps() {
     // https://html.spec.whatwg.org/multipage/webappapis.html#clean-up-after-running-script
     setTimeout(function () {
       // Update drag over node
-      _this2.setState({
+      _this3.setState({
         dragOverNodeKey: eventKey,
         dropPosition: dropPosition
       });
 
       // Side effect for delay drag
-      if (!_this2.delayedDragEnterLogic) {
-        _this2.delayedDragEnterLogic = {};
+      if (!_this3.delayedDragEnterLogic) {
+        _this3.delayedDragEnterLogic = {};
       }
-      Object.keys(_this2.delayedDragEnterLogic).forEach(function (key) {
-        clearTimeout(_this2.delayedDragEnterLogic[key]);
+      Object.keys(_this3.delayedDragEnterLogic).forEach(function (key) {
+        clearTimeout(_this3.delayedDragEnterLogic[key]);
       });
-      _this2.delayedDragEnterLogic[pos] = setTimeout(function () {
+      _this3.delayedDragEnterLogic[pos] = setTimeout(function () {
         var newExpandedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* arrAdd */])(expandedKeys, eventKey);
-        _this2.setState({
+        _this3.setState({
           expandedKeys: newExpandedKeys
         });
 
@@ -2490,17 +2494,17 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeDragOver = function (event, node) {
-    var onDragOver = _this2.props.onDragOver;
+    var onDragOver = _this3.props.onDragOver;
     var eventKey = node.props.eventKey;
 
     // Update drag position
 
-    if (_this2.dragNode && eventKey === _this2.state.dragOverNodeKey) {
+    if (_this3.dragNode && eventKey === _this3.state.dragOverNodeKey) {
       var dropPosition = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* calcDropPosition */])(event, node);
 
-      if (dropPosition === _this2.state.dropPosition) return;
+      if (dropPosition === _this3.state.dropPosition) return;
 
-      _this2.setState({
+      _this3.setState({
         dropPosition: dropPosition
       });
     }
@@ -2511,10 +2515,10 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeDragLeave = function (event, node) {
-    var onDragLeave = _this2.props.onDragLeave;
+    var onDragLeave = _this3.props.onDragLeave;
 
 
-    _this2.setState({
+    _this3.setState({
       dragOverNodeKey: ''
     });
 
@@ -2524,9 +2528,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeDragEnd = function (event, node) {
-    var onDragEnd = _this2.props.onDragEnd;
+    var onDragEnd = _this3.props.onDragEnd;
 
-    _this2.setState({
+    _this3.setState({
       dragOverNodeKey: ''
     });
     if (onDragEnd) {
@@ -2535,16 +2539,16 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeDrop = function (event, node) {
-    var _state = _this2.state,
+    var _state = _this3.state,
         dragNodesKeys = _state.dragNodesKeys,
         dropPosition = _state.dropPosition;
-    var onDrop = _this2.props.onDrop;
+    var onDrop = _this3.props.onDrop;
     var _node$props3 = node.props,
         eventKey = _node$props3.eventKey,
         pos = _node$props3.pos;
 
 
-    _this2.setState({
+    _this3.setState({
       dragOverNodeKey: '',
       dropNodeKey: eventKey
     });
@@ -2559,7 +2563,7 @@ var _initialiseProps = function _initialiseProps() {
     var dropResult = {
       event: event,
       node: node,
-      dragNode: _this2.dragNode,
+      dragNode: _this3.dragNode,
       dragNodesKeys: dragNodesKeys.slice(),
       dropPosition: dropPosition + Number(posArr[posArr.length - 1])
     };
@@ -2574,8 +2578,8 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeSelect = function (e, treeNode) {
-    var selectedKeys = _this2.state.selectedKeys;
-    var _props3 = _this2.props,
+    var selectedKeys = _this3.state.selectedKeys;
+    var _props3 = _this3.props,
         onSelect = _props3.onSelect,
         multiple = _props3.multiple,
         children = _props3.children;
@@ -2608,7 +2612,7 @@ var _initialiseProps = function _initialiseProps() {
       });
     }
 
-    _this2.setUncontrolledState({ selectedKeys: selectedKeys });
+    _this3.setUncontrolledState({ selectedKeys: selectedKeys });
 
     if (onSelect) {
       var eventObj = {
@@ -2623,7 +2627,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onBatchNodeCheck = function (key, checked, halfChecked, startNode) {
     if (startNode) {
-      _this2.checkedBatch = {
+      _this3.checkedBatch = {
         treeNode: startNode,
         checked: checked,
         list: []
@@ -2631,21 +2635,21 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     // This code should never called
-    if (!_this2.checkedBatch) {
-      _this2.checkedBatch = {
+    if (!_this3.checkedBatch) {
+      _this3.checkedBatch = {
         list: []
       };
       __WEBPACK_IMPORTED_MODULE_8_warning___default()(false, 'Checked batch not init. This should be a bug. Please fire a issue.');
     }
 
-    _this2.checkedBatch.list.push({ key: key, checked: checked, halfChecked: halfChecked });
+    _this3.checkedBatch.list.push({ key: key, checked: checked, halfChecked: halfChecked });
   };
 
   this.onCheckConductFinished = function () {
-    var _state2 = _this2.state,
+    var _state2 = _this3.state,
         checkedKeys = _state2.checkedKeys,
         halfCheckedKeys = _state2.halfCheckedKeys;
-    var _props4 = _this2.props,
+    var _props4 = _this3.props,
         onCheck = _props4.onCheck,
         checkStrictly = _props4.checkStrictly,
         children = _props4.children;
@@ -2663,7 +2667,7 @@ var _initialiseProps = function _initialiseProps() {
     });
 
     // Batch process
-    _this2.checkedBatch.list.forEach(function (_ref3) {
+    _this3.checkedBatch.list.forEach(function (_ref3) {
       var key = _ref3.key,
           checked = _ref3.checked,
           halfChecked = _ref3.halfChecked;
@@ -2683,8 +2687,8 @@ var _initialiseProps = function _initialiseProps() {
 
     var eventObj = {
       event: 'check',
-      node: _this2.checkedBatch.treeNode,
-      checked: _this2.checkedBatch.checked
+      node: _this3.checkedBatch.treeNode,
+      checked: _this3.checkedBatch.checked
     };
 
     if (checkStrictly) {
@@ -2701,7 +2705,7 @@ var _initialiseProps = function _initialiseProps() {
         }
       });
 
-      _this2.setUncontrolledState({ checkedKeys: newCheckedKeys });
+      _this3.setUncontrolledState({ checkedKeys: newCheckedKeys });
     } else {
       selectedObj = newCheckedKeys;
 
@@ -2720,7 +2724,7 @@ var _initialiseProps = function _initialiseProps() {
         }
       });
 
-      _this2.setUncontrolledState({
+      _this3.setUncontrolledState({
         checkedKeys: newCheckedKeys,
         halfCheckedKeys: newHalfCheckedKeys
       });
@@ -2731,12 +2735,12 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     // Clean up
-    _this2.checkedBatch = null;
+    _this3.checkedBatch = null;
   };
 
   this.onNodeExpand = function (e, treeNode) {
-    var expandedKeys = _this2.state.expandedKeys;
-    var _props5 = _this2.props,
+    var expandedKeys = _this3.state.expandedKeys;
+    var _props5 = _this3.props,
         onExpand = _props5.onExpand,
         loadData = _props5.loadData;
     var _treeNode$props2 = treeNode.props,
@@ -2756,7 +2760,7 @@ var _initialiseProps = function _initialiseProps() {
       expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* arrDel */])(expandedKeys, eventKey);
     }
 
-    _this2.setUncontrolledState({ expandedKeys: expandedKeys });
+    _this3.setUncontrolledState({ expandedKeys: expandedKeys });
 
     if (onExpand) {
       onExpand(expandedKeys, { node: treeNode, expanded: targetExpanded });
@@ -2766,7 +2770,7 @@ var _initialiseProps = function _initialiseProps() {
     if (targetExpanded && loadData) {
       return loadData(treeNode).then(function () {
         // [Legacy] Refresh logic
-        _this2.setUncontrolledState({ expandedKeys: expandedKeys });
+        _this3.setUncontrolledState({ expandedKeys: expandedKeys });
       });
     }
 
@@ -2774,7 +2778,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeMouseEnter = function (event, node) {
-    var onMouseEnter = _this2.props.onMouseEnter;
+    var onMouseEnter = _this3.props.onMouseEnter;
 
     if (onMouseEnter) {
       onMouseEnter({ event: event, node: node });
@@ -2782,7 +2786,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeMouseLeave = function (event, node) {
-    var onMouseLeave = _this2.props.onMouseLeave;
+    var onMouseLeave = _this3.props.onMouseLeave;
 
     if (onMouseLeave) {
       onMouseLeave({ event: event, node: node });
@@ -2790,7 +2794,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onNodeContextMenu = function (event, node) {
-    var onRightClick = _this2.props.onRightClick;
+    var onRightClick = _this3.props.onRightClick;
 
     if (onRightClick) {
       event.preventDefault();
@@ -2801,8 +2805,10 @@ var _initialiseProps = function _initialiseProps() {
   this.getSyncProps = function () {
     var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var prevProps = arguments[1];
+    var preState = arguments[2];
 
     var needSync = false;
+    var oriState = preState || _this3.state;
     var newState = {};
     var myPrevProps = prevProps || {};
 
@@ -2817,7 +2823,9 @@ var _initialiseProps = function _initialiseProps() {
     // Children change will affect check box status.
     // And no need to check when prev props not provided
     if (prevProps && checkSync('children')) {
-      var _ref6 = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* calcCheckedKeys */])(props.checkedKeys || _this2.state.checkedKeys, props) || {},
+      var newCheckedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* calcCheckedKeys */])(props.checkedKeys || oriState.checkedKeys, props);
+
+      var _ref6 = newCheckedKeys || {},
           _ref6$checkedKeys = _ref6.checkedKeys,
           checkedKeys = _ref6$checkedKeys === undefined ? [] : _ref6$checkedKeys,
           _ref6$halfCheckedKeys = _ref6.halfCheckedKeys,
@@ -2855,19 +2863,19 @@ var _initialiseProps = function _initialiseProps() {
     var newState = {};
 
     Object.keys(state).forEach(function (name) {
-      if (name in _this2.props) return;
+      if (name in _this3.props) return;
 
       needSync = true;
       newState[name] = state[name];
     });
 
     if (needSync) {
-      _this2.setState(newState);
+      _this3.setState(newState);
     }
   };
 
   this.isKeyChecked = function (key) {
-    var _state$checkedKeys = _this2.state.checkedKeys,
+    var _state$checkedKeys = _this3.state.checkedKeys,
         checkedKeys = _state$checkedKeys === undefined ? [] : _state$checkedKeys;
 
     return checkedKeys.indexOf(key) !== -1;
@@ -2875,7 +2883,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.renderTreeNode = function (child, index) {
     var level = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var _state3 = _this2.state,
+    var _state3 = _this3.state,
         _state3$expandedKeys = _state3.expandedKeys,
         expandedKeys = _state3$expandedKeys === undefined ? [] : _state3$expandedKeys,
         _state3$selectedKeys = _state3.selectedKeys,
@@ -2885,7 +2893,7 @@ var _initialiseProps = function _initialiseProps() {
         dragOverNodeKey = _state3.dragOverNodeKey,
         dropPosition = _state3.dropPosition;
 
-    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty___default()(_this2.props);
+    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty___default()(_this3.props);
 
     var pos = Object(__WEBPACK_IMPORTED_MODULE_9__util__["j" /* getPosition */])(level, index);
     var key = child.key || pos;
@@ -2894,7 +2902,7 @@ var _initialiseProps = function _initialiseProps() {
       eventKey: key,
       expanded: expandedKeys.indexOf(key) !== -1,
       selected: selectedKeys.indexOf(key) !== -1,
-      checked: _this2.isKeyChecked(key),
+      checked: _this3.isKeyChecked(key),
       halfChecked: halfCheckedKeys.indexOf(key) !== -1,
       pos: pos,
 
