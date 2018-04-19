@@ -161,11 +161,20 @@ class TreeNode extends React.Component {
   };
 
   onSelectorClick = (e) => {
+    // Click trigger before select/check operation
+    const { rcTree: { onNodeClick } } = this.context;
+    onNodeClick(e, this);
+
     if (this.isSelectable()) {
       this.onSelect(e);
     } else {
       this.onCheck(e);
     }
+  };
+
+  onSelectorDoubleClick = (e) => {
+    const { rcTree: { onNodeDoubleClick } } = this.context;
+    onNodeDoubleClick(e, this);
   };
 
   onSelect = (e) => {
@@ -494,6 +503,7 @@ class TreeNode extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
         onClick={this.onSelectorClick}
+        onDoubleClick={this.onSelectorDoubleClick}
         onDragStart={this.onDragStart}
       >
           {$icon}{$title}
