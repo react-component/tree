@@ -2156,6 +2156,8 @@ var contextTypes = {
 
     isKeyChecked: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
 
+    onNodeClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
+    onNodeDoubleClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
     onNodeExpand: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
     onNodeSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
     onNodeMouseEnter: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
@@ -2254,6 +2256,8 @@ var Tree = function (_React$Component) {
         renderTreeNode: this.renderTreeNode,
         isKeyChecked: this.isKeyChecked,
 
+        onNodeClick: this.onNodeClick,
+        onNodeDoubleClick: this.onNodeDoubleClick,
         onNodeExpand: this.onNodeExpand,
         onNodeSelect: this.onNodeSelect,
         onNodeMouseEnter: this.onNodeMouseEnter,
@@ -2372,6 +2376,8 @@ Tree.propTypes = {
   checkedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string), __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object]),
   defaultSelectedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string),
   selectedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string),
+  onClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
+  onDoubleClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onExpand: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onCheck: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
@@ -2405,18 +2411,7 @@ Tree.defaultProps = {
   defaultExpandAll: false,
   defaultExpandedKeys: [],
   defaultCheckedKeys: [],
-  defaultSelectedKeys: [],
-  onExpand: null,
-  onCheck: null,
-  onSelect: null,
-  onDragStart: null,
-  onDragEnter: null,
-  onDragOver: null,
-  onDragLeave: null,
-  onDrop: null,
-  onDragEnd: null,
-  onMouseEnter: null,
-  onMouseLeave: null
+  defaultSelectedKeys: []
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -2574,6 +2569,22 @@ var _initialiseProps = function _initialiseProps() {
 
     if (onDrop) {
       onDrop(dropResult);
+    }
+  };
+
+  this.onNodeClick = function (e, treeNode) {
+    var onClick = _this3.props.onClick;
+
+    if (onClick) {
+      onClick(e, treeNode);
+    }
+  };
+
+  this.onNodeDoubleClick = function (e, treeNode) {
+    var onDoubleClick = _this3.props.onDoubleClick;
+
+    if (onDoubleClick) {
+      onDoubleClick(e, treeNode);
     }
   };
 
@@ -24129,11 +24140,22 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onSelectorClick = function (e) {
+    // Click trigger before select/check operation
+    var onNodeClick = _this2.context.rcTree.onNodeClick;
+
+    onNodeClick(e, _this2);
+
     if (_this2.isSelectable()) {
       _this2.onSelect(e);
     } else {
       _this2.onCheck(e);
     }
+  };
+
+  this.onSelectorDoubleClick = function (e) {
+    var onNodeDoubleClick = _this2.context.rcTree.onNodeDoubleClick;
+
+    onNodeDoubleClick(e, _this2);
   };
 
   this.onSelect = function (e) {
@@ -24467,6 +24489,7 @@ var _initialiseProps = function _initialiseProps() {
         onMouseLeave: _this2.onMouseLeave,
         onContextMenu: _this2.onContextMenu,
         onClick: _this2.onSelectorClick,
+        onDoubleClick: _this2.onSelectorDoubleClick,
         onDragStart: _this2.onDragStart
       },
       $icon,
