@@ -4,7 +4,7 @@ exports[`Tree check check update when Tree trigger componentWillReceiveProps 1`]
   role="tree-node"
   unselectable="on">
   <li
-    class="">
+    class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked">
     <span
       class="rc-tree-switcher rc-tree-switcher-noop">
       
@@ -36,7 +36,7 @@ exports[`Tree renders correctly 1`] = `
   tabindex="0"
   unselectable="on">
   <li
-    class="spe">
+    class="spe rc-tree-treenode-switcher-open">
     <span
       class="rc-tree-switcher rc-tree-switcher_open">
       
@@ -61,7 +61,7 @@ exports[`Tree renders correctly 1`] = `
       class="rc-tree-child-tree rc-tree-child-tree-open"
       data-expanded="true">
       <li
-        class="rc-tree-treenode-disabled">
+        class="rc-tree-treenode-disabled rc-tree-treenode-switcher-open">
         <span
           class="rc-tree-switcher rc-tree-switcher_open">
           
@@ -86,7 +86,7 @@ exports[`Tree renders correctly 1`] = `
           class="rc-tree-child-tree rc-tree-child-tree-open"
           data-expanded="true">
           <li
-            class="">
+            class="rc-tree-treenode-switcher-open">
             <span
               class="rc-tree-switcher rc-tree-switcher-noop">
               
@@ -109,7 +109,7 @@ exports[`Tree renders correctly 1`] = `
             </span>
           </li>
           <li
-            class="">
+            class="rc-tree-treenode-switcher-open">
             <span
               class="rc-tree-switcher rc-tree-switcher-noop">
               
@@ -134,7 +134,7 @@ exports[`Tree renders correctly 1`] = `
         </ul>
       </li>
       <li
-        class="">
+        class="rc-tree-treenode-switcher-open">
         <span
           class="rc-tree-switcher rc-tree-switcher-noop">
           
@@ -167,7 +167,7 @@ exports[`Tree renders opaque children correctly 1`] = `
   role="tree-node"
   unselectable="on">
   <li
-    class="">
+    class="rc-tree-treenode-switcher-close">
     <span
       class="rc-tree-switcher rc-tree-switcher_close">
       

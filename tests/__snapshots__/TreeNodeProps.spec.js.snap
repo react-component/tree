@@ -4,7 +4,7 @@ exports[`TreeNode Props className 1`] = `
   role="tree-node"
   unselectable="on">
   <li
-    class="">
+    class="rc-tree-treenode-switcher-open">
     <span
       class="rc-tree-switcher rc-tree-switcher_open">
       
@@ -25,7 +25,7 @@ exports[`TreeNode Props className 1`] = `
       class="rc-tree-child-tree rc-tree-child-tree-open"
       data-expanded="true">
       <li
-        class="tree-node-cls">
+        class="tree-node-cls rc-tree-treenode-switcher-open">
         <span
           class="rc-tree-switcher rc-tree-switcher_open">
           
@@ -46,7 +46,7 @@ exports[`TreeNode Props className 1`] = `
           class="rc-tree-child-tree rc-tree-child-tree-open"
           data-expanded="true">
           <li
-            class="">
+            class="rc-tree-treenode-switcher-open">
             <span
               class="rc-tree-switcher rc-tree-switcher-noop">
               
@@ -67,7 +67,7 @@ exports[`TreeNode Props className 1`] = `
         </ul>
       </li>
       <li
-        class="">
+        class="rc-tree-treenode-switcher-open">
         <span
           class="rc-tree-switcher rc-tree-switcher-noop">
           
@@ -88,7 +88,7 @@ exports[`TreeNode Props className 1`] = `
     </ul>
   </li>
   <li
-    class="">
+    class="rc-tree-treenode-switcher-open">
     <span
       class="rc-tree-switcher rc-tree-switcher-noop">
       
@@ -115,7 +115,7 @@ exports[`TreeNode Props customize icon component 1`] = `
   role="tree-node"
   unselectable="on">
   <li
-    class="">
+    class="rc-tree-treenode-switcher-open">
     <span
       class="rc-tree-switcher rc-tree-switcher-noop">
       
@@ -145,7 +145,7 @@ exports[`TreeNode Props customize icon element 1`] = `
   role="tree-node"
   unselectable="on">
   <li
-    class="">
+    class="rc-tree-treenode-switcher-open">
     <span
       class="rc-tree-switcher rc-tree-switcher-noop">
       
@@ -175,7 +175,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
   role="tree-node"
   unselectable="on">
   <li
-    class="">
+    class="rc-tree-treenode-switcher-open">
     <span
       class="rc-tree-switcher rc-tree-switcher-noop">
       

@@ -575,9 +575,12 @@ class TreeNode extends React.Component {
   };
 
   render() {
+    const { loadStatus } = this.state;
     const {
       className,
       dragOver, dragOverGapTop, dragOverGapBottom,
+      isLeaf,
+      expanded, selected, checked, halfChecked,
     } = this.props;
     const { rcTree: {
       prefixCls,
@@ -589,10 +592,17 @@ class TreeNode extends React.Component {
       <li
         className={classNames(className, {
           [`${prefixCls}-treenode-disabled`]: disabled,
+          [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
+          [`${prefixCls}-treenode-checkbox-checked`]: checked,
+          [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
+          [`${prefixCls}-treenode-selected`]: selected,
+          [`${prefixCls}-treenode-loading`]: loadStatus === LOAD_STATUS_LOADING,
+
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,
           'drag-over-gap-bottom': !disabled && dragOverGapBottom,
           'filter-node': filterTreeNode && filterTreeNode(this),
+
         })}
 
         onDragEnter={this.onDragEnter}
