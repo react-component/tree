@@ -23984,11 +23984,17 @@ var TreeNode = function (_React$Component) {
   TreeNode.prototype.render = function render() {
     var _classNames;
 
+    var loadStatus = this.state.loadStatus;
     var _props = this.props,
         className = _props.className,
         dragOver = _props.dragOver,
         dragOverGapTop = _props.dragOverGapTop,
-        dragOverGapBottom = _props.dragOverGapBottom;
+        dragOverGapBottom = _props.dragOverGapBottom,
+        isLeaf = _props.isLeaf,
+        expanded = _props.expanded,
+        selected = _props.selected,
+        checked = _props.checked,
+        halfChecked = _props.halfChecked;
     var _context$rcTree = this.context.rcTree,
         prefixCls = _context$rcTree.prefixCls,
         filterTreeNode = _context$rcTree.filterTreeNode;
@@ -23998,7 +24004,7 @@ var TreeNode = function (_React$Component) {
     return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
       'li',
       {
-        className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(className, (_classNames = {}, _classNames[prefixCls + '-treenode-disabled'] = disabled, _classNames['drag-over'] = !disabled && dragOver, _classNames['drag-over-gap-top'] = !disabled && dragOverGapTop, _classNames['drag-over-gap-bottom'] = !disabled && dragOverGapBottom, _classNames['filter-node'] = filterTreeNode && filterTreeNode(this), _classNames)),
+        className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(className, (_classNames = {}, _classNames[prefixCls + '-treenode-disabled'] = disabled, _classNames[prefixCls + '-treenode-switcher-' + (expanded ? 'open' : 'close')] = !isLeaf, _classNames[prefixCls + '-treenode-checkbox-checked'] = checked, _classNames[prefixCls + '-treenode-checkbox-indeterminate'] = halfChecked, _classNames[prefixCls + '-treenode-selected'] = selected, _classNames[prefixCls + '-treenode-loading'] = loadStatus === LOAD_STATUS_LOADING, _classNames['drag-over'] = !disabled && dragOver, _classNames['drag-over-gap-top'] = !disabled && dragOverGapTop, _classNames['drag-over-gap-bottom'] = !disabled && dragOverGapBottom, _classNames['filter-node'] = filterTreeNode && filterTreeNode(this), _classNames)),
 
         onDragEnter: this.onDragEnter,
         onDragOver: this.onDragOver,
@@ -24463,7 +24469,9 @@ var _initialiseProps = function _initialiseProps() {
         {
           className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(prefixCls + '-iconEle', prefixCls + '-icon__customize')
         },
-        typeof currentIcon === 'function' ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(currentIcon, _this2.props) : currentIcon
+        typeof currentIcon === 'function' ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(currentIcon, __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default()({}, _this2.props, {
+          loading: loadStatus === LOAD_STATUS_LOADING
+        })) : currentIcon
       ) : _this2.renderIcon();
     } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {
       $icon = _this2.renderIcon();
