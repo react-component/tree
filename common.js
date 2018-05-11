@@ -24349,6 +24349,10 @@ var _initialiseProps = function _initialiseProps() {
 
     var hasChildren = _this2.getNodeChildren().length !== 0;
 
+    if (isLeaf === false) {
+      return false;
+    }
+
     return isLeaf || !loadData && !hasChildren || loadData && loadStatus === LOAD_STATUS_LOADED && !hasChildren;
   };
 
