@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import { render } from 'enzyme';
+import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Tree, { TreeNode } from '..';
 
@@ -82,6 +82,22 @@ describe('TreeNode Props', () => {
         </Tree>
       );
       expect(renderToJson(withoutLoadData)).toMatchSnapshot();
+    });
+
+    it('get props when loading', () => {
+      const then = jest.fn(() => Promise.resolve());
+      const loadData = jest.fn(() => ({ then }));
+      const iconFn = jest.fn(() => null);
+      const wrapper = mount(
+        <Tree loadData={loadData}>
+          <TreeNode icon={iconFn} title="parent 1" key="0-0" />
+        </Tree>
+      );
+
+      wrapper.find('.rc-tree-switcher').simulate('click');
+
+      expect(iconFn.mock.calls[0][0].loading).toBe(false);
+      expect(iconFn.mock.calls[1][0].loading).toBe(true);
     });
   });
 });

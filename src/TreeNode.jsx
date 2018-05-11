@@ -476,7 +476,10 @@ class TreeNode extends React.Component {
           )}
         >
           {typeof currentIcon === 'function' ?
-            React.createElement(currentIcon, this.props) : currentIcon}
+            React.createElement(currentIcon, {
+              ...this.props,
+              loading: loadStatus === LOAD_STATUS_LOADING,
+            }) : currentIcon}
         </span>
       ) : this.renderIcon();
     } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {
