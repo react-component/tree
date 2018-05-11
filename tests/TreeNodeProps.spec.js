@@ -50,6 +50,15 @@ describe('TreeNode Props', () => {
       </Tree>
     );
     expect(renderToJson(withLoadData)).toMatchSnapshot();
+
+    const forceNoLeaf = render(
+      <Tree defaultExpandAll>
+        <TreeNode>
+          <TreeNode isLeaf={false} />
+        </TreeNode>
+      </Tree>
+    );
+    expect(renderToJson(forceNoLeaf)).toMatchSnapshot();
   });
 
   describe('customize icon', () => {
