@@ -92,9 +92,12 @@ class Demo extends React.Component {
         onCheck={this.onCheck}
       >
         <TreeNode title="parent 1" key="0-0">
-          <TreeNode title="parent 1-1" key="0-0-1">
-            <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
-            <TreeNode title="parent 1-1-1" key="0-0-1-1" />
+          <TreeNode title="parent 1-1" key="0-0-0">
+            <TreeNode title="parent 1-1-0" key="0-0-0-0" />
+          </TreeNode>
+          <TreeNode title="parent 1-2" key="0-0-1">
+            <TreeNode title="parent 1-2-0" key="0-0-1-0" disableCheckbox />
+            <TreeNode title="parent 1-2-1" key="0-0-1-1" />
           </TreeNode>
         </TreeNode>
       </Tree>
