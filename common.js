@@ -2393,7 +2393,11 @@ Tree.propTypes = {
   onDrop: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   filterTreeNode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   openTransitionName: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  openAnimation: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object])
+  openAnimation: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object]),
+
+  // [Internal] Currently is only used in `rc-tree-select` to save performance.
+  // Since this is internal usage, do not written in any doc.
+  internalOnStateUpdate: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
 };
 Tree.childContextTypes = contextTypes;
 Tree.defaultProps = {
@@ -2828,6 +2832,8 @@ var _initialiseProps = function _initialiseProps() {
     var oriState = preState || _this3.state;
     var newState = {};
     var myPrevProps = prevProps || {};
+    var internalOnStateUpdate = props.internalOnStateUpdate;
+
 
     function checkSync(name) {
       if (props[name] !== myPrevProps[name]) {
@@ -2872,7 +2878,13 @@ var _initialiseProps = function _initialiseProps() {
       newState.halfCheckedKeys = _halfCheckedKeys;
     }
 
-    return needSync ? newState : null;
+    if (needSync) {
+      if (internalOnStateUpdate) {
+        internalOnStateUpdate(newState);
+      }
+      return newState;
+    }
+    return null;
   };
 
   this.setUncontrolledState = function (state) {

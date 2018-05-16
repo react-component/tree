@@ -184,9 +184,14 @@ var Demo = function (_React$Component) {
           { title: 'parent 1', key: '0-0' },
           __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"],
-            { title: 'parent 1-1', key: '0-0-1' },
-            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"], { title: 'parent 1-1-0', key: '0-0-1-0', disableCheckbox: true }),
-            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"], { title: 'parent 1-1-1', key: '0-0-1-1' })
+            { title: 'parent 1-1', key: '0-0-0' },
+            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"], { title: 'parent 1-1-0', key: '0-0-0-0' })
+          ),
+          __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"],
+            { title: 'parent 1-2', key: '0-0-1' },
+            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"], { title: 'parent 1-2-0', key: '0-0-1-0', disableCheckbox: true }),
+            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"], { title: 'parent 1-2-1', key: '0-0-1-1' })
           )
         )
       )
