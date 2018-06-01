@@ -104,10 +104,6 @@ class Tree extends React.Component {
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-
-    // [Internal] Currently is only used in `rc-tree-select` to save performance.
-    // Since this is internal usage, do not written in any doc.
-    internalOnStateUpdate: PropTypes.func,
   };
 
   static childContextTypes = contextTypes;
@@ -597,7 +593,6 @@ class Tree extends React.Component {
     const oriState = preState || this.state;
     const newState = {};
     const myPrevProps = prevProps || {};
-    const { internalOnStateUpdate } = props;
 
     function checkSync(name) {
       if (props[name] !== myPrevProps[name]) {
@@ -635,9 +630,6 @@ class Tree extends React.Component {
     }
 
     if (needSync) {
-      if (internalOnStateUpdate) {
-        internalOnStateUpdate(newState);
-      }
       return newState;
     }
     return null;
