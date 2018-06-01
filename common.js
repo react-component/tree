@@ -2393,11 +2393,7 @@ Tree.propTypes = {
   onDrop: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   filterTreeNode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   openTransitionName: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  openAnimation: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object]),
-
-  // [Internal] Currently is only used in `rc-tree-select` to save performance.
-  // Since this is internal usage, do not written in any doc.
-  internalOnStateUpdate: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
+  openAnimation: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object])
 };
 Tree.childContextTypes = contextTypes;
 Tree.defaultProps = {
@@ -2448,6 +2444,8 @@ var _initialiseProps = function _initialiseProps() {
         pos = _node$props2.pos,
         eventKey = _node$props2.eventKey;
 
+
+    if (!_this3.dragNode) return;
 
     var dropPosition = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* calcDropPosition */])(event, node);
 
@@ -2539,7 +2537,8 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onNodeDrop = function (event, node) {
     var _state = _this3.state,
-        dragNodesKeys = _state.dragNodesKeys,
+        _state$dragNodesKeys = _state.dragNodesKeys,
+        dragNodesKeys = _state$dragNodesKeys === undefined ? [] : _state$dragNodesKeys,
         dropPosition = _state.dropPosition;
     var onDrop = _this3.props.onDrop;
     var _node$props3 = node.props,
@@ -2832,8 +2831,6 @@ var _initialiseProps = function _initialiseProps() {
     var oriState = preState || _this3.state;
     var newState = {};
     var myPrevProps = prevProps || {};
-    var internalOnStateUpdate = props.internalOnStateUpdate;
-
 
     function checkSync(name) {
       if (props[name] !== myPrevProps[name]) {
@@ -2879,9 +2876,6 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     if (needSync) {
-      if (internalOnStateUpdate) {
-        internalOnStateUpdate(newState);
-      }
       return newState;
     }
     return null;
