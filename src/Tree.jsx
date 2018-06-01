@@ -247,6 +247,8 @@ class Tree extends React.Component {
     const { onDragEnter } = this.props;
     const { pos, eventKey } = node.props;
 
+    if (!this.dragNode) return;
+
     const dropPosition = calcDropPosition(event, node);
 
     // Skip if drag node is self
@@ -332,7 +334,7 @@ class Tree extends React.Component {
     }
   };
   onNodeDrop = (event, node) => {
-    const { dragNodesKeys, dropPosition } = this.state;
+    const { dragNodesKeys = [], dropPosition } = this.state;
     const { onDrop } = this.props;
     const { eventKey, pos } = node.props;
 
