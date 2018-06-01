@@ -1,6 +1,16 @@
 # History
 ---
 
+## 1.11.5 / 2018-04-19
+- add `onClick` & `onDoubleClick` for node click event
+- add related className in treeNode
+- fix drag into another tree will throw exception
+
+## 1.10.0 / 2018-04-17
+- `onCheck` arguments provide nativeEvent
+- `onSelect` arguments provide nativeEvent
+- `onExpand` arguments provide nativeEvent
+
 ## 1.9.0 / 2018-04-09
 - adjust `dragable` logic to make drag more smooth
 - fix `loadData` trigger twice when expand node
