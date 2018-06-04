@@ -15,13 +15,13 @@ describe('TreeNode Props', () => {
   it('className', () => {
     const wrapper = render(
       <Tree defaultExpandAll>
-        <TreeNode>
-          <TreeNode className="tree-node-cls">
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" className="tree-node-cls">
             <TreeNode />
           </TreeNode>
-          <TreeNode />
+          <TreeNode key="0-0-1" />
         </TreeNode>
-        <TreeNode />
+        <TreeNode key="0-1" />
       </Tree>
     );
     expect(renderToJson(wrapper)).toMatchSnapshot();

@@ -5,7 +5,10 @@ import warning from 'warning';
 import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
 import { contextTypes } from './Tree';
-import { getPosition, getNodeChildren, isCheckDisabled, traverseTreeNodes } from './util';
+import {
+  getPosition, getNodeChildren, isCheckDisabled,
+  traverseTreeNodes, mapChildren,
+} from './util';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -562,7 +565,7 @@ class TreeNode extends React.Component {
           )}
           data-expanded={expanded}
         >
-          {React.Children.map(nodeList, (node, index) => (
+          {mapChildren(nodeList, (node, index) => (
             renderTreeNode(node, index, pos)
           ))}
         </ul>

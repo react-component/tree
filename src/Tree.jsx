@@ -8,6 +8,7 @@ import {
   calcExpandedKeys, calcSelectedKeys,
   calcCheckedKeys, calcDropPosition,
   arrAdd, arrDel, posToArr,
+  mapChildren,
 } from './util';
 
 /**
@@ -675,6 +676,7 @@ class Tree extends React.Component {
     const key = child.key || pos;
 
     return React.cloneElement(child, {
+      key,
       eventKey: key,
       expanded: expandedKeys.indexOf(key) !== -1,
       selected: selectedKeys.indexOf(key) !== -1,
@@ -712,7 +714,9 @@ class Tree extends React.Component {
         role="tree-node"
         unselectable="on"
       >
-        {React.Children.map(children, this.renderTreeNode, this)}
+        {mapChildren(children, (node, index) => (
+          this.renderTreeNode(node, index)
+        ))}
       </ul>
     );
   }
