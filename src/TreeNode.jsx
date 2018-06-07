@@ -465,8 +465,7 @@ class TreeNode extends React.Component {
     );
   };
 
-  // Icon 
-Title
+// Icon + Title
   renderSelector = () => {
     const { loadStatus, dragNodeHighlight } = this.state;
     const { title, selected, icon } = this.props;
