@@ -416,8 +416,8 @@ class TreeNode extends React.Component {
         )}
         onClick={this.onExpand}
         tabIndex={0}
-        role={"button"}
-        aria-label={"expand " + title}
+        role={'button'}
+        aria-label={`expand ${title}`}
         aria-expanded={expanded}
         onKeyPress={this.onExpand}
       />
@@ -465,7 +465,8 @@ class TreeNode extends React.Component {
     );
   };
 
-  // Icon + Title
+  // Icon 
+Title
   renderSelector = () => {
     const { loadStatus, dragNodeHighlight } = this.state;
     const { title, selected, icon } = this.props;
