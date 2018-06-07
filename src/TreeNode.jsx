@@ -13,11 +13,6 @@ import {
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
 
-const LOAD_STATUS_NONE = 0;
-const LOAD_STATUS_LOADING = 1;
-const LOAD_STATUS_LOADED = 2;
-const LOAD_STATUS_FAILED = 0; // Action align, let's make failed same as init.
-
 const defaultTitle = '---';
 
 let onlyTreeNodeWarned = false; // Only accept TreeNode
@@ -41,6 +36,8 @@ class TreeNode extends React.Component {
     expanded: PropTypes.bool,
     selected: PropTypes.bool,
     checked: PropTypes.bool,
+    loaded: PropTypes.bool,
+    loading: PropTypes.bool,
     halfChecked: PropTypes.bool,
     children: PropTypes.node,
     title: PropTypes.node,
@@ -69,7 +66,6 @@ class TreeNode extends React.Component {
     super(props);
 
     this.state = {
-      loadStatus: LOAD_STATUS_NONE,
       dragNodeHighlight: false,
     };
   }
@@ -294,18 +290,7 @@ class TreeNode extends React.Component {
   // Disabled item still can be switch
   onExpand = (e) => {
     const { rcTree: { onNodeExpand } } = this.context;
-    const callbackPromise = onNodeExpand(e, this);
-
-    // Promise like
-    if (callbackPromise && callbackPromise.then) {
-      this.setState({ loadStatus: LOAD_STATUS_LOADING });
-
-      callbackPromise.then(() => {
-        this.setState({ loadStatus: LOAD_STATUS_LOADED });
-      }).catch(() => {
-        this.setState({ loadStatus: LOAD_STATUS_FAILED });
-      });
-    }
+    onNodeExpand(e, this);
   };
 
   // Drag usage
@@ -337,8 +322,7 @@ class TreeNode extends React.Component {
   };
 
   isLeaf = () => {
-    const { loadStatus } = this.state;
-    const { isLeaf } = this.props;
+    const { isLeaf, loaded } = this.props;
     const { rcTree: { loadData } } = this.context;
 
     const hasChildren = this.getNodeChildren().length !== 0;
@@ -350,7 +334,7 @@ class TreeNode extends React.Component {
     return (
       isLeaf ||
       (!loadData && !hasChildren) ||
-      (loadData && loadStatus === LOAD_STATUS_LOADED && !hasChildren)
+      (loadData && loaded && !hasChildren)
     );
   };
 
@@ -381,22 +365,12 @@ class TreeNode extends React.Component {
   // Load data to avoid default expanded tree without data
   syncLoadData = (props) => {
     const { expanded } = props;
-    const { rcTree: { loadData } } = this.context;
+    const { rcTree: { onNodeLoad } } = this.context;
 
     // read from state to avoid loadData at same time
-    this.setState(({ loadStatus }) => {
-      if (loadData && loadStatus === LOAD_STATUS_NONE && expanded && !this.isLeaf()) {
-        loadData(this).then(() => {
-          this.setState({ loadStatus: LOAD_STATUS_LOADED });
-        }).catch(() => {
-          this.setState({ loadStatus: LOAD_STATUS_FAILED });
-        });
-
-        return { loadStatus: LOAD_STATUS_LOADING };
-      }
-
-      return null;
-    });
+    if (expanded && !this.isLeaf()) {
+      onNodeLoad(this);
+    }
   };
 
   // Switcher
@@ -446,7 +420,7 @@ class TreeNode extends React.Component {
   };
 
   renderIcon = () => {
-    const { loadStatus } = this.state;
+    const { loading } = this.props;
     const { rcTree: { prefixCls } } = this.context;
 
     return (
@@ -454,7 +428,7 @@ class TreeNode extends React.Component {
         className={classNames(
           `${prefixCls}-iconEle`,
           `${prefixCls}-icon__${this.getNodeState() || 'docu'}`,
-          (loadStatus === LOAD_STATUS_LOADING) && `${prefixCls}-icon_loading`,
+          loading && `${prefixCls}-icon_loading`,
         )}
       />
     );
@@ -462,8 +436,8 @@ class TreeNode extends React.Component {
 
   // Icon + Title
   renderSelector = () => {
-    const { loadStatus, dragNodeHighlight } = this.state;
-    const { title, selected, icon } = this.props;
+    const { dragNodeHighlight } = this.state;
+    const { title, selected, icon, loading } = this.props;
     const { rcTree: { prefixCls, showIcon, icon: treeIcon, draggable, loadData } } = this.context;
     const disabled = this.isDisabled();
 
@@ -485,11 +459,10 @@ class TreeNode extends React.Component {
           {typeof currentIcon === 'function' ?
             React.createElement(currentIcon, {
               ...this.props,
-              loading: loadStatus === LOAD_STATUS_LOADING,
             }) : currentIcon}
         </span>
       ) : this.renderIcon();
-    } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {
+    } else if (loadData && loading) {
       $icon = this.renderIcon();
     }
 
@@ -585,7 +558,7 @@ class TreeNode extends React.Component {
   };
 
   render() {
-    const { loadStatus } = this.state;
+    const { loading } = this.props;
     const {
       className,
       dragOver, dragOverGapTop, dragOverGapBottom,
@@ -606,7 +579,7 @@ class TreeNode extends React.Component {
           [`${prefixCls}-treenode-checkbox-checked`]: checked,
           [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
           [`${prefixCls}-treenode-selected`]: selected,
-          [`${prefixCls}-treenode-loading`]: loadStatus === LOAD_STATUS_LOADING,
+          [`${prefixCls}-treenode-loading`]: loading,
 
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,
