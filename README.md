@@ -77,6 +77,8 @@ see examples
 |onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 |filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
 |loadData | load data asynchronously and the return value should be a promise | function(node) | - |
+|loadedKeys | Mark node is loaded when `loadData` is true | string[] | - |
+|onLoad | Trigger when a node is loaded. If you set the `loadedKeys`, you must handle `onLoad` to avoid infinity loop | function(loadedKeys, {event, node}) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 |onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
 |onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |
