@@ -477,4 +477,53 @@ describe('Tree Props', () => {
       targetNode.instance(),
     );
   });
+
+  describe('loadedKeys & onLoad', () => {
+    it('has loadedKeys', () => {
+      const loadData = jest.fn(() => Promise.resolve());
+      const onLoad = jest.fn();
+
+      const wrapper = mount(
+        <Tree loadedKeys={['0-0']} loadData={loadData} onLoad={onLoad}>
+          <TreeNode key="0-0" />
+        </Tree>
+      );
+
+      wrapper.find('.rc-tree-switcher').simulate('click');
+      expect(loadData).not.toBeCalled();
+      expect(onLoad).not.toBeCalled();
+    });
+
+    it('reset loadedKeys', () => {
+      class FakePromise {
+        constructor(val) {
+          this.val = val;
+        }
+        then = (func) => {
+          const ret = func(this.val);
+          return new FakePromise(ret);
+        }
+      }
+
+      let wrapper;
+
+      const loadData = jest.fn(() => new FakePromise());
+      const onLoad = jest.fn(() => {
+        wrapper.setProps({ loadedKeys: ['0-0'] });
+      });
+
+      wrapper = mount(
+        <Tree loadedKeys={['0-0']} loadData={loadData} onLoad={onLoad}>
+          <TreeNode key="0-0" />
+        </Tree>
+      );
+      wrapper.setProps({ loadedKeys: [] });
+      wrapper.find('.rc-tree-switcher').simulate('click');
+      expect(loadData).toBeCalledWith(wrapper.find(TreeNode).instance());
+      expect(onLoad).toBeCalledWith(['0-0'], {
+        event: 'load',
+        node: wrapper.find(TreeNode).instance(),
+      });
+    });
+  });
 });

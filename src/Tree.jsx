@@ -92,6 +92,7 @@ class Tree extends React.Component {
     onExpand: PropTypes.func,
     onCheck: PropTypes.func,
     onSelect: PropTypes.func,
+    onLoad: PropTypes.func,
     loadData: PropTypes.func,
     loadedKeys: PropTypes.arrayOf(PropTypes.string),
     onMouseEnter: PropTypes.func,
@@ -428,7 +429,7 @@ class Tree extends React.Component {
   };
 
   onNodeLoad = (treeNode) => {
-    const { loadData } = this.props;
+    const { loadData, onLoad } = this.props;
     const { loadedKeys = [], loadingKeys = [] } = this.state;
     const { eventKey } = treeNode.props;
 
@@ -441,10 +442,21 @@ class Tree extends React.Component {
     });
     const promise = loadData(treeNode);
     promise.then(() => {
+      const newLoadedKeys = arrAdd(this.state.loadedKeys, eventKey);
       this.setUncontrolledState({
-        loadedKeys: arrAdd(this.state.loadedKeys, eventKey),
+        loadedKeys: newLoadedKeys,
+      });
+      this.setState({
         loadingKeys: arrDel(this.state.loadingKeys, eventKey),
       });
+
+      if (onLoad) {
+        const eventObj = {
+          event: 'load',
+          node: treeNode,
+        };
+        onLoad(newLoadedKeys, eventObj);
+      }
     });
 
     return promise;

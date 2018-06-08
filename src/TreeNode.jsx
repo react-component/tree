@@ -369,7 +369,12 @@ class TreeNode extends React.Component {
 
     // read from state to avoid loadData at same time
     if (expanded && !this.isLeaf()) {
-      onNodeLoad(this);
+      // We needn't reload data when has children in sync logic
+      // It's only needed in node expanded
+      const hasChildren = this.getNodeChildren().length !== 0;
+      if (!hasChildren) {
+        onNodeLoad(this);
+      }
     }
   };
 
