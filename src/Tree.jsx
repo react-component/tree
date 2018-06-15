@@ -82,7 +82,7 @@ class Tree extends React.Component {
     expandedKeys: PropTypes.arrayOf(PropTypes.string),
     defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
     checkedKeys: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
       PropTypes.object,
     ]),
     defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
