@@ -3669,6 +3669,17 @@ function calcCheckStateConduct(treeNodes, checkedKeys) {
 }
 
 /**
+ * Since React internal will convert key to string,
+ * we need do this to avoid `checkStrictly` use number match
+ */
+function keyListToString(keyList) {
+  if (!keyList) return keyList;
+  return keyList.map(function (key) {
+    return String(key);
+  });
+}
+
+/**
  * Calculate the value of checked and halfChecked keys.
  * This should be only run in init or props changed.
  */
@@ -3699,6 +3710,9 @@ function calcCheckedKeys(keys, props) {
     __WEBPACK_IMPORTED_MODULE_2_warning___default()(false, '`CheckedKeys` is not an array or an object');
     return null;
   }
+
+  keyProps.checkedKeys = keyListToString(keyProps.checkedKeys);
+  keyProps.halfCheckedKeys = keyListToString(keyProps.halfCheckedKeys);
 
   // Do nothing if is checkStrictly mode
   if (checkStrictly) {
