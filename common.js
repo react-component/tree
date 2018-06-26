@@ -1126,6 +1126,27 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 
 /***/ }),
 /* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+exports.default = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
+
+/***/ }),
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1503,7 +1524,6 @@ var _initialiseProps = function _initialiseProps() {
 /* harmony default export */ __webpack_exports__["a"] = (Animate);
 
 /***/ }),
-/* 44 */,
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24724,26 +24744,29 @@ module.exports = function() {
 
 "use strict";
 /* unused harmony export nodeContextTypes */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_classnames__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_warning__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_animate__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_util_es_Children_toArray__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Tree__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__util__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_classnames__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_warning__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_warning__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_animate__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_util_es_Children_toArray__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Tree__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__util__ = __webpack_require__(98);
+
 
 
 
@@ -24764,19 +24787,19 @@ var defaultTitle = '---';
 
 var onlyTreeNodeWarned = false; // Only accept TreeNode
 
-var nodeContextTypes = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_10__Tree__["a" /* contextTypes */], {
-  rcTreeNode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.shape({
-    onUpCheckConduct: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func
+var nodeContextTypes = __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_11__Tree__["a" /* contextTypes */], {
+  rcTreeNode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.shape({
+    onUpCheckConduct: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
   })
 });
 
 var TreeNode = function (_React$Component) {
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default()(TreeNode, _React$Component);
+  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(TreeNode, _React$Component);
 
   function TreeNode(props) {
-    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, TreeNode);
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, TreeNode);
 
-    var _this = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call(this, props));
+    var _this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call(this, props));
 
     _initialiseProps.call(_this);
 
@@ -24787,7 +24810,7 @@ var TreeNode = function (_React$Component) {
   }
 
   TreeNode.prototype.getChildContext = function getChildContext() {
-    return __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default()({}, this.context, {
+    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default()({}, this.context, {
       rcTreeNode: {
         onUpCheckConduct: this.onUpCheckConduct
       }
@@ -24843,6 +24866,7 @@ var TreeNode = function (_React$Component) {
     var _classNames;
 
     var loading = this.props.loading;
+
     var _props = this.props,
         className = _props.className,
         dragOver = _props.dragOver,
@@ -24852,24 +24876,32 @@ var TreeNode = function (_React$Component) {
         expanded = _props.expanded,
         selected = _props.selected,
         checked = _props.checked,
-        halfChecked = _props.halfChecked;
+        halfChecked = _props.halfChecked,
+        otherProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default()(_props, ['className', 'dragOver', 'dragOverGapTop', 'dragOverGapBottom', 'isLeaf', 'expanded', 'selected', 'checked', 'halfChecked']);
+
     var _context$rcTree = this.context.rcTree,
         prefixCls = _context$rcTree.prefixCls,
         filterTreeNode = _context$rcTree.filterTreeNode;
 
     var disabled = this.isDisabled();
+    var dataOrAriaAttributeProps = Object.keys(otherProps).reduce(function (prev, key) {
+      if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
+        prev[key] = otherProps[key];
+      }
+      return prev;
+    }, {});
 
-    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
       'li',
-      {
-        className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(className, (_classNames = {}, _classNames[prefixCls + '-treenode-disabled'] = disabled, _classNames[prefixCls + '-treenode-switcher-' + (expanded ? 'open' : 'close')] = !isLeaf, _classNames[prefixCls + '-treenode-checkbox-checked'] = checked, _classNames[prefixCls + '-treenode-checkbox-indeterminate'] = halfChecked, _classNames[prefixCls + '-treenode-selected'] = selected, _classNames[prefixCls + '-treenode-loading'] = loading, _classNames['drag-over'] = !disabled && dragOver, _classNames['drag-over-gap-top'] = !disabled && dragOverGapTop, _classNames['drag-over-gap-bottom'] = !disabled && dragOverGapBottom, _classNames['filter-node'] = filterTreeNode && filterTreeNode(this), _classNames)),
+      __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default()({
+        className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(className, (_classNames = {}, _classNames[prefixCls + '-treenode-disabled'] = disabled, _classNames[prefixCls + '-treenode-switcher-' + (expanded ? 'open' : 'close')] = !isLeaf, _classNames[prefixCls + '-treenode-checkbox-checked'] = checked, _classNames[prefixCls + '-treenode-checkbox-indeterminate'] = halfChecked, _classNames[prefixCls + '-treenode-selected'] = selected, _classNames[prefixCls + '-treenode-loading'] = loading, _classNames['drag-over'] = !disabled && dragOver, _classNames['drag-over-gap-top'] = !disabled && dragOverGapTop, _classNames['drag-over-gap-bottom'] = !disabled && dragOverGapBottom, _classNames['filter-node'] = filterTreeNode && filterTreeNode(this), _classNames)),
 
         onDragEnter: this.onDragEnter,
         onDragOver: this.onDragOver,
         onDragLeave: this.onDragLeave,
         onDrop: this.onDrop,
         onDragEnd: this.onDragEnd
-      },
+      }, dataOrAriaAttributeProps),
       this.renderSwitcher(),
       this.renderCheckbox(),
       this.renderSelector(),
@@ -24878,35 +24910,35 @@ var TreeNode = function (_React$Component) {
   };
 
   return TreeNode;
-}(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
 
 TreeNode.propTypes = {
-  eventKey: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string, // Pass by parent `cloneElement`
-  prefixCls: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  className: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  root: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
-  onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  eventKey: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, // Pass by parent `cloneElement`
+  prefixCls: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+  className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+  root: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object,
+  onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
 
   // By parent
-  expanded: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  selected: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  checked: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  loaded: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  loading: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  halfChecked: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  children: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
-  title: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
-  pos: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  dragOver: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  dragOverGapTop: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  dragOverGapBottom: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  expanded: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  selected: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  checked: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  loaded: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  loading: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  halfChecked: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  children: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node,
+  title: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node,
+  pos: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+  dragOver: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  dragOverGapTop: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  dragOverGapBottom: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
 
   // By user
-  isLeaf: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  selectable: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  disabled: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  disableCheckbox: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  icon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func])
+  isLeaf: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  selectable: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  disabled: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  disableCheckbox: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  icon: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func])
 };
 TreeNode.contextTypes = nodeContextTypes;
 TreeNode.childContextTypes = nodeContextTypes;
@@ -24936,7 +24968,7 @@ var _initialiseProps = function _initialiseProps() {
 
     // Stop conduct when current node is disabled
 
-    if (Object(__WEBPACK_IMPORTED_MODULE_11__util__["l" /* isCheckDisabled */])(_this2)) {
+    if (Object(__WEBPACK_IMPORTED_MODULE_12__util__["l" /* isCheckDisabled */])(_this2)) {
       onCheckConductFinished(e);
       return;
     }
@@ -24947,9 +24979,9 @@ var _initialiseProps = function _initialiseProps() {
 
     // Statistic checked count
     children.forEach(function (node, index) {
-      var childPos = Object(__WEBPACK_IMPORTED_MODULE_11__util__["j" /* getPosition */])(pos, index);
+      var childPos = Object(__WEBPACK_IMPORTED_MODULE_12__util__["j" /* getPosition */])(pos, index);
 
-      if (nodePos === childPos || Object(__WEBPACK_IMPORTED_MODULE_11__util__["l" /* isCheckDisabled */])(node)) {
+      if (nodePos === childPos || Object(__WEBPACK_IMPORTED_MODULE_12__util__["l" /* isCheckDisabled */])(node)) {
         return;
       }
 
@@ -24960,7 +24992,7 @@ var _initialiseProps = function _initialiseProps() {
 
     // Static enabled children count
     var enabledChildrenCount = children.filter(function (node) {
-      return !Object(__WEBPACK_IMPORTED_MODULE_11__util__["l" /* isCheckDisabled */])(node);
+      return !Object(__WEBPACK_IMPORTED_MODULE_12__util__["l" /* isCheckDisabled */])(node);
     }).length;
 
     // checkStrictly will not conduct check status
@@ -24993,11 +25025,11 @@ var _initialiseProps = function _initialiseProps() {
 
     if (checkStrictly) return;
 
-    Object(__WEBPACK_IMPORTED_MODULE_11__util__["o" /* traverseTreeNodes */])(children, function (_ref) {
+    Object(__WEBPACK_IMPORTED_MODULE_12__util__["o" /* traverseTreeNodes */])(children, function (_ref) {
       var node = _ref.node,
           key = _ref.key;
 
-      if (Object(__WEBPACK_IMPORTED_MODULE_11__util__["l" /* isCheckDisabled */])(node)) return false;
+      if (Object(__WEBPACK_IMPORTED_MODULE_12__util__["l" /* isCheckDisabled */])(node)) return false;
 
       if (nodeChecked !== isKeyChecked(key)) {
         onBatchNodeCheck(key, nodeChecked, false);
@@ -25166,14 +25198,14 @@ var _initialiseProps = function _initialiseProps() {
   this.getNodeChildren = function () {
     var children = _this2.props.children;
 
-    var originList = Object(__WEBPACK_IMPORTED_MODULE_9_rc_util_es_Children_toArray__["a" /* default */])(children).filter(function (node) {
+    var originList = Object(__WEBPACK_IMPORTED_MODULE_10_rc_util_es_Children_toArray__["a" /* default */])(children).filter(function (node) {
       return node;
     });
-    var targetList = Object(__WEBPACK_IMPORTED_MODULE_11__util__["i" /* getNodeChildren */])(originList);
+    var targetList = Object(__WEBPACK_IMPORTED_MODULE_12__util__["i" /* getNodeChildren */])(originList);
 
     if (originList.length !== targetList.length && !onlyTreeNodeWarned) {
       onlyTreeNodeWarned = true;
-      __WEBPACK_IMPORTED_MODULE_7_warning___default()(false, 'Tree only accept TreeNode as children.');
+      __WEBPACK_IMPORTED_MODULE_8_warning___default()(false, 'Tree only accept TreeNode as children.');
     }
 
     return targetList;
@@ -25241,11 +25273,11 @@ var _initialiseProps = function _initialiseProps() {
 
 
     if (_this2.isLeaf()) {
-      return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('span', { className: prefixCls + '-switcher ' + prefixCls + '-switcher-noop' });
+      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('span', { className: prefixCls + '-switcher ' + prefixCls + '-switcher-noop' });
     }
 
-    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('span', {
-      className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(prefixCls + '-switcher', prefixCls + '-switcher_' + (expanded ? ICON_OPEN : ICON_CLOSE)),
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('span', {
+      className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(prefixCls + '-switcher', prefixCls + '-switcher_' + (expanded ? ICON_OPEN : ICON_CLOSE)),
       onClick: _this2.onExpand
     });
   };
@@ -25266,10 +25298,10 @@ var _initialiseProps = function _initialiseProps() {
     // [Legacy] Custom element should be separate with `checkable` in future
     var $custom = typeof checkable !== 'boolean' ? checkable : null;
 
-    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
       'span',
       {
-        className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(prefixCls + '-checkbox', checked && prefixCls + '-checkbox-checked', !checked && halfChecked && prefixCls + '-checkbox-indeterminate', (disabled || disableCheckbox) && prefixCls + '-checkbox-disabled'),
+        className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(prefixCls + '-checkbox', checked && prefixCls + '-checkbox-checked', !checked && halfChecked && prefixCls + '-checkbox-indeterminate', (disabled || disableCheckbox) && prefixCls + '-checkbox-disabled'),
         onClick: _this2.onCheck
       },
       $custom
@@ -25281,8 +25313,8 @@ var _initialiseProps = function _initialiseProps() {
     var prefixCls = _this2.context.rcTree.prefixCls;
 
 
-    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('span', {
-      className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(prefixCls + '-iconEle', prefixCls + '-icon__' + (_this2.getNodeState() || 'docu'), loading && prefixCls + '-icon_loading')
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('span', {
+      className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(prefixCls + '-iconEle', prefixCls + '-icon__' + (_this2.getNodeState() || 'docu'), loading && prefixCls + '-icon_loading')
     });
   };
 
@@ -25310,30 +25342,30 @@ var _initialiseProps = function _initialiseProps() {
     if (showIcon) {
       var currentIcon = icon || treeIcon;
 
-      $icon = currentIcon ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+      $icon = currentIcon ? __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
         'span',
         {
-          className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(prefixCls + '-iconEle', prefixCls + '-icon__customize')
+          className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(prefixCls + '-iconEle', prefixCls + '-icon__customize')
         },
-        typeof currentIcon === 'function' ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(currentIcon, __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default()({}, _this2.props)) : currentIcon
+        typeof currentIcon === 'function' ? __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(currentIcon, __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default()({}, _this2.props)) : currentIcon
       ) : _this2.renderIcon();
     } else if (loadData && loading) {
       $icon = _this2.renderIcon();
     }
 
     // Title
-    var $title = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+    var $title = __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
       'span',
       { className: prefixCls + '-title' },
       title
     );
 
-    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
       'span',
       {
         ref: _this2.setSelectHandle,
         title: typeof title === 'string' ? title : '',
-        className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()('' + wrapClass, wrapClass + '-' + (_this2.getNodeState() || 'normal'), !disabled && (selected || dragNodeHighlight) && prefixCls + '-node-selected', !disabled && draggable && 'draggable'),
+        className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()('' + wrapClass, wrapClass + '-' + (_this2.getNodeState() || 'normal'), !disabled && (selected || dragNodeHighlight) && prefixCls + '-node-selected', !disabled && draggable && 'draggable'),
         draggable: !disabled && draggable || undefined,
         'aria-grabbed': !disabled && draggable || undefined,
 
@@ -25372,7 +25404,7 @@ var _initialiseProps = function _initialiseProps() {
     if (openTransitionName) {
       animProps.transitionName = openTransitionName;
     } else if (typeof openAnimation === 'object') {
-      animProps.animation = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default()({}, openAnimation);
+      animProps.animation = __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default()({}, openAnimation);
       if (!transitionAppear) {
         delete animProps.animation.appear;
       }
@@ -25387,21 +25419,21 @@ var _initialiseProps = function _initialiseProps() {
 
     var $children = void 0;
     if (expanded) {
-      $children = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+      $children = __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
         'ul',
         {
-          className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(prefixCls + '-child-tree', expanded && prefixCls + '-child-tree-open'),
+          className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(prefixCls + '-child-tree', expanded && prefixCls + '-child-tree-open'),
           'data-expanded': expanded
         },
-        Object(__WEBPACK_IMPORTED_MODULE_11__util__["m" /* mapChildren */])(nodeList, function (node, index) {
+        Object(__WEBPACK_IMPORTED_MODULE_12__util__["m" /* mapChildren */])(nodeList, function (node, index) {
           return renderTreeNode(node, index, pos);
         })
       );
     }
 
-    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-      __WEBPACK_IMPORTED_MODULE_8_rc_animate__["a" /* default */],
-      __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default()({}, animProps, {
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_9_rc_animate__["a" /* default */],
+      __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default()({}, animProps, {
         showProp: 'data-expanded',
         transitionAppear: transitionAppear,
         component: ''
