@@ -569,12 +569,19 @@ class TreeNode extends React.Component {
       dragOver, dragOverGapTop, dragOverGapBottom,
       isLeaf,
       expanded, selected, checked, halfChecked,
+      ...otherProps,
     } = this.props;
     const { rcTree: {
       prefixCls,
       filterTreeNode,
     } } = this.context;
     const disabled = this.isDisabled();
+    const dataOrAriaAttributeProps = Object.keys(otherProps).reduce((prev, key) => {
+      if ((key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-')) {
+        prev[key] = otherProps[key];
+      }
+      return prev;
+    }, {});
 
     return (
       <li
@@ -598,6 +605,7 @@ class TreeNode extends React.Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         onDragEnd={this.onDragEnd}
+        {...dataOrAriaAttributeProps}
       >
         {this.renderSwitcher()}
         {this.renderCheckbox()}
