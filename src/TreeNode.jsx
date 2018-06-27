@@ -492,7 +492,7 @@ class TreeNode extends React.Component {
         onContextMenu={this.onContextMenu}
         onClick={this.onSelectorClick}
         onDoubleClick={this.onSelectorDoubleClick}
-        onDragStart={draggable && this.onDragStart}
+        onDragStart={draggable ? this.onDragStart : undefined}
       >
           {$icon}{$title}
         </span>
@@ -601,11 +601,11 @@ class TreeNode extends React.Component {
 
         })}
 
-        onDragEnter={draggable && this.onDragEnter}
-        onDragOver={draggable && this.onDragOver}
-        onDragLeave={draggable && this.onDragLeave}
-        onDrop={draggable && this.onDrop}
-        onDragEnd={draggable && this.onDragEnd}
+        onDragEnter={draggable ? this.onDragEnter : undefined}
+        onDragOver={draggable ? this.onDragOver : undefined}
+        onDragLeave={draggable ? this.onDragLeave : undefined}
+        onDrop={draggable ? this.onDrop : undefined}
+        onDragEnd={draggable ? this.onDragEnd : undefined}
         {...dataOrAriaAttributeProps}
       >
         {this.renderSwitcher()}
