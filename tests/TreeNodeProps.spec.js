@@ -15,13 +15,13 @@ describe('TreeNode Props', () => {
   it('className', () => {
     const wrapper = render(
       <Tree defaultExpandAll>
-        <TreeNode>
-          <TreeNode className="tree-node-cls">
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" className="tree-node-cls">
             <TreeNode />
           </TreeNode>
-          <TreeNode />
+          <TreeNode key="0-0-1" />
         </TreeNode>
-        <TreeNode />
+        <TreeNode key="0-1" />
       </Tree>
     );
     expect(renderToJson(wrapper)).toMatchSnapshot();
@@ -107,6 +107,38 @@ describe('TreeNode Props', () => {
 
       expect(iconFn.mock.calls[0][0].loading).toBe(false);
       expect(iconFn.mock.calls[1][0].loading).toBe(true);
+    });
+  });
+
+  describe('data and aria props', () => {
+    it('renders data attributes on li', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll>
+          <TreeNode key="0-0" data-test="0-0">
+            <TreeNode key="0-0-0" className="tree-node-cls" data-test="0-0-0">
+              <TreeNode data-test="0-0-0-0"/>
+            </TreeNode>
+            <TreeNode key="0-0-1" data-test="0-0-1" />
+          </TreeNode>
+          <TreeNode key="0-1" data-test="0-1" />
+        </Tree>
+      );
+      expect(renderToJson(wrapper)).toMatchSnapshot();
+    });
+
+    it('renders aria attributes on li', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll>
+          <TreeNode key="0-0" aria-label="0-0">
+            <TreeNode key="0-0-0" className="tree-node-cls" aria-label="0-0-0">
+              <TreeNode aria-label="0-0-0-0"/>
+            </TreeNode>
+            <TreeNode key="0-0-1" aria-label="0-0-1" />
+          </TreeNode>
+          <TreeNode key="0-1" aria-label="0-1" />
+        </Tree>
+      );
+      expect(renderToJson(wrapper)).toMatchSnapshot();
     });
   });
 });

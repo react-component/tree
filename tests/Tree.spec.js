@@ -810,6 +810,23 @@ describe('Tree', () => {
       const event = onDragEnd.mock.calls[0][0];
       expect(event.node).toBe(wrapper.find(TreeNode).at(1).instance());
     });
+
+    it('do not throw error when drag into another non-drag-able tree', () => {
+      const wrapper = mount(
+        <div>
+          {createTree()}
+          {createTree({ draggable: false })}
+        </div>
+      );
+
+      const dragTree = wrapper.find(Tree).at(0);
+      const normalTree = wrapper.find(Tree).at(1);
+
+      dragTree.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+      normalTree.find('.dropTarget').at(0).simulate('dragEnter');
+      normalTree.find('.dropTarget').at(0).simulate('dragOver');
+      normalTree.find('.dropTarget').at(0).simulate('drop');
+    });
   });
 
   it('renders without errors', () => {

@@ -5,7 +5,7 @@ tree ui component for react
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
+[![Test coverage][codecov-image]][codecov-url]
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
 [![npm download][download-image]][download-url]
 
@@ -13,8 +13,8 @@ tree ui component for react
 [npm-url]: http://npmjs.org/package/rc-tree
 [travis-image]: https://img.shields.io/travis/react-component/tree.svg?style=flat-square
 [travis-url]: https://travis-ci.org/react-component/tree
-[coveralls-image]: https://img.shields.io/coveralls/react-component/tree.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/tree?branch=master
+[codecov-image]: https://img.shields.io/codecov/c/github/react-component/tree/master.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/react-component/tree/branch/master
 [gemnasium-image]: http://img.shields.io/gemnasium/react-component/tree.svg?style=flat-square
 [gemnasium-url]: https://gemnasium.com/react-component/tree
 [node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
@@ -77,6 +77,8 @@ see examples
 |onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 |filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
 |loadData | load data asynchronously and the return value should be a promise | function(node) | - |
+|loadedKeys | Mark node is loaded when `loadData` is true | string[] | - |
+|onLoad | Trigger when a node is loaded. If you set the `loadedKeys`, you must handle `onLoad` to avoid infinity loop | function(loadedKeys, {event, node}) | - |
 |onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 |onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
 |onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |

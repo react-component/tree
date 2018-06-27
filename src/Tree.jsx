@@ -8,6 +8,7 @@ import {
   calcExpandedKeys, calcSelectedKeys,
   calcCheckedKeys, calcDropPosition,
   arrAdd, arrDel, posToArr,
+  mapChildren,
 } from './util';
 
 /**
@@ -81,7 +82,7 @@ class Tree extends React.Component {
     expandedKeys: PropTypes.arrayOf(PropTypes.string),
     defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
     checkedKeys: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
       PropTypes.object,
     ]),
     defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
@@ -91,7 +92,9 @@ class Tree extends React.Component {
     onExpand: PropTypes.func,
     onCheck: PropTypes.func,
     onSelect: PropTypes.func,
+    onLoad: PropTypes.func,
     loadData: PropTypes.func,
+    loadedKeys: PropTypes.arrayOf(PropTypes.string),
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     onRightClick: PropTypes.func,
@@ -146,6 +149,9 @@ class Tree extends React.Component {
       selectedKeys: calcSelectedKeys(defaultSelectedKeys, props),
       checkedKeys,
       halfCheckedKeys,
+
+      loadedKeys: [],
+      loadingKeys: [],
     };
 
     if (defaultExpandAll) {
@@ -196,6 +202,7 @@ class Tree extends React.Component {
         onNodeDoubleClick: this.onNodeDoubleClick,
         onNodeExpand: this.onNodeExpand,
         onNodeSelect: this.onNodeSelect,
+        onNodeLoad: this.onNodeLoad,
         onNodeMouseEnter: this.onNodeMouseEnter,
         onNodeMouseLeave: this.onNodeMouseLeave,
         onNodeContextMenu: this.onNodeContextMenu,
@@ -246,6 +253,8 @@ class Tree extends React.Component {
     const { expandedKeys } = this.state;
     const { onDragEnter } = this.props;
     const { pos, eventKey } = node.props;
+
+    if (!this.dragNode) return;
 
     const dropPosition = calcDropPosition(event, node);
 
@@ -332,7 +341,7 @@ class Tree extends React.Component {
     }
   };
   onNodeDrop = (event, node) => {
-    const { dragNodesKeys, dropPosition } = this.state;
+    const { dragNodesKeys = [], dropPosition } = this.state;
     const { onDrop } = this.props;
     const { eventKey, pos } = node.props;
 
@@ -417,6 +426,40 @@ class Tree extends React.Component {
       };
       onSelect(selectedKeys, eventObj);
     }
+  };
+
+  onNodeLoad = (treeNode) => {
+    const { loadData, onLoad } = this.props;
+    const { loadedKeys = [], loadingKeys = [] } = this.state;
+    const { eventKey } = treeNode.props;
+
+    if (!loadData || loadedKeys.indexOf(eventKey) !== -1 || loadingKeys.indexOf(eventKey) !== -1) {
+      return null;
+    }
+
+    this.setState({
+      loadingKeys: arrAdd(loadingKeys, eventKey),
+    });
+    const promise = loadData(treeNode);
+    promise.then(() => {
+      const newLoadedKeys = arrAdd(this.state.loadedKeys, eventKey);
+      this.setUncontrolledState({
+        loadedKeys: newLoadedKeys,
+      });
+      this.setState({
+        loadingKeys: arrDel(this.state.loadingKeys, eventKey),
+      });
+
+      if (onLoad) {
+        const eventObj = {
+          event: 'load',
+          node: treeNode,
+        };
+        onLoad(newLoadedKeys, eventObj);
+      }
+    });
+
+    return promise;
   };
 
   /**
@@ -554,10 +597,11 @@ class Tree extends React.Component {
 
     // Async Load data
     if (targetExpanded && loadData) {
-      return loadData(treeNode).then(() => {
+      const loadPromise = this.onNodeLoad(treeNode);
+      return loadPromise ? loadPromise.then(() => {
         // [Legacy] Refresh logic
         this.setUncontrolledState({ expandedKeys });
-      });
+      }) : null;
     }
 
     return null;
@@ -629,7 +673,14 @@ class Tree extends React.Component {
       newState.halfCheckedKeys = halfCheckedKeys;
     }
 
-    return needSync ? newState : null;
+    if (checkSync('loadedKeys')) {
+      newState.loadedKeys = props.loadedKeys;
+    }
+
+    if (needSync) {
+      return newState;
+    }
+    return null;
   };
 
   /**
@@ -663,6 +714,7 @@ class Tree extends React.Component {
   renderTreeNode = (child, index, level = 0) => {
     const {
       expandedKeys = [], selectedKeys = [], halfCheckedKeys = [],
+      loadedKeys = [], loadingKeys = [],
       dragOverNodeKey, dropPosition,
     } = this.state;
     const {} = this.props;
@@ -670,9 +722,12 @@ class Tree extends React.Component {
     const key = child.key || pos;
 
     return React.cloneElement(child, {
+      key,
       eventKey: key,
       expanded: expandedKeys.indexOf(key) !== -1,
       selected: selectedKeys.indexOf(key) !== -1,
+      loaded: loadedKeys.indexOf(key) !== -1,
+      loading: loadingKeys.indexOf(key) !== -1,
       checked: this.isKeyChecked(key),
       halfChecked: halfCheckedKeys.indexOf(key) !== -1,
       pos,
@@ -707,7 +762,9 @@ class Tree extends React.Component {
         role="tree-node"
         unselectable="on"
       >
-        {React.Children.map(children, this.renderTreeNode, this)}
+        {mapChildren(children, (node, index) => (
+          this.renderTreeNode(node, index)
+        ))}
       </ul>
     );
   }

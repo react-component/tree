@@ -1,5 +1,6 @@
 /* eslint no-loop-func: 0*/
 import { Children } from 'react';
+import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
 
 const DRAG_SIDE_RANGE = 0.25;
@@ -94,6 +95,18 @@ export function traverseTreeNodes(treeNodes, subTreeData, callback) {
   }
 
   processNode(null);
+}
+
+/**
+ * Use `rc-util` `toArray` to get the children list which keeps the key.
+ * And return single node if children is only one(This can avoid `key` missing check).
+ */
+export function mapChildren(children, func) {
+  const list = toArray(children).map(func);
+  if (list.length === 1) {
+    return list[0];
+  }
+  return list;
 }
 
 /**
@@ -338,6 +351,15 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
 }
 
 /**
+ * Since React internal will convert key to string,
+ * we need do this to avoid `checkStrictly` use number match
+ */
+function keyListToString(keyList) {
+  if (!keyList) return keyList;
+  return keyList.map(key => String(key));
+}
+
+/**
  * Calculate the value of checked and halfChecked keys.
  * This should be only run in init or props changed.
  */
@@ -365,6 +387,9 @@ export function calcCheckedKeys(keys, props) {
     warning(false, '`CheckedKeys` is not an array or an object');
     return null;
   }
+
+  keyProps.checkedKeys = keyListToString(keyProps.checkedKeys);
+  keyProps.halfCheckedKeys = keyListToString(keyProps.halfCheckedKeys);
 
   // Do nothing if is checkStrictly mode
   if (checkStrictly) {

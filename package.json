@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "1.11.3",
+  "version": "1.12.3",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -46,7 +46,7 @@
     "pub": "rc-tools run pub --babel-runtime",
     "lint": "rc-tools run lint",
     "test": "jest",
-    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coverage": "jest --coverage"
   },
   "jest": {
     "setupFiles": [
@@ -60,10 +60,9 @@
     }
   },
   "devDependencies": {
-    "coveralls": "^2.11.15",
     "css-animation": "^1.2.0",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-16": "^1.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.0.0",
     "es6-promise": "^3.1.2",
     "jest": "^18.0.0",
