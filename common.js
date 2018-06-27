@@ -24897,11 +24897,11 @@ var TreeNode = function (_React$Component) {
       __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default()({
         className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(className, (_classNames = {}, _classNames[prefixCls + '-treenode-disabled'] = disabled, _classNames[prefixCls + '-treenode-switcher-' + (expanded ? 'open' : 'close')] = !isLeaf, _classNames[prefixCls + '-treenode-checkbox-checked'] = checked, _classNames[prefixCls + '-treenode-checkbox-indeterminate'] = halfChecked, _classNames[prefixCls + '-treenode-selected'] = selected, _classNames[prefixCls + '-treenode-loading'] = loading, _classNames['drag-over'] = !disabled && dragOver, _classNames['drag-over-gap-top'] = !disabled && dragOverGapTop, _classNames['drag-over-gap-bottom'] = !disabled && dragOverGapBottom, _classNames['filter-node'] = filterTreeNode && filterTreeNode(this), _classNames)),
 
-        onDragEnter: draggable && this.onDragEnter,
-        onDragOver: draggable && this.onDragOver,
-        onDragLeave: draggable && this.onDragLeave,
-        onDrop: draggable && this.onDrop,
-        onDragEnd: draggable && this.onDragEnd
+        onDragEnter: draggable ? this.onDragEnter : undefined,
+        onDragOver: draggable ? this.onDragOver : undefined,
+        onDragLeave: draggable ? this.onDragLeave : undefined,
+        onDrop: draggable ? this.onDrop : undefined,
+        onDragEnd: draggable ? this.onDragEnd : undefined
       }, dataOrAriaAttributeProps),
       this.renderSwitcher(),
       this.renderCheckbox(),
@@ -25375,7 +25375,7 @@ var _initialiseProps = function _initialiseProps() {
         onContextMenu: _this2.onContextMenu,
         onClick: _this2.onSelectorClick,
         onDoubleClick: _this2.onSelectorDoubleClick,
-        onDragStart: draggable && _this2.onDragStart
+        onDragStart: draggable ? _this2.onDragStart : undefined
       },
       $icon,
       $title
