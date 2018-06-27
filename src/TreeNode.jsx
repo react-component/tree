@@ -492,7 +492,7 @@ class TreeNode extends React.Component {
         onContextMenu={this.onContextMenu}
         onClick={this.onSelectorClick}
         onDoubleClick={this.onSelectorDoubleClick}
-        onDragStart={this.onDragStart}
+        onDragStart={draggable && this.onDragStart}
       >
           {$icon}{$title}
         </span>
@@ -574,6 +574,7 @@ class TreeNode extends React.Component {
     const { rcTree: {
       prefixCls,
       filterTreeNode,
+      draggable,
     } } = this.context;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = Object.keys(otherProps).reduce((prev, key) => {
@@ -600,11 +601,11 @@ class TreeNode extends React.Component {
 
         })}
 
-        onDragEnter={this.onDragEnter}
-        onDragOver={this.onDragOver}
-        onDragLeave={this.onDragLeave}
-        onDrop={this.onDrop}
-        onDragEnd={this.onDragEnd}
+        onDragEnter={draggable && this.onDragEnter}
+        onDragOver={draggable && this.onDragOver}
+        onDragLeave={draggable && this.onDragLeave}
+        onDrop={draggable && this.onDrop}
+        onDragEnd={draggable && this.onDragEnd}
         {...dataOrAriaAttributeProps}
       >
         {this.renderSwitcher()}
