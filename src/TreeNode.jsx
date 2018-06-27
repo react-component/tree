@@ -445,7 +445,6 @@ class TreeNode extends React.Component {
     const { title, selected, icon, loading } = this.props;
     const { rcTree: { prefixCls, showIcon, icon: treeIcon, draggable, loadData } } = this.context;
     const disabled = this.isDisabled();
-    const drag = draggable || undefined;
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
 
@@ -493,7 +492,7 @@ class TreeNode extends React.Component {
         onContextMenu={this.onContextMenu}
         onClick={this.onSelectorClick}
         onDoubleClick={this.onSelectorDoubleClick}
-        onDragStart={drag && this.onDragStart}
+        onDragStart={draggable && this.onDragStart}
       >
           {$icon}{$title}
         </span>
