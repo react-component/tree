@@ -29,6 +29,7 @@ class TreeNode extends React.Component {
     eventKey: PropTypes.string, // Pass by parent `cloneElement`
     prefixCls: PropTypes.string,
     className: PropTypes.string,
+    style: PropTypes.object,
     root: PropTypes.object,
     onSelect: PropTypes.func,
 
@@ -565,7 +566,7 @@ class TreeNode extends React.Component {
   render() {
     const { loading } = this.props;
     const {
-      className,
+      className, style,
       dragOver, dragOverGapTop, dragOverGapBottom,
       isLeaf,
       expanded, selected, checked, halfChecked,
@@ -598,8 +599,9 @@ class TreeNode extends React.Component {
           'drag-over-gap-top': !disabled && dragOverGapTop,
           'drag-over-gap-bottom': !disabled && dragOverGapBottom,
           'filter-node': filterTreeNode && filterTreeNode(this),
-
         })}
+
+        style={style}
 
         onDragEnter={draggable ? this.onDragEnter : undefined}
         onDragOver={draggable ? this.onDragOver : undefined}
