@@ -717,7 +717,6 @@ class Tree extends React.Component {
       loadedKeys = [], loadingKeys = [],
       dragOverNodeKey, dropPosition,
     } = this.state;
-    const {} = this.props;
     const pos = getPosition(level, index);
     const key = child.key || pos;
 
