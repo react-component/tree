@@ -98,6 +98,7 @@ see examples
 | name     | description    | type     | default      |
 |----------|----------------|----------|--------------|
 |className | additional class to treeNode | String | '' |
+|style | set style to treeNode | Object | '' |
 |disabled | whether disabled the treeNode | bool | false |
 |disableCheckbox | whether disable the treeNode' checkbox | bool | false |
 |title | tree/subTree's title | String/element | '---' |

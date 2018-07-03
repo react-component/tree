@@ -64,7 +64,7 @@ class Demo extends React.Component {
       >
         <TreeNode title="parent 1" key="0-0">
           <TreeNode title={customLabel} key="0-0-0">
-            <TreeNode title="leaf" key="0-0-0-0" />
+            <TreeNode title="leaf" key="0-0-0-0" style={{ background: 'rgba(255, 0, 0, 0.1)' }} />
             <TreeNode title="leaf" key="0-0-0-1" />
           </TreeNode>
           <TreeNode title="parent 1-1" key="0-0-1">
