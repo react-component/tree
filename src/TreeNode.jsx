@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import warning from 'warning';
 import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
+import { polyfill } from 'react-lifecycles-compat';
 import { contextTypes } from './Tree';
 import {
   getPosition, getNodeChildren, isCheckDisabled,
@@ -85,8 +86,8 @@ class TreeNode extends React.Component {
     this.syncLoadData(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.syncLoadData(nextProps);
+  componentDidUpdate() {
+    this.syncLoadData(this.props);
   }
 
   onUpCheckConduct = (treeNode, nodeChecked, nodeHalfChecked, e) => {
@@ -157,6 +158,8 @@ class TreeNode extends React.Component {
       if (nodeChecked !== isKeyChecked(key)) {
         onBatchNodeCheck(key, nodeChecked, false);
       }
+
+      return true;
     });
   };
 
@@ -495,8 +498,8 @@ class TreeNode extends React.Component {
         onDoubleClick={this.onSelectorDoubleClick}
         onDragStart={draggable ? this.onDragStart : undefined}
       >
-          {$icon}{$title}
-        </span>
+        {$icon}{$title}
+      </span>
     );
   };
 
@@ -543,6 +546,7 @@ class TreeNode extends React.Component {
             expanded && `${prefixCls}-child-tree-open`,
           )}
           data-expanded={expanded}
+          role="group"
         >
           {mapChildren(nodeList, (node, index) => (
             renderTreeNode(node, index, pos)
@@ -570,7 +574,7 @@ class TreeNode extends React.Component {
       dragOver, dragOverGapTop, dragOverGapBottom,
       isLeaf,
       expanded, selected, checked, halfChecked,
-      ...otherProps,
+      ...otherProps
     } = this.props;
     const { rcTree: {
       prefixCls,
@@ -603,6 +607,8 @@ class TreeNode extends React.Component {
 
         style={style}
 
+        role="treeitem"
+
         onDragEnter={draggable ? this.onDragEnter : undefined}
         onDragOver={draggable ? this.onDragOver : undefined}
         onDragLeave={draggable ? this.onDragLeave : undefined}
@@ -620,5 +626,7 @@ class TreeNode extends React.Component {
 }
 
 TreeNode.isTreeNode = 1;
+
+polyfill(TreeNode);
 
 export default TreeNode;

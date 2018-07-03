@@ -1,10 +1,10 @@
 /* eslint no-console:0 */
 import 'rc-tree/assets/index.less';
-import './draggable.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
 import { gData } from './util';
+import './draggable.less';
 
 class Demo extends React.Component {
   state = {
@@ -31,10 +31,11 @@ class Demo extends React.Component {
     const loop = (data, key, callback) => {
       data.forEach((item, index, arr) => {
         if (item.key === key) {
-          return callback(item, index, arr);
+          callback(item, index, arr);
+          return;
         }
         if (item.children) {
-          return loop(item.children, key, callback);
+          loop(item.children, key, callback);
         }
       });
     };

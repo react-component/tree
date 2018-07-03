@@ -1,10 +1,10 @@
 /* eslint no-console:0 */
 import 'rc-tree/assets/index.less';
-import './contextmenu.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
 import Tooltip from 'rc-tooltip';
+import './contextmenu.less';
 
 function contains(root, n) {
   let node = n;
@@ -65,7 +65,7 @@ class Demo extends React.Component {
         trigger="click" placement="bottomRight" prefixCls="rc-tree-contextmenu"
         defaultVisible overlay={<h4>{info.node.props.title}</h4>}
       >
-        <span></span>
+        <span />
       </Tooltip>
     );
 

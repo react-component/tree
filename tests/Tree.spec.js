@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, react/no-multi-comp */
+/* eslint-disable no-undef, react/no-multi-comp, react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';

@@ -32,7 +32,7 @@ class Demo extends React.Component {
       checkedKeys,
     });
   }
-  onCheckStrictly = (checkedKeys1, /* extra*/) => {
+  onCheckStrictly = (checkedKeys1, /* extra */) => {
     console.log(arguments);
     this.setState({
       checkedKeys1,
