@@ -1,7 +1,7 @@
 exports[`TreeNode Props className 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="rc-tree-treenode-switcher-open">
@@ -112,7 +112,7 @@ exports[`TreeNode Props className 1`] = `
 exports[`TreeNode Props customize icon component 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="rc-tree-treenode-switcher-open">
@@ -142,7 +142,7 @@ exports[`TreeNode Props customize icon component 1`] = `
 exports[`TreeNode Props customize icon element 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="rc-tree-treenode-switcher-open">
@@ -172,7 +172,7 @@ exports[`TreeNode Props customize icon element 1`] = `
 exports[`TreeNode Props customize icon hide icon 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="rc-tree-treenode-switcher-open">
@@ -195,7 +195,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
 exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     aria-label="0-0"
@@ -311,7 +311,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
 exports[`TreeNode Props data and aria props renders data attributes on li 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="rc-tree-treenode-switcher-open"
@@ -427,7 +427,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
 exports[`TreeNode Props isLeaf 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="">
@@ -469,7 +469,7 @@ exports[`TreeNode Props isLeaf 1`] = `
 exports[`TreeNode Props isLeaf 2`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="">
@@ -519,7 +519,7 @@ exports[`TreeNode Props isLeaf 2`] = `
 exports[`TreeNode Props isLeaf 3`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="rc-tree-treenode-switcher-open">

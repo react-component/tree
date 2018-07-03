@@ -1,7 +1,7 @@
 exports[`Tree check check update when Tree trigger componentWillReceiveProps 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked">
@@ -32,7 +32,7 @@ exports[`Tree check check update when Tree trigger componentWillReceiveProps 1`]
 exports[`Tree renders correctly 1`] = `
 <ul
   class="rc-tree forTest rc-tree-show-line"
-  role="tree-node"
+  role="tree"
   tabindex="0"
   unselectable="on">
   <li
@@ -164,7 +164,7 @@ exports[`Tree renders correctly 1`] = `
 exports[`Tree renders opaque children correctly 1`] = `
 <ul
   class="rc-tree"
-  role="tree-node"
+  role="tree"
   unselectable="on">
   <li
     class="rc-tree-treenode-switcher-close">
