@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
+import { polyfill } from 'react-lifecycles-compat';
+
 import {
   traverseTreeNodes, getStrictlyValue,
   getFullKeyList, getPosition, getDragNodesKeys,
@@ -347,7 +349,6 @@ class Tree extends React.Component {
 
     this.setState({
       dragOverNodeKey: '',
-      dropNodeKey: eventKey,
     });
 
     if (dragNodesKeys.indexOf(eventKey) !== -1) {
@@ -576,8 +577,9 @@ class Tree extends React.Component {
     const targetExpanded = !expanded;
 
     warning(
-      (expanded && index !== -1) || (!expanded && index === -1)
-    , 'Expand state not sync with index check');
+      (expanded && index !== -1) || (!expanded && index === -1),
+      'Expand state not sync with index check',
+    );
 
     if (targetExpanded) {
       expandedKeys = arrAdd(expandedKeys, eventKey);
@@ -758,7 +760,7 @@ class Tree extends React.Component {
         className={classNames(prefixCls, className, {
           [`${prefixCls}-show-line`]: showLine,
         })}
-        role="tree-node"
+        role="tree"
         unselectable="on"
       >
         {mapChildren(children, (node, index) => (
@@ -768,5 +770,7 @@ class Tree extends React.Component {
     );
   }
 }
+
+polyfill(Tree);
 
 export default Tree;

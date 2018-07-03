@@ -68,11 +68,11 @@
     "jest": "^18.0.0",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
-    "rc-tools": "^7.x",
+    "rc-tools": "^8.x",
     "rc-tooltip": "3.x",
     "rc-trigger": "^2.0.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-test-renderer": "^16.0.0"
   },
   "dependencies": {
@@ -81,6 +81,7 @@
     "prop-types": "^15.5.8",
     "rc-animate": "2.x",
     "rc-util": "^4.0.4",
+    "react-lifecycles-compat": "^3.0.4",
     "warning": "^3.0.0"
   },
   "pre-commit": [

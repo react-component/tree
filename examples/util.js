@@ -1,4 +1,4 @@
-/* eslint no-loop-func: 0*/
+/* eslint no-loop-func: 0 */
 /* eslint no-console:0 */
 
 export function generateData(x = 3, y = 2, z = 1, gData = []) {
@@ -23,13 +23,15 @@ export function generateData(x = 3, y = 2, z = 1, gData = []) {
       tns[index].children = [];
       return _loop(__level, key, tns[index].children);
     });
+
+    return null;
   }
   _loop(z);
   return gData;
 }
 export function calcTotal(x = 3, y = 2, z = 1) {
-  /* eslint no-param-reassign:0*/
-  const rec = (n) => n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
+  /* eslint no-param-reassign:0 */
+  const rec = (n) => n >= 0 ? x * (y ** n--) + rec(n) : 0;
   return rec(z + 1);
 }
 console.log('总节点数（单个tree）：', calcTotal());

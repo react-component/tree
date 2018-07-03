@@ -1,16 +1,16 @@
-/* eslint no-console:0 */
+/* eslint-disable no-console, react/no-unescaped-entities */
 import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Tree, { TreeNode } from 'rc-tree';
-import { gData,
-  /* filterParentPosition, getFilterExpandedKeys,*/ getRadioSelectKeys } from './util';
 import 'rc-dialog/assets/index.css';
 import Modal from 'rc-dialog';
+import { gData, getRadioSelectKeys } from './util';
 
 class Demo extends React.Component {
   static propTypes = {
+    visible: PropTypes.bool,
     multiple: PropTypes.bool,
   };
   static defaultProps = {
@@ -41,7 +41,7 @@ class Demo extends React.Component {
       checkedKeys,
     });
   }
-  onCheckStrictly = (checkedKeys, /* extra*/) => {
+  onCheckStrictly = (checkedKeys, /* extra */) => {
     console.log(arguments);
     // const { checkedNodesPositions } = extra;
     // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
