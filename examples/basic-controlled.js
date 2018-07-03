@@ -29,14 +29,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_tree__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rc_tree__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__util__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_dialog_assets_index_css__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_dialog_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rc_dialog_assets_index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_dialog__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_dialog_assets_index_css__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_dialog_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rc_dialog_assets_index_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_dialog__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__util__ = __webpack_require__(18);
 
 
 
-/* eslint no-console:0 */
+/* eslint-disable no-console, react/no-unescaped-entities */
 
 
 
@@ -81,7 +81,7 @@ var Demo = function (_React$Component) {
       _this.setState({
         checkedKeys: checkedKeys
       });
-    }, _this.onCheckStrictly = function (checkedKeys) /* extra*/{
+    }, _this.onCheckStrictly = function (checkedKeys) /* extra */{
       console.log(_arguments);
       // const { checkedNodesPositions } = extra;
       // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
@@ -103,7 +103,7 @@ var Demo = function (_React$Component) {
     }, _this.onRbSelect = function (selectedKeys, info) {
       var _selectedKeys = selectedKeys;
       if (info.selected) {
-        _selectedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["d" /* getRadioSelectKeys */])(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* gData */], selectedKeys, info.node.props.eventKey);
+        _selectedKeys = Object(__WEBPACK_IMPORTED_MODULE_10__util__["d" /* getRadioSelectKeys */])(__WEBPACK_IMPORTED_MODULE_10__util__["b" /* gData */], selectedKeys, info.node.props.eventKey);
       }
       _this.setState({
         selectedKeys: _selectedKeys
@@ -125,7 +125,7 @@ var Demo = function (_React$Component) {
       // simulate Ajax
       setTimeout(function () {
         _this.setState({
-          treeData: [].concat(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* gData */])
+          treeData: [].concat(__WEBPACK_IMPORTED_MODULE_10__util__["b" /* gData */])
         });
       }, 2000);
     }, _this.triggerChecked = function () {
@@ -166,7 +166,7 @@ var Demo = function (_React$Component) {
         'show dialog'
       ),
       __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_10_rc_dialog__["a" /* default */],
+        __WEBPACK_IMPORTED_MODULE_9_rc_dialog__["a" /* default */],
         {
           title: 'TestDemo', visible: this.state.visible,
           onOk: this.handleOk, onClose: this.onClose
@@ -196,7 +196,7 @@ var Demo = function (_React$Component) {
           onCheck: this.onCheck, checkedKeys: this.state.checkedKeys,
           onSelect: this.onSelect, selectedKeys: this.state.selectedKeys
         },
-        loop(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* gData */])
+        loop(__WEBPACK_IMPORTED_MODULE_10__util__["b" /* gData */])
       ),
       __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         'button',
@@ -217,7 +217,7 @@ var Demo = function (_React$Component) {
           checkedKeys: this.state.checkStrictlyKeys,
           checkStrictly: true
         },
-        loop(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* gData */])
+        loop(__WEBPACK_IMPORTED_MODULE_10__util__["b" /* gData */])
       ),
       __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         'h2',
@@ -229,9 +229,9 @@ var Demo = function (_React$Component) {
         {
           multiple: true, defaultExpandAll: true,
           onSelect: this.onRbSelect,
-          selectedKeys: Object(__WEBPACK_IMPORTED_MODULE_8__util__["d" /* getRadioSelectKeys */])(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* gData */], this.state.selectedKeys)
+          selectedKeys: Object(__WEBPACK_IMPORTED_MODULE_10__util__["d" /* getRadioSelectKeys */])(__WEBPACK_IMPORTED_MODULE_10__util__["b" /* gData */], this.state.selectedKeys)
         },
-        loop(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* gData */])
+        loop(__WEBPACK_IMPORTED_MODULE_10__util__["b" /* gData */])
       )
     );
   };
@@ -240,6 +240,7 @@ var Demo = function (_React$Component) {
 }(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
 
 Demo.propTypes = {
+  visible: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
   multiple: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool
 };
 Demo.defaultProps = {
@@ -381,11 +382,11 @@ module.exports = factory(
 
 var _assign = __webpack_require__(9);
 
-var emptyObject = __webpack_require__(26);
-var _invariant = __webpack_require__(12);
+var emptyObject = __webpack_require__(25);
+var _invariant = __webpack_require__(24);
 
 if (process.env.NODE_ENV !== 'production') {
-  var warning = __webpack_require__(27);
+  var warning = __webpack_require__(45);
 }
 
 var MIXINS_KEY = 'mixins';
@@ -1308,7 +1309,7 @@ module.exports = factory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
@@ -2162,7 +2163,7 @@ KeyCode.isCharacterKey = function isCharacterKey(keyCode) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
@@ -2367,7 +2368,7 @@ function getContainerRenderMixin(config) {
 
 /***/ }),
 
-/***/ 20:
+/***/ 18:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2377,7 +2378,7 @@ function getContainerRenderMixin(config) {
 /* unused harmony export filterParentPosition */
 /* unused harmony export getFilterExpandedKeys */
 /* harmony export (immutable) */ __webpack_exports__["d"] = getRadioSelectKeys;
-/* eslint no-loop-func: 0*/
+/* eslint no-loop-func: 0 */
 /* eslint no-console:0 */
 
 function generateData() {
@@ -2407,6 +2408,8 @@ function generateData() {
       tns[index].children = [];
       return _loop(__level, key, tns[index].children);
     });
+
+    return null;
   }
   _loop(z);
   return gData;
@@ -2416,7 +2419,7 @@ function calcTotal() {
   var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
   var z = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
 
-  /* eslint no-param-reassign:0*/
+  /* eslint no-param-reassign:0 */
   var rec = function rec(n) {
     return n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
   };

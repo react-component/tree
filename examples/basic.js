@@ -36,6 +36,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* eslint no-console:0 */
 /* eslint no-alert:0 */
+/* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 
 
 
@@ -83,8 +84,7 @@ var Demo = function (_React$Component) {
     _this.state = {
       defaultExpandedKeys: keys,
       defaultSelectedKeys: keys,
-      defaultCheckedKeys: keys,
-      switchIt: true
+      defaultCheckedKeys: keys
     };
     return _this;
   }
@@ -112,13 +112,14 @@ var Demo = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('input', { type: 'checkbox' }),
         ' checked'
       ),
-      ' \xA0',
+      '\xA0',
       __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         'span',
-        { style: { color: 'red' }, onClick: this.onDel },
+        { style: { color: '#EB0000' }, onClick: this.onDel },
         'Delete'
       )
     );
+
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { style: { margin: '0 20px' } },

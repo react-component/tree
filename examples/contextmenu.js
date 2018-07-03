@@ -23,15 +23,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_tree_assets_index_less__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_tree_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rc_tree_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contextmenu_less__ = __webpack_require__(183);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contextmenu_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__contextmenu_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_tree__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rc_tree__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_tooltip__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_tree__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rc_tree__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_tooltip__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__contextmenu_less__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__contextmenu_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__contextmenu_less__);
 
 
 
@@ -86,12 +86,12 @@ var Demo = function (_React$Component) {
   Demo.prototype.componentDidMount = function componentDidMount() {
     this.getContainer();
     // console.log(ReactDOM.findDOMNode(this), this.cmContainer);
-    console.log(contains(__WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.findDOMNode(this), this.cmContainer));
+    console.log(contains(__WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.findDOMNode(this), this.cmContainer));
   };
 
   Demo.prototype.componentWillUnmount = function componentWillUnmount() {
     if (this.cmContainer) {
-      __WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.unmountComponentAtNode(this.cmContainer);
+      __WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.unmountComponentAtNode(this.cmContainer);
       document.body.removeChild(this.cmContainer);
       this.cmContainer = null;
     }
@@ -107,20 +107,20 @@ var Demo = function (_React$Component) {
 
   Demo.prototype.renderCm = function renderCm(info) {
     if (this.toolTip) {
-      __WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.unmountComponentAtNode(this.cmContainer);
+      __WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.unmountComponentAtNode(this.cmContainer);
       this.toolTip = null;
     }
-    this.toolTip = __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-      __WEBPACK_IMPORTED_MODULE_9_rc_tooltip__["a" /* default */],
+    this.toolTip = __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_8_rc_tooltip__["a" /* default */],
       {
         trigger: 'click', placement: 'bottomRight', prefixCls: 'rc-tree-contextmenu',
-        defaultVisible: true, overlay: __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
+        defaultVisible: true, overlay: __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
           'h4',
           null,
           info.node.props.title
         )
       },
-      __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('span', null)
+      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('span', null)
     );
 
     var container = this.getContainer();
@@ -130,20 +130,20 @@ var Demo = function (_React$Component) {
       top: info.event.pageY + 'px'
     });
 
-    __WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(this.toolTip, container);
+    __WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.render(this.toolTip, container);
   };
 
   Demo.prototype.render = function render() {
-    return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
       'div',
       null,
-      __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
         'h2',
         null,
         'right click contextmenu'
       ),
-      __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_8_rc_tree___default.a,
+      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_7_rc_tree___default.a,
         {
           onRightClick: this.onRightClick,
           onSelect: this.onSelect,
@@ -153,48 +153,48 @@ var Demo = function (_React$Component) {
           showLine: true,
           showIcon: false
         },
-        __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"],
+        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"],
           { title: 'parent 1', key: '0-1' },
-          __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"],
+          __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"],
             { title: 'parent 1-0', key: '0-1-1' },
-            __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"], { title: 'leaf0', isLeaf: true }),
-            __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"], { title: 'leaf1', isLeaf: true }),
-            __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"], { title: 'leaf2', isLeaf: true })
+            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'leaf0', isLeaf: true }),
+            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'leaf1', isLeaf: true }),
+            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'leaf2', isLeaf: true })
           ),
-          __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"],
+          __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"],
             { title: 'parent 1-1' },
-            __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"], { title: 'leaf', isLeaf: true })
+            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'leaf', isLeaf: true })
           )
         )
       ),
-      __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
         'h2',
         null,
         'hover popup contextmenu'
       ),
-      __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_8_rc_tree___default.a,
+      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_7_rc_tree___default.a,
         {
           onMouseEnter: this.onMouseEnter, onMouseLeave: this.onMouseLeave,
           onSelect: this.onSelect,
           multiple: true, defaultExpandAll: true, showLine: true
         },
-        __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"],
+        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"],
           { title: 'parent 1', key: '0-1' },
-          __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"],
+          __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"],
             { title: 'parent 1-0', key: '0-1-1' },
-            __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"], { title: 'leaf', isLeaf: true }),
-            __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"], { title: 'leaf' })
+            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'leaf', isLeaf: true }),
+            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'leaf' })
           ),
-          __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"],
+          __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"],
             { title: 'parent 1-1' },
-            __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"], { title: 'leaf' })
+            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'leaf' })
           )
         )
       )
@@ -202,31 +202,24 @@ var Demo = function (_React$Component) {
   };
 
   return Demo;
-}(__WEBPACK_IMPORTED_MODULE_6_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
 
-__WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
+__WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }),
 
 /***/ 183:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 184:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Tooltip__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Tooltip__ = __webpack_require__(184);
 
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__Tooltip__["a" /* default */]);
 
 /***/ }),
 
-/***/ 185:
+/***/ 184:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -245,8 +238,8 @@ __WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_trigger__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__placements__ = __webpack_require__(186);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Content__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__placements__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Content__ = __webpack_require__(186);
 
 
 
@@ -388,7 +381,7 @@ Tooltip.defaultProps = {
 
 /***/ }),
 
-/***/ 186:
+/***/ 185:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -479,7 +472,7 @@ var placements = {
 
 /***/ }),
 
-/***/ 187:
+/***/ 186:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -539,6 +532,13 @@ Content.propTypes = {
   trigger: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.any
 };
 /* harmony default export */ __webpack_exports__["a"] = (Content);
+
+/***/ }),
+
+/***/ 187:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -748,7 +748,8 @@ function doAlign(el, tgtRegion, align, isTgtRegionVisible) {
   }, {
     useCssRight: align.useCssRight,
     useCssBottom: align.useCssBottom,
-    useCssTransform: align.useCssTransform
+    useCssTransform: align.useCssTransform,
+    ignoreShake: align.ignoreShake
   });
 
   return {
@@ -1084,8 +1085,11 @@ function saveRef(name, component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_util_es_Dom_addEventListener__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Popup__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_util_es_ContainerRender__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_rc_util_es_Portal__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_util_es_ContainerRender__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_rc_util_es_Portal__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_classnames__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_classnames__);
+
 
 
 
@@ -1395,7 +1399,8 @@ var Trigger = function (_React$Component) {
     var _props8 = this.props,
         children = _props8.children,
         forceRender = _props8.forceRender,
-        alignPoint = _props8.alignPoint;
+        alignPoint = _props8.alignPoint,
+        className = _props8.className;
 
     var child = __WEBPACK_IMPORTED_MODULE_4_react___default.a.Children.only(children);
     var newChildProps = { key: 'trigger' };
@@ -1436,6 +1441,10 @@ var Trigger = function (_React$Component) {
       newChildProps.onBlur = this.createTwoChains('onBlur');
     }
 
+    var childrenClassName = __WEBPACK_IMPORTED_MODULE_13_classnames___default()(child && child.props && child.props.className, className);
+    if (childrenClassName) {
+      newChildProps.className = childrenClassName;
+    }
     var trigger = __WEBPACK_IMPORTED_MODULE_4_react___default.a.cloneElement(child, newChildProps);
 
     if (!IS_REACT_16) {
@@ -1490,6 +1499,7 @@ Trigger.propTypes = {
   popupStyle: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   prefixCls: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
   popupClassName: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+  className: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
   popupPlacement: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
   builtinPlacements: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   popupTransitionName: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object]),
@@ -1629,7 +1639,9 @@ var _initialiseProps = function _initialiseProps() {
     }
     _this5.preClickTime = 0;
     _this5.preTouchTime = 0;
-    event.preventDefault();
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
     var nextVisible = !_this5.state.popupVisible;
     if (_this5.isClickToHide() && !nextVisible || nextVisible && _this5.isClickToShow()) {
       _this5.setPopupVisible(!_this5.state.popupVisible, event);
@@ -2206,7 +2218,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_align__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_animate__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__PopupInner__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__PopupInner__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__LazyRenderBox__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils__ = __webpack_require__(36);
 
@@ -2578,10 +2590,7 @@ var _initialiseProps = function _initialiseProps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_dom_align__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_util_es_Dom_addEventListener__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_shallowequal__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_shallowequal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_shallowequal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util__ = __webpack_require__(78);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__util__ = __webpack_require__(77);
 
 
 
@@ -2656,7 +2665,10 @@ var Align = function (_Component) {
     var props = this.props;
 
     if (!props.disabled) {
-      if (prevProps.disabled || !__WEBPACK_IMPORTED_MODULE_8_shallowequal___default()(prevProps.align, props.align)) {
+      var source = __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.findDOMNode(this);
+      var sourceRect = source ? source.getBoundingClientRect() : null;
+
+      if (prevProps.disabled) {
         reAlign = true;
       } else {
         var lastElement = getElement(prevProps.target);
@@ -2664,16 +2676,24 @@ var Align = function (_Component) {
         var lastPoint = getPoint(prevProps.target);
         var currentPoint = getPoint(props.target);
 
-        if (Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* isWindow */])(lastElement) && Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* isWindow */])(currentElement)) {
+        if (Object(__WEBPACK_IMPORTED_MODULE_8__util__["c" /* isWindow */])(lastElement) && Object(__WEBPACK_IMPORTED_MODULE_8__util__["c" /* isWindow */])(currentElement)) {
           // Skip if is window
           reAlign = false;
         } else if (lastElement !== currentElement || // Element change
-        !lastElement && currentPoint || // Change from element to point
-        !lastPoint && currentElement || // Change from point to element
-        currentPoint && !Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* isSamePoint */])(lastPoint, currentPoint)) {
+        lastElement && !currentElement && currentPoint || // Change from element to point
+        lastPoint && currentPoint && currentElement || // Change from point to element
+        currentPoint && !Object(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* isSamePoint */])(lastPoint, currentPoint)) {
+          reAlign = true;
+        }
+
+        // If source element size changed
+        var preRect = this.sourceRect || {};
+        if (!reAlign && source && (preRect.width !== sourceRect.width || preRect.height !== sourceRect.height)) {
           reAlign = true;
         }
       }
+
+      this.sourceRect = sourceRect;
     }
 
     if (reAlign) {
@@ -2693,7 +2713,7 @@ var Align = function (_Component) {
 
   Align.prototype.startMonitorWindowResize = function startMonitorWindowResize() {
     if (!this.resizeHandler) {
-      this.bufferMonitor = Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* buffer */])(this.forceAlign, this.props.monitorBufferTime);
+      this.bufferMonitor = Object(__WEBPACK_IMPORTED_MODULE_8__util__["a" /* buffer */])(this.forceAlign, this.props.monitorBufferTime);
       this.resizeHandler = Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_Dom_addEventListener__["a" /* default */])(window, 'resize', this.bufferMonitor);
     }
   };
@@ -3079,6 +3099,19 @@ function setTransform(elem, offset) {
 }
 
 function setOffset(elem, offset, option) {
+  if (option.ignoreShake) {
+    var oriOffset = getOffset(elem);
+
+    var oLeft = oriOffset.left.toFixed(0);
+    var oTop = oriOffset.top.toFixed(0);
+    var tLeft = offset.left.toFixed(0);
+    var tTop = offset.top.toFixed(0);
+
+    if (oLeft === tLeft && oTop === tTop) {
+      return;
+    }
+  }
+
   if (option.useCssRight || option.useCssBottom) {
     setLeftTop(elem, offset, option);
   } else if (option.useCssTransform && Object(__WEBPACK_IMPORTED_MODULE_0__propertyUtils__["a" /* getTransformName */])() in document.body.style) {
@@ -3702,63 +3735,6 @@ function alignPoint(el, tgtPoint, align) {
 /***/ }),
 
 /***/ 77:
-/***/ (function(module, exports) {
-
-module.exports = function shallowEqual(objA, objB, compare, compareContext) {
-
-    var ret = compare ? compare.call(compareContext, objA, objB) : void 0;
-
-    if(ret !== void 0) {
-        return !!ret;
-    }
-
-    if(objA === objB) {
-        return true;
-    }
-
-    if(typeof objA !== 'object' || !objA ||
-       typeof objB !== 'object' || !objB) {
-        return false;
-    }
-
-    var keysA = Object.keys(objA);
-    var keysB = Object.keys(objB);
-
-    if(keysA.length !== keysB.length) {
-        return false;
-    }
-
-    var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
-
-    // Test for A's keys different from B.
-    for(var idx = 0; idx < keysA.length; idx++) {
-
-        var key = keysA[idx];
-
-        if(!bHasOwnProperty(key)) {
-            return false;
-        }
-
-        var valueA = objA[key];
-        var valueB = objB[key];
-
-        ret = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
-
-        if(ret === false ||
-           ret === void 0 && valueA !== valueB) {
-            return false;
-        }
-
-    }
-
-    return true;
-
-};
-
-
-/***/ }),
-
-/***/ 78:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3789,7 +3765,15 @@ function isSamePoint(prev, next) {
   if (prev === next) return true;
   if (!prev || !next) return false;
 
-  return prev.pageX === next.pageX && prev.pageY === next.pageY || prev.clientX === next.clientX && prev.clientY === next.clientY;
+  if ('pageX' in next && 'pageY' in next) {
+    return prev.pageX === next.pageX && prev.pageY === next.pageY;
+  }
+
+  if ('clientX' in next && 'clientY' in next) {
+    return prev.clientX === next.clientX && prev.clientY === next.clientY;
+  }
+
+  return false;
 }
 
 function isWindow(obj) {
@@ -3798,7 +3782,7 @@ function isWindow(obj) {
 
 /***/ }),
 
-/***/ 79:
+/***/ 78:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3868,13 +3852,13 @@ PopupInner.propTypes = {
 
 /***/ }),
 
-/***/ 80:
+/***/ 79:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
@@ -3988,13 +3972,13 @@ ContainerRender.defaultProps = {
 
 /***/ }),
 
-/***/ 81:
+/***/ 80:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
