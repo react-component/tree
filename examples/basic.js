@@ -60,56 +60,54 @@ class Demo extends React.Component {
 
     return (
       <div style={{ margin: '0 20px' }}>
-        <React.StrictMode>
-          <h2>simple</h2>
-          <Tree
-            className="myCls" showLine checkable defaultExpandAll
-            defaultExpandedKeys={this.state.defaultExpandedKeys}
-            onExpand={this.onExpand}
-            defaultSelectedKeys={this.state.defaultSelectedKeys}
-            defaultCheckedKeys={this.state.defaultCheckedKeys}
-            onSelect={this.onSelect} onCheck={this.onCheck}
-          >
-            <TreeNode title="parent 1" key="0-0">
-              <TreeNode title={customLabel} key="0-0-0">
-                <TreeNode title="leaf" key="0-0-0-0" style={{ background: 'rgba(255, 0, 0, 0.1)' }} />
-                <TreeNode title="leaf" key="0-0-0-1" />
-              </TreeNode>
-              <TreeNode title="parent 1-1" key="0-0-1">
-                <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
-                <TreeNode title="parent 1-1-1" key="0-0-1-1" />
-              </TreeNode>
-              <TreeNode title="parent 1-2" key="0-0-2" disabled>
-                <TreeNode title="parent 1-2-0" key="0-0-2-0" disabled />
-                <TreeNode title="parent 1-2-1" key="0-0-2-1" />
-              </TreeNode>
+        <h2>simple</h2>
+        <Tree
+          className="myCls" showLine checkable defaultExpandAll
+          defaultExpandedKeys={this.state.defaultExpandedKeys}
+          onExpand={this.onExpand}
+          defaultSelectedKeys={this.state.defaultSelectedKeys}
+          defaultCheckedKeys={this.state.defaultCheckedKeys}
+          onSelect={this.onSelect} onCheck={this.onCheck}
+        >
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title={customLabel} key="0-0-0">
+              <TreeNode title="leaf" key="0-0-0-0" style={{ background: 'rgba(255, 0, 0, 0.1)' }} />
+              <TreeNode title="leaf" key="0-0-0-1" />
             </TreeNode>
-          </Tree>
+            <TreeNode title="parent 1-1" key="0-0-1">
+              <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
+              <TreeNode title="parent 1-1-1" key="0-0-1-1" />
+            </TreeNode>
+            <TreeNode title="parent 1-2" key="0-0-2" disabled>
+              <TreeNode title="parent 1-2-0" key="0-0-2-0" disabled />
+              <TreeNode title="parent 1-2-1" key="0-0-2-1" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>
 
-          <h2>Check on Click TreeNode</h2>
-          <Tree
-            className="myCls"
-            showLine
-            checkable
-            selectable={ false }
-            defaultExpandAll
-            onExpand={this.onExpand}
-            defaultSelectedKeys={this.state.defaultSelectedKeys}
-            defaultCheckedKeys={this.state.defaultCheckedKeys}
-            onSelect={this.onSelect}
-            onCheck={this.onCheck}
-          >
-            <TreeNode title="parent 1" key="0-0">
-              <TreeNode title="parent 1-1" key="0-0-0">
-                <TreeNode title="parent 1-1-0" key="0-0-0-0" />
-              </TreeNode>
-              <TreeNode title="parent 1-2" key="0-0-1">
-                <TreeNode title="parent 1-2-0" key="0-0-1-0" disableCheckbox />
-                <TreeNode title="parent 1-2-1" key="0-0-1-1" />
-              </TreeNode>
+        <h2>Check on Click TreeNode</h2>
+        <Tree
+          className="myCls"
+          showLine
+          checkable
+          selectable={ false }
+          defaultExpandAll
+          onExpand={this.onExpand}
+          defaultSelectedKeys={this.state.defaultSelectedKeys}
+          defaultCheckedKeys={this.state.defaultCheckedKeys}
+          onSelect={this.onSelect}
+          onCheck={this.onCheck}
+        >
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="parent 1-1" key="0-0-0">
+              <TreeNode title="parent 1-1-0" key="0-0-0-0" />
             </TreeNode>
-          </Tree>
-        </React.StrictMode>
+            <TreeNode title="parent 1-2" key="0-0-1">
+              <TreeNode title="parent 1-2-0" key="0-0-1-0" disableCheckbox />
+              <TreeNode title="parent 1-2-1" key="0-0-1-1" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>
       </div>
     );
   }

@@ -86,8 +86,8 @@ class TreeNode extends React.Component {
     this.syncLoadData(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.syncLoadData(nextProps);
+  componentDidUpdate() {
+    this.syncLoadData(this.props);
   }
 
   onUpCheckConduct = (treeNode, nodeChecked, nodeHalfChecked, e) => {

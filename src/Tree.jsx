@@ -14,6 +14,60 @@ import {
 } from './util';
 
 /**
+ * Sync state with props if needed
+ */
+const getSyncProps = (props = {}, prevProps, preState) => {
+  let needSync = false;
+  const oriState = preState;
+  const newState = {};
+  const myPrevProps = prevProps || {};
+
+  function checkSync(name) {
+    if (props[name] !== myPrevProps[name]) {
+      needSync = true;
+      return true;
+    }
+    return false;
+  }
+
+  // Children change will affect check box status.
+  // And no need to check when prev props not provided
+  if (prevProps && checkSync('children')) {
+    const newCheckedKeys = calcCheckedKeys(props.checkedKeys || oriState.checkedKeys, props);
+
+    const { checkedKeys = [], halfCheckedKeys = [] } = newCheckedKeys || {};
+    newState.checkedKeys = checkedKeys;
+    newState.halfCheckedKeys = halfCheckedKeys;
+  }
+
+  // Re-calculate when autoExpandParent or expandedKeys changed
+  if (prevProps && (checkSync('autoExpandParent') || checkSync('expandedKeys'))) {
+    newState.expandedKeys = props.autoExpandParent ?
+      calcExpandedKeys(props.expandedKeys, props) : props.expandedKeys;
+  }
+
+  if (checkSync('selectedKeys')) {
+    newState.selectedKeys = calcSelectedKeys(props.selectedKeys, props);
+  }
+
+  if (checkSync('checkedKeys')) {
+    const { checkedKeys = [], halfCheckedKeys = [] } =
+    calcCheckedKeys(props.checkedKeys, props) || {};
+    newState.checkedKeys = checkedKeys;
+    newState.halfCheckedKeys = halfCheckedKeys;
+  }
+
+  if (checkSync('loadedKeys')) {
+    newState.loadedKeys = props.loadedKeys;
+  }
+
+  if (needSync) {
+    return newState;
+  }
+  return null;
+};
+
+/**
  * Thought we still use `cloneElement` to pass `key`,
  * other props can pass with context for future refactor.
  */
@@ -166,7 +220,7 @@ class Tree extends React.Component {
 
     this.state = {
       ...state,
-      ...(this.getSyncProps(props) || {}),
+      ...(getSyncProps(props, null, this.state) || {}),
     };
 
     // Cache for check status to optimize
@@ -220,11 +274,13 @@ class Tree extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    // React 16 will not trigger update if new state is null
-    this.setState((prevState) => (
-      this.getSyncProps(nextProps, this.props, prevState)
-    ));
+  static getDerivedStateFromProps(props, state) {
+    const { prevProps } = state;
+
+    return {
+      prevProps: props,
+      ...getSyncProps(props, prevProps, state),
+    };
   }
 
   onNodeDragStart = (event, node) => {
@@ -629,60 +685,6 @@ class Tree extends React.Component {
       event.preventDefault();
       onRightClick({ event, node });
     }
-  };
-
-  /**
-   * Sync state with props if needed
-   */
-  getSyncProps = (props = {}, prevProps, preState) => {
-    let needSync = false;
-    const oriState = preState || this.state;
-    const newState = {};
-    const myPrevProps = prevProps || {};
-
-    function checkSync(name) {
-      if (props[name] !== myPrevProps[name]) {
-        needSync = true;
-        return true;
-      }
-      return false;
-    }
-
-    // Children change will affect check box status.
-    // And no need to check when prev props not provided
-    if (prevProps && checkSync('children')) {
-      const newCheckedKeys = calcCheckedKeys(props.checkedKeys || oriState.checkedKeys, props);
-
-      const { checkedKeys = [], halfCheckedKeys = [] } = newCheckedKeys || {};
-      newState.checkedKeys = checkedKeys;
-      newState.halfCheckedKeys = halfCheckedKeys;
-    }
-
-    // Re-calculate when autoExpandParent or expandedKeys changed
-    if (prevProps && (checkSync('autoExpandParent') || checkSync('expandedKeys'))) {
-      newState.expandedKeys = props.autoExpandParent ?
-        calcExpandedKeys(props.expandedKeys, props) : props.expandedKeys;
-    }
-
-    if (checkSync('selectedKeys')) {
-      newState.selectedKeys = calcSelectedKeys(props.selectedKeys, props);
-    }
-
-    if (checkSync('checkedKeys')) {
-      const { checkedKeys = [], halfCheckedKeys = [] } =
-      calcCheckedKeys(props.checkedKeys, props) || {};
-      newState.checkedKeys = checkedKeys;
-      newState.halfCheckedKeys = halfCheckedKeys;
-    }
-
-    if (checkSync('loadedKeys')) {
-      newState.loadedKeys = props.loadedKeys;
-    }
-
-    if (needSync) {
-      return newState;
-    }
-    return null;
   };
 
   /**
