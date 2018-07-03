@@ -44,15 +44,15 @@ class Gen extends React.Component {
     return (<div style={{ padding: '0 20px' }}>
       <h2>big data generator</h2>
       <form onSubmit={this.onGen}>
-        <span style={{ marginRight: 10 }}>
+        <label style={{ marginRight: 10 }}>
           x: <input ref="x" defaultValue={x} type="number" min="1" required style={{ width: 50 }} />
-        </span>
-        <span style={{ marginRight: 10 }}>
+        </label>
+        <label style={{ marginRight: 10 }}>
           y: <input ref="y" defaultValue={y} type="number" min="0" required style={{ width: 50 }} />
-        </span>
-        <span style={{ marginRight: 10 }}>
+        </label>
+        <label style={{ marginRight: 10 }}>
           z: <input ref="z" defaultValue={z} type="number" min="0" required style={{ width: 50 }} />
-        </span>
+        </label>
         <button type="submit">Generate</button>
         <p>total nodes: {this.state.nums || calcTotal(x, y, z)}</p>
       </form>

@@ -54,7 +54,7 @@ class Demo extends React.Component {
           <input type="checkbox" /> checked
         </label>
         &nbsp;
-        <span style={{ color: 'red' }} onClick={this.onDel}>Delete</span>
+        <span style={{ color: '#EB0000' }} onClick={this.onDel}>Delete</span>
       </span>
     );
 

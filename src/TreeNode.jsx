@@ -546,6 +546,7 @@ class TreeNode extends React.Component {
             expanded && `${prefixCls}-child-tree-open`,
           )}
           data-expanded={expanded}
+          role="group"
         >
           {mapChildren(nodeList, (node, index) => (
             renderTreeNode(node, index, pos)
@@ -605,6 +606,8 @@ class TreeNode extends React.Component {
         })}
 
         style={style}
+
+        role="treeitem"
 
         onDragEnter={draggable ? this.onDragEnter : undefined}
         onDragOver={draggable ? this.onDragOver : undefined}
