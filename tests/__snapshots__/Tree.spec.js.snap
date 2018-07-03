@@ -4,7 +4,8 @@ exports[`Tree check check update when Tree trigger componentWillReceiveProps 1`]
   role="tree"
   unselectable="on">
   <li
-    class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked">
+    class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
+    role="treeitem">
     <span
       class="rc-tree-switcher rc-tree-switcher-noop">
       
@@ -36,7 +37,8 @@ exports[`Tree renders correctly 1`] = `
   tabindex="0"
   unselectable="on">
   <li
-    class="spe rc-tree-treenode-switcher-open">
+    class="spe rc-tree-treenode-switcher-open"
+    role="treeitem">
     <span
       class="rc-tree-switcher rc-tree-switcher_open">
       
@@ -59,9 +61,11 @@ exports[`Tree renders correctly 1`] = `
     </span>
     <ul
       class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true">
+      data-expanded="true"
+      role="group">
       <li
-        class="rc-tree-treenode-disabled rc-tree-treenode-switcher-open">
+        class="rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
+        role="treeitem">
         <span
           class="rc-tree-switcher rc-tree-switcher_open">
           
@@ -84,9 +88,11 @@ exports[`Tree renders correctly 1`] = `
         </span>
         <ul
           class="rc-tree-child-tree rc-tree-child-tree-open"
-          data-expanded="true">
+          data-expanded="true"
+          role="group">
           <li
-            class="rc-tree-treenode-switcher-open">
+            class="rc-tree-treenode-switcher-open"
+            role="treeitem">
             <span
               class="rc-tree-switcher rc-tree-switcher-noop">
               
@@ -109,7 +115,8 @@ exports[`Tree renders correctly 1`] = `
             </span>
           </li>
           <li
-            class="rc-tree-treenode-switcher-open">
+            class="rc-tree-treenode-switcher-open"
+            role="treeitem">
             <span
               class="rc-tree-switcher rc-tree-switcher-noop">
               
@@ -134,7 +141,8 @@ exports[`Tree renders correctly 1`] = `
         </ul>
       </li>
       <li
-        class="rc-tree-treenode-switcher-open">
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem">
         <span
           class="rc-tree-switcher rc-tree-switcher-noop">
           
@@ -167,7 +175,8 @@ exports[`Tree renders opaque children correctly 1`] = `
   role="tree"
   unselectable="on">
   <li
-    class="rc-tree-treenode-switcher-close">
+    class="rc-tree-treenode-switcher-close"
+    role="treeitem">
     <span
       class="rc-tree-switcher rc-tree-switcher_close">
       
