@@ -1,14 +1,14 @@
 webpackJsonp([6],{
 
-/***/ 176:
+/***/ 175:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(177);
+module.exports = __webpack_require__(176);
 
 
 /***/ }),
 
-/***/ 177:
+/***/ 176:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29,7 +29,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rc_tree__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_tree_assets_index_less__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_tree_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rc_tree_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basic_less__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basic_less__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__basic_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__basic_less__);
 
 
@@ -143,7 +143,7 @@ var Demo = function (_React$Component) {
           __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"],
             { title: customLabel, key: '0-0-0' },
-            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"], { title: 'leaf', key: '0-0-0-0' }),
+            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"], { title: 'leaf', key: '0-0-0-0', style: { background: 'rgba(255, 0, 0, 0.1)' } }),
             __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tree__["TreeNode"], { title: 'leaf', key: '0-0-0-1' })
           ),
           __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
@@ -213,12 +213,12 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
-/***/ 178:
+/***/ 177:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[176]);
+},[175]);
 //# sourceMappingURL=basic.js.map

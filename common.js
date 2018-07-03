@@ -160,11 +160,11 @@ exports.default = function (self, call) {
 
 exports.__esModule = true;
 
-var _setPrototypeOf = __webpack_require__(148);
+var _setPrototypeOf = __webpack_require__(147);
 
 var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
 
-var _create = __webpack_require__(152);
+var _create = __webpack_require__(151);
 
 var _create2 = _interopRequireDefault(_create);
 
@@ -216,11 +216,11 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(155)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(154)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(156)();
+  module.exports = __webpack_require__(155)();
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
@@ -280,7 +280,7 @@ if (process.env.NODE_ENV === 'production') {
 
 exports.__esModule = true;
 
-var _assign = __webpack_require__(118);
+var _assign = __webpack_require__(117);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -1106,11 +1106,11 @@ exports.f = {}.propertyIsEnumerable;
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(126);
+var _iterator = __webpack_require__(125);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(138);
+var _symbol = __webpack_require__(137);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -1152,7 +1152,7 @@ exports.default = function (obj, keys) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(157);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
@@ -1166,8 +1166,8 @@ exports.default = function (obj, keys) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ChildrenUtils__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__AnimateChild__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ChildrenUtils__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__AnimateChild__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__util__ = __webpack_require__(103);
 
 
@@ -1709,7 +1709,7 @@ module.exports = {};
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(28);
-var dPs = __webpack_require__(131);
+var dPs = __webpack_require__(130);
 var enumBugKeys = __webpack_require__(52);
 var IE_PROTO = __webpack_require__(50)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -1724,7 +1724,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(132).appendChild(iframe);
+  __webpack_require__(131).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -2130,26 +2130,23 @@ module.exports = containsNode;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return contextTypes; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_warning__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util__ = __webpack_require__(98);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_classnames__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_classnames__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_warning__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_warning__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__util__ = __webpack_require__(98);
 
 
 
@@ -2165,51 +2162,51 @@ module.exports = containsNode;
  * other props can pass with context for future refactor.
  */
 var contextTypes = {
-  rcTree: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.shape({
-    root: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object,
+  rcTree: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.shape({
+    root: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
 
-    prefixCls: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-    selectable: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-    showIcon: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-    icon: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func]),
-    draggable: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-    checkable: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node]),
-    checkStrictly: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-    disabled: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-    openTransitionName: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-    openAnimation: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object]),
+    prefixCls: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+    selectable: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+    showIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+    icon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func]),
+    draggable: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+    checkable: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node]),
+    checkStrictly: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+    disabled: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+    openTransitionName: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+    openAnimation: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object]),
 
-    loadData: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    filterTreeNode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    renderTreeNode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
+    loadData: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    filterTreeNode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    renderTreeNode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
 
-    isKeyChecked: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
+    isKeyChecked: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
 
-    onNodeClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeDoubleClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeExpand: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeMouseEnter: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeMouseLeave: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeContextMenu: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeDragStart: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeDragEnter: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeDragOver: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeDragLeave: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeDragEnd: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onNodeDrop: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onBatchNodeCheck: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-    onCheckConductFinished: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
+    onNodeClick: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeDoubleClick: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeExpand: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeMouseEnter: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeMouseLeave: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeContextMenu: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeDragStart: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeDragEnter: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeDragOver: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeDragLeave: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeDragEnd: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onNodeDrop: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onBatchNodeCheck: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+    onCheckConductFinished: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func
   })
 };
 
 var Tree = function (_React$Component) {
-  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Tree, _React$Component);
+  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(Tree, _React$Component);
 
   function Tree(props) {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, Tree);
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Tree);
 
-    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call(this, props));
+    var _this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call(this, props));
 
     _initialiseProps.call(_this);
 
@@ -2222,14 +2219,14 @@ var Tree = function (_React$Component) {
 
     // Sync state with props
 
-    var _ref = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* calcCheckedKeys */])(defaultCheckedKeys, props) || {},
+    var _ref = Object(__WEBPACK_IMPORTED_MODULE_8__util__["c" /* calcCheckedKeys */])(defaultCheckedKeys, props) || {},
         _ref$checkedKeys = _ref.checkedKeys,
         checkedKeys = _ref$checkedKeys === undefined ? [] : _ref$checkedKeys,
         _ref$halfCheckedKeys = _ref.halfCheckedKeys,
         halfCheckedKeys = _ref$halfCheckedKeys === undefined ? [] : _ref$halfCheckedKeys;
 
     var state = {
-      selectedKeys: Object(__WEBPACK_IMPORTED_MODULE_9__util__["f" /* calcSelectedKeys */])(defaultSelectedKeys, props),
+      selectedKeys: Object(__WEBPACK_IMPORTED_MODULE_8__util__["f" /* calcSelectedKeys */])(defaultSelectedKeys, props),
       checkedKeys: checkedKeys,
       halfCheckedKeys: halfCheckedKeys,
 
@@ -2238,14 +2235,14 @@ var Tree = function (_React$Component) {
     };
 
     if (defaultExpandAll) {
-      state.expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* getFullKeyList */])(props.children);
+      state.expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["h" /* getFullKeyList */])(props.children);
     } else if (defaultExpandParent) {
-      state.expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["e" /* calcExpandedKeys */])(expandedKeys || defaultExpandedKeys, props);
+      state.expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["e" /* calcExpandedKeys */])(expandedKeys || defaultExpandedKeys, props);
     } else {
       state.expandedKeys = defaultExpandedKeys;
     }
 
-    _this.state = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, state, _this.getSyncProps(props) || {});
+    _this.state = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, state, _this.getSyncProps(props) || {});
 
     // Cache for check status to optimize
     _this.checkedBatch = null;
@@ -2373,65 +2370,65 @@ var Tree = function (_React$Component) {
       domProps.onKeyDown = this.onKeyDown;
     }
 
-    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
       'ul',
-      __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, domProps, {
-        className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(prefixCls, className, (_classNames = {}, _classNames[prefixCls + '-show-line'] = showLine, _classNames)),
+      __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, domProps, {
+        className: __WEBPACK_IMPORTED_MODULE_6_classnames___default()(prefixCls, className, (_classNames = {}, _classNames[prefixCls + '-show-line'] = showLine, _classNames)),
         role: 'tree-node',
         unselectable: 'on'
       }),
-      Object(__WEBPACK_IMPORTED_MODULE_9__util__["m" /* mapChildren */])(children, function (node, index) {
+      Object(__WEBPACK_IMPORTED_MODULE_8__util__["m" /* mapChildren */])(children, function (node, index) {
         return _this3.renderTreeNode(node, index);
       })
     );
   };
 
   return Tree;
-}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
 
 Tree.propTypes = {
-  prefixCls: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  children: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.any,
-  showLine: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  showIcon: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  icon: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func]),
-  focusable: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  selectable: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  disabled: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  multiple: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  checkable: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node]),
-  checkStrictly: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  draggable: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  defaultExpandParent: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  autoExpandParent: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  defaultExpandAll: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  defaultExpandedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string),
-  expandedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string),
-  defaultCheckedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string),
-  checkedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.number])), __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object]),
-  defaultSelectedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string),
-  selectedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string),
-  onClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onDoubleClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onExpand: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onCheck: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onLoad: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  loadData: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  loadedKeys: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string),
-  onMouseEnter: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onMouseLeave: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onRightClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onDragStart: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onDragEnter: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onDragOver: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onDragLeave: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onDragEnd: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  onDrop: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  filterTreeNode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  openTransitionName: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  openAnimation: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object])
+  prefixCls: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+  className: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+  children: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.any,
+  showLine: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  showIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  icon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func]),
+  focusable: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  selectable: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  disabled: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  multiple: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  checkable: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node]),
+  checkStrictly: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  draggable: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  defaultExpandParent: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  autoExpandParent: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  defaultExpandAll: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  defaultExpandedKeys: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string),
+  expandedKeys: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string),
+  defaultCheckedKeys: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string),
+  checkedKeys: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.number])), __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object]),
+  defaultSelectedKeys: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string),
+  selectedKeys: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string),
+  onClick: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onDoubleClick: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onExpand: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onCheck: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onLoad: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  loadData: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  loadedKeys: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string),
+  onMouseEnter: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onMouseLeave: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onRightClick: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onDragStart: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onDragEnter: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onDragOver: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onDragLeave: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onDragEnd: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onDrop: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  filterTreeNode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  openTransitionName: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+  openAnimation: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object])
 };
 Tree.childContextTypes = contextTypes;
 Tree.defaultProps = {
@@ -2466,8 +2463,8 @@ var _initialiseProps = function _initialiseProps() {
     _this4.dragNode = node;
 
     _this4.setState({
-      dragNodesKeys: Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* getDragNodesKeys */])(children, node),
-      expandedKeys: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* arrDel */])(expandedKeys, eventKey)
+      dragNodesKeys: Object(__WEBPACK_IMPORTED_MODULE_8__util__["g" /* getDragNodesKeys */])(children, node),
+      expandedKeys: Object(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* arrDel */])(expandedKeys, eventKey)
     });
 
     if (onDragStart) {
@@ -2485,7 +2482,7 @@ var _initialiseProps = function _initialiseProps() {
 
     if (!_this4.dragNode) return;
 
-    var dropPosition = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* calcDropPosition */])(event, node);
+    var dropPosition = Object(__WEBPACK_IMPORTED_MODULE_8__util__["d" /* calcDropPosition */])(event, node);
 
     // Skip if drag node is self
     if (_this4.dragNode.props.eventKey === eventKey && dropPosition === 0) {
@@ -2516,7 +2513,7 @@ var _initialiseProps = function _initialiseProps() {
         clearTimeout(_this4.delayedDragEnterLogic[key]);
       });
       _this4.delayedDragEnterLogic[pos] = setTimeout(function () {
-        var newExpandedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* arrAdd */])(expandedKeys, eventKey);
+        var newExpandedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["a" /* arrAdd */])(expandedKeys, eventKey);
         _this4.setState({
           expandedKeys: newExpandedKeys
         });
@@ -2535,7 +2532,7 @@ var _initialiseProps = function _initialiseProps() {
     // Update drag position
 
     if (_this4.dragNode && eventKey === _this4.state.dragOverNodeKey) {
-      var dropPosition = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* calcDropPosition */])(event, node);
+      var dropPosition = Object(__WEBPACK_IMPORTED_MODULE_8__util__["d" /* calcDropPosition */])(event, node);
 
       if (dropPosition === _this4.state.dropPosition) return;
 
@@ -2590,11 +2587,11 @@ var _initialiseProps = function _initialiseProps() {
     });
 
     if (dragNodesKeys.indexOf(eventKey) !== -1) {
-      __WEBPACK_IMPORTED_MODULE_8_warning___default()(false, 'Can not drop to dragNode(include it\'s children node)');
+      __WEBPACK_IMPORTED_MODULE_7_warning___default()(false, 'Can not drop to dragNode(include it\'s children node)');
       return;
     }
 
-    var posArr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["n" /* posToArr */])(pos);
+    var posArr = Object(__WEBPACK_IMPORTED_MODULE_8__util__["n" /* posToArr */])(pos);
 
     var dropResult = {
       event: event,
@@ -2643,18 +2640,18 @@ var _initialiseProps = function _initialiseProps() {
 
     // Update selected keys
     if (!targetSelected) {
-      selectedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* arrDel */])(selectedKeys, eventKey);
+      selectedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* arrDel */])(selectedKeys, eventKey);
     } else if (!multiple) {
       selectedKeys = [eventKey];
     } else {
-      selectedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* arrAdd */])(selectedKeys, eventKey);
+      selectedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["a" /* arrAdd */])(selectedKeys, eventKey);
     }
 
     // [Legacy] Not found related usage in doc or upper libs
     // [Legacy] TODO: add optimize prop to skip node process
     var selectedNodes = [];
     if (selectedKeys.length) {
-      Object(__WEBPACK_IMPORTED_MODULE_9__util__["o" /* traverseTreeNodes */])(children, function (_ref2) {
+      Object(__WEBPACK_IMPORTED_MODULE_8__util__["o" /* traverseTreeNodes */])(children, function (_ref2) {
         var node = _ref2.node,
             key = _ref2.key;
 
@@ -2695,16 +2692,16 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     _this4.setState({
-      loadingKeys: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* arrAdd */])(loadingKeys, eventKey)
+      loadingKeys: Object(__WEBPACK_IMPORTED_MODULE_8__util__["a" /* arrAdd */])(loadingKeys, eventKey)
     });
     var promise = loadData(treeNode);
     promise.then(function () {
-      var newLoadedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* arrAdd */])(_this4.state.loadedKeys, eventKey);
+      var newLoadedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["a" /* arrAdd */])(_this4.state.loadedKeys, eventKey);
       _this4.setUncontrolledState({
         loadedKeys: newLoadedKeys
       });
       _this4.setState({
-        loadingKeys: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* arrDel */])(_this4.state.loadingKeys, eventKey)
+        loadingKeys: Object(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* arrDel */])(_this4.state.loadingKeys, eventKey)
       });
 
       if (onLoad) {
@@ -2733,7 +2730,7 @@ var _initialiseProps = function _initialiseProps() {
       _this4.checkedBatch = {
         list: []
       };
-      __WEBPACK_IMPORTED_MODULE_8_warning___default()(false, 'Checked batch not init. This should be a bug. Please fire a issue.');
+      __WEBPACK_IMPORTED_MODULE_7_warning___default()(false, 'Checked batch not init. This should be a bug. Please fire a issue.');
     }
 
     _this4.checkedBatch.list.push({ key: key, checked: checked, halfChecked: halfChecked });
@@ -2787,11 +2784,11 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     if (checkStrictly) {
-      selectedObj = Object(__WEBPACK_IMPORTED_MODULE_9__util__["k" /* getStrictlyValue */])(newCheckedKeys, newHalfCheckedKeys);
+      selectedObj = Object(__WEBPACK_IMPORTED_MODULE_8__util__["k" /* getStrictlyValue */])(newCheckedKeys, newHalfCheckedKeys);
 
       // [Legacy] TODO: add optimize prop to skip node process
       eventObj.checkedNodes = [];
-      Object(__WEBPACK_IMPORTED_MODULE_9__util__["o" /* traverseTreeNodes */])(children, function (_ref4) {
+      Object(__WEBPACK_IMPORTED_MODULE_8__util__["o" /* traverseTreeNodes */])(children, function (_ref4) {
         var node = _ref4.node,
             key = _ref4.key;
 
@@ -2808,7 +2805,7 @@ var _initialiseProps = function _initialiseProps() {
       eventObj.checkedNodes = [];
       eventObj.checkedNodesPositions = []; // [Legacy] TODO: not in API
       eventObj.halfCheckedKeys = newHalfCheckedKeys; // [Legacy] TODO: not in API
-      Object(__WEBPACK_IMPORTED_MODULE_9__util__["o" /* traverseTreeNodes */])(children, function (_ref5) {
+      Object(__WEBPACK_IMPORTED_MODULE_8__util__["o" /* traverseTreeNodes */])(children, function (_ref5) {
         var node = _ref5.node,
             pos = _ref5.pos,
             key = _ref5.key;
@@ -2847,12 +2844,12 @@ var _initialiseProps = function _initialiseProps() {
     var index = expandedKeys.indexOf(eventKey);
     var targetExpanded = !expanded;
 
-    __WEBPACK_IMPORTED_MODULE_8_warning___default()(expanded && index !== -1 || !expanded && index === -1, 'Expand state not sync with index check');
+    __WEBPACK_IMPORTED_MODULE_7_warning___default()(expanded && index !== -1 || !expanded && index === -1, 'Expand state not sync with index check');
 
     if (targetExpanded) {
-      expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* arrAdd */])(expandedKeys, eventKey);
+      expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["a" /* arrAdd */])(expandedKeys, eventKey);
     } else {
-      expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* arrDel */])(expandedKeys, eventKey);
+      expandedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["b" /* arrDel */])(expandedKeys, eventKey);
     }
 
     _this4.setUncontrolledState({ expandedKeys: expandedKeys });
@@ -2923,7 +2920,7 @@ var _initialiseProps = function _initialiseProps() {
     // Children change will affect check box status.
     // And no need to check when prev props not provided
     if (prevProps && checkSync('children')) {
-      var newCheckedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* calcCheckedKeys */])(props.checkedKeys || oriState.checkedKeys, props);
+      var newCheckedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["c" /* calcCheckedKeys */])(props.checkedKeys || oriState.checkedKeys, props);
 
       var _ref6 = newCheckedKeys || {},
           _ref6$checkedKeys = _ref6.checkedKeys,
@@ -2937,15 +2934,15 @@ var _initialiseProps = function _initialiseProps() {
 
     // Re-calculate when autoExpandParent or expandedKeys changed
     if (prevProps && (checkSync('autoExpandParent') || checkSync('expandedKeys'))) {
-      newState.expandedKeys = props.autoExpandParent ? Object(__WEBPACK_IMPORTED_MODULE_9__util__["e" /* calcExpandedKeys */])(props.expandedKeys, props) : props.expandedKeys;
+      newState.expandedKeys = props.autoExpandParent ? Object(__WEBPACK_IMPORTED_MODULE_8__util__["e" /* calcExpandedKeys */])(props.expandedKeys, props) : props.expandedKeys;
     }
 
     if (checkSync('selectedKeys')) {
-      newState.selectedKeys = Object(__WEBPACK_IMPORTED_MODULE_9__util__["f" /* calcSelectedKeys */])(props.selectedKeys, props);
+      newState.selectedKeys = Object(__WEBPACK_IMPORTED_MODULE_8__util__["f" /* calcSelectedKeys */])(props.selectedKeys, props);
     }
 
     if (checkSync('checkedKeys')) {
-      var _ref7 = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* calcCheckedKeys */])(props.checkedKeys, props) || {},
+      var _ref7 = Object(__WEBPACK_IMPORTED_MODULE_8__util__["c" /* calcCheckedKeys */])(props.checkedKeys, props) || {},
           _ref7$checkedKeys = _ref7.checkedKeys,
           _checkedKeys = _ref7$checkedKeys === undefined ? [] : _ref7$checkedKeys,
           _ref7$halfCheckedKeys = _ref7.halfCheckedKeys,
@@ -3004,12 +3001,10 @@ var _initialiseProps = function _initialiseProps() {
         dragOverNodeKey = _state4.dragOverNodeKey,
         dropPosition = _state4.dropPosition;
 
-    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty___default()(_this4.props);
-
-    var pos = Object(__WEBPACK_IMPORTED_MODULE_9__util__["j" /* getPosition */])(level, index);
+    var pos = Object(__WEBPACK_IMPORTED_MODULE_8__util__["j" /* getPosition */])(level, index);
     var key = child.key || pos;
 
-    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.cloneElement(child, {
+    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.cloneElement(child, {
       key: key,
       eventKey: key,
       expanded: expandedKeys.indexOf(key) !== -1,
@@ -3035,7 +3030,7 @@ var _initialiseProps = function _initialiseProps() {
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(121);
+var aFunction = __webpack_require__(120);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -3084,7 +3079,7 @@ module.exports = function (it) {
 
 var has = __webpack_require__(19);
 var toIObject = __webpack_require__(24);
-var arrayIndexOf = __webpack_require__(123)(false);
+var arrayIndexOf = __webpack_require__(122)(false);
 var IE_PROTO = __webpack_require__(50)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -3146,9 +3141,9 @@ var $export = __webpack_require__(21);
 var redefine = __webpack_require__(95);
 var hide = __webpack_require__(22);
 var Iterators = __webpack_require__(54);
-var $iterCreate = __webpack_require__(130);
+var $iterCreate = __webpack_require__(129);
 var setToStringTag = __webpack_require__(56);
-var getPrototypeOf = __webpack_require__(133);
+var getPrototypeOf = __webpack_require__(132);
 var ITERATOR = __webpack_require__(25)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -3769,7 +3764,7 @@ function toArray(children) {
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(159), __esModule: true };
+module.exports = { "default": __webpack_require__(158), __esModule: true };
 
 /***/ }),
 /* 101 */
@@ -3779,8 +3774,8 @@ module.exports = { "default": __webpack_require__(159), __esModule: true };
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isCssAnimationSupported; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Event__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Event__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes__ = __webpack_require__(163);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_component_classes__);
 
 
@@ -23288,7 +23283,7 @@ module.exports = camelize;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Tree__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TreeNode__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TreeNode__ = __webpack_require__(156);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "TreeNode", function() { return __WEBPACK_IMPORTED_MODULE_1__TreeNode__["a"]; });
 
 
@@ -23301,41 +23296,28 @@ __WEBPACK_IMPORTED_MODULE_0__Tree__["b" /* default */].TreeNode = __WEBPACK_IMPO
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (obj) {
-  if (obj == null) throw new TypeError("Cannot destructure undefined");
-};
+module.exports = { "default": __webpack_require__(118), __esModule: true };
 
 /***/ }),
 /* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(119), __esModule: true };
+__webpack_require__(119);
+module.exports = __webpack_require__(14).Object.assign;
+
 
 /***/ }),
 /* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(120);
-module.exports = __webpack_require__(14).Object.assign;
+// 19.1.3.1 Object.assign(target, source)
+var $export = __webpack_require__(21);
+
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(121) });
 
 
 /***/ }),
 /* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(21);
-
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(122) });
-
-
-/***/ }),
-/* 121 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -23345,7 +23327,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23386,14 +23368,14 @@ module.exports = !$assign || __webpack_require__(29)(function () {
 
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(24);
-var toLength = __webpack_require__(124);
-var toAbsoluteIndex = __webpack_require__(125);
+var toLength = __webpack_require__(123);
+var toAbsoluteIndex = __webpack_require__(124);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -23415,7 +23397,7 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
@@ -23427,7 +23409,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(49);
@@ -23440,27 +23422,27 @@ module.exports = function (index, length) {
 
 
 /***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(126), __esModule: true };
+
+/***/ }),
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(127), __esModule: true };
+__webpack_require__(127);
+__webpack_require__(133);
+module.exports = __webpack_require__(57).f('iterator');
+
 
 /***/ }),
 /* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(128);
-__webpack_require__(134);
-module.exports = __webpack_require__(57).f('iterator');
-
-
-/***/ }),
-/* 128 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
-var $at = __webpack_require__(129)(true);
+var $at = __webpack_require__(128)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(94)(String, 'String', function (iterated) {
@@ -23479,7 +23461,7 @@ __webpack_require__(94)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 129 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(49);
@@ -23502,7 +23484,7 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 130 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23522,7 +23504,7 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 131 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(17);
@@ -23541,7 +23523,7 @@ module.exports = __webpack_require__(18) ? Object.defineProperties : function de
 
 
 /***/ }),
-/* 132 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(13).document;
@@ -23549,7 +23531,7 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 133 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
@@ -23568,10 +23550,10 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 134 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(135);
+__webpack_require__(134);
 var global = __webpack_require__(13);
 var hide = __webpack_require__(22);
 var Iterators = __webpack_require__(54);
@@ -23593,13 +23575,13 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 135 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(136);
-var step = __webpack_require__(137);
+var addToUnscopables = __webpack_require__(135);
+var step = __webpack_require__(136);
 var Iterators = __webpack_require__(54);
 var toIObject = __webpack_require__(24);
 
@@ -23634,14 +23616,14 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 136 */
+/* 135 */
 /***/ (function(module, exports) {
 
 module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -23650,24 +23632,24 @@ module.exports = function (done, value) {
 
 
 /***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(138), __esModule: true };
+
+/***/ }),
 /* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(139), __esModule: true };
-
-/***/ }),
-/* 139 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(140);
+__webpack_require__(139);
+__webpack_require__(144);
 __webpack_require__(145);
 __webpack_require__(146);
-__webpack_require__(147);
 module.exports = __webpack_require__(14).Symbol;
 
 
 /***/ }),
-/* 140 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23678,7 +23660,7 @@ var has = __webpack_require__(19);
 var DESCRIPTORS = __webpack_require__(18);
 var $export = __webpack_require__(21);
 var redefine = __webpack_require__(95);
-var META = __webpack_require__(141).KEY;
+var META = __webpack_require__(140).KEY;
 var $fails = __webpack_require__(29);
 var shared = __webpack_require__(51);
 var setToStringTag = __webpack_require__(56);
@@ -23686,15 +23668,15 @@ var uid = __webpack_require__(40);
 var wks = __webpack_require__(25);
 var wksExt = __webpack_require__(57);
 var wksDefine = __webpack_require__(58);
-var enumKeys = __webpack_require__(142);
-var isArray = __webpack_require__(143);
+var enumKeys = __webpack_require__(141);
+var isArray = __webpack_require__(142);
 var anObject = __webpack_require__(28);
 var isObject = __webpack_require__(23);
 var toIObject = __webpack_require__(24);
 var toPrimitive = __webpack_require__(47);
 var createDesc = __webpack_require__(37);
 var _create = __webpack_require__(55);
-var gOPNExt = __webpack_require__(144);
+var gOPNExt = __webpack_require__(143);
 var $GOPD = __webpack_require__(97);
 var $DP = __webpack_require__(17);
 var $keys = __webpack_require__(38);
@@ -23908,7 +23890,7 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 141 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(40)('meta');
@@ -23967,7 +23949,7 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 142 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
@@ -23988,7 +23970,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 143 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
@@ -23999,7 +23981,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 
 /***/ }),
-/* 144 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
@@ -24024,50 +24006,50 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 145 */
+/* 144 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 146 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(58)('asyncIterator');
 
 
 /***/ }),
-/* 147 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(58)('observable');
 
 
 /***/ }),
+/* 147 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(148), __esModule: true };
+
+/***/ }),
 /* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(149), __esModule: true };
+__webpack_require__(149);
+module.exports = __webpack_require__(14).Object.setPrototypeOf;
+
 
 /***/ }),
 /* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(150);
-module.exports = __webpack_require__(14).Object.setPrototypeOf;
+// 19.1.3.19 Object.setPrototypeOf(O, proto)
+var $export = __webpack_require__(21);
+$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(150).set });
 
 
 /***/ }),
 /* 150 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.19 Object.setPrototypeOf(O, proto)
-var $export = __webpack_require__(21);
-$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(151).set });
-
-
-/***/ }),
-/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
@@ -24098,16 +24080,16 @@ module.exports = {
 
 
 /***/ }),
+/* 151 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(152), __esModule: true };
+
+/***/ }),
 /* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(153), __esModule: true };
-
-/***/ }),
-/* 153 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(154);
+__webpack_require__(153);
 var $Object = __webpack_require__(14).Object;
 module.exports = function create(P, D) {
   return $Object.create(P, D);
@@ -24115,7 +24097,7 @@ module.exports = function create(P, D) {
 
 
 /***/ }),
-/* 154 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(21);
@@ -24124,7 +24106,7 @@ $export($export.S, 'Object', { create: __webpack_require__(55) });
 
 
 /***/ }),
-/* 155 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24674,7 +24656,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 156 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24739,7 +24721,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 157 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24869,6 +24851,7 @@ var TreeNode = function (_React$Component) {
 
     var _props = this.props,
         className = _props.className,
+        style = _props.style,
         dragOver = _props.dragOver,
         dragOverGapTop = _props.dragOverGapTop,
         dragOverGapBottom = _props.dragOverGapBottom,
@@ -24877,7 +24860,7 @@ var TreeNode = function (_React$Component) {
         selected = _props.selected,
         checked = _props.checked,
         halfChecked = _props.halfChecked,
-        otherProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default()(_props, ['className', 'dragOver', 'dragOverGapTop', 'dragOverGapBottom', 'isLeaf', 'expanded', 'selected', 'checked', 'halfChecked']);
+        otherProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default()(_props, ['className', 'style', 'dragOver', 'dragOverGapTop', 'dragOverGapBottom', 'isLeaf', 'expanded', 'selected', 'checked', 'halfChecked']);
 
     var _context$rcTree = this.context.rcTree,
         prefixCls = _context$rcTree.prefixCls,
@@ -24896,6 +24879,8 @@ var TreeNode = function (_React$Component) {
       'li',
       __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_extends___default()({
         className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()(className, (_classNames = {}, _classNames[prefixCls + '-treenode-disabled'] = disabled, _classNames[prefixCls + '-treenode-switcher-' + (expanded ? 'open' : 'close')] = !isLeaf, _classNames[prefixCls + '-treenode-checkbox-checked'] = checked, _classNames[prefixCls + '-treenode-checkbox-indeterminate'] = halfChecked, _classNames[prefixCls + '-treenode-selected'] = selected, _classNames[prefixCls + '-treenode-loading'] = loading, _classNames['drag-over'] = !disabled && dragOver, _classNames['drag-over-gap-top'] = !disabled && dragOverGapTop, _classNames['drag-over-gap-bottom'] = !disabled && dragOverGapBottom, _classNames['filter-node'] = filterTreeNode && filterTreeNode(this), _classNames)),
+
+        style: style,
 
         onDragEnter: draggable ? this.onDragEnter : undefined,
         onDragOver: draggable ? this.onDragOver : undefined,
@@ -24917,6 +24902,7 @@ TreeNode.propTypes = {
   eventKey: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, // Pass by parent `cloneElement`
   prefixCls: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
   className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+  style: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object,
   root: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object,
   onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
 
@@ -25449,7 +25435,7 @@ TreeNode.isTreeNode = 1;
 /* harmony default export */ __webpack_exports__["a"] = (TreeNode);
 
 /***/ }),
-/* 158 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25479,10 +25465,10 @@ exports.default = function (obj, key, value) {
 };
 
 /***/ }),
-/* 159 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(160);
+__webpack_require__(159);
 var $Object = __webpack_require__(14).Object;
 module.exports = function defineProperty(it, key, desc) {
   return $Object.defineProperty(it, key, desc);
@@ -25490,7 +25476,7 @@ module.exports = function defineProperty(it, key, desc) {
 
 
 /***/ }),
-/* 160 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(21);
@@ -25499,7 +25485,7 @@ $export($export.S + $export.F * !__webpack_require__(18), 'Object', { defineProp
 
 
 /***/ }),
-/* 161 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25614,7 +25600,7 @@ function mergeChildren(prev, next) {
 }
 
 /***/ }),
-/* 162 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25750,7 +25736,7 @@ AnimateChild.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (AnimateChild);
 
 /***/ }),
-/* 163 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25838,7 +25824,7 @@ var TransitionEvents = {
 /* harmony default export */ __webpack_exports__["a"] = (TransitionEvents);
 
 /***/ }),
-/* 164 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
