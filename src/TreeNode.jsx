@@ -5,7 +5,7 @@ import warning from 'warning';
 import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
-import { contextTypes } from './Tree';
+import { nodeContextTypes } from './contextTypes';
 import {
   getPosition, getNodeChildren, isCheckDisabled,
   traverseTreeNodes, mapChildren,
@@ -17,13 +17,6 @@ const ICON_CLOSE = 'close';
 const defaultTitle = '---';
 
 let onlyTreeNodeWarned = false; // Only accept TreeNode
-
-export const nodeContextTypes = {
-  ...contextTypes,
-  rcTreeNode: PropTypes.shape({
-    onUpCheckConduct: PropTypes.func,
-  }),
-};
 
 class TreeNode extends React.Component {
   static propTypes = {
