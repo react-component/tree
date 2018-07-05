@@ -53,6 +53,7 @@ const getSyncProps = (props = {}, prevProps, preState) => {
   }
 
   // ===============================================
+  // TODO: Remove this
   // Children change will affect check box status.
   // And no need to check when prev props not provided
   if (prevProps && checkSync('children')) {

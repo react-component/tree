@@ -1,4 +1,3 @@
-/* eslint no-loop-func: 0 */
 import React, { Children } from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
