@@ -6,6 +6,7 @@ import { polyfill } from 'react-lifecycles-compat';
 
 import {
   traverseTreeNodes, getStrictlyValue,
+  convertTreeToEntities, convertDataToTree,
   getFullKeyList, getPosition, getDragNodesKeys,
   calcExpandedKeys, calcSelectedKeys,
   calcCheckedKeys, calcDropPosition,
@@ -30,6 +31,27 @@ const getSyncProps = (props = {}, prevProps, preState) => {
     return false;
   }
 
+  let treeNode = null;
+
+  // Check if `treeData` or `children` changed and save into the state.
+  if (checkSync('treeData')) {
+    treeNode = convertDataToTree(props.treeData);
+  } else if (checkSync('children')) {
+    treeNode = props.children;
+  }
+
+  // Tree support filter function which will break the tree structure in the vdm.
+  // We cache the treeNodes in state so that we can return the treeNode in event trigger.
+  if (treeNode) {
+    newState.treeNode = treeNode;
+
+    // Calculate the entities data for quick match
+    const { posEntities, keyEntities } = convertTreeToEntities(props.children);
+    newState.posEntities = posEntities;
+    newState.keyEntities = keyEntities;
+  }
+
+  // ===============================================
   // Children change will affect check box status.
   // And no need to check when prev props not provided
   if (prevProps && checkSync('children')) {
@@ -39,6 +61,7 @@ const getSyncProps = (props = {}, prevProps, preState) => {
     newState.checkedKeys = checkedKeys;
     newState.halfCheckedKeys = halfCheckedKeys;
   }
+  // ===============================================
 
   // Re-calculate when autoExpandParent or expandedKeys changed
   if (prevProps && (checkSync('autoExpandParent') || checkSync('expandedKeys'))) {
@@ -110,6 +133,11 @@ export const contextTypes = {
     onNodeDrop: PropTypes.func,
     onBatchNodeCheck: PropTypes.func,
     onCheckConductFinished: PropTypes.func,
+
+    // treeData: PropTypes.array,
+    // Tree will store the entities when the treeNode refresh.
+    // User can pass the func to add more info to customize the additional info.
+    // processTreeEntity: PropTypes.func,
   }),
 };
 
@@ -117,6 +145,7 @@ class Tree extends React.Component {
   static propTypes = {
     prefixCls: PropTypes.string,
     className: PropTypes.string,
+    tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     children: PropTypes.any,
     showLine: PropTypes.bool,
     showIcon: PropTypes.bool,
@@ -745,14 +774,13 @@ class Tree extends React.Component {
   render() {
     const {
       prefixCls, className, focusable,
-      showLine,
+      showLine, tabIndex = 0,
       children,
     } = this.props;
     const domProps = {};
 
-    // [Legacy] Commit: 0117f0c9db0e2956e92cb208f51a42387dfcb3d1
     if (focusable) {
-      domProps.tabIndex = '0';
+      domProps.tabIndex = tabIndex;
       domProps.onKeyDown = this.onKeyDown;
     }
 

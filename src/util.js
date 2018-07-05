@@ -1,7 +1,8 @@
 /* eslint no-loop-func: 0 */
-import { Children } from 'react';
+import React, { Children } from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
+import TreeNode from './TreeNode';
 
 const DRAG_SIDE_RANGE = 0.25;
 const DRAG_MIN_GAP = 2;
@@ -399,4 +400,53 @@ export function calcCheckedKeys(keys, props) {
   // Conduct calculate the check status
   const { checkedKeys = [] } = keyProps;
   return calcCheckStateConduct(children, checkedKeys);
+}
+
+export function convertDataToTree(treeData) {
+  if (!treeData) return [];
+  const list = Array.isArray(treeData) ? treeData : [treeData];
+  return list.map(({ children, ...props }) => {
+    const childrenNodes = (children || []).map(convertDataToTree);
+
+    return (
+      <TreeNode {...props}>
+        {childrenNodes}
+      </TreeNode>
+    );
+  });
+}
+
+/**
+ * Calculate treeNodes entities.
+ * @param treeNodes
+ * @param processTreeEntity  User can customize the entity
+ */
+export function convertTreeToEntities(treeNodes, processTreeEntity) {
+  const posEntities = {};
+  const keyEntities = {};
+  const wrapper = {
+    posEntities,
+    keyEntities,
+  };
+
+  traverseTreeNodes(treeNodes, (item) => {
+    const { node, index, pos, key, parentPos } = item;
+    const entity = { node, index, key, pos };
+
+    posEntities[pos] = entity;
+    keyEntities[key] = entity;
+
+    // Fill children
+    entity.parent = posEntities[parentPos];
+    if (entity.parent) {
+      entity.parent.children = entity.parent.children || [];
+      entity.parent.children.push(entity);
+    }
+
+    if (processTreeEntity) {
+      processTreeEntity(entity, wrapper);
+    }
+  });
+
+  return wrapper;
 }

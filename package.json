@@ -65,7 +65,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.0.0",
     "es6-promise": "^3.1.2",
-    "jest": "^18.0.0",
+    "jest": "^22.0.0",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
     "rc-tools": "^8.x",
@@ -80,7 +80,7 @@
     "classnames": "2.x",
     "prop-types": "^15.5.8",
     "rc-animate": "2.x",
-    "rc-util": "^4.0.4",
+    "rc-util": "^4.5.1",
     "react-lifecycles-compat": "^3.0.4",
     "warning": "^3.0.0"
   },
