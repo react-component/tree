@@ -47,7 +47,7 @@ const getSyncProps = (props = {}, prevProps, preState) => {
     newState.treeNode = treeNode;
 
     // Calculate the entities data for quick match
-    const { posEntities, keyEntities } = convertTreeToEntities(props.children);
+    const { posEntities, keyEntities } = convertTreeToEntities(props.children, props.unstable_processTreeEntity);
     newState.posEntities = posEntities;
     newState.keyEntities = keyEntities;
   }
@@ -97,6 +97,7 @@ class Tree extends React.Component {
     className: PropTypes.string,
     tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     children: PropTypes.any,
+    treeData: PropTypes.array, // Generate treeNode by children
     showLine: PropTypes.bool,
     showIcon: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
@@ -142,6 +143,13 @@ class Tree extends React.Component {
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+    // Tree will parse treeNode as entities map,
+    // This prop enable user to process the Tree with additional entities
+    // This function may be remove in future if we start to remove the dependency on key
+    // So any user should not relay on this function.
+    // If you are refactor this code, you can remove it as your wish
+    unstable_processTreeEntity: PropTypes.func,
   };
 
   static childContextTypes = treeContextTypes;
