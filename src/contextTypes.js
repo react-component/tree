@@ -37,6 +37,7 @@ export const treeContextTypes = {
     onNodeDoubleClick: PropTypes.func,
     onNodeExpand: PropTypes.func,
     onNodeSelect: PropTypes.func,
+    onNodeCheck: PropTypes.func,
     onNodeMouseEnter: PropTypes.func,
     onNodeMouseLeave: PropTypes.func,
     onNodeContextMenu: PropTypes.func,
@@ -46,8 +47,10 @@ export const treeContextTypes = {
     onNodeDragLeave: PropTypes.func,
     onNodeDragEnd: PropTypes.func,
     onNodeDrop: PropTypes.func,
-    onBatchNodeCheck: PropTypes.func,
-    onCheckConductFinished: PropTypes.func,
+
+    // TODO: Remove this
+    // onBatchNodeCheck: PropTypes.func,
+    // onCheckConductFinished: PropTypes.func,
 
     // Tree will store the entities when the treeNode refresh.
     // User can pass the func to add more info to customize the additional info.

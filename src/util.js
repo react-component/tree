@@ -451,6 +451,47 @@ export function convertTreeToEntities(treeNodes, processTreeEntity) {
   return wrapper;
 }
 
+/**
+ * Parse `checkedKeys` to { checkedKeys, halfCheckedKeys } style
+ */
+export function parseCheckedKeys(keys) {
+  if (!keys) {
+    return null;
+  }
+
+  // Convert keys to object format
+  let keyProps;
+  if (Array.isArray(keys)) {
+    // [Legacy] Follow the api doc
+    keyProps = {
+      checkedKeys: keys,
+      halfCheckedKeys: undefined,
+    };
+  } else if (typeof keys === 'object') {
+    keyProps = {
+      checkedKeys: keys.checked || undefined,
+      halfCheckedKeys: keys.halfChecked || undefined,
+    };
+  } else {
+    warning(false, '`CheckedKeys` is not an array or an object');
+    return null;
+  }
+
+  keyProps.checkedKeys = keyListToString(keyProps.checkedKeys);
+  keyProps.halfCheckedKeys = keyListToString(keyProps.halfCheckedKeys);
+
+  return keyProps;
+}
+
+/**
+ * Conduct check state by the keyList. It will conduct up & from the provided key.
+ * If the conduct path reach the disabled or already checked / unchecked node will stop conduct.
+ * @param keyList       list of keys
+ * @param isCheck       is check the node or not
+ * @param keyEntities   parsed by `convertTreeToEntities` function in Tree
+ * @param checkStatus   Can pass current checked status for process (usually for uncheck operation)
+ * @returns {{checkedKeys: [], halfCheckedKeys: []}}
+ */
 export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
   const checkedKeys = {};
   const halfCheckedKeys = {}; // Record the key has some child checked (include child half checked)
@@ -570,4 +611,36 @@ export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
     checkedKeys: checkedKeyList,
     halfCheckedKeys: halfCheckedKeyList,
   };
+}
+
+/**
+ * If user use `autoExpandParent` we should get the list of parent node
+ * @param keyList
+ * @param keyEntities
+ */
+export function conductExpandParent(keyList, keyEntities) {
+  const expandedKeys = {};
+
+  function conductUp(key) {
+    if (expandedKeys[key]) return;
+
+    const entity = keyEntities[key];
+    if (!entity) return;
+
+    const { parent, node } = entity;
+
+    if (isCheckDisabled(node)) return;
+
+    expandedKeys[key] = true;
+
+    if (parent) {
+      conductUp(parent.key);
+    }
+  }
+
+  (keyList || []).forEach((key) => {
+    conductUp(key);
+  });
+
+  return Object.keys(expandedKeys);
 }

@@ -7,8 +7,7 @@ import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
 import {
-  getPosition, getNodeChildren, isCheckDisabled,
-  traverseTreeNodes, mapChildren,
+  getNodeChildren, mapChildren,
 } from './util';
 
 const ICON_OPEN = 'open';
@@ -69,7 +68,7 @@ class TreeNode extends React.Component {
     return {
       ...this.context,
       rcTreeNode: {
-        onUpCheckConduct: this.onUpCheckConduct,
+        // onUpCheckConduct: this.onUpCheckConduct,
       },
     };
   }
@@ -83,6 +82,7 @@ class TreeNode extends React.Component {
     this.syncLoadData(this.props);
   }
 
+  /*
   onUpCheckConduct = (treeNode, nodeChecked, nodeHalfChecked, e) => {
     const { pos: nodePos } = treeNode.props;
     const { eventKey, pos, checked, halfChecked } = this.props;
@@ -155,6 +155,7 @@ class TreeNode extends React.Component {
       return true;
     });
   };
+  */
 
   onSelectorClick = (e) => {
     // Click trigger before select/check operation
@@ -184,27 +185,16 @@ class TreeNode extends React.Component {
   onCheck = (e) => {
     if (this.isDisabled()) return;
 
-    const { disableCheckbox, checked, eventKey } = this.props;
+    const { disableCheckbox, checked } = this.props;
     const {
-      rcTree: { checkable, onBatchNodeCheck, onCheckConductFinished },
-      rcTreeNode: { onUpCheckConduct } = {},
+      rcTree: { checkable, onNodeCheck },
     } = this.context;
 
     if (!checkable || disableCheckbox) return;
 
     e.preventDefault();
     const targetChecked = !checked;
-    onBatchNodeCheck(eventKey, targetChecked, false, this);
-
-    // Children conduct
-    this.onDownCheckConduct(targetChecked);
-
-    // Parent conduct
-    if (onUpCheckConduct) {
-      onUpCheckConduct(this, targetChecked, false, e);
-    } else {
-      onCheckConductFinished(e);
-    }
+    onNodeCheck(e, this, targetChecked);
   };
 
   onMouseEnter = (e) => {

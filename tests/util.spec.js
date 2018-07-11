@@ -2,7 +2,10 @@
 import React from 'react';
 import Tree from '../src/Tree';
 import TreeNode from '../src/TreeNode';
-import { convertDataToTree, convertTreeToEntities, conductCheck } from '../src/util';
+import {
+  convertDataToTree, convertTreeToEntities,
+  conductCheck, conductExpandParent,
+} from '../src/util';
 import { convertTreeToData } from './util';
 
 describe('Util', () => {
@@ -163,5 +166,21 @@ describe('Util', () => {
         expect(result2.halfCheckedKeys.sort()).toEqual([].sort());
       });
     });
+  });
+
+  it('conductExpandParent', () => {
+    const tree = (
+      <Tree>
+        <TreeNode key="bamboo">
+          <TreeNode key="is">
+            <TreeNode key="good" />
+          </TreeNode>
+        </TreeNode>
+      </Tree>
+    );
+
+    const { keyEntities } = convertTreeToEntities(tree.props.children);
+    const keys = conductExpandParent(['good'], keyEntities);
+    expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
   });
 });
