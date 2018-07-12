@@ -373,7 +373,7 @@ describe('Tree Props', () => {
   // defaultCheckedKeys - is already full test in Tree.spec.js
   // defaultSelectedKeys - is already full test in Tree.spec.js
 
-  it.only('loadData', () => {
+  it('loadData', () => {
     let called = 0;
 
     const handleLoadData = jest.fn();

@@ -101,6 +101,12 @@ class Tree extends React.Component {
     // TODO: Remove this eslint
     posEntities: {}, // eslint-disable-line react/no-unused-state
     keyEntities: {},
+
+    selectedKeys: [],
+    checkedKeys: [],
+    halfCheckedKeys: [],
+    loadedKeys: [],
+    loadingKeys: [],
   };
 
   getChildContext() {
