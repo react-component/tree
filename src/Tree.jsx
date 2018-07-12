@@ -182,17 +182,17 @@ class Tree extends React.Component {
       newState.keyEntities = entitiesMap.keyEntities;
     }
 
-    const keyEntities = newState.keyEntities || prevProps.keyEntities;
+    const keyEntities = newState.keyEntities || prevState.keyEntities;
 
     // ================ expandedKeys =================
     if (needSync('expandedKeys')) {
       newState.expandedKeys = props.autoExpandParent ?
         conductExpandParent(props.expandedKeys, keyEntities) : props.expandedKeys;
+    } else if (!prevProps && props.defaultExpandAll) {
+      newState.expandedKeys = Object.keys(keyEntities);
     } else if (!prevProps && props.defaultExpandedKeys) {
       newState.expandedKeys = (props.autoExpandParent || props.defaultExpandParent) ?
         conductExpandParent(props.defaultExpandedKeys, keyEntities) : props.defaultExpandedKeys;
-    } else if (!prevProps && props.defaultExpandAll) {
-      newState.expandedKeys = Object.keys(keyEntities);
     }
 
     // ================ selectedKeys =================

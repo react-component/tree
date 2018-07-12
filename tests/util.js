@@ -23,3 +23,12 @@ export function convertTreeToData(treeNodes) {
     return entity;
   }).filter(data => data);
 }
+
+export function nodeMatcher({ props = {}, ...rest }) {
+
+
+  return expect.objectContaining({
+    ...rest,
+    props: expect.objectContaining(props),
+  });
+};

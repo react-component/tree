@@ -3,6 +3,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Tree, { TreeNode } from '..';
+import { nodeMatcher } from './util';
 
 /**
  * For refactor purpose. All the props should be passed by test
@@ -273,7 +274,7 @@ describe('Tree Props', () => {
         event: 'check',
         checked: true,
         node: targetNode.instance(),
-        checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
+        checkedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
         nativeEvent: expect.objectContaining({}),
       }));
       expect(handleOnSelect).not.toBeCalled();
@@ -309,7 +310,7 @@ describe('Tree Props', () => {
         event: 'check',
         checked: true,
         node: targetNode.instance(),
-        checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
+        checkedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
         nativeEvent: expect.objectContaining({}),
       }));
       expect(handleOnSelect).not.toBeCalled();
@@ -372,7 +373,7 @@ describe('Tree Props', () => {
   // defaultCheckedKeys - is already full test in Tree.spec.js
   // defaultSelectedKeys - is already full test in Tree.spec.js
 
-  it('loadData', () => {
+  it.only('loadData', () => {
     let called = 0;
 
     const handleLoadData = jest.fn();
