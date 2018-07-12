@@ -1,28 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Tree Basic check check update when Tree trigger componentWillReceiveProps 1`] = `
 <ul
   class="rc-tree"
   role="tree"
-  unselectable="on">
+  unselectable="on"
+>
   <li
     class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
-    role="treeitem">
+    role="treeitem"
+  >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop">
-      
-    </span>
+      class="rc-tree-switcher rc-tree-switcher-noop"
+    />
     <span
-      class="rc-tree-checkbox rc-tree-checkbox-checked">
-      
-    </span>
+      class="rc-tree-checkbox rc-tree-checkbox-checked"
+    />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="parent 1">
+      title="parent 1"
+    >
       <span
-        class="rc-tree-iconEle rc-tree-icon__docu">
-        
-      </span>
+        class="rc-tree-iconEle rc-tree-icon__docu"
+      />
       <span
-        class="rc-tree-title">
+        class="rc-tree-title"
+      >
         parent 1
       </span>
     </span>
@@ -35,105 +38,108 @@ exports[`Tree Basic renders correctly 1`] = `
   class="rc-tree forTest rc-tree-show-line"
   role="tree"
   tabindex="0"
-  unselectable="on">
+  unselectable="on"
+>
   <li
     class="spe rc-tree-treenode-switcher-open"
-    role="treeitem">
+    role="treeitem"
+  >
     <span
-      class="rc-tree-switcher rc-tree-switcher_open">
-      
-    </span>
+      class="rc-tree-switcher rc-tree-switcher_open"
+    />
     <span
-      class="rc-tree-checkbox">
-      
-    </span>
+      class="rc-tree-checkbox"
+    />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="parent 1">
+      title="parent 1"
+    >
       <span
-        class="rc-tree-iconEle rc-tree-icon__open">
-        
-      </span>
+        class="rc-tree-iconEle rc-tree-icon__open"
+      />
       <span
-        class="rc-tree-title">
+        class="rc-tree-title"
+      >
         parent 1
       </span>
     </span>
     <ul
       class="rc-tree-child-tree rc-tree-child-tree-open"
       data-expanded="true"
-      role="group">
+      role="group"
+    >
       <li
         class="rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
-        role="treeitem">
+        role="treeitem"
+      >
         <span
-          class="rc-tree-switcher rc-tree-switcher_open">
-          
-        </span>
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
         <span
-          class="rc-tree-checkbox rc-tree-checkbox-disabled">
-          
-        </span>
+          class="rc-tree-checkbox rc-tree-checkbox-disabled"
+        />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-          title="leaf 1">
+          title="leaf 1"
+        >
           <span
-            class="rc-tree-iconEle rc-tree-icon__open">
-            
-          </span>
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
           <span
-            class="rc-tree-title">
+            class="rc-tree-title"
+          >
             leaf 1
           </span>
         </span>
         <ul
           class="rc-tree-child-tree rc-tree-child-tree-open"
           data-expanded="true"
-          role="group">
+          role="group"
+        >
           <li
             class="rc-tree-treenode-switcher-open"
-            role="treeitem">
+            role="treeitem"
+          >
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop">
-              
-            </span>
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
             <span
-              class="rc-tree-checkbox">
-              
-            </span>
+              class="rc-tree-checkbox"
+            />
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="leaf">
+              title="leaf"
+            >
               <span
-                class="rc-tree-iconEle rc-tree-icon__docu">
-                
-              </span>
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
               <span
-                class="rc-tree-title">
+                class="rc-tree-title"
+              >
                 leaf
               </span>
             </span>
           </li>
           <li
             class="rc-tree-treenode-switcher-open"
-            role="treeitem">
+            role="treeitem"
+          >
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop">
-              
-            </span>
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
             <span
-              class="rc-tree-checkbox">
-              
-            </span>
+              class="rc-tree-checkbox"
+            />
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="leaf">
+              title="leaf"
+            >
               <span
-                class="rc-tree-iconEle rc-tree-icon__docu">
-                
-              </span>
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
               <span
-                class="rc-tree-title">
+                class="rc-tree-title"
+              >
                 leaf
               </span>
             </span>
@@ -142,24 +148,24 @@ exports[`Tree Basic renders correctly 1`] = `
       </li>
       <li
         class="rc-tree-treenode-switcher-open"
-        role="treeitem">
+        role="treeitem"
+      >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop">
-          
-        </span>
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
         <span
-          class="rc-tree-checkbox rc-tree-checkbox-disabled">
-          
-        </span>
+          class="rc-tree-checkbox rc-tree-checkbox-disabled"
+        />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-          title="leaf 2">
+          title="leaf 2"
+        >
           <span
-            class="rc-tree-iconEle rc-tree-icon__docu">
-            
-          </span>
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
           <span
-            class="rc-tree-title">
+            class="rc-tree-title"
+          >
             leaf 2
           </span>
         </span>
@@ -173,23 +179,25 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
 <ul
   class="rc-tree"
   role="tree"
-  unselectable="on">
+  unselectable="on"
+>
   <li
     class="rc-tree-treenode-switcher-close"
-    role="treeitem">
+    role="treeitem"
+  >
     <span
-      class="rc-tree-switcher rc-tree-switcher_close">
-      
-    </span>
+      class="rc-tree-switcher rc-tree-switcher_close"
+    />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
-      title="0">
+      title="0"
+    >
       <span
-        class="rc-tree-iconEle rc-tree-icon__close">
-        
-      </span>
+        class="rc-tree-iconEle rc-tree-icon__close"
+      />
       <span
-        class="rc-tree-title">
+        class="rc-tree-title"
+      >
         0
       </span>
     </span>
