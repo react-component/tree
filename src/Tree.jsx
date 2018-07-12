@@ -191,7 +191,7 @@ class Tree extends React.Component {
     const keyEntities = newState.keyEntities || prevState.keyEntities;
 
     // ================ expandedKeys =================
-    if (needSync('expandedKeys')) {
+    if (needSync('expandedKeys') || (prevProps && needSync('autoExpandParent'))) {
       newState.expandedKeys = (props.autoExpandParent || (!prevProps && props.defaultExpandParent)) ?
         conductExpandParent(props.expandedKeys, keyEntities) : props.expandedKeys;
     } else if (!prevProps && props.defaultExpandAll) {
@@ -213,10 +213,17 @@ class Tree extends React.Component {
     // ================= checkedKeys =================
     if (props.checkable) {
       let checkedKeyEntity;
+
       if (needSync('checkedKeys')) {
         checkedKeyEntity = parseCheckedKeys(props.checkedKeys) || {};
       } else if (!prevProps && props.defaultCheckedKeys) {
         checkedKeyEntity = parseCheckedKeys(props.defaultCheckedKeys) || {};
+      } else if (treeNode) {
+        // If treeNode changed, we also need check it
+        checkedKeyEntity = {
+          checkedKeys: prevState.checkedKeys,
+          halfCheckedKeys: prevState.halfCheckedKeys,
+        };
       }
 
       if (checkedKeyEntity) {
