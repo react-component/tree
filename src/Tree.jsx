@@ -192,7 +192,7 @@ class Tree extends React.Component {
 
     // ================ expandedKeys =================
     if (needSync('expandedKeys')) {
-      newState.expandedKeys = props.autoExpandParent ?
+      newState.expandedKeys = (props.autoExpandParent || (!prevProps && props.defaultExpandParent)) ?
         conductExpandParent(props.expandedKeys, keyEntities) : props.expandedKeys;
     } else if (!prevProps && props.defaultExpandAll) {
       newState.expandedKeys = Object.keys(keyEntities);

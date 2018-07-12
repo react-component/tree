@@ -1,4 +1,4 @@
-exports[`Tree check check update when Tree trigger componentWillReceiveProps 1`] = `
+exports[`Tree Basic check check update when Tree trigger componentWillReceiveProps 1`] = `
 <ul
   class="rc-tree"
   role="tree"
@@ -30,7 +30,7 @@ exports[`Tree check check update when Tree trigger componentWillReceiveProps 1`]
 </ul>
 `;
 
-exports[`Tree renders correctly 1`] = `
+exports[`Tree Basic renders correctly 1`] = `
 <ul
   class="rc-tree forTest rc-tree-show-line"
   role="tree"
@@ -169,7 +169,7 @@ exports[`Tree renders correctly 1`] = `
 </ul>
 `;
 
-exports[`Tree renders opaque children correctly 1`] = `
+exports[`Tree Basic renders opaque children correctly 1`] = `
 <ul
   class="rc-tree"
   role="tree"

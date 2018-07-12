@@ -10,7 +10,7 @@ const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
 const SELECTED_CLASSNAME = '.rc-tree-node-selected';
 
-describe('Tree', () => {
+describe('Tree Basic', () => {
   it('renders correctly', () => {
     const wrapper = render(
       <Tree
