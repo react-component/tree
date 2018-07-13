@@ -75,7 +75,11 @@ class Tree extends React.Component {
     // This function may be remove in future if we start to remove the dependency on key
     // So any user should not relay on this function.
     // If you are refactor this code, you can remove it as your wish
-    unstable_processTreeEntity: PropTypes.func,
+    unstable_processTreeEntity: PropTypes.shape({
+      initWrapper: PropTypes.func.isRequired,
+      processEntity: PropTypes.func.isRequired,
+      onProcessFinished: PropTypes.func.isRequired,
+    }),
   };
 
   static childContextTypes = treeContextTypes;

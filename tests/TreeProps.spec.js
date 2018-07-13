@@ -547,4 +547,33 @@ describe('Tree Props', () => {
     const wrapper = mount(<Tree treeData={treeData} defaultExpandAll />);
     expect(wrapper.render()).toMatchSnapshot();
   });
+
+  describe('unstable_processTreeEntity', () => {
+    const onProcessFinished = jest.fn();
+
+    const handler = {
+      initWrapper(wrapper) {
+        return { ...wrapper, valueEntities: {} };
+      },
+      processEntity(entity, { valueEntities }) {
+        valueEntities[entity.node.props.value] = entity;
+      },
+      onProcessFinished,
+    };
+
+    mount(
+      <Tree unstable_processTreeEntity={handler}>
+        <TreeNode key="K0" title="T0" value={0} />
+        <TreeNode key="K1" title="T1" value={1}>
+          <TreeNode key="K10" title="T10" value={10} />
+          <TreeNode key="K11" title="T11" value={11} />
+        </TreeNode>
+      </Tree>
+    );
+
+    expect(onProcessFinished).toBeCalled();
+
+    const valueList = Object.keys(onProcessFinished.mock.calls[0][0].valueEntities);
+    expect(valueList).toEqual(['0', '1', '10', '11']);
+  });
 });

@@ -154,9 +154,7 @@ export function calcDropPosition(event, treeNode) {
  * @returns [string]
  */
 export function calcSelectedKeys(selectedKeys, props) {
-  if (!selectedKeys) {
-    return undefined;
-  }
+  if (!selectedKeys) return undefined;
 
   const { multiple } = props;
   if (multiple) {
@@ -198,13 +196,19 @@ export function convertDataToTree(treeData) {
  * @param treeNodes
  * @param processTreeEntity  User can customize the entity
  */
-export function convertTreeToEntities(treeNodes, processTreeEntity) {
+export function convertTreeToEntities(treeNodes, { initWrapper, processEntity, onProcessFinished } = {}) {
+
+
   const posEntities = {};
   const keyEntities = {};
-  const wrapper = {
+  let wrapper = {
     posEntities,
     keyEntities,
   };
+
+  if (initWrapper) {
+    wrapper = initWrapper(wrapper) || wrapper;
+  }
 
   traverseTreeNodes(treeNodes, (item) => {
     const { node, index, pos, key, parentPos } = item;
@@ -220,10 +224,14 @@ export function convertTreeToEntities(treeNodes, processTreeEntity) {
       entity.parent.children.push(entity);
     }
 
-    if (processTreeEntity) {
-      processTreeEntity(entity, wrapper);
+    if (processEntity) {
+      processEntity(entity, wrapper);
     }
   });
+
+  if (onProcessFinished) {
+    onProcessFinished(wrapper);
+  }
 
   return wrapper;
 }
