@@ -1,21 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import warning from 'warning';
 import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
 import {
   getNodeChildren, mapChildren,
+  warnOnlyTreeNode,
 } from './util';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
 
 const defaultTitle = '---';
-
-let onlyTreeNodeWarned = false; // Only accept TreeNode
 
 class TreeNode extends React.Component {
   static propTypes = {
@@ -215,9 +213,8 @@ class TreeNode extends React.Component {
     const originList = toArray(children).filter(node => node);
     const targetList = getNodeChildren(originList);
 
-    if (originList.length !== targetList.length && !onlyTreeNodeWarned) {
-      onlyTreeNodeWarned = true;
-      warning(false, 'Tree only accept TreeNode as children.');
+    if (originList.length !== targetList.length) {
+      warnOnlyTreeNode();
     }
 
     return targetList;

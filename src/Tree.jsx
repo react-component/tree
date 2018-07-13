@@ -14,6 +14,7 @@ import {
   calcDropPosition,
   arrAdd, arrDel, posToArr,
   mapChildren, conductCheck,
+  warnOnlyTreeNode,
 } from './util';
 
 class Tree extends React.Component {
@@ -153,8 +154,6 @@ class Tree extends React.Component {
         onNodeDragLeave: this.onNodeDragLeave,
         onNodeDragEnd: this.onNodeDragEnd,
         onNodeDrop: this.onNodeDrop,
-        // onBatchNodeCheck: this.onBatchNodeCheck,
-        // onCheckConductFinished: this.onCheckConductFinished,
       },
     };
   }
@@ -632,12 +631,18 @@ class Tree extends React.Component {
    */
   renderTreeNode = (child, index, level = 0) => {
     const {
+      keyEntities,
       expandedKeys = [], selectedKeys = [], halfCheckedKeys = [],
       loadedKeys = [], loadingKeys = [],
       dragOverNodeKey, dropPosition,
     } = this.state;
     const pos = getPosition(level, index);
     const key = child.key || pos;
+
+    if (!keyEntities[key]) {
+      warnOnlyTreeNode();
+      return null;
+    }
 
     return React.cloneElement(child, {
       key,

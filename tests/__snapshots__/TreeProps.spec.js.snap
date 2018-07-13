@@ -838,7 +838,7 @@ exports[`Tree Props treeData 1`] = `
       role="group"
     >
       <li
-        class="rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode-switcher-open"
         role="treeitem"
       >
         <span
@@ -859,18 +859,18 @@ exports[`Tree Props treeData 1`] = `
         </span>
       </li>
       <li
-        class="rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode-switcher-open"
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher_close"
+          class="rc-tree-switcher rc-tree-switcher_open"
         />
         <span
-          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
           title="T11"
         >
           <span
-            class="rc-tree-iconEle rc-tree-icon__close"
+            class="rc-tree-iconEle rc-tree-icon__open"
           />
           <span
             class="rc-tree-title"
@@ -878,9 +878,57 @@ exports[`Tree Props treeData 1`] = `
             T11
           </span>
         </span>
+        <ul
+          class="rc-tree-child-tree rc-tree-child-tree-open"
+          data-expanded="true"
+          role="group"
+        >
+          <li
+            class="rc-tree-treenode-switcher-open"
+            role="treeitem"
+          >
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="T110"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                T110
+              </span>
+            </span>
+          </li>
+          <li
+            class="rc-tree-treenode-switcher-open"
+            role="treeitem"
+          >
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="T111"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                T111
+              </span>
+            </span>
+          </li>
+        </ul>
       </li>
       <li
-        class="rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode-switcher-open"
         role="treeitem"
       >
         <span

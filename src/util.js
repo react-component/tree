@@ -6,6 +6,15 @@ import TreeNode from './TreeNode';
 const DRAG_SIDE_RANGE = 0.25;
 const DRAG_MIN_GAP = 2;
 
+let onlyTreeNodeWarned = false;
+
+export function warnOnlyTreeNode() {
+  if (onlyTreeNodeWarned) return;
+
+  onlyTreeNodeWarned = true;
+  warning(false, 'Tree only accept TreeNode as children.');
+}
+
 export function arrDel(list, value) {
   const clone = list.slice();
   const index = clone.indexOf(value);
@@ -31,10 +40,12 @@ export function getPosition(level, index) {
   return `${level}-${index}`;
 }
 
+export function isTreeNode(node) {
+  return node && node.type && node.type.isTreeNode;
+}
+
 export function getNodeChildren(children) {
-  const childList = Array.isArray(children) ? children : [children];
-  return childList
-    .filter(child => child && child.type && child.type.isTreeNode);
+  return toArray(children).filter(isTreeNode);
 }
 
 export function isCheckDisabled(node) {
