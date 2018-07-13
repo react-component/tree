@@ -317,6 +317,32 @@ describe('Tree Props', () => {
     });
   });
 
+  // Don't crash
+  describe('invalidate checkedKeys', () => {
+    const genWrapper = (checkedKeys) => mount(
+      <Tree
+        checkedKeys={checkedKeys}
+        defaultExpandAll
+        checkable
+      >
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    it('null', () => {
+      const wrapper = genWrapper(null);
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+
+    it('number', () => {
+      console.log('>>> Follow Warning is for test purpose. Don\'t be scared :)');
+      const wrapper = genWrapper(123);
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+  });
+
   // checkStrictly
   it('checkStrictly', () => {
     const handleOnCheck = jest.fn();
