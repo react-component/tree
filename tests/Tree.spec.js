@@ -69,12 +69,10 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const switcher = wrapper.find('.rc-tree-switcher').first();
-      expect(switcher.is(OPEN_CLASSNAME)).toBe(false);
+      const getSwitcher = () => wrapper.find('.rc-tree-switcher').first();
+      expect(getSwitcher().is(OPEN_CLASSNAME)).toBe(false);
       wrapper.setProps({ expandedKeys: ['0-0'] });
-      setTimeout(() => {
-        expect(switcher.is(OPEN_CLASSNAME)).toBe(true);
-      }, 10);
+      expect(getSwitcher().is(OPEN_CLASSNAME)).toBe(true);
     });
 
     it('expands parent node when child node is expanded', () => {
@@ -192,12 +190,10 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const checkbox = wrapper.find('.rc-tree-checkbox');
-      expect(checkbox.is(CHECKED_CLASSNAME)).toBe(false);
+      const getCheckbox = () => wrapper.find('.rc-tree-checkbox');
+      expect(getCheckbox().is(CHECKED_CLASSNAME)).toBe(false);
       wrapper.setProps({ checkedKeys: ['0-0'] });
-      setTimeout(() => {
-        expect(checkbox.is(CHECKED_CLASSNAME)).toBe(true);
-      }, 10);
+      expect(getCheckbox().is(CHECKED_CLASSNAME)).toBe(true);
     });
 
     it('trurns parent node to checked when all children are checked', () => {
@@ -470,19 +466,18 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const node = wrapper.find(TreeNode).first().find('.rc-tree-checkbox').first();
-      node.simulate('click');
-      setTimeout(() => {
-        expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
-        expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-        expect(wrapper.state().checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0']);
-        node.simulate('click');
-        setTimeout(() => {
-          expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
-          expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-          expect(wrapper.state().checkedKeys).toEqual([]);
-        }, 10);
-      }, 10);
+
+      const firstNode = () => wrapper.find('.rc-tree-checkbox').first();
+      firstNode().simulate('click');
+
+      expect(firstNode().hasClass('rc-tree-checkbox-checked')).toBe(true);
+      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(wrapper.state().checkedKeys.slice().sort()).toEqual(['0-0-1', '0-0-2', '0-0'].sort());
+
+      firstNode().simulate('click');
+      expect(firstNode().hasClass('rc-tree-checkbox-checked')).toBe(false);
+      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(wrapper.state().checkedKeys).toEqual([]);
     });
 
     it('should ignore disabled children items when check parent', () => {
@@ -498,19 +493,18 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const node = wrapper.find(TreeNode).first().find('.rc-tree-checkbox').first();
-      node.simulate('click');
-      setTimeout(() => {
-        expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
-        expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-        expect(wrapper.state().checkedKeys).toEqual(['0-0-1', '0-0-2', '0-0']);
-        node.simulate('click');
-        setTimeout(() => {
-          expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
-          expect(node.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-          expect(wrapper.state().checkedKeys).toEqual([]);
-        }, 10);
-      }, 10);
+
+      const firstNode = () => wrapper.find(TreeNode).first().find('.rc-tree-checkbox').first();
+
+      firstNode().simulate('click');
+      expect(firstNode().hasClass('rc-tree-checkbox-checked')).toBe(true);
+      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(wrapper.state().checkedKeys.slice().sort()).toEqual(['0-0-1', '0-0-2', '0-0'].sort());
+
+      firstNode().simulate('click');
+      expect(firstNode().hasClass('rc-tree-checkbox-checked')).toBe(false);
+      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(wrapper.state().checkedKeys).toEqual([]);
     });
 
     // https://github.com/react-component/tree/pull/106#issuecomment-316779889
@@ -527,20 +521,17 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const parent = wrapper.find(TreeNode).at(1).find('.rc-tree-checkbox').first();
-      const node = wrapper.find(TreeNode).at(2).find('.rc-tree-checkbox').first();
-      node.simulate('click');
-      setTimeout(() => {
-        expect(node.hasClass('rc-tree-checkbox-checked')).toBe(true);
-        expect(parent.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-        expect(parent.hasClass('rc-tree-checkbox-checked')).toBe(true);
-        node.simulate('click');
-        setTimeout(() => {
-          expect(node.hasClass('rc-tree-checkbox-checked')).toBe(false);
-          expect(parent.hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
-          expect(parent.hasClass('rc-tree-checkbox-checked')).toBe(false);
-        }, 10);
-      }, 10);
+      const getParent = () => wrapper.find(TreeNode).at(1).find('.rc-tree-checkbox').first();
+      const getNode = () => wrapper.find(TreeNode).at(2).find('.rc-tree-checkbox').first();
+
+      getNode().simulate('click');
+      expect(getNode().hasClass('rc-tree-checkbox-checked')).toBe(true);
+      expect(getParent().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(getParent().hasClass('rc-tree-checkbox-checked')).toBe(true);
+      getNode().simulate('click');
+      expect(getNode().hasClass('rc-tree-checkbox-checked')).toBe(false);
+      expect(getParent().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(getParent().hasClass('rc-tree-checkbox-checked')).toBe(false);
     });
   });
 
