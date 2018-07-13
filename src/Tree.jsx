@@ -7,7 +7,6 @@ import { polyfill } from 'react-lifecycles-compat';
 
 import { treeContextTypes } from './contextTypes';
 import {
-  traverseTreeNodes,
   convertTreeToEntities, convertDataToTree,
   getPosition, getDragNodesKeys,
   parseCheckedKeys,
@@ -414,7 +413,8 @@ class Tree extends React.Component {
 
   onNodeSelect = (e, treeNode) => {
     let { selectedKeys } = this.state;
-    const { onSelect, multiple, children } = this.props;
+    const { keyEntities } = this.state;
+    const { onSelect, multiple } = this.props;
     const { selected, eventKey } = treeNode.props;
     const targetSelected = !selected;
 
@@ -428,15 +428,12 @@ class Tree extends React.Component {
     }
 
     // [Legacy] Not found related usage in doc or upper libs
-    // [Legacy] TODO: add optimize prop to skip node process
-    const selectedNodes = [];
-    if (selectedKeys.length) {
-      traverseTreeNodes(children, ({ node, key }) => {
-        if (selectedKeys.indexOf(key) !== -1) {
-          selectedNodes.push(node);
-        }
-      });
-    }
+    const selectedNodes = selectedKeys.map(key => {
+      const entity = keyEntities[key];
+      if (!entity) return null;
+
+      return entity.node;
+    }).filter(node => node);
 
     this.setUncontrolledState({ selectedKeys });
 

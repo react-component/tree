@@ -211,7 +211,7 @@ describe('Tree Props', () => {
       event: 'select',
       selected: true,
       node: parentNode.instance(),
-      selectedNodes: [wrapper.find(Tree).props().children, parentNode.props().children],
+      selectedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
       nativeEvent: expect.objectContaining({}),
     }));
     handleOnSelect.mockReset();
@@ -222,7 +222,7 @@ describe('Tree Props', () => {
       event: 'select',
       selected: false,
       node: targetNode.instance(),
-      selectedNodes: [wrapper.find(Tree).props().children],
+      selectedNodes: [nodeMatcher({ key: '0-0' })],
       nativeEvent: expect.objectContaining({}),
     });
   });
