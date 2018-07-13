@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
+import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 
 import { treeContextTypes } from './contextTypes';
@@ -107,6 +108,8 @@ class Tree extends React.Component {
     halfCheckedKeys: [],
     loadedKeys: [],
     loadingKeys: [],
+
+    treeNode: [],
   };
 
   getChildContext() {
@@ -171,10 +174,10 @@ class Tree extends React.Component {
     let treeNode = null;
 
     // Check if `treeData` or `children` changed and save into the state.
-    if (needSync('treeNode')) {
+    if (needSync('treeData')) {
       treeNode = convertDataToTree(props.treeData);
     } else if (needSync('children')) {
-      treeNode = props.children;
+      treeNode = toArray(props.children);
     }
 
     // Tree support filter function which will break the tree structure in the vdm.
@@ -183,7 +186,7 @@ class Tree extends React.Component {
       newState.treeNode = treeNode;
 
       // Calculate the entities data for quick match
-      const entitiesMap = convertTreeToEntities(props.children, props.unstable_processTreeEntity);
+      const entitiesMap = convertTreeToEntities(treeNode, props.unstable_processTreeEntity);
       newState.posEntities = entitiesMap.posEntities;
       newState.keyEntities = entitiesMap.keyEntities;
     }
@@ -658,10 +661,10 @@ class Tree extends React.Component {
   };
 
   render() {
+    const { treeNode } = this.state;
     const {
       prefixCls, className, focusable,
       showLine, tabIndex = 0,
-      children,
     } = this.props;
     const domProps = {};
 
@@ -679,7 +682,7 @@ class Tree extends React.Component {
         role="tree"
         unselectable="on"
       >
-        {mapChildren(children, (node, index) => (
+        {mapChildren(treeNode, (node, index) => (
           this.renderTreeNode(node, index)
         ))}
       </ul>

@@ -527,4 +527,24 @@ describe('Tree Props', () => {
       });
     });
   });
+
+  it('treeData', () => {
+    const treeData = [
+      { key: 'K0', title: 'T0' },
+      { key: 'K1', title: 'T1', children:
+        [
+          { key: 'K10', title: 'T10' },
+          { key: 'K11', title: 'T11', children:
+            [
+              { key: 'K110', title: 'T110' },
+              { key: 'K111', title: 'T111' },
+            ]
+          },
+          { key: 'K12', title: 'T12' },
+        ],
+      },
+    ];
+    const wrapper = mount(<Tree treeData={treeData} defaultExpandAll />);
+    expect(wrapper.render()).toMatchSnapshot();
+  });
 });

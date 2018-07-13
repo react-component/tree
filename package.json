@@ -55,6 +55,9 @@
     "collectCoverageFrom": [
       "src/**/*"
     ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "transform": {
       "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
     }
