@@ -849,4 +849,33 @@ describe('Tree Basic', () => {
 
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
+
+  describe('ignore illegal node as Tree children', () => {
+    console.log('>>> Follow Warning is for test purpose. Don\'t be scared :)');
+
+    it('Direct TreeNode', () => {
+      const wrapper = mount(
+        <Tree defaultExpandAll>
+          <TreeNode key="00" title="00" />
+          <span>Hide Me</span>
+          <TreeNode key="02" title="02" />
+        </Tree>
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+
+    it('Sub TreeNode', () => {
+      const wrapper = mount(
+        <Tree defaultExpandAll>
+          <TreeNode key="00" title="00" />
+          <TreeNode key="01" title="01">
+            <TreeNode key="010" title="010" />
+            <span>I AM INVISIBLE</span>
+            <TreeNode key="012" title="012" />
+          </TreeNode>
+        </Tree>
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+  });
 });
