@@ -113,6 +113,16 @@ describe('Util', () => {
         expect(checkedKeys.sort()).toEqual(['greed', 'there', 'no'].sort());
         expect(halfCheckedKeys.sort()).toEqual(['good', 'is'].sort());
       });
+
+      it('not exist', () => {
+        console.log('>>> Follow Warning is for test purpose. Don\'t be scared :)');
+        const tree = genTree();
+        const { keyEntities } = convertTreeToEntities(tree.props.children);
+        const { checkedKeys, halfCheckedKeys } =
+          conductCheck(['notExist'], true, keyEntities);
+        expect(checkedKeys).toEqual([]);
+        expect(halfCheckedKeys).toEqual([]);
+      });
     });
 
     describe('part disabled', () => {
