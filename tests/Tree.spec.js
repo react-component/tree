@@ -818,6 +818,54 @@ describe('Tree Basic', () => {
       normalTree.find('.dropTarget').at(0).simulate('dragOver');
       normalTree.find('.dropTarget').at(0).simulate('drop');
     });
+
+    describe('full steps', () => {
+      function dropTarget(targetSelector) {
+        return new Promise((resolve) => {
+          const wrapper = mount(
+            <Tree draggable defaultExpandAll>
+              <TreeNode key="0-0" className="dragTarget">
+                <TreeNode key="0-0-0" className="dragTargetChild" />
+              </TreeNode>
+              <TreeNode key="0-1" className="dropTarget">
+                <TreeNode key="0-1-0" />
+              </TreeNode>
+            </Tree>
+          );
+
+          wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+
+          // 1. Move into target
+          wrapper.find(targetSelector).simulate('dragEnter');
+          setTimeout(() => {
+            wrapper.find(targetSelector).simulate('dragOver', { clientY: 0 });
+
+            // 2. Move out of target
+            wrapper.find(targetSelector).simulate('dragLeave');
+
+            // 3. Move in again
+            wrapper.find(targetSelector).simulate('dragEnter');
+            setTimeout(() => {
+              wrapper.find(targetSelector).simulate('dragOver', { clientY: 0 });
+
+              // 4. Drop
+              wrapper.find(targetSelector).simulate('drop');
+              wrapper.find('li.dragTarget').simulate('dragEnd');
+
+              resolve();
+            }, 500);
+          }, 10);
+        });
+      }
+
+      it('self', () => {
+        return dropTarget('li.dragTarget');
+      });
+
+      it('target', () => {
+        return dropTarget('li.dropTarget');
+      });
+    });
   });
 
   it('renders without errors', () => {
