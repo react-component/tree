@@ -8,6 +8,24 @@ import Tree, { TreeNode } from 'rc-tree';
 import 'rc-tree/assets/index.less';
 import './basic.less';
 
+const treeData = [
+  { key: '0-0', title: 'parent 1', children:
+    [
+      { key: '0-0-0', title: 'parent 1-1', children:
+        [
+          { key: '0-0-0-0', title: 'parent 1-1-0' },
+        ],
+      },
+      { key: '0-0-1', title: 'parent 1-2', children:
+          [
+            { key: '0-0-1-0', title: 'parent 1-2-0', disableCheckbox: true },
+            { key: '0-0-1-1', title: 'parent 1-2-1' },
+          ],
+      },
+    ],
+  },
+];
+
 class Demo extends React.Component {
   static propTypes = {
     keys: PropTypes.array,
@@ -97,17 +115,8 @@ class Demo extends React.Component {
           defaultCheckedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect}
           onCheck={this.onCheck}
-        >
-          <TreeNode title="parent 1" key="0-0">
-            <TreeNode title="parent 1-1" key="0-0-0">
-              <TreeNode title="parent 1-1-0" key="0-0-0-0" />
-            </TreeNode>
-            <TreeNode title="parent 1-2" key="0-0-1">
-              <TreeNode title="parent 1-2-0" key="0-0-1-0" disableCheckbox />
-              <TreeNode title="parent 1-2-1" key="0-0-1-1" />
-            </TreeNode>
-          </TreeNode>
-        </Tree>
+          treeData={treeData}
+        />
       </div>
     );
   }
