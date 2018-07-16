@@ -154,6 +154,19 @@ describe('Tree Basic', () => {
   });
 
   describe('check', () => {
+    it('basic render', () => {
+      const wrapper = render(
+        <Tree checkable defaultExpandAll>
+          <TreeNode key="0-0">
+            <TreeNode key="0-0-0" disabled />
+            <TreeNode key="0-0-1" />
+          </TreeNode>
+        </Tree>
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+
     it('checks default checked keys', () => {
       const wrapper = mount(
         <Tree checkable defaultCheckedKeys={['0-0']}>
@@ -836,17 +849,17 @@ describe('Tree Basic', () => {
           wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
 
           // 1. Move into target
-          wrapper.find(targetSelector).simulate('dragEnter');
+          wrapper.find(targetSelector).simulate('dragEnter', { clientY: 0 });
           setTimeout(() => {
-            wrapper.find(targetSelector).simulate('dragOver', { clientY: 0 });
+            wrapper.find(targetSelector).simulate('dragOver', { clientY: 999 });
 
             // 2. Move out of target
             wrapper.find(targetSelector).simulate('dragLeave');
 
             // 3. Move in again
-            wrapper.find(targetSelector).simulate('dragEnter');
+            wrapper.find(targetSelector).simulate('dragEnter', { clientY: 0 });
             setTimeout(() => {
-              wrapper.find(targetSelector).simulate('dragOver', { clientY: 0 });
+              wrapper.find(targetSelector).simulate('dragOver', { clientY: 999 });
 
               // 4. Drop
               wrapper.find(targetSelector).simulate('drop');

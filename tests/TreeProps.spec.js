@@ -602,4 +602,24 @@ describe('Tree Props', () => {
     const valueList = Object.keys(onProcessFinished.mock.calls[0][0].valueEntities);
     expect(valueList).toEqual(['0', '1', '10', '11']);
   });
+
+  describe('disabled', () => {
+    it('basic', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll disabled>
+          <TreeNode key="0-0" />
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('treeNode not disabled', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll disabled>
+          <TreeNode key="0-0" disabled={false} />
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });
