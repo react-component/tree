@@ -141,4 +141,20 @@ describe('TreeNode Props', () => {
       expect(renderToJson(wrapper)).toMatchSnapshot();
     });
   });
+
+  it('selectable', () => {
+    const onClick = jest.fn();
+    const onSelect = jest.fn();
+
+    const wrapper = mount(
+      <Tree selectable onClick={onClick} onSelect={onSelect}>
+        <TreeNode selectable={false} />
+      </Tree>
+    );
+
+    wrapper.find('.rc-tree-node-content-wrapper').simulate('click');
+
+    expect(onClick).toBeCalled();
+    expect(onSelect).not.toBeCalled();
+  });
 });

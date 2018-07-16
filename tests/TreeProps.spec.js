@@ -419,8 +419,9 @@ describe('Tree Props', () => {
       };
 
       render() {
+        // Hide icon will still show the icon for loading status
         return (
-          <Tree loadData={this.loadData}>
+          <Tree loadData={this.loadData} showIcon={false}>
             <TreeNode key="0-0">
               {this.state.loaded ? <TreeNode key="0-0-0" /> : null}
             </TreeNode>

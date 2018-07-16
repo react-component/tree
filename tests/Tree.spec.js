@@ -848,8 +848,8 @@ describe('Tree Basic', () => {
 
           wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
 
-          // 1. Move into target
-          wrapper.find(targetSelector).simulate('dragEnter', { clientY: 0 });
+          // 1. Move into target (first in the middle of the node)
+          wrapper.find(targetSelector).simulate('dragEnter', { clientY: 10 });
           setTimeout(() => {
             wrapper.find(targetSelector).simulate('dragOver', { clientY: 999 });
 
@@ -870,6 +870,24 @@ describe('Tree Basic', () => {
           }, 10);
         });
       }
+
+      const getBoundingClientRect = Element.prototype.getBoundingClientRect;
+      beforeEach(() => {
+        Element.prototype.getBoundingClientRect = jest.fn(() => {
+          return {
+            width: 100,
+            height: 20,
+            top: 0,
+            left: 0,
+            bottom: 20,
+            right: 100,
+          }
+        });
+      });
+
+      afterEach(() => {
+        Element.prototype.getBoundingClientRect = getBoundingClientRect;
+      });
 
       it('self', () => {
         return dropTarget('li.dragTarget');
