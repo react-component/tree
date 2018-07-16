@@ -417,22 +417,11 @@ class TreeNode extends React.Component {
       renderTreeNode,
     } } = this.context;
 
-    // [Legacy] Animation control
-    const renderFirst = this.renderFirst;
-    this.renderFirst = 1;
-    let transitionAppear = true;
-    if (!renderFirst && expanded) {
-      transitionAppear = false;
-    }
-
     const animProps = {};
     if (openTransitionName) {
       animProps.transitionName = openTransitionName;
     } else if (typeof openAnimation === 'object') {
       animProps.animation = { ...openAnimation };
-      if (!transitionAppear) {
-        delete animProps.animation.appear;
-      }
     }
 
     // Children TreeNode
@@ -464,7 +453,6 @@ class TreeNode extends React.Component {
       <Animate
         {...animProps}
         showProp="data-expanded"
-        transitionAppear={transitionAppear}
         component=""
       >
         {$children}

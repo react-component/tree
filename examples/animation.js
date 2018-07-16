@@ -44,9 +44,6 @@ const animation = {
   leave(node, done) {
     return animate(node, false, done);
   },
-  appear(node, done) {
-    return animate(node, true, done);
-  },
 };
 
 const demo = (
