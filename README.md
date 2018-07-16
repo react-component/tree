@@ -53,42 +53,43 @@ see examples
 
 | name     | description    | type     | default      |
 |----------|----------------|----------|--------------|
-|prefixCls | prefix class | String | 'rc-tree' |
-|className | additional css class of root dom node | String | '' |
-|disabled | whether disabled the tree | bool | false |
-|showLine | whether show line | bool | false |
-|showIcon | whether show icon | bool | true |
-|selectable | whether can be selected | bool | true |
-|multiple | whether multiple select | bool | false |
-|checkable | whether support checked | bool/React Node | false |
-|defaultExpandAll | expand all treeNodes | bool | false |
-|defaultExpandedKeys | expand specific treeNodes | String[] | - |
-|expandedKeys | Controlled expand specific treeNodes | String[] | - |
-|defaultExpandParent | auto expand parent treeNodes when init | bool | true |
-|autoExpandParent | whether auto expand parent treeNodes | bool | false |
-|defaultCheckedKeys | default checked treeNodes | String[] | [] |
-|checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array. | String[]/{checked:Array<String>,halfChecked:Array<String>} | [] |
-|checkStrictly| check node precisely, parent and children nodes are not associated| bool | false |
-|defaultSelectedKeys | default selected treeNodes | String[] | [] |
-|icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
-|selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
-|onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node, nativeEvent}) | - |
-|onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent}) | - |
-|onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
-|filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
-|loadData | load data asynchronously and the return value should be a promise | function(node) | - |
-|loadedKeys | Mark node is loaded when `loadData` is true | string[] | - |
-|onLoad | Trigger when a node is loaded. If you set the `loadedKeys`, you must handle `onLoad` to avoid infinity loop | function(loadedKeys, {event, node}) | - |
-|onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
-|onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
-|onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |
-|draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool | false |
-|onDragStart | it execs when fire the tree's dragstart event | function({event,node}) | - |
-|onDragEnter | it execs when fire the tree's dragenter event | function({event,node,expandedKeys}) | - |
-|onDragOver | it execs when fire the tree's dragover event | function({event,node}) | - |
-|onDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
-|onDrop | it execs when fire the tree's drop event | function({event, node, dragNode, dragNodesKeys}) | - |
-|onDragEnd | it execs when fire the tree's dragend event | function({event,node}) | - |
+| autoExpandParent | whether auto expand parent treeNodes | bool | false |
+| checkable | whether support checked | bool/React Node | false |
+| checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array. | String[]/{checked:Array<String>,halfChecked:Array<String>} | [] |
+| checkStrictly| check node precisely, parent and children nodes are not associated| bool | false |
+| className | additional css class of root dom node | String | '' |
+| defaultCheckedKeys | default checked treeNodes | String[] | [] |
+| defaultExpandedKeys | expand specific treeNodes | String[] | - |
+| defaultExpandAll | expand all treeNodes | bool | false |
+| defaultExpandParent | auto expand parent treeNodes when init | bool | true |
+| defaultSelectedKeys | default selected treeNodes | String[] | [] |
+| disabled | whether disabled the tree | bool | false |
+| draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool | false |
+| expandedKeys | Controlled expand specific treeNodes | String[] | - |
+| filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
+| icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
+| loadedKeys | Mark node is loaded when `loadData` is true | string[] | - |
+| loadData | load data asynchronously and the return value should be a promise | function(node) | - |
+| multiple | whether multiple select | bool | false |
+| prefixCls | prefix class | String | 'rc-tree' |
+| selectable | whether can be selected | bool | true |
+| selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
+| showIcon | whether show icon | bool | true |
+| showLine | whether show line | bool | false |
+| treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array) | array<{key,title,children, [disabled, selectable]}> | - |
+| onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent}) | - |
+| onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node, nativeEvent}) | - |
+| onDragEnd | it execs when fire the tree's dragend event | function({event,node}) | - |
+| onDragEnter | it execs when fire the tree's dragenter event | function({event,node,expandedKeys}) | - |
+| onDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
+| onDragOver | it execs when fire the tree's dragover event | function({event,node}) | - |
+| onDragStart | it execs when fire the tree's dragstart event | function({event,node}) | - |
+| onDrop | it execs when fire the tree's drop event | function({event, node, dragNode, dragNodesKeys}) | - |
+| onLoad | Trigger when a node is loaded. If you set the `loadedKeys`, you must handle `onLoad` to avoid infinity loop | function(loadedKeys, {event, node}) | - |
+| onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
+| onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |
+| onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
+| onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 
 ### TreeNode props
 > note: if you have a lot of TreeNode, like more than 1000,   
