@@ -55,6 +55,9 @@
     "collectCoverageFrom": [
       "src/**/*"
     ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "transform": {
       "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
     }
@@ -65,7 +68,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.0.0",
     "es6-promise": "^3.1.2",
-    "jest": "^18.0.0",
+    "jest": "^23.0.0",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
     "rc-tools": "^8.x",
@@ -79,8 +82,8 @@
     "babel-runtime": "^6.23.0",
     "classnames": "2.x",
     "prop-types": "^15.5.8",
-    "rc-animate": "2.x",
-    "rc-util": "^4.0.4",
+    "rc-animate": "3.0.0-rc.1",
+    "rc-util": "^4.5.1",
     "react-lifecycles-compat": "^3.0.4",
     "warning": "^3.0.0"
   },

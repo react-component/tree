@@ -1,4 +1,4 @@
-/* eslint no-console:0 */
+/* eslint no-console:0, react/no-danger: 0 */
 import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -43,9 +43,6 @@ const animation = {
   },
   leave(node, done) {
     return animate(node, false, done);
-  },
-  appear(node, done) {
-    return animate(node, true, done);
   },
 };
 

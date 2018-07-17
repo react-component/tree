@@ -2,7 +2,9 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
+import Animate from 'rc-animate';
 import Tree, { TreeNode } from '..';
+import { nodeMatcher } from './util';
 
 /**
  * For refactor purpose. All the props should be passed by test
@@ -210,7 +212,7 @@ describe('Tree Props', () => {
       event: 'select',
       selected: true,
       node: parentNode.instance(),
-      selectedNodes: [wrapper.find(Tree).props().children, parentNode.props().children],
+      selectedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
       nativeEvent: expect.objectContaining({}),
     }));
     handleOnSelect.mockReset();
@@ -221,7 +223,7 @@ describe('Tree Props', () => {
       event: 'select',
       selected: false,
       node: targetNode.instance(),
-      selectedNodes: [wrapper.find(Tree).props().children],
+      selectedNodes: [nodeMatcher({ key: '0-0' })],
       nativeEvent: expect.objectContaining({}),
     });
   });
@@ -273,7 +275,7 @@ describe('Tree Props', () => {
         event: 'check',
         checked: true,
         node: targetNode.instance(),
-        checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
+        checkedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
         nativeEvent: expect.objectContaining({}),
       }));
       expect(handleOnSelect).not.toBeCalled();
@@ -309,10 +311,36 @@ describe('Tree Props', () => {
         event: 'check',
         checked: true,
         node: targetNode.instance(),
-        checkedNodes: [withCheckable.find(Tree).props().children, parentNode.props().children],
+        checkedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
         nativeEvent: expect.objectContaining({}),
       }));
       expect(handleOnSelect).not.toBeCalled();
+    });
+  });
+
+  // Don't crash
+  describe('invalidate checkedKeys', () => {
+    const genWrapper = (checkedKeys) => mount(
+      <Tree
+        checkedKeys={checkedKeys}
+        defaultExpandAll
+        checkable
+      >
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    it('null', () => {
+      const wrapper = genWrapper(null);
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+
+    it('number', () => {
+      console.log('>>> Follow Warning is for test purpose. Don\'t be scared :)');
+      const wrapper = genWrapper(123);
+      expect(wrapper.render()).toMatchSnapshot();
     });
   });
 
@@ -392,8 +420,9 @@ describe('Tree Props', () => {
       };
 
       render() {
+        // Hide icon will still show the icon for loading status
         return (
-          <Tree loadData={this.loadData}>
+          <Tree loadData={this.loadData} showIcon={false}>
             <TreeNode key="0-0">
               {this.state.loaded ? <TreeNode key="0-0-0" /> : null}
             </TreeNode>
@@ -525,5 +554,104 @@ describe('Tree Props', () => {
         node: wrapper.find(TreeNode).instance(),
       });
     });
+  });
+
+  it('treeData', () => {
+    const treeData = [
+      { key: 'K0', title: 'T0' },
+      { key: 'K1', title: 'T1', children:
+        [
+          { key: 'K10', title: 'T10' },
+          { key: 'K11', title: 'T11', children:
+            [
+              { key: 'K110', title: 'T110' },
+              { key: 'K111', title: 'T111' },
+            ]
+          },
+          { key: 'K12', title: 'T12' },
+        ],
+      },
+    ];
+    const wrapper = mount(<Tree treeData={treeData} defaultExpandAll />);
+    expect(wrapper.render()).toMatchSnapshot();
+  });
+
+  describe('unstable_processTreeEntity', () => {
+    const onProcessFinished = jest.fn();
+
+    const handler = {
+      initWrapper(wrapper) {
+        return { ...wrapper, valueEntities: {} };
+      },
+      processEntity(entity, { valueEntities }) {
+        valueEntities[entity.node.props.value] = entity;
+      },
+      onProcessFinished,
+    };
+
+    mount(
+      <Tree unstable_processTreeEntity={handler}>
+        <TreeNode key="K0" title="T0" value={0} />
+        <TreeNode key="K1" title="T1" value={1}>
+          <TreeNode key="K10" title="T10" value={10} />
+          <TreeNode key="K11" title="T11" value={11} />
+        </TreeNode>
+      </Tree>
+    );
+
+    expect(onProcessFinished).toBeCalled();
+
+    const valueList = Object.keys(onProcessFinished.mock.calls[0][0].valueEntities);
+    expect(valueList).toEqual(['0', '1', '10', '11']);
+  });
+
+  describe('disabled', () => {
+    it('basic', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll disabled>
+          <TreeNode key="0-0" />
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('treeNode not disabled', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll disabled>
+          <TreeNode key="0-0" disabled={false} />
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  it('openTransitionName', () => {
+    const wrapper = mount(
+      <Tree openTransitionName="test-trans">
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    const { transitionName } = wrapper.find(Animate).props();
+    expect(transitionName).toBe('test-trans');
+  });
+
+  it('openAnimation', () => {
+    const openAnimation = {
+      enter: 'test-enter',
+      leave: 'test-leave',
+    };
+    const wrapper = mount(
+      <Tree openAnimation={openAnimation}>
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>
+    );
+
+    const { animation } = wrapper.find(Animate).props();
+    expect(animation).toEqual(openAnimation);
   });
 });

@@ -1,29 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import warning from 'warning';
 import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
-import { contextTypes } from './Tree';
+import { nodeContextTypes } from './contextTypes';
 import {
-  getPosition, getNodeChildren, isCheckDisabled,
-  traverseTreeNodes, mapChildren,
+  getNodeChildren, mapChildren,
+  warnOnlyTreeNode,
 } from './util';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
 
 const defaultTitle = '---';
-
-let onlyTreeNodeWarned = false; // Only accept TreeNode
-
-export const nodeContextTypes = {
-  ...contextTypes,
-  rcTreeNode: PropTypes.shape({
-    onUpCheckConduct: PropTypes.func,
-  }),
-};
 
 class TreeNode extends React.Component {
   static propTypes = {
@@ -76,7 +66,7 @@ class TreeNode extends React.Component {
     return {
       ...this.context,
       rcTreeNode: {
-        onUpCheckConduct: this.onUpCheckConduct,
+        // onUpCheckConduct: this.onUpCheckConduct,
       },
     };
   }
@@ -89,79 +79,6 @@ class TreeNode extends React.Component {
   componentDidUpdate() {
     this.syncLoadData(this.props);
   }
-
-  onUpCheckConduct = (treeNode, nodeChecked, nodeHalfChecked, e) => {
-    const { pos: nodePos } = treeNode.props;
-    const { eventKey, pos, checked, halfChecked } = this.props;
-    const {
-      rcTree: { checkStrictly, isKeyChecked, onBatchNodeCheck, onCheckConductFinished },
-      rcTreeNode: { onUpCheckConduct } = {},
-    } = this.context;
-
-    // Stop conduct when current node is disabled
-    if (isCheckDisabled(this)) {
-      onCheckConductFinished(e);
-      return;
-    }
-
-    const children = this.getNodeChildren();
-
-    let checkedCount = nodeChecked ? 1 : 0;
-
-    // Statistic checked count
-    children.forEach((node, index) => {
-      const childPos = getPosition(pos, index);
-
-      if (nodePos === childPos || isCheckDisabled(node)) {
-        return;
-      }
-
-      if (isKeyChecked(node.key || childPos)) {
-        checkedCount += 1;
-      }
-    });
-
-    // Static enabled children count
-    const enabledChildrenCount = children
-      .filter(node => !isCheckDisabled(node))
-      .length;
-
-    // checkStrictly will not conduct check status
-    const nextChecked = checkStrictly ? checked : enabledChildrenCount === checkedCount;
-    const nextHalfChecked = checkStrictly ? // propagated or child checked
-      halfChecked : (nodeHalfChecked || (checkedCount > 0 && !nextChecked));
-
-    // Add into batch update
-    if (checked !== nextChecked || halfChecked !== nextHalfChecked) {
-      onBatchNodeCheck(eventKey, nextChecked, nextHalfChecked);
-
-      if (onUpCheckConduct) {
-        onUpCheckConduct(this, nextChecked, nextHalfChecked, e);
-      } else {
-        // Flush all the update
-        onCheckConductFinished(e);
-      }
-    } else {
-      // Flush all the update
-      onCheckConductFinished(e);
-    }
-  };
-
-  onDownCheckConduct = (nodeChecked) => {
-    const { children } = this.props;
-    const { rcTree: { checkStrictly, isKeyChecked, onBatchNodeCheck } } = this.context;
-    if (checkStrictly) return;
-
-    traverseTreeNodes(children, ({ node, key }) => {
-      if (isCheckDisabled(node)) return false;
-
-      if (nodeChecked !== isKeyChecked(key)) {
-        onBatchNodeCheck(key, nodeChecked, false);
-      }
-
-      return true;
-    });
-  };
 
   onSelectorClick = (e) => {
     // Click trigger before select/check operation
@@ -191,27 +108,16 @@ class TreeNode extends React.Component {
   onCheck = (e) => {
     if (this.isDisabled()) return;
 
-    const { disableCheckbox, checked, eventKey } = this.props;
+    const { disableCheckbox, checked } = this.props;
     const {
-      rcTree: { checkable, onBatchNodeCheck, onCheckConductFinished },
-      rcTreeNode: { onUpCheckConduct } = {},
+      rcTree: { checkable, onNodeCheck },
     } = this.context;
 
     if (!checkable || disableCheckbox) return;
 
     e.preventDefault();
     const targetChecked = !checked;
-    onBatchNodeCheck(eventKey, targetChecked, false, this);
-
-    // Children conduct
-    this.onDownCheckConduct(targetChecked);
-
-    // Parent conduct
-    if (onUpCheckConduct) {
-      onUpCheckConduct(this, targetChecked, false, e);
-    } else {
-      onCheckConductFinished(e);
-    }
+    onNodeCheck(e, this, targetChecked);
   };
 
   onMouseEnter = (e) => {
@@ -307,9 +213,8 @@ class TreeNode extends React.Component {
     const originList = toArray(children).filter(node => node);
     const targetList = getNodeChildren(originList);
 
-    if (originList.length !== targetList.length && !onlyTreeNodeWarned) {
-      onlyTreeNodeWarned = true;
-      warning(false, 'Tree only accept TreeNode as children.');
+    if (originList.length !== targetList.length) {
+      warnOnlyTreeNode();
     }
 
     return targetList;
@@ -512,22 +417,11 @@ class TreeNode extends React.Component {
       renderTreeNode,
     } } = this.context;
 
-    // [Legacy] Animation control
-    const renderFirst = this.renderFirst;
-    this.renderFirst = 1;
-    let transitionAppear = true;
-    if (!renderFirst && expanded) {
-      transitionAppear = false;
-    }
-
     const animProps = {};
     if (openTransitionName) {
       animProps.transitionName = openTransitionName;
     } else if (typeof openAnimation === 'object') {
       animProps.animation = { ...openAnimation };
-      if (!transitionAppear) {
-        delete animProps.animation.appear;
-      }
     }
 
     // Children TreeNode
@@ -559,7 +453,6 @@ class TreeNode extends React.Component {
       <Animate
         {...animProps}
         showProp="data-expanded"
-        transitionAppear={transitionAppear}
         component=""
       >
         {$children}

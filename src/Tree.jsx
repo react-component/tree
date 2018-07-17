@@ -2,122 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
+import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 
+import { treeContextTypes } from './contextTypes';
 import {
-  traverseTreeNodes, getStrictlyValue,
-  getFullKeyList, getPosition, getDragNodesKeys,
-  calcExpandedKeys, calcSelectedKeys,
-  calcCheckedKeys, calcDropPosition,
+  convertTreeToEntities, convertDataToTree,
+  getPosition, getDragNodesKeys,
+  parseCheckedKeys,
+  conductExpandParent, calcSelectedKeys,
+  calcDropPosition,
   arrAdd, arrDel, posToArr,
-  mapChildren,
+  mapChildren, conductCheck,
+  warnOnlyTreeNode,
 } from './util';
-
-/**
- * Sync state with props if needed
- */
-const getSyncProps = (props = {}, prevProps, preState) => {
-  let needSync = false;
-  const oriState = preState;
-  const newState = {};
-  const myPrevProps = prevProps || {};
-
-  function checkSync(name) {
-    if (props[name] !== myPrevProps[name]) {
-      needSync = true;
-      return true;
-    }
-    return false;
-  }
-
-  // Children change will affect check box status.
-  // And no need to check when prev props not provided
-  if (prevProps && checkSync('children')) {
-    const newCheckedKeys = calcCheckedKeys(props.checkedKeys || oriState.checkedKeys, props);
-
-    const { checkedKeys = [], halfCheckedKeys = [] } = newCheckedKeys || {};
-    newState.checkedKeys = checkedKeys;
-    newState.halfCheckedKeys = halfCheckedKeys;
-  }
-
-  // Re-calculate when autoExpandParent or expandedKeys changed
-  if (prevProps && (checkSync('autoExpandParent') || checkSync('expandedKeys'))) {
-    newState.expandedKeys = props.autoExpandParent ?
-      calcExpandedKeys(props.expandedKeys, props) : props.expandedKeys;
-  }
-
-  if (checkSync('selectedKeys')) {
-    newState.selectedKeys = calcSelectedKeys(props.selectedKeys, props);
-  }
-
-  if (checkSync('checkedKeys')) {
-    const { checkedKeys = [], halfCheckedKeys = [] } =
-    calcCheckedKeys(props.checkedKeys, props) || {};
-    newState.checkedKeys = checkedKeys;
-    newState.halfCheckedKeys = halfCheckedKeys;
-  }
-
-  if (checkSync('loadedKeys')) {
-    newState.loadedKeys = props.loadedKeys;
-  }
-
-  if (needSync) {
-    return newState;
-  }
-  return null;
-};
-
-/**
- * Thought we still use `cloneElement` to pass `key`,
- * other props can pass with context for future refactor.
- */
-export const contextTypes = {
-  rcTree: PropTypes.shape({
-    root: PropTypes.object,
-
-    prefixCls: PropTypes.string,
-    selectable: PropTypes.bool,
-    showIcon: PropTypes.bool,
-    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    draggable: PropTypes.bool,
-    checkable: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.node,
-    ]),
-    checkStrictly: PropTypes.bool,
-    disabled: PropTypes.bool,
-    openTransitionName: PropTypes.string,
-    openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-
-    loadData: PropTypes.func,
-    filterTreeNode: PropTypes.func,
-    renderTreeNode: PropTypes.func,
-
-    isKeyChecked: PropTypes.func,
-
-    onNodeClick: PropTypes.func,
-    onNodeDoubleClick: PropTypes.func,
-    onNodeExpand: PropTypes.func,
-    onNodeSelect: PropTypes.func,
-    onNodeMouseEnter: PropTypes.func,
-    onNodeMouseLeave: PropTypes.func,
-    onNodeContextMenu: PropTypes.func,
-    onNodeDragStart: PropTypes.func,
-    onNodeDragEnter: PropTypes.func,
-    onNodeDragOver: PropTypes.func,
-    onNodeDragLeave: PropTypes.func,
-    onNodeDragEnd: PropTypes.func,
-    onNodeDrop: PropTypes.func,
-    onBatchNodeCheck: PropTypes.func,
-    onCheckConductFinished: PropTypes.func,
-  }),
-};
 
 class Tree extends React.Component {
   static propTypes = {
     prefixCls: PropTypes.string,
     className: PropTypes.string,
+    tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     children: PropTypes.any,
+    treeData: PropTypes.array, // Generate treeNode by children
     showLine: PropTypes.bool,
     showIcon: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
@@ -163,9 +69,20 @@ class Tree extends React.Component {
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+    // Tree will parse treeNode as entities map,
+    // This prop enable user to process the Tree with additional entities
+    // This function may be remove in future if we start to remove the dependency on key
+    // So any user should not relay on this function.
+    // If you are refactor this code, you can remove it as your wish
+    unstable_processTreeEntity: PropTypes.shape({
+      initWrapper: PropTypes.func.isRequired,
+      processEntity: PropTypes.func.isRequired,
+      onProcessFinished: PropTypes.func.isRequired,
+    }),
   };
 
-  static childContextTypes = contextTypes;
+  static childContextTypes = treeContextTypes;
 
   static defaultProps = {
     prefixCls: 'rc-tree',
@@ -185,47 +102,19 @@ class Tree extends React.Component {
     defaultSelectedKeys: [],
   };
 
-  constructor(props) {
-    super(props);
+  state = {
+    // TODO: Remove this eslint
+    posEntities: {}, // eslint-disable-line react/no-unused-state
+    keyEntities: {},
 
-    const {
-      defaultExpandAll,
-      defaultExpandParent,
-      defaultExpandedKeys,
-      defaultCheckedKeys,
-      defaultSelectedKeys,
-      expandedKeys,
-    } = props;
+    selectedKeys: [],
+    checkedKeys: [],
+    halfCheckedKeys: [],
+    loadedKeys: [],
+    loadingKeys: [],
 
-    // Sync state with props
-    const { checkedKeys = [], halfCheckedKeys = [] } =
-      calcCheckedKeys(defaultCheckedKeys, props) || {};
-
-    const state = {
-      selectedKeys: calcSelectedKeys(defaultSelectedKeys, props),
-      checkedKeys,
-      halfCheckedKeys,
-
-      loadedKeys: [],
-      loadingKeys: [],
-    };
-
-    if (defaultExpandAll) {
-      state.expandedKeys = getFullKeyList(props.children);
-    } else if (defaultExpandParent) {
-      state.expandedKeys = calcExpandedKeys(expandedKeys || defaultExpandedKeys, props);
-    } else {
-      state.expandedKeys = defaultExpandedKeys;
-    }
-
-    this.state = {
-      ...state,
-      ...(getSyncProps(props, null, this.state) || {}),
-    };
-
-    // Cache for check status to optimize
-    this.checkedBatch = null;
-  }
+    treeNode: [],
+  };
 
   getChildContext() {
     const {
@@ -258,6 +147,7 @@ class Tree extends React.Component {
         onNodeDoubleClick: this.onNodeDoubleClick,
         onNodeExpand: this.onNodeExpand,
         onNodeSelect: this.onNodeSelect,
+        onNodeCheck: this.onNodeCheck,
         onNodeLoad: this.onNodeLoad,
         onNodeMouseEnter: this.onNodeMouseEnter,
         onNodeMouseLeave: this.onNodeMouseLeave,
@@ -268,19 +158,98 @@ class Tree extends React.Component {
         onNodeDragLeave: this.onNodeDragLeave,
         onNodeDragEnd: this.onNodeDragEnd,
         onNodeDrop: this.onNodeDrop,
-        onBatchNodeCheck: this.onBatchNodeCheck,
-        onCheckConductFinished: this.onCheckConductFinished,
       },
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
-    const { prevProps } = state;
-
-    return {
+  static getDerivedStateFromProps(props, prevState) {
+    const { prevProps } = prevState;
+    const newState = {
       prevProps: props,
-      ...getSyncProps(props, prevProps, state),
     };
+
+    function needSync(name) {
+      return (!prevProps && name in props) || (prevProps && prevProps[name] !== props[name]);
+    }
+
+    // ================== Tree Node ==================
+    let treeNode = null;
+
+    // Check if `treeData` or `children` changed and save into the state.
+    if (needSync('treeData')) {
+      treeNode = convertDataToTree(props.treeData);
+    } else if (needSync('children')) {
+      treeNode = toArray(props.children);
+    }
+
+    // Tree support filter function which will break the tree structure in the vdm.
+    // We cache the treeNodes in state so that we can return the treeNode in event trigger.
+    if (treeNode) {
+      newState.treeNode = treeNode;
+
+      // Calculate the entities data for quick match
+      const entitiesMap = convertTreeToEntities(treeNode, props.unstable_processTreeEntity);
+      newState.posEntities = entitiesMap.posEntities;
+      newState.keyEntities = entitiesMap.keyEntities;
+    }
+
+    const keyEntities = newState.keyEntities || prevState.keyEntities;
+
+    // ================ expandedKeys =================
+    if (needSync('expandedKeys') || (prevProps && needSync('autoExpandParent'))) {
+      newState.expandedKeys = (props.autoExpandParent || (!prevProps && props.defaultExpandParent)) ?
+        conductExpandParent(props.expandedKeys, keyEntities) : props.expandedKeys;
+    } else if (!prevProps && props.defaultExpandAll) {
+      newState.expandedKeys = Object.keys(keyEntities);
+    } else if (!prevProps && props.defaultExpandedKeys) {
+      newState.expandedKeys = (props.autoExpandParent || props.defaultExpandParent) ?
+        conductExpandParent(props.defaultExpandedKeys, keyEntities) : props.defaultExpandedKeys;
+    }
+
+    // ================ selectedKeys =================
+    if (props.selectable) {
+      if (needSync('selectedKeys')) {
+        newState.selectedKeys = calcSelectedKeys(props.selectedKeys, props);
+      } else if (!prevProps && props.defaultSelectedKeys) {
+        newState.selectedKeys = calcSelectedKeys(props.defaultSelectedKeys, props);
+      }
+    }
+
+    // ================= checkedKeys =================
+    if (props.checkable) {
+      let checkedKeyEntity;
+
+      if (needSync('checkedKeys')) {
+        checkedKeyEntity = parseCheckedKeys(props.checkedKeys) || {};
+      } else if (!prevProps && props.defaultCheckedKeys) {
+        checkedKeyEntity = parseCheckedKeys(props.defaultCheckedKeys) || {};
+      } else if (treeNode) {
+        // If treeNode changed, we also need check it
+        checkedKeyEntity = {
+          checkedKeys: prevState.checkedKeys,
+          halfCheckedKeys: prevState.halfCheckedKeys,
+        };
+      }
+
+      if (checkedKeyEntity) {
+        let { checkedKeys = [], halfCheckedKeys = [] } = checkedKeyEntity;
+
+        if (!props.checkStrictly) {
+          const conductKeys = conductCheck(checkedKeys, true, keyEntities);
+          checkedKeys = conductKeys.checkedKeys;
+          halfCheckedKeys = conductKeys.halfCheckedKeys;
+        }
+
+        newState.checkedKeys = checkedKeys;
+        newState.halfCheckedKeys = halfCheckedKeys;
+      }
+    }
+    // ================= loadedKeys ==================
+    if (needSync('loadedKeys')) {
+      newState.loadedKeys = props.loadedKeys;
+    }
+
+    return newState;
   }
 
   onNodeDragStart = (event, node) => {
@@ -447,7 +416,8 @@ class Tree extends React.Component {
 
   onNodeSelect = (e, treeNode) => {
     let { selectedKeys } = this.state;
-    const { onSelect, multiple, children } = this.props;
+    const { keyEntities } = this.state;
+    const { onSelect, multiple } = this.props;
     const { selected, eventKey } = treeNode.props;
     const targetSelected = !selected;
 
@@ -461,15 +431,12 @@ class Tree extends React.Component {
     }
 
     // [Legacy] Not found related usage in doc or upper libs
-    // [Legacy] TODO: add optimize prop to skip node process
-    const selectedNodes = [];
-    if (selectedKeys.length) {
-      traverseTreeNodes(children, ({ node, key }) => {
-        if (selectedKeys.indexOf(key) !== -1) {
-          selectedNodes.push(node);
-        }
-      });
-    }
+    const selectedNodes = selectedKeys.map(key => {
+      const entity = keyEntities[key];
+      if (!entity) return null;
+
+      return entity.node;
+    }).filter(node => node);
 
     this.setUncontrolledState({ selectedKeys });
 
@@ -482,6 +449,61 @@ class Tree extends React.Component {
         nativeEvent: e.nativeEvent,
       };
       onSelect(selectedKeys, eventObj);
+    }
+  };
+
+  onNodeCheck = (e, treeNode, checked) => {
+    const { keyEntities, checkedKeys: oriCheckedKeys, halfCheckedKeys: oriHalfCheckedKeys } = this.state;
+    const { checkStrictly, onCheck } = this.props;
+    const { props: { eventKey } } = treeNode;
+
+    // Prepare trigger arguments
+    let checkedObj;
+    const eventObj = {
+      event: 'check',
+      node: treeNode,
+      checked,
+      nativeEvent: e.nativeEvent,
+    };
+
+    if (checkStrictly) {
+      const checkedKeys = checked ? arrAdd(oriCheckedKeys, eventKey) : arrDel(oriCheckedKeys, eventKey);
+      const halfCheckedKeys = arrDel(oriHalfCheckedKeys, eventKey);
+      checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
+
+      eventObj.checkedNodes = checkedKeys.map(key => keyEntities[key].node);
+
+      this.setUncontrolledState({ checkedKeys });
+    } else {
+      const { checkedKeys, halfCheckedKeys } = conductCheck([eventKey], checked, keyEntities, {
+        checkedKeys: oriCheckedKeys, halfCheckedKeys: oriHalfCheckedKeys,
+      });
+
+      checkedObj = checkedKeys;
+
+      // [Legacy] This is used for `rc-tree-select`
+      eventObj.checkedNodes = [];
+      eventObj.checkedNodesPositions = [];
+      eventObj.halfCheckedKeys = halfCheckedKeys;
+
+      checkedKeys.forEach((key) => {
+        const entity = keyEntities[key];
+        if (!entity) return;
+
+        const { node, pos } = entity;
+
+        eventObj.checkedNodes.push(node);
+        eventObj.checkedNodesPositions.push({ node, pos });
+      });
+
+      this.setUncontrolledState({
+        checkedKeys,
+        halfCheckedKeys,
+      });
+    }
+
+    if (onCheck) {
+      onCheck(checkedObj, eventObj);
     }
   };
 
@@ -517,110 +539,6 @@ class Tree extends React.Component {
     });
 
     return promise;
-  };
-
-  /**
-   * This will cache node check status to optimize update process.
-   * When Tree get trigger `onCheckConductFinished` will flush all the update.
-   */
-  onBatchNodeCheck = (key, checked, halfChecked, startNode) => {
-    if (startNode) {
-      this.checkedBatch = {
-        treeNode: startNode,
-        checked,
-        list: [],
-      };
-    }
-
-    // This code should never called
-    if (!this.checkedBatch) {
-      this.checkedBatch = {
-        list: [],
-      };
-      warning(
-        false,
-        'Checked batch not init. This should be a bug. Please fire a issue.'
-      );
-    }
-
-    this.checkedBatch.list.push({ key, checked, halfChecked });
-  };
-
-  /**
-   * When top `onCheckConductFinished` called, will execute all batch update.
-   * And trigger `onCheck` event.
-   */
-  onCheckConductFinished = (e) => {
-    const { checkedKeys, halfCheckedKeys } = this.state;
-    const { onCheck, checkStrictly, children } = this.props;
-
-    // Use map to optimize update speed
-    const checkedKeySet = {};
-    const halfCheckedKeySet = {};
-
-    checkedKeys.forEach(key => {
-      checkedKeySet[key] = true;
-    });
-    halfCheckedKeys.forEach(key => {
-      halfCheckedKeySet[key] = true;
-    });
-
-    // Batch process
-    this.checkedBatch.list.forEach(({ key, checked, halfChecked }) => {
-      checkedKeySet[key] = checked;
-      halfCheckedKeySet[key] = halfChecked;
-    });
-    const newCheckedKeys = Object.keys(checkedKeySet).filter(key => checkedKeySet[key]);
-    const newHalfCheckedKeys = Object.keys(halfCheckedKeySet).filter(key => halfCheckedKeySet[key]);
-
-    // Trigger onChecked
-    let selectedObj;
-
-    const eventObj = {
-      event: 'check',
-      node: this.checkedBatch.treeNode,
-      checked: this.checkedBatch.checked,
-      nativeEvent: e.nativeEvent,
-    };
-
-    if (checkStrictly) {
-      selectedObj = getStrictlyValue(newCheckedKeys, newHalfCheckedKeys);
-
-      // [Legacy] TODO: add optimize prop to skip node process
-      eventObj.checkedNodes = [];
-      traverseTreeNodes(children, ({ node, key }) => {
-        if (checkedKeySet[key]) {
-          eventObj.checkedNodes.push(node);
-        }
-      });
-
-      this.setUncontrolledState({ checkedKeys: newCheckedKeys });
-    } else {
-      selectedObj = newCheckedKeys;
-
-      // [Legacy] TODO: add optimize prop to skip node process
-      eventObj.checkedNodes = [];
-      eventObj.checkedNodesPositions = []; // [Legacy] TODO: not in API
-      eventObj.halfCheckedKeys = newHalfCheckedKeys; // [Legacy] TODO: not in API
-      traverseTreeNodes(children, ({ node, pos, key }) => {
-        if (checkedKeySet[key]) {
-          eventObj.checkedNodes.push(node);
-          eventObj.checkedNodesPositions.push({ node, pos });
-        }
-      });
-
-      this.setUncontrolledState({
-        checkedKeys: newCheckedKeys,
-        halfCheckedKeys: newHalfCheckedKeys,
-      });
-    }
-
-    if (onCheck) {
-      onCheck(selectedObj, eventObj);
-    }
-
-    // Clean up
-    this.checkedBatch = null;
   };
 
   onNodeExpand = (e, treeNode) => {
@@ -717,12 +635,18 @@ class Tree extends React.Component {
    */
   renderTreeNode = (child, index, level = 0) => {
     const {
+      keyEntities,
       expandedKeys = [], selectedKeys = [], halfCheckedKeys = [],
       loadedKeys = [], loadingKeys = [],
       dragOverNodeKey, dropPosition,
     } = this.state;
     const pos = getPosition(level, index);
     const key = child.key || pos;
+
+    if (!keyEntities[key]) {
+      warnOnlyTreeNode();
+      return null;
+    }
 
     return React.cloneElement(child, {
       key,
@@ -743,16 +667,15 @@ class Tree extends React.Component {
   };
 
   render() {
+    const { treeNode } = this.state;
     const {
       prefixCls, className, focusable,
-      showLine,
-      children,
+      showLine, tabIndex = 0,
     } = this.props;
     const domProps = {};
 
-    // [Legacy] Commit: 0117f0c9db0e2956e92cb208f51a42387dfcb3d1
     if (focusable) {
-      domProps.tabIndex = '0';
+      domProps.tabIndex = tabIndex;
       domProps.onKeyDown = this.onKeyDown;
     }
 
@@ -765,7 +688,7 @@ class Tree extends React.Component {
         role="tree"
         unselectable="on"
       >
-        {mapChildren(children, (node, index) => (
+        {mapChildren(treeNode, (node, index) => (
           this.renderTreeNode(node, index)
         ))}
       </ul>
