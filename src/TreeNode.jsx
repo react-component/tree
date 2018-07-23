@@ -289,7 +289,7 @@ class TreeNode extends React.Component {
 
   // Switcher
   renderSwitcher = () => {
-    const { expanded } = this.props;
+    const { expanded, title } = this.props;
     const { rcTree: { prefixCls } } = this.context;
 
     if (this.isLeaf()) {
@@ -303,6 +303,11 @@ class TreeNode extends React.Component {
           `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
         )}
         onClick={this.onExpand}
+        tabIndex={0}
+        role={'button'}
+        aria-label={`expand ${title}`}
+        aria-expanded={expanded}
+        onKeyPress={this.onExpand}
       />
     );
   };
@@ -348,7 +353,7 @@ class TreeNode extends React.Component {
     );
   };
 
-  // Icon + Title
+// Icon + Title
   renderSelector = () => {
     const { dragNodeHighlight } = this.state;
     const { title, selected, icon, loading } = this.props;
