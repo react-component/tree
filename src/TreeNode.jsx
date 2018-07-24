@@ -512,7 +512,7 @@ class TreeNode extends React.Component {
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}
-        {this.renderChildren()}
+        {/* TODO: Remove this -> {this.renderChildren()} */}
       </li>
     );
   }

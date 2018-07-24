@@ -3,7 +3,7 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree from 'rc-tree';
 import Gen from './big-data-generator';
 
 class Demo extends React.Component {
@@ -17,16 +17,6 @@ class Demo extends React.Component {
     checkedKeys1: [],
     selectedKeys: [],
   };
-  componentWillUpdate(nextProps, nextState) {
-    // invoked immediately before rendering with new props or state, not for initial 'render'
-    // see componentWillReceiveProps if you need to call setState
-    // console.log(nextState.gData === this.state.gData);
-    if (nextState.gData === this.state.gData) {
-      this.notReRender = true;
-    } else {
-      this.notReRender = false;
-    }
-  }
   onCheck = (checkedKeys) => {
     this.setState({
       checkedKeys,
@@ -55,58 +45,40 @@ class Demo extends React.Component {
     });
   }
   render() {
-    const loop = data => {
-      return data.map((item) => {
-        if (item.children) {
-          return (<TreeNode key={item.key} title={item.title}>
-            {loop(item.children)}
-          </TreeNode>);
-        }
-        return <TreeNode key={item.key} title={item.title}/>;
-      });
-    };
-    // const s = Date.now();
-    // const treeNodes = loop(this.state.gData);
-    let treeNodes;
-    if (this.treeNodes && this.notReRender) {
-      treeNodes = this.treeNodes;
-    } else {
-      treeNodes = loop(this.state.gData);
-      this.treeNodes = treeNodes;
-    }
-    // console.log(Date.now()-s);
-    return (<div style={{ padding: '0 20px' }}>
-      <Gen onGen={this.onGen} />
-      <div style={{ border: '1px solid red', width: 700, padding: 10 }}>
-        <h5 style={{ margin: 10 }}>大数据量下优化建议：</h5>
-        初始展开的节点少，向dom中插入节点就会少，速度更快。 <br />
-        treeNodes 总数据量尽量少变化，缓存并复用计算出的 treeNodes，可在 componentWillUpdate 等时机做判断。 <br />
-      </div>
-      {this.state.gData.length ? <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: 20 }}>
+    const { gData, expandedKeys, checkedKeys, checkedKeys1, selectedKeys } = this.state;
+
+    const $tree = gData.length ? (
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: 'auto' }}>
           <h3>normal check</h3>
           <Tree
             checkable multiple={this.props.multiple}
-            defaultExpandedKeys={this.state.expandedKeys}
-            onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
-            onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}
-          >
-            {treeNodes}
-          </Tree>
+            defaultExpandedKeys={expandedKeys}
+            onCheck={this.onCheck} checkedKeys={checkedKeys}
+            onSelect={this.onSelect} selectedKeys={selectedKeys}
+            treeData={gData}
+          />
         </div>
-        <div>
+        <div style={{ flex: 'auto' }}>
           <h3>checkStrictly</h3>
           <Tree
             checkable checkStrictly multiple={this.props.multiple}
-            defaultExpandedKeys={this.state.expandedKeys}
-            onCheck={this.onCheckStrictly} checkedKeys={this.state.checkedKeys1}
-            onSelect={this.onSelect} selectedKeys={this.state.selectedKeys}
-          >
-            {treeNodes}
-          </Tree>
+            defaultExpandedKeys={expandedKeys}
+            onCheck={this.onCheckStrictly} checkedKeys={checkedKeys1}
+            onSelect={this.onSelect} selectedKeys={selectedKeys}
+            treeData={gData}
+          />
         </div>
-      </div> : null}
-    </div>);
+      </div>
+    ) : null;
+
+    return (
+      <div style={{ padding: '0 20px' }}>
+        <Gen onGen={this.onGen} />
+
+        {$tree}
+      </div>
+    );
   }
 }
 

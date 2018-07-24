@@ -36,7 +36,8 @@ class VirtualList extends React.Component {
     this.state = {
       scrollPtg: 0,
       targetItemIndex: 0,
-      targetItemOffsetPtg: 0,
+      targetItemOffsetPtg: -1,
+      useVirtualList: true,
       needSyncScroll: true,
 
       // Save the styles to the item
@@ -52,6 +53,7 @@ class VirtualList extends React.Component {
   }
 
   componentDidUpdate() {
+    this.calculatePosition();
     this.syncPosition();
   }
 
@@ -89,16 +91,27 @@ class VirtualList extends React.Component {
   };
 
   calculatePosition = () => {
-    const { targetItemIndex, targetItemOffsetPtg } = this.state;
+    const { targetItemIndex, targetItemOffsetPtg, useVirtualList } = this.state;
     const { dataSource } = this.props;
 
     const total = dataSource.length;
     if (total === 0) return;
 
     const { scrollTop, scrollHeight, clientHeight } = this.$container;
+    const scrollRange = scrollHeight - clientHeight;
+
+    // Skip if needn't scroll
+    if (scrollRange === 0) {
+      if (useVirtualList !== false) {
+        this.setState({
+          useVirtualList: false,
+        });
+      }
+      return;
+    }
 
     // Get current scroll position (percentage)
-    const scrollPtg = scrollTop / (scrollHeight - clientHeight);
+    const scrollPtg = scrollTop / scrollRange;
 
     const itemIndex = Math.floor(total * scrollPtg);
     const itemTopPtg = itemIndex / (total);
@@ -111,6 +124,7 @@ class VirtualList extends React.Component {
         targetItemIndex: itemIndex,
         targetItemOffsetPtg: itemOffsetPtg,
         needSyncScroll: true,
+        useVirtualList: true,
       });
     }
   };
@@ -166,7 +180,7 @@ class VirtualList extends React.Component {
   };
 
   renderNode = (index) => {
-    const { itemStyles } = this.state;
+    const { itemStyles, useVirtualList } = this.state;
     const { dataSource, children } = this.props;
     const item = dataSource[index];
     if (!item) return null;
@@ -179,25 +193,31 @@ class VirtualList extends React.Component {
       this.nodes[index] = node;
     };
 
+    let style = {};
+    if (useVirtualList) {
+      style = {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+
+        ...itemStyles[index],
+      };
+    }
+
     // TODO: Replace `key` with `rowKey`
     return (
       <Item key={index} ref={nodeRef}>
         {children({
-          ...item,
-          style: {
-            position: 'absolute',
-            left: 0,
-            right: 0,
-
-            ...itemStyles[index],
-          },
+          index,
+          style,
+          props: item,
         })}
       </Item>
     );
   };
 
   render() {
-    const { targetItemIndex } = this.state;
+    const { targetItemIndex, useVirtualList } = this.state;
     const {
       dataSource,
       innerComponent: InnerComponent,
@@ -217,6 +237,22 @@ class VirtualList extends React.Component {
       padding: 0,
     };
 
+    let innerStyle;
+    if (useVirtualList) {
+      innerStyle = {
+        height: itemMinHeight * dataSource.length,
+        padding: 0,
+        margin: 0,
+        position: 'relative',
+        overflowY: 'hidden',
+      };
+    } else {
+      innerStyle = {
+        padding: 0,
+        margin: 0,
+      };
+    }
+
     return (
       <div
         style={mergedStyle}
@@ -224,15 +260,7 @@ class VirtualList extends React.Component {
         ref={this.setContainerRef}
         onScroll={this.onScroll}
       >
-        <InnerComponent
-          style={{
-            height: itemMinHeight * dataSource.length,
-            padding: 0,
-            margin: 0,
-            position: 'relative',
-            overflowY: 'hidden',
-          }}
-        >
+        <InnerComponent style={innerStyle}>
           {/* Top items */}
           {[...new Array(topCount)].map((_, index) => (
             this.renderNode(targetItemIndex - (topCount - index))

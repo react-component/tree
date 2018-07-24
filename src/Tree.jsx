@@ -8,6 +8,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import VirtualList from './VirtualList';
 
 import { treeContextTypes } from './contextTypes';
+import TreeNode from './TreeNode';
 import {
   convertTreeToEntities, convertDataToTree,
   getPosition, getDragNodesKeys,
@@ -17,11 +18,13 @@ import {
   arrAdd, arrDel, posToArr,
   conductCheck,
   warnOnlyTreeNode,
+  getVisibleKeyList,
 } from './util';
 
 class Tree extends React.Component {
   static propTypes = {
     prefixCls: PropTypes.string,
+    style: PropTypes.object,
     className: PropTypes.string,
     tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     children: PropTypes.any,
@@ -71,6 +74,7 @@ class Tree extends React.Component {
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    inlineIndent: PropTypes.number,
 
     // Tree will parse treeNode as entities map,
     // This prop enable user to process the Tree with additional entities
@@ -102,6 +106,7 @@ class Tree extends React.Component {
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
     defaultSelectedKeys: [],
+    inlineIndent: 18,
   };
 
   state = {
@@ -116,6 +121,10 @@ class Tree extends React.Component {
     loadingKeys: [],
 
     treeNode: [], // eslint-disable-line react/no-unused-state
+
+    // We are now use virtual list to show the treeNodes.
+    // So we need to collect the visible treeNodes.
+    internalVisibleKeys: [],
   };
 
   getChildContext() {
@@ -206,6 +215,18 @@ class Tree extends React.Component {
     } else if (!prevProps && props.defaultExpandedKeys) {
       newState.expandedKeys = (props.autoExpandParent || props.defaultExpandParent) ?
         conductExpandParent(props.defaultExpandedKeys, keyEntities) : props.defaultExpandedKeys;
+    }
+
+    // Generate visible treeNode list
+    // TODO: check uncontrolled treeNodes
+    if (newState.treeNode || newState.expandedKeys || !prevState.expandedKeys) {
+      const internalVisibleKeys = getVisibleKeyList(
+        newState.treeNode || prevState.treeNode,
+        newState.expandedKeys || prevState.expandedKeys,
+        keyEntities,
+      );
+
+      newState.internalVisibleKeys = internalVisibleKeys;
     }
 
     // ================ selectedKeys =================
@@ -563,7 +584,7 @@ class Tree extends React.Component {
       expandedKeys = arrDel(expandedKeys, eventKey);
     }
 
-    this.setUncontrolledState({ expandedKeys });
+    this.setUncontrolledExpandedKeys(expandedKeys);
 
     if (onExpand) {
       onExpand(expandedKeys, {
@@ -578,7 +599,7 @@ class Tree extends React.Component {
       const loadPromise = this.onNodeLoad(treeNode);
       return loadPromise ? loadPromise.then(() => {
         // [Legacy] Refresh logic
-        this.setUncontrolledState({ expandedKeys });
+        this.setUncontrolledExpandedKeys(expandedKeys);
       }) : null;
     }
 
@@ -626,6 +647,20 @@ class Tree extends React.Component {
     }
   };
 
+  setUncontrolledExpandedKeys = (expandedKeys) => {
+    const { treeNode, keyEntities } = this.state;
+    if (!('expandedKeys' in this.props)) {
+      // We need re-calculate the `internalVisibleKeys`
+      const internalVisibleKeys = getVisibleKeyList(
+        treeNode,
+        expandedKeys,
+        keyEntities,
+      );
+
+      this.setUncontrolledState({ expandedKeys, internalVisibleKeys });
+    }
+  };
+
   isKeyChecked = (key) => {
     const { checkedKeys = [] } = this.state;
     return checkedKeys.indexOf(key) !== -1;
@@ -668,21 +703,51 @@ class Tree extends React.Component {
     });
   };
 
-  renderSingleNode = ({ height, title, theme, style }) => {
-    const colors = ['red', 'green', 'blue'];
-    return (
-      <li style={{ height, background: colors[theme], ...style }}>
-        {title}
-      </li>
-    );
+  renderSingleNode = ({ style, props: { key, level } }) => {
+    const {
+      keyEntities,
+      expandedKeys = [], selectedKeys = [], halfCheckedKeys = [],
+      loadedKeys = [], loadingKeys = [],
+      dragOverNodeKey, dropPosition,
+    } = this.state;
+    const { inlineIndent } = this.props;
+
+    const { node, pos } = keyEntities[key];
+    const { props: { style: oriStyle, ...props } } = node;
+
+    return React.createElement(TreeNode, {
+      ...props,
+      style: {
+        ...oriStyle,
+        paddingLeft: level * inlineIndent,
+        ...style,
+      },
+
+      // Status props
+      key,
+      eventKey: key,
+      expanded: expandedKeys.indexOf(key) !== -1,
+      selected: selectedKeys.indexOf(key) !== -1,
+      loaded: loadedKeys.indexOf(key) !== -1,
+      loading: loadingKeys.indexOf(key) !== -1,
+      checked: this.isKeyChecked(key),
+      halfChecked: halfCheckedKeys.indexOf(key) !== -1,
+      pos,
+
+      // [Legacy] Drag props
+      dragOver: dragOverNodeKey === key && dropPosition === 0,
+      dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
+      dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
+    });
   };
 
   render() {
-    // const { treeNode } = this.state;
+    const { internalVisibleKeys } = this.state;
     const {
-      prefixCls, className, focusable,
+      prefixCls, className, style, focusable,
       showLine, tabIndex = 0,
     } = this.props;
+
     const domProps = {};
 
     if (focusable) {
@@ -690,22 +755,17 @@ class Tree extends React.Component {
       domProps.onKeyDown = this.onKeyDown;
     }
 
-    const list = [...new Array(60)].map((_, index) => ({
-      title: `Title ${index}`,
-      height: 50 + (index % 3 + 1) * 25,
-      theme: index % 3,
-    }));
-
     return (
       <VirtualList
         innerComponent="ul"
         {...domProps}
+        style={style}
         className={classNames(prefixCls, className, {
           [`${prefixCls}-show-line`]: showLine,
         })}
         role="tree"
         unselectable="on"
-        dataSource={list}
+        dataSource={internalVisibleKeys}
 
         itemMinHeight={20}
         height={500}

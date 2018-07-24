@@ -429,3 +429,33 @@ export function conductExpandParent(keyList, keyEntities) {
 
   return Object.keys(expandedKeys);
 }
+
+/**
+ * Get the full node key list which can display in the tree view (expanded).
+ * @param rootChildren    children prop of Tree component
+ * @param expandedKeys
+ * @param keyEntities
+ */
+export function getVisibleKeyList(rootChildren, expandedKeys, keyEntities) {
+  const fullList = [];
+  const rootEntityList = getNodeChildren(rootChildren)
+    .map(({ key }) => keyEntities[key])
+    .filter(entity => entity);
+
+  function appendNodes(entityList, level) {
+    entityList.forEach(({ key, children = [] }) => {
+      fullList.push({
+        key,
+        level,
+      });
+
+      if (expandedKeys.indexOf(key) !== -1) {
+        appendNodes(children, level + 1);
+      }
+    });
+  }
+
+  appendNodes(rootEntityList, 0);
+
+  return fullList;
+}
