@@ -5,6 +5,8 @@ import warning from 'warning';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 
+import VirtualList from './VirtualList';
+
 import { treeContextTypes } from './contextTypes';
 import {
   convertTreeToEntities, convertDataToTree,
@@ -13,7 +15,7 @@ import {
   conductExpandParent, calcSelectedKeys,
   calcDropPosition,
   arrAdd, arrDel, posToArr,
-  mapChildren, conductCheck,
+  conductCheck,
   warnOnlyTreeNode,
 } from './util';
 
@@ -113,7 +115,7 @@ class Tree extends React.Component {
     loadedKeys: [],
     loadingKeys: [],
 
-    treeNode: [],
+    treeNode: [], // eslint-disable-line react/no-unused-state
   };
 
   getChildContext() {
@@ -666,8 +668,17 @@ class Tree extends React.Component {
     });
   };
 
+  renderSingleNode = ({ height, title, theme, style }) => {
+    const colors = ['red', 'green', 'blue'];
+    return (
+      <li style={{ height, background: colors[theme], ...style }}>
+        {title}
+      </li>
+    );
+  };
+
   render() {
-    const { treeNode } = this.state;
+    // const { treeNode } = this.state;
     const {
       prefixCls, className, focusable,
       showLine, tabIndex = 0,
@@ -679,20 +690,44 @@ class Tree extends React.Component {
       domProps.onKeyDown = this.onKeyDown;
     }
 
+    const list = [...new Array(60)].map((_, index) => ({
+      title: `Title ${index}`,
+      height: 50 + (index % 3 + 1) * 25,
+      theme: index % 3,
+    }));
+
     return (
-      <ul
+      <VirtualList
+        innerComponent="ul"
         {...domProps}
         className={classNames(prefixCls, className, {
           [`${prefixCls}-show-line`]: showLine,
         })}
         role="tree"
         unselectable="on"
+        dataSource={list}
+
+        itemMinHeight={20}
+        height={500}
       >
-        {mapChildren(treeNode, (node, index) => (
-          this.renderTreeNode(node, index)
-        ))}
-      </ul>
+        {this.renderSingleNode}
+      </VirtualList>
     );
+
+    // return (
+    //   <ul
+    //     {...domProps}
+    //     className={classNames(prefixCls, className, {
+    //       [`${prefixCls}-show-line`]: showLine,
+    //     })}
+    //     role="tree"
+    //     unselectable="on"
+    //   >
+    //     {mapChildren(treeNode, (node, index) => (
+    //       this.renderTreeNode(node, index)
+    //     ))}
+    //   </ul>
+    // );
   }
 }
 
