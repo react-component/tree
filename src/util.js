@@ -436,7 +436,7 @@ export function conductExpandParent(keyList, keyEntities) {
  * @param expandedKeys
  * @param keyEntities
  */
-export function getVisibleKeyList(rootChildren, expandedKeys, keyEntities) {
+export function getVisibleKeyLevelList(rootChildren, expandedKeys, keyEntities) {
   const fullList = [];
   const rootEntityList = getNodeChildren(rootChildren)
     .map(({ key }) => keyEntities[key])

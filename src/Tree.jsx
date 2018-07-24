@@ -18,7 +18,7 @@ import {
   arrAdd, arrDel, posToArr,
   conductCheck,
   warnOnlyTreeNode,
-  getVisibleKeyList,
+  getVisibleKeyLevelList,
 } from './util';
 
 class Tree extends React.Component {
@@ -75,6 +75,7 @@ class Tree extends React.Component {
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     inlineIndent: PropTypes.number,
+    height: PropTypes.number,
 
     // Tree will parse treeNode as entities map,
     // This prop enable user to process the Tree with additional entities
@@ -124,7 +125,7 @@ class Tree extends React.Component {
 
     // We are now use virtual list to show the treeNodes.
     // So we need to collect the visible treeNodes.
-    internalVisibleKeys: [],
+    internalVisibleKeyLevels: [],
   };
 
   getChildContext() {
@@ -220,13 +221,13 @@ class Tree extends React.Component {
     // Generate visible treeNode list
     // TODO: check uncontrolled treeNodes
     if (newState.treeNode || newState.expandedKeys || !prevState.expandedKeys) {
-      const internalVisibleKeys = getVisibleKeyList(
+      const internalVisibleKeyLevels = getVisibleKeyLevelList(
         newState.treeNode || prevState.treeNode,
         newState.expandedKeys || prevState.expandedKeys,
         keyEntities,
       );
 
-      newState.internalVisibleKeys = internalVisibleKeys;
+      newState.internalVisibleKeyLevels = internalVisibleKeyLevels;
     }
 
     // ================ selectedKeys =================
@@ -650,14 +651,14 @@ class Tree extends React.Component {
   setUncontrolledExpandedKeys = (expandedKeys) => {
     const { treeNode, keyEntities } = this.state;
     if (!('expandedKeys' in this.props)) {
-      // We need re-calculate the `internalVisibleKeys`
-      const internalVisibleKeys = getVisibleKeyList(
+      // We need re-calculate the `internalVisibleKeyLevels`
+      const internalVisibleKeyLevels = getVisibleKeyLevelList(
         treeNode,
         expandedKeys,
         keyEntities,
       );
 
-      this.setUncontrolledState({ expandedKeys, internalVisibleKeys });
+      this.setUncontrolledState({ expandedKeys, internalVisibleKeyLevels });
     }
   };
 
@@ -742,52 +743,59 @@ class Tree extends React.Component {
   };
 
   render() {
-    const { internalVisibleKeys } = this.state;
+    const { internalVisibleKeyLevels } = this.state;
     const {
       prefixCls, className, style, focusable,
-      showLine, tabIndex = 0,
+      showLine, tabIndex = 0, height,
     } = this.props;
 
-    const domProps = {};
+    const domProps = {
+      style,
+      className: classNames(prefixCls, className, {
+        [`${prefixCls}-show-line`]: showLine,
+      }),
+      role: 'tree',
+      unselectable: 'on',
+    };
 
     if (focusable) {
       domProps.tabIndex = tabIndex;
       domProps.onKeyDown = this.onKeyDown;
     }
 
+    if (height) {
+      // TODO: make `itemMinHeight` as prop
+      // Use virtual list
+      return (
+        <VirtualList
+          innerComponent="ul"
+          {...domProps}
+
+          dataSource={internalVisibleKeyLevels}
+          itemMinHeight={20}
+          height={height}
+        >
+          {this.renderSingleNode}
+        </VirtualList>
+      );
+    }
+
+    // Pure render
     return (
-      <VirtualList
-        innerComponent="ul"
+      <ul
         {...domProps}
-        style={style}
-        className={classNames(prefixCls, className, {
-          [`${prefixCls}-show-line`]: showLine,
-        })}
-        role="tree"
-        unselectable="on"
-        dataSource={internalVisibleKeys}
-
-        itemMinHeight={20}
-        height={500}
       >
-        {this.renderSingleNode}
-      </VirtualList>
+        {internalVisibleKeyLevels.map(({ key, level }) => (
+          React.createElement(
+            this.renderSingleNode,
+            {
+              key,
+              props: { key, level },
+            }
+          )
+        ))}
+      </ul>
     );
-
-    // return (
-    //   <ul
-    //     {...domProps}
-    //     className={classNames(prefixCls, className, {
-    //       [`${prefixCls}-show-line`]: showLine,
-    //     })}
-    //     role="tree"
-    //     unselectable="on"
-    //   >
-    //     {mapChildren(treeNode, (node, index) => (
-    //       this.renderTreeNode(node, index)
-    //     ))}
-    //   </ul>
-    // );
   }
 }
 
