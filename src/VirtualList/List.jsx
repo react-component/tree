@@ -90,26 +90,24 @@ class VirtualList extends React.Component {
 
   calculatePosition = () => {
     const { targetItemIndex, targetItemOffsetPtg } = this.state;
-    const { dataSource, itemMinHeight } = this.props;
+    const { dataSource } = this.props;
 
     const total = dataSource.length;
     if (total === 0) return;
 
-    const { scrollTop, clientHeight } = this.$container;
-    const scrollHeight = total * itemMinHeight;
+    const { scrollTop, scrollHeight, clientHeight } = this.$container;
 
     // Get current scroll position (percentage)
     const scrollPtg = scrollTop / (scrollHeight - clientHeight);
-    const offsetPtg = scrollPtg * ((total + 1) / total);
 
-    const itemIndex = Math.floor(total * offsetPtg);
+    const itemIndex = Math.floor(total * scrollPtg);
     const itemTopPtg = itemIndex / (total);
     const itemBottomPtg = (itemIndex + 1) / (total);
-    const itemOffsetPtg = (offsetPtg - itemTopPtg) / (itemBottomPtg - itemTopPtg);
+    const itemOffsetPtg = (scrollPtg - itemTopPtg) / (itemBottomPtg - itemTopPtg);
 
     if (targetItemIndex !== itemIndex || targetItemOffsetPtg !== itemOffsetPtg) {
       this.setState({
-        scrollPtg: offsetPtg,
+        scrollPtg,
         targetItemIndex: itemIndex,
         targetItemOffsetPtg: itemOffsetPtg,
         needSyncScroll: true,
