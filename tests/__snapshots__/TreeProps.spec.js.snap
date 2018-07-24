@@ -11,7 +11,11 @@ exports[`Tree Props checkStrictly 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-checkbox"
@@ -74,7 +78,11 @@ exports[`Tree Props checkable default 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-checkbox"
@@ -137,7 +145,11 @@ exports[`Tree Props checkable without selectable 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-checkbox"
@@ -200,7 +212,11 @@ exports[`Tree Props defaultExpandAll 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -317,7 +333,11 @@ exports[`Tree Props icon 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -382,7 +402,11 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-checkbox"
@@ -445,7 +469,11 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-checkbox"
@@ -508,7 +536,11 @@ exports[`Tree Props loadData 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -530,7 +562,11 @@ exports[`Tree Props loadData 1`] = `
         role="treeitem"
       >
         <span
+          aria-expanded="false"
+          aria-label="expand ---"
           class="rc-tree-switcher rc-tree-switcher_close"
+          role="button"
+          tabindex="0"
         />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
@@ -559,7 +595,11 @@ exports[`Tree Props multiple 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -632,7 +672,11 @@ exports[`Tree Props selectable with selectable 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -689,7 +733,11 @@ exports[`Tree Props selectable without selectable 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -746,7 +794,11 @@ exports[`Tree Props showIcon 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="false"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_close"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
@@ -797,7 +849,11 @@ exports[`Tree Props showIcon 2`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="false"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_close"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
@@ -842,7 +898,11 @@ exports[`Tree Props showIcon 3`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -867,7 +927,11 @@ exports[`Tree Props showIcon 3`] = `
         role="treeitem"
       >
         <span
+          aria-expanded="true"
+          aria-label="expand ---"
           class="rc-tree-switcher rc-tree-switcher_open"
+          role="button"
+          tabindex="0"
         />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -997,7 +1061,11 @@ exports[`Tree Props treeData 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand T1"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -1043,7 +1111,11 @@ exports[`Tree Props treeData 1`] = `
         role="treeitem"
       >
         <span
+          aria-expanded="true"
+          aria-label="expand T11"
           class="rc-tree-switcher rc-tree-switcher_open"
+          role="button"
+          tabindex="0"
         />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"

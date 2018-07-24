@@ -11,7 +11,11 @@ exports[`TreeNode Props className 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -36,7 +40,11 @@ exports[`TreeNode Props className 1`] = `
         role="treeitem"
       >
         <span
+          aria-expanded="true"
+          aria-label="expand ---"
           class="rc-tree-switcher rc-tree-switcher_open"
+          role="button"
+          tabindex="0"
         />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -233,7 +241,11 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -259,7 +271,11 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
         role="treeitem"
       >
         <span
+          aria-expanded="true"
+          aria-label="expand ---"
           class="rc-tree-switcher rc-tree-switcher_open"
+          role="button"
+          tabindex="0"
         />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -364,7 +380,11 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -390,7 +410,11 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
         role="treeitem"
       >
         <span
+          aria-expanded="true"
+          aria-label="expand ---"
           class="rc-tree-switcher rc-tree-switcher_open"
+          role="button"
+          tabindex="0"
         />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -602,7 +626,11 @@ exports[`TreeNode Props isLeaf 3`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -627,7 +655,11 @@ exports[`TreeNode Props isLeaf 3`] = `
         role="treeitem"
       >
         <span
+          aria-expanded="true"
+          aria-label="expand ---"
           class="rc-tree-switcher rc-tree-switcher_open"
+          role="button"
+          tabindex="0"
         />
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
