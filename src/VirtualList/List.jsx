@@ -100,6 +100,13 @@ class VirtualList extends React.Component {
     this.calculatePosition();
   };
 
+  onAnimationEnd = () => {
+    const { dataSource } = this.props;
+    this.setState({
+      itemList: [{ type: TYPE_KEEP, list: dataSource }],
+    });
+  };
+
   setContainerRef = (ele) => {
     this.$container = ele;
   };
@@ -288,6 +295,17 @@ class VirtualList extends React.Component {
       return this.renderSingleNode(itemList, index); // It's a item, not list actually
     }
 
+    let $children;
+    if (type === TYPE_ADD) {
+      $children = (
+        <div>
+          {itemList.map((item, j) => (
+            this.renderSingleNode(item, `${index}_${j}`)
+          ))}
+        </div>
+      );
+    }
+
     // TODO: style not correct
     return (
       <Animate
@@ -295,13 +313,9 @@ class VirtualList extends React.Component {
         component=""
         transitionName={transitionName}
         animation={animation}
-        showProp="data-show"
+        onEnd={this.onAnimationEnd}
       >
-        <div data-show={type === TYPE_ADD}>
-          {itemList.map((item, j) => (
-            this.renderSingleNode(item, `${index}_${j}`)
-          ))}
-        </div>
+        {$children}
       </Animate>
     );
   };
