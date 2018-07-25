@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import Animate from 'rc-animate';
 import { polyfill } from 'react-lifecycles-compat';
 
 import Item from './Item';
 import {
-  TYPE_KEEP,
+  TYPE_KEEP, TYPE_ADD,
   getHeight, diffList,
 } from './util';
 
@@ -140,9 +141,13 @@ class VirtualList extends React.Component {
 
     for (let i = 0; i < listCount; i += 1) {
       const { type, list } = itemList[i];
-      const len = type === TYPE_KEEP ? list.length : 1;
+      const isKeep = type === TYPE_KEEP;
+      const len = isKeep ? list.length : 1;
       if (current < len) {
-        return list[current];
+        return {
+          type,
+          item: isKeep ? list[current] : list,
+        };
       }
       current -= len;
     }
@@ -239,11 +244,9 @@ class VirtualList extends React.Component {
     });
   };
 
-  renderNode = (index) => {
+  renderSingleNode = (item, index) => {
     const { itemStyles, useVirtualList } = this.state;
     const { children, rowKey } = this.props;
-    const item = this.getItem(index);
-    if (!item) return null;
 
     if (typeof children !== 'function') {
       return children;
@@ -264,7 +267,6 @@ class VirtualList extends React.Component {
       };
     }
 
-    // TODO: Replace `key` with `rowKey`
     return (
       <Item key={rowKey ? item[rowKey] : index} ref={nodeRef}>
         {children({
@@ -273,6 +275,34 @@ class VirtualList extends React.Component {
           props: item,
         })}
       </Item>
+    );
+  };
+
+  renderNode = (index) => {
+    const { transitionName, animation } =this.props;
+    const { type, item: itemList } = this.getItem(index) || {};
+
+    if (!itemList) return null;
+
+    if (type === TYPE_KEEP) {
+      return this.renderSingleNode(itemList, index); // It's a item, not list actually
+    }
+
+    // TODO: style not correct
+    return (
+      <Animate
+        key={`RC_VIRTUAL_${index}`}
+        component=""
+        transitionName={transitionName}
+        animation={animation}
+        showProp="data-show"
+      >
+        <div data-show={type === TYPE_ADD}>
+          {itemList.map((item, j) => (
+            this.renderSingleNode(item, `${index}_${j}`)
+          ))}
+        </div>
+      </Animate>
     );
   };
 

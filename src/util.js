@@ -434,7 +434,6 @@ export function conductExpandParent(keyList, keyEntities) {
  * Get the full node key & level list which can display in the tree view (expanded).
  * @param rootEntityList    children prop of Tree component
  * @param expandedKeys
- * @param keyEntities
  */
 export function getVisibleKeyLevelListByEntityList(rootEntityList, expandedKeys) {
   const fullList = [];

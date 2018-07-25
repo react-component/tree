@@ -17,16 +17,6 @@ export function getHeight(element) {
   return match ? Number(match[1]) : null;
 }
 
-export function isDataSourceEqual(list1 = [], list2 = [], rowKey) {
-  if (list1.length !== list2.length) return false;
-
-  if (rowKey) {
-    return list1.every((item, index) => item[rowKey] === list2[index][rowKey]);
-  }
-
-  return list1.every((item, index) => item === list2[index]);
-}
-
 /**
  * list1: [1, 2, 3, 4, 5, 9]
  * list2: [1, 5, 6, 7, 8, 9]
