@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 
 import Item from './Item';
-import { getHeight } from './util';
+import {
+  TYPE_KEEP,
+  getHeight, diffList,
+} from './util';
 
 // TODO: Move this code to rc-virtual-list
 
@@ -15,12 +18,19 @@ import { getHeight } from './util';
  */
 class VirtualList extends React.Component {
   static propTypes = {
-    innerComponent: PropTypes.any,
     children: PropTypes.func,
     dataSource: PropTypes.array,
-    itemMinHeight: PropTypes.number,
     height: PropTypes.number.isRequired,
+    innerComponent: PropTypes.any,
+    itemMinHeight: PropTypes.number,
+    rowKey: PropTypes.string,
     style: PropTypes.object,
+
+    // Animation
+    transitionName: PropTypes.string,
+    animation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+    // Event
     onScroll: PropTypes.func,
   };
 
@@ -34,6 +44,7 @@ class VirtualList extends React.Component {
     super();
 
     this.state = {
+      itemList: [],
       scrollPtg: 0,
       targetItemIndex: 0,
       targetItemOffsetPtg: -1,
@@ -42,6 +53,8 @@ class VirtualList extends React.Component {
 
       // Save the styles to the item
       itemStyles: {},
+
+      prevProps: {},
     };
 
     this.nodes = {};
@@ -50,6 +63,25 @@ class VirtualList extends React.Component {
   componentDidMount() {
     this.calculatePosition();
     this.syncPosition();
+  }
+
+  static getDerivedStateFromProps(props, prevState) {
+    const { prevProps } = prevState;
+    const { dataSource, rowKey, transitionName, animation } = props;
+    const newState = {
+      prevProps: props,
+    };
+
+    if (prevProps.dataSource !== dataSource) {
+      if (!rowKey || !prevProps.dataSource || (!transitionName && !animation)) {
+        newState.itemList = [{ type: TYPE_KEEP, list: dataSource }];
+      } else {
+        // Only has `rowKey` & animation props can do the animation
+        newState.itemList = diffList(prevProps.dataSource, dataSource);
+      }
+    }
+
+    return newState;
   }
 
   componentDidUpdate() {
@@ -71,14 +103,14 @@ class VirtualList extends React.Component {
     this.$container = ele;
   };
 
-  getTopCount = () => {
-    const { scrollPtg } = this.state;
+  getTopCount = (state) => {
+    const { scrollPtg } = state || this.state;
     const { itemMinHeight, height } = this.props;
     return Math.ceil(scrollPtg * height / itemMinHeight);
   };
 
-  getBottomCount = () => {
-    const { scrollPtg } = this.state;
+  getBottomCount = (state) => {
+    const { scrollPtg } = state || this.state;
     const { itemMinHeight, height } = this.props;
     return Math.ceil((1 - scrollPtg) * height / itemMinHeight);
   };
@@ -90,17 +122,45 @@ class VirtualList extends React.Component {
     return getHeight(targetDom) || 0;
   };
 
+  getItemCount = () => {
+    const { itemList } = this.state;
+    let total = 0;
+
+    itemList.forEach(({ type, list }) => {
+      total += type === TYPE_KEEP ? list.length : 1;
+    });
+
+    return total;
+  };
+
+  getItem = (index) => {
+    const { itemList } = this.state;
+    let current = index;
+    const listCount = itemList.length;
+
+    for (let i = 0; i < listCount; i += 1) {
+      const { type, list } = itemList[i];
+      const len = type === TYPE_KEEP ? list.length : 1;
+      if (current < len) {
+        return list[current];
+      }
+      current -= len;
+    }
+
+    return null;
+  };
+
   calculatePosition = () => {
     const { targetItemIndex, targetItemOffsetPtg, useVirtualList } = this.state;
-    const { dataSource } = this.props;
 
-    const total = dataSource.length;
+    const total = this.getItemCount();
     if (total === 0) return;
 
     const { scrollTop, scrollHeight, clientHeight } = this.$container;
     const scrollRange = scrollHeight - clientHeight;
 
     // Skip if needn't scroll
+    // TODO: Process collapse logic
     if (scrollRange === 0) {
       if (useVirtualList !== false) {
         this.setState({
@@ -181,8 +241,8 @@ class VirtualList extends React.Component {
 
   renderNode = (index) => {
     const { itemStyles, useVirtualList } = this.state;
-    const { dataSource, children } = this.props;
-    const item = dataSource[index];
+    const { children, rowKey } = this.props;
+    const item = this.getItem(index);
     if (!item) return null;
 
     if (typeof children !== 'function') {
@@ -206,7 +266,7 @@ class VirtualList extends React.Component {
 
     // TODO: Replace `key` with `rowKey`
     return (
-      <Item key={index} ref={nodeRef}>
+      <Item key={rowKey ? item[rowKey] : index} ref={nodeRef}>
         {children({
           index,
           style,
@@ -219,12 +279,17 @@ class VirtualList extends React.Component {
   render() {
     const { targetItemIndex, useVirtualList } = this.state;
     const {
-      dataSource,
       innerComponent: InnerComponent,
       height = 0, itemMinHeight,
       style,
       ...restProps
     } = this.props;
+
+    delete restProps.dataSource;
+    delete restProps.onVisibleChange;
+    delete restProps.rowKey;
+    delete restProps.transitionName;
+    delete restProps.animation;
 
     // Calculate the list before target item
     const topCount = this.getTopCount();
@@ -240,7 +305,7 @@ class VirtualList extends React.Component {
     let innerStyle;
     if (useVirtualList) {
       innerStyle = {
-        height: itemMinHeight * dataSource.length,
+        height: itemMinHeight * this.getItemCount(),
         padding: 0,
         margin: 0,
         position: 'relative',

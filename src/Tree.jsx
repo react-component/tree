@@ -18,7 +18,7 @@ import {
   arrAdd, arrDel, posToArr,
   conductCheck,
   warnOnlyTreeNode,
-  getVisibleKeyLevelList,
+  getVisibleKeyLevelListByTreeNode,
 } from './util';
 
 class Tree extends React.Component {
@@ -137,8 +137,6 @@ class Tree extends React.Component {
 
     return {
       rcTree: {
-        // root: this,
-
         prefixCls,
         selectable,
         showIcon,
@@ -221,7 +219,7 @@ class Tree extends React.Component {
     // Generate visible treeNode list
     // TODO: check uncontrolled treeNodes
     if (newState.treeNode || newState.expandedKeys || !prevState.expandedKeys) {
-      const internalVisibleKeyLevels = getVisibleKeyLevelList(
+      const internalVisibleKeyLevels = getVisibleKeyLevelListByTreeNode(
         newState.treeNode || prevState.treeNode,
         newState.expandedKeys || prevState.expandedKeys,
         keyEntities,
@@ -652,7 +650,7 @@ class Tree extends React.Component {
     const { treeNode, keyEntities } = this.state;
     if (!('expandedKeys' in this.props)) {
       // We need re-calculate the `internalVisibleKeyLevels`
-      const internalVisibleKeyLevels = getVisibleKeyLevelList(
+      const internalVisibleKeyLevels = getVisibleKeyLevelListByTreeNode(
         treeNode,
         expandedKeys,
         keyEntities,
@@ -747,6 +745,7 @@ class Tree extends React.Component {
     const {
       prefixCls, className, style, focusable,
       showLine, tabIndex = 0, height,
+      openTransitionName, openAnimation,
     } = this.props;
 
     const domProps = {
@@ -774,6 +773,9 @@ class Tree extends React.Component {
           dataSource={internalVisibleKeyLevels}
           itemMinHeight={20}
           height={height}
+          rowKey="key"
+          transitionName={openTransitionName}
+          animation={openAnimation}
         >
           {this.renderSingleNode}
         </VirtualList>
