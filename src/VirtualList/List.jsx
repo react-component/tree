@@ -296,18 +296,19 @@ class VirtualList extends React.Component {
       return children;
     }
 
+    const itemStyle = itemStyles[index];
     const nodeRef = node => {
       this.nodes[index] = node;
     };
 
     let style = {};
-    if (useVirtualList) {
+    if (useVirtualList && itemStyle) {
       style = {
         position: 'absolute',
         left: 0,
         right: 0,
 
-        ...itemStyles[index],
+        ...itemStyle,
       };
     }
 

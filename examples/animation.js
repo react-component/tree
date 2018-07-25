@@ -78,7 +78,7 @@ class Demo extends React.Component {
 
         <Tree
           defaultExpandAll={false}
-          defaultExpandedKeys={['p1', 'p11', 'p21']}
+          defaultExpandedKeys={['p1', 'p11', 'p21', 'l1']}
           openAnimation={animation}
 
           height={hasHeight ? 300 : null}
@@ -91,7 +91,7 @@ class Demo extends React.Component {
                 <TreeNode title="leaf"/>
                 <TreeNode title="leaf"/>
                 <TreeNode title="leaf"/>
-                <TreeNode title="leaf">
+                <TreeNode title="leaf" key="l1">
                   <TreeNode title="sub leaf"/>
                   <TreeNode title="sub leaf"/>
                   <TreeNode title="sub leaf"/>
