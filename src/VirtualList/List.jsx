@@ -82,7 +82,7 @@ class VirtualList extends React.Component {
         newState.itemList = [{ type: TYPE_KEEP, list: dataSource }];
       } else {
         // Only has `rowKey` & animation props can do the animation
-        newState.itemList = diffList(prevProps.dataSource, dataSource);
+        newState.itemList = diffList(prevProps.dataSource, dataSource, rowKey);
       }
     }
 
@@ -105,16 +105,12 @@ class VirtualList extends React.Component {
     this.calculatePosition();
   };
 
-  onAnimationEnd = (index) => {
-    console.log('!!!!!! END !!!!!');
-    const { animations } = this.state;
+  // TODO: support multi animation
+  onAnimationEnd = () => {
     const { dataSource } = this.props;
     this.setState({
       itemList: [{ type: TYPE_KEEP, list: dataSource }],
-      animations: {
-        ...animations,
-        [index]: false,
-      },
+      animations: {},
     });
   };
 
@@ -350,23 +346,20 @@ class VirtualList extends React.Component {
       );
     }
 
-    console.log('Render Node:', !!$children);
-    // TODO: style not correct
-
     const animateProps = {};
     if (type === TYPE_ADD) {
       animateProps.transitionName = transitionName;
       animateProps.animation = animation;
+      animateProps.onEnd = this.onAnimationEnd;
     } else if (animations[index]) {
       animateProps.transitionName = transitionName;
       animateProps.animation = {
         leave: animation.leave,
       };
-      animateProps.onEnd = () => {
-        this.onAnimationEnd(index);
-      };
+      animateProps.onEnd = this.onAnimationEnd;
     }
 
+    // TODO: style not correct
     return (
       <Animate
         key={`RC_VIRTUAL_${index}`}

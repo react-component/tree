@@ -20,7 +20,6 @@ function animate(node, show, done) {
   let height = node.offsetHeight;
   return cssAnimation(node, 'collapse', {
     start() {
-      console.log('START!!!', show);
       if (!show) {
         node.style.height = `${node.offsetHeight}px`;
       } else {
@@ -29,11 +28,9 @@ function animate(node, show, done) {
       }
     },
     active() {
-      console.log('ACTIVE!!!');
       node.style.height = `${show ? height : 0}px`;
     },
     end() {
-      console.log('END!!!');
       node.style.height = '';
       done();
     },
@@ -81,7 +78,7 @@ class Demo extends React.Component {
 
         <Tree
           defaultExpandAll={false}
-          defaultExpandedKeys={['p1']}
+          defaultExpandedKeys={['p1', 'p11', 'p21']}
           openAnimation={animation}
 
           height={hasHeight ? 300 : null}
