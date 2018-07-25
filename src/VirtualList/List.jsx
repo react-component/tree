@@ -212,7 +212,8 @@ class VirtualList extends React.Component {
     const { needSyncScroll, targetItemIndex, targetItemOffsetPtg, scrollPtg } = this.state;
     const { height } = this.props;
 
-    if (!needSyncScroll) return;
+    // `targetItemOffsetPtg = -1` is only when the dom init
+    if (!needSyncScroll || targetItemOffsetPtg === -1) return;
 
     const { scrollTop } = this.$container;
     const itemStyles = {};

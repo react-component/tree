@@ -3,49 +3,29 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
-import cssAnimation from 'css-animation';
 
 const STYLE = `
-.collapse {
+.transition-appear,
+.transition-leave {
   overflow: hidden;
-  display: block;
-}
-
-.collapse-active {
   transition: height 0.3s ease-out;
 }
 `;
 
-function animate(node, show, done) {
-  let height = node.offsetHeight;
-  return cssAnimation(node, 'collapse', {
-    start() {
-      if (!show) {
-        node.style.height = `${node.offsetHeight}px`;
-      } else {
-        height = node.offsetHeight;
-        node.style.height = 0;
-      }
-    },
-    active() {
-      node.style.height = `${show ? height : 0}px`;
-    },
-    end() {
-      node.style.height = '';
-      done();
-    },
-  });
-}
-
 const animation = {
-  appear(node, done) {
-    return animate(node, true, done);
+  appear(node) {
+    node.style.height = 0;
+    setTimeout(() => {
+      node.style.height = `${node.scrollHeight}px`;
+    });
+    return {};
   },
-  enter(node, done) {
-    return animate(node, true, done);
-  },
-  leave(node, done) {
-    return animate(node, false, done);
+  leave(node) {
+    node.style.height = `${node.offsetHeight}px`;
+    setTimeout(() => {
+      node.style.height = 0;
+    });
+    return {};
   },
 };
 
@@ -80,6 +60,7 @@ class Demo extends React.Component {
           defaultExpandAll={false}
           defaultExpandedKeys={['p1', 'p11', 'p21', 'l1']}
           openAnimation={animation}
+          openTransitionName="transition"
 
           height={hasHeight ? 300 : null}
         >
