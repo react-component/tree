@@ -171,6 +171,7 @@ class VirtualList extends React.Component {
 
   calculatePosition = () => {
     const { targetItemIndex, targetItemOffsetPtg, useVirtualList } = this.state;
+    const { itemMinHeight, height } = this.props;
 
     const total = this.getItemCount();
     if (total === 0) return;
@@ -180,7 +181,16 @@ class VirtualList extends React.Component {
 
     // Skip if needn't scroll
     // TODO: Process collapse logic
+    /** console.log(scrollHeight, clientHeight, scrollTop);
     if (scrollRange === 0) {
+      if (useVirtualList !== false) {
+        this.setState({
+          useVirtualList: false,
+        });
+      }
+      return;
+    } */
+    if (total * itemMinHeight <= height) {
       if (useVirtualList !== false) {
         this.setState({
           useVirtualList: false,
@@ -391,6 +401,7 @@ class VirtualList extends React.Component {
     // Calculate the list before target item
     const topCount = this.getTopCount();
     const bottomCount = this.getBottomCount();
+    const totalCount = this.getItemCount();
 
     const mergedStyle = {
       ...style,
@@ -399,22 +410,46 @@ class VirtualList extends React.Component {
       padding: 0,
     };
 
-    let innerStyle;
+    let innerStyle = {
+      padding: 0,
+      margin: 0,
+    };
+
+    // Virtual list render
     if (useVirtualList) {
       innerStyle = {
-        height: itemMinHeight * this.getItemCount(),
-        padding: 0,
-        margin: 0,
+        ...innerStyle,
+        height: Math.max(itemMinHeight * totalCount, height),
         position: 'relative',
         overflowY: 'hidden',
       };
-    } else {
-      innerStyle = {
-        padding: 0,
-        margin: 0,
-      };
+
+      return (
+        <div
+          style={mergedStyle}
+          {...restProps}
+          ref={this.setContainerRef}
+          onScroll={this.onScroll}
+        >
+          <InnerComponent style={innerStyle}>
+            {/* Top items */}
+            {[...new Array(topCount)].map((_, index) => (
+              this.renderNode(targetItemIndex - (topCount - index))
+            ))}
+
+            {/* Target item */}
+            {this.renderNode(targetItemIndex)}
+
+            {/* Bottom items */}
+            {[...new Array(bottomCount)].map((_, index) => (
+              this.renderNode(targetItemIndex + index + 1)
+            ))}
+          </InnerComponent>
+        </div>
+      );
     }
 
+    // Normal list
     return (
       <div
         style={mergedStyle}
@@ -423,17 +458,8 @@ class VirtualList extends React.Component {
         onScroll={this.onScroll}
       >
         <InnerComponent style={innerStyle}>
-          {/* Top items */}
-          {[...new Array(topCount)].map((_, index) => (
-            this.renderNode(targetItemIndex - (topCount - index))
-          ))}
-
-          {/* Target item */}
-          {this.renderNode(targetItemIndex)}
-
-          {/* Bottom items */}
-          {[...new Array(bottomCount)].map((_, index) => (
-            this.renderNode(targetItemIndex + index + 1)
+          {[...new Array(totalCount)].map((_, index) => (
+            this.renderNode(index)
           ))}
         </InnerComponent>
       </div>

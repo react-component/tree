@@ -21,7 +21,7 @@ const animation = {
     return {};
   },
   leave(node) {
-    node.style.height = `${node.offsetHeight}px`;
+    node.style.height = `${node.scrollHeight}px`;
     setTimeout(() => {
       node.style.height = 0;
     });
