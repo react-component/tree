@@ -6,7 +6,7 @@ import { polyfill } from 'react-lifecycles-compat';
 
 import Item from './Item';
 import {
-  TYPE_KEEP, TYPE_ADD,
+  TYPE_KEEP, TYPE_ADD, TYPE_REMOVE,
   getHeight, diffList,
 } from './util';
 
@@ -45,12 +45,15 @@ class VirtualList extends React.Component {
     super();
 
     this.state = {
-      itemList: [],
       scrollPtg: 0,
       targetItemIndex: 0,
       targetItemOffsetPtg: -1,
       useVirtualList: true,
       needSyncScroll: true,
+
+      // item with animation
+      itemList: [],
+      animations: {},
 
       // Save the styles to the item
       itemStyles: {},
@@ -64,6 +67,7 @@ class VirtualList extends React.Component {
   componentDidMount() {
     this.calculatePosition();
     this.syncPosition();
+    this.processAnimation();
   }
 
   static getDerivedStateFromProps(props, prevState) {
@@ -88,6 +92,7 @@ class VirtualList extends React.Component {
   componentDidUpdate() {
     this.calculatePosition();
     this.syncPosition();
+    this.processAnimation();
   }
 
   onScroll = (...args) => {
@@ -100,10 +105,16 @@ class VirtualList extends React.Component {
     this.calculatePosition();
   };
 
-  onAnimationEnd = () => {
+  onAnimationEnd = (index) => {
+    console.log('!!!!!! END !!!!!');
+    const { animations } = this.state;
     const { dataSource } = this.props;
     this.setState({
       itemList: [{ type: TYPE_KEEP, list: dataSource }],
+      animations: {
+        ...animations,
+        [index]: false,
+      },
     });
   };
 
@@ -251,6 +262,36 @@ class VirtualList extends React.Component {
     });
   };
 
+  /**
+   * This is only used for the List which need animation process.
+   * We will diff the `dataSource` to find the add or remove items and wrapped under a div.
+   * It's OK for add animation.
+   * But if is remove animation, we need to add list and then remove it to trigger <Animate> remove.
+   */
+  processAnimation = () => {
+    const { animations, targetItemIndex } = this.state;
+    const { transitionName, animation } = this.props;
+    if (!transitionName && !animation) return;
+
+    const startIndex = targetItemIndex - this.getTopCount();
+    const endIndex = targetItemIndex + this.getBottomCount();
+
+    const newAnimations = {};
+    let changed = false;
+
+    for (let i = startIndex; i < endIndex; i += 1) {
+      const { type } = this.getItem(i) || {};
+      if (type === TYPE_REMOVE && !animations[i]) {
+        newAnimations[i] = true;
+        changed = true;
+      }
+    }
+
+    if (changed) {
+      this.setState({ animations: newAnimations });
+    }
+  };
+
   renderSingleNode = (item, index) => {
     const { itemStyles, useVirtualList } = this.state;
     const { children, rowKey } = this.props;
@@ -286,7 +327,8 @@ class VirtualList extends React.Component {
   };
 
   renderNode = (index) => {
-    const { transitionName, animation } =this.props;
+    const { animations } = this.state;
+    const { transitionName, animation, height, itemMinHeight } =this.props;
     const { type, item: itemList } = this.getItem(index) || {};
 
     if (!itemList) return null;
@@ -296,24 +338,40 @@ class VirtualList extends React.Component {
     }
 
     let $children;
-    if (type === TYPE_ADD) {
+    if (type === TYPE_ADD || !animations[index]) {
+      // We only need to render the items to fill the List
+      const maxCount = Math.ceil(height / itemMinHeight);
       $children = (
         <div>
-          {itemList.map((item, j) => (
+          {itemList.slice(0, maxCount).map((item, j) => (
             this.renderSingleNode(item, `${index}_${j}`)
           ))}
         </div>
       );
     }
 
+    console.log('Render Node:', !!$children);
     // TODO: style not correct
+
+    const animateProps = {};
+    if (type === TYPE_ADD) {
+      animateProps.transitionName = transitionName;
+      animateProps.animation = animation;
+    } else if (animations[index]) {
+      animateProps.transitionName = transitionName;
+      animateProps.animation = {
+        leave: animation.leave,
+      };
+      animateProps.onEnd = () => {
+        this.onAnimationEnd(index);
+      };
+    }
+
     return (
       <Animate
         key={`RC_VIRTUAL_${index}`}
         component=""
-        transitionName={transitionName}
-        animation={animation}
-        onEnd={this.onAnimationEnd}
+        {...animateProps}
       >
         {$children}
       </Animate>
