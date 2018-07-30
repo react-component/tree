@@ -123,10 +123,8 @@ export function getDragNodesKeys(treeNodes, node) {
   const { eventKey, pos } = node.props;
   const dragNodesKeys = [];
 
-  traverseTreeNodes(treeNodes, ({ pos: nodePos, key }) => {
-    if (isParent(pos, nodePos)) {
-      dragNodesKeys.push(key);
-    }
+  traverseTreeNodes(treeNodes, ({ key }) => {
+    dragNodesKeys.push(key);
   });
   dragNodesKeys.push(eventKey || pos);
   return dragNodesKeys;

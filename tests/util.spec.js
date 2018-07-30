@@ -1,10 +1,12 @@
 /* eslint-disable no-undef, react/no-multi-comp, react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
+import { mount } from 'enzyme';
 import Tree from '../src/Tree';
 import TreeNode from '../src/TreeNode';
 import {
   convertDataToTree, convertTreeToEntities,
   conductCheck, conductExpandParent,
+  getDragNodesKeys,
 } from '../src/util';
 import { convertTreeToData } from './util';
 
@@ -192,5 +194,26 @@ describe('Util', () => {
     const { keyEntities } = convertTreeToEntities(tree.props.children);
     const keys = conductExpandParent(['good'], keyEntities);
     expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
+  });
+
+  it('getDragNodesKeys', () => {
+    const tree = mount(
+      <Tree defaultExpandAll>
+        <TreeNode key="000">
+          <TreeNode key="111">
+            <TreeNode key="222" />
+            <TreeNode key="333" />
+          </TreeNode>
+        </TreeNode>
+      </Tree>
+    );
+
+    const treeNode0 = tree.find(TreeNode).at(0).instance();
+    const keys0 = getDragNodesKeys(treeNode0.props.children, treeNode0);
+    expect(keys0.sort()).toEqual(['000', '111', '222', '333'].sort());
+
+    const treeNode1 = tree.find(TreeNode).at(1).instance();
+    const keys1 = getDragNodesKeys(treeNode1.props.children, treeNode1);
+    expect(keys1.sort()).toEqual(['111', '222', '333'].sort());
   });
 });

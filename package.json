@@ -61,7 +61,8 @@
     ],
     "transform": {
       "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
-    }
+    },
+    "testURL": "http://localhost"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
