@@ -11,8 +11,12 @@ exports[`TreeNode Props className 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher_open"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
       title="---"
@@ -36,8 +40,12 @@ exports[`TreeNode Props className 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher_open"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher_open"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
           title="---"
@@ -61,8 +69,12 @@ exports[`TreeNode Props className 1`] = `
             role="treeitem"
           >
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
+              class="rc-tree-switcher"
+            >
+              <i
+                class="rc-tree-switcher-noop"
+              />
+            </span>
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
               title="---"
@@ -84,8 +96,12 @@ exports[`TreeNode Props className 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="---"
@@ -107,8 +123,12 @@ exports[`TreeNode Props className 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---"
@@ -137,8 +157,12 @@ exports[`TreeNode Props customize icon component 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---"
@@ -171,8 +195,12 @@ exports[`TreeNode Props customize icon element 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---"
@@ -205,8 +233,12 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---"
@@ -233,8 +265,12 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher_open"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
       title="---"
@@ -259,8 +295,12 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher_open"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher_open"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
           title="---"
@@ -285,8 +325,12 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             role="treeitem"
           >
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
+              class="rc-tree-switcher"
+            >
+              <i
+                class="rc-tree-switcher-noop"
+              />
+            </span>
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
               title="---"
@@ -309,8 +353,12 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="---"
@@ -333,8 +381,12 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---"
@@ -364,8 +416,12 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher_open"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
       title="---"
@@ -390,8 +446,12 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher_open"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher_open"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
           title="---"
@@ -416,8 +476,12 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             role="treeitem"
           >
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
+              class="rc-tree-switcher"
+            >
+              <i
+                class="rc-tree-switcher-noop"
+              />
+            </span>
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
               title="---"
@@ -440,8 +504,12 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="---"
@@ -464,8 +532,12 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---"
@@ -494,8 +566,12 @@ exports[`TreeNode Props isLeaf 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---"
@@ -516,8 +592,12 @@ exports[`TreeNode Props isLeaf 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="---"
@@ -545,8 +625,12 @@ exports[`TreeNode Props isLeaf 2`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="---"
@@ -570,8 +654,12 @@ exports[`TreeNode Props isLeaf 2`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="---"
@@ -602,8 +690,12 @@ exports[`TreeNode Props isLeaf 3`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher_open"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
       title="---"
@@ -627,8 +719,12 @@ exports[`TreeNode Props isLeaf 3`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher_open"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher_open"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
           title="---"

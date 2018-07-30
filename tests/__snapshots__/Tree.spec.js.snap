@@ -11,8 +11,12 @@ exports[`Tree Basic check basic render 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher_open"
+      />
+    </span>
     <span
       class="rc-tree-checkbox"
     />
@@ -39,8 +43,12 @@ exports[`Tree Basic check basic render 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-checkbox rc-tree-checkbox-disabled"
         />
@@ -63,8 +71,12 @@ exports[`Tree Basic check basic render 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-checkbox"
         />
@@ -98,8 +110,12 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-checkbox rc-tree-checkbox-checked"
     />
@@ -131,8 +147,12 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="00"
@@ -152,8 +172,12 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="02"
@@ -182,8 +206,12 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher-noop"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
       title="00"
@@ -203,8 +231,12 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher_open"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
       title="01"
@@ -228,8 +260,12 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="010"
@@ -249,8 +285,12 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
           title="012"
@@ -282,8 +322,12 @@ exports[`Tree Basic renders correctly 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher_open"
+      />
+    </span>
     <span
       class="rc-tree-checkbox"
     />
@@ -310,8 +354,12 @@ exports[`Tree Basic renders correctly 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher_open"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher_open"
+          />
+        </span>
         <span
           class="rc-tree-checkbox rc-tree-checkbox-disabled"
         />
@@ -338,8 +386,12 @@ exports[`Tree Basic renders correctly 1`] = `
             role="treeitem"
           >
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
+              class="rc-tree-switcher"
+            >
+              <i
+                class="rc-tree-switcher-noop"
+              />
+            </span>
             <span
               class="rc-tree-checkbox"
             />
@@ -362,8 +414,12 @@ exports[`Tree Basic renders correctly 1`] = `
             role="treeitem"
           >
             <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
+              class="rc-tree-switcher"
+            >
+              <i
+                class="rc-tree-switcher-noop"
+              />
+            </span>
             <span
               class="rc-tree-checkbox"
             />
@@ -388,8 +444,12 @@ exports[`Tree Basic renders correctly 1`] = `
         role="treeitem"
       >
         <span
-          class="rc-tree-switcher rc-tree-switcher-noop"
-        />
+          class="rc-tree-switcher"
+        >
+          <i
+            class="rc-tree-switcher-noop"
+          />
+        </span>
         <span
           class="rc-tree-checkbox rc-tree-checkbox-disabled"
         />
@@ -423,8 +483,12 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
     role="treeitem"
   >
     <span
-      class="rc-tree-switcher rc-tree-switcher_close"
-    />
+      class="rc-tree-switcher"
+    >
+      <i
+        class="rc-tree-switcher_close"
+      />
+    </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
       title="0"
