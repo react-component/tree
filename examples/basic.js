@@ -109,8 +109,10 @@ class Demo extends React.Component {
       </span>
     );
 
-    const switcherIcon = this.state.useIcon &&
-      getSvgIcon(arrowPath, { cursor: 'pointer' }) || undefined;
+    const switcherIcon = ({ expanded }) => {
+      return this.state.useIcon &&
+        getSvgIcon(arrowPath, { cursor: 'pointer' }, { transform: `rotate(${expanded ? 90 : 0}deg)` }) || null;
+    };
     const switcherLeafIcon = this.state.useIcon &&
       getSvgIcon(arrowPath, { cursor: 'pointer' }, { transform: 'rotate(270deg)' }) ||
       undefined;
