@@ -90,7 +90,7 @@ describe('Tree Props', () => {
       const withoutSelectableBase = (
         <Tree onSelect={handleOnSelect} defaultExpandedKeys={['0-0']} selectable={false}>
           <TreeNode key="0-0">
-            <TreeNode key="0-0-0"/>
+            <TreeNode key="0-0-0" />
           </TreeNode>
         </Tree>
       );
@@ -559,17 +559,19 @@ describe('Tree Props', () => {
   it('treeData', () => {
     const treeData = [
       { key: 'K0', title: 'T0' },
-      { key: 'K1', title: 'T1', children:
-        [
-          { key: 'K10', title: 'T10' },
-          { key: 'K11', title: 'T11', children:
-            [
-              { key: 'K110', title: 'T110' },
-              { key: 'K111', title: 'T111' },
-            ]
-          },
-          { key: 'K12', title: 'T12' },
-        ],
+      {
+        key: 'K1', title: 'T1', children:
+          [
+            { key: 'K10', title: 'T10' },
+            {
+              key: 'K11', title: 'T11', children:
+                [
+                  { key: 'K110', title: 'T110' },
+                  { key: 'K111', title: 'T111' },
+                ]
+            },
+            { key: 'K12', title: 'T12' },
+          ],
       },
     ];
     const wrapper = mount(<Tree treeData={treeData} defaultExpandAll />);
@@ -653,5 +655,35 @@ describe('Tree Props', () => {
 
     const { animation } = wrapper.find(Animate).props();
     expect(animation).toEqual(openAnimation);
+  });
+
+  describe('custom switcher icon', () => {
+    it('switcher icon', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll switcherIcon="sicon">
+          <TreeNode key="0-0" />
+          <TreeNode key="0-1" switcherIcon="sicon-from-node">
+            <TreeNode key="0-1-0" />
+            <TreeNode key="0-1-1" />
+          </TreeNode>
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('switcher leaf icon', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll switcherLeafIcon="sleaficon">
+          <TreeNode key="0-0" />
+          <TreeNode key="0-1" switcherLeafIcon="sleaficon-from-node" />
+          <TreeNode key="0-2">
+            <TreeNode key="0-2-0" />
+            <TreeNode key="0-2-1" switcherLeafIcon="sleaficon-from-subnode" />
+          </TreeNode>
+          <TreeNode key="0-3" />
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 });

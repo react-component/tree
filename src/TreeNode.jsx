@@ -44,6 +44,8 @@ class TreeNode extends React.Component {
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    switcherIcon: PropTypes.node,
+    switcherLeafIcon: PropTypes.node,
   };
 
   static contextTypes = nodeContextTypes;
@@ -289,21 +291,33 @@ class TreeNode extends React.Component {
 
   // Switcher
   renderSwitcher = () => {
-    const { expanded } = this.props;
-    const { rcTree: { prefixCls } } = this.context;
+    const {
+      expanded,
+      switcherIcon: switcherIconFromProps,
+      switcherLeafIcon: switcherLeafIconFromProps
+    } = this.props;
+    const {
+      rcTree: {
+        prefixCls,
+        switcherIcon: switcherIconFromCtx,
+        switcherLeafIcon: switcherLeafIconFromCtx
+      }
+    } = this.context;
 
     if (this.isLeaf()) {
-      return <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />;
+      const switcherLeafIcon = switcherLeafIconFromProps || switcherLeafIconFromCtx;
+      return switcherLeafIcon || <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />;
     }
 
+    const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
+
     return (
-      <span
-        className={classNames(
-          `${prefixCls}-switcher`,
-          `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
-        )}
-        onClick={this.onExpand}
-      />
+      <span onClick={this.onExpand} className={classNames(
+        `${prefixCls}-switcher`,
+        `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
+      )}>
+        {switcherIcon}
+      </span>
     );
   };
 
