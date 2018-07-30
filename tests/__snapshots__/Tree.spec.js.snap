@@ -11,7 +11,11 @@ exports[`Tree Basic check basic render 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand ---"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-checkbox"
@@ -203,7 +207,11 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand 01"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -282,7 +290,11 @@ exports[`Tree Basic renders correctly 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="true"
+      aria-label="expand parent 1"
       class="rc-tree-switcher rc-tree-switcher_open"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-checkbox"
@@ -310,7 +322,11 @@ exports[`Tree Basic renders correctly 1`] = `
         role="treeitem"
       >
         <span
+          aria-expanded="true"
+          aria-label="expand leaf 1"
           class="rc-tree-switcher rc-tree-switcher_open"
+          role="button"
+          tabindex="0"
         />
         <span
           class="rc-tree-checkbox rc-tree-checkbox-disabled"
@@ -423,7 +439,11 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
     role="treeitem"
   >
     <span
+      aria-expanded="false"
+      aria-label="expand 0"
       class="rc-tree-switcher rc-tree-switcher_close"
+      role="button"
+      tabindex="0"
     />
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
