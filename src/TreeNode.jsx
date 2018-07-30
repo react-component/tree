@@ -306,19 +306,24 @@ class TreeNode extends React.Component {
 
     if (this.isLeaf()) {
       const switcherLeafIcon = switcherLeafIconFromProps || switcherLeafIconFromCtx;
-      return switcherLeafIcon || <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />;
+      return (
+        <span className={`${prefixCls}-switcher`}>
+          {switcherLeafIcon || <i className={`${prefixCls}-switcher-noop`} />}
+        </span>
+      );
     }
 
     const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
 
-    return (
-      <span onClick={this.onExpand} className={classNames(
-        `${prefixCls}-switcher`,
-        `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
-      )}>
-        {switcherIcon}
-      </span>
-    );
+    return switcherIcon ?
+      <span
+        onClick={this.onExpand}
+        className={classNames(`${prefixCls}-switcher`,
+          `${prefixCls}-switcher-icon_${expanded ? ICON_OPEN : ICON_CLOSE}`)}
+      >{switcherIcon}</span> :
+      <span onClick={this.onExpand} className={`${prefixCls}-switcher`}>
+        <i className={`${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`} />
+      </span>;
   };
 
   // Checkbox
