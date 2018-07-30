@@ -55,7 +55,7 @@ const demo = (
       defaultExpandedKeys={['p1']}
       openAnimation={animation}
     >
-      <TreeNode title="parent 1" key="p1" icon="ggb">
+      <TreeNode title="parent 1" key="p1">
         <TreeNode key="p10" title="leaf"/>
         <TreeNode title="parent 1-1" key="p11">
           <TreeNode title="parent 2-1" key="p21">
