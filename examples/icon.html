@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>icon.js - example - rc-tree@1.13.1</title>
+  <title>icon.js - example - rc-tree@1.12.7</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.13.1</h1>
+      <h1>rc-tree@1.12.7</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -272,7 +272,6 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0 */</span>
 <span class="hljs-comment">/* eslint no-alert:0 */</span>
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
 <span class="hljs-keyword">import</span> classNames <span class="hljs-keyword">from</span> <span class="hljs-string">'classnames'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, { TreeNode } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
@@ -287,41 +286,42 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     )}
   /&gt;</span>
 )</span>;
-Icon.propTypes = {
-  selected: PropTypes.bool,
-};
 
-<span class="hljs-keyword">const</span> Demo = () =&gt; (
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Customize icon with element<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
-      <span class="hljs-attribute">defaultExpandAll</span>
-    &gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">icon</span>=<span class="hljs-value">{&lt;span</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"customize-icon"</span> /&gt;</span>} title="Parent"&gt;
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">icon</span>=<span class="hljs-value">{&lt;span</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"customize-icon sub-icon"</span> /&gt;</span>} title="Child" /&gt;
-      <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Customize icon with element<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
+          <span class="hljs-attribute">defaultExpandAll</span>
+        &gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">icon</span>=<span class="hljs-value">{&lt;span</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"customize-icon"</span> /&gt;</span>} title="Parent"&gt;
+            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">icon</span>=<span class="hljs-value">{&lt;span</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"customize-icon sub-icon"</span> /&gt;</span>} title="Child" /&gt;
+          <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
 
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Customize icon with component<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
-      <span class="hljs-attribute">defaultExpandAll</span>
-    &gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">icon</span>=<span class="hljs-value">{Icon}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Parent"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">icon</span>=<span class="hljs-value">{Icon}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Child"</span> /&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Customize icon with component<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
+          <span class="hljs-attribute">defaultExpandAll</span>
+        &gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">icon</span>=<span class="hljs-value">{Icon}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Parent"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">icon</span>=<span class="hljs-value">{Icon}</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Child"</span> /&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
 
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Customize icon with Tree prop<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
-      <span class="hljs-attribute">defaultExpandAll</span>
-      <span class="hljs-attribute">icon</span>=<span class="hljs-value">{Icon}</span>
-    &gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Parent"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Child"</span> /&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-)</span>;
+        <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Customize icon with Tree prop<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Tree</span>
+          <span class="hljs-attribute">defaultExpandAll</span>
+          <span class="hljs-attribute">icon</span>=<span class="hljs-value">{Icon}</span>
+        &gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Parent"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">TreeNode</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Child"</span> /&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">TreeNode</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">Tree</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>;
+  }
+}
 
 ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
