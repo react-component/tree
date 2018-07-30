@@ -80,8 +80,8 @@ class Tree extends React.Component {
       processEntity: PropTypes.func.isRequired,
       onProcessFinished: PropTypes.func.isRequired,
     }),
-    switcherIcon: PropTypes.node,
-    switcherLeafIcon: PropTypes.node,
+    switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    switcherLeafIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static childContextTypes = treeContextTypes;

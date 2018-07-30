@@ -44,8 +44,8 @@ class TreeNode extends React.Component {
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    switcherIcon: PropTypes.node,
-    switcherLeafIcon: PropTypes.node,
+    switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    switcherLeafIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static contextTypes = nodeContextTypes;
@@ -308,7 +308,9 @@ class TreeNode extends React.Component {
       const switcherLeafIcon = switcherLeafIconFromProps || switcherLeafIconFromCtx;
       return (
         <span className={`${prefixCls}-switcher`}>
-          {switcherLeafIcon || <i className={`${prefixCls}-switcher-noop`} />}
+          {(typeof switcherLeafIcon === 'function' ?
+            React.createElement(switcherLeafIcon, { ...this.props }) : switcherLeafIcon
+          ) || <i className={`${prefixCls}-switcher-noop`} />}
         </span>
       );
     }
@@ -320,7 +322,7 @@ class TreeNode extends React.Component {
         onClick={this.onExpand}
         className={classNames(`${prefixCls}-switcher`,
           `${prefixCls}-switcher-icon_${expanded ? ICON_OPEN : ICON_CLOSE}`)}
-      >{switcherIcon}</span> :
+      >{typeof switcherIcon === 'function' ? React.createElement(switcherIcon, { ...this.props }) : switcherIcon}</span> :
       <span onClick={this.onExpand} className={`${prefixCls}-switcher`}>
         <i className={`${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`} />
       </span>;
