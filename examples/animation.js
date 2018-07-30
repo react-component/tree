@@ -22,8 +22,10 @@ const animation = {
   },
   leave(node) {
     node.style.height = `${node.scrollHeight}px`;
+    console.log('1 >>>', node.style.height);
     setTimeout(() => {
       node.style.height = 0;
+      console.log('2 >>>', node.style.height);
     });
     return {};
   },

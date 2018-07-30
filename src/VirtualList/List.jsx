@@ -7,7 +7,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import Item from './Item';
 import {
   TYPE_KEEP, TYPE_ADD, TYPE_REMOVE,
-  getHeight, diffList,
+  getHeight, diffList, flattenChildren,
 } from './util';
 
 // TODO: Move this code to rc-virtual-list
@@ -180,16 +180,6 @@ class VirtualList extends React.Component {
     const scrollRange = scrollHeight - clientHeight;
 
     // Skip if needn't scroll
-    // TODO: Process collapse logic
-    /** console.log(scrollHeight, clientHeight, scrollTop);
-    if (scrollRange === 0) {
-      if (useVirtualList !== false) {
-        this.setState({
-          useVirtualList: false,
-        });
-      }
-      return;
-    } */
     if (total * itemMinHeight <= height) {
       if (useVirtualList !== false) {
         this.setState({
@@ -339,7 +329,9 @@ class VirtualList extends React.Component {
     const { transitionName, animation, height, itemMinHeight } =this.props;
     const { type, item: itemList } = this.getItem(index) || {};
 
-    if (!itemList) return null;
+    if (!itemList) {
+      return null;
+    }
 
     if (type === TYPE_KEEP) {
       return this.renderSingleNode(itemList, index); // It's a item, not list actually
@@ -424,6 +416,19 @@ class VirtualList extends React.Component {
         overflowY: 'hidden',
       };
 
+      const $children = flattenChildren(
+        // Top items
+        [...new Array(topCount)].map((_, index) => (
+          this.renderNode(targetItemIndex - (topCount - index))
+        )),
+        // Target item
+        [this.renderNode(targetItemIndex)],
+        // Bottom items
+        [...new Array(bottomCount)].map((_, index) => (
+          this.renderNode(targetItemIndex + index + 1)
+        )),
+      );
+
       return (
         <div
           style={mergedStyle}
@@ -432,18 +437,7 @@ class VirtualList extends React.Component {
           onScroll={this.onScroll}
         >
           <InnerComponent style={innerStyle}>
-            {/* Top items */}
-            {[...new Array(topCount)].map((_, index) => (
-              this.renderNode(targetItemIndex - (topCount - index))
-            ))}
-
-            {/* Target item */}
-            {this.renderNode(targetItemIndex)}
-
-            {/* Bottom items */}
-            {[...new Array(bottomCount)].map((_, index) => (
-              this.renderNode(targetItemIndex + index + 1)
-            ))}
+            {$children}
           </InnerComponent>
         </div>
       );
