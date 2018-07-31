@@ -45,7 +45,7 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const switcher = wrapper.find('.rc-tree-switcher').children().first();
+      const switcher = wrapper.find('.rc-tree-switcher').first();
       expect(switcher.is(OPEN_CLASSNAME)).toBe(true);
     });
 
@@ -57,7 +57,7 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const switcher = wrapper.find('.rc-tree-switcher').children().first();
+      const switcher = wrapper.find('.rc-tree-switcher').first();
       expect(switcher.is(OPEN_CLASSNAME)).toBe(true);
     });
 
@@ -69,7 +69,7 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const getSwitcher = () => wrapper.find('.rc-tree-switcher').children().first();
+      const getSwitcher = () => wrapper.find('.rc-tree-switcher').first();
       expect(getSwitcher().is(OPEN_CLASSNAME)).toBe(false);
       wrapper.setProps({ expandedKeys: ['0-0'] });
       expect(getSwitcher().is(OPEN_CLASSNAME)).toBe(true);
@@ -86,7 +86,7 @@ describe('Tree Basic', () => {
         </Tree>
       );
 
-      const switcher = wrapper.find('.rc-tree-switcher').children().first();
+      const switcher = wrapper.find('.rc-tree-switcher').first();
       expect(switcher.is(OPEN_CLASSNAME)).toBe(true);
     });
 
@@ -100,7 +100,7 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>
       );
-      const switcher = wrapper.find('.rc-tree-switcher').children().first();
+      const switcher = wrapper.find('.rc-tree-switcher').first();
       expect(switcher.is(OPEN_CLASSNAME)).toBe(false);
     });
 
@@ -119,8 +119,8 @@ describe('Tree Basic', () => {
 
       wrapper.setProps({ autoExpandParent: true });
 
-      parentSwitcher = wrapper.find('.rc-tree-switcher').children().first();
-      const childSwitcher = wrapper.find('.rc-tree-switcher').children().at(1);
+      parentSwitcher = wrapper.find('.rc-tree-switcher').first();
+      const childSwitcher = wrapper.find('.rc-tree-switcher').at(1);
       expect(parentSwitcher.is(OPEN_CLASSNAME)).toBe(true);
       expect(childSwitcher.is(OPEN_CLASSNAME)).toBe(true);
     });

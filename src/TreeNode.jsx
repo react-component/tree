@@ -305,23 +305,20 @@ class TreeNode extends React.Component {
 
     if (this.isLeaf()) {
       return (
-        <span className={`${prefixCls}-switcher`}>
-          {(typeof switcherIcon === 'function' ?
-            React.createElement(switcherIcon, { ...this.props, isLeaf: true }) : switcherIcon
-          ) || <i className={`${prefixCls}-switcher-noop`} />}
+        <span className={classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-noop`)}>
+          {typeof switcherIcon === 'function' ?
+            React.createElement(switcherIcon, { ...this.props, isLeaf: true }) : switcherIcon}
         </span>
       );
     }
 
-    const switcherCls = classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-icon_${expanded ? ICON_OPEN : ICON_CLOSE}`);
-    return switcherIcon ?
+    const switcherCls = classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`);
+    return (
       <span onClick={this.onExpand} className={switcherCls}>
         {typeof switcherIcon === 'function' ?
           React.createElement(switcherIcon, { ...this.props, isLeaf: false }) : switcherIcon}
-      </span> :
-      <span onClick={this.onExpand} className={`${prefixCls}-switcher`}>
-        <i className={`${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`} />
-      </span>;
+      </span>
+    );
   };
 
   // Checkbox

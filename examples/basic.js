@@ -114,9 +114,13 @@ class Demo extends React.Component {
         return null;
       }
       if (obj.isLeaf) {
-        return getSvgIcon(arrowPath, { cursor: 'pointer' }, { transform: 'rotate(270deg)' });
+        return getSvgIcon(arrowPath,
+          { cursor: 'pointer', backgroundColor: 'white' },
+          { transform: 'rotate(270deg)' });
       }
-      return getSvgIcon(arrowPath, { cursor: 'pointer' }, { transform: `rotate(${obj.expanded ? 90 : 0}deg)` });
+      return getSvgIcon(arrowPath,
+        { cursor: 'pointer', backgroundColor: 'white' },
+        { transform: `rotate(${obj.expanded ? 90 : 0}deg)` });
     };
     const treeCls = `myCls${this.state.useIcon && ' customIcon' || ''}`;
 

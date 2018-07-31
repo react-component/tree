@@ -56,9 +56,7 @@
       vertical-align: top;
     }
     span {
-      &.@{treePrefixCls}-switcher .@{treePrefixCls}-switcher-noop,
-      &.@{treePrefixCls}-switcher .@{treePrefixCls}-switcher_open,
-      &.@{treePrefixCls}-switcher .@{treePrefixCls}-switcher_close,
+      &.@{treePrefixCls}-switcher,
       &.@{treePrefixCls}-checkbox,
       &.@{treePrefixCls}-iconEle {
         line-height: 16px;
@@ -85,13 +83,13 @@
         background: url('data:image/gif;base64,R0lGODlhEAAQAKIGAMLY8YSx5HOm4Mjc88/g9Ofw+v///wAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgAGACwAAAAAEAAQAAADMGi6RbUwGjKIXCAA016PgRBElAVlG/RdLOO0X9nK61W39qvqiwz5Ls/rRqrggsdkAgAh+QQFCgAGACwCAAAABwAFAAADD2hqELAmiFBIYY4MAutdCQAh+QQFCgAGACwGAAAABwAFAAADD1hU1kaDOKMYCGAGEeYFCQAh+QQFCgAGACwKAAIABQAHAAADEFhUZjSkKdZqBQG0IELDQAIAIfkEBQoABgAsCgAGAAUABwAAAxBoVlRKgyjmlAIBqCDCzUoCACH5BAUKAAYALAYACgAHAAUAAAMPaGpFtYYMAgJgLogA610JACH5BAUKAAYALAIACgAHAAUAAAMPCAHWFiI4o1ghZZJB5i0JACH5BAUKAAYALAAABgAFAAcAAAMQCAFmIaEp1motpDQySMNFAgA7') no-repeat scroll 0 0 transparent;
       }
       &.@{treePrefixCls}-switcher {
-        .@{treePrefixCls}-switcher-noop {
+        &.@{treePrefixCls}-switcher-noop {
           cursor: auto;
         }
-        .@{treePrefixCls}-switcher_open {
+        &.@{treePrefixCls}-switcher_open {
           background-position: -93px -56px;
         }
-        .@{treePrefixCls}-switcher_close {
+        &.@{treePrefixCls}-switcher_close {
           background-position: -75px -56px;
         }
       }
@@ -134,7 +132,7 @@
     }
   }
   &:not(.@{treePrefixCls}-show-line) {
-    .@{treePrefixCls}-switcher .@{treePrefixCls}-switcher-noop {
+    .@{treePrefixCls}-switcher-noop {
       background: none;
     }
   }
@@ -143,12 +141,12 @@
       > ul {
         background: url('data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7') 0 0 repeat-y;
       }
-      > .@{treePrefixCls}-switcher .@{treePrefixCls}-switcher-noop {
+      > .@{treePrefixCls}-switcher-noop {
         background-position: -56px -18px;
       }
     }
     li:last-child {
-      > .@{treePrefixCls}-switcher .@{treePrefixCls}-switcher-noop {
+      > .@{treePrefixCls}-switcher-noop {
         background-position: -56px -36px;
       }
     }
