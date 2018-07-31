@@ -77,6 +77,7 @@ class Tree extends React.Component {
     inlineIndent: PropTypes.number,
     height: PropTypes.number,
 
+    motion: VirtualList.propTypes.motion,
     // Tree will parse treeNode as entities map,
     // This prop enable user to process the Tree with additional entities
     // This function may be remove in future if we start to remove the dependency on key
@@ -745,7 +746,7 @@ class Tree extends React.Component {
     const {
       prefixCls, className, style, focusable,
       showLine, tabIndex = 0, height,
-      openTransitionName, openAnimation,
+      motion,
     } = this.props;
 
     const domProps = {
@@ -774,8 +775,7 @@ class Tree extends React.Component {
           itemMinHeight={20}
           height={height}
           rowKey="key"
-          transitionName={openTransitionName}
-          animation={openAnimation}
+          motion={motion}
         >
           {this.renderSingleNode}
         </VirtualList>

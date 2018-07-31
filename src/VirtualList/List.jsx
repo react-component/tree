@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import Animate from 'rc-animate';
+import { CSSMotion } from 'rc-animate';
 import { polyfill } from 'react-lifecycles-compat';
 
 import Item from './Item';
@@ -26,6 +26,10 @@ class VirtualList extends React.Component {
     itemMinHeight: PropTypes.number,
     rowKey: PropTypes.string,
     style: PropTypes.object,
+
+    motion: PropTypes.shape({
+      ...CSSMotion.propTypes,
+    }),
 
     // Animation
     transitionName: PropTypes.string,
@@ -72,13 +76,13 @@ class VirtualList extends React.Component {
 
   static getDerivedStateFromProps(props, prevState) {
     const { prevProps } = prevState;
-    const { dataSource, rowKey, transitionName, animation } = props;
+    const { dataSource, rowKey, motion } = props;
     const newState = {
       prevProps: props,
     };
 
     if (prevProps.dataSource !== dataSource) {
-      if (!rowKey || !prevProps.dataSource || (!transitionName && !animation)) {
+      if (!rowKey || !prevProps.dataSource || !motion) {
         newState.itemList = [{ type: TYPE_KEEP, list: dataSource }];
       } else {
         // Only has `rowKey` & animation props can do the animation
@@ -106,7 +110,7 @@ class VirtualList extends React.Component {
   };
 
   // TODO: support multi animation
-  onAnimationEnd = () => {
+  onMotionEnd = () => {
     const { dataSource } = this.props;
     this.setState({
       itemList: [{ type: TYPE_KEEP, list: dataSource }],
@@ -263,12 +267,12 @@ class VirtualList extends React.Component {
    * This is only used for the List which need animation process.
    * We will diff the `dataSource` to find the add or remove items and wrapped under a div.
    * It's OK for add animation.
-   * But if is remove animation, we need to add list and then remove it to trigger <Animate> remove.
+   * But if is remove animation, we need to add list and then remove it to trigger rc-animate remove.
    */
   processAnimation = () => {
     const { animations, targetItemIndex } = this.state;
-    const { transitionName, animation } = this.props;
-    if (!transitionName && !animation) return;
+    const { motion } = this.props;
+    if (!motion) return;
 
     const startIndex = targetItemIndex - this.getTopCount();
     const endIndex = targetItemIndex + this.getBottomCount();
@@ -326,7 +330,7 @@ class VirtualList extends React.Component {
 
   renderNode = (index) => {
     const { animations } = this.state;
-    const { transitionName, animation, height, itemMinHeight } =this.props;
+    const { height, itemMinHeight, motion } = this.props;
     const { type, item: itemList } = this.getItem(index) || {};
 
     if (!itemList) {
@@ -337,41 +341,35 @@ class VirtualList extends React.Component {
       return this.renderSingleNode(itemList, index); // It's a item, not list actually
     }
 
-    let $children;
-    if (type === TYPE_ADD || !animations[index]) {
-      // We only need to render the items to fill the List
-      const maxCount = Math.ceil(height / itemMinHeight);
-      $children = (
-        <div>
-          {itemList.slice(0, maxCount).map((item, j) => (
-            this.renderSingleNode(item, `${index}_${j}`)
-          ))}
-        </div>
-      );
+    // Animate
+    let visible;
+    if (type === TYPE_REMOVE) {
+      visible = !animations[index];
+    } else {
+      visible = true;
     }
 
-    const animateProps = {};
-    if (type === TYPE_ADD) {
-      animateProps.transitionName = transitionName;
-      animateProps.animation = animation;
-      animateProps.onEnd = this.onAnimationEnd;
-    } else if (animations[index]) {
-      animateProps.transitionName = transitionName;
-      animateProps.animation = {
-        leave: animation.leave,
-      };
-      animateProps.onEnd = this.onAnimationEnd;
-    }
-
-    // TODO: style not correct
+    const maxCount = Math.ceil(height / itemMinHeight);
     return (
-      <Animate
+      <CSSMotion
         key={`RC_VIRTUAL_${index}`}
-        component=""
-        {...animateProps}
+        motionAppear={type === TYPE_ADD}
+        motionEnter={type === TYPE_ADD}
+        motionLeave={type === TYPE_REMOVE}
+        {...motion}
+        onAppearEnd={this.onMotionEnd}
+        onEnterEnd={this.onMotionEnd}
+        onLeaveEnd={this.onMotionEnd}
+        visible={visible}
       >
-        {$children}
-      </Animate>
+        {({ className, style }) => (
+          <div className={className} style={style}>
+            {itemList.slice(0, maxCount).map((item, j) => (
+              this.renderSingleNode(item, `${index}_${j}`)
+            ))}
+          </div>
+        )}
+      </CSSMotion>
     );
   };
 

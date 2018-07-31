@@ -12,23 +12,15 @@ const STYLE = `
 }
 `;
 
-const animation = {
-  appear(node) {
-    node.style.height = 0;
-    setTimeout(() => {
-      node.style.height = `${node.scrollHeight}px`;
-    });
-    return {};
-  },
-  leave(node) {
-    node.style.height = `${node.scrollHeight}px`;
-    console.log('1 >>>', node.style.height);
-    setTimeout(() => {
-      node.style.height = 0;
-      console.log('2 >>>', node.style.height);
-    });
-    return {};
-  },
+const oriHeight = (ele) => ({ height: ele.scrollHeight });
+const collapseHeight = () => ({ height: 0 });
+
+const motion = {
+  motionName: 'transition',
+  onAppearStart: collapseHeight,
+  onAppearActive: oriHeight,
+  onLeaveStart: oriHeight,
+  onLeaveActive: collapseHeight,
 };
 
 class Demo extends React.Component {
@@ -61,8 +53,7 @@ class Demo extends React.Component {
         <Tree
           defaultExpandAll={false}
           defaultExpandedKeys={['p1', 'p11', 'p21', 'l1']}
-          openAnimation={animation}
-          openTransitionName="transition"
+          motion={motion}
 
           height={hasHeight ? 300 : null}
         >
