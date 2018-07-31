@@ -658,11 +658,12 @@ describe('Tree Props', () => {
   });
 
   describe('custom switcher icon', () => {
+    const switcherIcon = (text) => ({ isLeaf }) => isLeaf ? null : text;
     it('switcher icon', () => {
       const wrapper = render(
-        <Tree defaultExpandAll switcherIcon="sicon">
+        <Tree defaultExpandAll switcherIcon={switcherIcon('switcherIcon')}>
           <TreeNode key="0-0" />
-          <TreeNode key="0-1" switcherIcon="sicon-from-node">
+          <TreeNode key="0-1" switcherIcon={switcherIcon('switcherIconFromNode0-1')}>
             <TreeNode key="0-1-0" />
             <TreeNode key="0-1-1" />
           </TreeNode>
@@ -672,13 +673,14 @@ describe('Tree Props', () => {
     });
 
     it('switcher leaf icon', () => {
+      const switcherLeafIcon = (text) => ({ isLeaf }) => isLeaf ? text : null;
       const wrapper = render(
-        <Tree defaultExpandAll switcherLeafIcon="sleaficon">
+        <Tree defaultExpandAll switcherIcon={switcherLeafIcon('switcherLeafIcon')}>
           <TreeNode key="0-0" />
-          <TreeNode key="0-1" switcherLeafIcon="sleaficon-from-node" />
+          <TreeNode key="0-1" switcherIcon={switcherLeafIcon('switcherLeafIconFromNode0-1')} />
           <TreeNode key="0-2">
             <TreeNode key="0-2-0" />
-            <TreeNode key="0-2-1" switcherLeafIcon="sleaficon-from-subnode" />
+            <TreeNode key="0-2-1" switcherIcon={switcherLeafIcon('switcherLeafIconFromNode0-2-1')} />
           </TreeNode>
           <TreeNode key="0-3" />
         </Tree>

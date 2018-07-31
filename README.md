@@ -91,7 +91,6 @@ see examples
 | onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 | onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 | switcherIcon | specific the switcher icon. | ReactNode \| (props: TreeNodeAttribute) => ReactNode | - |
-| switcherLeafIcon | specific the switcher leaf icon. | ReactNode \| (props: TreeNodeAttribute) => ReactNode | - |
 
 ### TreeNode props
 > note: if you have a lot of TreeNode, like more than 1000,   
@@ -109,7 +108,6 @@ see examples
 |isLeaf | whether it's leaf node | bool | false |
 |icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
 | switcherIcon | specific the switcher icon. | ReactNode \| (props: TreeNodeAttribute) => ReactNode | - |
-| switcherLeafIcon | specific the switcher leaf icon. | ReactNode \| (props: TreeNodeAttribute) => ReactNode | - |
 
 ## note
 

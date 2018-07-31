@@ -81,7 +81,6 @@ class Tree extends React.Component {
       onProcessFinished: PropTypes.func.isRequired,
     }),
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    switcherLeafIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static childContextTypes = treeContextTypes;
@@ -123,7 +122,7 @@ class Tree extends React.Component {
       prefixCls, selectable, showIcon, icon, draggable, checkable, checkStrictly, disabled,
       loadData, filterTreeNode,
       openTransitionName, openAnimation,
-      switcherIcon, switcherLeafIcon,
+      switcherIcon,
     } = this.props;
 
     return {
@@ -135,7 +134,6 @@ class Tree extends React.Component {
         showIcon,
         icon,
         switcherIcon,
-        switcherLeafIcon,
         draggable,
         checkable,
         checkStrictly,

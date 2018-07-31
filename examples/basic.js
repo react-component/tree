@@ -109,13 +109,15 @@ class Demo extends React.Component {
       </span>
     );
 
-    const switcherIcon = ({ expanded }) => {
-      return this.state.useIcon &&
-        getSvgIcon(arrowPath, { cursor: 'pointer' }, { transform: `rotate(${expanded ? 90 : 0}deg)` }) || null;
+    const switcherIcon = (obj) => {
+      if (!this.state.useIcon) {
+        return null;
+      }
+      if (obj.isLeaf) {
+        return getSvgIcon(arrowPath, { cursor: 'pointer' }, { transform: 'rotate(270deg)' });
+      }
+      return getSvgIcon(arrowPath, { cursor: 'pointer' }, { transform: `rotate(${obj.expanded ? 90 : 0}deg)` });
     };
-    const switcherLeafIcon = this.state.useIcon &&
-      getSvgIcon(arrowPath, { cursor: 'pointer' }, { transform: 'rotate(270deg)' }) ||
-      undefined;
     const treeCls = `myCls${this.state.useIcon && ' customIcon' || ''}`;
 
     return (
@@ -135,7 +137,6 @@ class Demo extends React.Component {
           defaultCheckedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect} onCheck={this.onCheck}
           switcherIcon={switcherIcon}
-          switcherLeafIcon={switcherLeafIcon}
         >
           <TreeNode title="parent 1" key="0-0">
             <TreeNode title={customLabel} key="0-0-0">
@@ -167,7 +168,6 @@ class Demo extends React.Component {
           onCheck={this.onCheck}
           treeData={treeData}
           switcherIcon={switcherIcon}
-          switcherLeafIcon={switcherLeafIcon}
         />
       </div>
     );

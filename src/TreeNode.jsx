@@ -45,7 +45,6 @@ class TreeNode extends React.Component {
     disableCheckbox: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    switcherLeafIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static contextTypes = nodeContextTypes;
@@ -294,35 +293,32 @@ class TreeNode extends React.Component {
     const {
       expanded,
       switcherIcon: switcherIconFromProps,
-      switcherLeafIcon: switcherLeafIconFromProps
     } = this.props;
     const {
       rcTree: {
         prefixCls,
         switcherIcon: switcherIconFromCtx,
-        switcherLeafIcon: switcherLeafIconFromCtx
       }
     } = this.context;
 
+    const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
+
     if (this.isLeaf()) {
-      const switcherLeafIcon = switcherLeafIconFromProps || switcherLeafIconFromCtx;
       return (
         <span className={`${prefixCls}-switcher`}>
-          {(typeof switcherLeafIcon === 'function' ?
-            React.createElement(switcherLeafIcon, { ...this.props }) : switcherLeafIcon
+          {(typeof switcherIcon === 'function' ?
+            React.createElement(switcherIcon, { ...this.props, isLeaf: true }) : switcherIcon
           ) || <i className={`${prefixCls}-switcher-noop`} />}
         </span>
       );
     }
 
-    const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
-
+    const switcherCls = classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-icon_${expanded ? ICON_OPEN : ICON_CLOSE}`);
     return switcherIcon ?
-      <span
-        onClick={this.onExpand}
-        className={classNames(`${prefixCls}-switcher`,
-          `${prefixCls}-switcher-icon_${expanded ? ICON_OPEN : ICON_CLOSE}`)}
-      >{typeof switcherIcon === 'function' ? React.createElement(switcherIcon, { ...this.props }) : switcherIcon}</span> :
+      <span onClick={this.onExpand} className={switcherCls}>
+        {typeof switcherIcon === 'function' ?
+          React.createElement(switcherIcon, { ...this.props, isLeaf: false }) : switcherIcon}
+      </span> :
       <span onClick={this.onExpand} className={`${prefixCls}-switcher`}>
         <i className={`${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`} />
       </span>;
