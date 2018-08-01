@@ -58,6 +58,10 @@ class Demo extends React.Component {
           height={hasHeight ? 300 : null}
         >
           <TreeNode title="parent 1" key="p1">
+            <TreeNode key="1-0" title="1-0">
+              <TreeNode key="1-0-0" title="1-0-0"/>
+              <TreeNode key="1-0-1" title="1-0-1"/>
+            </TreeNode>
             <TreeNode key="p10" title="leaf"/>
             <TreeNode title="parent 1-1" key="p11">
               <TreeNode title="parent 2-1" key="p21">

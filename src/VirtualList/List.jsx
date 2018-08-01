@@ -141,10 +141,15 @@ class VirtualList extends React.Component {
     return getHeight(targetDom) || 0;
   };
 
-  getItemCount = () => {
+  getItemCount = (includeAnimatingItems) => {
     const { itemList } = this.state;
-    let total = 0;
 
+
+    if (includeAnimatingItems) {
+      return itemList.reduce((count, { list }) => count + list.length, 0);
+    }
+
+    let total = 0;
     itemList.forEach(({ type, list }) => {
       total += type === TYPE_KEEP ? list.length : 1;
     });
@@ -329,7 +334,7 @@ class VirtualList extends React.Component {
   };
 
   renderNode = (index) => {
-    const { animations } = this.state;
+    const { animations, itemStyles, useVirtualList } = this.state;
     const { height, itemMinHeight, motion } = this.props;
     const { type, item: itemList } = this.getItem(index) || {};
 
@@ -349,6 +354,24 @@ class VirtualList extends React.Component {
       visible = true;
     }
 
+    // TODO: Simplify this
+    const itemStyle = itemStyles[index];
+
+    const nodeRef = node => {
+      this.nodes[index] = node;
+    };
+
+    let virtualStyle = {};
+    if (useVirtualList && itemStyle) {
+      virtualStyle = {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+
+        ...itemStyle,
+      };
+    }
+
     const maxCount = Math.ceil(height / itemMinHeight);
     return (
       <CSSMotion
@@ -363,7 +386,7 @@ class VirtualList extends React.Component {
         visible={visible}
       >
         {({ className, style }) => (
-          <div className={className} style={style}>
+          <div className={className} style={{ ...style, ...virtualStyle }} ref={nodeRef}>
             {itemList.slice(0, maxCount).map((item, j) => (
               this.renderSingleNode(item, `${index}_${j}`)
             ))}
@@ -391,7 +414,8 @@ class VirtualList extends React.Component {
     // Calculate the list before target item
     const topCount = this.getTopCount();
     const bottomCount = this.getBottomCount();
-    const totalCount = this.getItemCount();
+    const totalCount = this.getItemCount(); // Count without animating items
+    const totalItemCount = this.getItemCount(true); // Count includes animating items
 
     const mergedStyle = {
       ...style,
@@ -405,11 +429,12 @@ class VirtualList extends React.Component {
       margin: 0,
     };
 
+    console.log('>>>', totalItemCount, totalCount);
     // Virtual list render
     if (useVirtualList) {
       innerStyle = {
         ...innerStyle,
-        height: Math.max(itemMinHeight * totalCount, height),
+        height: Math.max(itemMinHeight * totalItemCount, height),
         position: 'relative',
         overflowY: 'hidden',
       };
