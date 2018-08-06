@@ -85,11 +85,3 @@ export function diffList(list1 = [], list2 = [], rowKey) {
 
   return itemList;
 }
-
-export function flattenChildren(...list) {
-  const fullList = [];
-  list.forEach((subList) => {
-    fullList.push(...subList);
-  });
-  return fullList.filter(child => child);
-}

@@ -8,7 +8,7 @@ import raf from 'raf'; // TODO: Remove this when we use rc-virtual-list later
 import Item from './Item';
 import {
   TYPE_KEEP, TYPE_ADD, TYPE_REMOVE,
-  getHeight, diffList, flattenChildren,
+  getHeight, diffList,
 } from './util';
 
 // TODO: Move this code to rc-virtual-list
@@ -415,18 +415,16 @@ class VirtualList extends React.Component {
         overflowY: 'hidden',
       };
 
-      const $children = flattenChildren(
+      const $children = [
         // Top items
-        [...new Array(topCount)].map((_, index) => (
-          this.renderNode(targetItemIndex - (topCount - index))
-        )),
+        ...new Array(topCount),
         // Target item
-        [this.renderNode(targetItemIndex)],
+        1,
         // Bottom items
-        [...new Array(bottomCount)].map((_, index) => (
-          this.renderNode(targetItemIndex + index + 1)
-        )),
-      );
+        ...new Array(bottomCount),
+      ].map((_, index) => (
+        this.renderNode(targetItemIndex - (topCount - index))
+      ));
 
       const ulStyle = {
         padding: 0,
