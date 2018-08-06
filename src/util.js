@@ -464,7 +464,7 @@ export function getVisibleKeyLevelListByEntityList(rootEntityList, expandedKeys)
  */
 export function getVisibleKeyLevelListByTreeNode(rootChildren, expandedKeys, keyEntities) {
   const rootEntityList = getNodeChildren(rootChildren)
-    .map(({ key }) => keyEntities[key])
+    .map(({ key }, index) => keyEntities[key || `0-${index}`])
     .filter(entity => entity);
 
   return getVisibleKeyLevelListByEntityList(rootEntityList, expandedKeys, keyEntities);
