@@ -6,7 +6,9 @@ import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
 import {
-  getNodeChildren, mapChildren,
+  getNodeChildren,
+  getDataAndAria,
+  mapChildren,
   warnOnlyTreeNode,
 } from './util';
 
@@ -475,12 +477,7 @@ class TreeNode extends React.Component {
       draggable,
     } } = this.context;
     const disabled = this.isDisabled();
-    const dataOrAriaAttributeProps = Object.keys(otherProps).reduce((prev, key) => {
-      if ((key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-')) {
-        prev[key] = otherProps[key];
-      }
-      return prev;
-    }, {});
+    const dataOrAriaAttributeProps = getDataAndAria(otherProps);
 
     return (
       <li

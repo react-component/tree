@@ -189,6 +189,24 @@ exports[`Tree Props checkable without selectable 1`] = `
 </ul>
 `;
 
+exports[`Tree Props data and aria props renders aria attributes 1`] = `
+<ul
+  aria-label="name"
+  class="rc-tree"
+  role="tree"
+  unselectable="on"
+/>
+`;
+
+exports[`Tree Props data and aria props renders data attributes 1`] = `
+<ul
+  class="rc-tree"
+  data-test="tree"
+  role="tree"
+  unselectable="on"
+/>
+`;
+
 exports[`Tree Props defaultExpandAll 1`] = `
 <ul
   class="rc-tree"

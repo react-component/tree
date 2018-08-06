@@ -427,3 +427,16 @@ export function conductExpandParent(keyList, keyEntities) {
 
   return Object.keys(expandedKeys);
 }
+
+/**
+ * Returns only the data- and aria- key/value pairs
+ * @param {object} props 
+ */
+export function getDataAndAria(props) {
+  return Object.keys(props).reduce((prev, key) => {
+    if ((key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-')) {
+      prev[key] = props[key];
+    }
+    return prev;
+  }, {});
+}

@@ -7,6 +7,7 @@ import {
   convertDataToTree, convertTreeToEntities,
   conductCheck, conductExpandParent,
   getDragNodesKeys,
+  getDataAndAria,
 } from '../src/util';
 import { convertTreeToData } from './util';
 
@@ -215,5 +216,20 @@ describe('Util', () => {
     const treeNode1 = tree.find(TreeNode).at(1).instance();
     const keys1 = getDragNodesKeys(treeNode1.props.children, treeNode1);
     expect(keys1.sort()).toEqual(['111', '222', '333'].sort());
+  });
+
+  describe('getDataAndAria', () => {
+    it('should return only data- and aria- properties', () => {
+      const props = {
+        'data-test': 'name',
+        'aria-label': 'name',
+        dataSource: '/api',
+        ariaLabel: 'some-label',
+      };
+      expect(getDataAndAria(props)).toEqual({
+        'data-test': 'name',
+        'aria-label': 'name',
+      });
+    });
   });
 });
