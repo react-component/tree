@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CSSMotion } from 'rc-animate';
 import { polyfill } from 'react-lifecycles-compat';
+import raf from 'raf'; // TODO: Remove this when we use rc-virtual-list later
 
 import Item from './Item';
 import {
@@ -63,6 +64,7 @@ class VirtualList extends React.Component {
     };
 
     this.nodes = {};
+    this.animationRaf = null;
   }
 
   componentDidMount() {
@@ -94,6 +96,10 @@ class VirtualList extends React.Component {
     this.calculatePosition();
     this.syncPosition();
     this.processAnimation();
+  }
+
+  componentWillUnmount() {
+    this.cancelProcessAnimation();
   }
 
   onScroll = (...args) => {
@@ -253,26 +259,37 @@ class VirtualList extends React.Component {
    * But if is remove animation, we need to add list and then remove it to trigger rc-animate remove.
    */
   processAnimation = () => {
-    const { animations, targetItemIndex } = this.state;
-    const { motion } = this.props;
-    if (!motion) return;
+    this.cancelProcessAnimation();
 
-    const startIndex = targetItemIndex - this.getTopCount();
-    const endIndex = targetItemIndex + this.getBottomCount();
+    this.animationRaf = raf(() => {
+      const { animations, targetItemIndex } = this.state;
+      const { motion } = this.props;
+      if (!motion) return;
 
-    const newAnimations = {};
-    let changed = false;
+      const startIndex = targetItemIndex - this.getTopCount();
+      const endIndex = targetItemIndex + this.getBottomCount();
 
-    for (let i = startIndex; i < endIndex; i += 1) {
-      const { type } = this.getItem(i) || {};
-      if (type === TYPE_REMOVE && !animations[i]) {
-        newAnimations[i] = true;
-        changed = true;
+      const newAnimations = {};
+      let changed = false;
+
+      for (let i = startIndex; i < endIndex; i += 1) {
+        const { type } = this.getItem(i) || {};
+        if (type === TYPE_REMOVE && !animations[i]) {
+          newAnimations[i] = true;
+          changed = true;
+        }
       }
-    }
 
-    if (changed) {
-      this.setState({ animations: newAnimations });
+      if (changed) {
+        this.setState({ animations: newAnimations });
+      }
+    });
+  };
+
+  cancelProcessAnimation = () => {
+    if (this.animationRaf) {
+      raf.cancel(this.animationRaf);
+      this.animationRaf = null;
     }
   };
 
@@ -322,8 +339,6 @@ class VirtualList extends React.Component {
     const nodeRef = node => {
       this.nodes[index] = node;
     };
-
-    console.log('->', visible, type);
 
     const maxCount = Math.ceil(height / itemMinHeight);
     return (
