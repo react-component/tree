@@ -262,12 +262,21 @@ class VirtualList extends React.Component {
     this.cancelProcessAnimation();
 
     this.animationRaf = raf(() => {
-      const { animations, targetItemIndex } = this.state;
+      const { animations, targetItemIndex, useVirtualList } = this.state;
       const { motion } = this.props;
       if (!motion) return;
 
-      const startIndex = targetItemIndex - this.getTopCount();
-      const endIndex = targetItemIndex + this.getBottomCount();
+      let startIndex;
+      let endIndex;
+
+      // Calculate the check range
+      if (useVirtualList) {
+        startIndex = targetItemIndex - this.getTopCount();
+        endIndex = targetItemIndex + this.getBottomCount();
+      } else {
+        startIndex = 0;
+        endIndex = this.getItemCount();
+      }
 
       const newAnimations = {};
       let changed = false;
