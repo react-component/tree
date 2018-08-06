@@ -509,9 +509,11 @@ class TreeNode extends React.Component {
         onDragEnd={draggable ? this.onDragEnd : undefined}
         {...dataOrAriaAttributeProps}
       >
-        {this.renderSwitcher()}
-        {this.renderCheckbox()}
-        {this.renderSelector()}
+        <div className={`${prefixCls}-treenode-item-wrapper`}>
+          {this.renderSwitcher()}
+          {this.renderCheckbox()}
+          {this.renderSelector()}
+        </div>
         {this.renderChildren()}
       </li>
     );
