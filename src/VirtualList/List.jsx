@@ -398,7 +398,6 @@ class VirtualList extends React.Component {
       ...style,
       overflowY: 'auto',
       height,
-      padding: 0,
     };
 
     let innerStyle = {
