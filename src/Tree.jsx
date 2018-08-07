@@ -763,40 +763,21 @@ class Tree extends React.Component {
       domProps.onKeyDown = this.onKeyDown;
     }
 
-    if (height) {
-      // TODO: make `itemMinHeight` as prop
-      // Use virtual list
-      return (
-        <VirtualList
-          innerComponent="ul"
-          {...domProps}
-
-          dataSource={internalVisibleKeyLevels}
-          itemMinHeight={20}
-          height={height}
-          rowKey="key"
-          motion={motion}
-        >
-          {this.renderSingleNode}
-        </VirtualList>
-      );
-    }
-
-    // Pure render
+    // TODO: make `itemMinHeight` as prop
+    // Use virtual list
     return (
-      <ul
+      <VirtualList
+        innerComponent="ul"
         {...domProps}
+
+        dataSource={internalVisibleKeyLevels}
+        itemMinHeight={20}
+        height={height || false}
+        rowKey="key"
+        motion={motion}
       >
-        {internalVisibleKeyLevels.map(({ key, level }) => (
-          React.createElement(
-            this.renderSingleNode,
-            {
-              key,
-              props: { key, level },
-            }
-          )
-        ))}
-      </ul>
+        {this.renderSingleNode}
+      </VirtualList>
     );
   }
 }

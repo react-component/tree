@@ -13,6 +13,21 @@ import {
 
 // TODO: Move this code to rc-virtual-list
 
+function heightProp(...args) {
+  const [props, propName, Component] = args;
+  const prop = props[propName];
+
+  if (prop === false || typeof prop === 'number') {
+    return null;
+  }
+
+  return new Error(
+    `Invalid prop \`${propName}\` supplied to \`${Component}\`. ` +
+    `Only accept boolean false or number value but get ${prop}`
+  );
+}
+
+
 /**
  * Virtual List provide the container to hold list item.
  * The scroll bar pin element's height of scroll bar is always fixed.
@@ -22,7 +37,7 @@ class VirtualList extends React.Component {
   static propTypes = {
     children: PropTypes.func,
     dataSource: PropTypes.array,
-    height: PropTypes.number.isRequired,
+    height: heightProp,
     innerComponent: PropTypes.any,
     itemMinHeight: PropTypes.number,
     rowKey: PropTypes.string,
@@ -68,8 +83,14 @@ class VirtualList extends React.Component {
   }
 
   componentDidMount() {
-    this.calculatePosition();
-    this.syncPosition();
+    const { height } = this.props;
+
+    // No height no calculate
+    if (height) {
+      this.calculatePosition();
+      this.syncPosition();
+    }
+
     this.processAnimation();
   }
 
@@ -93,8 +114,14 @@ class VirtualList extends React.Component {
   }
 
   componentDidUpdate() {
-    this.calculatePosition();
-    this.syncPosition();
+    const { height } = this.props;
+
+    // No height no calculate
+    if (height) {
+      this.calculatePosition();
+      this.syncPosition();
+    }
+
     this.processAnimation();
   }
 
@@ -262,15 +289,17 @@ class VirtualList extends React.Component {
     this.cancelProcessAnimation();
 
     this.animationRaf = raf(() => {
+      this.animationRaf = null;
+
       const { animations, targetItemIndex, useVirtualList } = this.state;
-      const { motion } = this.props;
+      const { motion, height } = this.props;
       if (!motion) return;
 
       let startIndex;
       let endIndex;
 
       // Calculate the check range
-      if (useVirtualList) {
+      if (useVirtualList && height) {
         startIndex = targetItemIndex - this.getTopCount();
         endIndex = targetItemIndex + this.getBottomCount();
       } else {
@@ -349,7 +378,12 @@ class VirtualList extends React.Component {
       this.nodes[index] = node;
     };
 
-    const maxCount = Math.ceil(height / itemMinHeight);
+    let filteredList = itemList;
+    if (height) {
+      const maxCount = Math.ceil(height / itemMinHeight);
+      filteredList = itemList.slice(0, maxCount);
+    }
+
     return (
       <CSSMotion
         key={`RC_VIRTUAL_${index}`}
@@ -364,7 +398,7 @@ class VirtualList extends React.Component {
       >
         {({ className, style }) => (
           <div className={className} style={style} ref={nodeRef}>
-            {itemList.slice(0, maxCount).map((item, j) => (
+            {filteredList.map((item, j) => (
               this.renderSingleNode(item, `${index}_${j}`)
             ))}
           </div>
@@ -406,7 +440,7 @@ class VirtualList extends React.Component {
     };
 
     // Virtual list render
-    if (useVirtualList) {
+    if (useVirtualList && height) {
       innerStyle = {
         ...innerStyle,
         height: Math.max(itemMinHeight * totalItemCount, height),
