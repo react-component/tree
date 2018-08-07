@@ -130,13 +130,15 @@ class VirtualList extends React.Component {
   }
 
   onScroll = (...args) => {
-    const { onScroll } = this.props;
+    const { onScroll, height } = this.props;
 
     if (onScroll) {
       onScroll(...args);
     }
 
-    this.calculatePosition();
+    if (height) {
+      this.calculatePosition();
+    }
   };
 
   // TODO: support multi animation
