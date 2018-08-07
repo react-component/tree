@@ -11,10 +11,39 @@ export function getStyle(element) {
   return null;
 }
 
-export function getHeight(element) {
-  const style = getStyle(element) || {};
-  const match = (style.height || '').match(/^(\d*(\.\d+)?)px/);
+function toNum(value) {
+  const match = (value || '').match(/^(\d*(\.\d+)?)px/);
   return match ? Number(match[1]) : null;
+}
+
+export function getBoxHeight(element) {
+  const style = getStyle(element);
+  if (!style) return null;
+
+  if (style.boxSizing === 'border-box') {
+    return toNum(style.height);
+  }
+
+  return (
+    toNum(style.borderTopWidth) + toNum(style.paddingTop)
+    + toNum(style.height)
+    + toNum(style.borderBottomWidth) + toNum(style.paddingBottom)
+  );
+}
+
+export function getContentHeight(element) {
+  const style = getStyle(element);
+  if (!style) return null;
+
+  if (style.boxSizing === 'border-box') {
+    return (
+      toNum(style.height)
+      - toNum(style.borderTopWidth) - toNum(style.paddingTop)
+      - toNum(style.borderBottomWidth) - toNum(style.paddingBottom)
+    );
+  }
+
+  return toNum(style.height);
 }
 
 /**

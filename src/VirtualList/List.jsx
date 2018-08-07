@@ -8,7 +8,7 @@ import raf from 'raf'; // TODO: Remove this when we use rc-virtual-list later
 import Item from './Item';
 import {
   TYPE_KEEP, TYPE_ADD, TYPE_REMOVE,
-  getHeight, diffList,
+  diffList, getBoxHeight, getContentHeight,
 } from './util';
 
 // TODO: Move this code to rc-virtual-list
@@ -168,7 +168,7 @@ class VirtualList extends React.Component {
   getItemHeight = (index) => {
     const targetNode = this.nodes[index];
     const targetDom = ReactDOM.findDOMNode(targetNode);
-    return getHeight(targetDom) || 0;
+    return getBoxHeight(targetDom) || 0;
   };
 
   getItemCount = (includeAnimatingItems) => {
@@ -243,14 +243,12 @@ class VirtualList extends React.Component {
         targetItemOffsetPtg: itemOffsetPtg,
         needSyncScroll: true,
         useVirtualList: true,
-        scrollTop,
       });
     }
   };
 
   syncPosition = () => {
     const { needSyncScroll, targetItemIndex, targetItemOffsetPtg, scrollPtg } = this.state;
-    const { height } = this.props;
 
     // `targetItemOffsetPtg = -1` is only when the dom init
     if (!needSyncScroll || targetItemOffsetPtg === -1) return;
@@ -259,7 +257,7 @@ class VirtualList extends React.Component {
 
     // Calculate target item
     const targetItemHeight = this.getItemHeight(targetItemIndex);
-    const targetItemTop = scrollPtg * height;
+    const targetItemTop = scrollPtg * getContentHeight(this.$container);
     const targetItemOffset = targetItemOffsetPtg * targetItemHeight;
     const targetItemMergedTop = scrollTop + targetItemTop - targetItemOffset;
 
@@ -275,8 +273,6 @@ class VirtualList extends React.Component {
       needSyncScroll: false,
       topItemTop: topItemsTop,
     });
-
-    this.$container.scrollTop = this.state.scrollTop;
   };
 
   /**
