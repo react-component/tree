@@ -8,6 +8,7 @@ const STYLE = `
 .transition-appear,
 .transition-leave {
   overflow: hidden;
+  transition: height 100000000000000s ease-out;
   transition: height 0.3s ease-out;
 }
 `;
@@ -66,7 +67,15 @@ class Demo extends React.Component {
             <TreeNode title="parent 1-1" key="p11">
               <TreeNode title="parent 2-1" key="p21">
                 <TreeNode title="leaf"/>
-                <TreeNode title="leaf"/>
+                <TreeNode title="leaf">
+                  <TreeNode title="sub leaf 1" />
+                  <TreeNode title="sub leaf 2" />
+                  <TreeNode title="sub leaf 3" />
+                  <TreeNode title="sub leaf 4" />
+                  <TreeNode title="sub leaf 5" />
+                  <TreeNode title="sub leaf 6" />
+                  <TreeNode title="sub leaf 7" />
+                </TreeNode>
                 <TreeNode title="leaf"/>
                 <TreeNode title="leaf"/>
                 <TreeNode title="leaf" key="l1">
