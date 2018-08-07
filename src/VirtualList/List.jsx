@@ -12,6 +12,12 @@ import {
 } from './util';
 
 // TODO: Move this code to rc-virtual-list
+/**
+ * The mock container of item list's height is count * itemMinHeight * SCALE.
+ * The SCALE value is to make the scrollHeight much bigger than origin
+ * since we can get more accurate scrollTop percentage value.
+ */
+const ITEM_HEIGHT_SCALE = 1.5;
 
 function heightProp(...args) {
   const [props, propName, Component] = args;
@@ -136,6 +142,7 @@ class VirtualList extends React.Component {
       onScroll(...args);
     }
 
+    // When `height` set to 0 will also trigger `onScroll` event. We needn't that.
     if (height) {
       this.calculatePosition();
     }
@@ -451,7 +458,7 @@ class VirtualList extends React.Component {
     if (useVirtualList && height) {
       innerStyle = {
         ...innerStyle,
-        height: Math.max(itemMinHeight * totalItemCount, height),
+        height: Math.max(itemMinHeight * totalItemCount * ITEM_HEIGHT_SCALE, height),
         position: 'relative',
         overflowY: 'hidden',
       };
