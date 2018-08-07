@@ -75,9 +75,12 @@ class Tree extends React.Component {
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     inlineIndent: PropTypes.number,
-    height: PropTypes.number,
 
+    // Virtual list
+    height: PropTypes.number,
+    nodeMinHeight: PropTypes.number,
     motion: VirtualList.propTypes.motion,
+
     // Tree will parse treeNode as entities map,
     // This prop enable user to process the Tree with additional entities
     // This function may be remove in future if we start to remove the dependency on key
@@ -109,6 +112,9 @@ class Tree extends React.Component {
     defaultCheckedKeys: [],
     defaultSelectedKeys: [],
     inlineIndent: 18,
+
+    // Virtual list
+    nodeMinHeight: 16,
   };
 
   state = {
@@ -746,7 +752,7 @@ class Tree extends React.Component {
     const {
       prefixCls, className, style, focusable,
       showLine, tabIndex = 0, height,
-      motion,
+      motion, nodeMinHeight,
     } = this.props;
 
     const domProps = {
@@ -763,7 +769,6 @@ class Tree extends React.Component {
       domProps.onKeyDown = this.onKeyDown;
     }
 
-    // TODO: make `itemMinHeight` as prop
     // Use virtual list
     return (
       <VirtualList
@@ -771,7 +776,7 @@ class Tree extends React.Component {
         {...domProps}
 
         dataSource={internalVisibleKeyLevels}
-        itemMinHeight={20}
+        itemMinHeight={nodeMinHeight}
         height={height || false}
         rowKey="key"
         motion={motion}

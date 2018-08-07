@@ -155,13 +155,19 @@ class VirtualList extends React.Component {
   getTopCount = (state) => {
     const { scrollPtg } = state || this.state;
     const { itemMinHeight, height } = this.props;
-    return Math.ceil(scrollPtg * height / itemMinHeight);
+    return Math.max(
+      Math.ceil(scrollPtg * height / itemMinHeight),
+      0,
+    );
   };
 
   getBottomCount = (state) => {
     const { scrollPtg } = state || this.state;
     const { itemMinHeight, height } = this.props;
-    return Math.ceil((1 - scrollPtg) * height / itemMinHeight);
+    return Math.max(
+      Math.ceil((1 - scrollPtg) * height / itemMinHeight),
+      0,
+    );
   };
 
   // Get real dom height
@@ -212,7 +218,7 @@ class VirtualList extends React.Component {
     const { targetItemIndex, targetItemOffsetPtg, useVirtualList } = this.state;
     const { itemMinHeight, height } = this.props;
 
-    const total = this.getItemCount();
+    const total = this.getItemCount(true);
     if (total === 0) return;
 
     const { scrollTop, scrollHeight, clientHeight } = this.$container;
@@ -229,7 +235,11 @@ class VirtualList extends React.Component {
     }
 
     // Get current scroll position (percentage)
-    const scrollPtg = scrollTop / scrollRange;
+    let scrollPtg = scrollTop / scrollRange;
+
+    // Safari has the bump effect which will make scroll out of range. Need check this.
+    scrollPtg = Math.max(0, scrollPtg);
+    scrollPtg = Math.min(1, scrollPtg);
 
     const itemIndex = Math.floor(total * scrollPtg);
     const itemTopPtg = itemIndex / (total);
