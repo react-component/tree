@@ -3,6 +3,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Animate from 'rc-animate';
+import PropTypes from 'prop-types';
 import Tree, { TreeNode } from '..';
 import { nodeMatcher } from './util';
 
@@ -90,7 +91,7 @@ describe('Tree Props', () => {
       const withoutSelectableBase = (
         <Tree onSelect={handleOnSelect} defaultExpandedKeys={['0-0']} selectable={false}>
           <TreeNode key="0-0">
-            <TreeNode key="0-0-0"/>
+            <TreeNode key="0-0-0" />
           </TreeNode>
         </Tree>
       );
@@ -559,17 +560,19 @@ describe('Tree Props', () => {
   it('treeData', () => {
     const treeData = [
       { key: 'K0', title: 'T0' },
-      { key: 'K1', title: 'T1', children:
-        [
-          { key: 'K10', title: 'T10' },
-          { key: 'K11', title: 'T11', children:
-            [
-              { key: 'K110', title: 'T110' },
-              { key: 'K111', title: 'T111' },
-            ]
-          },
-          { key: 'K12', title: 'T12' },
-        ],
+      {
+        key: 'K1', title: 'T1', children:
+          [
+            { key: 'K10', title: 'T10' },
+            {
+              key: 'K11', title: 'T11', children:
+                [
+                  { key: 'K110', title: 'T110' },
+                  { key: 'K111', title: 'T111' },
+                ]
+            },
+            { key: 'K12', title: 'T12' },
+          ],
       },
     ];
     const wrapper = mount(<Tree treeData={treeData} defaultExpandAll />);
@@ -653,5 +656,49 @@ describe('Tree Props', () => {
 
     const { animation } = wrapper.find(Animate).props();
     expect(animation).toEqual(openAnimation);
+  });
+
+  describe('custom switcher icon', () => {
+    function switcherIcon(text, testLeaf) {
+      const sfc = ({ isLeaf }) => {
+        if (testLeaf) {
+          return isLeaf ? <span>{text}</span> : null;
+        } 
+        return isLeaf ? null : <span>{text}</span>;
+      };
+
+      sfc.propTypes = {
+        isLeaf: PropTypes.bool,
+      };
+
+      return sfc;
+    }
+    it('switcher icon', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll switcherIcon={switcherIcon('switcherIcon')}>
+          <TreeNode key="0-0" />
+          <TreeNode key="0-1" switcherIcon={switcherIcon('switcherIconFromNode0-1')}>
+            <TreeNode key="0-1-0" />
+            <TreeNode key="0-1-1" />
+          </TreeNode>
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('switcher leaf icon', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll switcherIcon={switcherIcon('switcherLeafIcon', true)}>
+          <TreeNode key="0-0" />
+          <TreeNode key="0-1" switcherIcon={switcherIcon('switcherLeafIconFromNode0-1', true)} />
+          <TreeNode key="0-2">
+            <TreeNode key="0-2-0" />
+            <TreeNode key="0-2-1" switcherIcon={switcherIcon('switcherLeafIconFromNode0-2-1', true)} />
+          </TreeNode>
+          <TreeNode key="0-3" />
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 });
