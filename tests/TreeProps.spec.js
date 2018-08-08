@@ -658,7 +658,7 @@ describe('Tree Props', () => {
   });
 
   describe('custom switcher icon', () => {
-    const switcherIcon = (text) => ({ isLeaf }) => isLeaf ? null : text;
+    const switcherIcon = (text) => ({ isLeaf }) => isLeaf ? null : <span>{text}</span>;
     it('switcher icon', () => {
       const wrapper = render(
         <Tree defaultExpandAll switcherIcon={switcherIcon('switcherIcon')}>
@@ -673,7 +673,7 @@ describe('Tree Props', () => {
     });
 
     it('switcher leaf icon', () => {
-      const switcherLeafIcon = (text) => ({ isLeaf }) => isLeaf ? text : null;
+      const switcherLeafIcon = (text) => ({ isLeaf }) => isLeaf ? <span>{text}</span> : null;
       const wrapper = render(
         <Tree defaultExpandAll switcherIcon={switcherLeafIcon('switcherLeafIcon')}>
           <TreeNode key="0-0" />

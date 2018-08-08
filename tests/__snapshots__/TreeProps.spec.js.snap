@@ -223,7 +223,9 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
     <span
       class="rc-tree-switcher rc-tree-switcher_open"
     >
-      switcherIconFromNode0-1
+      <span>
+        switcherIconFromNode0-1
+      </span>
     </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -303,7 +305,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
     <span
       class="rc-tree-switcher rc-tree-switcher-noop"
     >
-      switcherLeafIcon
+      <span>
+        switcherLeafIcon
+      </span>
     </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
@@ -326,7 +330,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
     <span
       class="rc-tree-switcher rc-tree-switcher-noop"
     >
-      switcherLeafIconFromNode0-1
+      <span>
+        switcherLeafIconFromNode0-1
+      </span>
     </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
@@ -374,7 +380,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         >
-          switcherLeafIcon
+          <span>
+            switcherLeafIcon
+          </span>
         </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
@@ -397,7 +405,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         >
-          switcherLeafIconFromNode0-2-1
+          <span>
+            switcherLeafIconFromNode0-2-1
+          </span>
         </span>
         <span
           class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
@@ -422,7 +432,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
     <span
       class="rc-tree-switcher rc-tree-switcher-noop"
     >
-      switcherLeafIcon
+      <span>
+        switcherLeafIcon
+      </span>
     </span>
     <span
       class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
