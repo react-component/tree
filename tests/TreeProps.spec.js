@@ -3,6 +3,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Animate from 'rc-animate';
+import PropTypes from 'prop-types';
 import Tree, { TreeNode } from '..';
 import { nodeMatcher } from './util';
 
@@ -658,7 +659,20 @@ describe('Tree Props', () => {
   });
 
   describe('custom switcher icon', () => {
-    const switcherIcon = (text) => ({ isLeaf }) => isLeaf ? null : <span>{text}</span>;
+    function switcherIcon(text, testLeaf) {
+      const sfc = ({ isLeaf }) => {
+        if (testLeaf) {
+          return isLeaf ? <span>{text}</span> : null;
+        } 
+        return isLeaf ? null : <span>{text}</span>;
+      };
+
+      sfc.propTypes = {
+        isLeaf: PropTypes.bool,
+      };
+
+      return sfc;
+    }
     it('switcher icon', () => {
       const wrapper = render(
         <Tree defaultExpandAll switcherIcon={switcherIcon('switcherIcon')}>
@@ -673,14 +687,13 @@ describe('Tree Props', () => {
     });
 
     it('switcher leaf icon', () => {
-      const switcherLeafIcon = (text) => ({ isLeaf }) => isLeaf ? <span>{text}</span> : null;
       const wrapper = render(
-        <Tree defaultExpandAll switcherIcon={switcherLeafIcon('switcherLeafIcon')}>
+        <Tree defaultExpandAll switcherIcon={switcherIcon('switcherLeafIcon', true)}>
           <TreeNode key="0-0" />
-          <TreeNode key="0-1" switcherIcon={switcherLeafIcon('switcherLeafIconFromNode0-1')} />
+          <TreeNode key="0-1" switcherIcon={switcherIcon('switcherLeafIconFromNode0-1', true)} />
           <TreeNode key="0-2">
             <TreeNode key="0-2-0" />
-            <TreeNode key="0-2-1" switcherIcon={switcherLeafIcon('switcherLeafIconFromNode0-2-1')} />
+            <TreeNode key="0-2-1" switcherIcon={switcherIcon('switcherLeafIconFromNode0-2-1', true)} />
           </TreeNode>
           <TreeNode key="0-3" />
         </Tree>
