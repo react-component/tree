@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>contextmenu.js - example - rc-tree@1.12.7</title>
+  <title>contextmenu.js - example - rc-tree@1.13.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.12.7</h1>
+      <h1>rc-tree@1.13.2</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -271,11 +271,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
     <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0 */</span>
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./contextmenu.less'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, { TreeNode } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
 <span class="hljs-keyword">import</span> Tooltip <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tooltip'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./contextmenu.less'</span>;
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">contains</span>(<span class="hljs-params">root, n</span>) </span>{
   <span class="hljs-keyword">let</span> node = n;
@@ -336,7 +336,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-attribute">trigger</span>=<span class="hljs-value">"click"</span> <span class="hljs-attribute">placement</span>=<span class="hljs-value">"bottomRight"</span> <span class="hljs-attribute">prefixCls</span>=<span class="hljs-value">"rc-tree-contextmenu"</span>
         <span class="hljs-attribute">defaultVisible</span> <span class="hljs-attribute">overlay</span>=<span class="hljs-value">{&lt;h4</span>&gt;</span>{info.node.props.title}<span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>}
       &gt;
-        <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">span</span> /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">Tooltip</span>&gt;</span>
     )</span>;
 

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>draggable.js - example - rc-tree@1.12.7</title>
+  <title>draggable.js - example - rc-tree@1.13.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.12.7</h1>
+      <h1>rc-tree@1.13.2</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -271,11 +271,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
     <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0 */</span>
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-tree/assets/index.css'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./draggable.less'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, { TreeNode } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
 <span class="hljs-keyword">import</span> { gData } <span class="hljs-keyword">from</span> <span class="hljs-string">'./util'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./draggable.less'</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   state = {
@@ -302,10 +302,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-keyword">const</span> loop = (data, key, callback) =&gt; {
       data.forEach((item, index, arr) =&gt; {
         <span class="hljs-keyword">if</span> (item.key === key) {
-          <span class="hljs-keyword">return</span> callback(item, index, arr);
+          callback(item, index, arr);
+          <span class="hljs-keyword">return</span>;
         }
         <span class="hljs-keyword">if</span> (item.children) {
-          <span class="hljs-keyword">return</span> loop(item.children, key, callback);
+          loop(item.children, key, callback);
         }
       });
     };
