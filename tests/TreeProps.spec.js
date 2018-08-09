@@ -400,49 +400,82 @@ describe('Tree Props', () => {
   // defaultCheckedKeys - is already full test in Tree.spec.js
   // defaultSelectedKeys - is already full test in Tree.spec.js
 
-  it('loadData', () => {
-    let called = 0;
+  describe('loadData', () => {
+    it('basic', () => {
+      let called = 0;
 
-    const handleLoadData = jest.fn();
+      const handleLoadData = jest.fn();
 
-    class Demo extends React.Component {
-      state = {
-        loaded: false,
-      };
+      class Demo extends React.Component {
+        state = {
+          loaded: false,
+        };
 
-      loadData = (...args) => {
-        called += 1;
-        handleLoadData(...args);
+        loadData = (...args) => {
+          called += 1;
+          handleLoadData(...args);
 
-        this.setState({ loaded: true });
+          this.setState({ loaded: true });
 
-        return Promise.resolve();
-      };
+          return Promise.resolve();
+        };
 
-      render() {
-        // Hide icon will still show the icon for loading status
-        return (
-          <Tree loadData={this.loadData} showIcon={false}>
-            <TreeNode key="0-0">
-              {this.state.loaded ? <TreeNode key="0-0-0" /> : null}
-            </TreeNode>
-          </Tree>
-        );
+        render() {
+          // Hide icon will still show the icon for loading status
+          return (
+            <Tree loadData={this.loadData} showIcon={false}>
+              <TreeNode key="0-0">
+                {this.state.loaded ? <TreeNode key="0-0-0" /> : null}
+              </TreeNode>
+            </Tree>
+          );
+        }
       }
-    }
 
-    const wrapper = mount(<Demo />);
+      const wrapper = mount(<Demo />);
 
-    expect(handleLoadData).not.toBeCalled();
+      expect(handleLoadData).not.toBeCalled();
 
-    const switcher = wrapper.find('.rc-tree-switcher');
-    const node = wrapper.find(TreeNode).instance();
-    switcher.simulate('click');
+      const switcher = wrapper.find('.rc-tree-switcher');
+      const node = wrapper.find(TreeNode).instance();
+      switcher.simulate('click');
 
-    return timeoutPromise().then(() => {
-      expect(handleLoadData).toBeCalledWith(node);
-      expect(called).toBe(1);
-      expect(renderToJson(wrapper.render())).toMatchSnapshot();
+      return timeoutPromise().then(() => {
+        expect(handleLoadData).toBeCalledWith(node);
+        expect(called).toBe(1);
+        expect(renderToJson(wrapper.render())).toMatchSnapshot();
+      });
+    });
+
+    // https://github.com/ant-design/ant-design/issues/11689#issuecomment-411712770
+    it('with expandedKeys', () => {
+      let called = 0;
+      const keys = {};
+      const loadData = ({ props: { eventKey } }) => {
+        keys[eventKey] = (keys[eventKey] || 0) + 1;
+
+        return new Promise(() => {
+          called += 1;
+        });
+      };
+
+      mount(
+        <Tree
+          loadData={loadData}
+          expandedKeys={['0', '1', '2']}
+        >
+          <TreeNode key="0" />
+          <TreeNode key="1" />
+          <TreeNode key="2" />
+        </Tree>
+      );
+
+      return timeoutPromise().then(() => {
+        expect(called).toBe(3);
+        expect(keys[0]).toBe(1);
+        expect(keys[1]).toBe(1);
+        expect(keys[2]).toBe(1);
+      });
     });
   });
 

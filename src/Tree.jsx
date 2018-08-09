@@ -507,39 +507,46 @@ class Tree extends React.Component {
     }
   };
 
-  onNodeLoad = (treeNode) => {
-    const { loadData, onLoad } = this.props;
-    const { loadedKeys = [], loadingKeys = [] } = this.state;
-    const { eventKey } = treeNode.props;
+  onNodeLoad = treeNode => (
+    new Promise((resolve) => {
+      // We need to get the latest state of loading/loaded keys
+      this.setState(({ loadedKeys = [], loadingKeys = [] }) => {
+        const { loadData, onLoad } = this.props;
+        const { eventKey } = treeNode.props;
 
-    if (!loadData || loadedKeys.indexOf(eventKey) !== -1 || loadingKeys.indexOf(eventKey) !== -1) {
-      return null;
-    }
+        if (!loadData || loadedKeys.indexOf(eventKey) !== -1 || loadingKeys.indexOf(eventKey) !== -1) {
+          // react 15 will warn if return null
+          return {};
+        }
 
-    this.setState({
-      loadingKeys: arrAdd(loadingKeys, eventKey),
-    });
-    const promise = loadData(treeNode);
-    promise.then(() => {
-      const newLoadedKeys = arrAdd(this.state.loadedKeys, eventKey);
-      this.setUncontrolledState({
-        loadedKeys: newLoadedKeys,
-      });
-      this.setState({
-        loadingKeys: arrDel(this.state.loadingKeys, eventKey),
-      });
+        // Process load data
+        const promise = loadData(treeNode);
+        promise.then(() => {
+          const newLoadedKeys = arrAdd(this.state.loadedKeys, eventKey);
+          this.setUncontrolledState({
+            loadedKeys: newLoadedKeys,
+          });
+          this.setState({
+            loadingKeys: arrDel(this.state.loadingKeys, eventKey),
+          });
 
-      if (onLoad) {
-        const eventObj = {
-          event: 'load',
-          node: treeNode,
+          if (onLoad) {
+            const eventObj = {
+              event: 'load',
+              node: treeNode,
+            };
+            onLoad(newLoadedKeys, eventObj);
+          }
+
+          resolve();
+        });
+
+        return {
+          loadingKeys: arrAdd(loadingKeys, eventKey),
         };
-        onLoad(newLoadedKeys, eventObj);
-      }
-    });
-
-    return promise;
-  };
+      });
+    })
+  );
 
   onNodeExpand = (e, treeNode) => {
     let { expandedKeys } = this.state;

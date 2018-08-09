@@ -256,7 +256,7 @@ export function parseCheckedKeys(keys) {
       halfCheckedKeys: keys.halfChecked || undefined,
     };
   } else {
-    warning(false, '`CheckedKeys` is not an array or an object');
+    warning(false, '`checkedKeys` is not an array or an object');
     return null;
   }
 

@@ -273,8 +273,10 @@ class TreeNode extends React.Component {
 
   // Load data to avoid default expanded tree without data
   syncLoadData = (props) => {
-    const { expanded } = props;
+    const { expanded, loading } = props;
     const { rcTree: { onNodeLoad } } = this.context;
+
+    if (loading) return;
 
     // read from state to avoid loadData at same time
     if (expanded && !this.isLeaf()) {
