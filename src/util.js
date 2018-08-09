@@ -95,30 +95,6 @@ export function mapChildren(children, func) {
   return list;
 }
 
-/**
- * Check position relation.
- * @param parentPos
- * @param childPos
- * @param directly only directly parent can be true
- * @returns {boolean}
- */
-export function isParent(parentPos, childPos, directly = false) {
-  if (!parentPos || !childPos || parentPos.length > childPos.length) return false;
-
-  const parentPath = posToArr(parentPos);
-  const childPath = posToArr(childPos);
-
-  // Directly check
-  if (directly && parentPath.length !== childPath.length - 1) return false;
-
-  const len = parentPath.length;
-  for (let i = 0; i < len; i += 1) {
-    if (parentPath[i] !== childPath[i]) return false;
-  }
-
-  return true;
-}
-
 export function getDragNodesKeys(treeNodes, node) {
   const { eventKey, pos } = node.props;
   const dragNodesKeys = [];
