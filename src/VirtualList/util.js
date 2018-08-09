@@ -2,6 +2,7 @@ export const TYPE_ADD = 'ADD';
 export const TYPE_KEEP = 'KEEP';
 export const TYPE_REMOVE = 'REMOVE';
 
+// ========================== Dom Style ==========================
 export function getStyle(element) {
   if (!element) return null;
 
@@ -46,6 +47,7 @@ export function getContentHeight(element) {
   return toNum(style.height);
 }
 
+// =========================== Virtual ===========================
 /**
  * list1: [1, 2, 3, 4, 5, 9]
  * list2: [1, 5, 6, 7, 8, 9]
@@ -113,4 +115,35 @@ export function diffList(list1 = [], list2 = [], rowKey) {
   push(null, []);
 
   return itemList;
+}
+
+/**
+ * Calculate the current must show item index and which line of the item must match with scrollPtg.
+ * @param scrollPtg
+ * @param total
+ * @returns {{itemIndex: number, itemOffsetPtg: number}}
+ */
+export function getTargetItemByScroll(scrollPtg, total) {
+  const itemIndex = Math.floor(total * scrollPtg);
+  const itemTopPtg = itemIndex / total;
+  const itemBottomPtg = (itemIndex + 1) / total;
+  const itemOffsetPtg = (scrollPtg - itemTopPtg) / (itemBottomPtg - itemTopPtg);
+
+  return {
+    itemIndex,
+    itemOffsetPtg,
+  };
+}
+
+/**
+ * Revert scrollPtg from calculated item offset.
+ * @param itemIndex
+ * @param itemOffsetPtg
+ * @param total
+ * @returns {number}
+ */
+export function getScrollByTargetItem(itemIndex, itemOffsetPtg, total) {
+  const itemTopPtg = itemIndex / total;
+  const itemBottomPtg = (itemIndex + 1) / total;
+  return itemOffsetPtg * (itemBottomPtg - itemTopPtg) + itemTopPtg;
 }

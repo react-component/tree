@@ -9,6 +9,7 @@ import Item from './Item';
 import {
   TYPE_KEEP, TYPE_ADD, TYPE_REMOVE,
   diffList, getBoxHeight, getContentHeight,
+  getTargetItemByScroll, getScrollByTargetItem,
 } from './util';
 
 // TODO: Move this code to rc-virtual-list
@@ -117,6 +118,19 @@ class VirtualList extends React.Component {
     }
 
     return newState;
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    // TODO: Not the best place
+    const { animations } = prevState;
+    console.log('=>', animations);
+    // if (lockScroll) {
+    const { targetItemIndex, targetItemOffsetPtg } = this.state;
+    const totalCount = this.getItemCount(true);
+    const scrollPtg = getScrollByTargetItem(targetItemIndex, targetItemOffsetPtg, totalCount);
+    console.log('==>', scrollPtg);
+    // }
+    return null;
   }
 
   componentDidUpdate() {
@@ -246,14 +260,14 @@ class VirtualList extends React.Component {
     // Get current scroll position (percentage)
     let scrollPtg = scrollTop / scrollRange;
 
+    console.log('Total:', total);
+    console.log('Scroll:', scrollPtg.toFixed(3), scrollTop, scrollRange);
+
     // Safari has the bump effect which will make scroll out of range. Need check this.
     scrollPtg = Math.max(0, scrollPtg);
     scrollPtg = Math.min(1, scrollPtg);
 
-    const itemIndex = Math.floor(total * scrollPtg);
-    const itemTopPtg = itemIndex / (total);
-    const itemBottomPtg = (itemIndex + 1) / (total);
-    const itemOffsetPtg = (scrollPtg - itemTopPtg) / (itemBottomPtg - itemTopPtg);
+    const { itemIndex, itemOffsetPtg } = getTargetItemByScroll(scrollPtg, total);
 
     if (targetItemIndex !== itemIndex || targetItemOffsetPtg !== itemOffsetPtg) {
       this.setState({
@@ -327,13 +341,16 @@ class VirtualList extends React.Component {
 
       for (let i = startIndex; i < endIndex; i += 1) {
         const { type } = this.getItem(i) || {};
-        if (type === TYPE_REMOVE && !animations[i]) {
+        // if (type === TYPE_REMOVE && !animations[i]) {
+        // TODO: handle this
+        if (type !== TYPE_KEEP && !animations[i]) {
           newAnimations[i] = true;
           changed = true;
         }
       }
 
       if (changed) {
+        newAnimations.changed = true;
         this.setState({ animations: newAnimations });
       }
     });
