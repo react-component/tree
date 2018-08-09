@@ -761,7 +761,7 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
 </ul>
 `;
 
-exports[`Tree Props loadData 1`] = `
+exports[`Tree Props loadData basic 1`] = `
 <ul
   class="rc-tree"
   role="tree"
