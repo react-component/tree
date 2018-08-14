@@ -48,6 +48,25 @@ describe('Util', () => {
     ]);
   });
 
+  it('convertDataToTree', () => {
+    const treeData = [{
+      title: '0-0',
+      children: [{
+        title: '0-0-0'
+      }],
+    }];
+
+    const treeNodes = convertDataToTree(treeData, {
+      processProps: (props) => ({
+        ...props,
+        value: props.title,
+      }),
+    });
+
+    expect(treeNodes[0].props.value).toBe('0-0');
+    expect(treeNodes[0].props.children[0].props.value).toBe('0-0-0');
+  });
+
   it('convertTreeToData', () => {
     const treeData = [
       { key: 'rc', title: 'RC' },

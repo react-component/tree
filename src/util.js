@@ -151,11 +151,13 @@ function keyListToString(keyList) {
 }
 
 const internalProcessProps = props => props;
-export function convertDataToTree(treeData, { processProps = internalProcessProps } = {}) {
+export function convertDataToTree(treeData, processer) {
   if (!treeData) return [];
+
+  const { processProps = internalProcessProps } = processer || {};
   const list = Array.isArray(treeData) ? treeData : [treeData];
   return list.map(({ children, ...props }) => {
-    const childrenNodes = (children || []).map(convertDataToTree);
+    const childrenNodes = convertDataToTree(children, processer);
 
     return (
       <TreeNode {...processProps(props)}>
