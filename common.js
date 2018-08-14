@@ -2752,18 +2752,19 @@ function keyListToString(keyList) {
 var internalProcessProps = function internalProcessProps(props) {
   return props;
 };
-function convertDataToTree(treeData) {
-  var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+function convertDataToTree(treeData, processer) {
+  if (!treeData) return [];
+
+  var _ref3 = processer || {},
       _ref3$processProps = _ref3.processProps,
       processProps = _ref3$processProps === undefined ? internalProcessProps : _ref3$processProps;
 
-  if (!treeData) return [];
   var list = Array.isArray(treeData) ? treeData : [treeData];
   return list.map(function (_ref4) {
     var children = _ref4.children,
         props = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default()(_ref4, ['children']);
 
-    var childrenNodes = (children || []).map(convertDataToTree);
+    var childrenNodes = convertDataToTree(children, processer);
 
     return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_4__TreeNode__["a" /* default */],
