@@ -460,7 +460,7 @@ describe('Tree Props', () => {
         });
       };
 
-      mount(
+      const tree = mount(
         <Tree
           loadData={loadData}
           expandedKeys={['0', '1', '2']}
@@ -470,6 +470,42 @@ describe('Tree Props', () => {
           <TreeNode key="2" />
         </Tree>
       );
+
+      tree.setProps({ expandedKeys: ['0', '1', '2'] });
+
+      return timeoutPromise().then(() => {
+        expect(called).toBe(3);
+        expect(keys[0]).toBe(1);
+        expect(keys[1]).toBe(1);
+        expect(keys[2]).toBe(1);
+      });
+    });
+
+    it('with defaultExpandedKeys', () => {
+      let called = 0;
+      const keys = {};
+      const loadData = ({ props: { eventKey } }) => {
+        keys[eventKey] = (keys[eventKey] || 0) + 1;
+
+        return new Promise(() => {
+          called += 1;
+        });
+      };
+
+      const wrapper = mount(
+        <Tree
+          loadData={loadData}
+          defaultExpandedKeys={['0', '1', '2']}
+        >
+          <TreeNode key="0" />
+          <TreeNode key="1" />
+          <TreeNode key="2" />
+        </Tree>
+      );
+
+      // Do not trigger loadData
+      wrapper.find('.rc-tree-switcher').at(0).simulate('click');
+      wrapper.find('.rc-tree-switcher').at(0).simulate('click');
 
       return timeoutPromise().then(() => {
         expect(called).toBe(3);
@@ -612,35 +648,6 @@ describe('Tree Props', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
-  describe('unstable_processTreeEntity', () => {
-    const onProcessFinished = jest.fn();
-
-    const handler = {
-      initWrapper(wrapper) {
-        return { ...wrapper, valueEntities: {} };
-      },
-      processEntity(entity, { valueEntities }) {
-        valueEntities[entity.node.props.value] = entity;
-      },
-      onProcessFinished,
-    };
-
-    mount(
-      <Tree unstable_processTreeEntity={handler}>
-        <TreeNode key="K0" title="T0" value={0} />
-        <TreeNode key="K1" title="T1" value={1}>
-          <TreeNode key="K10" title="T10" value={10} />
-          <TreeNode key="K11" title="T11" value={11} />
-        </TreeNode>
-      </Tree>
-    );
-
-    expect(onProcessFinished).toBeCalled();
-
-    const valueList = Object.keys(onProcessFinished.mock.calls[0][0].valueEntities);
-    expect(valueList).toEqual(['0', '1', '10', '11']);
-  });
-
   describe('disabled', () => {
     it('basic', () => {
       const wrapper = render(
@@ -696,7 +703,7 @@ describe('Tree Props', () => {
       const sfc = ({ isLeaf }) => {
         if (testLeaf) {
           return isLeaf ? <span>{text}</span> : null;
-        } 
+        }
         return isLeaf ? null : <span>{text}</span>;
       };
 

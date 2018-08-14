@@ -69,6 +69,30 @@ describe('Util', () => {
     expect(convertTreeToData($treeNode)).toEqual(treeData);
   });
 
+  it('convertTreeToEntities with additional handler', () => {
+    const onProcessFinished = jest.fn();
+
+    const tree = (
+      <Tree>
+        <TreeNode key="key" title="test" value="ttt" />
+      </Tree>
+    );
+
+    const { keyEntities, valueEntities } = convertTreeToEntities(tree.props.children, {
+      initWrapper: wrapper => ({
+        ...wrapper,
+        valueEntities: {},
+      }),
+      processEntity: (entity, wrapper) => {
+        wrapper.valueEntities[entity.node.props.value] = entity;
+      },
+      onProcessFinished,
+    });
+
+    expect(onProcessFinished).toBeCalled();
+    expect(valueEntities.ttt).toBe(keyEntities.key);
+  });
+
   // You can remove this test if refactor remove conductCheck function
   describe('conductCheck', () => {
     describe('basic', () => {

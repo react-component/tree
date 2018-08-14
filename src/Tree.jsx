@@ -69,17 +69,6 @@ class Tree extends React.Component {
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-
-    // Tree will parse treeNode as entities map,
-    // This prop enable user to process the Tree with additional entities
-    // This function may be remove in future if we start to remove the dependency on key
-    // So any user should not relay on this function.
-    // If you are refactor this code, you can remove it as your wish
-    unstable_processTreeEntity: PropTypes.shape({
-      initWrapper: PropTypes.func.isRequired,
-      processEntity: PropTypes.func.isRequired,
-      onProcessFinished: PropTypes.func.isRequired,
-    }),
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
@@ -191,7 +180,7 @@ class Tree extends React.Component {
       newState.treeNode = treeNode;
 
       // Calculate the entities data for quick match
-      const entitiesMap = convertTreeToEntities(treeNode, props.unstable_processTreeEntity);
+      const entitiesMap = convertTreeToEntities(treeNode);
       newState.posEntities = entitiesMap.posEntities;
       newState.keyEntities = entitiesMap.keyEntities;
     }

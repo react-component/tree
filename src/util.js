@@ -150,14 +150,15 @@ function keyListToString(keyList) {
   return keyList.map(key => String(key));
 }
 
-export function convertDataToTree(treeData) {
+const internalProcessProps = props => props;
+export function convertDataToTree(treeData, { processProps = internalProcessProps } = {}) {
   if (!treeData) return [];
   const list = Array.isArray(treeData) ? treeData : [treeData];
   return list.map(({ children, ...props }) => {
     const childrenNodes = (children || []).map(convertDataToTree);
 
     return (
-      <TreeNode {...props}>
+      <TreeNode {...processProps(props)}>
         {childrenNodes}
       </TreeNode>
     );
@@ -166,7 +167,7 @@ export function convertDataToTree(treeData) {
 
 // TODO: ========================= NEW LOGIC =========================
 /**
- * Calculate treeNodes entities.
+ * Calculate treeNodes entities. `processTreeEntity` is used for `rc-tree-select`
  * @param treeNodes
  * @param processTreeEntity  User can customize the entity
  */
