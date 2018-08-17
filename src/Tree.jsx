@@ -463,7 +463,10 @@ class Tree extends React.Component {
       const halfCheckedKeys = arrDel(oriHalfCheckedKeys, eventKey);
       checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
 
-      eventObj.checkedNodes = checkedKeys.map(key => keyEntities[key].node);
+      eventObj.checkedNodes = checkedKeys
+        .map(key => keyEntities[key])
+        .filter(entity => entity)
+        .map(entity => entity.node);
 
       this.setUncontrolledState({ checkedKeys });
     } else {
