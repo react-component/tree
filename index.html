@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-tree@1.13.3 - tree ui component for react</title>
+  <title>rc-tree@1.14.3 - tree ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-tree@1.13.3</h1>
+  <h1>rc-tree@1.14.3</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -755,6 +755,8 @@
       <li><a href="examples/big-data.html">big-data</a></li>
       
       <li><a href="examples/contextmenu.html">contextmenu</a></li>
+      
+      <li><a href="examples/custom-switch-icon.html">custom-switch-icon</a></li>
       
       <li><a href="examples/draggable.html">draggable</a></li>
       
@@ -1019,6 +1021,12 @@
 <td>function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent})</td>
 <td>-</td>
 </tr>
+<tr>
+<td>switcherIcon</td>
+<td>specific the switcher icon.</td>
+<td>ReactNode / (props: TreeNodeAttribute) =&gt; ReactNode</td>
+<td>-</td>
+</tr>
 </tbody>
 </table>
 <h3>TreeNode props<a id="user-content-treenode-props" name="treenode-props" class="anchor" aria-hidden="true" href="#treenode-props"><span class="octicon octicon-link"></span></a></h3><blockquote>
@@ -1080,6 +1088,12 @@
 <td>icon</td>
 <td>customize icon. When you pass component, whose render will receive full TreeNode props as component props</td>
 <td>element/Function(props)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>switcherIcon</td>
+<td>specific the switcher icon.</td>
+<td>ReactNode / (props: TreeNodeAttribute) =&gt; ReactNode</td>
 <td>-</td>
 </tr>
 </tbody>

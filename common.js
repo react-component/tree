@@ -34,7 +34,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		10: 0
+/******/ 		11: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -535,6 +535,15 @@ process.umask = function() { return 0; };
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(130);
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /*
 object-assign
 (c) Sindre Sorhus
@@ -626,15 +635,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(130);
 
 /***/ }),
 /* 13 */
@@ -2929,18 +2929,26 @@ function keyListToString(keyList) {
   });
 }
 
-function convertDataToTree(treeData) {
+var internalProcessProps = function internalProcessProps(props) {
+  return props;
+};
+function convertDataToTree(treeData, processer) {
   if (!treeData) return [];
-  var list = Array.isArray(treeData) ? treeData : [treeData];
-  return list.map(function (_ref3) {
-    var children = _ref3.children,
-        props = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default()(_ref3, ['children']);
 
-    var childrenNodes = (children || []).map(convertDataToTree);
+  var _ref3 = processer || {},
+      _ref3$processProps = _ref3.processProps,
+      processProps = _ref3$processProps === undefined ? internalProcessProps : _ref3$processProps;
+
+  var list = Array.isArray(treeData) ? treeData : [treeData];
+  return list.map(function (_ref4) {
+    var children = _ref4.children,
+        props = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default()(_ref4, ['children']);
+
+    var childrenNodes = convertDataToTree(children, processer);
 
     return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_4__TreeNode__["a" /* default */],
-      props,
+      processProps(props),
       childrenNodes
     );
   });
@@ -2948,15 +2956,15 @@ function convertDataToTree(treeData) {
 
 // TODO: ========================= NEW LOGIC =========================
 /**
- * Calculate treeNodes entities.
+ * Calculate treeNodes entities. `processTreeEntity` is used for `rc-tree-select`
  * @param treeNodes
  * @param processTreeEntity  User can customize the entity
  */
 function convertTreeToEntities(treeNodes) {
-  var _ref4 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      initWrapper = _ref4.initWrapper,
-      processEntity = _ref4.processEntity,
-      onProcessFinished = _ref4.onProcessFinished;
+  var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      initWrapper = _ref5.initWrapper,
+      processEntity = _ref5.processEntity,
+      onProcessFinished = _ref5.onProcessFinished;
 
   var posEntities = {};
   var keyEntities = {};
@@ -3075,8 +3083,8 @@ function conductCheck(keyList, isCheck, keyEntities) {
 
     (children || []).filter(function (child) {
       return !isCheckDisabled(child.node);
-    }).forEach(function (_ref5) {
-      var childKey = _ref5.key;
+    }).forEach(function (_ref6) {
+      var childKey = _ref6.key;
 
       var childChecked = checkedKeys[childKey];
       var childHalfChecked = halfCheckedKeys[childKey];
@@ -3418,7 +3426,8 @@ TreeNode.propTypes = {
   selectable: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
   disabled: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
   disableCheckbox: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
-  icon: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func])
+  icon: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func]),
+  switcherIcon: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func])
 };
 TreeNode.contextTypes = __WEBPACK_IMPORTED_MODULE_13__contextTypes__["a" /* nodeContextTypes */];
 TreeNode.childContextTypes = __WEBPACK_IMPORTED_MODULE_13__contextTypes__["a" /* nodeContextTypes */];
@@ -3646,28 +3655,40 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.renderSwitcher = function () {
-    var expanded = _this2.props.expanded;
-    var prefixCls = _this2.context.rcTree.prefixCls;
+    var _props4 = _this2.props,
+        expanded = _props4.expanded,
+        switcherIconFromProps = _props4.switcherIcon;
+    var _context$rcTree3 = _this2.context.rcTree,
+        prefixCls = _context$rcTree3.prefixCls,
+        switcherIconFromCtx = _context$rcTree3.switcherIcon;
 
+
+    var switcherIcon = switcherIconFromProps || switcherIconFromCtx;
 
     if (_this2.isLeaf()) {
-      return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement('span', { className: prefixCls + '-switcher ' + prefixCls + '-switcher-noop' });
+      return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+        'span',
+        { className: __WEBPACK_IMPORTED_MODULE_9_classnames___default()(prefixCls + '-switcher', prefixCls + '-switcher-noop') },
+        typeof switcherIcon === 'function' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(switcherIcon, __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, _this2.props, { isLeaf: true })) : switcherIcon
+      );
     }
 
-    return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement('span', {
-      className: __WEBPACK_IMPORTED_MODULE_9_classnames___default()(prefixCls + '-switcher', prefixCls + '-switcher_' + (expanded ? ICON_OPEN : ICON_CLOSE)),
-      onClick: _this2.onExpand
-    });
+    var switcherCls = __WEBPACK_IMPORTED_MODULE_9_classnames___default()(prefixCls + '-switcher', prefixCls + '-switcher_' + (expanded ? ICON_OPEN : ICON_CLOSE));
+    return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+      'span',
+      { onClick: _this2.onExpand, className: switcherCls },
+      typeof switcherIcon === 'function' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(switcherIcon, __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, _this2.props, { isLeaf: false })) : switcherIcon
+    );
   };
 
   this.renderCheckbox = function () {
-    var _props4 = _this2.props,
-        checked = _props4.checked,
-        halfChecked = _props4.halfChecked,
-        disableCheckbox = _props4.disableCheckbox;
-    var _context$rcTree3 = _this2.context.rcTree,
-        prefixCls = _context$rcTree3.prefixCls,
-        checkable = _context$rcTree3.checkable;
+    var _props5 = _this2.props,
+        checked = _props5.checked,
+        halfChecked = _props5.halfChecked,
+        disableCheckbox = _props5.disableCheckbox;
+    var _context$rcTree4 = _this2.context.rcTree,
+        prefixCls = _context$rcTree4.prefixCls,
+        checkable = _context$rcTree4.checkable;
 
     var disabled = _this2.isDisabled();
 
@@ -3698,17 +3719,17 @@ var _initialiseProps = function _initialiseProps() {
 
   this.renderSelector = function () {
     var dragNodeHighlight = _this2.state.dragNodeHighlight;
-    var _props5 = _this2.props,
-        title = _props5.title,
-        selected = _props5.selected,
-        icon = _props5.icon,
-        loading = _props5.loading;
-    var _context$rcTree4 = _this2.context.rcTree,
-        prefixCls = _context$rcTree4.prefixCls,
-        showIcon = _context$rcTree4.showIcon,
-        treeIcon = _context$rcTree4.icon,
-        draggable = _context$rcTree4.draggable,
-        loadData = _context$rcTree4.loadData;
+    var _props6 = _this2.props,
+        title = _props6.title,
+        selected = _props6.selected,
+        icon = _props6.icon,
+        loading = _props6.loading;
+    var _context$rcTree5 = _this2.context.rcTree,
+        prefixCls = _context$rcTree5.prefixCls,
+        showIcon = _context$rcTree5.showIcon,
+        treeIcon = _context$rcTree5.icon,
+        draggable = _context$rcTree5.draggable,
+        loadData = _context$rcTree5.loadData;
 
     var disabled = _this2.isDisabled();
 
@@ -3760,14 +3781,14 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.renderChildren = function () {
-    var _props6 = _this2.props,
-        expanded = _props6.expanded,
-        pos = _props6.pos;
-    var _context$rcTree5 = _this2.context.rcTree,
-        prefixCls = _context$rcTree5.prefixCls,
-        openTransitionName = _context$rcTree5.openTransitionName,
-        openAnimation = _context$rcTree5.openAnimation,
-        renderTreeNode = _context$rcTree5.renderTreeNode;
+    var _props7 = _this2.props,
+        expanded = _props7.expanded,
+        pos = _props7.pos;
+    var _context$rcTree6 = _this2.context.rcTree,
+        prefixCls = _context$rcTree6.prefixCls,
+        openTransitionName = _context$rcTree6.openTransitionName,
+        openAnimation = _context$rcTree6.openAnimation,
+        renderTreeNode = _context$rcTree6.renderTreeNode;
 
 
     var animProps = {};
@@ -4412,7 +4433,7 @@ module.exports.polyfill = function(object) {
  * LICENSE file in the root directory of this source tree.
  */
 
-var k=__webpack_require__(11),n=__webpack_require__(31),p=__webpack_require__(32),q=__webpack_require__(33),r="function"===typeof Symbol&&Symbol.for,t=r?Symbol.for("react.element"):60103,u=r?Symbol.for("react.portal"):60106,v=r?Symbol.for("react.fragment"):60107,w=r?Symbol.for("react.strict_mode"):60108,x=r?Symbol.for("react.profiler"):60114,y=r?Symbol.for("react.provider"):60109,z=r?Symbol.for("react.context"):60110,A=r?Symbol.for("react.async_mode"):60111,B=
+var k=__webpack_require__(12),n=__webpack_require__(31),p=__webpack_require__(32),q=__webpack_require__(33),r="function"===typeof Symbol&&Symbol.for,t=r?Symbol.for("react.element"):60103,u=r?Symbol.for("react.portal"):60106,v=r?Symbol.for("react.fragment"):60107,w=r?Symbol.for("react.strict_mode"):60108,x=r?Symbol.for("react.profiler"):60114,y=r?Symbol.for("react.provider"):60109,z=r?Symbol.for("react.context"):60110,A=r?Symbol.for("react.async_mode"):60111,B=
 r?Symbol.for("react.forward_ref"):60112;r&&Symbol.for("react.timeout");var C="function"===typeof Symbol&&Symbol.iterator;function D(a){for(var b=arguments.length-1,e="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=0;c<b;c++)e+="&args[]="+encodeURIComponent(arguments[c+1]);n(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",e)}
 var E={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function F(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||E}F.prototype.isReactComponent={};F.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?D("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};F.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function G(){}
 G.prototype=F.prototype;function H(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||E}var I=H.prototype=new G;I.constructor=H;k(I,F.prototype);I.isPureReactComponent=!0;var J={current:null},K=Object.prototype.hasOwnProperty,L={key:!0,ref:!0,__self:!0,__source:!0};
@@ -4449,7 +4470,7 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(11);
+var _assign = __webpack_require__(12);
 var invariant = __webpack_require__(31);
 var emptyObject = __webpack_require__(32);
 var warning = __webpack_require__(52);
@@ -5938,7 +5959,7 @@ module.exports = react;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(31),ba=__webpack_require__(0),m=__webpack_require__(60),p=__webpack_require__(11),v=__webpack_require__(33),da=__webpack_require__(97),ea=__webpack_require__(98),fa=__webpack_require__(99),ha=__webpack_require__(32);
+var aa=__webpack_require__(31),ba=__webpack_require__(0),m=__webpack_require__(60),p=__webpack_require__(12),v=__webpack_require__(33),da=__webpack_require__(97),ea=__webpack_require__(98),fa=__webpack_require__(99),ha=__webpack_require__(32);
 function A(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);aa(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}ba?void 0:A("227");
 function ia(a,b,c,d,e,f,g,h,k){this._hasCaughtError=!1;this._caughtError=null;var n=Array.prototype.slice.call(arguments,3);try{b.apply(c,n)}catch(r){this._caughtError=r,this._hasCaughtError=!0}}
 var B={_caughtError:null,_hasCaughtError:!1,_rethrowError:null,_hasRethrowError:!1,invokeGuardedCallback:function(a,b,c,d,e,f,g,h,k){ia.apply(B,arguments)},invokeGuardedCallbackAndCatchFirstError:function(a,b,c,d,e,f,g,h,k){B.invokeGuardedCallback.apply(this,arguments);if(B.hasCaughtError()){var n=B.clearCaughtError();B._hasRethrowError||(B._hasRethrowError=!0,B._rethrowError=n)}},rethrowCaughtError:function(){return ka.apply(B,arguments)},hasCaughtError:function(){return B._hasCaughtError},clearCaughtError:function(){if(B._hasCaughtError){var a=
@@ -6250,7 +6271,7 @@ var invariant = __webpack_require__(31);
 var React = __webpack_require__(0);
 var warning = __webpack_require__(52);
 var ExecutionEnvironment = __webpack_require__(60);
-var _assign = __webpack_require__(11);
+var _assign = __webpack_require__(12);
 var emptyFunction = __webpack_require__(33);
 var checkPropTypes = __webpack_require__(58);
 var getActiveElement = __webpack_require__(97);
@@ -24133,7 +24154,11 @@ var Tree = function (_React$Component) {
         checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
 
         eventObj.checkedNodes = checkedKeys.map(function (key) {
-          return keyEntities[key].node;
+          return keyEntities[key];
+        }).filter(function (entity) {
+          return entity;
+        }).map(function (entity) {
+          return entity.node;
         });
 
         _this.setUncontrolledState({ checkedKeys: checkedKeys });
@@ -24357,7 +24382,8 @@ var Tree = function (_React$Component) {
           loadData = _props.loadData,
           filterTreeNode = _props.filterTreeNode,
           openTransitionName = _props.openTransitionName,
-          openAnimation = _props.openAnimation;
+          openAnimation = _props.openAnimation,
+          switcherIcon = _props.switcherIcon;
 
 
       return {
@@ -24368,6 +24394,7 @@ var Tree = function (_React$Component) {
           selectable: selectable,
           showIcon: showIcon,
           icon: icon,
+          switcherIcon: switcherIcon,
           draggable: draggable,
           checkable: checkable,
           checkStrictly: checkStrictly,
@@ -24460,7 +24487,7 @@ var Tree = function (_React$Component) {
         newState.treeNode = treeNode;
 
         // Calculate the entities data for quick match
-        var entitiesMap = Object(__WEBPACK_IMPORTED_MODULE_13__util__["h" /* convertTreeToEntities */])(treeNode, props.unstable_processTreeEntity);
+        var entitiesMap = Object(__WEBPACK_IMPORTED_MODULE_13__util__["h" /* convertTreeToEntities */])(treeNode);
         newState.posEntities = entitiesMap.posEntities;
         newState.keyEntities = entitiesMap.keyEntities;
       }
@@ -24596,17 +24623,7 @@ Tree.propTypes = {
   filterTreeNode: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func,
   openTransitionName: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string,
   openAnimation: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object]),
-
-  // Tree will parse treeNode as entities map,
-  // This prop enable user to process the Tree with additional entities
-  // This function may be remove in future if we start to remove the dependency on key
-  // So any user should not relay on this function.
-  // If you are refactor this code, you can remove it as your wish
-  unstable_processTreeEntity: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.shape({
-    initWrapper: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func.isRequired,
-    processEntity: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func.isRequired,
-    onProcessFinished: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func.isRequired
-  })
+  switcherIcon: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func])
 };
 Tree.childContextTypes = __WEBPACK_IMPORTED_MODULE_12__contextTypes__["b" /* treeContextTypes */];
 Tree.defaultProps = {
@@ -25443,7 +25460,7 @@ $export($export.S, 'Object', { create: __webpack_require__(71) });
 
 
 
-var assign = __webpack_require__(11);
+var assign = __webpack_require__(12);
 
 var ReactPropTypesSecret = __webpack_require__(59);
 var checkPropTypes = __webpack_require__(58);
