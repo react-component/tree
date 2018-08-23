@@ -189,6 +189,270 @@ exports[`Tree Props checkable without selectable 1`] = `
 </ul>
 `;
 
+exports[`Tree Props custom switcher icon switcher icon 1`] = `
+<ul
+  class="rc-tree"
+  role="tree"
+  unselectable="on"
+>
+  <li
+    class="rc-tree-treenode-switcher-open"
+    role="treeitem"
+  >
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop"
+    />
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---"
+    >
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu"
+      />
+      <span
+        class="rc-tree-title"
+      >
+        ---
+      </span>
+    </span>
+  </li>
+  <li
+    class="rc-tree-treenode-switcher-open"
+    role="treeitem"
+  >
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open"
+    >
+      <span>
+        switcherIconFromNode0-1
+      </span>
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---"
+    >
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open"
+      />
+      <span
+        class="rc-tree-title"
+      >
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true"
+      role="group"
+    >
+      <li
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+      >
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </li>
+      <li
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+      >
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
+<ul
+  class="rc-tree"
+  role="tree"
+  unselectable="on"
+>
+  <li
+    class="rc-tree-treenode-switcher-open"
+    role="treeitem"
+  >
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop"
+    >
+      <span>
+        switcherLeafIcon
+      </span>
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---"
+    >
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu"
+      />
+      <span
+        class="rc-tree-title"
+      >
+        ---
+      </span>
+    </span>
+  </li>
+  <li
+    class="rc-tree-treenode-switcher-open"
+    role="treeitem"
+  >
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop"
+    >
+      <span>
+        switcherLeafIconFromNode0-1
+      </span>
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---"
+    >
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu"
+      />
+      <span
+        class="rc-tree-title"
+      >
+        ---
+      </span>
+    </span>
+  </li>
+  <li
+    class="rc-tree-treenode-switcher-open"
+    role="treeitem"
+  >
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open"
+    />
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="---"
+    >
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open"
+      />
+      <span
+        class="rc-tree-title"
+      >
+        ---
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true"
+      role="group"
+    >
+      <li
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+      >
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        >
+          <span>
+            switcherLeafIcon
+          </span>
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </li>
+      <li
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+      >
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        >
+          <span>
+            switcherLeafIconFromNode0-2-1
+          </span>
+        </span>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+  <li
+    class="rc-tree-treenode-switcher-open"
+    role="treeitem"
+  >
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop"
+    >
+      <span>
+        switcherLeafIcon
+      </span>
+    </span>
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="---"
+    >
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu"
+      />
+      <span
+        class="rc-tree-title"
+      >
+        ---
+      </span>
+    </span>
+  </li>
+</ul>
+`;
+
 exports[`Tree Props defaultExpandAll 1`] = `
 <ul
   class="rc-tree"
@@ -497,7 +761,7 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
 </ul>
 `;
 
-exports[`Tree Props loadData 1`] = `
+exports[`Tree Props loadData basic 1`] = `
 <ul
   class="rc-tree"
   role="tree"

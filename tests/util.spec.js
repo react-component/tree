@@ -1,10 +1,12 @@
 /* eslint-disable no-undef, react/no-multi-comp, react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
+import { mount } from 'enzyme';
 import Tree from '../src/Tree';
 import TreeNode from '../src/TreeNode';
 import {
   convertDataToTree, convertTreeToEntities,
   conductCheck, conductExpandParent,
+  getDragNodesKeys,
 } from '../src/util';
 import { convertTreeToData } from './util';
 
@@ -46,6 +48,25 @@ describe('Util', () => {
     ]);
   });
 
+  it('convertDataToTree', () => {
+    const treeData = [{
+      title: '0-0',
+      children: [{
+        title: '0-0-0'
+      }],
+    }];
+
+    const treeNodes = convertDataToTree(treeData, {
+      processProps: (props) => ({
+        ...props,
+        value: props.title,
+      }),
+    });
+
+    expect(treeNodes[0].props.value).toBe('0-0');
+    expect(treeNodes[0].props.children[0].props.value).toBe('0-0-0');
+  });
+
   it('convertTreeToData', () => {
     const treeData = [
       { key: 'rc', title: 'RC' },
@@ -65,6 +86,30 @@ describe('Util', () => {
     const $treeNode = convertDataToTree(treeData);
 
     expect(convertTreeToData($treeNode)).toEqual(treeData);
+  });
+
+  it('convertTreeToEntities with additional handler', () => {
+    const onProcessFinished = jest.fn();
+
+    const tree = (
+      <Tree>
+        <TreeNode key="key" title="test" value="ttt" />
+      </Tree>
+    );
+
+    const { keyEntities, valueEntities } = convertTreeToEntities(tree.props.children, {
+      initWrapper: wrapper => ({
+        ...wrapper,
+        valueEntities: {},
+      }),
+      processEntity: (entity, wrapper) => {
+        wrapper.valueEntities[entity.node.props.value] = entity;
+      },
+      onProcessFinished,
+    });
+
+    expect(onProcessFinished).toBeCalled();
+    expect(valueEntities.ttt).toBe(keyEntities.key);
   });
 
   // You can remove this test if refactor remove conductCheck function
@@ -192,5 +237,26 @@ describe('Util', () => {
     const { keyEntities } = convertTreeToEntities(tree.props.children);
     const keys = conductExpandParent(['good'], keyEntities);
     expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
+  });
+
+  it('getDragNodesKeys', () => {
+    const tree = mount(
+      <Tree defaultExpandAll>
+        <TreeNode key="000">
+          <TreeNode key="111">
+            <TreeNode key="222" />
+            <TreeNode key="333" />
+          </TreeNode>
+        </TreeNode>
+      </Tree>
+    );
+
+    const treeNode0 = tree.find(TreeNode).at(0).instance();
+    const keys0 = getDragNodesKeys(treeNode0.props.children, treeNode0);
+    expect(keys0.sort()).toEqual(['000', '111', '222', '333'].sort());
+
+    const treeNode1 = tree.find(TreeNode).at(1).instance();
+    const keys1 = getDragNodesKeys(treeNode1.props.children, treeNode1);
+    expect(keys1.sort()).toEqual(['111', '222', '333'].sort());
   });
 });

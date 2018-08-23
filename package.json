@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "1.13.0",
+  "version": "1.14.3",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -61,7 +61,8 @@
     ],
     "transform": {
       "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
-    }
+    },
+    "testURL": "http://localhost"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
@@ -85,7 +86,7 @@
     "classnames": "2.x",
     "prop-types": "^15.5.8",
     "raf": "^3.4.0",
-    "rc-animate": "3.0.0-rc.4",
+    "rc-animate": "^3.0.0-rc.5",
     "rc-util": "^4.5.1",
     "react-lifecycles-compat": "^3.0.4",
     "warning": "^3.0.0"

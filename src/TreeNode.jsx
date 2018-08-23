@@ -44,6 +44,7 @@ class TreeNode extends React.Component {
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static contextTypes = nodeContextTypes;
@@ -273,8 +274,10 @@ class TreeNode extends React.Component {
 
   // Load data to avoid default expanded tree without data
   syncLoadData = (props) => {
-    const { expanded } = props;
+    const { expanded, loading } = props;
     const { rcTree: { onNodeLoad } } = this.context;
+
+    if (loading) return;
 
     // read from state to avoid loadData at same time
     if (expanded && !this.isLeaf()) {
@@ -289,21 +292,34 @@ class TreeNode extends React.Component {
 
   // Switcher
   renderSwitcher = () => {
-    const { expanded } = this.props;
-    const { rcTree: { prefixCls } } = this.context;
+    const {
+      expanded,
+      switcherIcon: switcherIconFromProps,
+    } = this.props;
+    const {
+      rcTree: {
+        prefixCls,
+        switcherIcon: switcherIconFromCtx,
+      }
+    } = this.context;
+
+    const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
 
     if (this.isLeaf()) {
-      return <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />;
+      return (
+        <span className={classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-noop`)}>
+          {typeof switcherIcon === 'function' ?
+            React.createElement(switcherIcon, { ...this.props, isLeaf: true }) : switcherIcon}
+        </span>
+      );
     }
 
+    const switcherCls = classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`);
     return (
-      <span
-        className={classNames(
-          `${prefixCls}-switcher`,
-          `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
-        )}
-        onClick={this.onExpand}
-      />
+      <span onClick={this.onExpand} className={switcherCls}>
+        {typeof switcherIcon === 'function' ?
+          React.createElement(switcherIcon, { ...this.props, isLeaf: false }) : switcherIcon}
+      </span>
     );
   };
 
