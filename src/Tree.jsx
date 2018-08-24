@@ -8,6 +8,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import { treeContextTypes } from './contextTypes';
 import {
   convertTreeToEntities, convertDataToTree,
+  getDataAndAria,
   getPosition, getDragNodesKeys,
   parseCheckedKeys,
   conductExpandParent, calcSelectedKeys,
@@ -674,7 +675,7 @@ class Tree extends React.Component {
       prefixCls, className, focusable,
       showLine, tabIndex = 0,
     } = this.props;
-    const domProps = {};
+    const domProps = getDataAndAria(this.props);
 
     if (focusable) {
       domProps.tabIndex = tabIndex;

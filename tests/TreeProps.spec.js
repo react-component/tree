@@ -698,6 +698,19 @@ describe('Tree Props', () => {
     expect(animation).toEqual(openAnimation);
   });
 
+  describe('data and aria props', () => {
+    it('renders data attributes', () => {
+      const wrapper = render(<Tree data-test="tree" />);
+      expect(renderToJson(wrapper)).toMatchSnapshot();
+    });
+
+    it('renders aria attributes', () => {
+      const wrapper = render(<Tree aria-label="name" />);
+      expect(renderToJson(wrapper)).toMatchSnapshot();
+    });
+  });
+
+
   describe('custom switcher icon', () => {
     function switcherIcon(text, testLeaf) {
       const sfc = ({ isLeaf }) => {
