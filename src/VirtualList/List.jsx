@@ -120,18 +120,18 @@ class VirtualList extends React.Component {
     return newState;
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    // TODO: Not the best place
-    const { animations } = prevState;
-    console.log('=>', animations);
-    // if (lockScroll) {
-    const { targetItemIndex, targetItemOffsetPtg } = this.state;
-    const totalCount = this.getItemCount(true);
-    const scrollPtg = getScrollByTargetItem(targetItemIndex, targetItemOffsetPtg, totalCount);
-    console.log('==>', scrollPtg);
-    // }
-    return null;
-  }
+  // getSnapshotBeforeUpdate(prevProps, prevState) {
+  //   // TODO: Not the best place
+  //   const { animations } = prevState;
+  //   console.log('=>', animations);
+  //   // if (lockScroll) {
+  //   const { targetItemIndex, targetItemOffsetPtg } = this.state;
+  //   const totalCount = this.getItemCount(true);
+  //   const scrollPtg = getScrollByTargetItem(targetItemIndex, targetItemOffsetPtg, totalCount);
+  //   console.log('==>', scrollPtg);
+  //   // }
+  //   return null;
+  // }
 
   componentDidUpdate() {
     const { height } = this.props;
@@ -259,6 +259,11 @@ class VirtualList extends React.Component {
 
     // Get current scroll position (percentage)
     let scrollPtg = scrollTop / scrollRange;
+
+    // Mark as 0 if scrollRange is 0
+    if (isNaN(scrollPtg)) {
+      scrollPtg = 0;
+    }
 
     console.log('Total:', total);
     console.log('Scroll:', scrollPtg.toFixed(3), scrollTop, scrollRange);
