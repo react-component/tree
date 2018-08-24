@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Animate from 'rc-animate';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
 import {
-  getNodeChildren, mapChildren,
+  getNodeChildren,
   warnOnlyTreeNode,
 } from './util';
 

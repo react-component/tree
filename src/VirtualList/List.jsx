@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CSSMotion } from 'rc-animate';
 import { polyfill } from 'react-lifecycles-compat';
-import raf from 'raf'; // TODO: Remove this when we use rc-virtual-list later
 
 import Item from './Item';
 import {
   TYPE_KEEP, TYPE_ADD, TYPE_REMOVE,
   diffList, getBoxHeight, getContentHeight,
-  getTargetItemByScroll, getScrollByTargetItem,
+  getTargetItemByScroll,
 } from './util';
 
 // TODO: Move this code to rc-virtual-list
@@ -79,7 +78,6 @@ class VirtualList extends React.Component {
 
       // item with animation
       itemList: [],
-      animations: {},
 
       prevProps: {},
     };
@@ -96,8 +94,6 @@ class VirtualList extends React.Component {
       this.calculatePosition();
       this.syncPosition();
     }
-
-    this.processAnimation();
   }
 
   static getDerivedStateFromProps(props, prevState) {
@@ -119,19 +115,6 @@ class VirtualList extends React.Component {
     return newState;
   }
 
-  // getSnapshotBeforeUpdate(prevProps, prevState) {
-  //   // TODO: Not the best place
-  //   const { animations } = prevState;
-  //   console.log('=>', animations);
-  //   // if (lockScroll) {
-  //   const { targetItemIndex, targetItemOffsetPtg } = this.state;
-  //   const totalCount = this.getItemCount(true);
-  //   const scrollPtg = getScrollByTargetItem(targetItemIndex, targetItemOffsetPtg, totalCount);
-  //   console.log('==>', scrollPtg);
-  //   // }
-  //   return null;
-  // }
-
   componentDidUpdate() {
     const { height } = this.props;
 
@@ -140,12 +123,6 @@ class VirtualList extends React.Component {
       this.calculatePosition();
       this.syncPosition();
     }
-
-    this.processAnimation();
-  }
-
-  componentWillUnmount() {
-    this.cancelProcessAnimation();
   }
 
   onScroll = (...args) => {
@@ -166,7 +143,6 @@ class VirtualList extends React.Component {
     const { dataSource } = this.props;
     this.setState({
       itemList: [{ type: TYPE_KEEP, list: dataSource }],
-      animations: {},
     });
   };
 
@@ -260,12 +236,12 @@ class VirtualList extends React.Component {
     let scrollPtg = scrollTop / scrollRange;
 
     // Mark as 0 if scrollRange is 0
-    if (isNaN(scrollPtg)) {
+    if (Number.isNaN(scrollPtg)) {
       scrollPtg = 0;
     }
 
-    console.log('Total:', total);
-    console.log('Scroll:', scrollPtg.toFixed(3), scrollTop, scrollRange);
+    // console.log('Total:', total);
+    // console.log('Scroll:', scrollPtg.toFixed(3), scrollTop, scrollRange);
 
     // Safari has the bump effect which will make scroll out of range. Need check this.
     scrollPtg = Math.max(0, scrollPtg);
@@ -274,6 +250,7 @@ class VirtualList extends React.Component {
     const { itemIndex, itemOffsetPtg } = getTargetItemByScroll(scrollPtg, total);
 
     if (targetItemIndex !== itemIndex || targetItemOffsetPtg !== itemOffsetPtg) {
+      console.warn('Get Scroll:', scrollPtg);
       this.setState({
         scrollPtg,
         targetItemIndex: itemIndex,
@@ -312,59 +289,6 @@ class VirtualList extends React.Component {
     });
   };
 
-  /**
-   * This is only used for the List which need animation process.
-   * We will diff the `dataSource` to find the add or remove items and wrapped under a div.
-   * It's OK for add animation.
-   * But if is remove animation, we need to add list and then remove it to trigger rc-animate remove.
-   */
-  processAnimation = () => {
-    this.cancelProcessAnimation();
-
-    this.animationRaf = raf(() => {
-      this.animationRaf = null;
-
-      const { animations, targetItemIndex, useVirtualList } = this.state;
-      const { motion, height } = this.props;
-      if (!motion) return;
-
-      let startIndex;
-      let endIndex;
-
-      // Calculate the check range
-      if (useVirtualList && height) {
-        startIndex = targetItemIndex - this.getTopCount();
-        endIndex = targetItemIndex + this.getBottomCount();
-      } else {
-        startIndex = 0;
-        endIndex = this.getItemCount();
-      }
-
-      const newAnimations = {};
-      let changed = false;
-
-      for (let i = startIndex; i < endIndex; i += 1) {
-        const { type } = this.getItem(i) || {};
-        if (type !== TYPE_KEEP && !animations[i]) {
-          newAnimations[i] = true;
-          changed = true;
-        }
-      }
-
-      if (changed) {
-        newAnimations.changed = true;
-        this.setState({ animations: newAnimations });
-      }
-    });
-  };
-
-  cancelProcessAnimation = () => {
-    if (this.animationRaf) {
-      raf.cancel(this.animationRaf);
-      this.animationRaf = null;
-    }
-  };
-
   renderSingleNode = (item, index) => {
     const { children, rowKey } = this.props;
 
@@ -388,7 +312,6 @@ class VirtualList extends React.Component {
   };
 
   renderNode = (index) => {
-    const { animations } = this.state;
     const { height, itemMinHeight, motion } = this.props;
     const { type, item: itemList } = this.getItem(index) || {};
 
@@ -400,13 +323,7 @@ class VirtualList extends React.Component {
       return this.renderSingleNode(itemList, index); // It's a item, not list actually
     }
 
-    // Animate
-    let visible;
-    if (type === TYPE_REMOVE) {
-      visible = !animations[index];
-    } else {
-      visible = true;
-    }
+    const visible = type !== TYPE_REMOVE;
 
     const nodeRef = node => {
       this.nodes[index] = node;
@@ -422,8 +339,9 @@ class VirtualList extends React.Component {
       <CSSMotion
         key={`RC_VIRTUAL_${index}`}
         motionAppear={type === TYPE_ADD}
-        motionEnter={type === TYPE_ADD}
+        motionEnter={false}
         motionLeave={type === TYPE_REMOVE}
+        motionLeaveImmediately
         {...motion}
         onAppearEnd={this.onMotionEnd}
         onEnterEnd={this.onMotionEnd}

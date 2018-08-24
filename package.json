@@ -85,8 +85,7 @@
     "babel-runtime": "^6.23.0",
     "classnames": "2.x",
     "prop-types": "^15.5.8",
-    "raf": "^3.4.0",
-    "rc-animate": "^3.0.0-rc.5",
+    "rc-animate": "^3.0.0-rc.6",
     "rc-util": "^4.5.1",
     "react-lifecycles-compat": "^3.0.4",
     "warning": "^3.0.0"
