@@ -424,58 +424,6 @@ class TreeNode extends React.Component {
     );
   };
 
-  // Children list wrapped with `Animation`
-  renderChildren = () => {
-    const { expanded, pos } = this.props;
-    const { rcTree: {
-      prefixCls,
-      openTransitionName, openAnimation,
-      renderTreeNode,
-    } } = this.context;
-
-    const animProps = {};
-    if (openTransitionName) {
-      animProps.transitionName = openTransitionName;
-    } else if (typeof openAnimation === 'object') {
-      animProps.animation = { ...openAnimation };
-    }
-
-    // Children TreeNode
-    const nodeList = this.getNodeChildren();
-
-    if (nodeList.length === 0) {
-      return null;
-    }
-
-    let $children;
-    if (expanded) {
-      $children = (
-        <ul
-          className={classNames(
-            `${prefixCls}-child-tree`,
-            expanded && `${prefixCls}-child-tree-open`,
-          )}
-          data-expanded={expanded}
-          role="group"
-        >
-          {mapChildren(nodeList, (node, index) => (
-            renderTreeNode(node, index, pos)
-          ))}
-        </ul>
-      );
-    }
-
-    return (
-      <Animate
-        {...animProps}
-        showProp="data-expanded"
-        component=""
-      >
-        {$children}
-      </Animate>
-    );
-  };
-
   render() {
     const { loading } = this.props;
     const {
@@ -528,7 +476,6 @@ class TreeNode extends React.Component {
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}
-        {/* TODO: Remove this -> {this.renderChildren()} */}
       </li>
     );
   }

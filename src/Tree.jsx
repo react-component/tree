@@ -74,8 +74,7 @@ class Tree extends React.Component {
     onDrop: PropTypes.func,
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
-    openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    
+
     inlineIndent: PropTypes.number,
 
     // Virtual list
@@ -130,7 +129,7 @@ class Tree extends React.Component {
     const {
       prefixCls, selectable, showIcon, icon, draggable, checkable, checkStrictly, disabled,
       loadData, filterTreeNode,
-      openTransitionName, openAnimation,
+      openTransitionName,
       switcherIcon,
     } = this.props;
 
@@ -146,7 +145,6 @@ class Tree extends React.Component {
         checkStrictly,
         disabled,
         openTransitionName,
-        openAnimation,
 
         loadData,
         filterTreeNode,

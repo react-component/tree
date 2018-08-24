@@ -56,7 +56,6 @@ class VirtualList extends React.Component {
 
     // Animation
     transitionName: PropTypes.string,
-    animation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
     // Event
     onScroll: PropTypes.func,
@@ -346,8 +345,6 @@ class VirtualList extends React.Component {
 
       for (let i = startIndex; i < endIndex; i += 1) {
         const { type } = this.getItem(i) || {};
-        // if (type === TYPE_REMOVE && !animations[i]) {
-        // TODO: handle this
         if (type !== TYPE_KEEP && !animations[i]) {
           newAnimations[i] = true;
           changed = true;
