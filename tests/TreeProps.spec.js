@@ -3,6 +3,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Animate from 'rc-animate';
+import PropTypes from 'prop-types';
 import Tree, { TreeNode } from '..';
 import { nodeMatcher } from './util';
 
@@ -90,7 +91,7 @@ describe('Tree Props', () => {
       const withoutSelectableBase = (
         <Tree onSelect={handleOnSelect} defaultExpandedKeys={['0-0']} selectable={false}>
           <TreeNode key="0-0">
-            <TreeNode key="0-0-0"/>
+            <TreeNode key="0-0-0" />
           </TreeNode>
         </Tree>
       );
@@ -400,49 +401,118 @@ describe('Tree Props', () => {
   // defaultCheckedKeys - is already full test in Tree.spec.js
   // defaultSelectedKeys - is already full test in Tree.spec.js
 
-  it('loadData', () => {
-    let called = 0;
+  describe('loadData', () => {
+    it('basic', () => {
+      let called = 0;
 
-    const handleLoadData = jest.fn();
+      const handleLoadData = jest.fn();
 
-    class Demo extends React.Component {
-      state = {
-        loaded: false,
-      };
+      class Demo extends React.Component {
+        state = {
+          loaded: false,
+        };
 
-      loadData = (...args) => {
-        called += 1;
-        handleLoadData(...args);
+        loadData = (...args) => {
+          called += 1;
+          handleLoadData(...args);
 
-        this.setState({ loaded: true });
+          this.setState({ loaded: true });
 
-        return Promise.resolve();
-      };
+          return Promise.resolve();
+        };
 
-      render() {
-        // Hide icon will still show the icon for loading status
-        return (
-          <Tree loadData={this.loadData} showIcon={false}>
-            <TreeNode key="0-0">
-              {this.state.loaded ? <TreeNode key="0-0-0" /> : null}
-            </TreeNode>
-          </Tree>
-        );
+        render() {
+          // Hide icon will still show the icon for loading status
+          return (
+            <Tree loadData={this.loadData} showIcon={false}>
+              <TreeNode key="0-0">
+                {this.state.loaded ? <TreeNode key="0-0-0" /> : null}
+              </TreeNode>
+            </Tree>
+          );
+        }
       }
-    }
 
-    const wrapper = mount(<Demo />);
+      const wrapper = mount(<Demo />);
 
-    expect(handleLoadData).not.toBeCalled();
+      expect(handleLoadData).not.toBeCalled();
 
-    const switcher = wrapper.find('.rc-tree-switcher');
-    const node = wrapper.find(TreeNode).instance();
-    switcher.simulate('click');
+      const switcher = wrapper.find('.rc-tree-switcher');
+      const node = wrapper.find(TreeNode).instance();
+      switcher.simulate('click');
 
-    return timeoutPromise().then(() => {
-      expect(handleLoadData).toBeCalledWith(node);
-      expect(called).toBe(1);
-      expect(renderToJson(wrapper.render())).toMatchSnapshot();
+      return timeoutPromise().then(() => {
+        expect(handleLoadData).toBeCalledWith(node);
+        expect(called).toBe(1);
+        expect(renderToJson(wrapper.render())).toMatchSnapshot();
+      });
+    });
+
+    // https://github.com/ant-design/ant-design/issues/11689#issuecomment-411712770
+    it('with expandedKeys', () => {
+      let called = 0;
+      const keys = {};
+      const loadData = ({ props: { eventKey } }) => {
+        keys[eventKey] = (keys[eventKey] || 0) + 1;
+
+        return new Promise(() => {
+          called += 1;
+        });
+      };
+
+      const tree = mount(
+        <Tree
+          loadData={loadData}
+          expandedKeys={['0', '1', '2']}
+        >
+          <TreeNode key="0" />
+          <TreeNode key="1" />
+          <TreeNode key="2" />
+        </Tree>
+      );
+
+      tree.setProps({ expandedKeys: ['0', '1', '2'] });
+
+      return timeoutPromise().then(() => {
+        expect(called).toBe(3);
+        expect(keys[0]).toBe(1);
+        expect(keys[1]).toBe(1);
+        expect(keys[2]).toBe(1);
+      });
+    });
+
+    it('with defaultExpandedKeys', () => {
+      let called = 0;
+      const keys = {};
+      const loadData = ({ props: { eventKey } }) => {
+        keys[eventKey] = (keys[eventKey] || 0) + 1;
+
+        return new Promise(() => {
+          called += 1;
+        });
+      };
+
+      const wrapper = mount(
+        <Tree
+          loadData={loadData}
+          defaultExpandedKeys={['0', '1', '2']}
+        >
+          <TreeNode key="0" />
+          <TreeNode key="1" />
+          <TreeNode key="2" />
+        </Tree>
+      );
+
+      // Do not trigger loadData
+      wrapper.find('.rc-tree-switcher').at(0).simulate('click');
+      wrapper.find('.rc-tree-switcher').at(0).simulate('click');
+
+      return timeoutPromise().then(() => {
+        expect(called).toBe(3);
+        expect(keys[0]).toBe(1);
+        expect(keys[1]).toBe(1);
+        expect(keys[2]).toBe(1);
+      });
     });
   });
 
@@ -559,50 +629,23 @@ describe('Tree Props', () => {
   it('treeData', () => {
     const treeData = [
       { key: 'K0', title: 'T0' },
-      { key: 'K1', title: 'T1', children:
-        [
-          { key: 'K10', title: 'T10' },
-          { key: 'K11', title: 'T11', children:
-            [
-              { key: 'K110', title: 'T110' },
-              { key: 'K111', title: 'T111' },
-            ]
-          },
-          { key: 'K12', title: 'T12' },
-        ],
+      {
+        key: 'K1', title: 'T1', children:
+          [
+            { key: 'K10', title: 'T10' },
+            {
+              key: 'K11', title: 'T11', children:
+                [
+                  { key: 'K110', title: 'T110' },
+                  { key: 'K111', title: 'T111' },
+                ]
+            },
+            { key: 'K12', title: 'T12' },
+          ],
       },
     ];
     const wrapper = mount(<Tree treeData={treeData} defaultExpandAll />);
     expect(wrapper.render()).toMatchSnapshot();
-  });
-
-  describe('unstable_processTreeEntity', () => {
-    const onProcessFinished = jest.fn();
-
-    const handler = {
-      initWrapper(wrapper) {
-        return { ...wrapper, valueEntities: {} };
-      },
-      processEntity(entity, { valueEntities }) {
-        valueEntities[entity.node.props.value] = entity;
-      },
-      onProcessFinished,
-    };
-
-    mount(
-      <Tree unstable_processTreeEntity={handler}>
-        <TreeNode key="K0" title="T0" value={0} />
-        <TreeNode key="K1" title="T1" value={1}>
-          <TreeNode key="K10" title="T10" value={10} />
-          <TreeNode key="K11" title="T11" value={11} />
-        </TreeNode>
-      </Tree>
-    );
-
-    expect(onProcessFinished).toBeCalled();
-
-    const valueList = Object.keys(onProcessFinished.mock.calls[0][0].valueEntities);
-    expect(valueList).toEqual(['0', '1', '10', '11']);
   });
 
   describe('disabled', () => {
@@ -664,6 +707,51 @@ describe('Tree Props', () => {
     it('renders aria attributes', () => {
       const wrapper = render(<Tree aria-label="name" />);
       expect(renderToJson(wrapper)).toMatchSnapshot();
+    });
+  });
+
+
+  describe('custom switcher icon', () => {
+    function switcherIcon(text, testLeaf) {
+      const sfc = ({ isLeaf }) => {
+        if (testLeaf) {
+          return isLeaf ? <span>{text}</span> : null;
+        }
+        return isLeaf ? null : <span>{text}</span>;
+      };
+
+      sfc.propTypes = {
+        isLeaf: PropTypes.bool,
+      };
+
+      return sfc;
+    }
+    it('switcher icon', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll switcherIcon={switcherIcon('switcherIcon')}>
+          <TreeNode key="0-0" />
+          <TreeNode key="0-1" switcherIcon={switcherIcon('switcherIconFromNode0-1')}>
+            <TreeNode key="0-1-0" />
+            <TreeNode key="0-1-1" />
+          </TreeNode>
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('switcher leaf icon', () => {
+      const wrapper = render(
+        <Tree defaultExpandAll switcherIcon={switcherIcon('switcherLeafIcon', true)}>
+          <TreeNode key="0-0" />
+          <TreeNode key="0-1" switcherIcon={switcherIcon('switcherLeafIconFromNode0-1', true)} />
+          <TreeNode key="0-2">
+            <TreeNode key="0-2-0" />
+            <TreeNode key="0-2-1" switcherIcon={switcherIcon('switcherLeafIconFromNode0-2-1', true)} />
+          </TreeNode>
+          <TreeNode key="0-3" />
+        </Tree>
+      );
+      expect(wrapper).toMatchSnapshot();
     });
   });
 });

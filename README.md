@@ -90,6 +90,7 @@ see examples
 | onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |
 | onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 | onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
+| switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 
 ### TreeNode props
 > note: if you have a lot of TreeNode, like more than 1000,   
@@ -106,6 +107,7 @@ see examples
 |key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
 |isLeaf | whether it's leaf node | bool | false |
 |icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
+| switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 
 ## note
 
