@@ -276,7 +276,7 @@ class TreeNode extends React.Component {
 
   // Load data to avoid default expanded tree without data
   syncLoadData = (props) => {
-    const { expanded, loading } = props;
+    const { expanded, loading, loaded } = props;
     const { rcTree: { onNodeLoad } } = this.context;
 
     if (loading) return;
@@ -286,7 +286,7 @@ class TreeNode extends React.Component {
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
       const hasChildren = this.getNodeChildren().length !== 0;
-      if (!hasChildren) {
+      if (!hasChildren && !loaded) {
         onNodeLoad(this);
       }
     }
