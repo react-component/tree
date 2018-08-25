@@ -2734,24 +2734,25 @@ var nodeContextTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["o"] = warnOnlyTreeNode;
+/* harmony export (immutable) */ __webpack_exports__["p"] = warnOnlyTreeNode;
 /* harmony export (immutable) */ __webpack_exports__["b"] = arrDel;
 /* harmony export (immutable) */ __webpack_exports__["a"] = arrAdd;
-/* harmony export (immutable) */ __webpack_exports__["n"] = posToArr;
-/* harmony export (immutable) */ __webpack_exports__["k"] = getPosition;
+/* harmony export (immutable) */ __webpack_exports__["o"] = posToArr;
+/* harmony export (immutable) */ __webpack_exports__["l"] = getPosition;
 /* unused harmony export isTreeNode */
-/* harmony export (immutable) */ __webpack_exports__["j"] = getNodeChildren;
+/* harmony export (immutable) */ __webpack_exports__["k"] = getNodeChildren;
 /* unused harmony export isCheckDisabled */
 /* unused harmony export traverseTreeNodes */
-/* harmony export (immutable) */ __webpack_exports__["l"] = mapChildren;
-/* harmony export (immutable) */ __webpack_exports__["i"] = getDragNodesKeys;
+/* harmony export (immutable) */ __webpack_exports__["m"] = mapChildren;
+/* harmony export (immutable) */ __webpack_exports__["j"] = getDragNodesKeys;
 /* harmony export (immutable) */ __webpack_exports__["c"] = calcDropPosition;
 /* harmony export (immutable) */ __webpack_exports__["d"] = calcSelectedKeys;
 /* harmony export (immutable) */ __webpack_exports__["g"] = convertDataToTree;
 /* harmony export (immutable) */ __webpack_exports__["h"] = convertTreeToEntities;
-/* harmony export (immutable) */ __webpack_exports__["m"] = parseCheckedKeys;
+/* harmony export (immutable) */ __webpack_exports__["n"] = parseCheckedKeys;
 /* harmony export (immutable) */ __webpack_exports__["e"] = conductCheck;
 /* harmony export (immutable) */ __webpack_exports__["f"] = conductExpandParent;
+/* harmony export (immutable) */ __webpack_exports__["i"] = getDataAndAria;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
@@ -3216,6 +3217,19 @@ function conductExpandParent(keyList, keyEntities) {
   return Object.keys(expandedKeys);
 }
 
+/**
+ * Returns only the data- and aria- key/value pairs
+ * @param {object} props 
+ */
+function getDataAndAria(props) {
+  return Object.keys(props).reduce(function (prev, key) {
+    if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
+      prev[key] = props[key];
+    }
+    return prev;
+  }, {});
+}
+
 /***/ }),
 /* 114 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -3366,12 +3380,7 @@ var TreeNode = function (_React$Component) {
           draggable = _context$rcTree.draggable;
 
       var disabled = this.isDisabled();
-      var dataOrAriaAttributeProps = Object.keys(otherProps).reduce(function (prev, key) {
-        if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
-          prev[key] = otherProps[key];
-        }
-        return prev;
-      }, {});
+      var dataOrAriaAttributeProps = Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* getDataAndAria */])(otherProps);
 
       return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
         'li',
@@ -3586,10 +3595,10 @@ var _initialiseProps = function _initialiseProps() {
     var originList = Object(__WEBPACK_IMPORTED_MODULE_11_rc_util_es_Children_toArray__["a" /* default */])(children).filter(function (node) {
       return node;
     });
-    var targetList = Object(__WEBPACK_IMPORTED_MODULE_14__util__["j" /* getNodeChildren */])(originList);
+    var targetList = Object(__WEBPACK_IMPORTED_MODULE_14__util__["k" /* getNodeChildren */])(originList);
 
     if (originList.length !== targetList.length) {
-      Object(__WEBPACK_IMPORTED_MODULE_14__util__["o" /* warnOnlyTreeNode */])();
+      Object(__WEBPACK_IMPORTED_MODULE_14__util__["p" /* warnOnlyTreeNode */])();
     }
 
     return targetList;
@@ -3637,7 +3646,8 @@ var _initialiseProps = function _initialiseProps() {
 
   this.syncLoadData = function (props) {
     var expanded = props.expanded,
-        loading = props.loading;
+        loading = props.loading,
+        loaded = props.loaded;
     var onNodeLoad = _this2.context.rcTree.onNodeLoad;
 
 
@@ -3648,7 +3658,7 @@ var _initialiseProps = function _initialiseProps() {
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
       var hasChildren = _this2.getNodeChildren().length !== 0;
-      if (!hasChildren) {
+      if (!hasChildren && !loaded) {
         onNodeLoad(_this2);
       }
     }
@@ -3814,7 +3824,7 @@ var _initialiseProps = function _initialiseProps() {
           'data-expanded': expanded,
           role: 'group'
         },
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["l" /* mapChildren */])(nodeList, function (node, index) {
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* mapChildren */])(nodeList, function (node, index) {
           return renderTreeNode(node, index, pos);
         })
       );
@@ -23939,7 +23949,7 @@ var Tree = function (_React$Component) {
       _this.dragNode = node;
 
       _this.setState({
-        dragNodesKeys: Object(__WEBPACK_IMPORTED_MODULE_13__util__["i" /* getDragNodesKeys */])(children, node),
+        dragNodesKeys: Object(__WEBPACK_IMPORTED_MODULE_13__util__["j" /* getDragNodesKeys */])(children, node),
         expandedKeys: Object(__WEBPACK_IMPORTED_MODULE_13__util__["b" /* arrDel */])(expandedKeys, eventKey)
       });
 
@@ -24056,7 +24066,7 @@ var Tree = function (_React$Component) {
         return;
       }
 
-      var posArr = Object(__WEBPACK_IMPORTED_MODULE_13__util__["n" /* posToArr */])(pos);
+      var posArr = Object(__WEBPACK_IMPORTED_MODULE_13__util__["o" /* posToArr */])(pos);
 
       var dropResult = {
         event: event,
@@ -24340,11 +24350,11 @@ var Tree = function (_React$Component) {
           dragOverNodeKey = _this$state3.dragOverNodeKey,
           dropPosition = _this$state3.dropPosition;
 
-      var pos = Object(__WEBPACK_IMPORTED_MODULE_13__util__["k" /* getPosition */])(level, index);
+      var pos = Object(__WEBPACK_IMPORTED_MODULE_13__util__["l" /* getPosition */])(level, index);
       var key = child.key || pos;
 
       if (!keyEntities[key]) {
-        Object(__WEBPACK_IMPORTED_MODULE_13__util__["o" /* warnOnlyTreeNode */])();
+        Object(__WEBPACK_IMPORTED_MODULE_13__util__["p" /* warnOnlyTreeNode */])();
         return null;
       }
 
@@ -24439,7 +24449,7 @@ var Tree = function (_React$Component) {
           _props2$tabIndex = _props2.tabIndex,
           tabIndex = _props2$tabIndex === undefined ? 0 : _props2$tabIndex;
 
-      var domProps = {};
+      var domProps = Object(__WEBPACK_IMPORTED_MODULE_13__util__["i" /* getDataAndAria */])(this.props);
 
       if (focusable) {
         domProps.tabIndex = tabIndex;
@@ -24453,7 +24463,7 @@ var Tree = function (_React$Component) {
           role: 'tree',
           unselectable: 'on'
         }),
-        Object(__WEBPACK_IMPORTED_MODULE_13__util__["l" /* mapChildren */])(treeNode, function (node, index) {
+        Object(__WEBPACK_IMPORTED_MODULE_13__util__["m" /* mapChildren */])(treeNode, function (node, index) {
           return _this2.renderTreeNode(node, index);
         })
       );
@@ -24517,9 +24527,9 @@ var Tree = function (_React$Component) {
         var checkedKeyEntity = void 0;
 
         if (needSync('checkedKeys')) {
-          checkedKeyEntity = Object(__WEBPACK_IMPORTED_MODULE_13__util__["m" /* parseCheckedKeys */])(props.checkedKeys) || {};
+          checkedKeyEntity = Object(__WEBPACK_IMPORTED_MODULE_13__util__["n" /* parseCheckedKeys */])(props.checkedKeys) || {};
         } else if (!prevProps && props.defaultCheckedKeys) {
-          checkedKeyEntity = Object(__WEBPACK_IMPORTED_MODULE_13__util__["m" /* parseCheckedKeys */])(props.defaultCheckedKeys) || {};
+          checkedKeyEntity = Object(__WEBPACK_IMPORTED_MODULE_13__util__["n" /* parseCheckedKeys */])(props.defaultCheckedKeys) || {};
         } else if (treeNode) {
           // If treeNode changed, we also need check it
           checkedKeyEntity = {
@@ -26841,7 +26851,8 @@ function genCSSMotion(transitionSupport) {
         var visible = props.visible,
             motionAppear = props.motionAppear,
             motionEnter = props.motionEnter,
-            motionLeave = props.motionLeave;
+            motionLeave = props.motionLeave,
+            motionLeaveImmediately = props.motionLeaveImmediately;
 
         var newState = {
           prevProps: props
@@ -26862,7 +26873,7 @@ function genCSSMotion(transitionSupport) {
         }
 
         // Leave
-        if (prevProps && prevProps.visible && !visible && motionLeave) {
+        if (prevProps && prevProps.visible && !visible && motionLeave || !prevProps && motionLeaveImmediately && !visible && motionLeave) {
           newState.status = STATUS_LEAVE;
           newState.statusActive = false;
           newState.newStatus = true;
@@ -26882,6 +26893,7 @@ function genCSSMotion(transitionSupport) {
     motionAppear: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
     motionEnter: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
     motionLeave: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
+    motionLeaveImmediately: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool, // Trigger leave motion immediately
     onAppearStart: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
     onAppearActive: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
     onAppearEnd: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
