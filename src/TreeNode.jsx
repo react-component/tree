@@ -6,6 +6,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
 import {
   getNodeChildren,
+  getDataAndAria,
   warnOnlyTreeNode,
 } from './util';
 
@@ -273,7 +274,7 @@ class TreeNode extends React.Component {
 
   // Load data to avoid default expanded tree without data
   syncLoadData = (props) => {
-    const { expanded, loading } = props;
+    const { expanded, loading, loaded } = props;
     const { rcTree: { onNodeLoad } } = this.context;
 
     if (loading) return;
@@ -283,7 +284,7 @@ class TreeNode extends React.Component {
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
       const hasChildren = this.getNodeChildren().length !== 0;
-      if (!hasChildren) {
+      if (!hasChildren && !loaded) {
         onNodeLoad(this);
       }
     }
@@ -438,12 +439,7 @@ class TreeNode extends React.Component {
       draggable,
     } } = this.context;
     const disabled = this.isDisabled();
-    const dataOrAriaAttributeProps = Object.keys(otherProps).reduce((prev, key) => {
-      if ((key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-')) {
-        prev[key] = otherProps[key];
-      }
-      return prev;
-    }, {});
+    const dataOrAriaAttributeProps = getDataAndAria(otherProps);
 
     return (
       <li

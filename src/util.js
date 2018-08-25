@@ -446,3 +446,16 @@ export function getVisibleKeyLevelListByTreeNode(rootChildren, expandedKeys, key
 
   return getVisibleKeyLevelListByEntityList(rootEntityList, expandedKeys, keyEntities);
 }
+
+/**
+ * Returns only the data- and aria- key/value pairs
+ * @param {object} props 
+ */
+export function getDataAndAria(props) {
+  return Object.keys(props).reduce((prev, key) => {
+    if ((key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-')) {
+      prev[key] = props[key];
+    }
+    return prev;
+  }, {});
+}

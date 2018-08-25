@@ -11,6 +11,7 @@ import { treeContextTypes } from './contextTypes';
 import TreeNode from './TreeNode';
 import {
   convertTreeToEntities, convertDataToTree,
+  getDataAndAria,
   getPosition, getDragNodesKeys,
   parseCheckedKeys,
   conductExpandParent, calcSelectedKeys,
@@ -763,6 +764,7 @@ class Tree extends React.Component {
       }),
       role: 'tree',
       unselectable: 'on',
+      ...getDataAndAria(this.props),
     };
 
     if (focusable) {
