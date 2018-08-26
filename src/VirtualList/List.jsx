@@ -8,7 +8,7 @@ import Item from './Item';
 import {
   TYPE_KEEP, TYPE_ADD, TYPE_REMOVE,
   diffList, getBoxHeight, getContentHeight,
-  getTargetItemByScroll,
+  getTargetItemByScroll, getScrollByTargetItem,
 } from './util';
 
 // TODO: Move this code to rc-virtual-list
@@ -32,7 +32,6 @@ function heightProp(...args) {
     `Only accept boolean false or number value but get ${prop}`
   );
 }
-
 
 /**
  * Virtual List provide the container to hold list item.
@@ -83,17 +82,10 @@ class VirtualList extends React.Component {
     };
 
     this.nodes = {};
-    this.animationRaf = null;
   }
 
   componentDidMount() {
-    const { height } = this.props;
-
-    // No height no calculate
-    if (height) {
-      this.calculatePosition();
-      this.syncPosition();
-    }
+    this.onDomUpdated();
   }
 
   static getDerivedStateFromProps(props, prevState) {
@@ -116,14 +108,20 @@ class VirtualList extends React.Component {
   }
 
   componentDidUpdate() {
+    this.onDomUpdated();
+  }
+
+  onDomUpdated = () => {
     const { height } = this.props;
 
     // No height no calculate
     if (height) {
+      this.restoreScroll();
+
       this.calculatePosition();
       this.syncPosition();
     }
-  }
+  };
 
   onScroll = (...args) => {
     const { onScroll, height } = this.props;
@@ -212,6 +210,33 @@ class VirtualList extends React.Component {
     return null;
   };
 
+  restoreScroll = () => {
+    const { itemList, targetItemIndex, targetItemOffsetPtg } = this.state;
+    const needRestore = itemList.some((item) => {
+      const { type } = item;
+
+      // TODO: Not use this in prod env
+      if (item.used === true) return false;
+
+      item.used = true;
+      return type !== TYPE_KEEP;
+    });
+
+    if (needRestore && this.$container) {
+      // const { scrollHeight, clientHeight } = this.$container;
+      // const total = this.getItemCount(true);
+      // const bindScroll = getScrollByTargetItem(targetItemIndex, targetItemOffsetPtg, total);
+      // const scroppTop = (scrollHeight - clientHeight) * bindScroll;
+      // this.$container.scrollTop = scroppTop;
+      this.$container.scrollTop = this.lastTop;
+      console.log('Sync!', this.$container.scrollTop);
+    }
+    // console.log('>>>', itemList, this.state);
+    // getScrollByTargetItem(targetItemIndex, targetItemOffsetPtg, total)
+    this.lastTop = this.$container ? this.$container.scrollTop : 0;
+    console.log('Last:', this.lastTop);
+  };
+
   calculatePosition = () => {
     const { targetItemIndex, targetItemOffsetPtg, useVirtualList } = this.state;
     const { itemMinHeight, height } = this.props;
@@ -250,7 +275,7 @@ class VirtualList extends React.Component {
     const { itemIndex, itemOffsetPtg } = getTargetItemByScroll(scrollPtg, total);
 
     if (targetItemIndex !== itemIndex || targetItemOffsetPtg !== itemOffsetPtg) {
-      console.warn('Get Scroll:', scrollPtg);
+      // console.warn('Get Scroll:', scrollPtg);
       this.setState({
         scrollPtg,
         targetItemIndex: itemIndex,
