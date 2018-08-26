@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CSSMotion } from 'rc-animate';
 import { polyfill } from 'react-lifecycles-compat';
+import bigNumber from 'bignumber.js';
 
 import Item from './Item';
 import {
@@ -69,9 +70,9 @@ class VirtualList extends React.Component {
     super();
 
     this.state = {
-      scrollPtg: 0,
+      scrollPtg: bigNumber(0),
       targetItemIndex: 0,
-      targetItemOffsetPtg: -1,
+      targetItemOffsetPtg: bigNumber(-1),
       useVirtualList: true,
       needSyncScroll: true,
 
@@ -213,6 +214,7 @@ class VirtualList extends React.Component {
   };
 
   restoreScroll = () => {
+    return;
     const { itemList, scrollPtg, targetItemIndex, targetItemOffsetPtg } = this.state;
     const needRestore = itemList.some((item) => {
       const { type } = item;
@@ -276,23 +278,27 @@ class VirtualList extends React.Component {
     }
 
     // Get current scroll position (percentage)
-    let scrollPtg = scrollTop / scrollRange;
+    let scrollPtg = bigNumber(scrollTop).div(scrollRange); // scrollTop / scrollRange;
 
     // Mark as 0 if scrollRange is 0
-    if (Number.isNaN(scrollPtg)) {
-      scrollPtg = 0;
+    if (scrollPtg.isNaN()) {
+      scrollPtg = bigNumber(0);
     }
 
-    // console.log('Total:', total);
-    // console.log('Scroll:', scrollPtg.toFixed(3), scrollTop, scrollRange);
-
     // Safari has the bump effect which will make scroll out of range. Need check this.
-    scrollPtg = Math.max(0, scrollPtg);
-    scrollPtg = Math.min(1, scrollPtg);
+    const scrollPtgNum = scrollPtg.toNumber();
+    if (scrollPtgNum < 0) {
+      scrollPtg = bigNumber(0);
+    } else if (scrollPtgNum > 1) {
+      scrollPtg = bigNumber(1);
+    }
 
     const { itemIndex, itemOffsetPtg } = getTargetItemByScroll(scrollPtg, total);
 
-    if (targetItemIndex !== itemIndex || targetItemOffsetPtg !== itemOffsetPtg) {
+    if (
+      targetItemIndex !== itemIndex ||
+      targetItemOffsetPtg.toString() !== itemOffsetPtg.toString()
+    ) {
       console.warn(
         'Update:',
         scrollTop,
@@ -317,27 +323,27 @@ class VirtualList extends React.Component {
     const { needSyncScroll, targetItemIndex, targetItemOffsetPtg, scrollPtg } = this.state;
 
     // `targetItemOffsetPtg = -1` is only when the dom init
-    if (!needSyncScroll || targetItemOffsetPtg === -1) return;
+    if (!needSyncScroll || targetItemOffsetPtg.toNumber() === -1) return;
 
     const { scrollTop } = this.$container;
 
     // Calculate target item
     const targetItemHeight = this.getItemHeight(targetItemIndex);
-    const targetItemTop = scrollPtg * getContentHeight(this.$container);
-    const targetItemOffset = targetItemOffsetPtg * targetItemHeight;
-    const targetItemMergedTop = scrollTop + targetItemTop - targetItemOffset;
+    const targetItemTop = scrollPtg.multipliedBy(getContentHeight(this.$container)); // scrollPtg * getContentHeight(this.$container);
+    const targetItemOffset = targetItemOffsetPtg.multipliedBy(targetItemHeight); // targetItemOffsetPtg * targetItemHeight;
+    const targetItemMergedTop = bigNumber(scrollTop).plus(targetItemTop).minus(targetItemOffset); // scrollTop + targetItemTop - targetItemOffset;
 
     // Calculate top items
     let topItemsTop = targetItemMergedTop;
     const topCount = this.getTopCount();
     [...new Array(topCount)].forEach((_, i) => {
       const index = targetItemIndex - i - 1;
-      topItemsTop -= this.getItemHeight(index);
+      topItemsTop = topItemsTop.minus(this.getItemHeight(index)); // topItemsTop - this.getItemHeight(index);
     });
 
     this.setState({
       needSyncScroll: false,
-      topItemTop: topItemsTop,
+      topItemTop: topItemsTop.toNumber(),
     });
   };
 

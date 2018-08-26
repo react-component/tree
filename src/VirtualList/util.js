@@ -1,3 +1,6 @@
+import bigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
+
 export const TYPE_ADD = 'ADD';
 export const TYPE_KEEP = 'KEEP';
 export const TYPE_REMOVE = 'REMOVE';
@@ -119,15 +122,20 @@ export function diffList(list1 = [], list2 = [], rowKey) {
 
 /**
  * Calculate the current must show item index and which line of the item must match with scrollPtg.
- * @param scrollPtg
+ * @param scrollPtg:BigNumber
  * @param total
- * @returns {{itemIndex: number, itemOffsetPtg: number}}
+ * @returns {{itemIndex: BigNumber, itemOffsetPtg: BigNumber}}
  */
 export function getTargetItemByScroll(scrollPtg, total) {
-  const itemIndex = Math.floor(total * scrollPtg);
-  const itemTopPtg = itemIndex / total;
-  const itemBottomPtg = (itemIndex + 1) / total;
-  const itemOffsetPtg = (scrollPtg - itemTopPtg) / (itemBottomPtg - itemTopPtg);
+  const itemIndex = Math.floor(scrollPtg.multipliedBy(total)); // Math.floor(total * scrollPtg);
+  const itemTopPtg = bigNumber(itemIndex).div(total); // itemIndex / total;
+  const itemBottomPtg = bigNumber(itemIndex + 1).div(total); // (itemIndex + 1) / total;
+  // (scrollPtg - itemTopPtg) / (itemBottomPtg - itemTopPtg);
+  const itemOffsetPtg = (
+    scrollPtg.minus(itemTopPtg)
+  ).div(
+    itemBottomPtg.minus(itemTopPtg)
+  );
 
   return {
     itemIndex,
@@ -138,12 +146,13 @@ export function getTargetItemByScroll(scrollPtg, total) {
 /**
  * Revert scrollPtg from calculated item offset.
  * @param itemIndex
- * @param itemOffsetPtg
+ * @param itemOffsetPtg:BigNumber
  * @param total
- * @returns {number}
+ * @returns BigNumber
  */
 export function getScrollByTargetItem(itemIndex, itemOffsetPtg, total) {
-  const itemTopPtg = itemIndex / total;
-  const itemBottomPtg = (itemIndex + 1) / total;
-  return itemOffsetPtg * (itemBottomPtg - itemTopPtg) + itemTopPtg;
+  const itemTopPtg = bigNumber(itemIndex).div(total); // itemIndex / total;
+  const itemBottomPtg = bigNumber(itemIndex + 1).div(total); // (itemIndex + 1) / total;
+  // return itemOffsetPtg * (itemBottomPtg - itemTopPtg) + itemTopPtg;
+  return bigNumber(itemOffsetPtg).multipliedBy(itemBottomPtg.minus(itemTopPtg)).plus(itemTopPtg);
 }

@@ -83,6 +83,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
+    "bignumber.js": "^7.2.1",
     "classnames": "2.x",
     "prop-types": "^15.5.8",
     "rc-animate": "^3.0.0-rc.6",
