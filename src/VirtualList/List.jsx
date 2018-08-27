@@ -119,9 +119,9 @@ class VirtualList extends React.Component {
 
     // No height no calculate
     if (height) {
-      const doRestore = this.restoreScroll();
+      const needLock = this.lockScroll();
 
-      if (!doRestore) {
+      if (!needLock) {
         this.calculatePosition();
         this.syncPosition();
       }
@@ -215,9 +215,9 @@ class VirtualList extends React.Component {
     return null;
   };
 
-  restoreScroll = () => {
-    const { itemList, scrollPtg, targetItemIndex, targetItemOffsetPtg } = this.state;
-    const needRestore = itemList.some((item) => {
+  lockScroll = () => {
+    const { itemList, topItemTop, scrollPtg, targetItemIndex, targetItemOffsetPtg } = this.state;
+    const needLock = itemList.some((item) => {
       const { type } = item;
 
       // TODO: Not use this in prod env
@@ -227,57 +227,48 @@ class VirtualList extends React.Component {
       return type !== TYPE_KEEP;
     });
 
-    if (needRestore && this.$container) {
-      const { scrollHeight, clientHeight } = this.$container;
-      const total = this.getItemCount(true);
-      const newScrollPtg = getScrollByTargetItem(targetItemIndex, targetItemOffsetPtg, total);
-      const scrollRange = scrollHeight - clientHeight;
-      
-      const { itemIndex, itemOffsetPtg } = getTargetItemByScroll(newScrollPtg, total);
-      this.$container.scrollTop = Math.round(
-        newScrollPtg.multipliedBy(scrollRange)
-      ); // scrollRange * newScrollPtg;
+    if (needLock && this.$container) {
+      console.log('LOOK!', topItemTop);
+      const scrollHeight = bigNumber(this.$container.scrollHeight);
+      const topCount = this.getTopCount();
+      const total = this.getItemCount(true); // TODO: collpase needed
 
-      console.log(
-        'CCC:',
-        newScrollPtg.multipliedBy(scrollRange).toNumber(),
-        '/ Total:',
-        total,
-      );
+      // Loop current display item list to find new targetItem.
+      let itemTop = bigNumber(topItemTop);
+      for (let i = 0; i <= topCount; i += 1) {
+        const itemIndex = targetItemIndex - topCount + i;
 
-      console.log(
-        'Sync!',
-        this.$container.scrollTop,
-        scrollHeight - clientHeight,
-        '-',
-        newScrollPtg.toNumber(),
-        itemIndex,
-        itemOffsetPtg.toNumber(),
-      );
+        const itemTopPtg = bigNumber(itemIndex).div(total); // itemIndex / total;
+        const itemBottomPtg = bigNumber(itemIndex + 1).div(total); // (itemIndex + 1) / total;
+        const itemHeight = bigNumber(this.getItemHeight(itemIndex));
 
-      const mockScrollPtg = bigNumber(this.$container.scrollTop).div(scrollRange);
-      const {
-        itemIndex: mockItemIndex, itemOffsetPtg: mockItemOffsetPtg,
-      } = getTargetItemByScroll(mockScrollPtg, total);
-      this.setState({
-        scrollPtg: mockScrollPtg,
-        targetItemIndex: mockItemIndex,
-        targetItemOffsetPtg: mockItemOffsetPtg,
-        needSyncScroll: false,
-      });
+        // 通过以下公式可以算出 scrollPtg:
+        // itemTop = scrollPtg * scrollHeight - itemHeight * itemOffsetPtg
+        // itemOffsetPtg = (scrollPtg - itemTopPtg) / (itemBottomPtg - itemTopPtg)
+        // 推导：itemTop - itemHeight * itemTopPtg / (itemBottomPtg - itemTopPtg) = scrollPtg * (scrollHeight - itemHeight / (itemBottomPtg - itemTopPtg))
+        const itemPtgDiff = itemBottomPtg.minus(itemTopPtg);
+        const leftPart = itemTop.minus(
+          itemHeight.multipliedBy(itemTopPtg).div(itemPtgDiff)
+        );
+        const rightPart = scrollHeight.minus(
+          itemHeight.div(itemPtgDiff)
+        );
 
-      return true;
+        const scrollPtg = leftPart.div(rightPart);
+        const itemOffsetPtg = scrollPtg.minus(itemTopPtg).div(itemPtgDiff);
+        console.log(
+          itemIndex,
+          '>',
+          scrollPtg.toNumber(),
+          itemOffsetPtg.toNumber(),
+        );
+
+        // Next element
+        itemTop = itemTop.plus(this.getItemHeight(itemIndex));
+      }
     }
-    console.log(
-      'Last:',
-      this.$container.scrollTop,
-      '-',
-      scrollPtg.toNumber(),
-      targetItemIndex,
-      targetItemOffsetPtg.toNumber(),
-    );
 
-    return false;
+    return needLock;
   };
 
   calculatePosition = () => {
@@ -356,16 +347,16 @@ class VirtualList extends React.Component {
     const targetItemMergedTop = bigNumber(scrollTop).plus(targetItemTop).minus(targetItemOffset); // scrollTop + targetItemTop - targetItemOffset;
 
     // Calculate top items
-    let topItemsTop = targetItemMergedTop;
+    let topItemTop = targetItemMergedTop;
     const topCount = this.getTopCount();
     [...new Array(topCount)].forEach((_, i) => {
       const index = targetItemIndex - i - 1;
-      topItemsTop = topItemsTop.minus(this.getItemHeight(index)); // topItemsTop - this.getItemHeight(index);
+      topItemTop = topItemTop.minus(this.getItemHeight(index)); // topItemTop - this.getItemHeight(index);
     });
 
     this.setState({
       needSyncScroll: false,
-      topItemTop: topItemsTop.toNumber(),
+      topItemTop: topItemTop.toNumber(),
     });
   };
 
@@ -471,14 +462,6 @@ class VirtualList extends React.Component {
       margin: 0,
     };
 
-    console.log(
-      'HEIGHT:',
-      totalItemCount,
-      'Top:',
-      topItemTop,
-      'Item Index',
-      targetItemIndex,
-    );
     // Virtual list render
     if (useVirtualList && height) {
       innerStyle = {
