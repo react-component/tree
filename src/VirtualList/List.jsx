@@ -121,8 +121,10 @@ class VirtualList extends React.Component {
     if (height) {
       const doRestore = this.restoreScroll();
 
-      this.calculatePosition();
-      this.syncPosition();
+      if (!doRestore) {
+        this.calculatePosition();
+        this.syncPosition();
+      }
     }
   };
 
@@ -214,7 +216,6 @@ class VirtualList extends React.Component {
   };
 
   restoreScroll = () => {
-    return;
     const { itemList, scrollPtg, targetItemIndex, targetItemOffsetPtg } = this.state;
     const needRestore = itemList.some((item) => {
       const { type } = item;
@@ -230,28 +231,50 @@ class VirtualList extends React.Component {
       const { scrollHeight, clientHeight } = this.$container;
       const total = this.getItemCount(true);
       const newScrollPtg = getScrollByTargetItem(targetItemIndex, targetItemOffsetPtg, total);
+      const scrollRange = scrollHeight - clientHeight;
       
       const { itemIndex, itemOffsetPtg } = getTargetItemByScroll(newScrollPtg, total);
-      this.$container.scrollTop = (scrollHeight - clientHeight) * newScrollPtg;
+      this.$container.scrollTop = Math.round(
+        newScrollPtg.multipliedBy(scrollRange)
+      ); // scrollRange * newScrollPtg;
+
+      console.log(
+        'CCC:',
+        newScrollPtg.multipliedBy(scrollRange).toNumber(),
+        '/ Total:',
+        total,
+      );
 
       console.log(
         'Sync!',
         this.$container.scrollTop,
-        '/',
-        (scrollHeight - clientHeight),
+        scrollHeight - clientHeight,
         '-',
-        newScrollPtg,
+        newScrollPtg.toNumber(),
         itemIndex,
-        itemOffsetPtg,
+        itemOffsetPtg.toNumber(),
       );
+
+      const mockScrollPtg = bigNumber(this.$container.scrollTop).div(scrollRange);
+      const {
+        itemIndex: mockItemIndex, itemOffsetPtg: mockItemOffsetPtg,
+      } = getTargetItemByScroll(mockScrollPtg, total);
+      this.setState({
+        scrollPtg: mockScrollPtg,
+        targetItemIndex: mockItemIndex,
+        targetItemOffsetPtg: mockItemOffsetPtg,
+        needSyncScroll: false,
+      });
 
       return true;
     }
     console.log(
       'Last:',
-      scrollPtg,
+      this.$container.scrollTop,
+      '-',
+      scrollPtg.toNumber(),
       targetItemIndex,
-      targetItemOffsetPtg,
+      targetItemOffsetPtg.toNumber(),
     );
 
     return false;
@@ -302,12 +325,11 @@ class VirtualList extends React.Component {
       console.warn(
         'Update:',
         scrollTop,
-        '/',
         scrollRange,
         '-',
-        scrollPtg,
-        targetItemIndex,
-        targetItemOffsetPtg,
+        scrollPtg.toNumber(),
+        itemIndex,
+        itemOffsetPtg.toNumber(),
       );
       this.setState({
         scrollPtg,
@@ -449,6 +471,14 @@ class VirtualList extends React.Component {
       margin: 0,
     };
 
+    console.log(
+      'HEIGHT:',
+      totalItemCount,
+      'Top:',
+      topItemTop,
+      'Item Index',
+      targetItemIndex,
+    );
     // Virtual list render
     if (useVirtualList && height) {
       innerStyle = {

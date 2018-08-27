@@ -98,7 +98,10 @@ class Demo extends React.Component {
                   <TreeNode title="sub leaf"/>
                 </TreeNode>
               </TreeNode>
-              <TreeNode key="p22" title="leaf"/>
+              <TreeNode key="p22" title="leaf">
+                <TreeNode title="sub leaf"/>
+                <TreeNode title="sub leaf"/>
+              </TreeNode>
             </TreeNode>
           </TreeNode>
         </Tree>
