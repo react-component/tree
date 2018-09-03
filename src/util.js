@@ -389,11 +389,11 @@ export function conductExpandParent(keyList, keyEntities) {
     const entity = keyEntities[key];
     if (!entity) return;
 
+    expandedKeys[key] = true;
+
     const { parent, node } = entity;
 
     if (isCheckDisabled(node)) return;
-
-    expandedKeys[key] = true;
 
     if (parent) {
       conductUp(parent.key);
