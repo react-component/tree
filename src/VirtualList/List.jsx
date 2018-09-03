@@ -228,44 +228,40 @@ class VirtualList extends React.Component {
     });
 
     if (needLock && this.$container) {
-      console.log('LOOK!', topItemTop);
-      const scrollHeight = bigNumber(this.$container.scrollHeight);
+      const { scrollTop, scrollHeight, clientHeight } = this.$container;
+      const scrollRange = scrollHeight - clientHeight;
       const topCount = this.getTopCount();
+      const bottomCount = this.getBottomCount();
       const total = this.getItemCount(true); // TODO: collpase needed
 
+      // console.log(
+      //   'LOOK!',
+      //   'scrollPtg',
+      //   scrollPtg.toFixed(5),
+      //   'topItemTop',
+      //   topItemTop,
+      //   'itemIndex',
+      //   targetItemIndex,
+      //   'itemOffsetPtg',
+      //   targetItemOffsetPtg.toFixed(5),
+      //   'total',
+      //   total,
+      // );
+
+      let excuted = false;
       // Loop current display item list to find new targetItem.
-      let itemTop = bigNumber(topItemTop);
-      for (let i = 0; i <= topCount; i += 1) {
-        const itemIndex = targetItemIndex - topCount + i;
+      let currentItemTop = bigNumber(topItemTop);
 
-        const itemTopPtg = bigNumber(itemIndex).div(total); // itemIndex / total;
-        const itemBottomPtg = bigNumber(itemIndex + 1).div(total); // (itemIndex + 1) / total;
-        const itemHeight = bigNumber(this.getItemHeight(itemIndex));
-
-        // 通过以下公式可以算出 scrollPtg:
-        // itemTop = scrollPtg * scrollHeight - itemHeight * itemOffsetPtg
-        // itemOffsetPtg = (scrollPtg - itemTopPtg) / (itemBottomPtg - itemTopPtg)
-        // 推导：itemTop - itemHeight * itemTopPtg / (itemBottomPtg - itemTopPtg) = scrollPtg * (scrollHeight - itemHeight / (itemBottomPtg - itemTopPtg))
-        const itemPtgDiff = itemBottomPtg.minus(itemTopPtg);
-        const leftPart = itemTop.minus(
-          itemHeight.multipliedBy(itemTopPtg).div(itemPtgDiff)
-        );
-        const rightPart = scrollHeight.minus(
-          itemHeight.div(itemPtgDiff)
-        );
-
-        const scrollPtg = leftPart.div(rightPart);
-        const itemOffsetPtg = scrollPtg.minus(itemTopPtg).div(itemPtgDiff);
-        console.log(
-          itemIndex,
-          '>',
-          scrollPtg.toNumber(),
-          itemOffsetPtg.toNumber(),
-        );
-
-        // Next element
-        itemTop = itemTop.plus(this.getItemHeight(itemIndex));
+      for (let index = targetItemIndex - topCount; index < targetItemIndex + bottomCount; index += 1) {
+        const itemHeight = this.getItemHeight(index);
+        console.log(index, '=>', itemHeight);
       }
+
+      console.log(
+        '触发信息统计:\n',
+        'Total:', total, `(${topCount}+[${targetItemIndex}]+${bottomCount})`, '\n',
+        'ScrollPtg:', scrollPtg.toNumber(), `(${scrollTop} / ${scrollHeight} - ${clientHeight})`, '\n',
+      );
     }
 
     return needLock;
@@ -313,14 +309,18 @@ class VirtualList extends React.Component {
       targetItemIndex !== itemIndex ||
       targetItemOffsetPtg.toString() !== itemOffsetPtg.toString()
     ) {
-      console.warn(
+      console.error(
         'Update:',
+        'ScrollTop',
         scrollTop,
+        'scrollRange',
         scrollRange,
-        '-',
-        scrollPtg.toNumber(),
+        'scrollPtg',
+        scrollPtg.toFixed(5),
+        'itemIndex',
         itemIndex,
-        itemOffsetPtg.toNumber(),
+        'itemOffsetPtg',
+        itemOffsetPtg.toFixed(5),
       );
       this.setState({
         scrollPtg,
@@ -353,6 +353,16 @@ class VirtualList extends React.Component {
       const index = targetItemIndex - i - 1;
       topItemTop = topItemTop.minus(this.getItemHeight(index)); // topItemTop - this.getItemHeight(index);
     });
+
+    console.log(
+      '[Sync]',
+      'topItemTop',
+      topItemTop.toFixed(2),
+      'topCount',
+      topCount,
+      'targetItemIndex',
+      targetItemIndex,
+    );
 
     this.setState({
       needSyncScroll: false,
@@ -491,6 +501,13 @@ class VirtualList extends React.Component {
         right: 0,
         overflowAnchor: 'none',
       };
+
+      console.log(
+        '【渲染】',
+        'TopItemTop',
+        topItemTop,
+        `Total: ${totalItemCount} (${topCount} + [targetItemIndex] + ${bottomCount})`,
+      );
 
       return (
         <div

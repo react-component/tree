@@ -52,55 +52,60 @@ class Demo extends React.Component {
         </div>
 
         <Tree
-          defaultExpandAll={false}
-          defaultExpandedKeys={['p1', 'p11', 'p21', 'l1']}
+          // defaultExpandAll={false}
+          defaultExpandedKeys={['key_0', 'key_1', 'key_5', 'key_18']}
+          // defaultExpandAll
           motion={motion}
 
           height={hasHeight ? 300 : null}
         >
-          <TreeNode title="parent 1" key="p1">
-            <TreeNode key="1-0" title="1-0">
-              <TreeNode key="1-0-0" title="1-0-0"/>
-              <TreeNode key="1-0-1" title="1-0-1"/>
+          <TreeNode key="key_0" title="treeNode 0">
+            <TreeNode key="key_1" title="treeNode 1">
+              <TreeNode key="1-0-0" title="treeNode 2"/>
+              <TreeNode key="1-0-1" title="treeNode 3"/>
             </TreeNode>
-            <TreeNode key="p10" title="leaf"/>
-            <TreeNode title="parent 1-1" key="p11">
-              <TreeNode title="parent 2-1" key="p21">
-                <TreeNode title="leaf"/>
-                <TreeNode title="leaf">
-                  <TreeNode title="sub leaf 1" />
-                  <TreeNode title="sub leaf 2" />
-                  <TreeNode title="sub leaf 3" />
-                  <TreeNode title="sub leaf 4" />
-                  <TreeNode title="sub leaf 5" />
-                  <TreeNode title="sub leaf 6" />
-                  <TreeNode title="sub leaf 7" />
+            <TreeNode key="p10" title="treeNode 4"/>
+            <TreeNode key="key_5" title="treeNode 5">
+              <TreeNode key="key_6" title="treeNode 6">
+                <TreeNode title="treeNode 7"/>
+                <TreeNode key="key_8" title="treeNode 8">
+                  <TreeNode title="treeNode 9" />
+                  <TreeNode title="treeNode 10" />
+                  <TreeNode title="treeNode 11" />
+                  <TreeNode title="treeNode 12" />
+                  <TreeNode title="treeNode 13" />
+                  <TreeNode title="treeNode 14" />
+                  <TreeNode title="treeNode 15" />
                 </TreeNode>
-                <TreeNode title="leaf"/>
-                <TreeNode title="leaf"/>
-                <TreeNode title="leaf" key="l1">
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
-                  <TreeNode title="sub leaf"/>
+                <TreeNode title="treeNode 16"/>
+                <TreeNode title="treeNode 17"/>
+                <TreeNode key="key_18" title="treeNode 18">
+                  <TreeNode title="treeNode 19"/>
+                  <TreeNode title="treeNode 20"/>
+                  <TreeNode title="treeNode 21"/>
+                  <TreeNode title="treeNode 22"/>
+                  <TreeNode title="treeNode 23"/>
+                  <TreeNode title="treeNode 24"/>
+                  <TreeNode title="treeNode 25"/>
+                  <TreeNode title="treeNode 26"/>
+                  <TreeNode title="treeNode 27"/>
+                  <TreeNode title="treeNode 28"/>
+                  <TreeNode title="treeNode 29"/>
+                  <TreeNode title="treeNode 30"/>
+                  <TreeNode title="treeNode 31"/>
+                  <TreeNode title="treeNode 32"/>
+                  <TreeNode title="treeNode 33"/>
+                  <TreeNode title="treeNode 34"/>
+                  <TreeNode title="treeNode 35"/>
                 </TreeNode>
               </TreeNode>
-              <TreeNode key="p22" title="leaf">
-                <TreeNode title="sub leaf"/>
-                <TreeNode title="sub leaf"/>
+              <TreeNode key="key_36" title="treeNode 36">
+                <TreeNode title="treeNode 37"/>
+                <TreeNode title="treeNode 38"/>
+              </TreeNode>
+              <TreeNode key="key_39" title="treeNode 39">
+                <TreeNode title="treeNode 40"/>
+                <TreeNode title="treeNode 41"/>
               </TreeNode>
             </TreeNode>
           </TreeNode>
