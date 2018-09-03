@@ -3197,13 +3197,13 @@ function conductExpandParent(keyList, keyEntities) {
     var entity = keyEntities[key];
     if (!entity) return;
 
+    expandedKeys[key] = true;
+
     var parent = entity.parent,
         node = entity.node;
 
 
     if (isCheckDisabled(node)) return;
-
-    expandedKeys[key] = true;
 
     if (parent) {
       conductUp(parent.key);
