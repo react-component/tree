@@ -3648,13 +3648,15 @@ var _initialiseProps = function _initialiseProps() {
     var expanded = props.expanded,
         loading = props.loading,
         loaded = props.loaded;
-    var onNodeLoad = _this2.context.rcTree.onNodeLoad;
+    var _context$rcTree3 = _this2.context.rcTree,
+        loadData = _context$rcTree3.loadData,
+        onNodeLoad = _context$rcTree3.onNodeLoad;
 
 
     if (loading) return;
 
     // read from state to avoid loadData at same time
-    if (expanded && !_this2.isLeaf()) {
+    if (loadData && expanded && !_this2.isLeaf()) {
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
       var hasChildren = _this2.getNodeChildren().length !== 0;
@@ -3668,9 +3670,9 @@ var _initialiseProps = function _initialiseProps() {
     var _props4 = _this2.props,
         expanded = _props4.expanded,
         switcherIconFromProps = _props4.switcherIcon;
-    var _context$rcTree3 = _this2.context.rcTree,
-        prefixCls = _context$rcTree3.prefixCls,
-        switcherIconFromCtx = _context$rcTree3.switcherIcon;
+    var _context$rcTree4 = _this2.context.rcTree,
+        prefixCls = _context$rcTree4.prefixCls,
+        switcherIconFromCtx = _context$rcTree4.switcherIcon;
 
 
     var switcherIcon = switcherIconFromProps || switcherIconFromCtx;
@@ -3696,9 +3698,9 @@ var _initialiseProps = function _initialiseProps() {
         checked = _props5.checked,
         halfChecked = _props5.halfChecked,
         disableCheckbox = _props5.disableCheckbox;
-    var _context$rcTree4 = _this2.context.rcTree,
-        prefixCls = _context$rcTree4.prefixCls,
-        checkable = _context$rcTree4.checkable;
+    var _context$rcTree5 = _this2.context.rcTree,
+        prefixCls = _context$rcTree5.prefixCls,
+        checkable = _context$rcTree5.checkable;
 
     var disabled = _this2.isDisabled();
 
@@ -3734,12 +3736,12 @@ var _initialiseProps = function _initialiseProps() {
         selected = _props6.selected,
         icon = _props6.icon,
         loading = _props6.loading;
-    var _context$rcTree5 = _this2.context.rcTree,
-        prefixCls = _context$rcTree5.prefixCls,
-        showIcon = _context$rcTree5.showIcon,
-        treeIcon = _context$rcTree5.icon,
-        draggable = _context$rcTree5.draggable,
-        loadData = _context$rcTree5.loadData;
+    var _context$rcTree6 = _this2.context.rcTree,
+        prefixCls = _context$rcTree6.prefixCls,
+        showIcon = _context$rcTree6.showIcon,
+        treeIcon = _context$rcTree6.icon,
+        draggable = _context$rcTree6.draggable,
+        loadData = _context$rcTree6.loadData;
 
     var disabled = _this2.isDisabled();
 
@@ -3794,11 +3796,11 @@ var _initialiseProps = function _initialiseProps() {
     var _props7 = _this2.props,
         expanded = _props7.expanded,
         pos = _props7.pos;
-    var _context$rcTree6 = _this2.context.rcTree,
-        prefixCls = _context$rcTree6.prefixCls,
-        openTransitionName = _context$rcTree6.openTransitionName,
-        openAnimation = _context$rcTree6.openAnimation,
-        renderTreeNode = _context$rcTree6.renderTreeNode;
+    var _context$rcTree7 = _this2.context.rcTree,
+        prefixCls = _context$rcTree7.prefixCls,
+        openTransitionName = _context$rcTree7.openTransitionName,
+        openAnimation = _context$rcTree7.openAnimation,
+        renderTreeNode = _context$rcTree7.renderTreeNode;
 
 
     var animProps = {};
