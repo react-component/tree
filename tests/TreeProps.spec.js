@@ -514,6 +514,25 @@ describe('Tree Props', () => {
         expect(keys[2]).toBe(1);
       });
     });
+
+    // https://github.com/ant-design/ant-design/issues/12217
+    it('node has false isLeaf & no loadData function', () => {
+      const onExpand = jest.fn();
+      const wrapper = mount(
+        <Tree
+          onExpand={onExpand}
+        >
+          <TreeNode key="0" isLeaf={false} />
+        </Tree>
+      );
+
+      const switcher = wrapper.find('.rc-tree-switcher');
+      switcher.simulate('click');
+
+      expect(onExpand).toBeCalled();
+
+      // If has dead loop. This test will not be end.
+    });
   });
 
   it('icon', () => {
