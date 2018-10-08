@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef, react/no-multi-comp */
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
@@ -532,6 +532,67 @@ describe('Tree Props', () => {
       expect(onExpand).toBeCalled();
 
       // If has dead loop. This test will not be end.
+    });
+
+    // https://github.com/ant-design/ant-design/issues/12464
+    it('by controlled', (done) => {
+      const treeData = [
+        {
+          title: 'demo1',
+          key: 'demo1',
+          value: 'demo1',
+          children: [
+            {
+              title: 'demo2',
+              key: 'demo2',
+              value: 'demo3',
+            },
+          ]
+        }
+      ];
+
+      let count = 0;
+
+      class Test extends React.Component {
+        state = {
+          loadedKeys: [],
+        };
+
+        onLoad = (loadedKeys) => {
+          this.setState({ loadedKeys });
+        };
+
+        loadData = () => {
+          count ++;
+          return Promise.resolve();
+        };
+
+        render() {
+          return (
+            <Tree
+              loadData={this.loadData}
+              loadedKeys={this.state.loadedKeys}
+              onLoad={this.onLoad}
+              treeData={treeData}
+            />
+          );
+        }
+      }
+
+      const wrapper = mount(<Test />);
+
+      // Parent click
+      wrapper.find('.rc-tree-switcher').simulate('click');
+
+      setTimeout(() => {
+        // Child click
+        wrapper.find('.rc-tree-switcher').at(1).simulate('click');
+
+        setTimeout(() => {
+          expect(count).toBe(2);
+          done();
+        }, 500);
+      }, 500);
     });
   });
 

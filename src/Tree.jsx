@@ -519,13 +519,10 @@ class Tree extends React.Component {
         const promise = loadData(treeNode);
         promise.then(() => {
           const newLoadedKeys = arrAdd(this.state.loadedKeys, eventKey);
-          this.setUncontrolledState({
-            loadedKeys: newLoadedKeys,
-          });
-          this.setState({
-            loadingKeys: arrDel(this.state.loadingKeys, eventKey),
-          });
+          const newLoadingKeys = arrDel(this.state.loadingKeys, eventKey);
 
+          // onLoad should trigger before internal setState to avoid `loadData` trigger twice.
+          // https://github.com/ant-design/ant-design/issues/12464
           if (onLoad) {
             const eventObj = {
               event: 'load',
@@ -533,6 +530,13 @@ class Tree extends React.Component {
             };
             onLoad(newLoadedKeys, eventObj);
           }
+
+          this.setUncontrolledState({
+            loadedKeys: newLoadedKeys,
+          });
+          this.setState({
+            loadingKeys: newLoadingKeys,
+          });
 
           resolve();
         });
