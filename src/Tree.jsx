@@ -359,6 +359,8 @@ class Tree extends React.Component {
     if (onDragEnd) {
       onDragEnd({ event, node });
     }
+
+    this.dragNode = null;
   };
   onNodeDrop = (event, node) => {
     const { dragNodesKeys = [], dropPosition } = this.state;
@@ -391,6 +393,8 @@ class Tree extends React.Component {
     if (onDrop) {
       onDrop(dropResult);
     }
+
+    this.dragNode = null;
   };
 
   onNodeClick = (e, treeNode) => {
