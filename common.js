@@ -25517,6 +25517,8 @@ var Tree = function (_React$Component) {
       if (onDragEnd) {
         onDragEnd({ event: event, node: node });
       }
+
+      _this.dragNode = null;
     }, _this.onNodeDrop = function (event, node) {
       var _this$state = _this.state,
           _this$state$dragNodes = _this$state.dragNodesKeys,
@@ -25554,6 +25556,8 @@ var Tree = function (_React$Component) {
       if (onDrop) {
         onDrop(dropResult);
       }
+
+      _this.dragNode = null;
     }, _this.onNodeClick = function (e, treeNode) {
       var onClick = _this.props.onClick;
 
