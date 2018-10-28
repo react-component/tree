@@ -47,6 +47,7 @@ class TreeNode extends React.Component {
     disableCheckbox: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    horizontal: PropTypes.bool,
   };
 
   static contextTypes = nodeContextTypes;
@@ -479,7 +480,7 @@ class TreeNode extends React.Component {
   };
 
   render() {
-    const { loading } = this.props;
+    const { loading, horizontal } = this.props;
     const {
       className, style,
       dragOver, dragOverGapTop, dragOverGapBottom,
@@ -504,6 +505,7 @@ class TreeNode extends React.Component {
           [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
           [`${prefixCls}-treenode-selected`]: selected,
           [`${prefixCls}-treenode-loading`]: loading,
+          [`${prefixCls}-treenode-horizontal`]: expanded && horizontal,
 
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,

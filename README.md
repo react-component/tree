@@ -91,6 +91,7 @@ see examples
 | onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 | onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
+| horizontal | whether treeNode is shown horizontally. | bool | false |
 
 ### TreeNode props
 > note: if you have a lot of TreeNode, like more than 1000,   

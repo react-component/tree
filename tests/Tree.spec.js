@@ -957,4 +957,35 @@ describe('Tree Basic', () => {
       expect(wrapper.render()).toMatchSnapshot();
     });
   });
+
+  describe('horizontal', () => {
+    const treeData = [
+      { key: '0-0', title: 'parent 1', children:
+        [
+          { key: '0-0-0', title: 'parent 1-1', children:
+            [
+              { key: '0-0-0-0', title: 'parent 1-1-0' },
+              { key: '0-0-0-1', title: 'parent 1-1-1' },
+              { key: '0-0-0-2', title: 'parent 1-1-2' },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const wrapper = mount(
+      <Tree
+        checkable
+        selectable={ false }
+        defaultExpandAll
+        treeData={treeData}
+        horizontal
+      />
+    );
+    
+    expect(wrapper.render()).toMatchSnapshot();
+
+    wrapper.find('.rc-tree-switcher').at(1).simulate('click');
+    expect(wrapper.find('.rc-tree-switcher').at(1).hasClass('.rc-tree-treenode-horizontal')).toBe(false);
+  })
 });

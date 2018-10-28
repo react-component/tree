@@ -71,6 +71,7 @@ class Tree extends React.Component {
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    horizontal: PropTypes.bool,
   };
 
   static childContextTypes = treeContextTypes;
@@ -91,6 +92,7 @@ class Tree extends React.Component {
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
     defaultSelectedKeys: [],
+    horizontal: false,
   };
 
   state = {
@@ -651,6 +653,7 @@ class Tree extends React.Component {
       loadedKeys = [], loadingKeys = [],
       dragOverNodeKey, dropPosition,
     } = this.state;
+    const { horizontal } = this.props;
     const pos = getPosition(level, index);
     const key = child.key || pos;
 
@@ -669,6 +672,7 @@ class Tree extends React.Component {
       checked: this.isKeyChecked(key),
       halfChecked: halfCheckedKeys.indexOf(key) !== -1,
       pos,
+      horizontal,
 
       // [Legacy] Drag props
       dragOver: dragOverNodeKey === key && dropPosition === 0,
