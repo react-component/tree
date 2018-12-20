@@ -88,7 +88,7 @@
     "rc-animate": "^3.0.0-rc.5",
     "rc-util": "^4.5.1",
     "react-lifecycles-compat": "^3.0.4",
-    "warning": "^3.0.0"
+    "warning": "^4.0.2"
   },
   "pre-commit": [
     "lint"
