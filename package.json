@@ -74,7 +74,7 @@
     "jest": "^23.0.0",
     "pre-commit": "1.x",
     "rc-dialog": "^6.1.0",
-    "rc-tools": "^8.x",
+    "rc-tools": "^9.x",
     "rc-tooltip": "3.x",
     "rc-trigger": "^2.0.0",
     "react": "^16.4.0",
