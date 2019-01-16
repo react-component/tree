@@ -1927,12 +1927,12 @@ function getTransitionName(transitionName, transitionType) {
 
 
 
-function addEventListenerWrap(target, eventType, cb) {
+function addEventListenerWrap(target, eventType, cb, option) {
   /* eslint camelcase: 2 */
   var callback = __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.unstable_batchedUpdates ? function run(e) {
     __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.unstable_batchedUpdates(cb, e);
   } : cb;
-  return __WEBPACK_IMPORTED_MODULE_0_add_dom_event_listener___default()(target, eventType, callback);
+  return __WEBPACK_IMPORTED_MODULE_0_add_dom_event_listener___default()(target, eventType, callback, option);
 }
 
 /***/ }),
@@ -3220,30 +3220,44 @@ function contains(root, n) {
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = addEventListener;
+exports['default'] = addEventListener;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _EventObject = __webpack_require__(78);
 
 var _EventObject2 = _interopRequireDefault(_EventObject);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function addEventListener(target, eventType, callback) {
+function addEventListener(target, eventType, callback, option) {
   function wrapCallback(e) {
-    var ne = new _EventObject2["default"](e);
+    var ne = new _EventObject2['default'](e);
     callback.call(target, ne);
   }
 
   if (target.addEventListener) {
-    target.addEventListener(eventType, wrapCallback, false);
-    return {
-      remove: function remove() {
-        target.removeEventListener(eventType, wrapCallback, false);
+    var _ret = (function () {
+      var useCapture = false;
+      if (typeof option === 'object') {
+        useCapture = option.capture || false;
+      } else if (typeof option === 'boolean') {
+        useCapture = option;
       }
-    };
+
+      target.addEventListener(eventType, wrapCallback, option || false);
+
+      return {
+        v: {
+          remove: function remove() {
+            target.removeEventListener(eventType, wrapCallback, useCapture);
+          }
+        }
+      };
+    })();
+
+    if (typeof _ret === 'object') return _ret.v;
   } else if (target.attachEvent) {
     target.attachEvent('on' + eventType, wrapCallback);
     return {
@@ -3253,6 +3267,7 @@ function addEventListener(target, eventType, callback) {
     };
   }
 }
+
 module.exports = exports['default'];
 
 /***/ }),
@@ -3261,11 +3276,19 @@ module.exports = exports['default'];
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ * @ignore
+ * event object for dom
+ * @author yiminghe@gmail.com
+ */
 
 
-Object.defineProperty(exports, "__esModule", {
+
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _EventBaseObject = __webpack_require__(79);
 
@@ -3274,14 +3297,6 @@ var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 var _objectAssign = __webpack_require__(12);
 
 var _objectAssign2 = _interopRequireDefault(_objectAssign);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/**
- * @ignore
- * event object for dom
- * @author yiminghe@gmail.com
- */
 
 var TRUE = true;
 var FALSE = false;
@@ -3317,9 +3332,9 @@ var eventNormalizers = [{
   reg: /^(mousewheel|DOMMouseScroll)$/,
   props: [],
   fix: function fix(event, nativeEvent) {
-    var deltaX = void 0;
-    var deltaY = void 0;
-    var delta = void 0;
+    var deltaX = undefined;
+    var deltaY = undefined;
+    var delta = undefined;
     var wheelDelta = nativeEvent.wheelDelta;
     var axis = nativeEvent.axis;
     var wheelDeltaY = nativeEvent.wheelDeltaY;
@@ -3392,9 +3407,9 @@ var eventNormalizers = [{
   reg: /^mouse|contextmenu|click|mspointer|(^DOMMouseScroll$)/i,
   props: ['buttons', 'clientX', 'clientY', 'button', 'offsetX', 'relatedTarget', 'which', 'fromElement', 'toElement', 'offsetY', 'pageX', 'pageY', 'screenX', 'screenY'],
   fix: function fix(event, nativeEvent) {
-    var eventDoc = void 0;
-    var doc = void 0;
-    var body = void 0;
+    var eventDoc = undefined;
+    var doc = undefined;
+    var body = undefined;
     var target = event.target;
     var button = nativeEvent.button;
 
@@ -3443,7 +3458,7 @@ function DomEventObject(nativeEvent) {
 
   var isNative = typeof nativeEvent.stopPropagation === 'function' || typeof nativeEvent.cancelBubble === 'boolean';
 
-  _EventBaseObject2["default"].call(this);
+  _EventBaseObject2['default'].call(this);
 
   this.nativeEvent = nativeEvent;
 
@@ -3461,9 +3476,9 @@ function DomEventObject(nativeEvent) {
   this.isDefaultPrevented = isDefaultPrevented;
 
   var fixFns = [];
-  var fixFn = void 0;
-  var l = void 0;
-  var prop = void 0;
+  var fixFn = undefined;
+  var l = undefined;
+  var prop = undefined;
   var props = commonProps.concat();
 
   eventNormalizers.forEach(function (normalizer) {
@@ -3503,9 +3518,9 @@ function DomEventObject(nativeEvent) {
   this.timeStamp = nativeEvent.timeStamp || Date.now();
 }
 
-var EventBaseObjectProto = _EventBaseObject2["default"].prototype;
+var EventBaseObjectProto = _EventBaseObject2['default'].prototype;
 
-(0, _objectAssign2["default"])(DomEventObject.prototype, EventBaseObjectProto, {
+(0, _objectAssign2['default'])(DomEventObject.prototype, EventBaseObjectProto, {
   constructor: DomEventObject,
 
   preventDefault: function preventDefault() {
@@ -3521,6 +3536,7 @@ var EventBaseObjectProto = _EventBaseObject2["default"].prototype;
 
     EventBaseObjectProto.preventDefault.call(this);
   },
+
   stopPropagation: function stopPropagation() {
     var e = this.nativeEvent;
 
@@ -3536,7 +3552,7 @@ var EventBaseObjectProto = _EventBaseObject2["default"].prototype;
   }
 });
 
-exports["default"] = DomEventObject;
+exports['default'] = DomEventObject;
 module.exports = exports['default'];
 
 /***/ }),
@@ -3545,17 +3561,17 @@ module.exports = exports['default'];
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 /**
  * @ignore
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
 
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 function returnFalse() {
   return false;
 }
@@ -3584,15 +3600,18 @@ EventBaseObject.prototype = {
   preventDefault: function preventDefault() {
     this.isDefaultPrevented = returnTrue;
   },
+
   stopPropagation: function stopPropagation() {
     this.isPropagationStopped = returnTrue;
   },
+
   stopImmediatePropagation: function stopImmediatePropagation() {
     this.isImmediatePropagationStopped = returnTrue;
     // fixed 1.2
     // call stopPropagation implicitly
     this.stopPropagation();
   },
+
   halt: function halt(immediate) {
     if (immediate) {
       this.stopImmediatePropagation();
@@ -3604,7 +3623,7 @@ EventBaseObject.prototype = {
 };
 
 exports["default"] = EventBaseObject;
-module.exports = exports['default'];
+module.exports = exports["default"];
 
 /***/ }),
 

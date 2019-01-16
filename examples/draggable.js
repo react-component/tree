@@ -79,7 +79,7 @@ var Demo = function (_React$Component) {
       var dragKey = info.dragNode.props.eventKey;
       var dropPos = info.node.props.pos.split('-');
       var dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
-      // const dragNodesKeys = info.dragNodesKeys;
+
       var loop = function loop(data, key, callback) {
         data.forEach(function (item, index, arr) {
           if (item.key === key) {
@@ -92,12 +92,32 @@ var Demo = function (_React$Component) {
         });
       };
       var data = [].concat(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default()(_this.state.gData));
+
+      // Find dragObject
       var dragObj = void 0;
       loop(data, dragKey, function (item, index, arr) {
         arr.splice(index, 1);
         dragObj = item;
       });
-      if (info.dropToGap) {
+
+      if (!info.dropToGap) {
+        // Drop on the content
+        loop(data, dropKey, function (item) {
+          item.children = item.children || [];
+          // where to insert 示例添加到尾部，可以是随意位置
+          item.children.push(dragObj);
+        });
+      } else if ((info.node.props.children || []).length > 0 && // Has children
+      info.node.props.expanded && // Is expanded
+      dropPosition === 1 // On the bottom gap
+      ) {
+          loop(data, dropKey, function (item) {
+            item.children = item.children || [];
+            // where to insert 示例添加到尾部，可以是随意位置
+            item.children.unshift(dragObj);
+          });
+        } else {
+        // Drop on the gap
         var ar = void 0;
         var i = void 0;
         loop(data, dropKey, function (item, index, arr) {
@@ -109,13 +129,8 @@ var Demo = function (_React$Component) {
         } else {
           ar.splice(i + 1, 0, dragObj);
         }
-      } else {
-        loop(data, dropKey, function (item) {
-          item.children = item.children || [];
-          // where to insert 示例添加到尾部，可以是随意位置
-          item.children.push(dragObj);
-        });
       }
+
       _this.setState({
         gData: data
       });
