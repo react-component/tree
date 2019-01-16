@@ -311,9 +311,11 @@ class Tree extends React.Component {
       });
       this.delayedDragEnterLogic[pos] = setTimeout(() => {
         const newExpandedKeys = arrAdd(expandedKeys, eventKey);
-        this.setState({
-          expandedKeys: newExpandedKeys,
-        });
+        if (!('expandedKeys' in this.props)) {
+          this.setState({
+            expandedKeys: newExpandedKeys,
+          });
+        }
 
         if (onDragEnter) {
           onDragEnter({ event, node, expandedKeys: newExpandedKeys });
