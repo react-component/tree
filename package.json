@@ -15,7 +15,6 @@
     "assets/*.png",
     "assets/*.gif",
     "dist",
-    "es",
     "lib"
   ],
   "homepage": "http://github.com/react-component/tree",
