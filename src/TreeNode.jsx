@@ -399,7 +399,10 @@ class TreeNode extends React.Component {
     }
 
     // Title
-    const $title = <span className={`${prefixCls}-title`}>{title}</span>;
+    const $title = <span 
+      className={`${prefixCls}-title`}
+      onClick={this.onCheck}
+    >{title}</span>;
 
     return (
       <span
