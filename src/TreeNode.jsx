@@ -508,7 +508,6 @@ class TreeNode extends React.Component {
 
     return (
       <li
-        ref={this.setRef}
         className={classNames(className, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
