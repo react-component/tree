@@ -957,4 +957,20 @@ describe('Tree Basic', () => {
       expect(wrapper.render()).toMatchSnapshot();
     });
   });
+
+  it('get treeNode ref', () => {
+    const wrapper = mount(
+      <Tree defaultExpandAll>
+        <TreeNode key="00" title="00" />
+        <TreeNode key="01" title="01">
+          <TreeNode key="010" title="010" />
+          <TreeNode key="012" title="012" />
+        </TreeNode>
+      </Tree>
+    );
+
+    expect(
+      Object.keys(wrapper.instance().domTreeNodes)
+    ).toHaveLength(4);
+  });
 });

@@ -76,11 +76,22 @@ class TreeNode extends React.Component {
 
   // Isomorphic needn't load data in server side
   componentDidMount() {
+    const { eventKey } = this.props;
+    const { rcTree: { registerTreeNode } } = this.context;
+
     this.syncLoadData(this.props);
+
+    registerTreeNode(eventKey, this);
   }
 
   componentDidUpdate() {
     this.syncLoadData(this.props);
+  }
+
+  componentWillUnmount() {
+    const { eventKey } = this.props;
+    const { rcTree: { registerTreeNode } } = this.context;
+    registerTreeNode(eventKey, null);
   }
 
   onSelectorClick = (e) => {
