@@ -93,19 +93,26 @@ class Tree extends React.Component {
     defaultSelectedKeys: [],
   };
 
-  state = {
-    // TODO: Remove this eslint
-    posEntities: {}, // eslint-disable-line react/no-unused-state
-    keyEntities: {},
+  constructor(props) {
+    super(props);
 
-    selectedKeys: [],
-    checkedKeys: [],
-    halfCheckedKeys: [],
-    loadedKeys: [],
-    loadingKeys: [],
-
-    treeNode: [],
-  };
+    this.state = {
+      // TODO: Remove this eslint
+      posEntities: {}, // eslint-disable-line react/no-unused-state
+      keyEntities: {},
+  
+      selectedKeys: [],
+      checkedKeys: [],
+      halfCheckedKeys: [],
+      loadedKeys: [],
+      loadingKeys: [],
+  
+      treeNode: [],
+    };
+  
+    // Internal usage for `rc-tree-select`, we don't promise it will not change.
+    this.domTreeNodes = {};
+  }
 
   getChildContext() {
     const {
@@ -151,6 +158,8 @@ class Tree extends React.Component {
         onNodeDragLeave: this.onNodeDragLeave,
         onNodeDragEnd: this.onNodeDragEnd,
         onNodeDrop: this.onNodeDrop,
+
+        registerTreeNode: this.registerTreeNode,
       },
     };
   }
@@ -634,6 +643,14 @@ class Tree extends React.Component {
 
     if (needSync) {
       this.setState(newState);
+    }
+  };
+
+  registerTreeNode = (key, node) => {
+    if (node) {
+      this.domTreeNodes[key] = node;
+    } else {
+      delete this.domTreeNodes[key];
     }
   };
 

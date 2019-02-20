@@ -48,6 +48,13 @@ class Demo extends React.Component {
   onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
     this.selKey = info.node.props.eventKey;
+
+    if (this.tree) {
+      console.log(
+        'Selected DOM node:',
+        selectedKeys.map(key => ReactDOM.findDOMNode(this.tree.domTreeNodes[key])),
+      );
+    }
   };
   onCheck = (checkedKeys, info) => {
     console.log('onCheck', checkedKeys, info);
@@ -62,6 +69,9 @@ class Demo extends React.Component {
       return;
     }
     e.stopPropagation();
+  };
+  setTreeRef = (tree) => {
+    this.tree = tree;
   };
   render() {
     const customLabel = (
@@ -80,6 +90,7 @@ class Demo extends React.Component {
       <div style={{ margin: '0 20px' }}>
         <h2>simple</h2>
         <Tree
+          ref={this.setTreeRef}
           className="myCls" showLine checkable defaultExpandAll
           defaultExpandedKeys={this.state.defaultExpandedKeys}
           onExpand={this.onExpand}
