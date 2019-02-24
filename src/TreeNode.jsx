@@ -322,7 +322,7 @@ class TreeNode extends React.Component {
       return (
         <span className={classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-noop`)}>
           {typeof switcherIcon === 'function' ?
-            React.createElement(switcherIcon, { ...this.props, isLeaf: true }) : switcherIcon}
+            switcherIcon({ ...this.props, isLeaf: true }) : switcherIcon}
         </span>
       );
     }
@@ -331,7 +331,7 @@ class TreeNode extends React.Component {
     return (
       <span onClick={this.onExpand} className={switcherCls}>
         {typeof switcherIcon === 'function' ?
-          React.createElement(switcherIcon, { ...this.props, isLeaf: false }) : switcherIcon}
+          switcherIcon({ ...this.props, isLeaf: false }) : switcherIcon}
       </span>
     );
   };
