@@ -402,6 +402,21 @@ describe('Tree Basic', () => {
       expect(renderToJson(wrapper.render())).toMatchSnapshot();
     });
 
+    it('check after data ready', () => {
+      const checkedKeys = ['0-0-0'];
+      const wrapper = mount(<Tree checkable checkedKeys={checkedKeys} />);
+      wrapper.setProps({
+        expandedKeys: ['0-0'],
+        children: (
+          <TreeNode key="0-0" title="Light">
+            <TreeNode key="0-0-0" title="Bamboo" />
+          </TreeNode>
+        ),
+      });
+
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+
     describe('strictly', () => {
       it('checks strictly', () => {
         const wrapper = mount(
