@@ -87,6 +87,69 @@ exports[`Tree Basic check basic render 1`] = `
 </ul>
 `;
 
+exports[`Tree Basic check check after data ready 1`] = `
+<ul
+  class="rc-tree"
+  role="tree"
+  unselectable="on"
+>
+  <li
+    class="rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked"
+    role="treeitem"
+  >
+    <span
+      class="rc-tree-switcher rc-tree-switcher_open"
+    />
+    <span
+      class="rc-tree-checkbox rc-tree-checkbox-checked"
+    />
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+      title="Light"
+    >
+      <span
+        class="rc-tree-iconEle rc-tree-icon__open"
+      />
+      <span
+        class="rc-tree-title"
+      >
+        Light
+      </span>
+    </span>
+    <ul
+      class="rc-tree-child-tree rc-tree-child-tree-open"
+      data-expanded="true"
+      role="group"
+    >
+      <li
+        class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
+        role="treeitem"
+      >
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-checkbox rc-tree-checkbox-checked"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="Bamboo"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            Bamboo
+          </span>
+        </span>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;
+
 exports[`Tree Basic check check update when Tree trigger componentWillReceiveProps 1`] = `
 <ul
   class="rc-tree"

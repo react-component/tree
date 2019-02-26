@@ -227,7 +227,7 @@ class Tree extends React.Component {
         checkedKeyEntity = parseCheckedKeys(props.defaultCheckedKeys) || {};
       } else if (treeNode) {
         // If treeNode changed, we also need check it
-        checkedKeyEntity = {
+        checkedKeyEntity = parseCheckedKeys(props.checkedKeys) || {
           checkedKeys: prevState.checkedKeys,
           halfCheckedKeys: prevState.halfCheckedKeys,
         };
