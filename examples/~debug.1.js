@@ -1,14 +1,14 @@
-webpackJsonp([6],{
+webpackJsonp([7],{
 
-/***/ 223:
+/***/ 221:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(224);
+module.exports = __webpack_require__(222);
 
 
 /***/ }),
 
-/***/ 224:
+/***/ 222:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -35,13 +35,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-/* eslint no-console:0, quotes: 0, comma-dangle: 0 */
+/* eslint-disable */
 
 
 
 
 
 
+
+var checkedKeys = ["0-0"];
 
 var treeData = [{
   title: "0-0",
@@ -53,13 +55,11 @@ var treeData = [{
       title: "0-0-0-0",
       key: "0-0-0-0",
       children: [{ title: "0-0-0-0-1", key: "0-0-0-0-1" }, { title: "0-0-0-0-2", key: "0-0-0-0-2" }]
-    }, {
-      title: "0-0-0-1",
-      key: "0-0-0-1",
-      children: [{ title: "0-0-0-1-1", key: "0-0-0-1-1" }, { title: "0-0-0-1-2", key: "0-0-0-1-2" }]
     }]
   }]
 }];
+
+var expandedKeys = ['0-0', '0-0-0'];
 
 var Demo = function (_React$Component) {
   __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(Demo, _React$Component);
@@ -76,19 +76,7 @@ var Demo = function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      expandedKeys: ["0-0-0", "0-0-1"],
-      autoExpandParent: true,
-      checkedKeys: ["0-0-0"],
-      selectedKeys: []
-    }, _this.onExpand = function (expandedKeys) {
-      _this.setState({
-        expandedKeys: expandedKeys,
-        autoExpandParent: false
-      });
-    }, _this.onCheck = function (checkedKeys, i) {
-      console.log("onCheck", checkedKeys);
-      console.log("i", i);
-      _this.setState({ checkedKeys: checkedKeys });
+      treeData: []
     }, _this.renderTreeNodes = function (data) {
       return data.map(function (item) {
         if (item.children) {
@@ -104,19 +92,23 @@ var Demo = function (_React$Component) {
   }
 
   __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Demo, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({
+        treeData: treeData
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var treeData = this.state.treeData;
+
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_6_rc_tree___default.a,
         {
           checkable: true,
-          onExpand: this.onExpand,
-          expandedKeys: this.state.expandedKeys,
-          autoExpandParent: this.state.autoExpandParent,
-          onCheck: this.onCheck,
-          checkedKeys: this.state.checkedKeys,
-          onSelect: this.onSelect,
-          selectedKeys: this.state.selectedKeys
+          checkedKeys: checkedKeys,
+          expandedKeys: expandedKeys
         },
         this.renderTreeNodes(treeData)
       );
@@ -127,6 +119,7 @@ var Demo = function (_React$Component) {
 }(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
 
 __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
+/* eslint-enable */
 
 /***/ }),
 
@@ -137,5 +130,5 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[223]);
-//# sourceMappingURL=~debug.js.map
+},[221]);
+//# sourceMappingURL=~debug.1.js.map
