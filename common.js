@@ -2981,26 +2981,12 @@ var TreeNode = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var eventKey = this.props.eventKey;
-      var registerTreeNode = this.context.rcTree.registerTreeNode;
-
-
       this.syncLoadData(this.props);
-
-      registerTreeNode(eventKey, this);
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       this.syncLoadData(this.props);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      var eventKey = this.props.eventKey;
-      var registerTreeNode = this.context.rcTree.registerTreeNode;
-
-      registerTreeNode(eventKey, null);
     }
 
     // Disabled item still can be switch
@@ -3364,7 +3350,7 @@ var _initialiseProps = function _initialiseProps() {
       return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
         'span',
         { className: __WEBPACK_IMPORTED_MODULE_9_classnames___default()(prefixCls + '-switcher', prefixCls + '-switcher-noop') },
-        typeof switcherIcon === 'function' ? switcherIcon(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, _this2.props, { isLeaf: true })) : switcherIcon
+        typeof switcherIcon === 'function' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(switcherIcon, __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, _this2.props, { isLeaf: true })) : switcherIcon
       );
     }
 
@@ -3372,7 +3358,7 @@ var _initialiseProps = function _initialiseProps() {
     return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
       'span',
       { onClick: _this2.onExpand, className: switcherCls },
-      typeof switcherIcon === 'function' ? switcherIcon(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, _this2.props, { isLeaf: false })) : switcherIcon
+      typeof switcherIcon === 'function' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(switcherIcon, __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, _this2.props, { isLeaf: false })) : switcherIcon
     );
   };
 
@@ -28746,12 +28732,30 @@ __WEBPACK_IMPORTED_MODULE_0__Tree__["a" /* default */].TreeNode = __WEBPACK_IMPO
 var Tree = function (_React$Component) {
   __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(Tree, _React$Component);
 
-  function Tree(props) {
+  function Tree() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, Tree);
 
-    var _this = __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Tree.__proto__ || Object.getPrototypeOf(Tree)).call(this, props));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.onNodeDragStart = function (event, node) {
+    return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Tree.__proto__ || Object.getPrototypeOf(Tree)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      // TODO: Remove this eslint
+      posEntities: {}, // eslint-disable-line react/no-unused-state
+      keyEntities: {},
+
+      selectedKeys: [],
+      checkedKeys: [],
+      halfCheckedKeys: [],
+      loadedKeys: [],
+      loadingKeys: [],
+
+      treeNode: []
+    }, _this.onNodeDragStart = function (event, node) {
       var expandedKeys = _this.state.expandedKeys;
       var onDragStart = _this.props.onDragStart;
       var _node$props = node.props,
@@ -28769,9 +28773,7 @@ var Tree = function (_React$Component) {
       if (onDragStart) {
         onDragStart({ event: event, node: node });
       }
-    };
-
-    _this.onNodeDragEnter = function (event, node) {
+    }, _this.onNodeDragEnter = function (event, node) {
       var expandedKeys = _this.state.expandedKeys;
       var onDragEnter = _this.props.onDragEnter;
       var _node$props2 = node.props,
@@ -28824,9 +28826,7 @@ var Tree = function (_React$Component) {
           }
         }, 400);
       }, 0);
-    };
-
-    _this.onNodeDragOver = function (event, node) {
+    }, _this.onNodeDragOver = function (event, node) {
       var onDragOver = _this.props.onDragOver;
       var eventKey = node.props.eventKey;
 
@@ -28845,9 +28845,7 @@ var Tree = function (_React$Component) {
       if (onDragOver) {
         onDragOver({ event: event, node: node });
       }
-    };
-
-    _this.onNodeDragLeave = function (event, node) {
+    }, _this.onNodeDragLeave = function (event, node) {
       var onDragLeave = _this.props.onDragLeave;
 
 
@@ -28858,9 +28856,7 @@ var Tree = function (_React$Component) {
       if (onDragLeave) {
         onDragLeave({ event: event, node: node });
       }
-    };
-
-    _this.onNodeDragEnd = function (event, node) {
+    }, _this.onNodeDragEnd = function (event, node) {
       var onDragEnd = _this.props.onDragEnd;
 
       _this.setState({
@@ -28871,9 +28867,7 @@ var Tree = function (_React$Component) {
       }
 
       _this.dragNode = null;
-    };
-
-    _this.onNodeDrop = function (event, node) {
+    }, _this.onNodeDrop = function (event, node) {
       var _this$state = _this.state,
           _this$state$dragNodes = _this$state.dragNodesKeys,
           dragNodesKeys = _this$state$dragNodes === undefined ? [] : _this$state$dragNodes,
@@ -28912,25 +28906,19 @@ var Tree = function (_React$Component) {
       }
 
       _this.dragNode = null;
-    };
-
-    _this.onNodeClick = function (e, treeNode) {
+    }, _this.onNodeClick = function (e, treeNode) {
       var onClick = _this.props.onClick;
 
       if (onClick) {
         onClick(e, treeNode);
       }
-    };
-
-    _this.onNodeDoubleClick = function (e, treeNode) {
+    }, _this.onNodeDoubleClick = function (e, treeNode) {
       var onDoubleClick = _this.props.onDoubleClick;
 
       if (onDoubleClick) {
         onDoubleClick(e, treeNode);
       }
-    };
-
-    _this.onNodeSelect = function (e, treeNode) {
+    }, _this.onNodeSelect = function (e, treeNode) {
       var selectedKeys = _this.state.selectedKeys;
       var keyEntities = _this.state.keyEntities;
       var _this$props = _this.props,
@@ -28973,9 +28961,7 @@ var Tree = function (_React$Component) {
         };
         onSelect(selectedKeys, eventObj);
       }
-    };
-
-    _this.onNodeCheck = function (e, treeNode, checked) {
+    }, _this.onNodeCheck = function (e, treeNode, checked) {
       var _this$state2 = _this.state,
           keyEntities = _this$state2.keyEntities,
           oriCheckedKeys = _this$state2.checkedKeys,
@@ -29044,16 +29030,14 @@ var Tree = function (_React$Component) {
       if (onCheck) {
         onCheck(checkedObj, eventObj);
       }
-    };
-
-    _this.onNodeLoad = function (treeNode) {
+    }, _this.onNodeLoad = function (treeNode) {
       return new Promise(function (resolve) {
         // We need to get the latest state of loading/loaded keys
-        _this.setState(function (_ref) {
-          var _ref$loadedKeys = _ref.loadedKeys,
-              loadedKeys = _ref$loadedKeys === undefined ? [] : _ref$loadedKeys,
-              _ref$loadingKeys = _ref.loadingKeys,
-              loadingKeys = _ref$loadingKeys === undefined ? [] : _ref$loadingKeys;
+        _this.setState(function (_ref2) {
+          var _ref2$loadedKeys = _ref2.loadedKeys,
+              loadedKeys = _ref2$loadedKeys === undefined ? [] : _ref2$loadedKeys,
+              _ref2$loadingKeys = _ref2.loadingKeys,
+              loadingKeys = _ref2$loadingKeys === undefined ? [] : _ref2$loadingKeys;
           var _this$props3 = _this.props,
               loadData = _this$props3.loadData,
               onLoad = _this$props3.onLoad;
@@ -29096,9 +29080,7 @@ var Tree = function (_React$Component) {
           };
         });
       });
-    };
-
-    _this.onNodeExpand = function (e, treeNode) {
+    }, _this.onNodeExpand = function (e, treeNode) {
       var expandedKeys = _this.state.expandedKeys;
       var _this$props4 = _this.props,
           onExpand = _this$props4.onExpand,
@@ -29140,34 +29122,26 @@ var Tree = function (_React$Component) {
       }
 
       return null;
-    };
-
-    _this.onNodeMouseEnter = function (event, node) {
+    }, _this.onNodeMouseEnter = function (event, node) {
       var onMouseEnter = _this.props.onMouseEnter;
 
       if (onMouseEnter) {
         onMouseEnter({ event: event, node: node });
       }
-    };
-
-    _this.onNodeMouseLeave = function (event, node) {
+    }, _this.onNodeMouseLeave = function (event, node) {
       var onMouseLeave = _this.props.onMouseLeave;
 
       if (onMouseLeave) {
         onMouseLeave({ event: event, node: node });
       }
-    };
-
-    _this.onNodeContextMenu = function (event, node) {
+    }, _this.onNodeContextMenu = function (event, node) {
       var onRightClick = _this.props.onRightClick;
 
       if (onRightClick) {
         event.preventDefault();
         onRightClick({ event: event, node: node });
       }
-    };
-
-    _this.setUncontrolledState = function (state) {
+    }, _this.setUncontrolledState = function (state) {
       var needSync = false;
       var newState = {};
 
@@ -29181,24 +29155,12 @@ var Tree = function (_React$Component) {
       if (needSync) {
         _this.setState(newState);
       }
-    };
-
-    _this.registerTreeNode = function (key, node) {
-      if (node) {
-        _this.domTreeNodes[key] = node;
-      } else {
-        delete _this.domTreeNodes[key];
-      }
-    };
-
-    _this.isKeyChecked = function (key) {
+    }, _this.isKeyChecked = function (key) {
       var _this$state$checkedKe = _this.state.checkedKeys,
           checkedKeys = _this$state$checkedKe === undefined ? [] : _this$state$checkedKe;
 
       return checkedKeys.indexOf(key) !== -1;
-    };
-
-    _this.renderTreeNode = function (child, index) {
+    }, _this.renderTreeNode = function (child, index) {
       var level = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
       var _this$state3 = _this.state,
           keyEntities = _this$state3.keyEntities,
@@ -29239,25 +29201,7 @@ var Tree = function (_React$Component) {
         dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
         dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1
       });
-    };
-
-    _this.state = {
-      // TODO: Remove this eslint
-      posEntities: {}, // eslint-disable-line react/no-unused-state
-      keyEntities: {},
-
-      selectedKeys: [],
-      checkedKeys: [],
-      halfCheckedKeys: [],
-      loadedKeys: [],
-      loadingKeys: [],
-
-      treeNode: []
-    };
-
-    // Internal usage for `rc-tree-select`, we don't promise it will not change.
-    _this.domTreeNodes = {};
-    return _this;
+    }, _temp), __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
   }
 
   __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(Tree, [{
@@ -29314,9 +29258,7 @@ var Tree = function (_React$Component) {
           onNodeDragOver: this.onNodeDragOver,
           onNodeDragLeave: this.onNodeDragLeave,
           onNodeDragEnd: this.onNodeDragEnd,
-          onNodeDrop: this.onNodeDrop,
-
-          registerTreeNode: this.registerTreeNode
+          onNodeDrop: this.onNodeDrop
         }
       };
     }

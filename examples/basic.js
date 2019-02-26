@@ -69,12 +69,6 @@ var Demo = function (_React$Component) {
     _this.onSelect = function (selectedKeys, info) {
       console.log('selected', selectedKeys, info);
       _this.selKey = info.node.props.eventKey;
-
-      if (_this.tree) {
-        console.log('Selected DOM node:', selectedKeys.map(function (key) {
-          return __WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.findDOMNode(_this.tree.domTreeNodes[key]);
-        }));
-      }
     };
 
     _this.onCheck = function (checkedKeys, info) {
@@ -92,10 +86,6 @@ var Demo = function (_React$Component) {
         return;
       }
       e.stopPropagation();
-    };
-
-    _this.setTreeRef = function (tree) {
-      _this.tree = tree;
     };
 
     var keys = props.keys;
@@ -151,7 +141,6 @@ var Demo = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_7_rc_tree___default.a,
           {
-            ref: this.setTreeRef,
             className: 'myCls', showLine: true, checkable: true, defaultExpandAll: true,
             defaultExpandedKeys: this.state.defaultExpandedKeys,
             onExpand: this.onExpand,
