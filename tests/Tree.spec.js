@@ -847,6 +847,36 @@ describe('Tree Basic', () => {
       normalTree.find('.dropTarget').at(0).simulate('drop');
     });
 
+    describe('canDrop', () => {
+      const canDrop = () => false;
+      it('not trigger onDragEnter', (done) => {
+        const onDragEnter = jest.fn();
+        const wrapper = mount(createTree({ onDragEnter, canDrop }));
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+        wrapper.find('.dropTarget').at(0).simulate('dragEnter');
+        expect(onDragEnter).not.toBeCalled();
+        setTimeout(() => {
+          expect(onDragEnter).not.toBeCalled();
+          done();
+        }, 500);
+      });
+
+      it('not trigger onDragOver', () => {
+        const onDragOver = jest.fn();
+        const wrapper = mount(createTree({ onDragOver, canDrop }));
+        wrapper.find('.dropTarget').at(0).simulate('dragOver');
+        expect(onDragOver).not.toBeCalled();
+      });
+
+      it('not trigger onDrop', () => {
+        const onDrop = jest.fn();
+        const wrapper = mount(createTree({ onDrop, canDrop }));
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+        wrapper.find('.dropTarget').at(0).simulate('drop');
+        expect(onDrop).not.toBeCalled();
+      });
+    });
+
     describe('full steps', () => {
       function dropTarget(targetSelector) {
         return new Promise((resolve) => {

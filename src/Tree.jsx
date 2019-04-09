@@ -337,22 +337,24 @@ class Tree extends React.Component {
     }, 0);
   };
   onNodeDragOver = (event, node) => {
+    const { dropPosition: prevDropPosition, dragOverNodeKey } = this.state;
     const { onDragOver, canDrop } = this.props;
     const { eventKey } = node.props;
 
-    // Update drag position
-    if (this.dragNode && eventKey === this.state.dragOverNodeKey) {
-      const dropPosition = calcDropPosition(event, node);
+    const dropPosition = calcDropPosition(event, node);
 
-      if (dropPosition === this.state.dropPosition) return;
-      if (canDrop && canDrop(node, { source: this.dragNode, dropPosition }) === false) {
-        this.onCleanDragOver();
-        return;
-      }
+    // Update drag position
+    if (this.dragNode && eventKey === dragOverNodeKey) {
+      if (dropPosition === prevDropPosition) return;
 
       this.setState({
         dropPosition,
       });
+    }
+
+    if (canDrop && canDrop(node, { source: this.dragNode, dropPosition }) === false) {
+      this.onCleanDragOver();
+      return;
     }
 
     if (onDragOver) {
