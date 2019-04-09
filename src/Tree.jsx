@@ -67,6 +67,7 @@ class Tree extends React.Component {
     onDragLeave: PropTypes.func,
     onDragEnd: PropTypes.func,
     onDrop: PropTypes.func,
+    canDrop: PropTypes.func,
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -280,20 +281,23 @@ class Tree extends React.Component {
    */
   onNodeDragEnter = (event, node) => {
     const { expandedKeys } = this.state;
-    const { onDragEnter } = this.props;
+    const { onDragEnter, canDrop } = this.props;
     const { pos, eventKey } = node.props;
 
     if (!this.dragNode) return;
 
     const dropPosition = calcDropPosition(event, node);
+    if (canDrop && canDrop(node, { source: this.dragNode, dropPosition }) === false) {
+      this.onCleanDragOver();
+      return;
+    }
 
     // Skip if drag node is self
     if (
       this.dragNode.props.eventKey === eventKey &&
       dropPosition === 0
     ) {
-      this.setState({
-        dragOverNodeKey: '',
+      this.onCleanDragOver({
         dropPosition: null,
       });
       return;
@@ -333,7 +337,7 @@ class Tree extends React.Component {
     }, 0);
   };
   onNodeDragOver = (event, node) => {
-    const { onDragOver } = this.props;
+    const { onDragOver, canDrop } = this.props;
     const { eventKey } = node.props;
 
     // Update drag position
@@ -341,6 +345,10 @@ class Tree extends React.Component {
       const dropPosition = calcDropPosition(event, node);
 
       if (dropPosition === this.state.dropPosition) return;
+      if (canDrop && canDrop(node, { source: this.dragNode, dropPosition }) === false) {
+        this.onCleanDragOver();
+        return;
+      }
 
       this.setState({
         dropPosition,
@@ -354,9 +362,7 @@ class Tree extends React.Component {
   onNodeDragLeave = (event, node) => {
     const { onDragLeave } = this.props;
 
-    this.setState({
-      dragOverNodeKey: '',
-    });
+    this.onCleanDragOver();
 
     if (onDragLeave) {
       onDragLeave({ event, node });
@@ -364,26 +370,37 @@ class Tree extends React.Component {
   };
   onNodeDragEnd = (event, node) => {
     const { onDragEnd } = this.props;
-    this.setState({
-      dragOverNodeKey: '',
-    });
+    this.onCleanDragOver();
+
     if (onDragEnd) {
       onDragEnd({ event, node });
     }
 
     this.dragNode = null;
   };
-  onNodeDrop = (event, node) => {
-    const { dragNodesKeys = [], dropPosition } = this.state;
-    const { onDrop } = this.props;
-    const { eventKey, pos } = node.props;
-
+  
+  onCleanDragOver = (otherState) => {
     this.setState({
       dragOverNodeKey: '',
+      ...otherState,
     });
+  };
+
+  onNodeDrop = (event, node) => {
+    const { dragNodesKeys = [], dropPosition } = this.state;
+    const { onDrop, canDrop } = this.props;
+    const { eventKey, pos } = node.props;
+    const dragNode = this.dragNode;
+
+    this.onCleanDragOver();
+    this.dragNode = null;
 
     if (dragNodesKeys.indexOf(eventKey) !== -1) {
       warning(false, 'Can not drop to dragNode(include it\'s children node)');
+      return;
+    }
+
+    if (canDrop && canDrop(node, { source: this.dragNode, dropPosition }) === false) {
       return;
     }
 
@@ -392,7 +409,7 @@ class Tree extends React.Component {
     const dropResult = {
       event,
       node,
-      dragNode: this.dragNode,
+      dragNode,
       dragNodesKeys: dragNodesKeys.slice(),
       dropPosition: dropPosition + Number(posArr[posArr.length - 1]),
     };
@@ -404,8 +421,6 @@ class Tree extends React.Component {
     if (onDrop) {
       onDrop(dropResult);
     }
-
-    this.dragNode = null;
   };
 
   onNodeClick = (e, treeNode) => {

@@ -91,6 +91,16 @@ class Demo extends React.Component {
       autoExpandParent: false,
     });
   }
+
+  canDrop = (target, { dropPosition }) => {
+    const { eventKey } = target.props;
+    if (eventKey === '0-2-key') {
+      console.log('=>', dropPosition);
+      return false;
+    }
+    return true;
+  };
+
   render() {
     const loop = data => {
       return data.map((item) => {
@@ -102,7 +112,7 @@ class Demo extends React.Component {
     };
     return (<div className="draggable-demo">
       <h2>draggable</h2>
-      <p>drag a node into another node</p>
+      <p>drag a node into another node. (prevent drop on 0-2)</p>
       <div className="draggable-container">
         <Tree
           expandedKeys={this.state.expandedKeys}
@@ -110,6 +120,7 @@ class Demo extends React.Component {
           draggable
           onDragStart={this.onDragStart}
           onDragEnter={this.onDragEnter}
+          canDrop={this.canDrop}
           onDrop={this.onDrop}
         >
           {loop(this.state.gData)}
