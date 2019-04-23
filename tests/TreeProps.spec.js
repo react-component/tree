@@ -834,4 +834,10 @@ describe('Tree Props', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  it('should style work', () => {
+    const style = { background: 'red' };
+    const wrapper = mount(<Tree style={style} />);
+    expect(wrapper.props().style).toEqual(style);
+  });
 });
