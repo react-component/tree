@@ -1,14 +1,14 @@
 webpackJsonp([10],{
 
-/***/ 196:
+/***/ 191:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(197);
+module.exports = __webpack_require__(192);
 
 
 /***/ }),
 
-/***/ 197:
+/***/ 192:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31,7 +31,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rc_tree__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_tree_assets_index_less__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_tree_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rc_tree_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__basic_less__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__basic_less__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__basic_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__basic_less__);
 
 
@@ -69,6 +69,12 @@ var Demo = function (_React$Component) {
     _this.onSelect = function (selectedKeys, info) {
       console.log('selected', selectedKeys, info);
       _this.selKey = info.node.props.eventKey;
+
+      if (_this.tree) {
+        console.log('Selected DOM node:', selectedKeys.map(function (key) {
+          return __WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.findDOMNode(_this.tree.domTreeNodes[key]);
+        }));
+      }
     };
 
     _this.onCheck = function (checkedKeys, info) {
@@ -86,6 +92,10 @@ var Demo = function (_React$Component) {
         return;
       }
       e.stopPropagation();
+    };
+
+    _this.setTreeRef = function (tree) {
+      _this.tree = tree;
     };
 
     var keys = props.keys;
@@ -141,6 +151,7 @@ var Demo = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_7_rc_tree___default.a,
           {
+            ref: this.setTreeRef,
             className: 'myCls', showLine: true, checkable: true, defaultExpandAll: true,
             defaultExpandedKeys: this.state.defaultExpandedKeys,
             onExpand: this.onExpand,
@@ -208,12 +219,12 @@ __WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
-/***/ 42:
+/***/ 45:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[196]);
+},[191]);
 //# sourceMappingURL=basic.js.map
