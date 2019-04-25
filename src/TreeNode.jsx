@@ -442,7 +442,6 @@ class TreeNode extends React.Component {
     const { expanded, pos } = this.props;
     const { rcTree: {
       prefixCls,
-      // openTransitionName, openAnimation,
       motion,
       renderTreeNode,
     } } = this.context;

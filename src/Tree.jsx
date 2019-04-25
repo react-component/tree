@@ -69,8 +69,6 @@ class Tree extends React.Component {
     onDragEnd: PropTypes.func,
     onDrop: PropTypes.func,
     filterTreeNode: PropTypes.func,
-    openTransitionName: PropTypes.string,
-    openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     motion: PropTypes.object,
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
@@ -120,7 +118,7 @@ class Tree extends React.Component {
     const {
       prefixCls, selectable, showIcon, icon, draggable, checkable, checkStrictly, disabled,
       loadData, filterTreeNode,
-      openTransitionName, openAnimation, motion,
+      motion,
       switcherIcon,
     } = this.props;
 
@@ -137,8 +135,6 @@ class Tree extends React.Component {
         checkable,
         checkStrictly,
         disabled,
-        openTransitionName,
-        openAnimation,
         motion,
 
         loadData,
