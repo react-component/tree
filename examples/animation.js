@@ -3,47 +3,33 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
-import cssAnimation from 'css-animation';
 
 const STYLE = `
-.collapse {
-  overflow: hidden;
+.rc-tree-child-tree {
   display: block;
 }
 
-.collapse-active {
-  transition: height 0.3s ease-out;
+.node-motion {
+  transition: all .3s;
+  overflow-y: hidden;
+}
+
+.node-motion-enter,
+.node-motion-leave-active {
+  height: 0;
 }
 `;
 
-function animate(node, show, done) {
-  let height = node.offsetHeight;
-  return cssAnimation(node, 'collapse', {
-    start() {
-      if (!show) {
-        node.style.height = `${node.offsetHeight}px`;
-      } else {
-        height = node.offsetHeight;
-        node.style.height = 0;
-      }
-    },
-    active() {
-      node.style.height = `${show ? height : 0}px`;
-    },
-    end() {
-      node.style.height = '';
-      done();
-    },
-  });
-}
+const onAppearActive = (node) => {
+  return { height: node.scrollHeight };
+};
 
-const animation = {
-  enter(node, done) {
-    return animate(node, true, done);
-  },
-  leave(node, done) {
-    return animate(node, false, done);
-  },
+const motion = {
+  motionName: 'node-motion',
+  motionAppear: false,
+  onAppearActive,
+  onEnterActive: onAppearActive,
+  onLeaveStart: ( node ) => ({ height: node.offsetHeight }),
 };
 
 const demo = (
@@ -53,7 +39,7 @@ const demo = (
     <Tree
       defaultExpandAll={false}
       defaultExpandedKeys={['p1']}
-      openAnimation={animation}
+      motion={motion}
     >
       <TreeNode title="parent 1" key="p1">
         <TreeNode key="p10" title="leaf"/>
