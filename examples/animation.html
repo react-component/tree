@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>animation.js - example - rc-tree@1.15.3</title>
+  <title>animation.js - example - rc-tree@2.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-tree@1.15.3</h1>
+      <h1>rc-tree@2.0.0</h1>
 
       <p>tree ui component for react</p>
     </div>
@@ -274,47 +274,32 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Tree, { TreeNode } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-tree'</span>;
-<span class="hljs-keyword">import</span> cssAnimation <span class="hljs-keyword">from</span> <span class="hljs-string">'css-animation'</span>;
 
 <span class="hljs-keyword">const</span> STYLE = <span class="hljs-string">`
-.collapse {
-  overflow: hidden;
+.rc-tree-child-tree {
   display: block;
 }
 
-.collapse-active {
-  transition: height 0.3s ease-out;
+.node-motion {
+  transition: all .3s;
+  overflow-y: hidden;
+}
+
+.node-motion-enter,
+.node-motion-leave-active {
+  height: 0;
 }
 `</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">animate</span>(<span class="hljs-params">node, show, done</span>) </span>{
-  <span class="hljs-keyword">let</span> height = node.offsetHeight;
-  <span class="hljs-keyword">return</span> cssAnimation(node, <span class="hljs-string">'collapse'</span>, {
-    start() {
-      <span class="hljs-keyword">if</span> (!show) {
-        node.style.height = <span class="hljs-string">`<span class="hljs-subst">${node.offsetHeight}</span>px`</span>;
-      } <span class="hljs-keyword">else</span> {
-        height = node.offsetHeight;
-        node.style.height = <span class="hljs-number">0</span>;
-      }
-    },
-    active() {
-      node.style.height = <span class="hljs-string">`<span class="hljs-subst">${show ? height : 0}</span>px`</span>;
-    },
-    end() {
-      node.style.height = <span class="hljs-string">''</span>;
-      done();
-    },
-  });
-}
+<span class="hljs-keyword">const</span> onEnterActive = (node) =&gt; {
+  <span class="hljs-keyword">return</span> { height: node.scrollHeight };
+};
 
-<span class="hljs-keyword">const</span> animation = {
-  enter(node, done) {
-    <span class="hljs-keyword">return</span> animate(node, <span class="hljs-literal">true</span>, done);
-  },
-  leave(node, done) {
-    <span class="hljs-keyword">return</span> animate(node, <span class="hljs-literal">false</span>, done);
-  },
+<span class="hljs-keyword">const</span> motion = {
+  motionName: <span class="hljs-string">'node-motion'</span>,
+  motionAppear: <span class="hljs-literal">false</span>,
+  onEnterActive,
+  onLeaveStart: ( node ) =&gt; ({ height: node.offsetHeight }),
 };
 
 <span class="hljs-keyword">const</span> demo = (
@@ -324,7 +309,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     &lt;<span class="hljs-tag">Tree</span>
       <span class="hljs-tag">defaultExpandAll</span>=<span class="hljs-rules">{false}</span>
       <span class="hljs-tag">defaultExpandedKeys</span>=<span class="hljs-rules">{['p1']}</span>
-      <span class="hljs-tag">openAnimation</span>=<span class="hljs-rules">{animation}</span>
+      <span class="hljs-tag">motion</span>=<span class="hljs-rules">{motion}</span>
     &gt;
       &lt;<span class="hljs-tag">TreeNode</span> <span class="hljs-tag">title</span>="<span class="hljs-tag">parent</span> 1" <span class="hljs-tag">key</span>="<span class="hljs-tag">p1</span>"&gt;
         &lt;<span class="hljs-tag">TreeNode</span> <span class="hljs-tag">key</span>="<span class="hljs-tag">p10</span>" <span class="hljs-tag">title</span>="<span class="hljs-tag">leaf</span>"/&gt;
