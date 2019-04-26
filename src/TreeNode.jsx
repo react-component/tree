@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Animate from 'rc-animate';
+import CSSMotion from 'rc-animate/lib/CSSMotion';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
@@ -442,16 +442,9 @@ class TreeNode extends React.Component {
     const { expanded, pos } = this.props;
     const { rcTree: {
       prefixCls,
-      openTransitionName, openAnimation,
+      motion,
       renderTreeNode,
     } } = this.context;
-
-    const animProps = {};
-    if (openTransitionName) {
-      animProps.transitionName = openTransitionName;
-    } else if (typeof openAnimation === 'object') {
-      animProps.animation = { ...openAnimation };
-    }
 
     // Children TreeNode
     const nodeList = this.getNodeChildren();
@@ -459,33 +452,27 @@ class TreeNode extends React.Component {
     if (nodeList.length === 0) {
       return null;
     }
-
-    let $children;
-    if (expanded) {
-      $children = (
-        <ul
-          className={classNames(
-            `${prefixCls}-child-tree`,
-            expanded && `${prefixCls}-child-tree-open`,
-          )}
-          data-expanded={expanded}
-          role="group"
-        >
-          {mapChildren(nodeList, (node, index) => (
-            renderTreeNode(node, index, pos)
-          ))}
-        </ul>
-      );
-    }
-
     return (
-      <Animate
-        {...animProps}
-        showProp="data-expanded"
-        component=""
-      >
-        {$children}
-      </Animate>
+      <CSSMotion visible={expanded} {...motion}>
+        {({ style, className }) => {
+          return (
+            <ul
+              className={classNames(
+                className,
+                `${prefixCls}-child-tree`,
+                expanded && `${prefixCls}-child-tree-open`,
+              )}
+              style={style}
+              data-expanded={expanded}
+              role="group"
+            >
+              {mapChildren(nodeList, (node, index) => (
+                renderTreeNode(node, index, pos)
+              ))}
+            </ul>
+          );
+        }}
+      </CSSMotion>
     );
   };
 

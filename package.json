@@ -47,7 +47,8 @@
     "lint": "rc-tools run lint",
     "test": "jest",
     "coverage": "jest --coverage",
-    "test:15": "npm i --no-save react@15 react-dom@15 react-test-renderer@15 enzyme-adapter-react-15 && cross-env REACT=15 jest -u"
+    "test:15": "npm i --no-save react@15 react-dom@15 react-test-renderer@15 enzyme-adapter-react-15 && cross-env REACT=15 jest -u",
+    "now-build": "npm run build"
   },
   "jest": {
     "setupFiles": [
@@ -85,7 +86,7 @@
     "babel-runtime": "^6.23.0",
     "classnames": "2.x",
     "prop-types": "^15.5.8",
-    "rc-animate": "^3.0.0-rc.5",
+    "rc-animate": "^2.6.0",
     "rc-util": "^4.5.1",
     "react-lifecycles-compat": "^3.0.4",
     "warning": "^3.0.0"

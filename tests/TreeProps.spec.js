@@ -2,7 +2,6 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
-import Animate from 'rc-animate';
 import PropTypes from 'prop-types';
 import Tree, { TreeNode } from '..';
 import { nodeMatcher } from './util';
@@ -748,34 +747,21 @@ describe('Tree Props', () => {
     });
   });
 
-  it('openTransitionName', () => {
-    const wrapper = mount(
-      <Tree openTransitionName="test-trans">
-        <TreeNode key="0-0">
-          <TreeNode key="0-0-0" />
-        </TreeNode>
-      </Tree>
-    );
-
-    const { transitionName } = wrapper.find(Animate).props();
-    expect(transitionName).toBe('test-trans');
-  });
-
-  it('openAnimation', () => {
-    const openAnimation = {
-      enter: 'test-enter',
-      leave: 'test-leave',
+  it('motion', () => {
+    const motion = {
+      motionName: 'bamboo',
     };
     const wrapper = mount(
-      <Tree openAnimation={openAnimation}>
+      <Tree motion={motion}>
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
         </TreeNode>
       </Tree>
     );
 
-    const { animation } = wrapper.find(Animate).props();
-    expect(animation).toEqual(openAnimation);
+    expect(
+      wrapper.find('CSSMotion').props()
+    ).toMatchObject(motion);
   });
 
   describe('data and aria props', () => {
