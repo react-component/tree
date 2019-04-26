@@ -20,15 +20,14 @@ const STYLE = `
 }
 `;
 
-const onAppearActive = (node) => {
+const onEnterActive = (node) => {
   return { height: node.scrollHeight };
 };
 
 const motion = {
   motionName: 'node-motion',
   motionAppear: false,
-  onAppearActive,
-  onEnterActive: onAppearActive,
+  onEnterActive,
   onLeaveStart: ( node ) => ({ height: node.offsetHeight }),
 };
 

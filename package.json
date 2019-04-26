@@ -47,7 +47,8 @@
     "lint": "rc-tools run lint",
     "test": "jest",
     "coverage": "jest --coverage",
-    "test:15": "npm i --no-save react@15 react-dom@15 react-test-renderer@15 enzyme-adapter-react-15 && cross-env REACT=15 jest -u"
+    "test:15": "npm i --no-save react@15 react-dom@15 react-test-renderer@15 enzyme-adapter-react-15 && cross-env REACT=15 jest -u",
+    "now-build": "npm run build"
   },
   "jest": {
     "setupFiles": [
