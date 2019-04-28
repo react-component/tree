@@ -2740,6 +2740,7 @@ TreeNode.propTypes = {
 
   // By user
   isLeaf: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
+  checkable: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
   selectable: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
   disabled: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
   disableCheckbox: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
@@ -2789,12 +2790,10 @@ var _initialiseProps = function _initialiseProps() {
     var _props2 = _this2.props,
         disableCheckbox = _props2.disableCheckbox,
         checked = _props2.checked;
-    var _context$rcTree2 = _this2.context.rcTree,
-        checkable = _context$rcTree2.checkable,
-        onNodeCheck = _context$rcTree2.onNodeCheck;
+    var onNodeCheck = _this2.context.rcTree.onNodeCheck;
 
 
-    if (!checkable || disableCheckbox) return;
+    if (!_this2.isCheckable() || disableCheckbox) return;
 
     e.preventDefault();
     var targetChecked = !checked;
@@ -2952,13 +2951,23 @@ var _initialiseProps = function _initialiseProps() {
     return !!(treeDisabled || disabled);
   };
 
+  this.isCheckable = function () {
+    var checkable = _this2.props.checkable;
+    var treeCheckable = _this2.context.rcTree.checkable;
+
+    // Return false if tree or treeNode is not checkable
+
+    if (!treeCheckable || checkable === false) return false;
+    return treeCheckable;
+  };
+
   this.syncLoadData = function (props) {
     var expanded = props.expanded,
         loading = props.loading,
         loaded = props.loaded;
-    var _context$rcTree3 = _this2.context.rcTree,
-        loadData = _context$rcTree3.loadData,
-        onNodeLoad = _context$rcTree3.onNodeLoad;
+    var _context$rcTree2 = _this2.context.rcTree,
+        loadData = _context$rcTree2.loadData,
+        onNodeLoad = _context$rcTree2.onNodeLoad;
 
 
     if (loading) return;
@@ -2978,9 +2987,9 @@ var _initialiseProps = function _initialiseProps() {
     var _props4 = _this2.props,
         expanded = _props4.expanded,
         switcherIconFromProps = _props4.switcherIcon;
-    var _context$rcTree4 = _this2.context.rcTree,
-        prefixCls = _context$rcTree4.prefixCls,
-        switcherIconFromCtx = _context$rcTree4.switcherIcon;
+    var _context$rcTree3 = _this2.context.rcTree,
+        prefixCls = _context$rcTree3.prefixCls,
+        switcherIconFromCtx = _context$rcTree3.switcherIcon;
 
 
     var switcherIcon = switcherIconFromProps || switcherIconFromCtx;
@@ -3006,11 +3015,10 @@ var _initialiseProps = function _initialiseProps() {
         checked = _props5.checked,
         halfChecked = _props5.halfChecked,
         disableCheckbox = _props5.disableCheckbox;
-    var _context$rcTree5 = _this2.context.rcTree,
-        prefixCls = _context$rcTree5.prefixCls,
-        checkable = _context$rcTree5.checkable;
+    var prefixCls = _this2.context.rcTree.prefixCls;
 
     var disabled = _this2.isDisabled();
+    var checkable = _this2.isCheckable();
 
     if (!checkable) return null;
 
@@ -3044,12 +3052,12 @@ var _initialiseProps = function _initialiseProps() {
         selected = _props6.selected,
         icon = _props6.icon,
         loading = _props6.loading;
-    var _context$rcTree6 = _this2.context.rcTree,
-        prefixCls = _context$rcTree6.prefixCls,
-        showIcon = _context$rcTree6.showIcon,
-        treeIcon = _context$rcTree6.icon,
-        draggable = _context$rcTree6.draggable,
-        loadData = _context$rcTree6.loadData;
+    var _context$rcTree4 = _this2.context.rcTree,
+        prefixCls = _context$rcTree4.prefixCls,
+        showIcon = _context$rcTree4.showIcon,
+        treeIcon = _context$rcTree4.icon,
+        draggable = _context$rcTree4.draggable,
+        loadData = _context$rcTree4.loadData;
 
     var disabled = _this2.isDisabled();
 
@@ -3104,10 +3112,10 @@ var _initialiseProps = function _initialiseProps() {
     var _props7 = _this2.props,
         expanded = _props7.expanded,
         pos = _props7.pos;
-    var _context$rcTree7 = _this2.context.rcTree,
-        prefixCls = _context$rcTree7.prefixCls,
-        motion = _context$rcTree7.motion,
-        renderTreeNode = _context$rcTree7.renderTreeNode;
+    var _context$rcTree5 = _this2.context.rcTree,
+        prefixCls = _context$rcTree5.prefixCls,
+        motion = _context$rcTree5.motion,
+        renderTreeNode = _context$rcTree5.renderTreeNode;
 
     // Children TreeNode
 

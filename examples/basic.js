@@ -177,7 +177,7 @@ var Demo = function (_React$Component) {
             __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"],
               { title: 'parent 1-2', key: '0-0-2', disabled: true },
-              __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'parent 1-2-0', key: '0-0-2-0', disabled: true }),
+              __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'parent 1-2-0', key: '0-0-2-0', checkable: false }),
               __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_rc_tree__["TreeNode"], { title: 'parent 1-2-1', key: '0-0-2-1' })
             )
           )
