@@ -1,6 +1,10 @@
 # History
 ---
 
+## 2.1.0 / 2019-04-28
+
+- TreeNode support `checkable`.
+
 ## 2.0.0 / 2019-04-26
 
 - Remove old animation api and use `motion` instead.
