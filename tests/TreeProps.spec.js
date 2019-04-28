@@ -316,6 +316,22 @@ describe('Tree Props', () => {
       }));
       expect(handleOnSelect).not.toBeCalled();
     });
+
+    it('node set checkable to `false`', () => {
+      const wrapper = mount(
+        <Tree
+          checkable
+          defaultExpandAll
+        >
+          <TreeNode key="0-0">
+            <TreeNode key="0-0-0" checkable={false} />
+          </TreeNode>
+        </Tree>
+      );
+
+      expect(wrapper.find('TreeNode').at(0).find('.rc-tree-checkbox').length).toBeTruthy();
+      expect(wrapper.find('TreeNode').at(1).find('.rc-tree-checkbox').length).toBeFalsy();
+    });
   });
 
   // Don't crash
