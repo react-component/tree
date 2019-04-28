@@ -42,6 +42,7 @@ class TreeNode extends React.Component {
 
     // By user
     isLeaf: PropTypes.bool,
+    checkable: PropTypes.bool,
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
@@ -124,10 +125,10 @@ class TreeNode extends React.Component {
 
     const { disableCheckbox, checked } = this.props;
     const {
-      rcTree: { checkable, onNodeCheck },
+      rcTree: { onNodeCheck },
     } = this.context;
 
-    if (!checkable || disableCheckbox) return;
+    if (!this.isCheckable() || disableCheckbox) return;
 
     e.preventDefault();
     const targetChecked = !checked;
@@ -273,6 +274,15 @@ class TreeNode extends React.Component {
     return !!(treeDisabled || disabled);
   };
 
+  isCheckable = () => {
+    const { checkable } = this.props;
+    const { rcTree: { checkable: treeCheckable } } = this.context;
+
+    // Return false if tree or treeNode is not checkable
+    if (!treeCheckable || checkable === false) return false;
+    return treeCheckable;
+  };
+
   isSelectable() {
     const { selectable } = this.props;
     const { rcTree: { selectable: treeSelectable } } = this.context;
@@ -339,8 +349,9 @@ class TreeNode extends React.Component {
   // Checkbox
   renderCheckbox = () => {
     const { checked, halfChecked, disableCheckbox } = this.props;
-    const { rcTree: { prefixCls, checkable } } = this.context;
+    const { rcTree: { prefixCls } } = this.context;
     const disabled = this.isDisabled();
+    const checkable = this.isCheckable();
 
     if (!checkable) return null;
 
