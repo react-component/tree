@@ -434,7 +434,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   }
   onExpand = (expandedKeys) =&gt; {
     <span class="hljs-keyword">this</span>.filterKeys = <span class="hljs-literal">undefined</span>;
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, <span class="hljs-built_in">arguments</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expandedKeys);
     <span class="hljs-comment">// if not set autoExpandParent to false, if children expanded, parent can not collapse.</span>
     <span class="hljs-comment">// or, you can remove all expanded chilren keys.</span>
     <span class="hljs-keyword">this</span>.setState({

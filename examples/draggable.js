@@ -1,43 +1,204 @@
-webpackJsonp([3],{
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/ 		return result;
+/******/ 	}
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"examples/draggable": 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
+/******/
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push([6,"common"]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
+/******/ })
+/************************************************************************/
+/******/ ({
 
-/***/ 198:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(199);
-
-
-/***/ }),
-
-/***/ 199:
+/***/ "./examples/draggable.js":
+/*!*******************************!*\
+  !*** ./examples/draggable.js ***!
+  \*******************************/
+/*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tree_assets_index_less__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tree_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_tree_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_tree__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_tree___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rc_tree__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__draggable_less__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__draggable_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__draggable_less__);
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var rc_tree_assets_index_less__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rc-tree/assets/index.less */ "./assets/index.less");
+/* harmony import */ var rc_tree_assets_index_less__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rc_tree_assets_index_less__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var rc_tree__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rc-tree */ "./index.js");
+/* harmony import */ var rc_tree__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(rc_tree__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util */ "./examples/util.js");
+/* harmony import */ var _draggable_less__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./draggable.less */ "./examples/draggable.less");
+/* harmony import */ var _draggable_less__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_draggable_less__WEBPACK_IMPORTED_MODULE_5__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /* eslint no-console:0 */
 
@@ -47,33 +208,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var Demo = function (_React$Component) {
-  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Demo, _React$Component);
+var Demo =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Demo, _React$Component);
 
   function Demo() {
-    var _ref,
-        _arguments = arguments;
+    var _getPrototypeOf2;
 
-    var _temp, _this, _ret;
+    var _this;
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    _classCallCheck(this, Demo);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Demo);
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Demo)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      gData: __WEBPACK_IMPORTED_MODULE_9__util__["b" /* gData */],
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      gData: _util__WEBPACK_IMPORTED_MODULE_4__["gData"],
       autoExpandParent: true,
       expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key']
-    }, _this.onDragStart = function (info) {
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onDragStart", function (info) {
       console.log('start', info);
-    }, _this.onDragEnter = function (info) {
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onDragEnter", function (info) {
       console.log('enter', info);
+
       _this.setState({
         expandedKeys: info.expandedKeys
       });
-    }, _this.onDrop = function (info) {
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onDrop", function (info) {
       console.log('drop', info);
       var dropKey = info.node.props.eventKey;
       var dragKey = info.dragNode.props.eventKey;
@@ -86,15 +257,17 @@ var Demo = function (_React$Component) {
             callback(item, index, arr);
             return;
           }
+
           if (item.children) {
             loop(item.children, key, callback);
           }
         });
       };
-      var data = [].concat(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default()(_this.state.gData));
 
-      // Find dragObject
-      var dragObj = void 0;
+      var data = _toConsumableArray(_this.state.gData); // Find dragObject
+
+
+      var dragObj;
       loop(data, dragKey, function (item, index, arr) {
         arr.splice(index, 1);
         dragObj = item;
@@ -103,8 +276,8 @@ var Demo = function (_React$Component) {
       if (!info.dropToGap) {
         // Drop on the content
         loop(data, dropKey, function (item) {
-          item.children = item.children || [];
-          // where to insert 示例添加到尾部，可以是随意位置
+          item.children = item.children || []; // where to insert 示例添加到尾部，可以是随意位置
+
           item.children.push(dragObj);
         });
       } else if ((info.node.props.children || []).length > 0 && // Has children
@@ -112,18 +285,19 @@ var Demo = function (_React$Component) {
       dropPosition === 1 // On the bottom gap
       ) {
           loop(data, dropKey, function (item) {
-            item.children = item.children || [];
-            // where to insert 示例添加到尾部，可以是随意位置
+            item.children = item.children || []; // where to insert 示例添加到尾部，可以是随意位置
+
             item.children.unshift(dragObj);
           });
         } else {
         // Drop on the gap
-        var ar = void 0;
-        var i = void 0;
+        var ar;
+        var i;
         loop(data, dropKey, function (item, index, arr) {
           ar = arr;
           i = index;
         });
+
         if (dropPosition === -1) {
           ar.splice(i, 0, dragObj);
         } else {
@@ -134,505 +308,84 @@ var Demo = function (_React$Component) {
       _this.setState({
         gData: data
       });
-    }, _this.onExpand = function (expandedKeys) {
-      console.log('onExpand', _arguments);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onExpand", function (expandedKeys) {
+      console.log('onExpand', expandedKeys);
+
       _this.setState({
         expandedKeys: expandedKeys,
         autoExpandParent: false
       });
-    }, _temp), __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
+    });
+
+    return _this;
   }
 
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Demo, [{
-    key: 'render',
+  _createClass(Demo, [{
+    key: "render",
     value: function render() {
       var loop = function loop(data) {
         return data.map(function (item) {
           if (item.children && item.children.length) {
-            return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"],
-              { key: item.key, title: item.title },
-              loop(item.children)
-            );
+            return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rc_tree__WEBPACK_IMPORTED_MODULE_3__["TreeNode"], {
+              key: item.key,
+              title: item.title
+            }, loop(item.children));
           }
-          return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_tree__["TreeNode"], { key: item.key, title: item.title });
+
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rc_tree__WEBPACK_IMPORTED_MODULE_3__["TreeNode"], {
+            key: item.key,
+            title: item.title
+          });
         });
       };
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-        'div',
-        { className: 'draggable-demo' },
-        __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-          'h2',
-          null,
-          'draggable'
-        ),
-        __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-          'p',
-          null,
-          'drag a node into another node'
-        ),
-        __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-          'div',
-          { className: 'draggable-container' },
-          __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_8_rc_tree___default.a,
-            {
-              expandedKeys: this.state.expandedKeys,
-              onExpand: this.onExpand, autoExpandParent: this.state.autoExpandParent,
-              draggable: true,
-              onDragStart: this.onDragStart,
-              onDragEnter: this.onDragEnter,
-              onDrop: this.onDrop
-            },
-            loop(this.state.gData)
-          )
-        )
-      );
+
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "draggable-demo"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h2", null, "draggable"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, "drag a node into another node"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "draggable-container"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(rc_tree__WEBPACK_IMPORTED_MODULE_3___default.a, {
+        expandedKeys: this.state.expandedKeys,
+        onExpand: this.onExpand,
+        autoExpandParent: this.state.autoExpandParent,
+        draggable: true,
+        onDragStart: this.onDragStart,
+        onDragEnter: this.onDragEnter,
+        onDrop: this.onDrop
+      }, loop(this.state.gData))));
     }
   }]);
 
   return Demo;
-}(__WEBPACK_IMPORTED_MODULE_6_react___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
 
-__WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
-
-/***/ }),
-
-/***/ 200:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
+react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }),
 
-/***/ 26:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["c"] = generateData;
-/* harmony export (immutable) */ __webpack_exports__["a"] = calcTotal;
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return gData; });
-/* unused harmony export filterParentPosition */
-/* unused harmony export getFilterExpandedKeys */
-/* harmony export (immutable) */ __webpack_exports__["d"] = getRadioSelectKeys;
-/* eslint no-loop-func: 0 */
-/* eslint no-console:0 */
-
-function generateData() {
-  var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
-  var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-  var z = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-  var gData = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-
-  // x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
-  function _loop(_level, _preKey, _tns) {
-    var preKey = _preKey || '0';
-    var tns = _tns || gData;
-
-    var children = [];
-    for (var i = 0; i < x; i++) {
-      var key = preKey + '-' + i;
-      tns.push({ title: key + '-label', key: key + '-key' });
-      if (i < y) {
-        children.push(key);
-      }
-    }
-    if (_level < 0) {
-      return tns;
-    }
-    var __level = _level - 1;
-    children.forEach(function (key, index) {
-      tns[index].children = [];
-      return _loop(__level, key, tns[index].children);
-    });
-
-    return null;
-  }
-  _loop(z);
-  return gData;
-}
-function calcTotal() {
-  var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
-  var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-  var z = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-
-  /* eslint no-param-reassign:0 */
-  var rec = function rec(n) {
-    return n >= 0 ? x * Math.pow(y, n--) + rec(n) : 0;
-  };
-  return rec(z + 1);
-}
-console.log('总节点数（单个tree）：', calcTotal());
-// 性能测试：总节点数超过 2000（z要小）明显感觉慢。z 变大时，递归多，会卡死。
-
-var gData = generateData();
-
-function isPositionPrefix(smallPos, bigPos) {
-  if (bigPos.length < smallPos.length) {
-    return false;
-  }
-  // attention: "0-0-1" "0-0-10"
-  if (bigPos.length > smallPos.length && bigPos.charAt(smallPos.length) !== '-') {
-    return false;
-  }
-  return bigPos.substr(0, smallPos.length) === smallPos;
-}
-// console.log(isPositionPrefix("0-1", "0-10-1"));
-
-
-// arr.length === 628, use time: ~20ms
-function filterParentPosition(arr) {
-  var levelObj = {};
-  arr.forEach(function (item) {
-    var posLen = item.split('-').length;
-    if (!levelObj[posLen]) {
-      levelObj[posLen] = [];
-    }
-    levelObj[posLen].push(item);
-  });
-  var levelArr = Object.keys(levelObj).sort();
-
-  var _loop2 = function _loop2(i) {
-    if (levelArr[i + 1]) {
-      levelObj[levelArr[i]].forEach(function (ii) {
-        var _loop3 = function _loop3(j) {
-          levelObj[levelArr[j]].forEach(function (_i, index) {
-            if (isPositionPrefix(ii, _i)) {
-              levelObj[levelArr[j]][index] = null;
-            }
-          });
-          levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(function (p) {
-            return p;
-          });
-        };
-
-        for (var j = i + 1; j < levelArr.length; j++) {
-          _loop3(j);
-        }
-      });
-    }
-  };
-
-  for (var i = 0; i < levelArr.length; i++) {
-    _loop2(i);
-  }
-  var nArr = [];
-  levelArr.forEach(function (i) {
-    nArr = nArr.concat(levelObj[i]);
-  });
-  return nArr;
-}
-// console.log(filterParentPosition(
-//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
-// ));
-
-
-function loopData(data, callback) {
-  var loop = function loop(d) {
-    var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-    d.forEach(function (item, index) {
-      var pos = level + '-' + index;
-      if (item.children) {
-        loop(item.children, pos);
-      }
-      callback(item, index, pos);
-    });
-  };
-  loop(data);
-}
-
-function spl(str) {
-  return str.split('-');
-}
-function splitLen(str) {
-  return str.split('-').length;
-}
-
-function getFilterExpandedKeys(data, expandedKeys) {
-  var expandedPosArr = [];
-  loopData(data, function (item, index, pos) {
-    if (expandedKeys.indexOf(item.key) > -1) {
-      expandedPosArr.push(pos);
-    }
-  });
-  var filterExpandedKeys = [];
-  loopData(data, function (item, index, pos) {
-    expandedPosArr.forEach(function (p) {
-      if ((splitLen(pos) < splitLen(p) && p.indexOf(pos) === 0 || pos === p) && filterExpandedKeys.indexOf(item.key) === -1) {
-        filterExpandedKeys.push(item.key);
-      }
-    });
-  });
-  return filterExpandedKeys;
-}
-
-function isSibling(pos, pos1) {
-  pos.pop();
-  pos1.pop();
-  return pos.join(',') === pos1.join(',');
-}
-
-function getRadioSelectKeys(data, selectedKeys, key) {
-  var res = [];
-  var pkObjArr = [];
-  var selPkObjArr = [];
-  loopData(data, function (item, index, pos) {
-    if (selectedKeys.indexOf(item.key) > -1) {
-      pkObjArr.push([pos, item.key]);
-    }
-    if (key && key === item.key) {
-      selPkObjArr.push(pos, item.key);
-    }
-  });
-  var lenObj = {};
-  var getPosKey = function getPosKey(pos, k) {
-    var posLen = splitLen(pos);
-    if (!lenObj[posLen]) {
-      lenObj[posLen] = [[pos, k]];
-    } else {
-      lenObj[posLen].forEach(function (pkArr, i) {
-        if (isSibling(spl(pkArr[0]), spl(pos))) {
-          // 后来覆盖前者
-          lenObj[posLen][i] = [pos, k];
-        } else if (spl(pkArr[0]) !== spl(pos)) {
-          lenObj[posLen].push([pos, k]);
-        }
-      });
-    }
-  };
-  pkObjArr.forEach(function (pk) {
-    getPosKey(pk[0], pk[1]);
-  });
-  if (key) {
-    getPosKey(selPkObjArr[0], selPkObjArr[1]);
-  }
-
-  Object.keys(lenObj).forEach(function (item) {
-    lenObj[item].forEach(function (i) {
-      if (res.indexOf(i[1]) === -1) {
-        res.push(i[1]);
-      }
-    });
-  });
-  return res;
-}
-
-/***/ }),
-
-/***/ 38:
+/***/ "./examples/draggable.less":
+/*!*********************************!*\
+  !*** ./examples/draggable.less ***!
+  \*********************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _from = __webpack_require__(39);
-
-var _from2 = _interopRequireDefault(_from);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  } else {
-    return (0, _from2.default)(arr);
-  }
-};
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
-/***/ 39:
+/***/ 6:
+/*!*************************************!*\
+  !*** multi ./examples/draggable.js ***!
+  \*************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(40), __esModule: true };
-
-/***/ }),
-
-/***/ 40:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(69);
-__webpack_require__(41);
-module.exports = __webpack_require__(11).Array.from;
-
-
-/***/ }),
-
-/***/ 41:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var ctx = __webpack_require__(32);
-var $export = __webpack_require__(15);
-var toObject = __webpack_require__(35);
-var call = __webpack_require__(42);
-var isArrayIter = __webpack_require__(43);
-var toLength = __webpack_require__(65);
-var createProperty = __webpack_require__(44);
-var getIterFn = __webpack_require__(45);
-
-$export($export.S + $export.F * !__webpack_require__(47)(function (iter) { Array.from(iter); }), 'Array', {
-  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
-  from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
-    var O = toObject(arrayLike);
-    var C = typeof this == 'function' ? this : Array;
-    var aLen = arguments.length;
-    var mapfn = aLen > 1 ? arguments[1] : undefined;
-    var mapping = mapfn !== undefined;
-    var index = 0;
-    var iterFn = getIterFn(O);
-    var length, result, step, iterator;
-    if (mapping) mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
-    // if object isn't iterable or it's array with default iterator - use simple case
-    if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
-      for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
-        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
-      }
-    } else {
-      length = toLength(O.length);
-      for (result = new C(length); length > index; index++) {
-        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
-      }
-    }
-    result.length = index;
-    return result;
-  }
-});
-
-
-/***/ }),
-
-/***/ 42:
-/***/ (function(module, exports, __webpack_require__) {
-
-// call something on iterator step with safe closing on error
-var anObject = __webpack_require__(18);
-module.exports = function (iterator, fn, value, entries) {
-  try {
-    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
-  // 7.4.6 IteratorClose(iterator, completion)
-  } catch (e) {
-    var ret = iterator['return'];
-    if (ret !== undefined) anObject(ret.call(iterator));
-    throw e;
-  }
-};
-
-
-/***/ }),
-
-/***/ 43:
-/***/ (function(module, exports, __webpack_require__) {
-
-// check on default Array iterator
-var Iterators = __webpack_require__(16);
-var ITERATOR = __webpack_require__(8)('iterator');
-var ArrayProto = Array.prototype;
-
-module.exports = function (it) {
-  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
-};
-
-
-/***/ }),
-
-/***/ 44:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $defineProperty = __webpack_require__(14);
-var createDesc = __webpack_require__(23);
-
-module.exports = function (object, index, value) {
-  if (index in object) $defineProperty.f(object, index, createDesc(0, value));
-  else object[index] = value;
-};
-
-
-/***/ }),
-
-/***/ 45:
-/***/ (function(module, exports, __webpack_require__) {
-
-var classof = __webpack_require__(46);
-var ITERATOR = __webpack_require__(8)('iterator');
-var Iterators = __webpack_require__(16);
-module.exports = __webpack_require__(11).getIteratorMethod = function (it) {
-  if (it != undefined) return it[ITERATOR]
-    || it['@@iterator']
-    || Iterators[classof(it)];
-};
-
-
-/***/ }),
-
-/***/ 46:
-/***/ (function(module, exports, __webpack_require__) {
-
-// getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(34);
-var TAG = __webpack_require__(8)('toStringTag');
-// ES3 wrong here
-var ARG = cof(function () { return arguments; }()) == 'Arguments';
-
-// fallback for IE11 Script Access Denied error
-var tryGet = function (it, key) {
-  try {
-    return it[key];
-  } catch (e) { /* empty */ }
-};
-
-module.exports = function (it) {
-  var O, T, B;
-  return it === undefined ? 'Undefined' : it === null ? 'Null'
-    // @@toStringTag case
-    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-    // builtinTag case
-    : ARG ? cof(O)
-    // ES3 arguments fallback
-    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-};
-
-
-/***/ }),
-
-/***/ 47:
-/***/ (function(module, exports, __webpack_require__) {
-
-var ITERATOR = __webpack_require__(8)('iterator');
-var SAFE_CLOSING = false;
-
-try {
-  var riter = [7][ITERATOR]();
-  riter['return'] = function () { SAFE_CLOSING = true; };
-  // eslint-disable-next-line no-throw-literal
-  Array.from(riter, function () { throw 2; });
-} catch (e) { /* empty */ }
-
-module.exports = function (exec, skipClosing) {
-  if (!skipClosing && !SAFE_CLOSING) return false;
-  var safe = false;
-  try {
-    var arr = [7];
-    var iter = arr[ITERATOR]();
-    iter.next = function () { return { done: safe = true }; };
-    arr[ITERATOR] = function () { return iter; };
-    exec(arr);
-  } catch (e) { /* empty */ }
-  return safe;
-};
+module.exports = __webpack_require__(/*! ./examples/draggable.js */"./examples/draggable.js");
 
 
 /***/ })
 
-},[198]);
+/******/ });
 //# sourceMappingURL=draggable.js.map

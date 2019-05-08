@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  <link rel="stylesheet" href="../common.css" /><link rel="stylesheet" href="basic.css" />
+  <link rel="stylesheet" href="../common.css" />
 </head>
 
 <body>
@@ -313,8 +313,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       defaultCheckedKeys: keys,
     };
   }
-  onExpand = (expandedKeys) =&gt; {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expandedKeys, <span class="hljs-built_in">arguments</span>);
+  onExpand = (...args) =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, ...args);
   };
   onSelect = (selectedKeys, info) =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'selected'</span>, selectedKeys, info);

@@ -17,88 +17,187 @@
 }
 .demo-dropdown-tree-slide-up-enter,
 .demo-dropdown-tree-slide-up-appear {
-  animation-duration: 0.3s;
-  animation-fill-mode: both;
-  transform-origin: 0 0;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
   display: block !important;
   opacity: 0;
-  animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
-  animation-play-state: paused;
+  -webkit-animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
+          animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
 }
 .demo-dropdown-tree-slide-up-leave {
-  animation-duration: 0.3s;
-  animation-fill-mode: both;
-  transform-origin: 0 0;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
   display: block !important;
   opacity: 1;
-  animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
-  animation-play-state: paused;
+  -webkit-animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+          animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
 }
 .demo-dropdown-tree-slide-up-enter.demo-dropdown-tree-slide-up-enter-active.demo-dropdown-tree-placement-bottomLeft,
 .demo-dropdown-tree-slide-up-appear.demo-dropdown-tree-slide-up-appear-active.demo-dropdown-tree-placement-bottomLeft {
-  animation-name: slideUpIn;
-  animation-play-state: running;
+  -webkit-animation-name: slideUpIn;
+          animation-name: slideUpIn;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
 }
 .demo-dropdown-tree-slide-up-enter.demo-dropdown-tree-slide-up-enter-active.demo-dropdown-tree-placement-topLeft,
 .demo-dropdown-tree-slide-up-appear.demo-dropdown-tree-slide-up-appear-active.demo-dropdown-tree-placement-topLeft {
-  animation-name: slideDownIn;
-  animation-play-state: running;
+  -webkit-animation-name: slideDownIn;
+          animation-name: slideDownIn;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
 }
 .demo-dropdown-tree-slide-up-leave.demo-dropdown-tree-slide-up-leave-active.demo-dropdown-tree-placement-bottomLeft {
-  animation-name: slideUpOut;
-  animation-play-state: running;
+  -webkit-animation-name: slideUpOut;
+          animation-name: slideUpOut;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
 }
 .demo-dropdown-tree-slide-up-leave.demo-dropdown-tree-slide-up-leave-active.demo-dropdown-tree-placement-topLeft {
-  animation-name: slideDownOut;
-  animation-play-state: running;
+  -webkit-animation-name: slideDownOut;
+          animation-name: slideDownOut;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+}
+@-webkit-keyframes slideUpIn {
+  0% {
+    opacity: 0;
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
 }
 @keyframes slideUpIn {
   0% {
     opacity: 0;
-    transform-origin: 0% 0%;
-    transform: scaleY(0);
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
   }
   100% {
     opacity: 1;
-    transform-origin: 0% 0%;
-    transform: scaleY(1);
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+}
+@-webkit-keyframes slideUpOut {
+  0% {
+    opacity: 1;
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
   }
 }
 @keyframes slideUpOut {
   0% {
     opacity: 1;
-    transform-origin: 0% 0%;
-    transform: scaleY(1);
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
   }
   100% {
     opacity: 0;
-    transform-origin: 0% 0%;
-    transform: scaleY(0);
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+  }
+}
+@-webkit-keyframes slideDownIn {
+  0% {
+    opacity: 0;
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
   }
 }
 @keyframes slideDownIn {
   0% {
     opacity: 0;
-    transform-origin: 0% 100%;
-    transform: scaleY(0);
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
   }
   100% {
     opacity: 1;
-    transform-origin: 0% 100%;
-    transform: scaleY(1);
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+}
+@-webkit-keyframes slideDownOut {
+  0% {
+    opacity: 1;
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
   }
 }
 @keyframes slideDownOut {
   0% {
     opacity: 1;
-    transform-origin: 0% 100%;
-    transform: scaleY(1);
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
   }
   100% {
     opacity: 0;
-    transform-origin: 0% 100%;
-    transform: scaleY(0);
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
   }
 }
+
 
 /*# sourceMappingURL=dropdown.css.map*/

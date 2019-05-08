@@ -356,7 +356,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
   }
   onExpand = (expandedKeys) =&gt; {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, <span class="hljs-built_in">arguments</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expandedKeys);
     <span class="hljs-keyword">this</span>.setState({
       expandedKeys,
       autoExpandParent: <span class="hljs-literal">false</span>,
