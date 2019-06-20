@@ -158,6 +158,7 @@ class Tree extends React.Component {
 
   onDragEnter(e, treeNode) {
     const dropPosition = this.calcDropPosition(e, treeNode);
+    if (!this.dragNode) return;
     if (
       this.dragNode.props.eventKey === treeNode.props.eventKey &&
       dropPosition === 0
