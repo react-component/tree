@@ -37,6 +37,7 @@ class DropdownTree extends React.Component {
     prefixCls: PropTypes.string,
     children: PropTypes.any,
     transitionName: PropTypes.string,
+    overlay: PropTypes.object,
     overlayClassName: PropTypes.string,
     animation: PropTypes.any,
     align: PropTypes.object,
