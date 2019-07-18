@@ -56,7 +56,8 @@
     "rc-tooltip": "3.x",
     "rc-trigger": "^2.0.0",
     "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "react-dom": "^16.4.0",
+    "typescript": "^3.5.2"
   },
   "dependencies": {
     "classnames": "2.x",
