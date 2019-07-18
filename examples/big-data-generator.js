@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { generateData, calcTotal } from './util';
+import { generateData, calcTotal } from './utils/dataUtil';
 
 class Gen extends React.Component {
   static propTypes = {

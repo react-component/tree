@@ -3,7 +3,7 @@ import 'rc-tree/assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree, { TreeNode } from 'rc-tree';
-import { gData } from './util';
+import { gData } from './utils/dataUtil';
 import './draggable.less';
 
 class Demo extends React.Component {
@@ -119,4 +119,4 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;

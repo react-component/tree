@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Tree, { TreeNode } from 'rc-tree';
 import Trigger from 'rc-trigger';
-import { gData } from './util';
+import { gData } from './utils/dataUtil';
 import './dropdown.less';
 
 const placements = {
@@ -228,4 +228,4 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;

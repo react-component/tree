@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Tree, { TreeNode } from 'rc-tree';
 import 'rc-dialog/assets/index.css';
 import Modal from 'rc-dialog';
-import { gData, getRadioSelectKeys } from './util';
+import { gData, getRadioSelectKeys } from './utils/dataUtil';
 
 class Demo extends React.Component {
   static propTypes = {
@@ -170,4 +170,4 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;

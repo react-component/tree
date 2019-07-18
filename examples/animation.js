@@ -20,7 +20,7 @@ const STYLE = `
 }
 `;
 
-const onEnterActive = (node) => {
+const onEnterActive = node => {
   return { height: node.scrollHeight };
 };
 
@@ -28,30 +28,26 @@ const motion = {
   motionName: 'node-motion',
   motionAppear: false,
   onEnterActive,
-  onLeaveStart: ( node ) => ({ height: node.offsetHeight }),
+  onLeaveStart: node => ({ height: node.offsetHeight }),
 };
 
-const demo = (
+const Demo = () => (
   <div>
     <h2>expanded</h2>
-    <style dangerouslySetInnerHTML={{ __html: STYLE }}/>
-    <Tree
-      defaultExpandAll={false}
-      defaultExpandedKeys={['p1']}
-      motion={motion}
-    >
+    <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+    <Tree defaultExpandAll={false} defaultExpandedKeys={['p1']} motion={motion}>
       <TreeNode title="parent 1" key="p1">
-        <TreeNode key="p10" title="leaf"/>
+        <TreeNode key="p10" title="leaf" />
         <TreeNode title="parent 1-1" key="p11">
           <TreeNode title="parent 2-1" key="p21">
-            <TreeNode title="leaf"/>
-            <TreeNode title="leaf"/>
+            <TreeNode title="leaf" />
+            <TreeNode title="leaf" />
           </TreeNode>
-          <TreeNode key="p22" title="leaf"/>
+          <TreeNode key="p22" title="leaf" />
         </TreeNode>
       </TreeNode>
     </Tree>
   </div>
 );
 
-ReactDOM.render(demo, document.getElementById('__react-content'));
+export default Demo;
