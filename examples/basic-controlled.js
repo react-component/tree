@@ -28,7 +28,7 @@ class Demo extends React.Component {
     treeData: [],
   };
   onExpand = (expandedKeys) => {
-    console.log('onExpand', arguments);
+    console.log('onExpand', expandedKeys);
     // if not set autoExpandParent to false, if children expanded, parent can not collapse.
     // or, you can remove all expanded chilren keys.
     this.setState({
@@ -42,7 +42,7 @@ class Demo extends React.Component {
     });
   }
   onCheckStrictly = (checkedKeys, /* extra */) => {
-    console.log(arguments);
+    console.log(checkedKeys);
     // const { checkedNodesPositions } = extra;
     // const pps = filterParentPosition(checkedNodesPositions.map(i => i.pos));
     // console.log(checkedNodesPositions.filter(i => pps.indexOf(i.pos) > -1).map(i => i.node.key));

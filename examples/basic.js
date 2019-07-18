@@ -43,7 +43,7 @@ class Demo extends React.Component {
     };
   }
   onExpand = (expandedKeys) => {
-    console.log('onExpand', expandedKeys, arguments);
+    console.log('onExpand', expandedKeys);
   };
   onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);

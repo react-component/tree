@@ -85,7 +85,7 @@ class Demo extends React.Component {
     });
   }
   onExpand = (expandedKeys) => {
-    console.log('onExpand', arguments);
+    console.log('onExpand', expandedKeys);
     this.setState({
       expandedKeys,
       autoExpandParent: false,
