@@ -30,6 +30,7 @@ class Tree extends React.Component {
     className: PropTypes.string,
     style: PropTypes.object,
     tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    nodePadding: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     children: PropTypes.any,
     treeData: PropTypes.array, // Generate treeNode by children
     showLine: PropTypes.bool,
@@ -88,6 +89,7 @@ class Tree extends React.Component {
     disabled: false,
     checkStrictly: false,
     draggable: false,
+    nodePadding: 18,
     defaultExpandParent: true,
     autoExpandParent: false,
     defaultExpandAll: false,
@@ -124,6 +126,7 @@ class Tree extends React.Component {
       showIcon,
       icon,
       draggable,
+      nodePadding,
       checkable,
       checkStrictly,
       disabled,
@@ -143,6 +146,7 @@ class Tree extends React.Component {
         icon,
         switcherIcon,
         draggable,
+        nodePadding,
         checkable,
         checkStrictly,
         disabled,
@@ -690,7 +694,7 @@ class Tree extends React.Component {
    * [Legacy] Original logic use `key` as tracking clue.
    * We have to use `cloneElement` to pass `key`.
    */
-  renderTreeNode = (child, index, level = 0) => {
+  renderTreeNode = (child, index, pos, level = 0) => {
     const {
       keyEntities,
       expandedKeys = [],
@@ -700,8 +704,9 @@ class Tree extends React.Component {
       loadingKeys = [],
       dragOverNodeKey,
       dropPosition,
+      nodePadding,
     } = this.state;
-    const pos = getPosition(level, index);
+    pos = getPosition(pos, index);
     const key = child.key || pos;
 
     if (!keyEntities[key]) {
@@ -709,6 +714,7 @@ class Tree extends React.Component {
       return null;
     }
 
+    const padding = nodePadding === undefined ? Tree.defaultProps.nodePadding: nodePadding;
     return React.cloneElement(child, {
       key,
       eventKey: key,
@@ -719,11 +725,12 @@ class Tree extends React.Component {
       checked: this.isKeyChecked(key),
       halfChecked: halfCheckedKeys.indexOf(key) !== -1,
       pos,
-
+      level,
+      nodePadding: padding,
       // [Legacy] Drag props
       dragOver: dragOverNodeKey === key && dropPosition === 0,
       dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
-      dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
+      dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1
     });
   };
 
@@ -741,13 +748,15 @@ class Tree extends React.Component {
       <ul
         {...domProps}
         className={classNames(prefixCls, className, {
-          [`${prefixCls}-show-line`]: showLine,
+          [`${prefixCls}-show-line`]: showLine
         })}
         style={style}
         role="tree"
         unselectable="on"
       >
-        {mapChildren(treeNode, (node, index) => this.renderTreeNode(node, index))}
+        {mapChildren(treeNode, (node, index) =>
+          this.renderTreeNode(node, index, index)
+        )}
       </ul>
     );
   }

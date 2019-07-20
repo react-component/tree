@@ -31,6 +31,8 @@ class TreeNode extends React.Component {
     children: PropTypes.node,
     title: PropTypes.node,
     pos: PropTypes.string,
+    level: PropTypes.number,
+    nodePadding: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     dragOver: PropTypes.bool,
     dragOverGapTop: PropTypes.bool,
     dragOverGapBottom: PropTypes.bool,
@@ -134,8 +136,8 @@ class TreeNode extends React.Component {
     } = this.context;
 
     if (!this.isCheckable() || disableCheckbox) return;
-
     e.preventDefault();
+    e.stopPropagation();
     const targetChecked = !checked;
     onNodeCheck(e, this, targetChecked);
   };
@@ -183,7 +185,7 @@ class TreeNode extends React.Component {
 
   onDragEnter = e => {
     const {
-      rcTree: { onNodeDragEnter },
+      rcTree: { onNodeDragEnter }
     } = this.context;
 
     e.preventDefault();
@@ -241,6 +243,7 @@ class TreeNode extends React.Component {
       rcTree: { onNodeExpand },
     } = this.context;
     onNodeExpand(e, this);
+    e.stopPropagation();
   };
 
   // Drag usage
@@ -425,7 +428,7 @@ class TreeNode extends React.Component {
   // Icon + Title
   renderSelector = () => {
     const { dragNodeHighlight } = this.state;
-    const { title, selected, icon, loading } = this.props;
+    const { title, selected, icon, loading, level, nodePadding } = this.props;
     const {
       rcTree: { prefixCls, showIcon, icon: treeIcon, draggable, loadData },
     } = this.context;
@@ -457,15 +460,19 @@ class TreeNode extends React.Component {
     // Title
     const $title = <span className={`${prefixCls}-title`}>{title}</span>;
 
+    const padding = `${level * nodePadding}px`;
+    const paddingStyle = { paddingLeft: padding};
+    const isSelected = !disabled && (selected || dragNodeHighlight);
     return (
       <span
         ref={this.setSelectHandle}
-        title={typeof title === 'string' ? title : ''}
+        style={paddingStyle}
+        title={typeof title === "string" ? title : ""}
         className={classNames(
           `${wrapClass}`,
-          `${wrapClass}-${this.getNodeState() || 'normal'}`,
-          !disabled && (selected || dragNodeHighlight) && `${prefixCls}-node-selected`,
-          !disabled && draggable && 'draggable',
+          `${wrapClass}-${this.getNodeState() || "normal"}`,
+          isSelected && `${prefixCls}-node-selected`,
+          !disabled && draggable && "draggable"
         )}
         draggable={(!disabled && draggable) || undefined}
         aria-grabbed={(!disabled && draggable) || undefined}
@@ -476,15 +483,19 @@ class TreeNode extends React.Component {
         onDoubleClick={this.onSelectorDoubleClick}
         onDragStart={draggable ? this.onDragStart : undefined}
       >
-        {$icon}
-        {$title}
+        {this.renderSwitcher()}
+        {this.renderCheckbox()}
+        <span className={classNames(`${prefixCls}-node-title`, `${wrapClass}-node-title-${this.getNodeState() || "normal"}`, isSelected && `${prefixCls}-node-title-selected`)}>
+          {$icon}
+          {$title}
+        </span>
       </span>
     );
   };
 
   // Children list wrapped with `Animation`
   renderChildren = () => {
-    const { expanded, pos } = this.props;
+    const { expanded, pos, level, nodePadding } = this.props;
     const {
       rcTree: { prefixCls, motion, renderTreeNode },
     } = this.context;
@@ -495,6 +506,9 @@ class TreeNode extends React.Component {
     if (nodeList.length === 0) {
       return null;
     }
+
+    const padding = `${level * nodePadding}px`;
+    const linePosition = { backgroundPosition: `${padding} 0px` };
     return (
       <CSSMotion visible={expanded} {...motion}>
         {({ style, className }) => {
@@ -505,11 +519,13 @@ class TreeNode extends React.Component {
                 `${prefixCls}-child-tree`,
                 expanded && `${prefixCls}-child-tree-open`,
               )}
-              style={style}
+              style={{...style, ...linePosition}}
               data-expanded={expanded}
               role="group"
             >
-              {mapChildren(nodeList, (node, index) => renderTreeNode(node, index, pos))}
+              {mapChildren(nodeList, (node, index) =>
+                renderTreeNode(node, index, pos, level + 1)
+              )}
             </ul>
           );
         }}
@@ -530,6 +546,7 @@ class TreeNode extends React.Component {
       selected,
       checked,
       halfChecked,
+      level,
       ...otherProps
     } = this.props;
     const {
@@ -562,8 +579,6 @@ class TreeNode extends React.Component {
         onDragEnd={draggable ? this.onDragEnd : undefined}
         {...dataOrAriaAttributeProps}
       >
-        {this.renderSwitcher()}
-        {this.renderCheckbox()}
         {this.renderSelector()}
         {this.renderChildren()}
       </li>
