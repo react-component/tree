@@ -472,7 +472,8 @@ class TreeNode extends React.Component {
           `${wrapClass}`,
           `${wrapClass}-${this.getNodeState() || "normal"}`,
           isSelected && `${prefixCls}-node-selected`,
-          !disabled && draggable && "draggable"
+          !disabled && draggable && "draggable",
+          disabled && `${wrapClass}-disabled`
         )}
         draggable={(!disabled && draggable) || undefined}
         aria-grabbed={(!disabled && draggable) || undefined}
