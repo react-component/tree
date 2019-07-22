@@ -310,20 +310,6 @@ class TreeNode extends React.Component {
     return treeCheckable;
   };
 
-  isSelectable() {
-    const { selectable } = this.props;
-    const {
-      rcTree: { selectable: treeSelectable },
-    } = this.context;
-
-    // Ignore when selectable is undefined or null
-    if (typeof selectable === 'boolean') {
-      return selectable;
-    }
-
-    return treeSelectable;
-  }
-
   // Load data to avoid default expanded tree without data
   syncLoadData = props => {
     const { expanded, loading, loaded } = props;
@@ -343,6 +329,20 @@ class TreeNode extends React.Component {
       }
     }
   };
+
+  isSelectable() {
+    const { selectable } = this.props;
+    const {
+      rcTree: { selectable: treeSelectable },
+    } = this.context;
+
+    // Ignore when selectable is undefined or null
+    if (typeof selectable === 'boolean') {
+      return selectable;
+    }
+
+    return treeSelectable;
+  }
 
   // Switcher
   renderSwitcher = () => {
