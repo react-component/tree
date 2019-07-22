@@ -343,6 +343,7 @@ class Tree extends React.Component {
       }, 400);
     }, 0);
   };
+
   onNodeDragOver = (event, node) => {
     const { onDragOver } = this.props;
     const { eventKey } = node.props;
@@ -362,6 +363,7 @@ class Tree extends React.Component {
       onDragOver({ event, node });
     }
   };
+
   onNodeDragLeave = (event, node) => {
     const { onDragLeave } = this.props;
 
@@ -373,6 +375,7 @@ class Tree extends React.Component {
       onDragLeave({ event, node });
     }
   };
+
   onNodeDragEnd = (event, node) => {
     const { onDragEnd } = this.props;
     this.setState({
@@ -384,6 +387,7 @@ class Tree extends React.Component {
 
     this.dragNode = null;
   };
+
   onNodeDrop = (event, node) => {
     const { dragNodesKeys = [], dropPosition } = this.state;
     const { onDrop } = this.props;

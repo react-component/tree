@@ -3,9 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import ReactDOM from 'react-dom';
-import Tree, { TreeNode } from 'rc-tree';
-import 'rc-tree/assets/index.less';
+import Tree, { TreeNode } from '../src';
+import '../assets/index.less';
 import './icon.less';
 
 const Icon = ({ selected }) => (

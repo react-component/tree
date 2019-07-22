@@ -3,9 +3,8 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import Tree, { TreeNode } from 'rc-tree';
-import 'rc-tree/assets/index.less';
+import '../assets/index.less';
+import Tree, { TreeNode } from '../src';
 
 const arrowPath =
   'M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88' +
@@ -13,38 +12,39 @@ const arrowPath =
   '6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-0.7 5.' +
   '2-2L869 536.2c14.7-12.8 14.7-35.6 0-48.4z';
 
-const getSvgIcon = (path, iStyle = {}, style = {}) => {
-  return (
-    <i style={iStyle}>
-      <svg
-        viewBox="0 0 1024 1024"
-        width="1em"
-        height="1em"
-        fill="currentColor"
-        style={{ verticalAlign: '-.125em', ...style }}
-      >
-        <path d={path} />
-      </svg>
-    </i>
-  );
-};
+const getSvgIcon = (path, iStyle = {}, style = {}) => (
+  <i style={iStyle}>
+    <svg
+      viewBox="0 0 1024 1024"
+      width="1em"
+      height="1em"
+      fill="currentColor"
+      style={{ verticalAlign: '-.125em', ...style }}
+    >
+      <path d={path} />
+    </svg>
+  </i>
+);
 
 class Demo extends React.Component {
   static propTypes = {
     keys: PropTypes.array,
   };
+
   static defaultProps = {
     keys: ['0-0-0-0'],
   };
+
   constructor(props) {
     super(props);
-    const keys = props.keys;
+    const { keys } = props;
     this.state = {
       defaultExpandedKeys: keys,
       defaultSelectedKeys: keys,
       defaultCheckedKeys: keys,
     };
   }
+
   render() {
     const switcherIcon = obj => {
       if (obj.isLeaf) {

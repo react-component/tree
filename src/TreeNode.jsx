@@ -497,22 +497,20 @@ class TreeNode extends React.Component {
     }
     return (
       <CSSMotion visible={expanded} {...motion}>
-        {({ style, className }) => {
-          return (
-            <ul
-              className={classNames(
-                className,
-                `${prefixCls}-child-tree`,
-                expanded && `${prefixCls}-child-tree-open`,
-              )}
-              style={style}
-              data-expanded={expanded}
-              role="group"
-            >
-              {mapChildren(nodeList, (node, index) => renderTreeNode(node, index, pos))}
-            </ul>
-          );
-        }}
+        {({ style, className }) => (
+          <ul
+            className={classNames(
+              className,
+              `${prefixCls}-child-tree`,
+              expanded && `${prefixCls}-child-tree-open`,
+            )}
+            style={style}
+            data-expanded={expanded}
+            role="group"
+          >
+            {mapChildren(nodeList, (node, index) => renderTreeNode(node, index, pos))}
+          </ul>
+        )}
       </CSSMotion>
     );
   };

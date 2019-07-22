@@ -1,10 +1,10 @@
-/* eslint no-console:0 */
-import 'rc-tree/assets/index.less';
+/* eslint-disable no-console, react/no-find-dom-node */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tree, { TreeNode } from 'rc-tree';
 import Tooltip from 'rc-tooltip';
 import './contextmenu.less';
+import '../assets/index.less';
+import Tree, { TreeNode } from '../src';
 
 function contains(root, n) {
   let node = n;
@@ -21,11 +21,13 @@ class Demo extends React.Component {
   state = {
     selectedKeys: ['0-1', '0-1-1'],
   };
+
   componentDidMount() {
     this.getContainer();
     // console.log(ReactDOM.findDOMNode(this), this.cmContainer);
     console.log(contains(ReactDOM.findDOMNode(this), this.cmContainer));
   }
+
   componentWillUnmount() {
     if (this.cmContainer) {
       ReactDOM.unmountComponentAtNode(this.cmContainer);
@@ -33,21 +35,26 @@ class Demo extends React.Component {
       this.cmContainer = null;
     }
   }
-  onSelect = (selectedKeys) => {
+
+  onSelect = selectedKeys => {
     this.setState({ selectedKeys });
-  }
-  onRightClick = (info) => {
+  };
+
+  onRightClick = info => {
     console.log('right click', info);
     this.setState({ selectedKeys: [info.node.props.eventKey] });
     this.renderCm(info);
-  }
-  onMouseEnter = (info) => {
+  };
+
+  onMouseEnter = info => {
     console.log('enter', info);
     this.renderCm(info);
-  }
-  onMouseLeave = (info) => {
+  };
+
+  onMouseLeave = info => {
     console.log('leave', info);
-  }
+  };
+
   getContainer() {
     if (!this.cmContainer) {
       this.cmContainer = document.createElement('div');
@@ -55,6 +62,7 @@ class Demo extends React.Component {
     }
     return this.cmContainer;
   }
+
   renderCm(info) {
     if (this.toolTip) {
       ReactDOM.unmountComponentAtNode(this.cmContainer);
@@ -62,8 +70,11 @@ class Demo extends React.Component {
     }
     this.toolTip = (
       <Tooltip
-        trigger="click" placement="bottomRight" prefixCls="rc-tree-contextmenu"
-        defaultVisible overlay={<h4>{info.node.props.title}</h4>}
+        trigger="click"
+        placement="bottomRight"
+        prefixCls="rc-tree-contextmenu"
+        defaultVisible
+        overlay={<h4>{info.node.props.title}</h4>}
       >
         <span />
       </Tooltip>
@@ -78,6 +89,7 @@ class Demo extends React.Component {
 
     ReactDOM.render(this.toolTip, container);
   }
+
   render() {
     return (
       <div>
@@ -104,9 +116,12 @@ class Demo extends React.Component {
         </Tree>
         <h2>hover popup contextmenu</h2>
         <Tree
-          onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
           onSelect={this.onSelect}
-          multiple defaultExpandAll showLine
+          multiple
+          defaultExpandAll
+          showLine
         >
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">

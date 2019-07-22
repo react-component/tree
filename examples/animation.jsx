@@ -1,8 +1,7 @@
 /* eslint no-console:0, react/no-danger: 0 */
-import 'rc-tree/assets/index.less';
+import '../assets/index.less';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '../src';
 
 const STYLE = `
 .rc-tree-child-tree {
@@ -20,9 +19,7 @@ const STYLE = `
 }
 `;
 
-const onEnterActive = node => {
-  return { height: node.scrollHeight };
-};
+const onEnterActive = node => ({ height: node.scrollHeight });
 
 const motion = {
   motionName: 'node-motion',
