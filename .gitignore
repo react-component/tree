@@ -1,5 +1,7 @@
+.storybook
 *.iml
 *.log
+.doc/
 .idea/
 .ipr
 .iws
@@ -13,6 +15,7 @@ Thumbs.db
 .project
 .*proj
 .svn/
+coverage/
 *.swp
 *.swo
 *.pyc

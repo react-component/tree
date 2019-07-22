@@ -1,13 +1,12 @@
-/* eslint no-console:0 */
-import 'rc-tree/assets/index.less';
+/* eslint-disable no-console, react/no-access-state-in-setstate */
+import '../assets/index.less';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '../src';
 
 function generateTreeNodes(treeNode) {
   const arr = [];
   const key = treeNode.props.eventKey;
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 3; i += 1) {
     arr.push({ name: `leaf ${key}-${i}`, key: `${key}-${i}` });
   }
   return arr;
@@ -16,9 +15,12 @@ function generateTreeNodes(treeNode) {
 function setLeaf(treeData, curKey, level) {
   const loopLeaf = (data, lev) => {
     const l = lev - 1;
-    data.forEach((item) => {
-      if ((item.key.length > curKey.length) ? item.key.indexOf(curKey) !== 0 :
-        curKey.indexOf(item.key) !== 0) {
+    data.forEach(item => {
+      if (
+        item.key.length > curKey.length
+          ? item.key.indexOf(curKey) !== 0
+          : curKey.indexOf(item.key) !== 0
+      ) {
         return;
       }
       if (item.children) {
@@ -32,9 +34,9 @@ function setLeaf(treeData, curKey, level) {
 }
 
 function getNewTreeData(treeData, curKey, child, level) {
-  const loop = (data) => {
+  const loop = data => {
     if (level < 1 || curKey.length - 3 > level * 2) return;
-    data.forEach((item) => {
+    data.forEach(item => {
       if (curKey.indexOf(item.key) === 0) {
         if (item.children) {
           loop(item.children);
@@ -53,6 +55,7 @@ class Demo extends React.Component {
     treeData: [],
     checkedKeys: [],
   };
+
   componentDidMount() {
     setTimeout(() => {
       this.setState({
@@ -65,18 +68,21 @@ class Demo extends React.Component {
       });
     }, 100);
   }
-  onSelect = (info) => {
+
+  onSelect = info => {
     console.log('selected', info);
-  }
-  onCheck = (checkedKeys) => {
+  };
+
+  onCheck = checkedKeys => {
     console.log(checkedKeys);
     this.setState({
       checkedKeys,
     });
-  }
-  onLoadData = (treeNode) => {
+  };
+
+  onLoadData = treeNode => {
     console.log('load data...');
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         const treeData = [...this.state.treeData];
         getNewTreeData(treeData, treeNode.props.eventKey, generateTreeNodes(treeNode), 2);
@@ -84,27 +90,36 @@ class Demo extends React.Component {
         resolve();
       }, 500);
     });
-  }
+  };
+
   render() {
-    const loop = (data) => {
-      return data.map((item) => {
+    const loop = data =>
+      data.map(item => {
         if (item.children) {
-          return <TreeNode title={item.name} key={item.key}>{loop(item.children)}</TreeNode>;
+          return (
+            <TreeNode title={item.name} key={item.key}>
+              {loop(item.children)}
+            </TreeNode>
+          );
         }
         return (
-          <TreeNode title={item.name} key={item.key} isLeaf={item.isLeaf}
+          <TreeNode
+            title={item.name}
+            key={item.key}
+            isLeaf={item.isLeaf}
             disabled={item.key === '0-0-0'}
           />
         );
       });
-    };
     const treeNodes = loop(this.state.treeData);
     return (
       <div>
         <h2>dynamic render</h2>
         <Tree
           onSelect={this.onSelect}
-          checkable onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}
+          checkable
+          onCheck={this.onCheck}
+          checkedKeys={this.state.checkedKeys}
           loadData={this.onLoadData}
         >
           {treeNodes}
@@ -114,4 +129,4 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;

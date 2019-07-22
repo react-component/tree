@@ -252,8 +252,7 @@ class Tree extends React.Component {
 
         if (!props.checkStrictly) {
           const conductKeys = conductCheck(checkedKeys, true, keyEntities);
-          checkedKeys = conductKeys.checkedKeys;
-          halfCheckedKeys = conductKeys.halfCheckedKeys;
+          ({ checkedKeys, halfCheckedKeys } = conductKeys);
         }
 
         newState.checkedKeys = checkedKeys;
@@ -343,6 +342,7 @@ class Tree extends React.Component {
       }, 400);
     }, 0);
   };
+
   onNodeDragOver = (event, node) => {
     const { onDragOver } = this.props;
     const { eventKey } = node.props;
@@ -362,6 +362,7 @@ class Tree extends React.Component {
       onDragOver({ event, node });
     }
   };
+
   onNodeDragLeave = (event, node) => {
     const { onDragLeave } = this.props;
 
@@ -373,6 +374,7 @@ class Tree extends React.Component {
       onDragLeave({ event, node });
     }
   };
+
   onNodeDragEnd = (event, node) => {
     const { onDragEnd } = this.props;
     this.setState({
@@ -384,6 +386,7 @@ class Tree extends React.Component {
 
     this.dragNode = null;
   };
+
   onNodeDrop = (event, node) => {
     const { dragNodesKeys = [], dropPosition } = this.state;
     const { onDrop } = this.props;
@@ -559,8 +562,9 @@ class Tree extends React.Component {
         // Process load data
         const promise = loadData(treeNode);
         promise.then(() => {
-          const newLoadedKeys = arrAdd(this.state.loadedKeys, eventKey);
-          const newLoadingKeys = arrDel(this.state.loadingKeys, eventKey);
+          const { loadedKeys: currentLoadedKeys, loadingKeys: currentLoadingKeys } = this.state;
+          const newLoadedKeys = arrAdd(currentLoadedKeys, eventKey);
+          const newLoadingKeys = arrDel(currentLoadingKeys, eventKey);
 
           // onLoad should trigger before internal setState to avoid `loadData` trigger twice.
           // https://github.com/ant-design/ant-design/issues/12464

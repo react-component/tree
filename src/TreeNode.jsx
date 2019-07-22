@@ -310,20 +310,6 @@ class TreeNode extends React.Component {
     return treeCheckable;
   };
 
-  isSelectable() {
-    const { selectable } = this.props;
-    const {
-      rcTree: { selectable: treeSelectable },
-    } = this.context;
-
-    // Ignore when selectable is undefined or null
-    if (typeof selectable === 'boolean') {
-      return selectable;
-    }
-
-    return treeSelectable;
-  }
-
   // Load data to avoid default expanded tree without data
   syncLoadData = props => {
     const { expanded, loading, loaded } = props;
@@ -343,6 +329,20 @@ class TreeNode extends React.Component {
       }
     }
   };
+
+  isSelectable() {
+    const { selectable } = this.props;
+    const {
+      rcTree: { selectable: treeSelectable },
+    } = this.context;
+
+    // Ignore when selectable is undefined or null
+    if (typeof selectable === 'boolean') {
+      return selectable;
+    }
+
+    return treeSelectable;
+  }
 
   // Switcher
   renderSwitcher = () => {
@@ -497,22 +497,20 @@ class TreeNode extends React.Component {
     }
     return (
       <CSSMotion visible={expanded} {...motion}>
-        {({ style, className }) => {
-          return (
-            <ul
-              className={classNames(
-                className,
-                `${prefixCls}-child-tree`,
-                expanded && `${prefixCls}-child-tree-open`,
-              )}
-              style={style}
-              data-expanded={expanded}
-              role="group"
-            >
-              {mapChildren(nodeList, (node, index) => renderTreeNode(node, index, pos))}
-            </ul>
-          );
-        }}
+        {({ style, className }) => (
+          <ul
+            className={classNames(
+              className,
+              `${prefixCls}-child-tree`,
+              expanded && `${prefixCls}-child-tree-open`,
+            )}
+            style={style}
+            data-expanded={expanded}
+            role="group"
+          >
+            {mapChildren(nodeList, (node, index) => renderTreeNode(node, index, pos))}
+          </ul>
+        )}
       </CSSMotion>
     );
   };

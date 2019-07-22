@@ -114,7 +114,8 @@ export function calcDropPosition(event, treeNode) {
 
   if (clientY <= top + des) {
     return -1;
-  } else if (clientY >= bottom - des) {
+  }
+  if (clientY >= bottom - des) {
     return 1;
   }
 
