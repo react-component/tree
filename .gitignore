@@ -1,6 +1,7 @@
 .storybook
 *.iml
 *.log
+.doc/
 .idea/
 .ipr
 .iws
