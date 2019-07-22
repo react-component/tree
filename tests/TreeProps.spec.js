@@ -20,22 +20,16 @@ function timeoutPromise(delay = 0) {
 describe('Tree Props', () => {
   // prefixCls
   it('prefixCls', () => {
-    const withoutPrefix = render(
-      <Tree />
-    );
+    const withoutPrefix = render(<Tree />);
     expect(renderToJson(withoutPrefix)).toMatchSnapshot();
 
-    const withPrefix = render(
-      <Tree prefixCls="test-prefix" />
-    );
+    const withPrefix = render(<Tree prefixCls="test-prefix" />);
     expect(renderToJson(withPrefix)).toMatchSnapshot();
   });
 
   // showLine
   it('showLine', () => {
-    const wrapper = render(
-      <Tree showLine />
-    );
+    const wrapper = render(<Tree showLine />);
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -50,7 +44,7 @@ describe('Tree Props', () => {
           <TreeNode />
         </TreeNode>
         <TreeNode />
-      </Tree>
+      </Tree>,
     );
     expect(renderToJson(withIcon)).toMatchSnapshot();
 
@@ -63,7 +57,7 @@ describe('Tree Props', () => {
           <TreeNode />
         </TreeNode>
         <TreeNode />
-      </Tree>
+      </Tree>,
     );
     expect(renderToJson(withoutIcon)).toMatchSnapshot();
 
@@ -76,7 +70,7 @@ describe('Tree Props', () => {
           <TreeNode />
         </TreeNode>
         <TreeNode />
-      </Tree>
+      </Tree>,
     );
     expect(renderToJson(withOpenIcon)).toMatchSnapshot();
   });
@@ -103,8 +97,8 @@ describe('Tree Props', () => {
 
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
 
-      expect(handleOnSelect).not.toBeCalled();
-      expect(handleOnCheck).not.toBeCalled(); // Will test in checkable
+      expect(handleOnSelect).not.toHaveBeenCalled();
+      expect(handleOnCheck).not.toHaveBeenCalled(); // Will test in checkable
     });
 
     // selectable - true
@@ -131,7 +125,7 @@ describe('Tree Props', () => {
       // traverseTreeNodes loops origin TreeNode and
       // onSelect trigger on `cloneElement` which is not the same instance
       // TODO: use context instead of `cloneElement` to reduce
-      expect(handleOnSelect).toBeCalledWith(['0-0-0'], {
+      expect(handleOnSelect).toHaveBeenCalledWith(['0-0-0'], {
         event: 'select',
         selected: true,
         node: targetNode.instance(),
@@ -142,7 +136,7 @@ describe('Tree Props', () => {
 
       // un-select leaf
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
-      expect(handleOnSelect).toBeCalledWith([], {
+      expect(handleOnSelect).toHaveBeenCalledWith([], {
         event: 'select',
         selected: false,
         node: targetNode.instance(),
@@ -153,7 +147,7 @@ describe('Tree Props', () => {
 
       // Select leaf and then parent
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
-      expect(handleOnSelect).toBeCalledWith(['0-0-0'], {
+      expect(handleOnSelect).toHaveBeenCalledWith(['0-0-0'], {
         event: 'select',
         selected: true,
         node: targetNode.instance(),
@@ -162,8 +156,11 @@ describe('Tree Props', () => {
       });
       handleOnSelect.mockReset();
 
-      parentNode.find('.rc-tree-node-content-wrapper').first().simulate('click');
-      expect(handleOnSelect).toBeCalledWith(['0-0'], {
+      parentNode
+        .find('.rc-tree-node-content-wrapper')
+        .first()
+        .simulate('click');
+      expect(handleOnSelect).toHaveBeenCalledWith(['0-0'], {
         event: 'select',
         selected: true,
         node: parentNode.instance(),
@@ -178,11 +175,7 @@ describe('Tree Props', () => {
     const handleOnSelect = jest.fn();
 
     const multipleBase = (
-      <Tree
-        onSelect={handleOnSelect}
-        defaultExpandAll
-        multiple
-      >
+      <Tree onSelect={handleOnSelect} defaultExpandAll multiple>
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
         </TreeNode>
@@ -197,7 +190,7 @@ describe('Tree Props', () => {
 
     // Leaf select
     targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
-    expect(handleOnSelect).toBeCalledWith(['0-0-0'], {
+    expect(handleOnSelect).toHaveBeenCalledWith(['0-0-0'], {
       event: 'select',
       selected: true,
       node: targetNode.instance(),
@@ -207,19 +200,25 @@ describe('Tree Props', () => {
     handleOnSelect.mockReset();
 
     // Parent select
-    parentNode.find('.rc-tree-node-content-wrapper').first().simulate('click');
-    expect(handleOnSelect).toBeCalledWith(['0-0-0', '0-0'], expect.objectContaining({
-      event: 'select',
-      selected: true,
-      node: parentNode.instance(),
-      selectedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
-      nativeEvent: expect.objectContaining({}),
-    }));
+    parentNode
+      .find('.rc-tree-node-content-wrapper')
+      .first()
+      .simulate('click');
+    expect(handleOnSelect).toHaveBeenCalledWith(
+      ['0-0-0', '0-0'],
+      expect.objectContaining({
+        event: 'select',
+        selected: true,
+        node: parentNode.instance(),
+        selectedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
+        nativeEvent: expect.objectContaining({}),
+      }),
+    );
     handleOnSelect.mockReset();
 
     // Leaf un-select
     targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
-    expect(handleOnSelect).toBeCalledWith(['0-0'], {
+    expect(handleOnSelect).toHaveBeenCalledWith(['0-0'], {
       event: 'select',
       selected: false,
       node: targetNode.instance(),
@@ -255,15 +254,15 @@ describe('Tree Props', () => {
 
       // Click leaf
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
-      expect(handleOnSelect).toBeCalledWith(['0-0-0'], {
+      expect(handleOnSelect).toHaveBeenCalledWith(['0-0-0'], {
         event: 'select',
         selected: true,
         node: targetNode.instance(),
         selectedNodes: [parentNode.props().children],
         nativeEvent: expect.objectContaining({}),
       });
-      expect(handleOnCheck).not.toBeCalled();
-      expect(handleOnSelect).toBeCalled();
+      expect(handleOnCheck).not.toHaveBeenCalled();
+      expect(handleOnSelect).toHaveBeenCalled();
 
       handleOnCheck.mockReset();
       handleOnSelect.mockReset();
@@ -271,14 +270,17 @@ describe('Tree Props', () => {
       // Click checkbox
       targetNode.find('.rc-tree-checkbox').simulate('click');
 
-      expect(handleOnCheck).toBeCalledWith(['0-0-0', '0-0'], expect.objectContaining({
-        event: 'check',
-        checked: true,
-        node: targetNode.instance(),
-        checkedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
-        nativeEvent: expect.objectContaining({}),
-      }));
-      expect(handleOnSelect).not.toBeCalled();
+      expect(handleOnCheck).toHaveBeenCalledWith(
+        ['0-0-0', '0-0'],
+        expect.objectContaining({
+          event: 'check',
+          checked: true,
+          node: targetNode.instance(),
+          checkedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
+          nativeEvent: expect.objectContaining({}),
+        }),
+      );
+      expect(handleOnSelect).not.toHaveBeenCalled();
     });
 
     it('without selectable', () => {
@@ -307,46 +309,53 @@ describe('Tree Props', () => {
 
       // Click leaf
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
-      expect(handleOnCheck).toBeCalledWith(['0-0-0', '0-0'], expect.objectContaining({
-        event: 'check',
-        checked: true,
-        node: targetNode.instance(),
-        checkedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
-        nativeEvent: expect.objectContaining({}),
-      }));
-      expect(handleOnSelect).not.toBeCalled();
+      expect(handleOnCheck).toHaveBeenCalledWith(
+        ['0-0-0', '0-0'],
+        expect.objectContaining({
+          event: 'check',
+          checked: true,
+          node: targetNode.instance(),
+          checkedNodes: [nodeMatcher({ key: '0-0-0' }), nodeMatcher({ key: '0-0' })],
+          nativeEvent: expect.objectContaining({}),
+        }),
+      );
+      expect(handleOnSelect).not.toHaveBeenCalled();
     });
 
     it('node set checkable to `false`', () => {
       const wrapper = mount(
-        <Tree
-          checkable
-          defaultExpandAll
-        >
+        <Tree checkable defaultExpandAll>
           <TreeNode key="0-0">
             <TreeNode key="0-0-0" checkable={false} />
           </TreeNode>
-        </Tree>
+        </Tree>,
       );
 
-      expect(wrapper.find('TreeNode').at(0).find('.rc-tree-checkbox').length).toBeTruthy();
-      expect(wrapper.find('TreeNode').at(1).find('.rc-tree-checkbox').length).toBeFalsy();
+      expect(
+        wrapper
+          .find('TreeNode')
+          .at(0)
+          .find('.rc-tree-checkbox').length,
+      ).toBeTruthy();
+      expect(
+        wrapper
+          .find('TreeNode')
+          .at(1)
+          .find('.rc-tree-checkbox').length,
+      ).toBeFalsy();
     });
   });
 
   // Don't crash
   describe('invalidate checkedKeys', () => {
-    const genWrapper = (checkedKeys) => mount(
-      <Tree
-        checkedKeys={checkedKeys}
-        defaultExpandAll
-        checkable
-      >
-        <TreeNode key="0-0">
-          <TreeNode key="0-0-0" />
-        </TreeNode>
-      </Tree>
-    );
+    const genWrapper = checkedKeys =>
+      mount(
+        <Tree checkedKeys={checkedKeys} defaultExpandAll checkable>
+          <TreeNode key="0-0">
+            <TreeNode key="0-0-0" />
+          </TreeNode>
+        </Tree>,
+      );
 
     it('null', () => {
       const wrapper = genWrapper(null);
@@ -354,7 +363,7 @@ describe('Tree Props', () => {
     });
 
     it('number', () => {
-      console.log('>>> Follow Warning is for test purpose. Don\'t be scared :)');
+      console.log(">>> Follow Warning is for test purpose. Don't be scared :)");
       const wrapper = genWrapper(123);
       expect(wrapper.render()).toMatchSnapshot();
     });
@@ -365,12 +374,7 @@ describe('Tree Props', () => {
     const handleOnCheck = jest.fn();
 
     const withCheckStrictlyBase = (
-      <Tree
-        onCheck={handleOnCheck}
-        defaultExpandedKeys={['0-0']}
-        checkable
-        checkStrictly
-      >
+      <Tree onCheck={handleOnCheck} defaultExpandedKeys={['0-0']} checkable checkStrictly>
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
         </TreeNode>
@@ -385,16 +389,19 @@ describe('Tree Props', () => {
 
     // Click Leaf
     targetNode.find('.rc-tree-checkbox').simulate('click');
-    expect(handleOnCheck).toBeCalledWith({
-      checked: ['0-0-0'],
-      halfChecked: [],
-    }, expect.objectContaining({
-      event: 'check',
-      checked: true,
-      node: targetNode.instance(),
-      checkedNodes: [parentNode.props().children],
-      nativeEvent: expect.objectContaining({}),
-    }));
+    expect(handleOnCheck).toHaveBeenCalledWith(
+      {
+        checked: ['0-0-0'],
+        halfChecked: [],
+      },
+      expect.objectContaining({
+        event: 'check',
+        checked: true,
+        node: targetNode.instance(),
+        checkedNodes: [parentNode.props().children],
+        nativeEvent: expect.objectContaining({}),
+      }),
+    );
   });
 
   // draggable - is already full test in Tree.spec.js
@@ -407,7 +414,7 @@ describe('Tree Props', () => {
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
         </TreeNode>
-      </Tree>
+      </Tree>,
     );
 
     expect(renderToJson(wrapper)).toMatchSnapshot();
@@ -440,9 +447,7 @@ describe('Tree Props', () => {
           // Hide icon will still show the icon for loading status
           return (
             <Tree loadData={this.loadData} showIcon={false}>
-              <TreeNode key="0-0">
-                {this.state.loaded ? <TreeNode key="0-0-0" /> : null}
-              </TreeNode>
+              <TreeNode key="0-0">{this.state.loaded ? <TreeNode key="0-0-0" /> : null}</TreeNode>
             </Tree>
           );
         }
@@ -450,14 +455,14 @@ describe('Tree Props', () => {
 
       const wrapper = mount(<Demo />);
 
-      expect(handleLoadData).not.toBeCalled();
+      expect(handleLoadData).not.toHaveBeenCalled();
 
       const switcher = wrapper.find('.rc-tree-switcher');
       const node = wrapper.find(TreeNode).instance();
       switcher.simulate('click');
 
       return timeoutPromise().then(() => {
-        expect(handleLoadData).toBeCalledWith(node);
+        expect(handleLoadData).toHaveBeenCalledWith(node);
         expect(called).toBe(1);
         expect(renderToJson(wrapper.render())).toMatchSnapshot();
       });
@@ -476,14 +481,11 @@ describe('Tree Props', () => {
       };
 
       const tree = mount(
-        <Tree
-          loadData={loadData}
-          expandedKeys={['0', '1', '2']}
-        >
+        <Tree loadData={loadData} expandedKeys={['0', '1', '2']}>
           <TreeNode key="0" />
           <TreeNode key="1" />
           <TreeNode key="2" />
-        </Tree>
+        </Tree>,
       );
 
       tree.setProps({ expandedKeys: ['0', '1', '2'] });
@@ -508,19 +510,22 @@ describe('Tree Props', () => {
       };
 
       const wrapper = mount(
-        <Tree
-          loadData={loadData}
-          defaultExpandedKeys={['0', '1', '2']}
-        >
+        <Tree loadData={loadData} defaultExpandedKeys={['0', '1', '2']}>
           <TreeNode key="0" />
           <TreeNode key="1" />
           <TreeNode key="2" />
-        </Tree>
+        </Tree>,
       );
 
       // Do not trigger loadData
-      wrapper.find('.rc-tree-switcher').at(0).simulate('click');
-      wrapper.find('.rc-tree-switcher').at(0).simulate('click');
+      wrapper
+        .find('.rc-tree-switcher')
+        .at(0)
+        .simulate('click');
+      wrapper
+        .find('.rc-tree-switcher')
+        .at(0)
+        .simulate('click');
 
       return timeoutPromise().then(() => {
         expect(called).toBe(3);
@@ -534,23 +539,21 @@ describe('Tree Props', () => {
     it('node has false isLeaf & no loadData function', () => {
       const onExpand = jest.fn();
       const wrapper = mount(
-        <Tree
-          onExpand={onExpand}
-        >
+        <Tree onExpand={onExpand}>
           <TreeNode key="0" isLeaf={false} />
-        </Tree>
+        </Tree>,
       );
 
       const switcher = wrapper.find('.rc-tree-switcher');
       switcher.simulate('click');
 
-      expect(onExpand).toBeCalled();
+      expect(onExpand).toHaveBeenCalled();
 
       // If has dead loop. This test will not be end.
     });
 
     // https://github.com/ant-design/ant-design/issues/12464
-    it('by controlled', (done) => {
+    it('by controlled', done => {
       const treeData = [
         {
           title: 'demo1',
@@ -562,8 +565,8 @@ describe('Tree Props', () => {
               key: 'demo2',
               value: 'demo3',
             },
-          ]
-        }
+          ],
+        },
       ];
 
       let count = 0;
@@ -573,12 +576,12 @@ describe('Tree Props', () => {
           loadedKeys: [],
         };
 
-        onLoad = (loadedKeys) => {
+        onLoad = loadedKeys => {
           this.setState({ loadedKeys });
         };
 
         loadData = () => {
-          count ++;
+          count += 1;
           return Promise.resolve();
         };
 
@@ -601,7 +604,10 @@ describe('Tree Props', () => {
 
       setTimeout(() => {
         // Child click
-        wrapper.find('.rc-tree-switcher').at(1).simulate('click');
+        wrapper
+          .find('.rc-tree-switcher')
+          .at(1)
+          .simulate('click');
 
         setTimeout(() => {
           expect(count).toBe(2);
@@ -618,7 +624,7 @@ describe('Tree Props', () => {
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" icon={<span>CUSTOMIZE ICON</span>} />
         </TreeNode>
-      </Tree>
+      </Tree>,
     );
 
     expect(renderToJson(wrapper)).toMatchSnapshot();
@@ -632,7 +638,7 @@ describe('Tree Props', () => {
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
         </TreeNode>
-      </Tree>
+      </Tree>,
     );
 
     const parentNode = wrapper.find(TreeNode).first();
@@ -641,10 +647,7 @@ describe('Tree Props', () => {
     // Select leaf
     targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
 
-    expect(onClick).toBeCalledWith(
-      expect.objectContaining({}),
-      targetNode.instance(),
-    );
+    expect(onClick).toHaveBeenCalledWith(expect.objectContaining({}), targetNode.instance());
   });
 
   it('onDoubleClick', () => {
@@ -656,7 +659,7 @@ describe('Tree Props', () => {
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
         </TreeNode>
-      </Tree>
+      </Tree>,
     );
 
     const parentNode = wrapper.find(TreeNode).first();
@@ -665,11 +668,8 @@ describe('Tree Props', () => {
     // Select leaf
     targetNode.find('.rc-tree-node-content-wrapper').simulate('doubleclick');
 
-    expect(onClick).not.toBeCalled();
-    expect(onDoubleClick).toBeCalledWith(
-      expect.objectContaining({}),
-      targetNode.instance(),
-    );
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onDoubleClick).toHaveBeenCalledWith(expect.objectContaining({}), targetNode.instance());
   });
 
   describe('loadedKeys & onLoad', () => {
@@ -680,12 +680,12 @@ describe('Tree Props', () => {
       const wrapper = mount(
         <Tree loadedKeys={['0-0']} loadData={loadData} onLoad={onLoad}>
           <TreeNode key="0-0" />
-        </Tree>
+        </Tree>,
       );
 
       wrapper.find('.rc-tree-switcher').simulate('click');
-      expect(loadData).not.toBeCalled();
-      expect(onLoad).not.toBeCalled();
+      expect(loadData).not.toHaveBeenCalled();
+      expect(onLoad).not.toHaveBeenCalled();
     });
 
     it('reset loadedKeys', () => {
@@ -693,10 +693,11 @@ describe('Tree Props', () => {
         constructor(val) {
           this.val = val;
         }
-        then = (func) => {
+
+        then = func => {
           const ret = func(this.val);
           return new FakePromise(ret);
-        }
+        };
       }
 
       let wrapper;
@@ -709,12 +710,12 @@ describe('Tree Props', () => {
       wrapper = mount(
         <Tree loadedKeys={['0-0']} loadData={loadData} onLoad={onLoad}>
           <TreeNode key="0-0" />
-        </Tree>
+        </Tree>,
       );
       wrapper.setProps({ loadedKeys: [] });
       wrapper.find('.rc-tree-switcher').simulate('click');
-      expect(loadData).toBeCalledWith(wrapper.find(TreeNode).instance());
-      expect(onLoad).toBeCalledWith(['0-0'], {
+      expect(loadData).toHaveBeenCalledWith(wrapper.find(TreeNode).instance());
+      expect(onLoad).toHaveBeenCalledWith(['0-0'], {
         event: 'load',
         node: wrapper.find(TreeNode).instance(),
       });
@@ -725,18 +726,17 @@ describe('Tree Props', () => {
     const treeData = [
       { key: 'K0', title: 'T0' },
       {
-        key: 'K1', title: 'T1', children:
-          [
-            { key: 'K10', title: 'T10' },
-            {
-              key: 'K11', title: 'T11', children:
-                [
-                  { key: 'K110', title: 'T110' },
-                  { key: 'K111', title: 'T111' },
-                ]
-            },
-            { key: 'K12', title: 'T12' },
-          ],
+        key: 'K1',
+        title: 'T1',
+        children: [
+          { key: 'K10', title: 'T10' },
+          {
+            key: 'K11',
+            title: 'T11',
+            children: [{ key: 'K110', title: 'T110' }, { key: 'K111', title: 'T111' }],
+          },
+          { key: 'K12', title: 'T12' },
+        ],
       },
     ];
     const wrapper = mount(<Tree treeData={treeData} defaultExpandAll />);
@@ -748,7 +748,7 @@ describe('Tree Props', () => {
       const wrapper = render(
         <Tree defaultExpandAll disabled>
           <TreeNode key="0-0" />
-        </Tree>
+        </Tree>,
       );
       expect(wrapper).toMatchSnapshot();
     });
@@ -757,7 +757,7 @@ describe('Tree Props', () => {
       const wrapper = render(
         <Tree defaultExpandAll disabled>
           <TreeNode key="0-0" disabled={false} />
-        </Tree>
+        </Tree>,
       );
       expect(wrapper).toMatchSnapshot();
     });
@@ -772,12 +772,10 @@ describe('Tree Props', () => {
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
         </TreeNode>
-      </Tree>
+      </Tree>,
     );
 
-    expect(
-      wrapper.find('CSSMotion').props()
-    ).toMatchObject(motion);
+    expect(wrapper.find('CSSMotion').props()).toMatchObject(motion);
   });
 
   describe('data and aria props', () => {
@@ -791,7 +789,6 @@ describe('Tree Props', () => {
       expect(renderToJson(wrapper)).toMatchSnapshot();
     });
   });
-
 
   describe('custom switcher icon', () => {
     function switcherIcon(text, testLeaf) {
@@ -816,7 +813,7 @@ describe('Tree Props', () => {
             <TreeNode key="0-1-0" />
             <TreeNode key="0-1-1" />
           </TreeNode>
-        </Tree>
+        </Tree>,
       );
       expect(wrapper).toMatchSnapshot();
     });
@@ -828,10 +825,13 @@ describe('Tree Props', () => {
           <TreeNode key="0-1" switcherIcon={switcherIcon('switcherLeafIconFromNode0-1', true)} />
           <TreeNode key="0-2">
             <TreeNode key="0-2-0" />
-            <TreeNode key="0-2-1" switcherIcon={switcherIcon('switcherLeafIconFromNode0-2-1', true)} />
+            <TreeNode
+              key="0-2-1"
+              switcherIcon={switcherIcon('switcherLeafIconFromNode0-2-1', true)}
+            />
           </TreeNode>
           <TreeNode key="0-3" />
-        </Tree>
+        </Tree>,
       );
       expect(wrapper).toMatchSnapshot();
     });
