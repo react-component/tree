@@ -189,24 +189,6 @@ exports[`Tree Props checkable without selectable 1`] = `
 </ul>
 `;
 
-exports[`Tree Props data and aria props renders aria attributes 1`] = `
-<ul
-  aria-label="name"
-  class="rc-tree"
-  role="tree"
-  unselectable="on"
-/>
-`;
-
-exports[`Tree Props data and aria props renders data attributes 1`] = `
-<ul
-  class="rc-tree"
-  data-test="tree"
-  role="tree"
-  unselectable="on"
-/>
-`;
-
 exports[`Tree Props custom switcher icon switcher icon 1`] = `
 <ul
   class="rc-tree"
@@ -469,6 +451,24 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
     </span>
   </li>
 </ul>
+`;
+
+exports[`Tree Props data and aria props renders aria attributes 1`] = `
+<ul
+  aria-label="name"
+  class="rc-tree"
+  role="tree"
+  unselectable="on"
+/>
+`;
+
+exports[`Tree Props data and aria props renders data attributes 1`] = `
+<ul
+  class="rc-tree"
+  data-test="tree"
+  role="tree"
+  unselectable="on"
+/>
 `;
 
 exports[`Tree Props defaultExpandAll 1`] = `
@@ -1411,6 +1411,36 @@ exports[`Tree Props treeData 1`] = `
         </span>
       </li>
     </ul>
+  </li>
+</ul>
+`;
+
+exports[`Tree Props treeData 2`] = `
+<ul
+  class="rc-tree"
+  role="tree"
+  unselectable="on"
+>
+  <li
+    class="rc-tree-treenode-switcher-open"
+    role="treeitem"
+  >
+    <span
+      class="rc-tree-switcher rc-tree-switcher-noop"
+    />
+    <span
+      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+      title="T0"
+    >
+      <span
+        class="rc-tree-iconEle rc-tree-icon__docu"
+      />
+      <span
+        class="rc-tree-title"
+      >
+        T0
+      </span>
+    </span>
   </li>
 </ul>
 `;

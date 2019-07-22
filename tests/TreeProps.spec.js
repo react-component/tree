@@ -3,7 +3,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import PropTypes from 'prop-types';
-import Tree, { TreeNode } from '..';
+import Tree, { TreeNode } from '../src';
 import { nodeMatcher } from './util';
 
 /**
@@ -740,6 +740,11 @@ describe('Tree Props', () => {
       },
     ];
     const wrapper = mount(<Tree treeData={treeData} defaultExpandAll />);
+    expect(wrapper.render()).toMatchSnapshot();
+
+    const newTreeData = [{ key: 'K0', title: 'T0' }];
+    wrapper.setProps({ treeData: newTreeData });
+    wrapper.update();
     expect(wrapper.render()).toMatchSnapshot();
   });
 

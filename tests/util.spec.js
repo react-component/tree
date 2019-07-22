@@ -10,6 +10,7 @@ import {
   conductExpandParent,
   getDragNodesKeys,
   getDataAndAria,
+  parseCheckedKeys,
 } from '../src/util';
 import { convertTreeToData } from './util';
 
@@ -291,5 +292,15 @@ describe('Util', () => {
         'aria-label': 'name',
       });
     });
+  });
+
+  it('parseCheckedKeys warning', () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    expect(parseCheckedKeys(233)).toBe(null);
+
+    expect(errorSpy).toHaveBeenCalledWith('Warning: `checkedKeys` is not an array or an object');
+
+    errorSpy.mockRestore();
   });
 });

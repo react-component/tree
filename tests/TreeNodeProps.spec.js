@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
-import Tree, { TreeNode } from '..';
+import Tree, { TreeNode } from '../src';
 
 /**
  * For refactor purpose. All the props should be passed by test
