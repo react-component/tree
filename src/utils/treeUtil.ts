@@ -1,15 +1,15 @@
-import { TreeNode, FlattenTreeNode } from '../interface';
+import { DataNode, FlattenDataNode } from '../interface';
 
 /**
  * Flat nest tree data into flatten list. This is used for virtual list render.
  */
-export function flattenTreeData(treeNodeList: TreeNode[] = []): FlattenTreeNode[] {
-  const flattenList: FlattenTreeNode[] = [];
+export function flattenTreeData(treeNodeList: DataNode[] = []): FlattenDataNode[] {
+  const flattenList: FlattenDataNode[] = [];
 
-  function dig(list: TreeNode[], parent: FlattenTreeNode = null): FlattenTreeNode[] {
+  function dig(list: DataNode[], parent: FlattenDataNode = null): FlattenDataNode[] {
     return list.map(treeNode => {
-      // Add FlattenTreeNode into list
-      const flattenNode: FlattenTreeNode = {
+      // Add FlattenDataNode into list
+      const flattenNode: FlattenDataNode = {
         ...treeNode,
         parent,
         children: null,

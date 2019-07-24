@@ -28,3 +28,8 @@ export interface Entity {
   parent?: Entity;
   children?: Entity[];
 }
+
+export interface FlattenDataNode extends Omit<DataNode, 'children'> {
+  parent: FlattenDataNode | null;
+  children: FlattenDataNode[];
+}
