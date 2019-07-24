@@ -113,7 +113,6 @@ export interface TreeProps {
 }
 
 interface TreeState {
-  posEntities: Record<string, Entity>;
   keyEntities: Record<Key, Entity>;
 
   selectedKeys: Key[];
@@ -209,8 +208,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
   delayedDragEnterLogic: Record<Key, number>;
 
   state = {
-    // TODO: Remove this eslint
-    posEntities: {}, // eslint-disable-line react/no-unused-state
     keyEntities: {},
 
     selectedKeys: [],
@@ -311,7 +308,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
       // Calculate the entities data for quick match
       const entitiesMap = convertTreeToEntities(treeNode);
-      newState.posEntities = entitiesMap.posEntities;
       newState.keyEntities = entitiesMap.keyEntities;
     }
 
