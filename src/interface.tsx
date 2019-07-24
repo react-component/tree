@@ -19,3 +19,12 @@ export type NodeElement = React.ReactElement<TreeNodeProps> & {
     isTreeNode: boolean;
   };
 };
+
+export interface Entity {
+  node: NodeElement;
+  index: number;
+  key: Key;
+  pos: string | number;
+  parent?: Entity;
+  children?: Entity[];
+}

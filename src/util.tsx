@@ -2,7 +2,7 @@ import React, { Children } from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode } from './interface';
+import { NodeElement, Key, DataNode, Entity } from './interface';
 import { TreeProps } from './Tree';
 
 const DRAG_SIDE_RANGE = 0.25;
@@ -172,8 +172,8 @@ function keyListToString(keyList: Key[]) {
 const internalProcessProps = (props: DataNode): Partial<TreeNodeProps> => props;
 export function convertDataToTree(
   treeData: DataNode[],
-  processor: { processProps: (prop: DataNode) => any },
-) {
+  processor?: { processProps: (prop: DataNode) => any },
+): React.ReactNode {
   if (!treeData) return [];
 
   const { processProps = internalProcessProps } = processor || {};
@@ -186,14 +186,6 @@ export function convertDataToTree(
 }
 
 // TODO: ========================= NEW LOGIC =========================
-interface Entity {
-  node: NodeElement;
-  index: number;
-  key: Key;
-  pos: string | number;
-  parent?: Entity;
-  children?: Entity[];
-}
 interface Wrapper {
   posEntities: Record<string, Entity>;
   keyEntities: Record<Key, Entity>;
@@ -454,7 +446,7 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Ent
 /**
  * Returns only the data- and aria- key/value pairs
  */
-export function getDataAndAria(props: TreeNodeProps) {
+export function getDataAndAria(props: Partial<TreeProps | TreeNodeProps>) {
   return Object.keys(props).reduce((prev, key) => {
     if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
       prev[key] = props[key];
