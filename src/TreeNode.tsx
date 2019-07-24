@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import CSSMotion from 'rc-animate/lib/CSSMotion';
@@ -6,19 +6,54 @@ import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
 import { getNodeChildren, getDataAndAria, mapChildren, warnOnlyTreeNode } from './util';
+import { IconType } from './interface';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
 
 const defaultTitle = '---';
 
-class TreeNode extends React.Component {
+export interface TreeNodeProps {
+  eventKey?: string; // Pass by parent `cloneElement`
+  prefixCls?: string;
+  className?: string;
+  style: React.CSSProperties;
+  onSelect: React.MouseEventHandler<HTMLSpanElement>;
+
+  // By parent
+  expanded?: boolean;
+  selected?: boolean;
+  checked?: boolean;
+  loaded?: boolean;
+  loading?: boolean;
+  halfChecked?: boolean;
+  children?: React.ReactNode;
+  title?: React.ReactNode;
+  pos?: string;
+  dragOver?: boolean;
+  dragOverGapTop?: boolean;
+  dragOverGapBottom?: boolean;
+
+  // By user
+  isLeaf?: boolean;
+  checkable?: boolean;
+  selectable?: boolean;
+  disabled?: boolean;
+  disableCheckbox?: boolean;
+  icon: IconType;
+  switcherIcon: IconType;
+}
+
+export interface TreeNodeState {
+  dragNodeHighlight: boolean;
+}
+
+class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   static propTypes = {
     eventKey: PropTypes.string, // Pass by parent `cloneElement`
     prefixCls: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
-    root: PropTypes.object,
     onSelect: PropTypes.func,
 
     // By parent
@@ -49,17 +84,17 @@ class TreeNode extends React.Component {
 
   static childContextTypes = nodeContextTypes;
 
+  static isTreeNode = 1;
+
   static defaultProps = {
     title: defaultTitle,
   };
 
-  constructor(props) {
-    super(props);
+  public state = {
+    dragNodeHighlight: false,
+  };
 
-    this.state = {
-      dragNodeHighlight: false,
-    };
-  }
+  public selectHandle: HTMLSpanElement;
 
   getChildContext() {
     return {
@@ -568,8 +603,6 @@ class TreeNode extends React.Component {
     );
   }
 }
-
-TreeNode.isTreeNode = 1;
 
 polyfill(TreeNode);
 

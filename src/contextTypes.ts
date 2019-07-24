@@ -11,8 +11,6 @@ import PropTypes from 'prop-types';
  */
 export const treeContextTypes = {
   rcTree: PropTypes.shape({
-    root: PropTypes.object,
-
     prefixCls: PropTypes.string,
     selectable: PropTypes.bool,
     showIcon: PropTypes.bool,
