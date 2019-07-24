@@ -12,6 +12,7 @@ import {
   getDataAndAria,
   parseCheckedKeys,
 } from '../src/util';
+import { flattenTreeData } from '../src/utils/treeUtil';
 import { convertTreeToData } from './util';
 
 describe('Util', () => {
@@ -302,5 +303,34 @@ describe('Util', () => {
     expect(errorSpy).toHaveBeenCalledWith('Warning: `checkedKeys` is not an array or an object');
 
     errorSpy.mockRestore();
+  });
+
+  it('flatten treeNode', () => {
+    function getNode(key, children) {
+      return {
+        key,
+        title: key,
+        children,
+      };
+    }
+
+    const flattenList = flattenTreeData([
+      getNode('0', [
+        getNode('0-0'),
+        getNode('0-1'),
+        getNode('0-2', [getNode('0-2-0'), getNode('0-2-1')]),
+      ]),
+      getNode('1'),
+    ]);
+
+    expect(flattenList.map(({ key }) => key)).toEqual([
+      '0',
+      '0-0',
+      '0-1',
+      '0-2',
+      '0-2-0',
+      '0-2-1',
+      '1',
+    ]);
   });
 });
