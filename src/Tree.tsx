@@ -135,8 +135,6 @@ class Tree extends React.Component {
 
     return {
       rcTree: {
-        // root: this,
-
         prefixCls,
         selectable,
         showIcon,
