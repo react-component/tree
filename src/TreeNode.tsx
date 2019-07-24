@@ -6,13 +6,12 @@ import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
 import { getNodeChildren, getDataAndAria, mapChildren, warnOnlyTreeNode } from './util';
+import { IconType } from './interface';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
 
 const defaultTitle = '---';
-
-type IconProp = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
 
 export interface TreeNodeProps {
   eventKey?: string; // Pass by parent `cloneElement`
@@ -41,8 +40,8 @@ export interface TreeNodeProps {
   selectable?: boolean;
   disabled?: boolean;
   disableCheckbox?: boolean;
-  icon: IconProp;
-  switcherIcon: IconProp;
+  icon: IconType;
+  switcherIcon: IconType;
 }
 
 export interface TreeNodeState {
@@ -91,11 +90,11 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     title: defaultTitle,
   };
 
-  state = {
+  public state = {
     dragNodeHighlight: false,
   };
 
-  selectHandle: HTMLSpanElement;
+  public selectHandle: HTMLSpanElement;
 
   getChildContext() {
     return {
