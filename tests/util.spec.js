@@ -12,8 +12,7 @@ import {
   getDataAndAria,
   parseCheckedKeys,
 } from '../src/util';
-import { flattenTreeData } from '../src/utils/treeUtil';
-import { convertTreeToData } from './util';
+import { flattenTreeData, convertTreeToData } from '../src/utils/treeUtil';
 
 describe('Util', () => {
   it('convertTreeToData - case1', () => {

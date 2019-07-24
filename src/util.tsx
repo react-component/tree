@@ -173,16 +173,18 @@ const internalProcessProps = (props: DataNode): Partial<TreeNodeProps> => props;
 export function convertDataToTree(
   treeData: DataNode[],
   processor?: { processProps: (prop: DataNode) => any },
-): React.ReactNode {
+): NodeElement[] {
   if (!treeData) return [];
 
   const { processProps = internalProcessProps } = processor || {};
   const list = Array.isArray(treeData) ? treeData : [treeData];
-  return list.map(({ children, ...props }) => {
-    const childrenNodes = convertDataToTree(children, processor);
+  return list.map(
+    ({ children, ...props }): NodeElement => {
+      const childrenNodes = convertDataToTree(children, processor);
 
-    return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
-  });
+      return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
+    },
+  );
 }
 
 // TODO: ========================= NEW LOGIC =========================

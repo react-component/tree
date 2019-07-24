@@ -23,7 +23,8 @@ import {
   conductCheck,
   warnOnlyTreeNode,
 } from './util';
-import { DataNode, IconType, Key, NodeElement, Entity } from './interface';
+import { DataNode, IconType, Key, NodeElement, Entity, FlattenDataNode } from './interface';
+import { flattenTreeData } from './utils/treeUtil';
 
 interface CheckInfo {
   event: 'check';
@@ -125,7 +126,9 @@ interface TreeState {
   dragOverNodeKey: Key;
   dropPosition: number;
 
+  /** @deprecated Cache treeNode of children. Will save as node if `treeData` provided. */
   treeNode: React.ReactNode;
+  flattenNodes: FlattenDataNode[];
 
   prevProps: TreeProps;
 }
@@ -221,6 +224,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
     dropPosition: null,
 
     treeNode: [],
+    flattenNodes: [],
+
     prevProps: null,
   };
 
@@ -281,23 +286,26 @@ class Tree extends React.Component<TreeProps, TreeState> {
     };
   }
 
-  static getDerivedStateFromProps(props, prevState) {
+  static getDerivedStateFromProps(props: TreeProps, prevState: TreeState) {
     const { prevProps } = prevState;
     const newState: Partial<TreeState> = {
       prevProps: props,
     };
 
-    function needSync(name) {
+    function needSync(name: string) {
       return (!prevProps && name in props) || (prevProps && prevProps[name] !== props[name]);
     }
 
     // ================== Tree Node ==================
     let treeNode = null;
+    let flattenNodes: FlattenDataNode[] = null;
 
     // Check if `treeData` or `children` changed and save into the state.
     if (needSync('treeData')) {
+      flattenNodes = flattenTreeData(props.treeData);
       treeNode = convertDataToTree(props.treeData);
     } else if (needSync('children')) {
+      warning(false, '`children` of Tree is deprecated. Please use `treeData` instead.');
       treeNode = toArray(props.children);
     }
 

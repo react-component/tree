@@ -1,4 +1,40 @@
-import { DataNode, FlattenDataNode } from '../interface';
+import * as React from 'react';
+import toArray from 'rc-util/lib/Children/toArray';
+import { DataNode, FlattenDataNode, NodeElement } from '../interface';
+
+/**
+ * Convert `children` of Tree into `treeData` structure.
+ */
+export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
+  function dig(node: React.ReactNode): DataNode[] {
+    const treeNodes: NodeElement[] = toArray(node);
+    return treeNodes
+      .map(treeNode => {
+        // Filter invalidate node
+        if (!React.isValidElement(treeNode)) {
+          return null;
+        }
+
+        const { key } = treeNode;
+        const { children, ...rest } = treeNode.props;
+
+        const dataNode: DataNode = {
+          key,
+          ...rest,
+        };
+
+        const parsedChildren = dig(children);
+        if (parsedChildren.length) {
+          dataNode.children = parsedChildren;
+        }
+
+        return dataNode;
+      })
+      .filter((dataNode: DataNode) => dataNode);
+  }
+
+  return dig(rootNodes);
+}
 
 /**
  * Flat nest tree data into flatten list. This is used for virtual list render.

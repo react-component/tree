@@ -2,11 +2,16 @@ import * as React from 'react';
 import { TreeNodeProps } from './TreeNode';
 
 export interface DataNode {
-  key: string;
-  title: string;
-  disabled?: boolean;
-  selectable?: boolean;
+  checkable?: boolean;
   children?: DataNode[];
+  disabled?: boolean;
+  disableCheckbox?: boolean;
+  icon?: IconType;
+  isLeaf?: boolean;
+  key: string | number;
+  title?: React.ReactNode;
+  selectable?: boolean;
+  switcherIcon?: IconType;
 }
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
@@ -14,7 +19,7 @@ export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactN
 export type Key = string | number;
 
 export type NodeElement = React.ReactElement<TreeNodeProps> & {
-  selectHandle: HTMLSpanElement;
+  selectHandle?: HTMLSpanElement;
   type: {
     isTreeNode: boolean;
   };
