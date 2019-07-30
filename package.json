@@ -64,6 +64,7 @@
     "prop-types": "^15.5.8",
     "rc-animate": "^2.6.0",
     "rc-util": "^4.5.1",
+    "rc-virtual-list": "^0.0.0-alpha.4",
     "react-lifecycles-compat": "^3.0.4",
     "warning": "^4.0.3"
   }

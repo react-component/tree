@@ -1,6 +1,7 @@
 import * as React from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
-import { DataNode, FlattenDataNode, NodeElement } from '../interface';
+import { DataNode, FlattenDataNode, NodeElement, DataEntity, Key } from '../interface';
+import { getPosition } from '../util';
 
 /**
  * Convert `children` of Tree into `treeData` structure.
@@ -63,4 +64,107 @@ export function flattenTreeData(treeNodeList: DataNode[] = []): FlattenDataNode[
   dig(treeNodeList);
 
   return flattenList;
+}
+
+/**
+ * Traverse all the data by `treeData`.
+ * Please not use it out of the `rc-tree` since we may refactor this code.
+ */
+export function traverseDataNodes(
+  dataNodes: DataNode[],
+  callback: (data: {
+    node: DataNode;
+    index: number;
+    pos: string | number;
+    key: Key;
+    parentPos: string | number;
+  }) => void,
+) {
+  function processNode(
+    node: DataNode,
+    index?: number,
+    parent?: { node: DataNode; pos: string | number },
+  ) {
+    const children = node ? node.children : dataNodes;
+    const pos = node ? getPosition(parent.pos, index) : 0;
+
+    // Process node if is not root
+    if (node) {
+      const data = {
+        node,
+        index,
+        pos,
+        key: node.key || pos,
+        parentPos: parent.node ? parent.pos : null,
+      };
+
+      callback(data);
+    }
+
+    // Process children node
+    if (children) {
+      children.forEach((subNode, subIndex) => {
+        processNode(subNode, subIndex, { node, pos });
+      });
+    }
+  }
+
+  processNode(null);
+}
+
+interface Wrapper {
+  posEntities: Record<string, DataEntity>;
+  keyEntities: Record<Key, DataEntity>;
+}
+
+/**
+ * Convert `treeData` into entity records.
+ */
+export function convertDataToEntities(
+  dataNodes: DataNode[],
+  {
+    initWrapper,
+    processEntity,
+    onProcessFinished,
+  }: {
+    initWrapper?: (wrapper: Wrapper) => Wrapper;
+    processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
+    onProcessFinished?: (wrapper: Wrapper) => void;
+  } = {},
+) {
+  const posEntities = {};
+  const keyEntities = {};
+  let wrapper = {
+    posEntities,
+    keyEntities,
+  };
+
+  if (initWrapper) {
+    wrapper = initWrapper(wrapper) || wrapper;
+  }
+
+  traverseDataNodes(dataNodes, item => {
+    const { node, index, pos, key, parentPos } = item;
+    const entity: DataEntity = { node, index, key, pos };
+
+    posEntities[pos] = entity;
+    keyEntities[key] = entity;
+
+    // Fill children
+    entity.parent = posEntities[parentPos];
+    if (entity.parent) {
+      entity.parent.children = entity.parent.children || [];
+      entity.parent.children.push(entity);
+    }
+
+    if (processEntity) {
+      processEntity(entity, wrapper);
+    }
+  });
+
+  if (onProcessFinished) {
+    onProcessFinished(wrapper);
+  }
+
+  return wrapper;
 }

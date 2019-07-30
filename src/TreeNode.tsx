@@ -5,8 +5,8 @@ import CSSMotion from 'rc-animate/lib/CSSMotion';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
-import { getNodeChildren, getDataAndAria, mapChildren, warnOnlyTreeNode } from './util';
-import { IconType } from './interface';
+import { getNodeChildren, getDataAndAria, warnOnlyTreeNode } from './util';
+import { IconType, Key } from './interface';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -14,11 +14,10 @@ const ICON_CLOSE = 'close';
 const defaultTitle = '---';
 
 export interface TreeNodeProps {
-  eventKey?: string; // Pass by parent `cloneElement`
+  eventKey?: Key; // Pass by parent `cloneElement`
   prefixCls?: string;
   className?: string;
-  style: React.CSSProperties;
-  onSelect: React.MouseEventHandler<HTMLSpanElement>;
+  style?: React.CSSProperties;
 
   // By parent
   expanded?: boolean;
@@ -29,7 +28,6 @@ export interface TreeNodeProps {
   halfChecked?: boolean;
   children?: React.ReactNode;
   title?: React.ReactNode;
-  pos?: string;
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
@@ -40,8 +38,8 @@ export interface TreeNodeProps {
   selectable?: boolean;
   disabled?: boolean;
   disableCheckbox?: boolean;
-  icon: IconType;
-  switcherIcon: IconType;
+  icon?: IconType;
+  switcherIcon?: IconType;
 }
 
 export interface TreeNodeState {
@@ -65,7 +63,6 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     halfChecked: PropTypes.bool,
     children: PropTypes.node,
     title: PropTypes.node,
-    pos: PropTypes.string,
     dragOver: PropTypes.bool,
     dragOverGapTop: PropTypes.bool,
     dragOverGapBottom: PropTypes.bool,
@@ -283,18 +280,6 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     this.selectHandle = node;
   };
 
-  getNodeChildren = () => {
-    const { children } = this.props;
-    const originList = toArray(children).filter(node => node);
-    const targetList = getNodeChildren(originList);
-
-    if (originList.length !== targetList.length) {
-      warnOnlyTreeNode();
-    }
-
-    return targetList;
-  };
-
   getNodeState = () => {
     const { expanded } = this.props;
 
@@ -305,13 +290,23 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     return expanded ? ICON_OPEN : ICON_CLOSE;
   };
 
+  hasChildren = () => {
+    const { eventKey } = this.props;
+    const {
+      rcTree: { keyEntities },
+    } = this.context;
+    const { children } = keyEntities[eventKey];
+
+    return !!(children || []).length;
+  };
+
   isLeaf = () => {
     const { isLeaf, loaded } = this.props;
     const {
       rcTree: { loadData },
     } = this.context;
 
-    const hasChildren = this.getNodeChildren().length !== 0;
+    const hasChildren = this.hasChildren();
 
     if (isLeaf === false) {
       return false;
@@ -358,8 +353,7 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     if (loadData && expanded && !this.isLeaf()) {
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
-      const hasChildren = this.getNodeChildren().length !== 0;
-      if (!hasChildren && !loaded) {
+      if (!this.hasChildren() && !loaded) {
         onNodeLoad(this);
       }
     }
@@ -519,13 +513,13 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
   // Children list wrapped with `Animation`
   renderChildren = () => {
-    const { expanded, pos } = this.props;
+    const { expanded } = this.props;
     const {
       rcTree: { prefixCls, motion, renderTreeNode },
     } = this.context;
 
     // Children TreeNode
-    const nodeList = this.getNodeChildren();
+    const nodeList = [];
 
     if (nodeList.length === 0) {
       return null;
@@ -543,7 +537,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
             data-expanded={expanded}
             role="group"
           >
-            {mapChildren(nodeList, (node, index) => renderTreeNode(node, index, pos))}
+            {/* {mapChildren(nodeList, (node, index) => renderTreeNode(node, index))} */}
+            NNNNNNNNNNNN
           </ul>
         )}
       </CSSMotion>
@@ -572,7 +567,7 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
 
     return (
-      <li
+      <div
         className={classNames(className, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
@@ -594,13 +589,42 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
         onDrop={draggable ? this.onDrop : undefined}
         onDragEnd={draggable ? this.onDragEnd : undefined}
         {...dataOrAriaAttributeProps}
+        tabIndex={0}
       >
         {this.renderSwitcher()}
-        {this.renderCheckbox()}
-        {this.renderSelector()}
-        {this.renderChildren()}
-      </li>
+      </div>
     );
+
+    // return (
+    //   <li
+    //     className={classNames(className, {
+    //       [`${prefixCls}-treenode-disabled`]: disabled,
+    //       [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
+    //       [`${prefixCls}-treenode-checkbox-checked`]: checked,
+    //       [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
+    //       [`${prefixCls}-treenode-selected`]: selected,
+    //       [`${prefixCls}-treenode-loading`]: loading,
+
+    //       'drag-over': !disabled && dragOver,
+    //       'drag-over-gap-top': !disabled && dragOverGapTop,
+    //       'drag-over-gap-bottom': !disabled && dragOverGapBottom,
+    //       'filter-node': filterTreeNode && filterTreeNode(this),
+    //     })}
+    //     style={style}
+    //     role="treeitem"
+    //     onDragEnter={draggable ? this.onDragEnter : undefined}
+    //     onDragOver={draggable ? this.onDragOver : undefined}
+    //     onDragLeave={draggable ? this.onDragLeave : undefined}
+    //     onDrop={draggable ? this.onDrop : undefined}
+    //     onDragEnd={draggable ? this.onDragEnd : undefined}
+    //     {...dataOrAriaAttributeProps}
+    //   >
+    //     {this.renderSwitcher()}
+    //     {this.renderCheckbox()}
+    //     {this.renderSelector()}
+    //     {this.renderChildren()}
+    //   </li>
+    // );
   }
 }
 

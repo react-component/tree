@@ -12,6 +12,9 @@ export interface DataNode {
   title?: React.ReactNode;
   selectable?: boolean;
   switcherIcon?: IconType;
+
+  /** Set style of TreeNode. This is not recommend if you don't have any force requirement */
+  style?: React.CSSProperties;
 }
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
@@ -32,6 +35,12 @@ export interface Entity {
   pos: string | number;
   parent?: Entity;
   children?: Entity[];
+}
+
+export interface DataEntity extends Omit<Entity, 'node' | 'parent' | 'children'> {
+  node: DataNode;
+  parent?: DataEntity;
+  children?: DataEntity[];
 }
 
 export interface FlattenDataNode extends Omit<DataNode, 'children'> {

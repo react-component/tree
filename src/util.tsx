@@ -98,21 +98,6 @@ export function traverseTreeNodes(
   processNode(null);
 }
 
-/**
- * Use `rc-util` `toArray` to get the children list which keeps the key.
- * And return single node if children is only one(This can avoid `key` missing check).
- */
-export function mapChildren(
-  children: React.ReactNode,
-  func: (node: NodeElement, index: number) => React.ReactElement,
-) {
-  const list = toArray(children).map(func);
-  if (list.length === 1) {
-    return list[0];
-  }
-  return list;
-}
-
 export function getDragNodesKeys(treeNodes: NodeElement[], node: NodeElement) {
   const { eventKey, pos } = node.props;
   const dragNodesKeys = [];
