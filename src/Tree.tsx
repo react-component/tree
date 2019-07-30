@@ -64,6 +64,7 @@ export interface TreeProps {
   checkedKeys: (Key)[] | { checked: (Key)[]; halfChecked: Key[] };
   defaultSelectedKeys: Key[];
   selectedKeys: Key[];
+  indentSize: number;
   onClick: (e: React.MouseEvent, treeNode: DataNode) => void;
   onDoubleClick: (e: React.MouseEvent, treeNode: DataNode) => void;
   onExpand: (
@@ -163,6 +164,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     ]),
     defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
     selectedKeys: PropTypes.arrayOf(PropTypes.string),
+    indentSize: PropTypes.number,
     onClick: PropTypes.func,
     onDoubleClick: PropTypes.func,
     onExpand: PropTypes.func,
@@ -199,6 +201,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     draggable: false,
     defaultExpandParent: true,
     autoExpandParent: false,
+    indentSize: 18,
     defaultExpandAll: false,
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
@@ -245,6 +248,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       filterTreeNode,
       motion,
       switcherIcon,
+      indentSize,
     } = this.props;
 
     return {
@@ -260,6 +264,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         disabled,
         motion,
         keyEntities,
+        indentSize,
 
         loadData,
         filterTreeNode,
@@ -861,20 +866,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       domProps.tabIndex = tabIndex;
     }
 
-    // return (
-    //   <ul
-    //     {...domProps}
-    //     className={classNames(prefixCls, className, {
-    //       [`${prefixCls}-show-line`]: showLine,
-    //     })}
-    //     style={style}
-    //     role="tree"
-    //     unselectable="on"
-    //   >
-    //     {mapChildren(treeNode, (node, index) => this.renderTreeNode(node, index))}
-    //   </ul>
-    // );
-
     return (
       <VirtualList
         {...domProps}
@@ -885,12 +876,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
         role="tree"
         data={flattenNodes}
         itemKey="key"
-        height={100}
+        height={150}
         itemHeight={15}
       >
         {(treeNode: DataNode) => {
           const { key } = treeNode;
-          const { pos }: Entity = keyEntities[key];
 
           const treeNodeProps = {
             eventKey: key,

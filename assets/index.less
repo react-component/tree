@@ -137,7 +137,7 @@
     }
   }
   &.@{treePrefixCls}-show-line {
-    li:not(:last-child) {
+    [role="treeitem"]:not(:last-child) {
       > ul {
         background: url('data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7') 0 0 repeat-y;
       }
@@ -145,7 +145,7 @@
         background-position: -56px -18px;
       }
     }
-    li:last-child {
+    [role="treeitem"]:last-child {
       > .@{treePrefixCls}-switcher-noop {
         background-position: -56px -36px;
       }

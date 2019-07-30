@@ -78,12 +78,13 @@ export function traverseDataNodes(
     pos: string | number;
     key: Key;
     parentPos: string | number;
+    level: number;
   }) => void,
 ) {
   function processNode(
     node: DataNode,
     index?: number,
-    parent?: { node: DataNode; pos: string | number },
+    parent?: { node: DataNode; pos: string | number; level: number },
   ) {
     const children = node ? node.children : dataNodes;
     const pos = node ? getPosition(parent.pos, index) : 0;
@@ -96,6 +97,7 @@ export function traverseDataNodes(
         pos,
         key: node.key || pos,
         parentPos: parent.node ? parent.pos : null,
+        level: parent.level + 1,
       };
 
       callback(data);
@@ -104,7 +106,7 @@ export function traverseDataNodes(
     // Process children node
     if (children) {
       children.forEach((subNode, subIndex) => {
-        processNode(subNode, subIndex, { node, pos });
+        processNode(subNode, subIndex, { node, pos, level: parent ? parent.level + 1 : -1 });
       });
     }
   }
@@ -144,8 +146,8 @@ export function convertDataToEntities(
   }
 
   traverseDataNodes(dataNodes, item => {
-    const { node, index, pos, key, parentPos } = item;
-    const entity: DataEntity = { node, index, key, pos };
+    const { node, index, pos, key, parentPos, level } = item;
+    const entity: DataEntity = { node, index, key, pos, level };
 
     posEntities[pos] = entity;
     keyEntities[key] = entity;

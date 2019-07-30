@@ -511,43 +511,9 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     );
   };
 
-  // Children list wrapped with `Animation`
-  renderChildren = () => {
-    const { expanded } = this.props;
-    const {
-      rcTree: { prefixCls, motion, renderTreeNode },
-    } = this.context;
-
-    // Children TreeNode
-    const nodeList = [];
-
-    if (nodeList.length === 0) {
-      return null;
-    }
-    return (
-      <CSSMotion visible={expanded} {...motion}>
-        {({ style, className }) => (
-          <ul
-            className={classNames(
-              className,
-              `${prefixCls}-child-tree`,
-              expanded && `${prefixCls}-child-tree-open`,
-            )}
-            style={style}
-            data-expanded={expanded}
-            role="group"
-          >
-            {/* {mapChildren(nodeList, (node, index) => renderTreeNode(node, index))} */}
-            NNNNNNNNNNNN
-          </ul>
-        )}
-      </CSSMotion>
-    );
-  };
-
   render() {
-    const { loading } = this.props;
     const {
+      eventKey,
       className,
       style,
       dragOver,
@@ -558,13 +524,15 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
       selected,
       checked,
       halfChecked,
+      loading,
       ...otherProps
     } = this.props;
     const {
-      rcTree: { prefixCls, filterTreeNode, draggable },
+      rcTree: { prefixCls, filterTreeNode, draggable, keyEntities, indentSize },
     } = this.context;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
+    const { level } = keyEntities[eventKey];
 
     return (
       <div
@@ -591,40 +559,17 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
         {...dataOrAriaAttributeProps}
         tabIndex={0}
       >
+        {level ? (
+          <span
+            aria-hidden="true"
+            style={{ display: 'inline-block', paddingLeft: level * indentSize, userSelect: 'none' }}
+          />
+        ) : null}
         {this.renderSwitcher()}
+        {this.renderCheckbox()}
+        {this.renderSelector()}
       </div>
     );
-
-    // return (
-    //   <li
-    //     className={classNames(className, {
-    //       [`${prefixCls}-treenode-disabled`]: disabled,
-    //       [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
-    //       [`${prefixCls}-treenode-checkbox-checked`]: checked,
-    //       [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
-    //       [`${prefixCls}-treenode-selected`]: selected,
-    //       [`${prefixCls}-treenode-loading`]: loading,
-
-    //       'drag-over': !disabled && dragOver,
-    //       'drag-over-gap-top': !disabled && dragOverGapTop,
-    //       'drag-over-gap-bottom': !disabled && dragOverGapBottom,
-    //       'filter-node': filterTreeNode && filterTreeNode(this),
-    //     })}
-    //     style={style}
-    //     role="treeitem"
-    //     onDragEnter={draggable ? this.onDragEnter : undefined}
-    //     onDragOver={draggable ? this.onDragOver : undefined}
-    //     onDragLeave={draggable ? this.onDragLeave : undefined}
-    //     onDrop={draggable ? this.onDrop : undefined}
-    //     onDragEnd={draggable ? this.onDragEnd : undefined}
-    //     {...dataOrAriaAttributeProps}
-    //   >
-    //     {this.renderSwitcher()}
-    //     {this.renderCheckbox()}
-    //     {this.renderSelector()}
-    //     {this.renderChildren()}
-    //   </li>
-    // );
   }
 }
 

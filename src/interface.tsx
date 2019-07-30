@@ -35,6 +35,7 @@ export interface Entity {
   pos: string | number;
   parent?: Entity;
   children?: Entity[];
+  level: number;
 }
 
 export interface DataEntity extends Omit<Entity, 'node' | 'parent' | 'children'> {

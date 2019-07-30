@@ -22,6 +22,7 @@ export const treeContextTypes = {
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     keyEntities: PropTypes.object,
+    indentSize: PropTypes.number,
 
     loadData: PropTypes.func,
     filterTreeNode: PropTypes.func,
