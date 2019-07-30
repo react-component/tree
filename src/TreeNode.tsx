@@ -31,6 +31,7 @@ export interface TreeNodeProps {
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
+  pos: string;
 
   // By user
   isLeaf?: boolean;
@@ -66,6 +67,7 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     dragOver: PropTypes.bool,
     dragOverGapTop: PropTypes.bool,
     dragOverGapBottom: PropTypes.bool,
+    pos: PropTypes.string,
 
     // By user
     isLeaf: PropTypes.bool,

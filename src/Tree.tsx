@@ -901,6 +901,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             loading: loadingKeys.indexOf(key) !== -1,
             checked: this.isKeyChecked(key),
             halfChecked: halfCheckedKeys.indexOf(key) !== -1,
+            pos: String(keyEntities[key].pos),
 
             // [Legacy] Drag props
             dragOver: dragOverNodeKey === key && dropPosition === 0,

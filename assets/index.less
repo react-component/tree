@@ -132,9 +132,11 @@
     }
   }
   &:not(.@{treePrefixCls}-show-line) {
+    [role="treeitem"] {
     .@{treePrefixCls}-switcher-noop {
       background: none;
     }
+  }
   }
   &.@{treePrefixCls}-show-line {
     [role="treeitem"]:not(:last-child) {
