@@ -50,8 +50,8 @@ export function getNodeChildren(children: React.ReactNode) {
   return toArray(children).filter(isTreeNode);
 }
 
-export function isCheckDisabled(node: NodeElement) {
-  const { disabled, disableCheckbox } = (node.props || {}) as NodeElement['props'];
+export function isCheckDisabled(node: DataNode) {
+  const { disabled, disableCheckbox } = (node || {}) as DataNode;
   return !!(disabled || disableCheckbox);
 }
 

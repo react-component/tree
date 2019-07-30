@@ -129,6 +129,7 @@ interface TreeState {
   dragOverNodeKey: Key;
   dropPosition: number;
 
+  treeData: DataNode[];
   flattenNodes: FlattenDataNode[];
 
   prevProps: TreeProps;
@@ -226,6 +227,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     dragOverNodeKey: null,
     dropPosition: null,
 
+    treeData: [],
     flattenNodes: [],
 
     prevProps: null,
@@ -303,21 +305,19 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     // ================== Tree Node ==================
-    let { treeData } = props;
-    let flattenNodes: FlattenDataNode[] = null;
+    let treeData: DataNode[];
 
     // Check if `treeData` or `children` changed and save into the state.
     if (needSync('treeData')) {
-      flattenNodes = flattenTreeData(treeData);
+      ({ treeData } = props);
     } else if (needSync('children')) {
       warning(false, '`children` of Tree is deprecated. Please use `treeData` instead.');
       treeData = convertTreeToData(props.children);
-      flattenNodes = flattenTreeData(treeData);
     }
 
     // Save flatten nodes info and convert `treeData` into keyEntities
-    if (flattenNodes) {
-      newState.flattenNodes = flattenNodes;
+    if (treeData) {
+      newState.treeData = treeData;
       const entitiesMap = convertDataToEntities(treeData);
       newState.keyEntities = entitiesMap.keyEntities;
     }
@@ -337,6 +337,15 @@ class Tree extends React.Component<TreeProps, TreeState> {
         props.autoExpandParent || props.defaultExpandParent
           ? conductExpandParent(props.defaultExpandedKeys, keyEntities)
           : props.defaultExpandedKeys;
+    }
+
+    // ================ flattenNodes =================
+    if (treeData || newState.expandedKeys) {
+      const flattenNodes: FlattenDataNode[] = flattenTreeData(
+        treeData || prevState.treeData,
+        newState.expandedKeys || prevState.expandedKeys,
+      );
+      newState.flattenNodes = flattenNodes;
     }
 
     // ================ selectedKeys =================
@@ -710,6 +719,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeExpand = (e, treeNode) => {
     let { expandedKeys } = this.state;
+    const { treeData } = this.state;
     const { onExpand, loadData } = this.props;
     const { eventKey, expanded } = treeNode.props;
 
@@ -728,7 +738,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
       expandedKeys = arrDel(expandedKeys, eventKey);
     }
 
-    this.setUncontrolledState({ expandedKeys });
+    const flattenNodes: FlattenDataNode[] = flattenTreeData(treeData, expandedKeys);
+    this.setUncontrolledState({ expandedKeys, flattenNodes });
 
     if (onExpand) {
       onExpand(expandedKeys, {
@@ -744,7 +755,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       return loadPromise
         ? loadPromise.then(() => {
             // [Legacy] Refresh logic
-            this.setUncontrolledState({ expandedKeys });
+            this.setUncontrolledState({ expandedKeys, flattenNodes });
           })
         : null;
     }
@@ -877,7 +888,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         data={flattenNodes}
         itemKey="key"
         height={150}
-        itemHeight={15}
+        itemHeight={20}
       >
         {(treeNode: DataNode) => {
           const { key } = treeNode;

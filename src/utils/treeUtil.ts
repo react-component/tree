@@ -40,7 +40,40 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
 /**
  * Flat nest tree data into flatten list. This is used for virtual list render.
  */
-export function flattenTreeData(treeNodeList: DataNode[] = []): FlattenDataNode[] {
+export function flattenTreeData(
+  treeNodeList: DataNode[] = [],
+  expandedKeys: Key[] = [],
+): FlattenDataNode[] {
+  const flattenList: FlattenDataNode[] = [];
+
+  function dig(list: DataNode[], parent: FlattenDataNode = null): FlattenDataNode[] {
+    return list.map(treeNode => {
+      // Add FlattenDataNode into list
+      const flattenNode: FlattenDataNode = {
+        ...treeNode,
+        parent,
+        children: null,
+      };
+
+      flattenList.push(flattenNode);
+
+      // Loop treeNode children
+      if (expandedKeys.includes(flattenNode.key)) {
+        flattenNode.children = dig(treeNode.children || [], flattenNode);
+      } else {
+        flattenNode.children = [];
+      }
+
+      return flattenNode;
+    });
+  }
+
+  dig(treeNodeList);
+
+  return flattenList;
+}
+
+export function flattenTreeData233(treeNodeList: DataNode[] = []): FlattenDataNode[] {
   const flattenList: FlattenDataNode[] = [];
 
   function dig(list: DataNode[], parent: FlattenDataNode = null): FlattenDataNode[] {
