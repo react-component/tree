@@ -891,7 +891,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
         itemHeight={20}
       >
         {(treeNode: DataNode) => {
-          const { key } = treeNode;
+          const { key, ...restProps } = treeNode;
+          delete restProps.children;
+
+          console.log('=>', key, keyEntities, flattenNodes);
 
           const treeNodeProps = {
             eventKey: key,
@@ -909,7 +912,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
           };
 
-          return <TreeNode {...treeNode} {...treeNodeProps} />;
+          return <TreeNode {...restProps} {...treeNodeProps} />;
         }}
       </VirtualList>
     );

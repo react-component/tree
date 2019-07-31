@@ -37,8 +37,8 @@ const Demo = () => (
         <TreeNode key="p10" title="leaf" />
         <TreeNode title="parent 1-1" key="p11">
           <TreeNode title="parent 2-1" key="p21">
-            <TreeNode title="leaf" />
-            <TreeNode title="leaf" />
+            <TreeNode key="p211" title="leaf" />
+            <TreeNode key="p212" title="leaf" />
           </TreeNode>
           <TreeNode key="p22" title="leaf" />
         </TreeNode>
