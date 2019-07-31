@@ -30,6 +30,7 @@ export interface TreeNodeProps {
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
   pos: string;
+  domRef: React.Ref<HTMLDivElement>;
 
   // By user
   isLeaf?: boolean;
@@ -525,6 +526,7 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
       checked,
       halfChecked,
       loading,
+      domRef,
       ...otherProps
     } = this.props;
     const {
@@ -536,6 +538,7 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
     return (
       <div
+        ref={domRef}
         className={classNames(className, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,

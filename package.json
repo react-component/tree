@@ -55,14 +55,14 @@
     "rc-tools": "^9.x",
     "rc-tooltip": "3.x",
     "rc-trigger": "^2.0.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "typescript": "^3.5.2"
   },
   "dependencies": {
     "classnames": "2.x",
     "prop-types": "^15.5.8",
-    "rc-animate": "^2.6.0",
+    "rc-animate": "^2.9.2",
     "rc-util": "^4.5.1",
     "rc-virtual-list": "^0.0.0-alpha.4",
     "react-lifecycles-compat": "^3.0.4",

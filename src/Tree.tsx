@@ -25,7 +25,7 @@ import {
 } from './util';
 import { DataNode, IconType, Key, NodeElement, Entity, FlattenDataNode } from './interface';
 import { flattenTreeData, convertTreeToData, convertDataToEntities } from './utils/treeUtil';
-import TreeNode from './TreeNode';
+import MotionTreeNode from './MotionTreeNode';
 
 interface CheckInfo {
   event: 'check';
@@ -130,6 +130,7 @@ interface TreeState {
 
   treeData: DataNode[];
   flattenNodes: FlattenDataNode[];
+  disableVirtual: boolean;
 
   prevProps: TreeProps;
 }
@@ -228,6 +229,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     treeData: [],
     flattenNodes: [],
+    disableVirtual: false,
 
     prevProps: null,
   };
@@ -868,6 +870,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       halfCheckedKeys,
       dragOverNodeKey,
       dropPosition,
+      disableVirtual,
     } = this.state;
     const { prefixCls, className, focusable, style, showLine, tabIndex = 0 } = this.props;
     const domProps: React.HTMLAttributes<HTMLUListElement> = getDataAndAria(this.props);
@@ -909,7 +912,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
           };
 
-          return <TreeNode {...restProps} {...treeNodeProps} />;
+          return <MotionTreeNode {...restProps} {...treeNodeProps} visible />;
         }}
       </VirtualList>
     );
