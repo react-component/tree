@@ -1,11 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import CSSMotion from 'rc-animate/lib/CSSMotion';
-import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { nodeContextTypes } from './contextTypes';
-import { getNodeChildren, getDataAndAria, warnOnlyTreeNode } from './util';
+import { getDataAndAria } from './util';
 import { IconType, Key } from './interface';
 
 const ICON_OPEN = 'open';

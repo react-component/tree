@@ -5,7 +5,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
-import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import VirtualList from 'rc-virtual-list';
 
@@ -672,7 +671,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   onNodeLoad = treeNode =>
     new Promise(resolve => {
       // We need to get the latest state of loading/loaded keys
-      this.setState(({ loadedKeys = [], loadingKeys = [] }) => {
+      this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
         const { loadData, onLoad } = this.props;
         const { eventKey } = treeNode.props;
 
@@ -713,7 +712,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
         return {
           loadingKeys: arrAdd(loadingKeys, eventKey),
-        } as any;
+        };
       });
     });
 
@@ -893,8 +892,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
         {(treeNode: DataNode) => {
           const { key, ...restProps } = treeNode;
           delete restProps.children;
-
-          console.log('=>', key, keyEntities, flattenNodes);
 
           const treeNodeProps = {
             eventKey: key,
