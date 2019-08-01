@@ -2,59 +2,51 @@
  * Webpack has bug for import loop, which is not the same behavior as ES module.
  * When util.js imports the TreeNode for tree generate will cause treeContextTypes be empty.
  */
+import * as React from 'react';
+import createReactContext, { Context } from '@ant-design/create-react-context';
+import { IconType, NodeElement, Key, DataEntity } from './interface';
+import { InternalTreeNodeProps, TreeNodeProps } from './TreeNode';
 
-import PropTypes from 'prop-types';
+type NodeMouseEventHandler = (e: MouseEvent, node: React.Component<InternalTreeNodeProps>) => void;
 
-/**
- * Thought we still use `cloneElement` to pass `key`,
- * other props can pass with context for future refactor.
- */
-export const treeContextTypes = {
-  rcTree: PropTypes.shape({
-    prefixCls: PropTypes.string,
-    selectable: PropTypes.bool,
-    showIcon: PropTypes.bool,
-    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    draggable: PropTypes.bool,
-    checkable: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
-    checkStrictly: PropTypes.bool,
-    disabled: PropTypes.bool,
-    openTransitionName: PropTypes.string,
-    openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    keyEntities: PropTypes.object,
-    indentSize: PropTypes.number,
+export interface TreeContextProps {
+  prefixCls: string;
+  selectable: boolean;
+  showIcon: boolean;
+  icon: IconType;
+  switcherIcon: IconType;
+  draggable: boolean;
+  checkable: boolean | React.ReactNode;
+  checkStrictly: boolean;
+  disabled: boolean;
+  motion: any;
+  keyEntities: Record<Key, DataEntity>;
+  indentSize: number;
 
-    loadData: PropTypes.func,
-    filterTreeNode: PropTypes.func,
+  loadData: (treeNode: NodeElement) => Promise<void>;
+  filterTreeNode: (treeNode: React.Component<TreeNodeProps>) => boolean;
 
-    onNodeClick: PropTypes.func,
-    onNodeDoubleClick: PropTypes.func,
-    onNodeExpand: PropTypes.func,
-    onNodeSelect: PropTypes.func,
-    onNodeCheck: PropTypes.func,
-    onNodeMouseEnter: PropTypes.func,
-    onNodeMouseLeave: PropTypes.func,
-    onNodeContextMenu: PropTypes.func,
-    onNodeDragStart: PropTypes.func,
-    onNodeDragEnter: PropTypes.func,
-    onNodeDragOver: PropTypes.func,
-    onNodeDragLeave: PropTypes.func,
-    onNodeDragEnd: PropTypes.func,
-    onNodeDrop: PropTypes.func,
+  onNodeClick: NodeMouseEventHandler;
+  onNodeDoubleClick: NodeMouseEventHandler;
+  onNodeExpand: NodeMouseEventHandler;
+  onNodeSelect: NodeMouseEventHandler;
+  onNodeCheck: (
+    e: MouseEvent,
+    treeNode: React.Component<InternalTreeNodeProps>,
+    checked: boolean,
+  ) => void;
+  onNodeLoad: (treeNode: React.Component<InternalTreeNodeProps>) => void;
+  onNodeMouseEnter: NodeMouseEventHandler;
+  onNodeMouseLeave: NodeMouseEventHandler;
+  onNodeContextMenu: NodeMouseEventHandler;
+  onNodeDragStart: NodeMouseEventHandler;
+  onNodeDragEnter: NodeMouseEventHandler;
+  onNodeDragOver: NodeMouseEventHandler;
+  onNodeDragLeave: NodeMouseEventHandler;
+  onNodeDragEnd: NodeMouseEventHandler;
+  onNodeDrop: NodeMouseEventHandler;
 
-    // TODO: Remove this
-    // onBatchNodeCheck: PropTypes.func,
-    // onCheckConductFinished: PropTypes.func,
+  registerTreeNode: (key: Key, node: React.Component<InternalTreeNodeProps>) => void;
+}
 
-    // Tree will store the entities when the treeNode refresh.
-    // User can pass the func to add more info to customize the additional info.
-    // processTreeEntity: PropTypes.func,
-  }),
-};
-
-export const nodeContextTypes = {
-  ...treeContextTypes,
-  rcTreeNode: PropTypes.shape({
-    onUpCheckConduct: PropTypes.func,
-  }),
-};
+export const TreeContext: Context<TreeContextProps | null> = createReactContext(null);

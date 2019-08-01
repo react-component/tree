@@ -12,6 +12,7 @@ interface NodeListProps {
   className: string;
   style: React.CSSProperties;
   data: FlattenDataNode[];
+  motion: any;
 
   expandedKeys: Key[];
   selectedKeys: Key[];
@@ -35,6 +36,7 @@ const NodeList: React.FC<NodeListProps> = ({
   keyEntities,
   dragOverNodeKey,
   dropPosition,
+  motion,
 
   ...domProps
 }) => {
@@ -55,12 +57,14 @@ const NodeList: React.FC<NodeListProps> = ({
     }
   }, [expandedKeys]);
 
+  const mergedData = motion ? prevData : data;
+
   return (
     <VirtualList
       {...domProps}
       disabled={disableVirtual}
       role="tree"
-      data={prevData}
+      data={mergedData}
       itemKey="key"
       height={150}
       itemHeight={20}

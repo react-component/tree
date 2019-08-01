@@ -4,6 +4,7 @@ import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import PropTypes from 'prop-types';
 import Tree, { TreeNode } from '../src';
+import { InternalTreeNode } from '../src/TreeNode';
 import { nodeMatcher } from './util';
 
 /**
@@ -92,8 +93,8 @@ describe('Tree Props', () => {
       expect(renderToJson(render(withoutSelectableBase))).toMatchSnapshot();
 
       const withoutSelectable = mount(withoutSelectableBase);
-      const parentNode = withoutSelectable.find(TreeNode).first();
-      const targetNode = parentNode.find(TreeNode).last();
+      const parentNode = withoutSelectable.find(InternalTreeNode).first();
+      const targetNode = parentNode.find(InternalTreeNode).last();
 
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
 
@@ -116,8 +117,8 @@ describe('Tree Props', () => {
       expect(renderToJson(render(withSelectableBase))).toMatchSnapshot();
 
       const withSelectable = mount(withSelectableBase);
-      const parentNode = withSelectable.find(TreeNode).first();
-      const targetNode = parentNode.find(TreeNode).last();
+      const parentNode = withSelectable.find(InternalTreeNode).first();
+      const targetNode = parentNode.find(InternalTreeNode).last();
 
       // Select leaf
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
@@ -185,8 +186,8 @@ describe('Tree Props', () => {
     expect(renderToJson(render(multipleBase))).toMatchSnapshot();
 
     const wrapper = mount(multipleBase);
-    const parentNode = wrapper.find(TreeNode).first();
-    const targetNode = parentNode.find(TreeNode).last();
+    const parentNode = wrapper.find(InternalTreeNode).first();
+    const targetNode = parentNode.find(InternalTreeNode).last();
 
     // Leaf select
     targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
@@ -249,8 +250,8 @@ describe('Tree Props', () => {
       expect(renderToJson(render(withCheckableBase))).toMatchSnapshot();
 
       const withCheckable = mount(withCheckableBase);
-      const parentNode = withCheckable.find(TreeNode).first();
-      const targetNode = parentNode.find(TreeNode).last();
+      const parentNode = withCheckable.find(InternalTreeNode).first();
+      const targetNode = parentNode.find(InternalTreeNode).last();
 
       // Click leaf
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
@@ -304,8 +305,8 @@ describe('Tree Props', () => {
       expect(renderToJson(render(withCheckableBase))).toMatchSnapshot();
 
       const withCheckable = mount(withCheckableBase);
-      const parentNode = withCheckable.find(TreeNode).first();
-      const targetNode = parentNode.find(TreeNode).last();
+      const parentNode = withCheckable.find(InternalTreeNode).first();
+      const targetNode = parentNode.find(InternalTreeNode).last();
 
       // Click leaf
       targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
@@ -384,8 +385,8 @@ describe('Tree Props', () => {
     expect(renderToJson(render(withCheckStrictlyBase))).toMatchSnapshot();
 
     const withCheckStrictly = mount(withCheckStrictlyBase);
-    const parentNode = withCheckStrictly.find(TreeNode).first();
-    const targetNode = parentNode.find(TreeNode).last();
+    const parentNode = withCheckStrictly.find(InternalTreeNode).first();
+    const targetNode = parentNode.find(InternalTreeNode).last();
 
     // Click Leaf
     targetNode.find('.rc-tree-checkbox').simulate('click');
@@ -458,7 +459,7 @@ describe('Tree Props', () => {
       expect(handleLoadData).not.toHaveBeenCalled();
 
       const switcher = wrapper.find('.rc-tree-switcher');
-      const node = wrapper.find(TreeNode).instance();
+      const node = wrapper.find(InternalTreeNode).instance();
       switcher.simulate('click');
 
       return timeoutPromise().then(() => {
@@ -641,8 +642,8 @@ describe('Tree Props', () => {
       </Tree>,
     );
 
-    const parentNode = wrapper.find(TreeNode).first();
-    const targetNode = parentNode.find(TreeNode).last();
+    const parentNode = wrapper.find(InternalTreeNode).first();
+    const targetNode = parentNode.find(InternalTreeNode).last();
 
     // Select leaf
     targetNode.find('.rc-tree-node-content-wrapper').simulate('click');
@@ -662,8 +663,8 @@ describe('Tree Props', () => {
       </Tree>,
     );
 
-    const parentNode = wrapper.find(TreeNode).first();
-    const targetNode = parentNode.find(TreeNode).last();
+    const parentNode = wrapper.find(InternalTreeNode).first();
+    const targetNode = parentNode.find(InternalTreeNode).last();
 
     // Select leaf
     targetNode.find('.rc-tree-node-content-wrapper').simulate('doubleclick');
@@ -714,10 +715,10 @@ describe('Tree Props', () => {
       );
       wrapper.setProps({ loadedKeys: [] });
       wrapper.find('.rc-tree-switcher').simulate('click');
-      expect(loadData).toHaveBeenCalledWith(wrapper.find(TreeNode).instance());
+      expect(loadData).toHaveBeenCalledWith(wrapper.find(InternalTreeNode).instance());
       expect(onLoad).toHaveBeenCalledWith(['0-0'], {
         event: 'load',
-        node: wrapper.find(TreeNode).instance(),
+        node: wrapper.find(InternalTreeNode).instance(),
       });
     });
   });

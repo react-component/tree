@@ -3,6 +3,7 @@ react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
 import { mount } from 'enzyme';
 import Tree, { TreeNode } from '../src';
+import { InternalTreeNode } from '../src/TreeNode';
 import {
   convertDataToTree,
   convertTreeToEntities,
@@ -265,14 +266,14 @@ describe('Util', () => {
     );
 
     const treeNode0 = tree
-      .find(TreeNode)
+      .find(InternalTreeNode)
       .at(0)
       .instance();
     const keys0 = getDragNodesKeys(treeNode0.props.children, treeNode0);
     expect(keys0.sort()).toEqual(['000', '111', '222', '333'].sort());
 
     const treeNode1 = tree
-      .find(TreeNode)
+      .find(InternalTreeNode)
       .at(1)
       .instance();
     const keys1 = getDragNodesKeys(treeNode1.props.children, treeNode1);
