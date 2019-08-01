@@ -84,8 +84,6 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
-  static isTreeNode = 1;
-
   static defaultProps = {
     title: defaultTitle,
   };
@@ -594,9 +592,11 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
 polyfill(TreeNode);
 
 const ContextTreeNode: React.FC<TreeNodeProps> = props => (
-    <TreeContext.Consumer>
-      {context => <TreeNode {...props} context={context} />}
-    </TreeContext.Consumer>
-  );
+  <TreeContext.Consumer>
+    {context => <TreeNode {...props} context={context} />}
+  </TreeContext.Consumer>
+);
 
-export default TreeNode;
+(ContextTreeNode as any).isTreeNode = 1;
+
+export default ContextTreeNode;

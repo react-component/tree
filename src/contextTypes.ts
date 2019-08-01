@@ -4,7 +4,6 @@
  */
 import * as React from 'react';
 import createReactContext, { Context } from '@ant-design/create-react-context';
-import PropTypes from 'prop-types';
 import { IconType, NodeElement, Key } from './interface';
 import { InternalTreeNodeProps, TreeNodeProps } from './TreeNode';
 
