@@ -1,10 +1,11 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+// @ts-ignore
 import CSSMotion from 'rc-animate/lib/CSSMotion';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
-import { nodeContextTypes } from './contextTypes';
+import { TreeContext, TreeContextProps } from './contextTypes';
 import { getNodeChildren, getDataAndAria, mapChildren, warnOnlyTreeNode } from './util';
 import { IconType } from './interface';
 
@@ -44,11 +45,15 @@ export interface TreeNodeProps {
   switcherIcon: IconType;
 }
 
+export interface InternalTreeNodeProps extends TreeNodeProps {
+  context?: TreeContextProps;
+}
+
 export interface TreeNodeState {
   dragNodeHighlight: boolean;
 }
 
-class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
+class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
   static propTypes = {
     eventKey: PropTypes.string, // Pass by parent `cloneElement`
     prefixCls: PropTypes.string,
@@ -80,37 +85,18 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
-  static contextTypes = nodeContextTypes;
-
-  static childContextTypes = nodeContextTypes;
-
-  static isTreeNode = 1;
-
-  static defaultProps = {
-    title: defaultTitle,
-  };
-
   public state = {
     dragNodeHighlight: false,
   };
 
   public selectHandle: HTMLSpanElement;
 
-  getChildContext() {
-    return {
-      ...this.context,
-      rcTreeNode: {
-        // onUpCheckConduct: this.onUpCheckConduct,
-      },
-    };
-  }
-
   // Isomorphic needn't load data in server side
   componentDidMount() {
-    const { eventKey } = this.props;
     const {
-      rcTree: { registerTreeNode },
-    } = this.context;
+      eventKey,
+      context: { registerTreeNode },
+    } = this.props;
 
     this.syncLoadData(this.props);
 
@@ -122,18 +108,18 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   }
 
   componentWillUnmount() {
-    const { eventKey } = this.props;
     const {
-      rcTree: { registerTreeNode },
-    } = this.context;
+      eventKey,
+      context: { registerTreeNode },
+    } = this.props;
     registerTreeNode(eventKey, null);
   }
 
   onSelectorClick = e => {
     // Click trigger before select/check operation
     const {
-      rcTree: { onNodeClick },
-    } = this.context;
+      context: { onNodeClick },
+    } = this.props;
     onNodeClick(e, this);
 
     if (this.isSelectable()) {
@@ -145,8 +131,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
   onSelectorDoubleClick = e => {
     const {
-      rcTree: { onNodeDoubleClick },
-    } = this.context;
+      context: { onNodeDoubleClick },
+    } = this.props;
     onNodeDoubleClick(e, this);
   };
 
@@ -154,8 +140,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     if (this.isDisabled()) return;
 
     const {
-      rcTree: { onNodeSelect },
-    } = this.context;
+      context: { onNodeSelect },
+    } = this.props;
     e.preventDefault();
     onNodeSelect(e, this);
   };
@@ -165,8 +151,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
     const { disableCheckbox, checked } = this.props;
     const {
-      rcTree: { onNodeCheck },
-    } = this.context;
+      context: { onNodeCheck },
+    } = this.props;
 
     if (!this.isCheckable() || disableCheckbox) return;
 
@@ -177,29 +163,29 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
   onMouseEnter = e => {
     const {
-      rcTree: { onNodeMouseEnter },
-    } = this.context;
+      context: { onNodeMouseEnter },
+    } = this.props;
     onNodeMouseEnter(e, this);
   };
 
   onMouseLeave = e => {
     const {
-      rcTree: { onNodeMouseLeave },
-    } = this.context;
+      context: { onNodeMouseLeave },
+    } = this.props;
     onNodeMouseLeave(e, this);
   };
 
   onContextMenu = e => {
     const {
-      rcTree: { onNodeContextMenu },
-    } = this.context;
+      context: { onNodeContextMenu },
+    } = this.props;
     onNodeContextMenu(e, this);
   };
 
   onDragStart = e => {
     const {
-      rcTree: { onNodeDragStart },
-    } = this.context;
+      context: { onNodeDragStart },
+    } = this.props;
 
     e.stopPropagation();
     this.setState({
@@ -218,8 +204,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
   onDragEnter = e => {
     const {
-      rcTree: { onNodeDragEnter },
-    } = this.context;
+      context: { onNodeDragEnter },
+    } = this.props;
 
     e.preventDefault();
     e.stopPropagation();
@@ -228,8 +214,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
   onDragOver = e => {
     const {
-      rcTree: { onNodeDragOver },
-    } = this.context;
+      context: { onNodeDragOver },
+    } = this.props;
 
     e.preventDefault();
     e.stopPropagation();
@@ -238,8 +224,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
   onDragLeave = e => {
     const {
-      rcTree: { onNodeDragLeave },
-    } = this.context;
+      context: { onNodeDragLeave },
+    } = this.props;
 
     e.stopPropagation();
     onNodeDragLeave(e, this);
@@ -247,8 +233,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
   onDragEnd = e => {
     const {
-      rcTree: { onNodeDragEnd },
-    } = this.context;
+      context: { onNodeDragEnd },
+    } = this.props;
 
     e.stopPropagation();
     this.setState({
@@ -259,8 +245,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
   onDrop = e => {
     const {
-      rcTree: { onNodeDrop },
-    } = this.context;
+      context: { onNodeDrop },
+    } = this.props;
 
     e.preventDefault();
     e.stopPropagation();
@@ -273,8 +259,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   // Disabled item still can be switch
   onExpand = e => {
     const {
-      rcTree: { onNodeExpand },
-    } = this.context;
+      context: { onNodeExpand },
+    } = this.props;
     onNodeExpand(e, this);
   };
 
@@ -308,8 +294,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   isLeaf = () => {
     const { isLeaf, loaded } = this.props;
     const {
-      rcTree: { loadData },
-    } = this.context;
+      context: { loadData },
+    } = this.props;
 
     const hasChildren = this.getNodeChildren().length !== 0;
 
@@ -323,8 +309,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   isDisabled = () => {
     const { disabled } = this.props;
     const {
-      rcTree: { disabled: treeDisabled },
-    } = this.context;
+      context: { disabled: treeDisabled },
+    } = this.props;
 
     // Follow the logic of Selectable
     if (disabled === false) {
@@ -337,8 +323,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   isCheckable = () => {
     const { checkable } = this.props;
     const {
-      rcTree: { checkable: treeCheckable },
-    } = this.context;
+      context: { checkable: treeCheckable },
+    } = this.props;
 
     // Return false if tree or treeNode is not checkable
     if (!treeCheckable || checkable === false) return false;
@@ -349,8 +335,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   syncLoadData = props => {
     const { expanded, loading, loaded } = props;
     const {
-      rcTree: { loadData, onNodeLoad },
-    } = this.context;
+      context: { loadData, onNodeLoad },
+    } = this.props;
 
     if (loading) return;
 
@@ -368,8 +354,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   isSelectable() {
     const { selectable } = this.props;
     const {
-      rcTree: { selectable: treeSelectable },
-    } = this.context;
+      context: { selectable: treeSelectable },
+    } = this.props;
 
     // Ignore when selectable is undefined or null
     if (typeof selectable === 'boolean') {
@@ -383,8 +369,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   renderSwitcher = () => {
     const { expanded, switcherIcon: switcherIconFromProps } = this.props;
     const {
-      rcTree: { prefixCls, switcherIcon: switcherIconFromCtx },
-    } = this.context;
+      context: { prefixCls, switcherIcon: switcherIconFromCtx },
+    } = this.props;
 
     const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
 
@@ -415,8 +401,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   renderCheckbox = () => {
     const { checked, halfChecked, disableCheckbox } = this.props;
     const {
-      rcTree: { prefixCls },
-    } = this.context;
+      context: { prefixCls },
+    } = this.props;
     const disabled = this.isDisabled();
     const checkable = this.isCheckable();
 
@@ -443,8 +429,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   renderIcon = () => {
     const { loading } = this.props;
     const {
-      rcTree: { prefixCls },
-    } = this.context;
+      context: { prefixCls },
+    } = this.props;
 
     return (
       <span
@@ -462,8 +448,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
     const { dragNodeHighlight } = this.state;
     const { title, selected, icon, loading } = this.props;
     const {
-      rcTree: { prefixCls, showIcon, icon: treeIcon, draggable, loadData },
-    } = this.context;
+      context: { prefixCls, showIcon, icon: treeIcon, draggable, loadData },
+    } = this.props;
     const disabled = this.isDisabled();
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
@@ -476,11 +462,7 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
       $icon = currentIcon ? (
         <span className={classNames(`${prefixCls}-iconEle`, `${prefixCls}-icon__customize`)}>
-          {typeof currentIcon === 'function'
-            ? React.createElement(currentIcon, {
-                ...this.props,
-              })
-            : currentIcon}
+          {typeof currentIcon === 'function' ? currentIcon(this.props) : currentIcon}
         </span>
       ) : (
         this.renderIcon()
@@ -521,8 +503,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
   renderChildren = () => {
     const { expanded, pos } = this.props;
     const {
-      rcTree: { prefixCls, motion, renderTreeNode },
-    } = this.context;
+      context: { prefixCls, motion, renderTreeNode },
+    } = this.props;
 
     // Children TreeNode
     const nodeList = this.getNodeChildren();
@@ -566,8 +548,8 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
       ...otherProps
     } = this.props;
     const {
-      rcTree: { prefixCls, filterTreeNode, draggable },
-    } = this.context;
+      context: { prefixCls, filterTreeNode, draggable },
+    } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
 
@@ -606,4 +588,18 @@ class TreeNode extends React.Component<TreeNodeProps, TreeNodeState> {
 
 polyfill(TreeNode);
 
-export default TreeNode;
+const ContextTreeNode: React.FC<TreeNodeProps> = props => (
+  <TreeContext.Consumer>
+    {context => <TreeNode {...props} context={context} />}
+  </TreeContext.Consumer>
+);
+
+ContextTreeNode.defaultProps = {
+  title: defaultTitle,
+};
+
+(ContextTreeNode as any).isTreeNode = 1;
+
+export { TreeNode as InternalTreeNode };
+
+export default ContextTreeNode;

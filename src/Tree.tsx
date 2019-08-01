@@ -5,7 +5,7 @@ import warning from 'warning';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 
-import { treeContextTypes } from './contextTypes';
+import { TreeContext } from './contextTypes';
 import {
   convertTreeToEntities,
   convertDataToTree,
@@ -107,7 +107,7 @@ export interface TreeProps {
     dropPosition: number;
     dropToGap: boolean;
   }) => void;
-  filterTreeNode: (treeNode: NodeElement) => boolean;
+  filterTreeNode: (treeNode: React.Component<TreeProps>) => boolean;
   motion: any;
   switcherIcon: IconType;
 }
@@ -182,8 +182,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
-  static childContextTypes = treeContextTypes;
-
   static defaultProps = {
     prefixCls: 'rc-tree',
     showLine: false,
@@ -225,61 +223,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   dragNode: NodeElement;
-
-  getChildContext() {
-    const {
-      prefixCls,
-      selectable,
-      showIcon,
-      icon,
-      draggable,
-      checkable,
-      checkStrictly,
-      disabled,
-      loadData,
-      filterTreeNode,
-      motion,
-      switcherIcon,
-    } = this.props;
-
-    return {
-      rcTree: {
-        prefixCls,
-        selectable,
-        showIcon,
-        icon,
-        switcherIcon,
-        draggable,
-        checkable,
-        checkStrictly,
-        disabled,
-        motion,
-
-        loadData,
-        filterTreeNode,
-        renderTreeNode: this.renderTreeNode,
-        isKeyChecked: this.isKeyChecked,
-
-        onNodeClick: this.onNodeClick,
-        onNodeDoubleClick: this.onNodeDoubleClick,
-        onNodeExpand: this.onNodeExpand,
-        onNodeSelect: this.onNodeSelect,
-        onNodeCheck: this.onNodeCheck,
-        onNodeLoad: this.onNodeLoad,
-        onNodeMouseEnter: this.onNodeMouseEnter,
-        onNodeMouseLeave: this.onNodeMouseLeave,
-        onNodeContextMenu: this.onNodeContextMenu,
-        onNodeDragStart: this.onNodeDragStart,
-        onNodeDragEnter: this.onNodeDragEnter,
-        onNodeDragOver: this.onNodeDragOver,
-        onNodeDragLeave: this.onNodeDragLeave,
-        onNodeDragEnd: this.onNodeDragEnd,
-        onNodeDrop: this.onNodeDrop,
-
-        registerTreeNode: this.registerTreeNode,
-      },
-    };
-  }
 
   static getDerivedStateFromProps(props, prevState) {
     const { prevProps } = prevState;
@@ -838,7 +781,25 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   render() {
     const { treeNode } = this.state;
-    const { prefixCls, className, focusable, style, showLine, tabIndex = 0 } = this.props;
+    const {
+      prefixCls,
+      className,
+      focusable,
+      style,
+      showLine,
+      tabIndex = 0,
+      selectable,
+      showIcon,
+      icon,
+      switcherIcon,
+      draggable,
+      checkable,
+      checkStrictly,
+      disabled,
+      motion,
+      loadData,
+      filterTreeNode,
+    } = this.props;
     const domProps: React.HTMLAttributes<HTMLUListElement> = getDataAndAria(this.props);
 
     if (focusable) {
@@ -846,17 +807,55 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     return (
-      <ul
-        {...domProps}
-        className={classNames(prefixCls, className, {
-          [`${prefixCls}-show-line`]: showLine,
-        })}
-        style={style}
-        role="tree"
-        unselectable="on"
+      <TreeContext.Provider
+        value={{
+          prefixCls,
+          selectable,
+          showIcon,
+          icon,
+          switcherIcon,
+          draggable,
+          checkable,
+          checkStrictly,
+          disabled,
+          motion,
+
+          loadData,
+          filterTreeNode,
+          renderTreeNode: this.renderTreeNode,
+          isKeyChecked: this.isKeyChecked,
+
+          onNodeClick: this.onNodeClick,
+          onNodeDoubleClick: this.onNodeDoubleClick,
+          onNodeExpand: this.onNodeExpand,
+          onNodeSelect: this.onNodeSelect,
+          onNodeCheck: this.onNodeCheck,
+          onNodeLoad: this.onNodeLoad,
+          onNodeMouseEnter: this.onNodeMouseEnter,
+          onNodeMouseLeave: this.onNodeMouseLeave,
+          onNodeContextMenu: this.onNodeContextMenu,
+          onNodeDragStart: this.onNodeDragStart,
+          onNodeDragEnter: this.onNodeDragEnter,
+          onNodeDragOver: this.onNodeDragOver,
+          onNodeDragLeave: this.onNodeDragLeave,
+          onNodeDragEnd: this.onNodeDragEnd,
+          onNodeDrop: this.onNodeDrop,
+
+          registerTreeNode: this.registerTreeNode,
+        }}
       >
-        {mapChildren(treeNode, (node, index) => this.renderTreeNode(node, index))}
-      </ul>
+        <ul
+          {...domProps}
+          className={classNames(prefixCls, className, {
+            [`${prefixCls}-show-line`]: showLine,
+          })}
+          style={style}
+          role="tree"
+          unselectable="on"
+        >
+          {mapChildren(treeNode, (node, index) => this.renderTreeNode(node, index))}
+        </ul>
+      </TreeContext.Provider>
     );
   }
 }
