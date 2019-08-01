@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+// @ts-ignore
 import CSSMotion from 'rc-animate/lib/CSSMotion';
 import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
@@ -82,10 +83,6 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
     disableCheckbox: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  };
-
-  static defaultProps = {
-    title: defaultTitle,
   };
 
   public state = {
@@ -597,6 +594,12 @@ const ContextTreeNode: React.FC<TreeNodeProps> = props => (
   </TreeContext.Consumer>
 );
 
+ContextTreeNode.defaultProps = {
+  title: defaultTitle,
+};
+
 (ContextTreeNode as any).isTreeNode = 1;
+
+export { TreeNode as InternalTreeNode };
 
 export default ContextTreeNode;
