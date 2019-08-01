@@ -42,6 +42,11 @@ const Demo = () => (
           </TreeNode>
           <TreeNode key="p22" title="leaf" />
         </TreeNode>
+        <TreeNode key="p12" title="p12" />
+        <TreeNode key="p13" title="p13" />
+        <TreeNode key="p14" title="p14" />
+        <TreeNode key="p15" title="p15" />
+        <TreeNode key="p16" title="p16" />
       </TreeNode>
     </Tree>
   </div>

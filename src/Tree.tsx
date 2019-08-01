@@ -3,10 +3,9 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import warning from 'warning';
+import classNames from 'classnames';
 import { polyfill } from 'react-lifecycles-compat';
-import VirtualList from 'rc-virtual-list';
 
 import { treeContextTypes } from './contextTypes';
 import {
@@ -25,7 +24,7 @@ import {
 } from './util';
 import { DataNode, IconType, Key, NodeElement, Entity, FlattenDataNode } from './interface';
 import { flattenTreeData, convertTreeToData, convertDataToEntities } from './utils/treeUtil';
-import MotionTreeNode from './MotionTreeNode';
+import NodeList from './NodeList';
 
 interface CheckInfo {
   event: 'check';
@@ -130,7 +129,6 @@ interface TreeState {
 
   treeData: DataNode[];
   flattenNodes: FlattenDataNode[];
-  disableVirtual: boolean;
 
   prevProps: TreeProps;
 }
@@ -229,7 +227,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     treeData: [],
     flattenNodes: [],
-    disableVirtual: false,
 
     prevProps: null,
   };
@@ -271,8 +268,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
         loadData,
         filterTreeNode,
-        renderTreeNode: this.renderTreeNode,
-        isKeyChecked: this.isKeyChecked,
 
         onNodeClick: this.onNodeClick,
         onNodeDoubleClick: this.onNodeDoubleClick,
@@ -813,64 +808,18 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  isKeyChecked = key => {
-    const { checkedKeys = [] } = this.state;
-    return checkedKeys.indexOf(key) !== -1;
-  };
-
-  /**
-   * [Legacy] Original logic use `key` as tracking clue.
-   * We have to use `cloneElement` to pass `key`.
-   */
-  renderTreeNode = (child, index, level = 0) => {
-    const {
-      keyEntities,
-      expandedKeys = [],
-      selectedKeys = [],
-      halfCheckedKeys = [],
-      loadedKeys = [],
-      loadingKeys = [],
-      dragOverNodeKey,
-      dropPosition,
-    } = this.state;
-    const pos = getPosition(level, index);
-    const key = child.key || pos;
-
-    if (!keyEntities[key]) {
-      warnOnlyTreeNode();
-      return null;
-    }
-
-    return React.cloneElement(child, {
-      key,
-      eventKey: key,
-      expanded: expandedKeys.indexOf(key) !== -1,
-      selected: selectedKeys.indexOf(key) !== -1,
-      loaded: loadedKeys.indexOf(key) !== -1,
-      loading: loadingKeys.indexOf(key) !== -1,
-      checked: this.isKeyChecked(key),
-      halfChecked: halfCheckedKeys.indexOf(key) !== -1,
-      pos,
-
-      // [Legacy] Drag props
-      dragOver: dragOverNodeKey === key && dropPosition === 0,
-      dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
-      dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
-    });
-  };
-
   render() {
     const {
       flattenNodes,
       keyEntities,
       expandedKeys,
       selectedKeys,
+      checkedKeys,
       loadedKeys,
       loadingKeys,
       halfCheckedKeys,
       dragOverNodeKey,
       dropPosition,
-      disableVirtual,
     } = this.state;
     const { prefixCls, className, focusable, style, showLine, tabIndex = 0 } = this.props;
     const domProps: React.HTMLAttributes<HTMLUListElement> = getDataAndAria(this.props);
@@ -880,41 +829,22 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     return (
-      <VirtualList
-        {...domProps}
+      <NodeList
         className={classNames(prefixCls, className, {
           [`${prefixCls}-show-line`]: showLine,
         })}
         style={style}
-        role="tree"
         data={flattenNodes}
-        itemKey="key"
-        height={150}
-        itemHeight={20}
-      >
-        {(treeNode: DataNode) => {
-          const { key, ...restProps } = treeNode;
-          delete restProps.children;
-
-          const treeNodeProps = {
-            eventKey: key,
-            expanded: expandedKeys.indexOf(key) !== -1,
-            selected: selectedKeys.indexOf(key) !== -1,
-            loaded: loadedKeys.indexOf(key) !== -1,
-            loading: loadingKeys.indexOf(key) !== -1,
-            checked: this.isKeyChecked(key),
-            halfChecked: halfCheckedKeys.indexOf(key) !== -1,
-            pos: String(keyEntities[key].pos),
-
-            // [Legacy] Drag props
-            dragOver: dragOverNodeKey === key && dropPosition === 0,
-            dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
-            dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
-          };
-
-          return <MotionTreeNode {...restProps} {...treeNodeProps} visible />;
-        }}
-      </VirtualList>
+        keyEntities={keyEntities}
+        expandedKeys={expandedKeys}
+        selectedKeys={selectedKeys}
+        checkedKeys={checkedKeys}
+        loadedKeys={loadedKeys}
+        loadingKeys={loadingKeys}
+        halfCheckedKeys={halfCheckedKeys}
+        dragOverNodeKey={dragOverNodeKey}
+        dropPosition={dropPosition}
+      />
     );
   }
 }

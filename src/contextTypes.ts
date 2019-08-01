@@ -26,9 +26,6 @@ export const treeContextTypes = {
 
     loadData: PropTypes.func,
     filterTreeNode: PropTypes.func,
-    renderTreeNode: PropTypes.func,
-
-    isKeyChecked: PropTypes.func,
 
     onNodeClick: PropTypes.func,
     onNodeDoubleClick: PropTypes.func,
