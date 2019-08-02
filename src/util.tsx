@@ -2,7 +2,7 @@ import React, { Children } from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, Entity } from './interface';
+import { NodeElement, Key, DataNode, Entity, DataEntity } from './interface';
 import { TreeProps } from './Tree';
 
 const DRAG_SIDE_RANGE = 0.25;
@@ -274,7 +274,7 @@ export function conductCheck(
   /** is check the node or not */
   isCheck: boolean,
   /** parsed by `convertTreeToEntities` function in Tree */
-  keyEntities: Record<Key, Entity>,
+  keyEntities: Record<Key, DataEntity>,
   /** Can pass current checked status for process (usually for uncheck operation) */
   checkStatus: { checkedKeys?: Key[]; halfCheckedKeys?: Key[] } = {},
 ) {
@@ -403,7 +403,7 @@ export function conductCheck(
  * @param keyList
  * @param keyEntities
  */
-export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Entity>) {
+export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, DataEntity>) {
   const expandedKeys = {};
 
   function conductUp(key: Key) {

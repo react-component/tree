@@ -3,7 +3,7 @@ import '../assets/index.less';
 import React from 'react';
 import Tree, { TreeNode } from '../src';
 
-const STYLE = `
+const STYLE1 = `
 .rc-tree-child-tree {
   display: block;
 }
@@ -18,37 +18,102 @@ const STYLE = `
   height: 0;
 }
 `;
+const STYLE = `
+.rc-tree-child-tree {
+  display: block;
+}
 
-const onEnterActive = node => ({ height: node.scrollHeight });
+.node-motion {
+  transition: all .3s;
+  overflow-y: hidden;
+}
+`;
 
 const motion = {
   motionName: 'node-motion',
   motionAppear: false,
-  onEnterActive,
+  onAppearStart: () => ({ height: 0 }),
+  onAppearActive: node => ({ height: node.scrollHeight }),
   onLeaveStart: node => ({ height: node.offsetHeight }),
+  onLeaveActive: () => ({ height: 0 }),
 };
+
+function getTreeData() {
+  return [
+    {
+      key: '0',
+      title: 'node 0',
+      children: [
+        { key: '0-0', title: 'node 0-0' },
+        { key: '0-1', title: 'node 0-1' },
+        {
+          key: '0-2',
+          title: 'node 0-2',
+          children: [
+            { key: '0-2-0', title: 'node 0-2-0' },
+            { key: '0-2-1', title: 'node 0-2-1' },
+            { key: '0-2-2', title: 'node 0-2-2' },
+          ],
+        },
+        { key: '0-3', title: 'node 0-3' },
+        { key: '0-4', title: 'node 0-4' },
+        { key: '0-5', title: 'node 0-5' },
+        { key: '0-6', title: 'node 0-6' },
+        { key: '0-7', title: 'node 0-7' },
+        { key: '0-8', title: 'node 0-8' },
+        {
+          key: '0-9',
+          title: 'node 0-9',
+          children: [
+            { key: '0-9-0', title: 'node 0-9-0' },
+            {
+              key: '0-9-1',
+              title: 'node 0-9-1',
+              children: [
+                { key: '0-9-1-0', title: 'node 0-9-1-0' },
+                { key: '0-9-1-1', title: 'node 0-9-1-1' },
+                { key: '0-9-1-2', title: 'node 0-9-1-2' },
+                { key: '0-9-1-3', title: 'node 0-9-1-3' },
+                { key: '0-9-1-4', title: 'node 0-9-1-4' },
+              ],
+            },
+            { key: '0-9-2', title: 'node 0-9-2' },
+          ],
+        },
+      ],
+    },
+  ];
+}
 
 const Demo = () => (
   <div>
     <h2>expanded</h2>
     <style dangerouslySetInnerHTML={{ __html: STYLE }} />
-    <Tree defaultExpandAll={false} defaultExpandedKeys={['p1']} motion={motion}>
-      <TreeNode title="parent 1" key="p1">
-        <TreeNode key="p10" title="leaf" />
-        <TreeNode title="parent 1-1" key="p11">
-          <TreeNode title="parent 2-1" key="p21">
-            <TreeNode key="p211" title="leaf" />
-            <TreeNode key="p212" title="leaf" />
-          </TreeNode>
-          <TreeNode key="p22" title="leaf" />
-        </TreeNode>
-        <TreeNode key="p12" title="p12" />
-        <TreeNode key="p13" title="p13" />
-        <TreeNode key="p14" title="p14" />
-        <TreeNode key="p15" title="p15" />
-        <TreeNode key="p16" title="p16" />
-      </TreeNode>
-    </Tree>
+
+    <div style={{ display: 'flex' }}>
+      <div style={{ flex: '1 1 50%' }}>
+        <h3>With Virtual</h3>
+        <Tree
+          defaultExpandAll={false}
+          defaultExpandedKeys={['0']}
+          motion={motion}
+          height={200}
+          itemHeight={20}
+          style={{ border: '1px solid #000' }}
+          treeData={getTreeData()}
+        />
+      </div>
+      <div style={{ flex: '1 1 50%' }}>
+        <h3>Without Virtual</h3>
+        <Tree
+          defaultExpandAll={false}
+          defaultExpandedKeys={['0']}
+          motion={motion}
+          style={{ border: '1px solid #000' }}
+          treeData={getTreeData()}
+        />
+      </div>
+    </div>
   </div>
 );
 

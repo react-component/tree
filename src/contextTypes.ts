@@ -19,7 +19,6 @@ export interface TreeContextProps {
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
-  motion: any;
   keyEntities: Record<Key, DataEntity>;
   indentSize: number;
 

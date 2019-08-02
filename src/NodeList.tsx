@@ -4,9 +4,27 @@
 
 import * as React from 'react';
 import VirtualList from 'rc-virtual-list';
-import { FlattenDataNode, DataNode, Key, Entity } from './interface';
+import { FlattenDataNode, Key, Entity, DataEntity } from './interface';
 import MotionTreeNode from './MotionTreeNode';
-import { findExpandedKeys } from './utils/diffUtil';
+import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
+
+export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
+
+export const MotionNode: DataEntity = {
+  key: MOTION_KEY,
+  level: 0,
+  index: 0,
+  pos: 0,
+  node: {
+    key: MOTION_KEY,
+  },
+};
+
+const MotionFlattenData: FlattenDataNode = {
+  ...MotionNode.node,
+  parent: null,
+  children: [],
+};
 
 interface NodeListProps {
   className: string;
@@ -23,6 +41,10 @@ interface NodeListProps {
   keyEntities: Record<Key, Entity>;
   dragOverNodeKey: Key;
   dropPosition: number;
+
+  // Virtual list
+  height: number;
+  itemHeight: number;
 }
 
 const NodeList: React.FC<NodeListProps> = ({
@@ -38,26 +60,65 @@ const NodeList: React.FC<NodeListProps> = ({
   dropPosition,
   motion,
 
+  height,
+  itemHeight,
+
   ...domProps
 }) => {
-  const [disableVirtual, setDisableVirtual] = React.useState();
+  const [disableVirtual, setDisableVirtual] = React.useState(false);
   const [prevExpandedKeys, setPrevExpandedKeys] = React.useState(expandedKeys);
   const [prevData, setPrevData] = React.useState(data);
+  const [transitionData, setTransitionData] = React.useState(data);
+  const [transitionRange, setTransitionRange] = React.useState([]);
+  const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
   // Do animation if expanded keys changed
   React.useEffect(() => {
     setPrevExpandedKeys(expandedKeys);
 
     const diffExpanded = findExpandedKeys(prevExpandedKeys, expandedKeys);
-    if (diffExpanded) {
-      console.log('666', diffExpanded);
+
+    // TODO: Slice only visible count!
+    if (diffExpanded.key !== null) {
       if (diffExpanded.add) {
-        setDisableVirtual(false);
+        const keyIndex = prevData.findIndex(({ key }) => key === diffExpanded.key);
+
+        setDisableVirtual(true);
+        const rangeNodes = getExpandRange(prevData, data, diffExpanded.key);
+
+        const newTransitionData: FlattenDataNode[] = prevData.slice();
+        newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
+
+        setTransitionData(newTransitionData);
+        setTransitionRange(rangeNodes);
+        setMotionType('show');
+      } else {
+        const keyIndex = data.findIndex(({ key }) => key === diffExpanded.key);
+
+        setDisableVirtual(true);
+        const rangeNodes = getExpandRange(data, prevData, diffExpanded.key);
+
+        const newTransitionData: FlattenDataNode[] = data.slice();
+        newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
+
+        setTransitionData(newTransitionData);
+        setTransitionRange(rangeNodes);
+        setMotionType('hide');
       }
     }
   }, [expandedKeys]);
 
-  const mergedData = motion ? prevData : data;
+  function onMotionEnd() {
+    setPrevData(data);
+    setTransitionData(data);
+    setTransitionRange([]);
+    setMotionType(null);
+    setDisableVirtual(false);
+  }
+
+  const mergedData = motion ? transitionData : data;
+
+  console.log('DSSS:', disableVirtual, mergedData, transitionRange);
 
   return (
     <VirtualList
@@ -66,8 +127,8 @@ const NodeList: React.FC<NodeListProps> = ({
       role="tree"
       data={mergedData}
       itemKey="key"
-      height={150}
-      itemHeight={20}
+      height={height}
+      itemHeight={itemHeight}
     >
       {(treeNode: FlattenDataNode) => {
         const { key, ...restProps } = treeNode;
@@ -89,7 +150,16 @@ const NodeList: React.FC<NodeListProps> = ({
           dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
         };
 
-        return <MotionTreeNode {...restProps} {...treeNodeProps} visible />;
+        return (
+          <MotionTreeNode
+            {...restProps}
+            {...treeNodeProps}
+            motion={motion}
+            motionNodes={key === MOTION_KEY ? transitionRange : null}
+            motionType={motionType}
+            onMotionEnd={onMotionEnd}
+          />
+        );
       }}
     </VirtualList>
   );

@@ -25,13 +25,12 @@ export interface TreeNodeProps {
   loaded?: boolean;
   loading?: boolean;
   halfChecked?: boolean;
-  children?: React.ReactNode;
   title?: React.ReactNode;
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
   pos: string;
-  domRef: React.Ref<HTMLDivElement>;
+  domRef?: React.Ref<HTMLDivElement>;
 
   // By user
   isLeaf?: boolean;
@@ -66,7 +65,6 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
     loaded: PropTypes.bool,
     loading: PropTypes.bool,
     halfChecked: PropTypes.bool,
-    children: PropTypes.node,
     title: PropTypes.node,
     dragOver: PropTypes.bool,
     dragOverGapTop: PropTypes.bool,

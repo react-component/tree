@@ -10,7 +10,6 @@ import { polyfill } from 'react-lifecycles-compat';
 import { TreeContext } from './contextTypes';
 import {
   getDataAndAria,
-  getPosition,
   getDragNodesKeys,
   parseCheckedKeys,
   conductExpandParent,
@@ -20,11 +19,10 @@ import {
   arrDel,
   posToArr,
   conductCheck,
-  warnOnlyTreeNode,
 } from './util';
-import { DataNode, IconType, Key, NodeElement, Entity, FlattenDataNode } from './interface';
+import { DataNode, IconType, Key, NodeElement, FlattenDataNode, DataEntity } from './interface';
 import { flattenTreeData, convertTreeToData, convertDataToEntities } from './utils/treeUtil';
-import NodeList from './NodeList';
+import NodeList, { MOTION_KEY, MotionNode } from './NodeList';
 import { TreeNodeProps } from './TreeNode';
 
 interface CheckInfo {
@@ -113,10 +111,14 @@ export interface TreeProps {
   filterTreeNode: (treeNode: React.Component<TreeNodeProps>) => boolean;
   motion: any;
   switcherIcon: IconType;
+
+  // Virtual List
+  height: number;
+  itemHeight: number;
 }
 
 interface TreeState {
-  keyEntities: Record<Key, Entity>;
+  keyEntities: Record<Key, DataEntity>;
 
   selectedKeys: Key[];
   checkedKeys: Key[];
@@ -257,7 +259,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (treeData) {
       newState.treeData = treeData;
       const entitiesMap = convertDataToEntities(treeData);
-      newState.keyEntities = entitiesMap.keyEntities;
+      newState.keyEntities = {
+        [MOTION_KEY]: MotionNode,
+        ...entitiesMap.keyEntities,
+      };
     }
 
     const keyEntities = newState.keyEntities || prevState.keyEntities;
@@ -782,6 +787,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
       loadData,
       filterTreeNode,
       indentSize,
+      height,
+      itemHeight,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLUListElement> = getDataAndAria(this.props);
 
@@ -801,7 +808,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
           checkable,
           checkStrictly,
           disabled,
-          motion,
           keyEntities,
           indentSize,
 
@@ -843,6 +849,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dragOverNodeKey={dragOverNodeKey}
           dropPosition={dropPosition}
           motion={motion}
+          height={height}
+          itemHeight={itemHeight}
         />
       </TreeContext.Provider>
     );

@@ -14,6 +14,7 @@ export interface DataNode {
   switcherIcon?: IconType;
 
   /** Set style of TreeNode. This is not recommend if you don't have any force requirement */
+  className?: string;
   style?: React.CSSProperties;
 }
 
