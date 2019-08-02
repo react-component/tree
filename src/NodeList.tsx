@@ -7,6 +7,7 @@ import VirtualList from 'rc-virtual-list';
 import { FlattenDataNode, Key, Entity, DataEntity } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
+import { getTreeNodeProps } from './utils/treeUtil';
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
@@ -38,7 +39,7 @@ interface NodeListProps {
   loadedKeys: Key[];
   loadingKeys: Key[];
   halfCheckedKeys: Key[];
-  keyEntities: Record<Key, Entity>;
+  keyEntities: Record<Key, DataEntity>;
   dragOverNodeKey: Key;
   dropPosition: number;
 
@@ -118,7 +119,19 @@ const NodeList: React.FC<NodeListProps> = ({
 
   const mergedData = motion ? transitionData : data;
 
-  console.log('DSSS:', disableVirtual, mergedData, transitionRange);
+  console.log('=========================');
+
+  const treeNodeRequiredProps = {
+    expandedKeys,
+    selectedKeys,
+    loadedKeys,
+    loadingKeys,
+    checkedKeys,
+    halfCheckedKeys,
+    dragOverNodeKey,
+    dropPosition,
+    keyEntities,
+  };
 
   return (
     <VirtualList
@@ -134,21 +147,7 @@ const NodeList: React.FC<NodeListProps> = ({
         const { key, ...restProps } = treeNode;
         delete restProps.children;
 
-        const treeNodeProps = {
-          eventKey: key,
-          expanded: expandedKeys.indexOf(key) !== -1,
-          selected: selectedKeys.indexOf(key) !== -1,
-          loaded: loadedKeys.indexOf(key) !== -1,
-          loading: loadingKeys.indexOf(key) !== -1,
-          checked: checkedKeys.indexOf(key) !== -1,
-          halfChecked: halfCheckedKeys.indexOf(key) !== -1,
-          pos: String(keyEntities[key].pos),
-
-          // [Legacy] Drag props
-          dragOver: dragOverNodeKey === key && dropPosition === 0,
-          dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
-          dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
-        };
+        const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
 
         return (
           <MotionTreeNode
@@ -158,6 +157,7 @@ const NodeList: React.FC<NodeListProps> = ({
             motionNodes={key === MOTION_KEY ? transitionRange : null}
             motionType={motionType}
             onMotionEnd={onMotionEnd}
+            treeNodeRequiredProps={treeNodeRequiredProps}
           />
         );
       }}

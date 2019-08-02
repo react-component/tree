@@ -3,16 +3,28 @@ import * as React from 'react';
 import CSSMotion from 'rc-animate/lib/CSSMotion';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { FlattenDataNode } from './interface';
+import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   motion?: any;
   motionNodes?: FlattenDataNode[];
   onMotionEnd: () => void;
   motionType?: 'show' | 'hide';
+
+  treeNodeRequiredProps: TreeNodeRequiredProps;
 }
 
 const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
-  { className, style, motion, motionNodes, motionType, onMotionEnd, ...props },
+  {
+    className,
+    style,
+    motion,
+    motionNodes,
+    motionType,
+    onMotionEnd,
+    treeNodeRequiredProps,
+    ...props
+  },
   ref,
 ) => {
   const [visible, setVisible] = React.useState(true);
@@ -23,9 +35,7 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
     }
   }, [motionNodes]);
 
-  console.log('>>>', props);
   if (motionNodes) {
-    console.log('!!!');
     return (
       <CSSMotion
         ref={ref}
@@ -38,9 +48,11 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
         {({ className: motionClassName, style: motionStyle }, motionRef) => (
           <div ref={motionRef} className={motionClassName} style={motionStyle}>
             {motionNodes.map((treeNode: FlattenDataNode) => {
-              const treeNodeProps = { ...treeNode };
+              const { key, ...restProps } = treeNode;
 
-              return <TreeNode {...treeNodeProps} eventKey={treeNode.key} pos="" />;
+              const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
+
+              return <TreeNode {...restProps} {...treeNodeProps} />;
             })}
           </div>
         )}

@@ -203,3 +203,51 @@ export function convertDataToEntities(
 
   return wrapper;
 }
+
+export interface TreeNodeRequiredProps {
+  expandedKeys: Key[];
+  selectedKeys: Key[];
+  loadedKeys: Key[];
+  loadingKeys: Key[];
+  checkedKeys: Key[];
+  halfCheckedKeys: Key[];
+  dragOverNodeKey: Key;
+  dropPosition: number;
+  keyEntities: Record<Key, DataEntity>;
+}
+
+/**
+ * Get TreeNode props with Tree props.
+ */
+export function getTreeNodeProps(
+  key: Key,
+  {
+    expandedKeys,
+    selectedKeys,
+    loadedKeys,
+    loadingKeys,
+    checkedKeys,
+    halfCheckedKeys,
+    dragOverNodeKey,
+    dropPosition,
+    keyEntities,
+  }: TreeNodeRequiredProps,
+) {
+  const treeNodeProps = {
+    eventKey: key,
+    expanded: expandedKeys.indexOf(key) !== -1,
+    selected: selectedKeys.indexOf(key) !== -1,
+    loaded: loadedKeys.indexOf(key) !== -1,
+    loading: loadingKeys.indexOf(key) !== -1,
+    checked: checkedKeys.indexOf(key) !== -1,
+    halfChecked: halfCheckedKeys.indexOf(key) !== -1,
+    pos: String(keyEntities[key].pos),
+
+    // [Legacy] Drag props
+    dragOver: dragOverNodeKey === key && dropPosition === 0,
+    dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
+    dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
+  };
+
+  return treeNodeProps;
+}
