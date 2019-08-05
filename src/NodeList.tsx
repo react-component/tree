@@ -48,6 +48,21 @@ interface NodeListProps {
   itemHeight: number;
 }
 
+/**
+ * We only need get visible content items to play the animation.
+ */
+function getMinimumRangeTransitionRange(
+  list: FlattenDataNode[],
+  height: number,
+  itemHeight: number,
+) {
+  if (!height) {
+    return list;
+  }
+
+  return list.slice(0, Math.ceil(height / itemHeight) + 1);
+}
+
 const NodeList: React.FC<NodeListProps> = ({
   data,
   expandedKeys,
@@ -79,13 +94,16 @@ const NodeList: React.FC<NodeListProps> = ({
 
     const diffExpanded = findExpandedKeys(prevExpandedKeys, expandedKeys);
 
-    // TODO: Slice only visible count!
     if (diffExpanded.key !== null) {
       if (diffExpanded.add) {
         const keyIndex = prevData.findIndex(({ key }) => key === diffExpanded.key);
 
         setDisableVirtual(true);
-        const rangeNodes = getExpandRange(prevData, data, diffExpanded.key);
+        const rangeNodes = getMinimumRangeTransitionRange(
+          getExpandRange(prevData, data, diffExpanded.key),
+          height,
+          itemHeight,
+        );
 
         const newTransitionData: FlattenDataNode[] = prevData.slice();
         newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
@@ -97,7 +115,11 @@ const NodeList: React.FC<NodeListProps> = ({
         const keyIndex = data.findIndex(({ key }) => key === diffExpanded.key);
 
         setDisableVirtual(true);
-        const rangeNodes = getExpandRange(data, prevData, diffExpanded.key);
+        const rangeNodes = getMinimumRangeTransitionRange(
+          getExpandRange(data, prevData, diffExpanded.key),
+          height,
+          itemHeight,
+        );
 
         const newTransitionData: FlattenDataNode[] = data.slice();
         newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
