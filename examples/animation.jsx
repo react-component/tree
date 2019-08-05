@@ -1,7 +1,7 @@
 /* eslint no-console:0, react/no-danger: 0 */
 import '../assets/index.less';
 import React from 'react';
-import Tree, { TreeNode } from '../src';
+import Tree from '../src';
 
 const STYLE = `
 .rc-tree-child-tree {
