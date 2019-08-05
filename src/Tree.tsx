@@ -270,7 +270,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       };
 
       // Warning if treeNode not provide key
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV !== 'production') {
         warningWithoutKey(treeData);
       }
     }

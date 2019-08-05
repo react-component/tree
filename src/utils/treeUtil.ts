@@ -4,6 +4,13 @@ import warning from 'warning';
 import { DataNode, FlattenDataNode, NodeElement, DataEntity, Key } from '../interface';
 import { getPosition } from '../util';
 
+export function getKey(key: Key, pos: string) {
+  if (key !== null && key !== undefined) {
+    return String(key);
+  }
+  return pos;
+}
+
 /**
  * Warning if TreeNode do not provides key
  */
@@ -13,10 +20,16 @@ export function warningWithoutKey(treeData: DataNode[] = []) {
   function dig(list: DataNode[], path: string = '') {
     (list || []).forEach(treeNode => {
       const { key, children } = treeNode;
-      warning(key !== null && key !== undefined, `Tree node must have a key: [${path}${key}]`);
+      warning(
+        key !== null && key !== undefined,
+        `Tree node must have a certain key: [${path}${key}]`,
+      );
 
       const recordKey = String(key);
-      warning(!keys.has(recordKey), `Same 'key' exist in the Tree: ${recordKey}`);
+      warning(
+        !keys.has(recordKey) || key === null || key === undefined,
+        `Same 'key' exist in the Tree: ${recordKey}`,
+      );
       keys.set(recordKey, true);
 
       dig(children, `${path}${recordKey} > `);
@@ -70,18 +83,22 @@ export function flattenTreeData(
   const flattenList: FlattenDataNode[] = [];
 
   function dig(list: DataNode[], parent: FlattenDataNode = null): FlattenDataNode[] {
-    return list.map(treeNode => {
+    return list.map((treeNode, index) => {
+      const pos: string = getPosition(parent ? parent.pos : '0', index);
+      const mergedKey = getKey(treeNode.key, pos);
+
       // Add FlattenDataNode into list
       const flattenNode: FlattenDataNode = {
         ...treeNode,
         parent,
+        pos,
         children: null,
       };
 
       flattenList.push(flattenNode);
 
       // Loop treeNode children
-      if (expandedKeys.includes(flattenNode.key)) {
+      if (expandedKeys.includes(mergedKey)) {
         flattenNode.children = dig(treeNode.children || [], flattenNode);
       } else {
         flattenNode.children = [];
@@ -105,7 +122,7 @@ export function traverseDataNodes(
   callback: (data: {
     node: DataNode;
     index: number;
-    pos: string | number;
+    pos: string;
     key: Key;
     parentPos: string | number;
     level: number;
@@ -114,10 +131,10 @@ export function traverseDataNodes(
   function processNode(
     node: DataNode,
     index?: number,
-    parent?: { node: DataNode; pos: string | number; level: number },
+    parent?: { node: DataNode; pos: string; level: number },
   ) {
     const children = node ? node.children : dataNodes;
-    const pos = node ? getPosition(parent.pos, index) : 0;
+    const pos = node ? getPosition(parent.pos, index) : '0';
 
     // Process node if is not root
     if (node) {
@@ -179,8 +196,10 @@ export function convertDataToEntities(
     const { node, index, pos, key, parentPos, level } = item;
     const entity: DataEntity = { node, index, key, pos, level };
 
+    const mergedKey = getKey(key, pos);
+
     posEntities[pos] = entity;
-    keyEntities[key] = entity;
+    keyEntities[mergedKey] = entity;
 
     // Fill children
     entity.parent = posEntities[parentPos];

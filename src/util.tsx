@@ -60,7 +60,7 @@ export function traverseTreeNodes(
   callback: (data: {
     node: NodeElement;
     index: number;
-    pos: string | number;
+    pos: string;
     key: Key;
     parentPos: string | number;
   }) => void,
@@ -68,7 +68,7 @@ export function traverseTreeNodes(
   function processNode(
     node: NodeElement,
     index?: number,
-    parent?: { node: NodeElement; pos: string | number },
+    parent?: { node: NodeElement; pos: string },
   ) {
     const children = node ? node.props.children : treeNodes;
     const pos = node ? getPosition(parent.pos, index) : 0;

@@ -33,7 +33,7 @@ export interface Entity {
   node: NodeElement;
   index: number;
   key: Key;
-  pos: string | number;
+  pos: string;
   parent?: Entity;
   children?: Entity[];
 }
@@ -48,4 +48,5 @@ export interface DataEntity extends Omit<Entity, 'node' | 'parent' | 'children'>
 export interface FlattenDataNode extends Omit<DataNode, 'children'> {
   parent: FlattenDataNode | null;
   children: FlattenDataNode[];
+  pos: string;
 }

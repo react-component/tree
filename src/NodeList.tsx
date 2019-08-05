@@ -7,7 +7,7 @@ import VirtualList from 'rc-virtual-list';
 import { FlattenDataNode, Key, Entity, DataEntity } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
-import { getTreeNodeProps } from './utils/treeUtil';
+import { getTreeNodeProps, getKey } from './utils/treeUtil';
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
@@ -15,7 +15,7 @@ export const MotionNode: DataEntity = {
   key: MOTION_KEY,
   level: 0,
   index: 0,
-  pos: 0,
+  pos: '0',
   node: {
     key: MOTION_KEY,
   },
@@ -25,6 +25,7 @@ const MotionFlattenData: FlattenDataNode = {
   ...MotionNode.node,
   parent: null,
   children: [],
+  pos: MotionNode.pos,
 };
 
 interface NodeListProps {
@@ -61,6 +62,11 @@ function getMinimumRangeTransitionRange(
   }
 
   return list.slice(0, Math.ceil(height / itemHeight) + 1);
+}
+
+function itemKey(item: FlattenDataNode) {
+  const { key, pos } = item;
+  return getKey(key, pos);
 }
 
 const NodeList: React.FC<NodeListProps> = ({
@@ -159,16 +165,17 @@ const NodeList: React.FC<NodeListProps> = ({
       disabled={disableVirtual}
       role="tree"
       data={mergedData}
-      itemKey="key"
+      itemKey={itemKey}
       height={height}
       itemHeight={itemHeight}
       onSkipRender={onMotionEnd}
     >
       {(treeNode: FlattenDataNode) => {
         const { key, ...restProps } = treeNode;
+        const mergedKey = getKey(key, restProps.pos);
         delete restProps.children;
 
-        const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
+        const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
 
         return (
           <MotionTreeNode
