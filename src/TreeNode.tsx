@@ -40,6 +40,7 @@ export interface TreeNodeProps {
   disableCheckbox?: boolean;
   icon?: IconType;
   switcherIcon?: IconType;
+  children?: React.ReactNode;
 }
 
 export interface InternalTreeNodeProps extends TreeNodeProps {

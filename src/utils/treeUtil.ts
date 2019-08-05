@@ -1,7 +1,30 @@
 import * as React from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
+import warning from 'warning';
 import { DataNode, FlattenDataNode, NodeElement, DataEntity, Key } from '../interface';
 import { getPosition } from '../util';
+
+/**
+ * Warning if TreeNode do not provides key
+ */
+export function warningWithoutKey(treeData: DataNode[] = []) {
+  const keys: Map<string, boolean> = new Map();
+
+  function dig(list: DataNode[], path: string = '') {
+    (list || []).forEach(treeNode => {
+      const { key, children } = treeNode;
+      warning(key !== null && key !== undefined, `Tree node must have a key: [${path}${key}]`);
+
+      const recordKey = String(key);
+      warning(!keys.has(recordKey), `Same 'key' exist in the Tree: ${recordKey}`);
+      keys.set(recordKey, true);
+
+      dig(children, `${path}${recordKey} > `);
+    });
+  }
+
+  dig(treeData);
+}
 
 /**
  * Convert `children` of Tree into `treeData` structure.
@@ -63,32 +86,6 @@ export function flattenTreeData(
       } else {
         flattenNode.children = [];
       }
-
-      return flattenNode;
-    });
-  }
-
-  dig(treeNodeList);
-
-  return flattenList;
-}
-
-export function flattenTreeData233(treeNodeList: DataNode[] = []): FlattenDataNode[] {
-  const flattenList: FlattenDataNode[] = [];
-
-  function dig(list: DataNode[], parent: FlattenDataNode = null): FlattenDataNode[] {
-    return list.map(treeNode => {
-      // Add FlattenDataNode into list
-      const flattenNode: FlattenDataNode = {
-        ...treeNode,
-        parent,
-        children: null,
-      };
-
-      flattenList.push(flattenNode);
-
-      // Loop treeNode children
-      flattenNode.children = dig(treeNode.children || [], flattenNode);
 
       return flattenNode;
     });

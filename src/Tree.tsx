@@ -21,7 +21,12 @@ import {
   conductCheck,
 } from './util';
 import { DataNode, IconType, Key, NodeElement, FlattenDataNode, DataEntity } from './interface';
-import { flattenTreeData, convertTreeToData, convertDataToEntities } from './utils/treeUtil';
+import {
+  flattenTreeData,
+  convertTreeToData,
+  convertDataToEntities,
+  warningWithoutKey,
+} from './utils/treeUtil';
 import NodeList, { MOTION_KEY, MotionNode } from './NodeList';
 import { TreeNodeProps } from './TreeNode';
 
@@ -263,6 +268,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
         [MOTION_KEY]: MotionNode,
         ...entitiesMap.keyEntities,
       };
+
+      // Warning if treeNode not provide key
+      if (process.env.NODE_ENV === 'development') {
+        warningWithoutKey(treeData);
+      }
     }
 
     const keyEntities = newState.keyEntities || prevState.keyEntities;
