@@ -52,7 +52,7 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
 
               const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
 
-              return <TreeNode {...restProps} {...treeNodeProps} />;
+              return <TreeNode {...restProps} {...treeNodeProps} key={key} />;
             })}
           </div>
         )}

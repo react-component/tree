@@ -119,8 +119,6 @@ const NodeList: React.FC<NodeListProps> = ({
 
   const mergedData = motion ? transitionData : data;
 
-  console.log('=========================');
-
   const treeNodeRequiredProps = {
     expandedKeys,
     selectedKeys,

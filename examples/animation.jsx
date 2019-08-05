@@ -3,21 +3,6 @@ import '../assets/index.less';
 import React from 'react';
 import Tree, { TreeNode } from '../src';
 
-const STYLE1 = `
-.rc-tree-child-tree {
-  display: block;
-}
-
-.node-motion {
-  transition: all .3s;
-  overflow-y: hidden;
-}
-
-.node-motion-enter,
-.node-motion-leave-active {
-  height: 0;
-}
-`;
 const STYLE = `
 .rc-tree-child-tree {
   display: block;
@@ -28,6 +13,8 @@ const STYLE = `
   overflow-y: hidden;
 }
 `;
+
+const defaultExpandedKeys = ['0', '0-2'];
 
 const motion = {
   motionName: 'node-motion',
@@ -95,7 +82,7 @@ const Demo = () => (
         <h3>With Virtual</h3>
         <Tree
           defaultExpandAll={false}
-          defaultExpandedKeys={['0']}
+          defaultExpandedKeys={defaultExpandedKeys}
           motion={motion}
           height={200}
           itemHeight={20}
@@ -107,7 +94,7 @@ const Demo = () => (
         <h3>Without Virtual</h3>
         <Tree
           defaultExpandAll={false}
-          defaultExpandedKeys={['0']}
+          defaultExpandedKeys={defaultExpandedKeys}
           motion={motion}
           style={{ border: '1px solid #000' }}
           treeData={getTreeData()}
