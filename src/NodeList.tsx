@@ -140,6 +140,7 @@ const NodeList: React.FC<NodeListProps> = ({
       itemKey="key"
       height={height}
       itemHeight={itemHeight}
+      onSkipRender={onMotionEnd}
     >
       {(treeNode: FlattenDataNode) => {
         const { key, ...restProps } = treeNode;
