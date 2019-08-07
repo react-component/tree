@@ -213,9 +213,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     defaultSelectedKeys: [],
   };
 
-  /** Internal usage for `rc-tree-select`, we don't promise it will not change. */
-  domTreeNodes: Record<string | number, HTMLElement> = {};
-
   delayedDragEnterLogic: Record<Key, number>;
 
   state = {
@@ -284,7 +281,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
           ? conductExpandParent(props.expandedKeys, keyEntities)
           : props.expandedKeys;
     } else if (!prevProps && props.defaultExpandAll) {
-      newState.expandedKeys = Object.keys(keyEntities);
+      const cloneKeyEntities = { ...keyEntities };
+      delete cloneKeyEntities[MOTION_KEY];
+      newState.expandedKeys = Object.keys(cloneKeyEntities);
     } else if (!prevProps && props.defaultExpandedKeys) {
       newState.expandedKeys =
         props.autoExpandParent || props.defaultExpandParent
@@ -757,14 +756,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  registerTreeNode = (key, node) => {
-    if (node) {
-      this.domTreeNodes[key] = node;
-    } else {
-      delete this.domTreeNodes[key];
-    }
-  };
-
   render() {
     const {
       flattenNodes,
@@ -839,8 +830,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
           onNodeDragLeave: this.onNodeDragLeave,
           onNodeDragEnd: this.onNodeDragEnd,
           onNodeDrop: this.onNodeDrop,
-
-          registerTreeNode: this.registerTreeNode,
         }}
       >
         <NodeList

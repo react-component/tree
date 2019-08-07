@@ -44,8 +44,6 @@ export interface TreeContextProps {
   onNodeDragLeave: NodeMouseEventHandler;
   onNodeDragEnd: NodeMouseEventHandler;
   onNodeDrop: NodeMouseEventHandler;
-
-  registerTreeNode: (key: Key, node: React.Component<InternalTreeNodeProps>) => void;
 }
 
 export const TreeContext: Context<TreeContextProps | null> = createReactContext(null);

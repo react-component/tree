@@ -51,7 +51,7 @@ export interface TreeNodeState {
   dragNodeHighlight: boolean;
 }
 
-class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
+class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
   static propTypes = {
     eventKey: PropTypes.string, // Pass by parent `cloneElement`
     prefixCls: PropTypes.string,
@@ -90,26 +90,11 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
 
   // Isomorphic needn't load data in server side
   componentDidMount() {
-    const {
-      eventKey,
-      context: { registerTreeNode },
-    } = this.props;
-
     this.syncLoadData(this.props);
-
-    registerTreeNode(eventKey, this);
   }
 
   componentDidUpdate() {
     this.syncLoadData(this.props);
-  }
-
-  componentWillUnmount() {
-    const {
-      eventKey,
-      context: { registerTreeNode },
-    } = this.props;
-    registerTreeNode(eventKey, null);
   }
 
   onSelectorClick = e => {
@@ -557,13 +542,15 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
   }
 }
 
-polyfill(TreeNode);
+polyfill(InternalTreeNode);
 
 const ContextTreeNode: React.FC<TreeNodeProps> = props => (
   <TreeContext.Consumer>
-    {context => <TreeNode {...props} context={context} />}
+    {context => <InternalTreeNode {...props} context={context} />}
   </TreeContext.Consumer>
 );
+
+ContextTreeNode.displayName = 'TreeNode';
 
 ContextTreeNode.defaultProps = {
   title: defaultTitle,
@@ -571,6 +558,6 @@ ContextTreeNode.defaultProps = {
 
 (ContextTreeNode as any).isTreeNode = 1;
 
-export { TreeNode as InternalTreeNode };
+export { InternalTreeNode };
 
 export default ContextTreeNode;

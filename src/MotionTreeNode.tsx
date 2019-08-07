@@ -62,6 +62,8 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
   return <TreeNode domRef={ref} className={className} style={style} {...props} />;
 };
 
+MotionTreeNode.displayName = 'MotionTreeNode';
+
 const RefMotionTreeNode = React.forwardRef(MotionTreeNode);
 
 export default RefMotionTreeNode;
