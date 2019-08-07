@@ -1,17 +1,19 @@
-/* eslint-disable no-undef, react/no-multi-comp,
+/* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign, import/no-named-as-default-member */
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
-import { objectMatcher } from './util';
+import { objectMatcher, spyConsole } from './util';
 
 const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
 const SELECTED_CLASSNAME = '.rc-tree-node-selected';
 
 describe('Tree Basic', () => {
+  spyConsole();
+
   it('TreeNode is in Tree', () => {
     expect(TreeNode).toBe(Tree.TreeNode);
   });
@@ -892,7 +894,12 @@ describe('Tree Basic', () => {
       </Tree>,
     );
 
-    expect(wrapper.find(InternalTreeNode).find('div').is('.filter-node')).toBe(true);
+    expect(
+      wrapper
+        .find(InternalTreeNode)
+        .find('div')
+        .is('.filter-node'),
+    ).toBe(true);
   });
 
   it('loads nodes asynchronously', () => {

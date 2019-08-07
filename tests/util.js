@@ -27,3 +27,26 @@ export function objectMatcher(item) {
 
   return expect.objectContaining(result);
 }
+
+export function spyConsole() {
+  const errorList = [
+    'Warning: Tree node must have a certain key:',
+    'Warning: `children` of Tree is deprecated. Please use `treeData` instead.',
+  ];
+
+  const originConsoleErr = console.error;
+
+  beforeAll(() => {
+    console.error = jest.fn().mockImplementation((...args) => {
+      if (errorList.some(tmpl => args[0].includes(tmpl))) {
+        return;
+      }
+
+      originConsoleErr(...args);
+    });
+  });
+
+  afterAll(() => {
+    console.error = originConsoleErr;
+  });
+}
