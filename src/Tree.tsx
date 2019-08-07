@@ -24,6 +24,7 @@ import {
   warnOnlyTreeNode,
 } from './util';
 import { DataNode, IconType, Key, NodeElement, Entity } from './interface';
+import { TreeNodeProps } from './TreeNode';
 
 interface CheckInfo {
   event: 'check';
@@ -107,7 +108,7 @@ export interface TreeProps {
     dropPosition: number;
     dropToGap: boolean;
   }) => void;
-  filterTreeNode: (treeNode: React.Component<TreeProps>) => boolean;
+  filterTreeNode: (treeNode: React.Component<TreeNodeProps>) => boolean;
   motion: any;
   switcherIcon: IconType;
 }
