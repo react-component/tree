@@ -1,13 +1,6 @@
 import { ReactWrapper } from 'enzyme';
 import { Component } from 'react';
 
-export function nodeMatcher({ props = {}, ...rest }) {
-  return expect.objectContaining({
-    ...rest,
-    props: expect.objectContaining(props),
-  });
-}
-
 export function objectMatcher(item) {
   const result = Array.isArray(item) ? [] : {};
 
@@ -49,4 +42,22 @@ export function spyConsole() {
   afterAll(() => {
     console.error = originConsoleErr;
   });
+}
+
+export function spyError() {
+  let errorSpy;
+
+  beforeAll(() => {
+    errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  beforeEach(() => {
+    errorSpy.mockReset();
+  });
+
+  afterAll(() => {
+    errorSpy.mockRestore();
+  });
+
+  return () => errorSpy;
 }

@@ -23,18 +23,14 @@ export interface TreeContextProps {
   indentSize: number;
 
   loadData: (treeNode: NodeElement) => Promise<void>;
-  filterTreeNode: (treeNode: React.Component<TreeNodeProps>) => boolean;
+  filterTreeNode: (treeNode: NodeElement) => boolean;
 
   onNodeClick: NodeMouseEventHandler;
   onNodeDoubleClick: NodeMouseEventHandler;
   onNodeExpand: NodeMouseEventHandler;
   onNodeSelect: NodeMouseEventHandler;
-  onNodeCheck: (
-    e: MouseEvent,
-    treeNode: React.Component<InternalTreeNodeProps>,
-    checked: boolean,
-  ) => void;
-  onNodeLoad: (treeNode: React.Component<InternalTreeNodeProps>) => void;
+  onNodeCheck: (e: MouseEvent, treeNode: NodeElement, checked: boolean) => void;
+  onNodeLoad: (treeNode: NodeElement) => void;
   onNodeMouseEnter: NodeMouseEventHandler;
   onNodeMouseLeave: NodeMouseEventHandler;
   onNodeContextMenu: NodeMouseEventHandler;

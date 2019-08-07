@@ -2,7 +2,7 @@ import * as React from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
 import { DataNode, FlattenDataNode, NodeElement, DataEntity, Key } from '../interface';
-import { getPosition } from '../util';
+import { getPosition, isTreeNode } from '../util';
 
 export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
@@ -48,7 +48,8 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
     return treeNodes
       .map(treeNode => {
         // Filter invalidate node
-        if (!React.isValidElement(treeNode)) {
+        if (!isTreeNode(treeNode)) {
+          warning(!treeNode, 'Tree/TreeNode can only accept TreeNode as children.');
           return null;
         }
 

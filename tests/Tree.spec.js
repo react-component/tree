@@ -5,7 +5,7 @@ import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
-import { objectMatcher, spyConsole } from './util';
+import { objectMatcher, spyConsole, spyError } from './util';
 
 const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
@@ -478,19 +478,25 @@ describe('Tree Basic', () => {
       expect(renderToJson(wrapper.render())).toMatchSnapshot();
     });
 
-    it('check after data ready', () => {
-      const checkedKeys = ['0-0-0'];
-      const wrapper = mount(<Tree checkable checkedKeys={checkedKeys} />);
-      wrapper.setProps({
-        expandedKeys: ['0-0'],
-        children: (
-          <TreeNode key="0-0" title="Light">
-            <TreeNode key="0-0-0" title="Bamboo" />
-          </TreeNode>
-        ),
-      });
+    describe('check after data ready', () => {
+      const errorSpy = spyError();
 
-      expect(wrapper.render()).toMatchSnapshot();
+      it('works', () => {
+        const checkedKeys = ['0-0-0'];
+        const wrapper = mount(<Tree checkable checkedKeys={checkedKeys} />);
+        expect(errorSpy()).toHaveBeenCalledWith("Warning: '0-0-0' does not exist in the tree.");
+
+        wrapper.setProps({
+          expandedKeys: ['0-0'],
+          children: (
+            <TreeNode key="0-0" title="Light">
+              <TreeNode key="0-0-0" title="Bamboo" />
+            </TreeNode>
+          ),
+        });
+
+        expect(wrapper.render()).toMatchSnapshot();
+      });
     });
 
     it('should ignore !checkable node', () => {
@@ -1145,9 +1151,9 @@ describe('Tree Basic', () => {
           {[0, 1].map(i => (
             <TreeNode title={i} key={i}>
               {[2, 3].map(j => (
-                <TreeNode title={j} key={j} />
+                <TreeNode title={j} key={`${i}_${j}`} />
               ))}
-              <TreeNode title="4" key="4" />
+              <TreeNode title="4" key={`${i}_4`} />
             </TreeNode>
           ))}
         </Tree>,
@@ -1171,7 +1177,7 @@ describe('Tree Basic', () => {
   });
 
   describe('ignore illegal node as Tree children', () => {
-    console.log(">>> Follow Warning is for test purpose. Don't be scared :)");
+    const errorSpy = spyError();
 
     it('Direct TreeNode', () => {
       const wrapper = mount(
@@ -1182,6 +1188,9 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       expect(wrapper.render()).toMatchSnapshot();
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: Tree/TreeNode can only accept TreeNode as children.',
+      );
     });
 
     it('Sub TreeNode', () => {
@@ -1196,6 +1205,9 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       expect(wrapper.render()).toMatchSnapshot();
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: Tree/TreeNode can only accept TreeNode as children.',
+      );
     });
   });
 });

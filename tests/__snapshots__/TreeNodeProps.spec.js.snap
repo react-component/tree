@@ -1,39 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TreeNode Props className 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__open"
-      />
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
-        class="tree-node-cls rc-tree-treenode-switcher-open"
+      <div
+        class="rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
@@ -51,37 +30,89 @@ exports[`TreeNode Props className 1`] = `
             ---
           </span>
         </span>
-        <ul
-          class="rc-tree-child-tree rc-tree-child-tree-open"
-          data-expanded="true"
-          role="group"
+      </div>
+      <div
+        class="tree-node-cls rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="---"
         >
-          <li
-            class="rc-tree-treenode-switcher-open"
-            role="treeitem"
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
+          <span
+            class="rc-tree-title"
           >
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </li>
-        </ul>
-      </li>
-      <li
+            ---
+          </span>
+        </span>
+      </div>
+      <div
         class="rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:36px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -99,165 +130,167 @@ exports[`TreeNode Props className 1`] = `
             ---
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="---"
-    >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__docu"
-      />
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-  </li>
-</ul>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props customize icon component 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__customize"
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
         <span
-          class="cust-icon"
+          class="rc-tree-switcher rc-tree-switcher-noop"
         />
-      </span>
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-  </li>
-</ul>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__customize"
+          >
+            <span
+              class="cust-icon"
+            />
+          </span>
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props customize icon element 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__customize"
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
         <span
-          class="cust-icon"
+          class="rc-tree-switcher rc-tree-switcher-noop"
         />
-      </span>
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-  </li>
-</ul>
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__customize"
+          >
+            <span
+              class="cust-icon"
+            />
+          </span>
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props customize icon hide icon 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-title"
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
-        ---
-      </span>
-    </span>
-  </li>
-</ul>
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    aria-label="0-0"
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__open"
-      />
-      <span
-        class="rc-tree-title"
+      <div
+        aria-label="0-0"
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
-        ---
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+      <div
         aria-label="0-0-0"
         class="tree-node-cls rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
         />
@@ -274,39 +307,66 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             ---
           </span>
         </span>
-        <ul
-          class="rc-tree-child-tree rc-tree-child-tree-open"
-          data-expanded="true"
-          role="group"
+      </div>
+      <div
+        aria-label="0-0-0-0"
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:36px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
         >
-          <li
-            aria-label="0-0-0-0"
-            class="rc-tree-treenode-switcher-open"
-            role="treeitem"
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
           >
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </li>
-        </ul>
-      </li>
-      <li
+            ---
+          </span>
+        </span>
+      </div>
+      <div
         aria-label="0-0-1"
         class="rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+      <div
+        aria-label="0-1"
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -324,71 +384,54 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             ---
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-  <li
-    aria-label="0-1"
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="---"
-    >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__docu"
-      />
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-  </li>
-</ul>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props data and aria props renders data attributes on li 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    data-test="0-0"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__open"
-      />
-      <span
-        class="rc-tree-title"
+      <div
+        class="rc-tree-treenode-switcher-open"
+        data-test="0-0"
+        role="treeitem"
+        tabindex="0"
       >
-        ---
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+      <div
         class="tree-node-cls rc-tree-treenode-switcher-open"
         data-test="0-0-0"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
         />
@@ -405,39 +448,66 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             ---
           </span>
         </span>
-        <ul
-          class="rc-tree-child-tree rc-tree-child-tree-open"
-          data-expanded="true"
-          role="group"
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        data-test="0-0-0-0"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:36px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
         >
-          <li
-            class="rc-tree-treenode-switcher-open"
-            data-test="0-0-0-0"
-            role="treeitem"
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
           >
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </li>
-        </ul>
-      </li>
-      <li
+            ---
+          </span>
+        </span>
+      </div>
+      <div
         class="rc-tree-treenode-switcher-open"
         data-test="0-0-1"
         role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        data-test="0-1"
+        role="treeitem"
+        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -455,65 +525,25 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             ---
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-  <li
-    class="rc-tree-treenode-switcher-open"
-    data-test="0-1"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="---"
-    >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__docu"
-      />
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-  </li>
-</ul>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props isLeaf 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class=""
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+      <div
         class=""
         role="treeitem"
+        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -528,46 +558,48 @@ exports[`TreeNode Props isLeaf 1`] = `
             ---
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-</ul>
+      </div>
+      <div
+        class=""
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props isLeaf 2`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class=""
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__docu"
-      />
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+      <div
         class=""
         role="treeitem"
+        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -585,46 +617,51 @@ exports[`TreeNode Props isLeaf 2`] = `
             ---
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-</ul>
+      </div>
+      <div
+        class=""
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props isLeaf 3`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__open"
-      />
-      <span
-        class="rc-tree-title"
-      >
-        ---
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+      <div
         class="rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
@@ -642,8 +679,34 @@ exports[`TreeNode Props isLeaf 3`] = `
             ---
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-</ul>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;

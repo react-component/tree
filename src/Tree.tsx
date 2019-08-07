@@ -113,7 +113,7 @@ export interface TreeProps {
     dropPosition: number;
     dropToGap: boolean;
   }) => void;
-  filterTreeNode: (treeNode: React.Component<TreeNodeProps>) => boolean;
+  filterTreeNode: (treeNode: NodeElement) => boolean;
   motion: any;
   switcherIcon: IconType;
 
@@ -345,15 +345,15 @@ class Tree extends React.Component<TreeProps, TreeState> {
     return newState;
   }
 
-  onNodeDragStart = (event, node) => {
-    const { expandedKeys } = this.state;
+  onNodeDragStart = (event, node: NodeElement) => {
+    const { expandedKeys, keyEntities } = this.state;
     const { onDragStart } = this.props;
     const { eventKey, children } = node.props;
 
     this.dragNode = node;
 
     this.setState({
-      dragNodesKeys: getDragNodesKeys(children, node),
+      dragNodesKeys: getDragNodesKeys(eventKey, keyEntities),
       expandedKeys: arrDel(expandedKeys, eventKey),
     });
 

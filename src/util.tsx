@@ -1,3 +1,7 @@
+/**
+ * Legacy code. Should avoid to use if you are new to import these code.
+ */
+
 import React, { Children } from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
@@ -98,14 +102,19 @@ export function traverseTreeNodes(
   processNode(null);
 }
 
-export function getDragNodesKeys(treeNodes: NodeElement[], node: NodeElement) {
-  const { eventKey, pos } = node.props;
-  const dragNodesKeys = [];
+export function getDragNodesKeys(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key[] {
+  const dragNodesKeys = [dragNodeKey];
 
-  traverseTreeNodes(treeNodes, ({ key }) => {
-    dragNodesKeys.push(key);
-  });
-  dragNodesKeys.push(eventKey || pos);
+  const entity = keyEntities[dragNodeKey];
+  function dig(list: DataEntity[] = []) {
+    list.forEach(({ key, children }) => {
+      dragNodesKeys.push(key);
+      dig(children);
+    });
+  }
+
+  dig(entity.children);
+
   return dragNodesKeys;
 }
 
@@ -179,7 +188,7 @@ interface Wrapper {
 }
 
 /**
- * Calculate treeNodes entities. `processTreeEntity` is used for `rc-tree-select`
+ * @deprecated Calculate treeNodes entities. `processTreeEntity` is used for `rc-tree-select`
  * @param treeNodes
  * @param processTreeEntity  User can customize the entity
  */

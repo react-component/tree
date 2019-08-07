@@ -5,7 +5,7 @@ import { renderToJson } from 'enzyme-to-json';
 import PropTypes from 'prop-types';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
-import { nodeMatcher, objectMatcher } from './util';
+import { objectMatcher, spyConsole } from './util';
 
 /**
  * For refactor purpose. All the props should be passed by test
@@ -19,6 +19,8 @@ function timeoutPromise(delay = 0) {
 }
 
 describe('Tree Props', () => {
+  spyConsole();
+
   // prefixCls
   it('prefixCls', () => {
     const withoutPrefix = render(<Tree />);

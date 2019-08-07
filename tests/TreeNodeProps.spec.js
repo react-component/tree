@@ -3,12 +3,15 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Tree, { TreeNode } from '../src';
+import { spyConsole } from './util';
 
 /**
  * For refactor purpose. All the props should be passed by test
  */
 
 describe('TreeNode Props', () => {
+  spyConsole();
+
   // prefixCls - is defined by Tree, TreeNode can not change it
   // expanded - is defined by Tree, TreeNode can not change it
 
