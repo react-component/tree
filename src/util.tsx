@@ -51,8 +51,8 @@ export function getNodeChildren(children: React.ReactNode) {
 }
 
 export function isCheckDisabled(node: NodeElement) {
-  const { disabled, disableCheckbox } = (node.props || {}) as NodeElement['props'];
-  return !!(disabled || disableCheckbox);
+  const { disabled, disableCheckbox, checkable } = (node.props || {}) as NodeElement['props'];
+  return !!(disabled || disableCheckbox) || checkable === false;
 }
 
 export function traverseTreeNodes(
