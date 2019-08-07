@@ -493,6 +493,25 @@ describe('Tree Basic', () => {
       expect(wrapper.render()).toMatchSnapshot();
     });
 
+    it('should ignore !checkable node', () => {
+      const onCheck = jest.fn();
+      const wrapper = mount(
+        <Tree checkable defaultExpandAll onCheck={onCheck}>
+          <TreeNode key="0-0">
+            <TreeNode key="0-0-0" checkable={false} />
+            <TreeNode key="0-0-1" />
+          </TreeNode>
+        </Tree>,
+      );
+
+      wrapper
+        .find('.rc-tree-checkbox')
+        .last()
+        .simulate('click');
+
+      expect(onCheck.mock.calls[0][0].sort()).toEqual(['0-0', '0-0-1']);
+    });
+
     describe('strictly', () => {
       it('checks strictly', () => {
         const wrapper = mount(

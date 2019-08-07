@@ -51,8 +51,8 @@ export function getNodeChildren(children: React.ReactNode) {
 }
 
 export function isCheckDisabled(node: DataNode) {
-  const { disabled, disableCheckbox } = (node || {}) as DataNode;
-  return !!(disabled || disableCheckbox);
+  const { disabled, disableCheckbox, checkable } = (node || {}) as DataNode;
+  return !!(disabled || disableCheckbox) || checkable === false;
 }
 
 export function traverseTreeNodes(
@@ -71,7 +71,7 @@ export function traverseTreeNodes(
     parent?: { node: NodeElement; pos: string },
   ) {
     const children = node ? node.props.children : treeNodes;
-    const pos = node ? getPosition(parent.pos, index) : 0;
+    const pos = node ? getPosition(parent.pos, index) : '0';
 
     // Filter children
     const childList = getNodeChildren(children);

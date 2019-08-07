@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "tree ui component for react",
   "keywords": [
     "react",
@@ -51,6 +51,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.0.0",
     "father": "^2.13.2",
+    "np": "^5.0.3",
     "rc-dialog": "^7.3.1",
     "rc-tools": "^9.x",
     "rc-tooltip": "3.x",
