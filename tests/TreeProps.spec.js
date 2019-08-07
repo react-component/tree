@@ -5,7 +5,7 @@ import { renderToJson } from 'enzyme-to-json';
 import PropTypes from 'prop-types';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
-import { objectMatcher, spyConsole } from './util';
+import { objectMatcher, spyConsole, spyError } from './util';
 
 /**
  * For refactor purpose. All the props should be passed by test
@@ -369,6 +369,8 @@ describe('Tree Props', () => {
 
   // Don't crash
   describe('invalidate checkedKeys', () => {
+    const errorSpy = spyError();
+
     const genWrapper = checkedKeys =>
       mount(
         <Tree checkedKeys={checkedKeys} defaultExpandAll checkable>
@@ -380,12 +382,17 @@ describe('Tree Props', () => {
 
     it('null', () => {
       const wrapper = genWrapper(null);
+      expect(errorSpy()).not.toHaveBeenCalledWith(
+        'Warning: `checkedKeys` is not an array or an object',
+      );
       expect(wrapper.render()).toMatchSnapshot();
     });
 
     it('number', () => {
-      console.log(">>> Follow Warning is for test purpose. Don't be scared :)");
       const wrapper = genWrapper(123);
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: `checkedKeys` is not an array or an object',
+      );
       expect(wrapper.render()).toMatchSnapshot();
     });
   });

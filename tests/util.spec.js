@@ -13,7 +13,7 @@ import {
   parseCheckedKeys,
 } from '../src/util';
 import { flattenTreeData, convertTreeToData, convertDataToEntities } from '../src/utils/treeUtil';
-import { spyConsole } from './util';
+import { spyConsole, spyError } from './util';
 
 describe('Util', () => {
   spyConsole();
@@ -88,9 +88,11 @@ describe('Util', () => {
     const treeData = [
       {
         title: '0-0',
+        key: '0-0',
         children: [
           {
             title: '0-0-0',
+            key: '0-0-0',
           },
         ],
       },
@@ -181,13 +183,19 @@ describe('Util', () => {
         expect(halfCheckedKeys.sort()).toEqual(['good', 'is'].sort());
       });
 
-      it('not exist', () => {
-        console.log(">>> Follow Warning is for test purpose. Don't be scared :)");
-        const tree = genTree();
-        const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
-        const { checkedKeys, halfCheckedKeys } = conductCheck(['notExist'], true, keyEntities);
-        expect(checkedKeys).toEqual([]);
-        expect(halfCheckedKeys).toEqual([]);
+      describe('not exist', () => {
+        const errorSpy = spyError();
+
+        it('works', () => {
+          const tree = genTree();
+          const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
+          const { checkedKeys, halfCheckedKeys } = conductCheck(['notExist'], true, keyEntities);
+          expect(errorSpy()).toHaveBeenCalledWith(
+            "Warning: 'notExist' does not exist in the tree.",
+          );
+          expect(checkedKeys).toEqual([]);
+          expect(halfCheckedKeys).toEqual([]);
+        });
       });
     });
 
