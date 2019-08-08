@@ -1,37 +1,63 @@
-/* eslint-disable import/prefer-default-export */
-import React from 'react';
-import toArray from 'rc-util/lib/Children/toArray';
+import { ReactWrapper } from 'enzyme';
+import { Component } from 'react';
 
-export function convertTreeToData(treeNodes) {
-  return toArray(treeNodes)
-    .map(node => {
-      if (!React.isValidElement(node) || !node.type || !node.type.isTreeNode) {
-        return null;
-      }
+export function objectMatcher(item) {
+  const result = Array.isArray(item) ? [] : {};
 
-      const {
-        key,
-        props: { children, ...rest },
-      } = node;
-      const convertedChildren = convertTreeToData(children);
+  Object.keys(item).forEach(key => {
+    const value = item[key];
+    if (
+      value &&
+      typeof value === 'object' &&
+      !(value instanceof ReactWrapper) &&
+      !(value instanceof Component)
+    ) {
+      result[key] = objectMatcher(value);
+    } else {
+      result[key] = value;
+    }
+  });
 
-      const entity = {
-        ...rest,
-        key,
-      };
-
-      if (convertedChildren.length) {
-        entity.children = convertedChildren;
-      }
-
-      return entity;
-    })
-    .filter(data => data);
+  return expect.objectContaining(result);
 }
 
-export function nodeMatcher({ props = {}, ...rest }) {
-  return expect.objectContaining({
-    ...rest,
-    props: expect.objectContaining(props),
+export function spyConsole() {
+  const errorList = [
+    'Warning: Tree node must have a certain key:',
+    'Warning: `children` of Tree is deprecated. Please use `treeData` instead.',
+  ];
+
+  const originConsoleErr = console.error;
+
+  beforeAll(() => {
+    console.error = jest.fn().mockImplementation((...args) => {
+      if (errorList.some(tmpl => args[0].includes(tmpl))) {
+        return;
+      }
+
+      originConsoleErr(...args);
+    });
   });
+
+  afterAll(() => {
+    console.error = originConsoleErr;
+  });
+}
+
+export function spyError() {
+  let errorSpy;
+
+  beforeAll(() => {
+    errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  beforeEach(() => {
+    errorSpy.mockReset();
+  });
+
+  afterAll(() => {
+    errorSpy.mockRestore();
+  });
+
+  return () => errorSpy;
 }

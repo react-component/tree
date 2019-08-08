@@ -105,12 +105,12 @@ class Demo extends React.Component {
         >
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
-              <TreeNode title="leaf0" isLeaf />
-              <TreeNode title="leaf1" isLeaf />
-              <TreeNode title="leaf2" isLeaf />
+              <TreeNode title="leaf0" key="l0" isLeaf />
+              <TreeNode title="leaf1" key="l1" isLeaf />
+              <TreeNode title="leaf2" key="l2" isLeaf />
             </TreeNode>
-            <TreeNode title="parent 1-1">
-              <TreeNode title="leaf" isLeaf />
+            <TreeNode title="parent 1-1" key="1-1">
+              <TreeNode title="leaf" key="l11" isLeaf />
             </TreeNode>
           </TreeNode>
         </Tree>
@@ -125,11 +125,11 @@ class Demo extends React.Component {
         >
           <TreeNode title="parent 1" key="0-1">
             <TreeNode title="parent 1-0" key="0-1-1">
-              <TreeNode title="leaf" isLeaf />
-              <TreeNode title="leaf" />
+              <TreeNode title="leaf" key="100" isLeaf />
+              <TreeNode title="leaf" key="101" />
             </TreeNode>
-            <TreeNode title="parent 1-1">
-              <TreeNode title="leaf" />
+            <TreeNode title="parent 1-1" key="11">
+              <TreeNode title="leaf" key="110" />
             </TreeNode>
           </TreeNode>
         </Tree>

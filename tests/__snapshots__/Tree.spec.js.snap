@@ -1,43 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tree Basic check basic render 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
-    <span
-      class="rc-tree-checkbox"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="---"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__open"
-      />
-      <span
-        class="rc-tree-title"
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
-        ---
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
+        <span
+          class="rc-tree-checkbox"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="---"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
+      <div
         class="rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -57,11 +62,16 @@ exports[`Tree Basic check basic render 1`] = `
             ---
           </span>
         </span>
-      </li>
-      <li
+      </div>
+      <div
         class="rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -81,50 +91,56 @@ exports[`Tree Basic check basic render 1`] = `
             ---
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-</ul>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
-exports[`Tree Basic check check after data ready 1`] = `
-<ul
+exports[`Tree Basic check check after data ready works 1`] = `
+<div
   class="rc-tree"
+  disabled=""
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
-    <span
-      class="rc-tree-checkbox rc-tree-checkbox-checked"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="Light"
+  <div>
+    <div
+      style="display: flex; flex-direction: column;"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__open"
-      />
-      <span
-        class="rc-tree-title"
+      <div
+        class="rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked"
+        role="treeitem"
+        tabindex="0"
       >
-        Light
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
+        <span
+          class="rc-tree-checkbox rc-tree-checkbox-checked"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="Light"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            Light
+          </span>
+        </span>
+      </div>
+      <div
         class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          aria-hidden="true"
+          style="display: inline-block; padding-left: 18px; user-select: none;"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -144,152 +160,171 @@ exports[`Tree Basic check check after data ready 1`] = `
             Bamboo
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-</ul>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Tree Basic check check update when Tree trigger componentWillReceiveProps 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-checkbox rc-tree-checkbox-checked"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="parent 1"
+  <div>
+    <div
+      style="display: flex; flex-direction: column;"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__docu"
-      />
-      <span
-        class="rc-tree-title"
+      <div
+        class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
+        role="treeitem"
+        tabindex="0"
       >
-        parent 1
-      </span>
-    </span>
-  </li>
-</ul>
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-checkbox rc-tree-checkbox-checked"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="parent 1"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            parent 1
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="00"
+  <div>
+    <div
+      style="display: flex; flex-direction: column;"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__docu"
-      />
-      <span
-        class="rc-tree-title"
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
-        00
-      </span>
-    </span>
-  </li>
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="02"
-    >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__docu"
-      />
-      <span
-        class="rc-tree-title"
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="00"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            00
+          </span>
+        </span>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
-        02
-      </span>
-    </span>
-  </li>
-</ul>
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="02"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            02
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher-noop"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-      title="00"
+  <div>
+    <div
+      style="display: flex; flex-direction: column;"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__docu"
-      />
-      <span
-        class="rc-tree-title"
-      >
-        00
-      </span>
-    </span>
-  </li>
-  <li
-    class="rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="01"
-    >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__open"
-      />
-      <span
-        class="rc-tree-title"
-      >
-        01
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+      <div
         class="rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="00"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            00
+          </span>
+        </span>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="01"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            01
+          </span>
+        </span>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display: inline-block; padding-left: 18px; user-select: none;"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -306,11 +341,16 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
             010
           </span>
         </span>
-      </li>
-      <li
+      </div>
+      <div
         class="rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          aria-hidden="true"
+          style="display: inline-block; padding-left: 18px; user-select: none;"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -327,51 +367,55 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
             012
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-</ul>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Tree Basic renders correctly 1`] = `
-<ul
+<div
   class="rc-tree forTest rc-tree-show-line"
   role="tree"
-  tabindex="0"
-  unselectable="on"
 >
-  <li
-    class="spe rc-tree-treenode-switcher-open"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_open"
-    />
-    <span
-      class="rc-tree-checkbox"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-      title="parent 1"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__open"
-      />
-      <span
-        class="rc-tree-title"
+      <div
+        class="spe rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
       >
-        parent 1
-      </span>
-    </span>
-    <ul
-      class="rc-tree-child-tree rc-tree-child-tree-open"
-      data-expanded="true"
-      role="group"
-    >
-      <li
+        <span
+          class="rc-tree-switcher rc-tree-switcher_open"
+        />
+        <span
+          class="rc-tree-checkbox"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+          title="parent 1"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__open"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            parent 1
+          </span>
+        </span>
+      </div>
+      <div
         class="rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
         />
@@ -391,65 +435,74 @@ exports[`Tree Basic renders correctly 1`] = `
             leaf 1
           </span>
         </span>
-        <ul
-          class="rc-tree-child-tree rc-tree-child-tree-open"
-          data-expanded="true"
-          role="group"
-        >
-          <li
-            class="rc-tree-treenode-switcher-open"
-            role="treeitem"
-          >
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-checkbox"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="leaf"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                leaf
-              </span>
-            </span>
-          </li>
-          <li
-            class="rc-tree-treenode-switcher-open"
-            role="treeitem"
-          >
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-checkbox"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="leaf"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                leaf
-              </span>
-            </span>
-          </li>
-        </ul>
-      </li>
-      <li
+      </div>
+      <div
         class="rc-tree-treenode-switcher-open"
         role="treeitem"
+        tabindex="0"
       >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:36px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-checkbox"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="leaf"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            leaf
+          </span>
+        </span>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:36px;user-select:none"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher-noop"
+        />
+        <span
+          class="rc-tree-checkbox"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+          title="leaf"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__docu"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            leaf
+          </span>
+        </span>
+      </div>
+      <div
+        class="rc-tree-treenode-switcher-open"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -469,38 +522,44 @@ exports[`Tree Basic renders correctly 1`] = `
             leaf 2
           </span>
         </span>
-      </li>
-    </ul>
-  </li>
-</ul>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Tree Basic renders opaque children correctly 1`] = `
-<ul
+<div
   class="rc-tree"
   role="tree"
-  unselectable="on"
 >
-  <li
-    class="rc-tree-treenode-switcher-close"
-    role="treeitem"
-  >
-    <span
-      class="rc-tree-switcher rc-tree-switcher_close"
-    />
-    <span
-      class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
-      title="0"
+  <div>
+    <div
+      style="display:flex;flex-direction:column"
     >
-      <span
-        class="rc-tree-iconEle rc-tree-icon__close"
-      />
-      <span
-        class="rc-tree-title"
+      <div
+        class="rc-tree-treenode-switcher-close"
+        role="treeitem"
+        tabindex="0"
       >
-        0
-      </span>
-    </span>
-  </li>
-</ul>
+        <span
+          class="rc-tree-switcher rc-tree-switcher_close"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
+          title="0"
+        >
+          <span
+            class="rc-tree-iconEle rc-tree-icon__close"
+          />
+          <span
+            class="rc-tree-title"
+          >
+            0
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 `;

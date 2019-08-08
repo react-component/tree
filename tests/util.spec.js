@@ -6,16 +6,18 @@ import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
 import {
   convertDataToTree,
-  convertTreeToEntities,
   conductCheck,
   conductExpandParent,
   getDragNodesKeys,
   getDataAndAria,
   parseCheckedKeys,
 } from '../src/util';
-import { convertTreeToData } from './util';
+import { flattenTreeData, convertTreeToData, convertDataToEntities } from '../src/utils/treeUtil';
+import { spyConsole, spyError } from './util';
 
 describe('Util', () => {
+  spyConsole();
+
   it('convertTreeToData - case1', () => {
     const tree = (
       <Tree>
@@ -86,9 +88,11 @@ describe('Util', () => {
     const treeData = [
       {
         title: '0-0',
+        key: '0-0',
         children: [
           {
             title: '0-0-0',
+            key: '0-0-0',
           },
         ],
       },
@@ -114,16 +118,19 @@ describe('Util', () => {
       </Tree>
     );
 
-    const { keyEntities, valueEntities } = convertTreeToEntities(tree.props.children, {
-      initWrapper: wrapper => ({
-        ...wrapper,
-        valueEntities: {},
-      }),
-      processEntity: (entity, wrapper) => {
-        wrapper.valueEntities[entity.node.props.value] = entity;
+    const { keyEntities, valueEntities } = convertDataToEntities(
+      convertTreeToData(tree.props.children),
+      {
+        initWrapper: wrapper => ({
+          ...wrapper,
+          valueEntities: {},
+        }),
+        processEntity: (entity, wrapper) => {
+          wrapper.valueEntities[entity.node.value] = entity;
+        },
+        onProcessFinished,
       },
-      onProcessFinished,
-    });
+    );
 
     expect(onProcessFinished).toHaveBeenCalled();
     expect(valueEntities.ttt).toBe(keyEntities.key);
@@ -154,7 +161,7 @@ describe('Util', () => {
 
       it('check', () => {
         const tree = genTree();
-        const { keyEntities } = convertTreeToEntities(tree.props.children);
+        const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
         const { checkedKeys, halfCheckedKeys } = conductCheck(['spoon'], true, keyEntities);
         expect(checkedKeys.sort()).toEqual(['spoon', 'i', 'see', 'dead', 'people', '!'].sort());
         expect(halfCheckedKeys.sort()).toEqual(['good', 'is'].sort());
@@ -162,7 +169,7 @@ describe('Util', () => {
 
       it('uncheck', () => {
         const tree = genTree({ checkedKeys: ['greed', 'good'] });
-        const { keyEntities } = convertTreeToEntities(tree.props.children);
+        const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
 
         // First, we check all
         const allCheckedKeys = conductCheck(['greed', 'good'], true, keyEntities).checkedKeys;
@@ -176,13 +183,19 @@ describe('Util', () => {
         expect(halfCheckedKeys.sort()).toEqual(['good', 'is'].sort());
       });
 
-      it('not exist', () => {
-        console.log(">>> Follow Warning is for test purpose. Don't be scared :)");
-        const tree = genTree();
-        const { keyEntities } = convertTreeToEntities(tree.props.children);
-        const { checkedKeys, halfCheckedKeys } = conductCheck(['notExist'], true, keyEntities);
-        expect(checkedKeys).toEqual([]);
-        expect(halfCheckedKeys).toEqual([]);
+      describe('not exist', () => {
+        const errorSpy = spyError();
+
+        it('works', () => {
+          const tree = genTree();
+          const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
+          const { checkedKeys, halfCheckedKeys } = conductCheck(['notExist'], true, keyEntities);
+          expect(errorSpy()).toHaveBeenCalledWith(
+            "Warning: 'notExist' does not exist in the tree.",
+          );
+          expect(checkedKeys).toEqual([]);
+          expect(halfCheckedKeys).toEqual([]);
+        });
       });
     });
 
@@ -204,7 +217,7 @@ describe('Util', () => {
 
       it('check', () => {
         const tree = genTree();
-        const { keyEntities } = convertTreeToEntities(tree.props.children);
+        const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
 
         const result1 = conductCheck(['not'], true, keyEntities);
         expect(result1.checkedKeys.sort()).toEqual(['not', 'it'].sort());
@@ -217,7 +230,7 @@ describe('Util', () => {
 
       it('uncheck', () => {
         const tree = genTree();
-        const { keyEntities } = convertTreeToEntities(tree.props.children);
+        const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
 
         // First, we check all
         const allCheckedKeys = conductCheck(['war', 'to', 'be'], true, keyEntities).checkedKeys;
@@ -248,13 +261,13 @@ describe('Util', () => {
       </Tree>
     );
 
-    const { keyEntities } = convertTreeToEntities(tree.props.children);
+    const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
     const keys = conductExpandParent(['good'], keyEntities);
     expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
   });
 
   it('getDragNodesKeys', () => {
-    const tree = mount(
+    const tree = (
       <Tree defaultExpandAll>
         <TreeNode key="000">
           <TreeNode key="111">
@@ -262,21 +275,14 @@ describe('Util', () => {
             <TreeNode key="333" />
           </TreeNode>
         </TreeNode>
-      </Tree>,
+      </Tree>
     );
 
-    const treeNode0 = tree
-      .find(InternalTreeNode)
-      .at(0)
-      .instance();
-    const keys0 = getDragNodesKeys(treeNode0.props.children, treeNode0);
+    const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
+    const keys0 = getDragNodesKeys('000', keyEntities);
     expect(keys0.sort()).toEqual(['000', '111', '222', '333'].sort());
 
-    const treeNode1 = tree
-      .find(InternalTreeNode)
-      .at(1)
-      .instance();
-    const keys1 = getDragNodesKeys(treeNode1.props.children, treeNode1);
+    const keys1 = getDragNodesKeys('111', keyEntities);
     expect(keys1.sort()).toEqual(['111', '222', '333'].sort());
   });
 
@@ -303,5 +309,37 @@ describe('Util', () => {
     expect(errorSpy).toHaveBeenCalledWith('Warning: `checkedKeys` is not an array or an object');
 
     errorSpy.mockRestore();
+  });
+
+  it('flatten treeNode', () => {
+    function getNode(key, children) {
+      return {
+        key,
+        title: key,
+        children,
+      };
+    }
+
+    const flattenList = flattenTreeData(
+      [
+        getNode('0', [
+          getNode('0-0'),
+          getNode('0-1'),
+          getNode('0-2', [getNode('0-2-0'), getNode('0-2-1')]),
+        ]),
+        getNode('1'),
+      ],
+      ['0-2', '0'],
+    );
+
+    expect(flattenList.map(({ key }) => key)).toEqual([
+      '0',
+      '0-0',
+      '0-1',
+      '0-2',
+      '0-2-0',
+      '0-2-1',
+      '1',
+    ]);
   });
 });

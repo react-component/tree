@@ -2,12 +2,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 // @ts-ignore
-import CSSMotion from 'rc-animate/lib/CSSMotion';
-import toArray from 'rc-util/lib/Children/toArray';
 import { polyfill } from 'react-lifecycles-compat';
 import { TreeContext, TreeContextProps } from './contextTypes';
-import { getNodeChildren, getDataAndAria, mapChildren, warnOnlyTreeNode } from './util';
-import { IconType } from './interface';
+import { getDataAndAria } from './util';
+import { IconType, Key } from './interface';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -15,11 +13,10 @@ const ICON_CLOSE = 'close';
 const defaultTitle = '---';
 
 export interface TreeNodeProps {
-  eventKey?: string; // Pass by parent `cloneElement`
+  eventKey?: Key; // Pass by parent `cloneElement`
   prefixCls?: string;
   className?: string;
-  style: React.CSSProperties;
-  onSelect: React.MouseEventHandler<HTMLSpanElement>;
+  style?: React.CSSProperties;
 
   // By parent
   expanded?: boolean;
@@ -28,12 +25,12 @@ export interface TreeNodeProps {
   loaded?: boolean;
   loading?: boolean;
   halfChecked?: boolean;
-  children?: React.ReactNode;
   title?: React.ReactNode;
-  pos?: string;
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
+  pos: string;
+  domRef?: React.Ref<HTMLDivElement>;
 
   // By user
   isLeaf?: boolean;
@@ -41,8 +38,9 @@ export interface TreeNodeProps {
   selectable?: boolean;
   disabled?: boolean;
   disableCheckbox?: boolean;
-  icon: IconType;
-  switcherIcon: IconType;
+  icon?: IconType;
+  switcherIcon?: IconType;
+  children?: React.ReactNode;
 }
 
 export interface InternalTreeNodeProps extends TreeNodeProps {
@@ -53,7 +51,7 @@ export interface TreeNodeState {
   dragNodeHighlight: boolean;
 }
 
-class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
+class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
   static propTypes = {
     eventKey: PropTypes.string, // Pass by parent `cloneElement`
     prefixCls: PropTypes.string,
@@ -68,12 +66,11 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
     loaded: PropTypes.bool,
     loading: PropTypes.bool,
     halfChecked: PropTypes.bool,
-    children: PropTypes.node,
     title: PropTypes.node,
-    pos: PropTypes.string,
     dragOver: PropTypes.bool,
     dragOverGapTop: PropTypes.bool,
     dragOverGapBottom: PropTypes.bool,
+    pos: PropTypes.string,
 
     // By user
     isLeaf: PropTypes.bool,
@@ -93,26 +90,11 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
 
   // Isomorphic needn't load data in server side
   componentDidMount() {
-    const {
-      eventKey,
-      context: { registerTreeNode },
-    } = this.props;
-
     this.syncLoadData(this.props);
-
-    registerTreeNode(eventKey, this);
   }
 
   componentDidUpdate() {
     this.syncLoadData(this.props);
-  }
-
-  componentWillUnmount() {
-    const {
-      eventKey,
-      context: { registerTreeNode },
-    } = this.props;
-    registerTreeNode(eventKey, null);
   }
 
   onSelectorClick = e => {
@@ -269,18 +251,6 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
     this.selectHandle = node;
   };
 
-  getNodeChildren = () => {
-    const { children } = this.props;
-    const originList = toArray(children).filter(node => node);
-    const targetList = getNodeChildren(originList);
-
-    if (originList.length !== targetList.length) {
-      warnOnlyTreeNode();
-    }
-
-    return targetList;
-  };
-
   getNodeState = () => {
     const { expanded } = this.props;
 
@@ -291,13 +261,23 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
     return expanded ? ICON_OPEN : ICON_CLOSE;
   };
 
+  hasChildren = () => {
+    const { eventKey } = this.props;
+    const {
+      context: { keyEntities },
+    } = this.props;
+    const { children } = keyEntities[eventKey];
+
+    return !!(children || []).length;
+  };
+
   isLeaf = () => {
     const { isLeaf, loaded } = this.props;
     const {
       context: { loadData },
     } = this.props;
 
-    const hasChildren = this.getNodeChildren().length !== 0;
+    const hasChildren = this.hasChildren();
 
     if (isLeaf === false) {
       return false;
@@ -344,8 +324,7 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
     if (loadData && expanded && !this.isLeaf()) {
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
-      const hasChildren = this.getNodeChildren().length !== 0;
-      if (!hasChildren && !loaded) {
+      if (!this.hasChildren() && !loaded) {
         onNodeLoad(this);
       }
     }
@@ -499,42 +478,9 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
     );
   };
 
-  // Children list wrapped with `Animation`
-  renderChildren = () => {
-    const { expanded, pos } = this.props;
-    const {
-      context: { prefixCls, motion, renderTreeNode },
-    } = this.props;
-
-    // Children TreeNode
-    const nodeList = this.getNodeChildren();
-
-    if (nodeList.length === 0) {
-      return null;
-    }
-    return (
-      <CSSMotion visible={expanded} {...motion}>
-        {({ style, className }) => (
-          <ul
-            className={classNames(
-              className,
-              `${prefixCls}-child-tree`,
-              expanded && `${prefixCls}-child-tree-open`,
-            )}
-            style={style}
-            data-expanded={expanded}
-            role="group"
-          >
-            {mapChildren(nodeList, (node, index) => renderTreeNode(node, index, pos))}
-          </ul>
-        )}
-      </CSSMotion>
-    );
-  };
-
   render() {
-    const { loading } = this.props;
     const {
+      eventKey,
       className,
       style,
       dragOver,
@@ -545,16 +491,20 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
       selected,
       checked,
       halfChecked,
+      loading,
+      domRef,
       ...otherProps
     } = this.props;
     const {
-      context: { prefixCls, filterTreeNode, draggable },
+      context: { prefixCls, filterTreeNode, draggable, keyEntities, indentSize },
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
+    const { level } = keyEntities[eventKey];
 
     return (
-      <li
+      <div
+        ref={domRef}
         className={classNames(className, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
@@ -576,23 +526,31 @@ class TreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
         onDrop={draggable ? this.onDrop : undefined}
         onDragEnd={draggable ? this.onDragEnd : undefined}
         {...dataOrAriaAttributeProps}
+        tabIndex={0}
       >
+        {level ? (
+          <span
+            aria-hidden="true"
+            style={{ display: 'inline-block', paddingLeft: level * indentSize, userSelect: 'none' }}
+          />
+        ) : null}
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}
-        {this.renderChildren()}
-      </li>
+      </div>
     );
   }
 }
 
-polyfill(TreeNode);
+polyfill(InternalTreeNode);
 
 const ContextTreeNode: React.FC<TreeNodeProps> = props => (
   <TreeContext.Consumer>
-    {context => <TreeNode {...props} context={context} />}
+    {context => <InternalTreeNode {...props} context={context} />}
   </TreeContext.Consumer>
 );
+
+ContextTreeNode.displayName = 'TreeNode';
 
 ContextTreeNode.defaultProps = {
   title: defaultTitle,
@@ -600,6 +558,6 @@ ContextTreeNode.defaultProps = {
 
 (ContextTreeNode as any).isTreeNode = 1;
 
-export { TreeNode as InternalTreeNode };
+export { InternalTreeNode };
 
 export default ContextTreeNode;

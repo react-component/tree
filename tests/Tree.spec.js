@@ -1,16 +1,19 @@
-/* eslint-disable no-undef, react/no-multi-comp,
+/* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign, import/no-named-as-default-member */
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
+import { objectMatcher, spyConsole, spyError } from './util';
 
 const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
 const SELECTED_CLASSNAME = '.rc-tree-node-selected';
 
 describe('Tree Basic', () => {
+  spyConsole();
+
   it('TreeNode is in Tree', () => {
     expect(TreeNode).toBe(Tree.TreeNode);
   });
@@ -297,36 +300,49 @@ describe('Tree Basic', () => {
       wrapper.find('.rc-tree-switcher').simulate('click');
       const treeNode1 = wrapper.find(InternalTreeNode).first();
       const treeNode2 = wrapper.find(InternalTreeNode).last();
-      const treeElm1 = wrapper.find(Tree).props().children;
-      const treeElm2 = treeNode1.props().children;
+      // const treeElm1 = wrapper.find(Tree).props().children;
+      // const treeElm2 = treeNode1.props().children;
+
+      const nodeData00 = { title: 'parent 1', key: '0-0' };
+      const nodeData000 = { title: 'leaf 1', key: '0-0-0' };
 
       wrapper
         .find('.rc-tree-checkbox')
         .first()
         .simulate('click');
-      expect(handleCheck).toHaveBeenCalledWith(['0-0', '0-0-0'], {
-        checked: true,
-        checkedNodes: [treeElm1, treeElm2],
-        checkedNodesPositions: [{ node: treeElm1, pos: '0-0' }, { node: treeElm2, pos: '0-0-0' }],
-        event: 'check',
-        halfCheckedKeys: [],
-        node: treeNode1.instance(),
-        nativeEvent: expect.objectContaining({}),
-      });
+
+      expect(handleCheck).toHaveBeenCalledWith(
+        ['0-0', '0-0-0'],
+        objectMatcher({
+          checked: true,
+          checkedNodes: [nodeData00, nodeData000],
+          checkedNodesPositions: [
+            { node: nodeData00, pos: '0-0' },
+            { node: nodeData000, pos: '0-0-0' },
+          ],
+          event: 'check',
+          halfCheckedKeys: [],
+          node: treeNode1.instance(),
+          nativeEvent: {},
+        }),
+      );
 
       wrapper
         .find('.rc-tree-checkbox')
         .last()
         .simulate('click');
-      expect(handleCheck).toHaveBeenCalledWith([], {
-        checked: false,
-        checkedNodes: [],
-        checkedNodesPositions: [],
-        event: 'check',
-        halfCheckedKeys: [],
-        node: treeNode2.instance(),
-        nativeEvent: expect.objectContaining({}),
-      });
+      expect(handleCheck).toHaveBeenCalledWith(
+        [],
+        objectMatcher({
+          checked: false,
+          checkedNodes: [],
+          checkedNodesPositions: [],
+          event: 'check',
+          halfCheckedKeys: [],
+          node: treeNode2.instance(),
+          nativeEvent: {},
+        }),
+      );
     });
 
     // https://github.com/react-component/tree/issues/117
@@ -462,19 +478,25 @@ describe('Tree Basic', () => {
       expect(renderToJson(wrapper.render())).toMatchSnapshot();
     });
 
-    it('check after data ready', () => {
-      const checkedKeys = ['0-0-0'];
-      const wrapper = mount(<Tree checkable checkedKeys={checkedKeys} />);
-      wrapper.setProps({
-        expandedKeys: ['0-0'],
-        children: (
-          <TreeNode key="0-0" title="Light">
-            <TreeNode key="0-0-0" title="Bamboo" />
-          </TreeNode>
-        ),
-      });
+    describe('check after data ready', () => {
+      const errorSpy = spyError();
 
-      expect(wrapper.render()).toMatchSnapshot();
+      it('works', () => {
+        const checkedKeys = ['0-0-0'];
+        const wrapper = mount(<Tree checkable checkedKeys={checkedKeys} />);
+        expect(errorSpy()).toHaveBeenCalledWith("Warning: '0-0-0' does not exist in the tree.");
+
+        wrapper.setProps({
+          expandedKeys: ['0-0'],
+          children: (
+            <TreeNode key="0-0" title="Light">
+              <TreeNode key="0-0-0" title="Bamboo" />
+            </TreeNode>
+          ),
+        });
+
+        expect(wrapper.render()).toMatchSnapshot();
+      });
     });
 
     it('should ignore !checkable node', () => {
@@ -748,22 +770,28 @@ describe('Tree Basic', () => {
       const nodeElm = wrapper.find(Tree).props().children;
 
       nodeContent.simulate('click');
-      expect(handleSelect).toHaveBeenCalledWith(['0-0'], {
-        event: 'select',
-        node,
-        selected: true,
-        selectedNodes: [nodeElm],
-        nativeEvent: expect.objectContaining({}),
-      });
+      expect(handleSelect).toHaveBeenCalledWith(
+        ['0-0'],
+        objectMatcher({
+          event: 'select',
+          node,
+          selected: true,
+          selectedNodes: [{ title: 'parent 1', key: '0-0' }],
+          nativeEvent: {},
+        }),
+      );
 
       nodeContent.simulate('click');
-      expect(handleSelect).toHaveBeenCalledWith([], {
-        event: 'select',
-        node,
-        selected: false,
-        selectedNodes: [],
-        nativeEvent: expect.objectContaining({}),
-      });
+      expect(handleSelect).toHaveBeenCalledWith(
+        [],
+        objectMatcher({
+          event: 'select',
+          node,
+          selected: false,
+          selectedNodes: [],
+          nativeEvent: {},
+        }),
+      );
     });
   });
 
@@ -780,36 +808,46 @@ describe('Tree Basic', () => {
       wrapper.find('.rc-tree-switcher').simulate('click');
       const treeNode1 = wrapper.find(InternalTreeNode).first();
       const treeNode2 = wrapper.find(InternalTreeNode).last();
-      const treeElm1 = wrapper.find(Tree).props().children;
-      const treeElm2 = treeNode1.props().children;
+
+      const dataNode1 = { title: 'parent 1', key: '0-0' };
+      const dataNode2 = { title: 'leaf 1', key: '0-0-0' };
 
       wrapper
         .find('.rc-tree-node-content-wrapper')
         .first()
         .simulate('click');
-      expect(handleCheck).toHaveBeenCalledWith(['0-0', '0-0-0'], {
-        checked: true,
-        checkedNodes: [treeElm1, treeElm2],
-        checkedNodesPositions: [{ node: treeElm1, pos: '0-0' }, { node: treeElm2, pos: '0-0-0' }],
-        event: 'check',
-        halfCheckedKeys: [],
-        node: treeNode1.instance(),
-        nativeEvent: expect.objectContaining({}),
-      });
+      expect(handleCheck).toHaveBeenCalledWith(
+        ['0-0', '0-0-0'],
+        objectMatcher({
+          checked: true,
+          checkedNodes: [dataNode1, dataNode2],
+          checkedNodesPositions: [
+            { node: dataNode1, pos: '0-0' },
+            { node: dataNode2, pos: '0-0-0' },
+          ],
+          event: 'check',
+          halfCheckedKeys: [],
+          node: treeNode1.instance(),
+          nativeEvent: {},
+        }),
+      );
 
       wrapper
         .find('.rc-tree-node-content-wrapper')
         .last()
         .simulate('click');
-      expect(handleCheck).toHaveBeenCalledWith([], {
-        checked: false,
-        checkedNodes: [],
-        checkedNodesPositions: [],
-        event: 'check',
-        halfCheckedKeys: [],
-        node: treeNode2.instance(),
-        nativeEvent: expect.objectContaining({}),
-      });
+      expect(handleCheck).toHaveBeenCalledWith(
+        [],
+        objectMatcher({
+          checked: false,
+          checkedNodes: [],
+          checkedNodesPositions: [],
+          event: 'check',
+          halfCheckedKeys: [],
+          node: treeNode2.instance(),
+          nativeEvent: {},
+        }),
+      );
     });
   });
 
@@ -881,7 +919,12 @@ describe('Tree Basic', () => {
       </Tree>,
     );
 
-    expect(wrapper.find('li').is('.filter-node')).toBe(true);
+    expect(
+      wrapper
+        .find(InternalTreeNode)
+        .find('div')
+        .is('.filter-node'),
+    ).toBe(true);
   });
 
   it('loads nodes asynchronously', () => {
@@ -1071,7 +1114,7 @@ describe('Tree Basic', () => {
 
               // 4. Drop
               wrapper.find(targetSelector).simulate('drop');
-              wrapper.find('li.dragTarget').simulate('dragEnd');
+              wrapper.find('div.dragTarget').simulate('dragEnd');
 
               resolve();
             }, 500);
@@ -1095,9 +1138,9 @@ describe('Tree Basic', () => {
         Element.prototype.getBoundingClientRect = getBoundingClientRect;
       });
 
-      it('self', () => dropTarget('li.dragTarget'));
+      it('self', () => dropTarget('div.dragTarget'));
 
-      it('target', () => dropTarget('li.dropTarget'));
+      it('target', () => dropTarget('div.dropTarget'));
     });
   });
 
@@ -1108,9 +1151,9 @@ describe('Tree Basic', () => {
           {[0, 1].map(i => (
             <TreeNode title={i} key={i}>
               {[2, 3].map(j => (
-                <TreeNode title={j} key={j} />
+                <TreeNode title={j} key={`${i}_${j}`} />
               ))}
-              <TreeNode title="4" key="4" />
+              <TreeNode title="4" key={`${i}_4`} />
             </TreeNode>
           ))}
         </Tree>,
@@ -1134,7 +1177,7 @@ describe('Tree Basic', () => {
   });
 
   describe('ignore illegal node as Tree children', () => {
-    console.log(">>> Follow Warning is for test purpose. Don't be scared :)");
+    const errorSpy = spyError();
 
     it('Direct TreeNode', () => {
       const wrapper = mount(
@@ -1145,6 +1188,9 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       expect(wrapper.render()).toMatchSnapshot();
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: Tree/TreeNode can only accept TreeNode as children.',
+      );
     });
 
     it('Sub TreeNode', () => {
@@ -1159,20 +1205,9 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       expect(wrapper.render()).toMatchSnapshot();
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: Tree/TreeNode can only accept TreeNode as children.',
+      );
     });
-  });
-
-  it('get treeNode ref', () => {
-    const wrapper = mount(
-      <Tree defaultExpandAll>
-        <TreeNode key="00" title="00" />
-        <TreeNode key="01" title="01">
-          <TreeNode key="010" title="010" />
-          <TreeNode key="012" title="012" />
-        </TreeNode>
-      </Tree>,
-    );
-
-    expect(Object.keys(wrapper.instance().domTreeNodes)).toHaveLength(4);
   });
 });

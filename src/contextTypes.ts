@@ -4,8 +4,8 @@
  */
 import * as React from 'react';
 import createReactContext, { Context } from '@ant-design/create-react-context';
-import { IconType, NodeElement, Key } from './interface';
-import { InternalTreeNodeProps, TreeNodeProps } from './TreeNode';
+import { IconType, NodeElement, Key, DataEntity } from './interface';
+import { InternalTreeNodeProps } from './TreeNode';
 
 type NodeMouseEventHandler = (e: MouseEvent, node: React.Component<InternalTreeNodeProps>) => void;
 
@@ -19,28 +19,18 @@ export interface TreeContextProps {
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
-  motion: any;
+  keyEntities: Record<Key, DataEntity>;
+  indentSize: number;
 
   loadData: (treeNode: NodeElement) => Promise<void>;
-  filterTreeNode: (treeNode: React.Component<TreeNodeProps>) => boolean;
-  renderTreeNode: (
-    child: React.ReactElement,
-    index: number,
-    pos: number | string,
-  ) => React.ReactElement;
-
-  isKeyChecked: (key: Key) => boolean;
+  filterTreeNode: (treeNode: NodeElement) => boolean;
 
   onNodeClick: NodeMouseEventHandler;
   onNodeDoubleClick: NodeMouseEventHandler;
   onNodeExpand: NodeMouseEventHandler;
   onNodeSelect: NodeMouseEventHandler;
-  onNodeCheck: (
-    e: MouseEvent,
-    treeNode: React.Component<InternalTreeNodeProps>,
-    checked: boolean,
-  ) => void;
-  onNodeLoad: (treeNode: React.Component<InternalTreeNodeProps>) => void;
+  onNodeCheck: (e: MouseEvent, treeNode: NodeElement, checked: boolean) => void;
+  onNodeLoad: (treeNode: NodeElement) => void;
   onNodeMouseEnter: NodeMouseEventHandler;
   onNodeMouseLeave: NodeMouseEventHandler;
   onNodeContextMenu: NodeMouseEventHandler;
@@ -50,8 +40,6 @@ export interface TreeContextProps {
   onNodeDragLeave: NodeMouseEventHandler;
   onNodeDragEnd: NodeMouseEventHandler;
   onNodeDrop: NodeMouseEventHandler;
-
-  registerTreeNode: (key: Key, node: React.Component<InternalTreeNodeProps>) => void;
 }
 
 export const TreeContext: Context<TreeContextProps | null> = createReactContext(null);
