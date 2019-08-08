@@ -2,15 +2,16 @@
 
 exports[`Tree Basic check basic render 1`] = `
 <div
-  class="rc-tree"
+  class="rc-tree-list rc-tree"
   role="tree"
 >
   <div>
     <div
+      class="rc-tree-list-holder-inner"
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -35,7 +36,7 @@ exports[`Tree Basic check basic render 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -64,7 +65,7 @@ exports[`Tree Basic check basic render 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -99,16 +100,17 @@ exports[`Tree Basic check basic render 1`] = `
 
 exports[`Tree Basic check check after data ready works 1`] = `
 <div
-  class="rc-tree"
+  class="rc-tree-list rc-tree"
   disabled=""
   role="tree"
 >
   <div>
     <div
+      class="rc-tree-list-holder-inner"
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked"
         role="treeitem"
         tabindex="0"
       >
@@ -133,7 +135,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
         role="treeitem"
         tabindex="0"
       >
@@ -168,15 +170,16 @@ exports[`Tree Basic check check after data ready works 1`] = `
 
 exports[`Tree Basic check check update when Tree trigger componentWillReceiveProps 1`] = `
 <div
-  class="rc-tree"
+  class="rc-tree-list rc-tree"
   role="tree"
 >
   <div>
     <div
+      class="rc-tree-list-holder-inner"
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked"
         role="treeitem"
         tabindex="0"
       >
@@ -207,15 +210,16 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
 
 exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
 <div
-  class="rc-tree"
+  class="rc-tree-list rc-tree"
   role="tree"
 >
   <div>
     <div
+      class="rc-tree-list-holder-inner"
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -237,7 +241,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -265,15 +269,16 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
 
 exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
 <div
-  class="rc-tree"
+  class="rc-tree-list rc-tree"
   role="tree"
 >
   <div>
     <div
+      class="rc-tree-list-holder-inner"
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -295,7 +300,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -317,7 +322,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -343,7 +348,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -375,15 +380,16 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
 
 exports[`Tree Basic renders correctly 1`] = `
 <div
-  class="rc-tree forTest rc-tree-show-line"
+  class="rc-tree-list rc-tree forTest rc-tree-show-line"
   role="tree"
 >
   <div>
     <div
+      class="rc-tree-list-holder-inner"
       style="display:flex;flex-direction:column"
     >
       <div
-        class="spe rc-tree-treenode-switcher-open"
+        class="spe rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -408,7 +414,7 @@ exports[`Tree Basic renders correctly 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -437,7 +443,7 @@ exports[`Tree Basic renders correctly 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -466,7 +472,7 @@ exports[`Tree Basic renders correctly 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -495,7 +501,7 @@ exports[`Tree Basic renders correctly 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -530,15 +536,16 @@ exports[`Tree Basic renders correctly 1`] = `
 
 exports[`Tree Basic renders opaque children correctly 1`] = `
 <div
-  class="rc-tree"
+  class="rc-tree-list rc-tree"
   role="tree"
 >
   <div>
     <div
+      class="rc-tree-list-holder-inner"
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close"
         role="treeitem"
         tabindex="0"
       >
