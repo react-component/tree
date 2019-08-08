@@ -4,7 +4,7 @@
  */
 import * as React from 'react';
 import createReactContext, { Context } from '@ant-design/create-react-context';
-import { IconType, NodeElement, Key, DataEntity } from './interface';
+import { IconType, NodeElement, Key, DataEntity, NodeInstance } from './interface';
 import { InternalTreeNodeProps } from './TreeNode';
 
 type NodeMouseEventHandler = (e: MouseEvent, node: React.Component<InternalTreeNodeProps>) => void;
@@ -22,15 +22,15 @@ export interface TreeContextProps {
   keyEntities: Record<Key, DataEntity>;
   indentSize: number;
 
-  loadData: (treeNode: NodeElement) => Promise<void>;
-  filterTreeNode: (treeNode: NodeElement) => boolean;
+  loadData: (treeNode: NodeInstance) => Promise<void>;
+  filterTreeNode: (treeNode: NodeInstance) => boolean;
 
   onNodeClick: NodeMouseEventHandler;
   onNodeDoubleClick: NodeMouseEventHandler;
   onNodeExpand: NodeMouseEventHandler;
   onNodeSelect: NodeMouseEventHandler;
-  onNodeCheck: (e: MouseEvent, treeNode: NodeElement, checked: boolean) => void;
-  onNodeLoad: (treeNode: NodeElement) => void;
+  onNodeCheck: (e: MouseEvent, treeNode: NodeInstance, checked: boolean) => void;
+  onNodeLoad: (treeNode: NodeInstance) => void;
   onNodeMouseEnter: NodeMouseEventHandler;
   onNodeMouseLeave: NodeMouseEventHandler;
   onNodeContextMenu: NodeMouseEventHandler;

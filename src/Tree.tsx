@@ -20,7 +20,7 @@ import {
   posToArr,
   conductCheck,
 } from './util';
-import { DataNode, IconType, Key, NodeElement, FlattenDataNode, DataEntity } from './interface';
+import { DataNode, IconType, Key, FlattenDataNode, DataEntity, NodeInstance } from './interface';
 import {
   flattenTreeData,
   convertTreeToData,
@@ -31,11 +31,11 @@ import NodeList, { MOTION_KEY, MotionNode } from './NodeList';
 
 interface CheckInfo {
   event: 'check';
-  node: NodeElement;
+  node: NodeInstance;
   checked: boolean;
   nativeEvent: MouseEvent;
-  checkedNodes: NodeElement[];
-  checkedNodesPositions?: { node: NodeElement; pos: string }[];
+  checkedNodes: DataNode[];
+  checkedNodesPositions?: { node: NodeInstance; pos: string }[];
   halfCheckedKeys?: Key[];
 }
 
@@ -71,7 +71,7 @@ export interface TreeProps {
   onExpand: (
     expandedKeys: Key[],
     info: {
-      node: NodeElement;
+      node: NodeInstance;
       expanded: boolean;
       nativeEvent: MouseEvent;
     },
@@ -82,8 +82,8 @@ export interface TreeProps {
     info: {
       event: 'select';
       selected: boolean;
-      node: NodeElement;
-      selectedNodes: NodeElement[];
+      node: NodeInstance;
+      selectedNodes: DataNode[];
       nativeEvent: MouseEvent;
     },
   ) => void;
@@ -91,28 +91,28 @@ export interface TreeProps {
     loadedKeys: Key[],
     info: {
       event: 'load';
-      node: NodeElement;
+      node: NodeInstance;
     },
   ) => void;
-  loadData: (treeNode: NodeElement) => Promise<void>;
+  loadData: (treeNode: NodeInstance) => Promise<void>;
   loadedKeys: Key[];
-  onMouseEnter: (info: { event: React.MouseEvent; node: NodeElement }) => void;
-  onMouseLeave: (info: { event: React.MouseEvent; node: NodeElement }) => void;
-  onRightClick: (info: { event: React.MouseEvent; node: NodeElement }) => void;
-  onDragStart: (info: { event: React.MouseEvent; node: NodeElement }) => void;
-  onDragEnter: (info: { event: React.MouseEvent; node: NodeElement; expandedKeys: Key[] }) => void;
-  onDragOver: (info: { event: React.MouseEvent; node: NodeElement }) => void;
-  onDragLeave: (info: { event: React.MouseEvent; node: NodeElement }) => void;
-  onDragEnd: (info: { event: React.MouseEvent; node: NodeElement }) => void;
+  onMouseEnter: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
+  onMouseLeave: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
+  onRightClick: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
+  onDragStart: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
+  onDragEnter: (info: { event: React.MouseEvent; node: NodeInstance; expandedKeys: Key[] }) => void;
+  onDragOver: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
+  onDragLeave: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
+  onDragEnd: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
   onDrop: (info: {
     event: React.MouseEvent;
-    node: NodeElement;
-    dragNode: NodeElement;
+    node: NodeInstance;
+    dragNode: NodeInstance;
     dragNodesKeys: Key[];
     dropPosition: number;
     dropToGap: boolean;
   }) => void;
-  filterTreeNode: (treeNode: NodeElement) => boolean;
+  filterTreeNode: (treeNode: NodeInstance) => boolean;
   motion: any;
   switcherIcon: IconType;
 
@@ -233,7 +233,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     prevProps: null,
   };
 
-  dragNode: NodeElement;
+  dragNode: NodeInstance;
 
   static getDerivedStateFromProps(props: TreeProps, prevState: TreeState) {
     const { prevProps } = prevState;
@@ -344,7 +344,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     return newState;
   }
 
-  onNodeDragStart = (event, node: NodeElement) => {
+  onNodeDragStart = (event, node: NodeInstance) => {
     const { expandedKeys, keyEntities } = this.state;
     const { onDragStart } = this.props;
     const { eventKey } = node.props;

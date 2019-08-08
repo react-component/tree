@@ -29,6 +29,8 @@ export type NodeElement = React.ReactElement<TreeNodeProps> & {
   };
 };
 
+export type NodeInstance = React.Component<TreeNodeProps>;
+
 export interface Entity {
   node: NodeElement;
   index: number;
