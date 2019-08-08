@@ -835,6 +835,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           className={classNames(prefixCls, className, {
             [`${prefixCls}-show-line`]: showLine,
           })}
+          prefixCls={prefixCls}
           style={style}
           data={flattenNodes}
           keyEntities={keyEntities}

@@ -29,6 +29,7 @@ const MotionFlattenData: FlattenDataNode = {
 };
 
 interface NodeListProps {
+  prefixCls: string;
   className: string;
   style: React.CSSProperties;
   data: FlattenDataNode[];
@@ -70,6 +71,7 @@ function itemKey(item: FlattenDataNode) {
 }
 
 const NodeList: React.FC<NodeListProps> = ({
+  prefixCls,
   data,
   expandedKeys,
   selectedKeys,
@@ -169,6 +171,7 @@ const NodeList: React.FC<NodeListProps> = ({
       height={height}
       itemHeight={itemHeight}
       onSkipRender={onMotionEnd}
+      prefixCls={`${prefixCls}-list`}
     >
       {(treeNode: FlattenDataNode) => {
         const { key, ...restProps } = treeNode;
