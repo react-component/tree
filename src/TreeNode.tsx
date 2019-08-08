@@ -505,7 +505,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     return (
       <div
         ref={domRef}
-        className={classNames(className, {
+        className={classNames(className, `${prefixCls}-treenode`, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
           [`${prefixCls}-treenode-checkbox-checked`]: checked,
