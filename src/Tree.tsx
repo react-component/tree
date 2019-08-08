@@ -28,7 +28,6 @@ import {
   warningWithoutKey,
 } from './utils/treeUtil';
 import NodeList, { MOTION_KEY, MotionNode } from './NodeList';
-import { TreeNodeProps } from './TreeNode';
 
 interface CheckInfo {
   event: 'check';
@@ -348,7 +347,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   onNodeDragStart = (event, node: NodeElement) => {
     const { expandedKeys, keyEntities } = this.state;
     const { onDragStart } = this.props;
-    const { eventKey, children } = node.props;
+    const { eventKey } = node.props;
 
     this.dragNode = node;
 

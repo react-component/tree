@@ -5,7 +5,7 @@
 import * as React from 'react';
 import createReactContext, { Context } from '@ant-design/create-react-context';
 import { IconType, NodeElement, Key, DataEntity } from './interface';
-import { InternalTreeNodeProps, TreeNodeProps } from './TreeNode';
+import { InternalTreeNodeProps } from './TreeNode';
 
 type NodeMouseEventHandler = (e: MouseEvent, node: React.Component<InternalTreeNodeProps>) => void;
 

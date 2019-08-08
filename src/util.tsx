@@ -2,8 +2,7 @@
  * Legacy code. Should avoid to use if you are new to import these code.
  */
 
-import React, { Children } from 'react';
-import toArray from 'rc-util/lib/Children/toArray';
+import React from 'react';
 import warning from 'warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { NodeElement, Key, DataNode, Entity, DataEntity } from './interface';
@@ -11,8 +10,6 @@ import { TreeProps } from './Tree';
 
 const DRAG_SIDE_RANGE = 0.25;
 const DRAG_MIN_GAP = 2;
-
-const onlyTreeNodeWarned = false;
 
 export function arrDel(list: Key[], value: Key) {
   const clone = list.slice();
@@ -335,10 +332,10 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
  * Returns only the data- and aria- key/value pairs
  */
 export function getDataAndAria(props: Partial<TreeProps | TreeNodeProps>) {
-  return Object.keys(props).reduce((prev, key) => {
-    if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
-      prev[key] = props[key];
-    }
-    return prev;
-  }, {});
+  const omitProps: Record<string, string> = {};
+  Object.keys(props).forEach(key => {
+    omitProps[key] = props[key];
+  });
+
+  return omitProps;
 }

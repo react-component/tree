@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 import VirtualList from 'rc-virtual-list';
-import { FlattenDataNode, Key, Entity, DataEntity } from './interface';
+import { FlattenDataNode, Key, DataEntity } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
