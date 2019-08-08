@@ -334,7 +334,9 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
 export function getDataAndAria(props: Partial<TreeProps | TreeNodeProps>) {
   const omitProps: Record<string, string> = {};
   Object.keys(props).forEach(key => {
-    omitProps[key] = props[key];
+    if (key.startsWith('data-') || key.startsWith('aria-')) {
+      omitProps[key] = props[key];
+    }
   });
 
   return omitProps;
