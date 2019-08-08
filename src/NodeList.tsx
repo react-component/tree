@@ -52,7 +52,7 @@ interface NodeListProps {
 /**
  * We only need get visible content items to play the animation.
  */
-function getMinimumRangeTransitionRange(
+export function getMinimumRangeTransitionRange(
   list: FlattenDataNode[],
   height: number,
   itemHeight: number,

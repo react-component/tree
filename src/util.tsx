@@ -12,14 +12,7 @@ import { TreeProps } from './Tree';
 const DRAG_SIDE_RANGE = 0.25;
 const DRAG_MIN_GAP = 2;
 
-let onlyTreeNodeWarned = false;
-
-export function warnOnlyTreeNode() {
-  if (onlyTreeNodeWarned) return;
-
-  onlyTreeNodeWarned = true;
-  warning(false, 'Tree only accept TreeNode as children.');
-}
+const onlyTreeNodeWarned = false;
 
 export function arrDel(list: Key[], value: Key) {
   const clone = list.slice();
@@ -50,56 +43,9 @@ export function isTreeNode(node: NodeElement) {
   return node && node.type && node.type.isTreeNode;
 }
 
-export function getNodeChildren(children: React.ReactNode) {
-  return toArray(children).filter(isTreeNode);
-}
-
 export function isCheckDisabled(node: DataNode) {
   const { disabled, disableCheckbox, checkable } = (node || {}) as DataNode;
   return !!(disabled || disableCheckbox) || checkable === false;
-}
-
-export function traverseTreeNodes(
-  treeNodes: NodeElement[],
-  callback: (data: {
-    node: NodeElement;
-    index: number;
-    pos: string;
-    key: Key;
-    parentPos: string | number;
-  }) => void,
-) {
-  function processNode(
-    node: NodeElement,
-    index?: number,
-    parent?: { node: NodeElement; pos: string },
-  ) {
-    const children = node ? node.props.children : treeNodes;
-    const pos = node ? getPosition(parent.pos, index) : '0';
-
-    // Filter children
-    const childList = getNodeChildren(children);
-
-    // Process node if is not root
-    if (node) {
-      const data = {
-        node,
-        index,
-        pos,
-        key: node.key || pos,
-        parentPos: parent.node ? parent.pos : null,
-      };
-
-      callback(data);
-    }
-
-    // Process children node
-    Children.forEach(childList, (subNode, subIndex) => {
-      processNode(subNode, subIndex, { node, pos });
-    });
-  }
-
-  processNode(null);
 }
 
 export function getDragNodesKeys(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key[] {
@@ -185,60 +131,6 @@ export function convertDataToTree(
 interface Wrapper {
   posEntities: Record<string, Entity>;
   keyEntities: Record<Key, Entity>;
-}
-
-/**
- * @deprecated Calculate treeNodes entities. `processTreeEntity` is used for `rc-tree-select`
- * @param treeNodes
- * @param processTreeEntity  User can customize the entity
- */
-export function convertTreeToEntities(
-  treeNodes: NodeElement[],
-  {
-    initWrapper,
-    processEntity,
-    onProcessFinished,
-  }: {
-    initWrapper?: (wrapper: Wrapper) => Wrapper;
-    processEntity?: (entity: Entity, wrapper: Wrapper) => void;
-    onProcessFinished?: (wrapper: Wrapper) => void;
-  } = {},
-) {
-  const posEntities = {};
-  const keyEntities = {};
-  let wrapper = {
-    posEntities,
-    keyEntities,
-  };
-
-  if (initWrapper) {
-    wrapper = initWrapper(wrapper) || wrapper;
-  }
-
-  traverseTreeNodes(treeNodes, item => {
-    const { node, index, pos, key, parentPos } = item;
-    const entity: Entity = { node, index, key, pos };
-
-    posEntities[pos] = entity;
-    keyEntities[key] = entity;
-
-    // Fill children
-    entity.parent = posEntities[parentPos];
-    if (entity.parent) {
-      entity.parent.children = entity.parent.children || [];
-      entity.parent.children.push(entity);
-    }
-
-    if (processEntity) {
-      processEntity(entity, wrapper);
-    }
-  });
-
-  if (onProcessFinished) {
-    onProcessFinished(wrapper);
-  }
-
-  return wrapper;
 }
 
 /**
