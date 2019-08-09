@@ -101,7 +101,6 @@ exports[`Tree Basic check basic render 1`] = `
 exports[`Tree Basic check check after data ready works 1`] = `
 <div
   class="rc-tree-list rc-tree"
-  disabled=""
   role="tree"
 >
   <div>

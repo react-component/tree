@@ -874,7 +874,6 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
 exports[`Tree Props loadData basic 1`] = `
 <div
   class="rc-tree-list rc-tree"
-  disabled=""
   role="tree"
 >
   <div>
