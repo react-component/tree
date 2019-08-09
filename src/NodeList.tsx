@@ -42,6 +42,8 @@ interface NodeListProps {
   loadingKeys: Key[];
   halfCheckedKeys: Key[];
   keyEntities: Record<Key, DataEntity>;
+
+  dragging: boolean;
   dragOverNodeKey: Key;
   dropPosition: number;
 
@@ -80,6 +82,8 @@ const NodeList: React.FC<NodeListProps> = ({
   loadingKeys,
   halfCheckedKeys,
   keyEntities,
+
+  dragging,
   dragOverNodeKey,
   dropPosition,
   motion,
@@ -96,6 +100,14 @@ const NodeList: React.FC<NodeListProps> = ({
   const [transitionRange, setTransitionRange] = React.useState([]);
   const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
+  function onMotionEnd() {
+    setPrevData(data);
+    setTransitionData(data);
+    setTransitionRange([]);
+    setMotionType(null);
+    setDisableVirtual(false);
+  }
+
   // Do animation if expanded keys changed
   React.useEffect(() => {
     setPrevExpandedKeys(expandedKeys);
@@ -106,7 +118,7 @@ const NodeList: React.FC<NodeListProps> = ({
       if (diffExpanded.add) {
         const keyIndex = prevData.findIndex(({ key }) => key === diffExpanded.key);
 
-        setDisableVirtual(true);
+        if (motion) setDisableVirtual(true);
         const rangeNodes = getMinimumRangeTransitionRange(
           getExpandRange(prevData, data, diffExpanded.key),
           height,
@@ -122,7 +134,7 @@ const NodeList: React.FC<NodeListProps> = ({
       } else {
         const keyIndex = data.findIndex(({ key }) => key === diffExpanded.key);
 
-        setDisableVirtual(true);
+        if (motion) setDisableVirtual(true);
         const rangeNodes = getMinimumRangeTransitionRange(
           getExpandRange(data, prevData, diffExpanded.key),
           height,
@@ -136,16 +148,19 @@ const NodeList: React.FC<NodeListProps> = ({
         setTransitionRange(rangeNodes);
         setMotionType('hide');
       }
+    } else if (prevData !== data) {
+      // If whole data changed, we just refresh the list
+      setPrevData(data);
+      setTransitionData(data);
     }
-  }, [expandedKeys]);
+  }, [expandedKeys, data]);
 
-  function onMotionEnd() {
-    setPrevData(data);
-    setTransitionData(data);
-    setTransitionRange([]);
-    setMotionType(null);
-    setDisableVirtual(false);
-  }
+  // We should clean up motion if is changed by dragging
+  React.useEffect(() => {
+    if (!dragging) {
+      onMotionEnd();
+    }
+  }, [dragging]);
 
   const mergedData = motion ? transitionData : data;
 
