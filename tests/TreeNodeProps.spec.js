@@ -107,7 +107,7 @@ describe('TreeNode Props', () => {
       wrapper.find('.rc-tree-switcher').simulate('click');
 
       expect(iconFn.mock.calls[0][0].loading).toBe(false);
-      expect(iconFn.mock.calls[1][0].loading).toBe(true);
+      expect(iconFn.mock.calls[iconFn.mock.calls.length - 1][0].loading).toBe(true);
     });
   });
 
