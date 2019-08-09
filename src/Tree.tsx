@@ -411,9 +411,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         clearTimeout(this.delayedDragEnterLogic[key]);
       });
       this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
-        if (!this.state.dragging) {
-          return;
-        }
+        if (!this.state.dragging) return;
 
         let newExpandedKeys = [...expandedKeys];
         const entity = keyEntities[eventKey];
