@@ -47,8 +47,9 @@ export interface DataEntity extends Omit<Entity, 'node' | 'parent' | 'children'>
   level: number;
 }
 
-export interface FlattenDataNode extends Omit<DataNode, 'children'> {
-  parent: FlattenDataNode | null;
-  children: FlattenDataNode[];
+export interface FlattenNode {
+  parent: FlattenNode | null;
+  children: FlattenNode[];
   pos: string;
+  data: DataNode;
 }

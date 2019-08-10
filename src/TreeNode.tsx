@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { polyfill } from 'react-lifecycles-compat';
 import { TreeContext, TreeContextProps } from './contextTypes';
 import { getDataAndAria } from './util';
-import { IconType, Key } from './interface';
+import { IconType, Key, DataNode } from './interface';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -31,6 +31,8 @@ export interface TreeNodeProps {
   dragOverGapBottom?: boolean;
   pos: string;
   domRef?: React.Ref<HTMLDivElement>;
+  /** New added in Tree for easy data access */
+  data: DataNode;
 
   // By user
   isLeaf?: boolean;

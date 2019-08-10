@@ -20,14 +20,14 @@ import {
   posToArr,
   conductCheck,
 } from './util';
-import { DataNode, IconType, Key, FlattenDataNode, DataEntity, NodeInstance } from './interface';
+import { DataNode, IconType, Key, FlattenNode, DataEntity, NodeInstance } from './interface';
 import {
   flattenTreeData,
   convertTreeToData,
   convertDataToEntities,
   warningWithoutKey,
 } from './utils/treeUtil';
-import NodeList, { MOTION_KEY, MotionNode } from './NodeList';
+import NodeList, { MOTION_KEY, MotionEntity } from './NodeList';
 
 interface CheckInfo {
   event: 'check';
@@ -137,7 +137,7 @@ interface TreeState {
   dropPosition: number;
 
   treeData: DataNode[];
-  flattenNodes: FlattenDataNode[];
+  flattenNodes: FlattenNode[];
 
   prevProps: TreeProps;
 }
@@ -265,7 +265,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       newState.treeData = treeData;
       const entitiesMap = convertDataToEntities(treeData);
       newState.keyEntities = {
-        [MOTION_KEY]: MotionNode,
+        [MOTION_KEY]: MotionEntity,
         ...entitiesMap.keyEntities,
       };
 
@@ -296,7 +296,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // ================ flattenNodes =================
     if (treeData || newState.expandedKeys) {
-      const flattenNodes: FlattenDataNode[] = flattenTreeData(
+      const flattenNodes: FlattenNode[] = flattenTreeData(
         treeData || prevState.treeData,
         newState.expandedKeys || prevState.expandedKeys,
       );
@@ -714,7 +714,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       expandedKeys = arrDel(expandedKeys, eventKey);
     }
 
-    const flattenNodes: FlattenDataNode[] = flattenTreeData(treeData, expandedKeys);
+    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys);
     this.setUncontrolledState({ expandedKeys, flattenNodes });
 
     if (onExpand) {

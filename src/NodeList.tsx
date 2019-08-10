@@ -4,35 +4,37 @@
 
 import * as React from 'react';
 import VirtualList from 'rc-virtual-list';
-import { FlattenDataNode, Key, DataEntity } from './interface';
+import { FlattenNode, Key, DataEntity, DataNode } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
-export const MotionNode: DataEntity = {
+const MotionNode: DataNode = {
+  key: MOTION_KEY,
+};
+
+export const MotionEntity: DataEntity = {
   key: MOTION_KEY,
   level: 0,
   index: 0,
   pos: '0',
-  node: {
-    key: MOTION_KEY,
-  },
+  node: MotionNode,
 };
 
-const MotionFlattenData: FlattenDataNode = {
-  ...MotionNode.node,
+const MotionFlattenData: FlattenNode = {
   parent: null,
   children: [],
-  pos: MotionNode.pos,
+  pos: MotionEntity.pos,
+  data: MotionNode,
 };
 
 interface NodeListProps {
   prefixCls: string;
   className: string;
   style: React.CSSProperties;
-  data: FlattenDataNode[];
+  data: FlattenNode[];
   motion: any;
 
   expandedKeys: Key[];
@@ -56,7 +58,7 @@ interface NodeListProps {
  * We only need get visible content items to play the animation.
  */
 export function getMinimumRangeTransitionRange(
-  list: FlattenDataNode[],
+  list: FlattenNode[],
   height: number,
   itemHeight: number,
 ) {
@@ -67,8 +69,11 @@ export function getMinimumRangeTransitionRange(
   return list.slice(0, Math.ceil(height / itemHeight) + 1);
 }
 
-function itemKey(item: FlattenDataNode) {
-  const { key, pos } = item;
+function itemKey(item: FlattenNode) {
+  const {
+    data: { key },
+    pos,
+  } = item;
   return getKey(key, pos);
 }
 
@@ -116,7 +121,7 @@ const NodeList: React.FC<NodeListProps> = ({
 
     if (diffExpanded.key !== null) {
       if (diffExpanded.add) {
-        const keyIndex = prevData.findIndex(({ key }) => key === diffExpanded.key);
+        const keyIndex = prevData.findIndex(({ data: { key } }) => key === diffExpanded.key);
 
         if (motion) setDisableVirtual(true);
         const rangeNodes = getMinimumRangeTransitionRange(
@@ -125,14 +130,14 @@ const NodeList: React.FC<NodeListProps> = ({
           itemHeight,
         );
 
-        const newTransitionData: FlattenDataNode[] = prevData.slice();
+        const newTransitionData: FlattenNode[] = prevData.slice();
         newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
 
         setTransitionData(newTransitionData);
         setTransitionRange(rangeNodes);
         setMotionType('show');
       } else {
-        const keyIndex = data.findIndex(({ key }) => key === diffExpanded.key);
+        const keyIndex = data.findIndex(({ data: { key } }) => key === diffExpanded.key);
 
         if (motion) setDisableVirtual(true);
         const rangeNodes = getMinimumRangeTransitionRange(
@@ -141,7 +146,7 @@ const NodeList: React.FC<NodeListProps> = ({
           itemHeight,
         );
 
-        const newTransitionData: FlattenDataNode[] = data.slice();
+        const newTransitionData: FlattenNode[] = data.slice();
         newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
 
         setTransitionData(newTransitionData);
@@ -188,9 +193,12 @@ const NodeList: React.FC<NodeListProps> = ({
       onSkipRender={onMotionEnd}
       prefixCls={`${prefixCls}-list`}
     >
-      {(treeNode: FlattenDataNode) => {
-        const { key, ...restProps } = treeNode;
-        const mergedKey = getKey(key, restProps.pos);
+      {(treeNode: FlattenNode) => {
+        const {
+          pos,
+          data: { key, ...restProps },
+        } = treeNode;
+        const mergedKey = getKey(key, pos);
         delete restProps.children;
 
         const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
@@ -199,6 +207,8 @@ const NodeList: React.FC<NodeListProps> = ({
           <MotionTreeNode
             {...restProps}
             {...treeNodeProps}
+            pos={pos}
+            data={treeNode.data}
             motion={motion}
             motionNodes={key === MOTION_KEY ? transitionRange : null}
             motionType={motionType}

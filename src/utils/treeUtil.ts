@@ -1,7 +1,7 @@
 import * as React from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
-import { DataNode, FlattenDataNode, NodeElement, DataEntity, Key } from '../interface';
+import { DataNode, FlattenNode, NodeElement, DataEntity, Key } from '../interface';
 import { getPosition, isTreeNode } from '../util';
 
 export function getKey(key: Key, pos: string) {
@@ -80,20 +80,21 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
 export function flattenTreeData(
   treeNodeList: DataNode[] = [],
   expandedKeys: Key[] = [],
-): FlattenDataNode[] {
-  const flattenList: FlattenDataNode[] = [];
+): FlattenNode[] {
+  const flattenList: FlattenNode[] = [];
 
-  function dig(list: DataNode[], parent: FlattenDataNode = null): FlattenDataNode[] {
+  function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode.key, pos);
 
       // Add FlattenDataNode into list
-      const flattenNode: FlattenDataNode = {
+      const flattenNode: FlattenNode = {
         ...treeNode,
         parent,
         pos,
         children: null,
+        data: treeNode,
       };
 
       flattenList.push(flattenNode);
