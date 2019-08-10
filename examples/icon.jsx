@@ -23,7 +23,7 @@ const Demo = () => (
       </TreeNode>
     </Tree>
 
-    {/* <h2>Customize icon with component</h2>
+    <h2>Customize icon with component</h2>
     <Tree defaultExpandAll>
       <TreeNode icon={Icon} title="Parent">
         <TreeNode icon={Icon} title="Child" />
@@ -35,7 +35,7 @@ const Demo = () => (
       <TreeNode title="Parent">
         <TreeNode title="Child" />
       </TreeNode>
-    </Tree> */}
+    </Tree>
   </div>
 );
 
