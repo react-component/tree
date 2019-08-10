@@ -1,4 +1,4 @@
-import { Key, FlattenDataNode } from '../interface';
+import { Key, FlattenNode } from '../interface';
 
 export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
   const prevLen = prev.length;
@@ -32,13 +32,13 @@ export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
   };
 }
 
-export function getExpandRange(shorter: FlattenDataNode[], longer: FlattenDataNode[], key: Key) {
-  const shorterStartIndex = shorter.findIndex(item => item.key === key);
+export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], key: Key) {
+  const shorterStartIndex = shorter.findIndex(({ data }) => data.key === key);
   const shorterEndNode = shorter[shorterStartIndex + 1];
-  const longerStartIndex = longer.findIndex(item => item.key === key);
+  const longerStartIndex = longer.findIndex(({ data }) => data.key === key);
 
   if (shorterEndNode) {
-    const longerEndIndex = longer.findIndex(item => item.key === shorterEndNode.key);
+    const longerEndIndex = longer.findIndex(({ data }) => data.key === shorterEndNode.data.key);
     return longer.slice(longerStartIndex + 1, longerEndIndex);
   }
   return longer.slice(longerStartIndex + 1);

@@ -2,12 +2,12 @@ import * as React from 'react';
 // @ts-ignore
 import CSSMotion from 'rc-animate/lib/CSSMotion';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { FlattenDataNode } from './interface';
+import { FlattenNode } from './interface';
 import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   motion?: any;
-  motionNodes?: FlattenDataNode[];
+  motionNodes?: FlattenNode[];
   onMotionEnd: () => void;
   motionType?: 'show' | 'hide';
 
@@ -47,12 +47,15 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
       >
         {({ className: motionClassName, style: motionStyle }, motionRef) => (
           <div ref={motionRef} className={motionClassName} style={motionStyle}>
-            {motionNodes.map((treeNode: FlattenDataNode) => {
-              const { key, ...restProps } = treeNode;
+            {motionNodes.map((treeNode: FlattenNode) => {
+              const {
+                data: { key, ...restProps },
+              } = treeNode;
+              delete restProps.children;
 
               const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
 
-              return <TreeNode {...restProps} {...treeNodeProps} key={key} />;
+              return <TreeNode {...restProps} {...treeNodeProps} data={treeNode.data} key={key} />;
             })}
           </div>
         )}
