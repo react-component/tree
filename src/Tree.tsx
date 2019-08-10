@@ -731,7 +731,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
       return loadPromise
         ? loadPromise.then(() => {
             // [Legacy] Refresh logic
-            this.setUncontrolledState({ expandedKeys, flattenNodes });
+            const newFlattenTreeData = flattenTreeData(this.state.treeData, expandedKeys);
+            this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
           })
         : null;
     }

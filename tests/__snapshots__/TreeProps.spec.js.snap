@@ -900,6 +900,29 @@ exports[`Tree Props loadData basic 1`] = `
           </span>
         </span>
       </div>
+      <div
+        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        role="treeitem"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          style="display: inline-block; padding-left: 18px; user-select: none;"
+        />
+        <span
+          class="rc-tree-switcher rc-tree-switcher_close"
+        />
+        <span
+          class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
+          title="---"
+        >
+          <span
+            class="rc-tree-title"
+          >
+            ---
+          </span>
+        </span>
+      </div>
     </div>
   </div>
 </div>

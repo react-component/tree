@@ -1,13 +1,13 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import '../assets/index.less';
 import React from 'react';
-import Tree, { TreeNode } from '../src';
+import Tree from '../src';
 
 function generateTreeNodes(treeNode) {
   const arr = [];
   const key = treeNode.props.eventKey;
   for (let i = 0; i < 3; i += 1) {
-    arr.push({ name: `leaf ${key}-${i}`, key: `${key}-${i}` });
+    arr.push({ title: `leaf ${key}-${i}`, key: `${key}-${i}` });
   }
   return arr;
 }
@@ -60,9 +60,9 @@ class Demo extends React.Component {
     setTimeout(() => {
       this.setState({
         treeData: [
-          { name: 'pNode 01', key: '0-0' },
-          { name: 'pNode 02', key: '0-1' },
-          { name: 'pNode 03', key: '0-2', isLeaf: true },
+          { title: 'pNode 01', key: '0-0' },
+          { title: 'pNode 02', key: '0-1' },
+          { title: 'pNode 03', key: '0-2', isLeaf: true },
         ],
         checkedKeys: ['0-0'],
       });
@@ -93,25 +93,8 @@ class Demo extends React.Component {
   };
 
   render() {
-    const loop = data =>
-      data.map(item => {
-        if (item.children) {
-          return (
-            <TreeNode title={item.name} key={item.key}>
-              {loop(item.children)}
-            </TreeNode>
-          );
-        }
-        return (
-          <TreeNode
-            title={item.name}
-            key={item.key}
-            isLeaf={item.isLeaf}
-            disabled={item.key === '0-0-0'}
-          />
-        );
-      });
-    const treeNodes = loop(this.state.treeData);
+    const { treeData } = this.state;
+
     return (
       <div>
         <h2>dynamic render</h2>
@@ -121,9 +104,8 @@ class Demo extends React.Component {
           onCheck={this.onCheck}
           checkedKeys={this.state.checkedKeys}
           loadData={this.onLoadData}
-        >
-          {treeNodes}
-        </Tree>
+          treeData={treeData}
+        />
       </div>
     );
   }
