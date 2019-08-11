@@ -50,12 +50,23 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
             {motionNodes.map((treeNode: FlattenNode) => {
               const {
                 data: { key, ...restProps },
+                isStart,
+                isEnd,
               } = treeNode;
               delete restProps.children;
 
               const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
 
-              return <TreeNode {...restProps} {...treeNodeProps} data={treeNode.data} key={key} />;
+              return (
+                <TreeNode
+                  {...restProps}
+                  {...treeNodeProps}
+                  data={treeNode.data}
+                  key={key}
+                  isStart={isStart}
+                  isEnd={isEnd}
+                />
+              );
             })}
           </div>
         )}
