@@ -1,5 +1,6 @@
 /* eslint no-console:0, react/no-danger: 0 */
 import '../assets/index.less';
+import './animation.less';
 import React from 'react';
 import Tree from '../src';
 

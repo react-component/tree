@@ -6,6 +6,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import { TreeContext, TreeContextProps } from './contextTypes';
 import { getDataAndAria } from './util';
 import { IconType, Key, DataNode } from './interface';
+import Indent from './Indent';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -530,12 +531,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         {...dataOrAriaAttributeProps}
         tabIndex={0}
       >
-        {level ? (
-          <span
-            aria-hidden="true"
-            style={{ display: 'inline-block', paddingLeft: level * indentSize, userSelect: 'none' }}
-          />
-        ) : null}
+        <Indent prefixCls={prefixCls} indentSize={indentSize} level={level} />
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}

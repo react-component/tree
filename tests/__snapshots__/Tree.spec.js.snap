@@ -42,6 +42,7 @@ exports[`Tree Basic check basic render 1`] = `
       >
         <span
           aria-hidden="true"
+          class="rc-tree-indent"
           style="display:inline-block;padding-left:18px;user-select:none"
         />
         <span
@@ -71,6 +72,7 @@ exports[`Tree Basic check basic render 1`] = `
       >
         <span
           aria-hidden="true"
+          class="rc-tree-indent"
           style="display:inline-block;padding-left:18px;user-select:none"
         />
         <span
@@ -140,6 +142,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
       >
         <span
           aria-hidden="true"
+          class="rc-tree-indent"
           style="display: inline-block; padding-left: 18px; user-select: none;"
         />
         <span
@@ -327,6 +330,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
       >
         <span
           aria-hidden="true"
+          class="rc-tree-indent"
           style="display: inline-block; padding-left: 18px; user-select: none;"
         />
         <span
@@ -353,6 +357,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
       >
         <span
           aria-hidden="true"
+          class="rc-tree-indent"
           style="display: inline-block; padding-left: 18px; user-select: none;"
         />
         <span
@@ -419,6 +424,7 @@ exports[`Tree Basic renders correctly 1`] = `
       >
         <span
           aria-hidden="true"
+          class="rc-tree-indent"
           style="display:inline-block;padding-left:18px;user-select:none"
         />
         <span
@@ -448,7 +454,13 @@ exports[`Tree Basic renders correctly 1`] = `
       >
         <span
           aria-hidden="true"
-          style="display:inline-block;padding-left:36px;user-select:none"
+          class="rc-tree-indent"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          aria-hidden="true"
+          class="rc-tree-indent"
+          style="display:inline-block;padding-left:18px;user-select:none"
         />
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -477,7 +489,13 @@ exports[`Tree Basic renders correctly 1`] = `
       >
         <span
           aria-hidden="true"
-          style="display:inline-block;padding-left:36px;user-select:none"
+          class="rc-tree-indent"
+          style="display:inline-block;padding-left:18px;user-select:none"
+        />
+        <span
+          aria-hidden="true"
+          class="rc-tree-indent"
+          style="display:inline-block;padding-left:18px;user-select:none"
         />
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -506,6 +524,7 @@ exports[`Tree Basic renders correctly 1`] = `
       >
         <span
           aria-hidden="true"
+          class="rc-tree-indent"
           style="display:inline-block;padding-left:18px;user-select:none"
         />
         <span

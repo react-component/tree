@@ -1,0 +1,16 @@
+.rc-tree-treenode {
+  display: flex;
+
+  .rc-tree-indent {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -26px;
+      border-right: 1px solid blue;
+    }
+  }
+}
