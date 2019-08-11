@@ -28,6 +28,8 @@ const MotionFlattenData: FlattenNode = {
   children: [],
   pos: MotionEntity.pos,
   data: MotionNode,
+  isStart: true,
+  isEnd: true,
 };
 
 interface NodeListProps {
@@ -197,6 +199,8 @@ const NodeList: React.FC<NodeListProps> = ({
         const {
           pos,
           data: { key, ...restProps },
+          isStart,
+          isEnd,
         } = treeNode;
         const mergedKey = getKey(key, pos);
         delete restProps.children;
@@ -209,6 +213,8 @@ const NodeList: React.FC<NodeListProps> = ({
             {...treeNodeProps}
             pos={pos}
             data={treeNode.data}
+            isStart={isStart}
+            isEnd={isEnd}
             motion={motion}
             motionNodes={key === MOTION_KEY ? transitionRange : null}
             motionType={motionType}

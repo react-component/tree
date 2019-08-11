@@ -3,14 +3,37 @@
 
   .rc-tree-indent {
     position: relative;
+    align-self: stretch;
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: -26px;
-      border-right: 1px solid blue;
+    .rc-tree-indent-unit {
+      position: relative;
+      height: 100%;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        right: -26px;
+        bottom: 0;
+        border-right: 1px solid blue;
+        content: '';
+      }
+    }
+  }
+
+  &-start {
+    background: green;
+
+    .rc-tree-indent {
+      background: yellow;
+      .rc-tree-indent-unit {
+        background: red;
+      }
+    }
+
+    .rc-tree-indent-unit:last-child {
+      &::before {
+        display: none;
+      }
     }
   }
 }

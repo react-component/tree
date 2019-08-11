@@ -52,4 +52,6 @@ export interface FlattenNode {
   children: FlattenNode[];
   pos: string;
   data: DataNode;
+  isStart: boolean;
+  isEnd: boolean;
 }

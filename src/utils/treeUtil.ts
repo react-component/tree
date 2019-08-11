@@ -95,6 +95,8 @@ export function flattenTreeData(
         pos,
         children: null,
         data: treeNode,
+        isStart: index === 0,
+        isEnd: index === list.length - 1,
       };
 
       flattenList.push(flattenNode);

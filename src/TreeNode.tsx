@@ -34,6 +34,8 @@ export interface TreeNodeProps {
   domRef?: React.Ref<HTMLDivElement>;
   /** New added in Tree for easy data access */
   data: DataNode;
+  isStart: boolean;
+  isEnd: boolean;
 
   // By user
   isLeaf?: boolean;
@@ -490,6 +492,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       dragOverGapTop,
       dragOverGapBottom,
       isLeaf,
+      isStart,
+      isEnd,
       expanded,
       selected,
       checked,
@@ -515,6 +519,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
           [`${prefixCls}-treenode-selected`]: selected,
           [`${prefixCls}-treenode-loading`]: loading,
+          [`${prefixCls}-treenode-start`]: isStart,
+          [`${prefixCls}-treenode-end`]: isEnd,
 
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,
