@@ -11,7 +11,7 @@ exports[`Tree Props checkStrictly 1`] = `
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -36,15 +36,19 @@ exports[`Tree Props checkStrictly 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -81,7 +85,7 @@ exports[`Tree Props checkable default 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -106,15 +110,19 @@ exports[`Tree Props checkable default 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -151,7 +159,7 @@ exports[`Tree Props checkable without selectable 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -176,15 +184,19 @@ exports[`Tree Props checkable without selectable 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -221,7 +233,7 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
@@ -243,7 +255,7 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -269,15 +281,19 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -296,15 +312,19 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -338,7 +358,7 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
@@ -412,15 +432,19 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         >
@@ -443,15 +467,19 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         >
@@ -474,7 +502,7 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -543,7 +571,7 @@ exports[`Tree Props defaultExpandAll 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -565,15 +593,19 @@ exports[`Tree Props defaultExpandAll 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -607,7 +639,7 @@ exports[`Tree Props disabled basic 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -644,7 +676,7 @@ exports[`Tree Props disabled treeNode not disabled 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -681,7 +713,7 @@ exports[`Tree Props icon 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -707,15 +739,19 @@ exports[`Tree Props icon 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -753,7 +789,7 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -778,15 +814,19 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -823,7 +863,7 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -848,15 +888,19 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -893,7 +937,7 @@ exports[`Tree Props loadData basic 1`] = `
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -912,15 +956,19 @@ exports[`Tree Props loadData basic 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher_close"
         />
@@ -951,7 +999,7 @@ exports[`Tree Props multiple 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -973,15 +1021,19 @@ exports[`Tree Props multiple 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1043,7 +1095,7 @@ exports[`Tree Props selectable with selectable 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -1065,15 +1117,19 @@ exports[`Tree Props selectable with selectable 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1107,7 +1163,7 @@ exports[`Tree Props selectable without selectable 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -1129,15 +1185,19 @@ exports[`Tree Props selectable without selectable 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1171,7 +1231,7 @@ exports[`Tree Props showIcon 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
@@ -1193,7 +1253,7 @@ exports[`Tree Props showIcon 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -1230,7 +1290,7 @@ exports[`Tree Props showIcon 2`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
@@ -1249,7 +1309,7 @@ exports[`Tree Props showIcon 2`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -1283,15 +1343,19 @@ exports[`Tree Props showIcon 3`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
         />
@@ -1310,15 +1374,19 @@ exports[`Tree Props showIcon 3`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
         />
@@ -1337,20 +1405,23 @@ exports[`Tree Props showIcon 3`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
-        <span
-          aria-hidden="true"
-          class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1369,15 +1440,19 @@ exports[`Tree Props showIcon 3`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display:inline-block;padding-left:18px;user-select:none"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display:inline-block;padding-left:18px;user-select:none"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1396,7 +1471,7 @@ exports[`Tree Props showIcon 3`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-close"
+        class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -1447,7 +1522,7 @@ exports[`Tree Props treeData 1`] = `
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
@@ -1469,7 +1544,7 @@ exports[`Tree Props treeData 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
@@ -1491,15 +1566,19 @@ exports[`Tree Props treeData 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1525,8 +1604,12 @@ exports[`Tree Props treeData 1`] = `
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
         />
@@ -1545,20 +1628,23 @@ exports[`Tree Props treeData 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
-        <span
-          aria-hidden="true"
-          class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1577,20 +1663,23 @@ exports[`Tree Props treeData 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
-        <span
-          aria-hidden="true"
-          class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1609,15 +1698,19 @@ exports[`Tree Props treeData 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
         <span
           aria-hidden="true"
           class="rc-tree-indent"
-          style="display: inline-block; padding-left: 18px; user-select: none;"
-        />
+        >
+          <span
+            class="rc-tree-indent-unit"
+            style="display: inline-block; padding-left: 18px; user-select: none;"
+          />
+        </span>
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
         />
@@ -1651,7 +1744,7 @@ exports[`Tree Props treeData 2`] = `
       style="display: flex; flex-direction: column;"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
         role="treeitem"
         tabindex="0"
       >
