@@ -30,12 +30,12 @@ export interface TreeNodeProps {
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
-  pos: string;
+  pos?: string;
   domRef?: React.Ref<HTMLDivElement>;
   /** New added in Tree for easy data access */
-  data: DataNode;
-  isStart: boolean[];
-  isEnd: boolean[];
+  data?: DataNode;
+  isStart?: boolean[];
+  isEnd?: boolean[];
 
   // By user
   isLeaf?: boolean;
