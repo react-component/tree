@@ -484,7 +484,7 @@ describe('Tree Basic', () => {
       it('works', () => {
         const checkedKeys = ['0-0-0'];
         const wrapper = mount(<Tree checkable checkedKeys={checkedKeys} />);
-        expect(errorSpy()).toHaveBeenCalledWith("Warning: '0-0-0' does not exist in the tree.");
+        expect(errorSpy()).toHaveBeenCalledWith("Warning: Tree missing follow keys: '0-0-0'");
 
         wrapper.setProps({
           expandedKeys: ['0-0'],

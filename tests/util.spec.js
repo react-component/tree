@@ -190,9 +190,7 @@ describe('Util', () => {
           const tree = genTree();
           const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
           const { checkedKeys, halfCheckedKeys } = conductCheck(['notExist'], true, keyEntities);
-          expect(errorSpy()).toHaveBeenCalledWith(
-            "Warning: 'notExist' does not exist in the tree.",
-          );
+          expect(errorSpy()).toHaveBeenCalledWith("Warning: Tree missing follow keys: 'notExist'");
           expect(checkedKeys).toEqual([]);
           expect(halfCheckedKeys).toEqual([]);
         });

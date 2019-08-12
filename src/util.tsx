@@ -176,6 +176,8 @@ export function conductCheck(
   /** Can pass current checked status for process (usually for uncheck operation) */
   checkStatus: { checkedKeys?: Key[]; halfCheckedKeys?: Key[] } = {},
 ) {
+  const warningMissKeys: Key[] = [];
+
   const checkedKeys = {};
   const halfCheckedKeys = {}; // Record the key has some child checked (include child half checked)
 
@@ -247,7 +249,7 @@ export function conductCheck(
     const entity = keyEntities[key];
 
     if (!entity) {
-      warning(false, `'${key}' does not exist in the tree.`);
+      warningMissKeys.push(key);
       return;
     }
 
@@ -289,6 +291,14 @@ export function conductCheck(
       halfCheckedKeyList.push(key);
     }
   });
+
+  warning(
+    !warningMissKeys.length,
+    `Tree missing follow keys: ${warningMissKeys
+      .slice(0, 100)
+      .map(key => `'${key}'`)
+      .join(', ')}`,
+  );
 
   return {
     checkedKeys: checkedKeyList,
