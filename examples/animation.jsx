@@ -77,6 +77,13 @@ function getTreeData() {
         },
       ],
     },
+    {
+      key: '1',
+      title: 'node 1',
+      children: new Array(1000)
+        .fill(null)
+        .map((_, index) => ({ title: `auto ${index}`, key: `auto-${index}` })),
+    },
   ];
 }
 

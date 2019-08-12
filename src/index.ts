@@ -1,5 +1,5 @@
-import OriginTree from './Tree';
-import TreeNode from './TreeNode';
+import OriginTree, { TreeProps } from './Tree';
+import TreeNode, { TreeNodeProps } from './TreeNode';
 
 type OriginTreeType = typeof OriginTree;
 interface TreeType extends OriginTreeType {
@@ -9,5 +9,5 @@ interface TreeType extends OriginTreeType {
 const Tree = OriginTree as TreeType;
 Tree.TreeNode = TreeNode;
 
-export { TreeNode };
+export { TreeNode, TreeProps, TreeNodeProps };
 export default Tree;
