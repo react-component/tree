@@ -114,7 +114,7 @@ describe('Tree Basic', () => {
     it('update to expand parent node with autoExpandParent', () => {
       const wrapper = mount(
         <Tree expandedKeys={['0-0-0']} defaultExpandParent={false}>
-          <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="parent 1" checkable={false} key="0-0">
             <TreeNode title="leaf 1" key="0-0-0">
               <TreeNode title="leaf" key="0-0-0-0" />
             </TreeNode>
@@ -130,6 +130,20 @@ describe('Tree Basic', () => {
       const childSwitcher = wrapper.find('.rc-tree-switcher').at(1);
       expect(parentSwitcher.is(OPEN_CLASSNAME)).toBe(true);
       expect(childSwitcher.is(OPEN_CLASSNAME)).toBe(true);
+    });
+
+    it('skip only if disabled with autoExpandParent', () => {
+      const wrapper = mount(
+        <Tree expandedKeys={['0-0-0-0']} defaultExpandParent>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" disabled key="0-0-0">
+              <TreeNode title="leaf" key="0-0-0-0" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      expect(wrapper.state().expandedKeys.sort()).toEqual(['0-0-0', '0-0-0-0']);
     });
 
     it('fires expand event', () => {

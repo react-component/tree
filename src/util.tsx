@@ -324,7 +324,7 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
 
     const { parent, node } = entity;
 
-    if (isCheckDisabled(node)) return;
+    if (node.props && node.props.disabled) return;
 
     if (parent) {
       conductUp(parent.key);
