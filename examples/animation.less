@@ -11,29 +11,36 @@
 
       &::before {
         position: absolute;
-        top: 0;
+        top: 100%;
         right: -26px;
-        bottom: 0;
+        bottom: -7px;
         border-right: 1px solid blue;
         content: '';
       }
-    }
-  }
 
-  &-start {
-    background: green;
-
-    .rc-tree-indent {
-      background: yellow;
-      .rc-tree-indent-unit {
-        background: red;
-      }
-    }
-
-    .rc-tree-indent-unit:last-child {
-      &::before {
-        display: none;
+      // End should ignore
+      &-end {
+        &::before {
+          display: none;
+        }
       }
     }
   }
+
+  // &-start {
+  //   background: green;
+
+  //   .rc-tree-indent {
+  //     background: yellow;
+  //     .rc-tree-indent-unit {
+  //       background: red;
+  //     }
+  //   }
+
+  //   .rc-tree-indent-unit:last-child {
+  //     &::before {
+  //       display: none;
+  //     }
+  //   }
+  // }
 }

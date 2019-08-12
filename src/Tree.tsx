@@ -65,7 +65,6 @@ export interface TreeProps {
   checkedKeys: (Key)[] | { checked: (Key)[]; halfChecked: Key[] };
   defaultSelectedKeys: Key[];
   selectedKeys: Key[];
-  indentSize: number;
   onClick: (e: React.MouseEvent, treeNode: DataNode) => void;
   onDoubleClick: (e: React.MouseEvent, treeNode: DataNode) => void;
   onExpand: (
@@ -172,7 +171,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     ]),
     defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
     selectedKeys: PropTypes.arrayOf(PropTypes.string),
-    indentSize: PropTypes.number,
     onClick: PropTypes.func,
     onDoubleClick: PropTypes.func,
     onExpand: PropTypes.func,
@@ -207,7 +205,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     draggable: false,
     defaultExpandParent: true,
     autoExpandParent: false,
-    indentSize: 18,
     defaultExpandAll: false,
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
@@ -813,7 +810,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       motion,
       loadData,
       filterTreeNode,
-      indentSize,
       height,
       itemHeight,
     } = this.props;
@@ -836,7 +832,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
           checkStrictly,
           disabled,
           keyEntities,
-          indentSize,
 
           loadData,
           filterTreeNode,

@@ -28,8 +28,9 @@ const MotionFlattenData: FlattenNode = {
   children: [],
   pos: MotionEntity.pos,
   data: MotionNode,
-  isStart: true,
-  isEnd: true,
+  /** Hold empty list here since we do not use it */
+  isStart: [],
+  isEnd: [],
 };
 
 interface NodeListProps {

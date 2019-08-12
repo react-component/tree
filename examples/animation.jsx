@@ -15,7 +15,7 @@ const STYLE = `
 }
 `;
 
-const defaultExpandedKeys = ['0', '0-2'];
+const defaultExpandedKeys = ['0', '0-2', '0-9-2'];
 
 const motion = {
   motionName: 'node-motion',
@@ -65,7 +65,14 @@ function getTreeData() {
                 { key: '0-9-1-4', title: 'node 0-9-1-4' },
               ],
             },
-            { key: '0-9-2', title: 'node 0-9-2' },
+            {
+              key: '0-9-2',
+              title: 'node 0-9-2',
+              children: [
+                { key: '0-9-2-0', title: 'node 0-9-2-0' },
+                { key: '0-9-2-1', title: 'node 0-9-2-1' },
+              ],
+            },
           ],
         },
       ],

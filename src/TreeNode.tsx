@@ -34,8 +34,8 @@ export interface TreeNodeProps {
   domRef?: React.Ref<HTMLDivElement>;
   /** New added in Tree for easy data access */
   data: DataNode;
-  isStart: boolean;
-  isEnd: boolean;
+  isStart: boolean[];
+  isEnd: boolean[];
 
   // By user
   isLeaf?: boolean;
@@ -503,7 +503,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       ...otherProps
     } = this.props;
     const {
-      context: { prefixCls, filterTreeNode, draggable, keyEntities, indentSize },
+      context: { prefixCls, filterTreeNode, draggable, keyEntities },
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
@@ -519,8 +519,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
           [`${prefixCls}-treenode-selected`]: selected,
           [`${prefixCls}-treenode-loading`]: loading,
-          [`${prefixCls}-treenode-start`]: isStart,
-          [`${prefixCls}-treenode-end`]: isEnd,
 
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,
@@ -537,7 +535,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         {...dataOrAriaAttributeProps}
         tabIndex={0}
       >
-        <Indent prefixCls={prefixCls} indentSize={indentSize} level={level} />
+        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}

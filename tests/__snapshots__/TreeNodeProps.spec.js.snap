@@ -11,7 +11,7 @@ exports[`TreeNode Props className 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -33,7 +33,7 @@ exports[`TreeNode Props className 1`] = `
         </span>
       </div>
       <div
-        class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
+        class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -42,8 +42,7 @@ exports[`TreeNode Props className 1`] = `
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start"
           />
         </span>
         <span
@@ -64,7 +63,7 @@ exports[`TreeNode Props className 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -73,12 +72,10 @@ exports[`TreeNode Props className 1`] = `
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start"
           />
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
           />
         </span>
         <span
@@ -99,7 +96,7 @@ exports[`TreeNode Props className 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -108,8 +105,7 @@ exports[`TreeNode Props className 1`] = `
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-end"
           />
         </span>
         <span
@@ -130,7 +126,7 @@ exports[`TreeNode Props className 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -167,7 +163,7 @@ exports[`TreeNode Props customize icon component 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -208,7 +204,7 @@ exports[`TreeNode Props customize icon element 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -249,7 +245,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -284,7 +280,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
     >
       <div
         aria-label="0-0"
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -307,7 +303,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       </div>
       <div
         aria-label="0-0-0"
-        class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
+        class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -316,8 +312,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start"
           />
         </span>
         <span
@@ -339,7 +334,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       </div>
       <div
         aria-label="0-0-0-0"
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -348,12 +343,10 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start"
           />
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
           />
         </span>
         <span
@@ -375,7 +368,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       </div>
       <div
         aria-label="0-0-1"
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -384,8 +377,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-end"
           />
         </span>
         <span
@@ -407,7 +399,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       </div>
       <div
         aria-label="0-1"
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -444,7 +436,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-0"
         role="treeitem"
         tabindex="0"
@@ -467,7 +459,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
         </span>
       </div>
       <div
-        class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start"
+        class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-0-0"
         role="treeitem"
         tabindex="0"
@@ -477,8 +469,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start"
           />
         </span>
         <span
@@ -499,7 +490,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-0-0-0"
         role="treeitem"
         tabindex="0"
@@ -509,12 +500,10 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start"
           />
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
           />
         </span>
         <span
@@ -535,7 +524,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-0-1"
         role="treeitem"
         tabindex="0"
@@ -545,8 +534,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-end"
           />
         </span>
         <span
@@ -567,7 +555,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-1"
         role="treeitem"
         tabindex="0"
@@ -605,7 +593,7 @@ exports[`TreeNode Props isLeaf 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode"
         role="treeitem"
         tabindex="0"
       >
@@ -624,7 +612,7 @@ exports[`TreeNode Props isLeaf 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode"
         role="treeitem"
         tabindex="0"
       >
@@ -633,8 +621,7 @@ exports[`TreeNode Props isLeaf 1`] = `
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
           />
         </span>
         <span
@@ -667,7 +654,7 @@ exports[`TreeNode Props isLeaf 2`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode"
         role="treeitem"
         tabindex="0"
       >
@@ -689,7 +676,7 @@ exports[`TreeNode Props isLeaf 2`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode"
         role="treeitem"
         tabindex="0"
       >
@@ -698,8 +685,7 @@ exports[`TreeNode Props isLeaf 2`] = `
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
           />
         </span>
         <span
@@ -735,7 +721,7 @@ exports[`TreeNode Props isLeaf 3`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -757,7 +743,7 @@ exports[`TreeNode Props isLeaf 3`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-start rc-tree-treenode-end"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open"
         role="treeitem"
         tabindex="0"
       >
@@ -766,8 +752,7 @@ exports[`TreeNode Props isLeaf 3`] = `
           class="rc-tree-indent"
         >
           <span
-            class="rc-tree-indent-unit"
-            style="display:inline-block;padding-left:18px;user-select:none"
+            class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
           />
         </span>
         <span

@@ -20,7 +20,6 @@ export interface TreeContextProps {
   checkStrictly: boolean;
   disabled: boolean;
   keyEntities: Record<Key, DataEntity>;
-  indentSize: number;
 
   loadData: (treeNode: NodeInstance) => Promise<void>;
   filterTreeNode: (treeNode: NodeInstance) => boolean;

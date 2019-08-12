@@ -1,23 +1,28 @@
 import * as React from 'react';
+import classNames from 'classnames';
 
 interface IndentProps {
   prefixCls: string;
   level: number;
-  indentSize: number;
+  isStart: boolean[];
+  isEnd: boolean[];
 }
 
-const Indent: React.FC<IndentProps> = ({ prefixCls, level, indentSize }) => {
+const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd }) => {
   if (!level) {
     return null;
   }
 
+  const baseClassName = `${prefixCls}-indent-unit`;
   const list: React.ReactElement[] = [];
   for (let i = 0; i < level; i += 1) {
     list.push(
       <span
         key={i}
-        className={`${prefixCls}-indent-unit`}
-        style={{ display: 'inline-block', paddingLeft: indentSize, userSelect: 'none' }}
+        className={classNames(baseClassName, {
+          [`${baseClassName}-start`]: isStart[i + 1],
+          [`${baseClassName}-end`]: isEnd[i + 1],
+        })}
       />,
     );
   }
