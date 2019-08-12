@@ -13,7 +13,7 @@
         position: absolute;
         top: 100%;
         right: -26px;
-        bottom: -7px;
+        bottom: -100%;
         border-right: 1px solid blue;
         content: '';
       }
@@ -27,20 +27,12 @@
     }
   }
 
-  // &-start {
-  //   background: green;
-
-  //   .rc-tree-indent {
-  //     background: yellow;
-  //     .rc-tree-indent-unit {
-  //       background: red;
-  //     }
-  //   }
-
-  //   .rc-tree-indent-unit:last-child {
-  //     &::before {
-  //       display: none;
-  //     }
-  //   }
-  // }
+  // Motion
+  &-motion:not(.node-motion-appear-active) {
+    .rc-tree-indent-unit {
+      &::before {
+        display: none;
+      }
+    }
+  }
 }

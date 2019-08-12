@@ -3,8 +3,7 @@
  * When util.js imports the TreeNode for tree generate will cause treeContextTypes be empty.
  */
 import * as React from 'react';
-import createReactContext, { Context } from '@ant-design/create-react-context';
-import { IconType, NodeElement, Key, DataEntity, NodeInstance } from './interface';
+import { IconType, Key, DataEntity, NodeInstance } from './interface';
 import { InternalTreeNodeProps } from './TreeNode';
 
 type NodeMouseEventHandler = (e: MouseEvent, node: React.Component<InternalTreeNodeProps>) => void;
@@ -41,4 +40,4 @@ export interface TreeContextProps {
   onNodeDrop: NodeMouseEventHandler;
 }
 
-export const TreeContext: Context<TreeContextProps | null> = createReactContext(null);
+export const TreeContext: React.Context<TreeContextProps | null> = React.createContext(null);

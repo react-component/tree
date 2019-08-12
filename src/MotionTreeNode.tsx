@@ -1,9 +1,11 @@
 import * as React from 'react';
+import classNames from 'classnames';
 // @ts-ignore
 import CSSMotion from 'rc-animate/lib/CSSMotion';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { FlattenNode } from './interface';
 import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
+import { TreeContext } from './contextTypes';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   motion?: any;
@@ -28,6 +30,7 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
   ref,
 ) => {
   const [visible, setVisible] = React.useState(true);
+  const { prefixCls } = React.useContext(TreeContext);
 
   React.useEffect(() => {
     if (motionNodes && motionType === 'hide' && visible) {
@@ -46,7 +49,11 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
         onLeaveEnd={onMotionEnd}
       >
         {({ className: motionClassName, style: motionStyle }, motionRef) => (
-          <div ref={motionRef} className={motionClassName} style={motionStyle}>
+          <div
+            ref={motionRef}
+            className={classNames(`${prefixCls}-treenode-motion`, motionClassName)}
+            style={motionStyle}
+          >
             {motionNodes.map((treeNode: FlattenNode) => {
               const {
                 data: { key, ...restProps },

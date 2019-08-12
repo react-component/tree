@@ -61,7 +61,6 @@
     "typescript": "^3.5.2"
   },
   "dependencies": {
-    "@ant-design/create-react-context": "^0.2.4",
     "classnames": "2.x",
     "prop-types": "^15.5.8",
     "rc-animate": "^2.9.2",
