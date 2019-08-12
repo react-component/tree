@@ -12,6 +12,7 @@
     "assets/*.css",
     "assets/*.png",
     "assets/*.gif",
+    "assets/*.less",
     "dist",
     "es",
     "lib"
