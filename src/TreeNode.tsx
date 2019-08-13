@@ -26,7 +26,7 @@ export interface TreeNodeProps {
   loaded?: boolean;
   loading?: boolean;
   halfChecked?: boolean;
-  title?: React.ReactNode | (() => React.ReactNode);
+  title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
@@ -430,7 +430,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // Icon + Title
   renderSelector = () => {
     const { dragNodeHighlight } = this.state;
-    const { title, selected, icon, loading } = this.props;
+    const { title, selected, icon, loading, data } = this.props;
     const {
       context: { prefixCls, showIcon, icon: treeIcon, draggable, loadData },
     } = this.props;
@@ -457,7 +457,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 
     // Title
     const $title = (
-      <span className={`${prefixCls}-title`}>{typeof title === 'function' ? title() : title}</span>
+      <span className={`${prefixCls}-title`}>
+        {typeof title === 'function' ? title(data) : title}
+      </span>
     );
 
     return (
