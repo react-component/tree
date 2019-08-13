@@ -111,7 +111,7 @@ The number of treeNodes can be very large, but when enable `checkable`, it will 
 
 ## Development
 
-```
+```bash
 npm install
 npm start
 ```
