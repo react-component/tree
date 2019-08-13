@@ -26,7 +26,7 @@ export interface TreeNodeProps {
   loaded?: boolean;
   loading?: boolean;
   halfChecked?: boolean;
-  title?: React.ReactNode;
+  title?: React.ReactNode | (() => React.ReactNode);
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
@@ -71,7 +71,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     loaded: PropTypes.bool,
     loading: PropTypes.bool,
     halfChecked: PropTypes.bool,
-    title: PropTypes.node,
+    title: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     dragOver: PropTypes.bool,
     dragOverGapTop: PropTypes.bool,
     dragOverGapBottom: PropTypes.bool,
@@ -456,7 +456,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     }
 
     // Title
-    const $title = <span className={`${prefixCls}-title`}>{title}</span>;
+    const $title = (
+      <span className={`${prefixCls}-title`}>{typeof title === 'function' ? title() : title}</span>
+    );
 
     return (
       <span
