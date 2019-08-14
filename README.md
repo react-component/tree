@@ -1,13 +1,10 @@
 # rc-tree
+
 ---
 
 tree ui component for react
 
-[![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![gemnasium deps][gemnasium-image]][gemnasium-url]
-[![npm download][download-image]][download-url]
+[![NPM version][npm-image]][npm-url] [![build status][travis-image]][travis-url] [![Test coverage][codecov-image]][codecov-url] [![gemnasium deps][gemnasium-image]][gemnasium-url] [![npm download][download-image]][download-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree
@@ -26,18 +23,15 @@ tree ui component for react
 
 <img src="https://t.alipayobjects.com/images/T15BpfXn8nXXXXXXXX.png" width="288"/>
 
-
 ## Feature
 
-* Support all popular browsers, including Internet Explorer 9 and above.
-
+- Support all popular browsers, including Internet Explorer 9 and above.
 
 ## Example
 
 http://localhost:8018/examples/
 
 online example: http://react-component.github.io/tree/examples/
-
 
 ## install
 
@@ -51,12 +45,12 @@ see examples
 
 ### Tree props
 
-| name     | description    | type     | default      |
-|----------|----------------|----------|--------------|
+| name | description | type | default |
+| --- | --- | --- | --- |
 | autoExpandParent | whether auto expand parent treeNodes | bool | false |
 | checkable | whether support checked | bool/React Node | false |
 | checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array. | String[]/{checked:Array<String>,halfChecked:Array<String>} | [] |
-| checkStrictly| check node precisely, parent and children nodes are not associated| bool | false |
+| checkStrictly | check node precisely, parent and children nodes are not associated | bool | false |
 | className | additional css class of root dom node | String | '' |
 | defaultCheckedKeys | default checked treeNodes | String[] | [] |
 | defaultExpandedKeys | expand specific treeNodes | String[] | - |
@@ -93,35 +87,31 @@ see examples
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 
 ### TreeNode props
-> note: if you have a lot of TreeNode, like more than 1000,   
+
+> note: if you have a lot of TreeNode, like more than 1000,  
 > make the parent node is collapsed by default, will obvious effect, very fast.  
 > Because the children hide TreeNode will not insert into dom.
 
-| name     | description    | type     | default      |
-|----------|----------------|----------|--------------|
-|className | additional class to treeNode | String | '' |
-|checkable | control node checkable if Tree is checkable | bool | - |
-|style | set style to treeNode | Object | '' |
-|disabled | whether disabled the treeNode | bool | false |
-|disableCheckbox | whether disable the treeNode' checkbox | bool | false |
-|title | tree/subTree's title | String/element | '---' |
-|key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
-|isLeaf | whether it's leaf node | bool | false |
-|icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
+| name | description | type | default |
+| --- | --- | --- | --- |
+| className | additional class to treeNode | String | '' |
+| checkable | control node checkable if Tree is checkable | bool | - |
+| style | set style to treeNode | Object | '' |
+| disabled | whether disabled the treeNode | bool | false |
+| disableCheckbox | whether disable the treeNode' checkbox | bool | false |
+| title | tree/subTree's title | String/element/((data: DataNode) => React.ReactNode) | '---' |
+| key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
+| isLeaf | whether it's leaf node | bool | false |
+| icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 
 ## note
 
-The number of treeNodes can be very large, but when enable `checkable`, 
-it will spend more computing time, so we cached some calculations(e.g. `this.treeNodesStates`), 
-to avoid double computing. But, this bring some restrictions, 
-**when you async load treeNodes, you should render tree like this** 
-`{this.state.treeData.length ? <Tree ...>{this.state.treeData.map(t => <TreeNode ... />)}</Tree> : 'loading tree'}`
-
+The number of treeNodes can be very large, but when enable `checkable`, it will spend more computing time, so we cached some calculations(e.g. `this.treeNodesStates`), to avoid double computing. But, this bring some restrictions, **when you async load treeNodes, you should render tree like this** `{this.state.treeData.length ? <Tree ...>{this.state.treeData.map(t => <TreeNode ... />)}</Tree> : 'loading tree'}`
 
 ## Development
 
-```
+```bash
 npm install
 npm start
 ```
@@ -135,9 +125,11 @@ http://localhost:8018/tests/runner.html?coverage
 http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8018/tests/runner.html?coverage
 
 ## License
+
 rc-tree is released under the MIT license.
 
 ## other tree view
+
 - [ztree](http://www.ztree.me/)
 - [jqTree](http://mbraak.github.io/jqTree/)
 - [jquery.treeselect](http://travistidwell.com/jquery.treeselect.js/)

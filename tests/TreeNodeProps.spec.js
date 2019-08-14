@@ -34,7 +34,6 @@ describe('TreeNode Props', () => {
   // disableCheckbox - is already full test in Tree.spec.js
   // title - is already full test in Tree.spec.js
   // key - is already full test in Tree.spec.js
-
   it('isLeaf', () => {
     const withoutLoadData = render(
       <Tree showIcon={false} defaultExpandAll>
@@ -62,6 +61,15 @@ describe('TreeNode Props', () => {
       </Tree>,
     );
     expect(renderToJson(forceNoLeaf)).toMatchSnapshot();
+  });
+
+  it('title function', () => {
+    const wrapper = render(
+      <Tree defaultExpandAll>
+        <TreeNode title={() => <a id="test-title">title</a>} />
+      </Tree>,
+    );
+    expect(wrapper.find('#test-title').text()).toEqual('title');
   });
 
   describe('customize icon', () => {
