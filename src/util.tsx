@@ -178,20 +178,21 @@ export function conductCheck(
 ) {
   const warningMissKeys: Key[] = [];
 
-  const checkedKeys = {};
-  const halfCheckedKeys = {}; // Record the key has some child checked (include child half checked)
+  const checkedKeyMap: Map<Key, boolean> = new Map();
+  // Record the key has some child checked (include child half checked)
+  const halfCheckedKeyMap: Map<Key, boolean> = new Map();
 
   (checkStatus.checkedKeys || []).forEach(key => {
-    checkedKeys[key] = true;
+    checkedKeyMap.set(key, true);
   });
 
   (checkStatus.halfCheckedKeys || []).forEach(key => {
-    halfCheckedKeys[key] = true;
+    halfCheckedKeyMap.set(key, true);
   });
 
   // Conduct up
   function conductUp(key: Key) {
-    if (checkedKeys[key] === isCheck) return;
+    if (checkedKeyMap.get(key) === isCheck) return;
 
     const entity = keyEntities[key];
     if (!entity) return;
@@ -204,23 +205,25 @@ export function conductCheck(
     let everyChildChecked = true;
     let someChildChecked = false; // Child checked or half checked
 
-    (children || [])
-      .filter(child => !isCheckDisabled(child.node))
-      .forEach(({ key: childKey }) => {
-        const childChecked = checkedKeys[childKey];
-        const childHalfChecked = halfCheckedKeys[childKey];
+    if (children && children.length) {
+      children.forEach(({ key: childKey, node: childNode }) => {
+        if (isCheckDisabled(childNode)) return;
+
+        const childChecked = checkedKeyMap.get(childKey);
+        const childHalfChecked = halfCheckedKeyMap.get(childKey);
 
         if (childChecked || childHalfChecked) someChildChecked = true;
         if (!childChecked) everyChildChecked = false;
       });
+    }
 
     // Update checked status
     if (isCheck) {
-      checkedKeys[key] = everyChildChecked;
+      checkedKeyMap.set(key, everyChildChecked);
     } else {
-      checkedKeys[key] = false;
+      checkedKeyMap.set(key, false);
     }
-    halfCheckedKeys[key] = someChildChecked;
+    halfCheckedKeyMap.set(key, someChildChecked);
 
     if (parent) {
       conductUp(parent.key);
@@ -229,7 +232,7 @@ export function conductCheck(
 
   // Conduct down
   function conductDown(key: Key) {
-    if (checkedKeys[key] === isCheck) return;
+    if (checkedKeyMap.get(key) === isCheck) return;
 
     const entity = keyEntities[key];
     if (!entity) return;
@@ -238,7 +241,7 @@ export function conductCheck(
 
     if (isCheckDisabled(node)) return;
 
-    checkedKeys[key] = isCheck;
+    checkedKeyMap.set(key, isCheck);
 
     (children || []).forEach(child => {
       conductDown(child.key);
@@ -254,7 +257,7 @@ export function conductCheck(
     }
 
     const { children, parent, node } = entity;
-    checkedKeys[key] = isCheck;
+    checkedKeyMap.set(key, isCheck);
 
     if (isCheckDisabled(node)) return;
 
@@ -279,15 +282,15 @@ export function conductCheck(
   const halfCheckedKeyList = [];
 
   // Fill checked list
-  Object.keys(checkedKeys).forEach(key => {
-    if (checkedKeys[key]) {
+  checkedKeyMap.forEach((checked, key) => {
+    if (checked) {
       checkedKeyList.push(key);
     }
   });
 
   // Fill half checked list
-  Object.keys(halfCheckedKeys).forEach(key => {
-    if (!checkedKeys[key] && halfCheckedKeys[key]) {
+  halfCheckedKeyMap.forEach((halfChecked, key) => {
+    if (!checkedKeyMap.get(key) && halfChecked) {
       halfCheckedKeyList.push(key);
     }
   });
