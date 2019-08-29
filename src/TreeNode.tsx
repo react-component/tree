@@ -297,11 +297,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       context: { disabled: treeDisabled },
     } = this.props;
 
-    // Follow the logic of Selectable
-    if (disabled === false) {
-      return false;
-    }
-
     return !!(treeDisabled || disabled);
   };
 

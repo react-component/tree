@@ -784,7 +784,7 @@ describe('Tree Props', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('treeNode not disabled', () => {
+    it('treeNode should disabled when tree disabled', () => {
       const wrapper = render(
         <Tree defaultExpandAll disabled>
           <TreeNode key="0-0" disabled={false} />
