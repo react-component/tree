@@ -253,6 +253,8 @@ export function getTreeNodeProps(
     keyEntities,
   }: TreeNodeRequiredProps,
 ) {
+  const entity = keyEntities[key];
+
   const treeNodeProps = {
     eventKey: key,
     expanded: expandedKeys.indexOf(key) !== -1,
@@ -261,7 +263,7 @@ export function getTreeNodeProps(
     loading: loadingKeys.indexOf(key) !== -1,
     checked: checkedKeys.indexOf(key) !== -1,
     halfChecked: halfCheckedKeys.indexOf(key) !== -1,
-    pos: String(keyEntities[key].pos),
+    pos: String(entity ? entity.pos : ''),
 
     // [Legacy] Drag props
     dragOver: dragOverNodeKey === key && dropPosition === 0,

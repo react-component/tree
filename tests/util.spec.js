@@ -1,9 +1,7 @@
 /* eslint-disable no-undef, react/no-multi-comp,
 react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
-import { mount } from 'enzyme';
 import Tree, { TreeNode } from '../src';
-import { InternalTreeNode } from '../src/TreeNode';
 import {
   convertDataToTree,
   conductCheck,
@@ -12,7 +10,12 @@ import {
   getDataAndAria,
   parseCheckedKeys,
 } from '../src/util';
-import { flattenTreeData, convertTreeToData, convertDataToEntities } from '../src/utils/treeUtil';
+import {
+  flattenTreeData,
+  convertTreeToData,
+  convertDataToEntities,
+  getTreeNodeProps,
+} from '../src/utils/treeUtil';
 import { spyConsole, spyError } from './util';
 
 describe('Util', () => {
@@ -339,5 +342,32 @@ describe('Util', () => {
       '0-2-1',
       '1',
     ]);
+  });
+
+  it('not crash if node not exist with getTreeNodeProps', () => {
+    const nodeProps = getTreeNodeProps('not-exist', {
+      expandedKeys: [],
+      selectedKeys: [],
+      loadedKeys: [],
+      loadingKeys: [],
+      checkedKeys: [],
+      halfCheckedKeys: [],
+      dragOverNodeKey: null,
+      dropPosition: null,
+      keyEntities: {},
+    });
+
+    expect(nodeProps).toEqual(
+      expect.objectContaining({
+        checked: false,
+        eventKey: 'not-exist',
+        expanded: false,
+        halfChecked: false,
+        loaded: false,
+        loading: false,
+        pos: '',
+        selected: false,
+      }),
+    );
   });
 });
