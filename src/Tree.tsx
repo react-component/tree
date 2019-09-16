@@ -84,7 +84,7 @@ export interface TreeProps {
       node: NodeInstance;
       selectedNodes: DataNode[];
       nativeEvent: MouseEvent;
-      expandedKeys: Key[],
+      expandedKeys: Key[];
     },
   ) => void;
   onLoad?: (
