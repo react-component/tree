@@ -6,6 +6,7 @@ import { renderToJson } from 'enzyme-to-json';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
 import { objectMatcher, spyConsole, spyError } from './util';
+import { convertNodePropsToEventData } from '../src/utils/treeUtil';
 
 const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
@@ -156,20 +157,31 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       const switcher = wrapper.find('.rc-tree-switcher');
-      const node = wrapper.find(InternalTreeNode).instance();
 
+      let node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .first()
+          .props(),
+      );
       switcher.simulate('click');
       expect(handleExpand).toHaveBeenCalledWith(['0-0'], {
         expanded: true,
         node,
-        nativeEvent: expect.objectContaining({}),
+        nativeEvent: expect.anything(),
       });
 
+      node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .first()
+          .props(),
+      );
       switcher.simulate('click');
       expect(handleExpand).toHaveBeenCalledWith([], {
         expanded: false,
         node,
-        nativeEvent: expect.objectContaining({}),
+        nativeEvent: expect.anything(),
       });
     });
   });
@@ -312,19 +324,20 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       wrapper.find('.rc-tree-switcher').simulate('click');
-      const treeNode1 = wrapper.find(InternalTreeNode).first();
-      const treeNode2 = wrapper.find(InternalTreeNode).last();
-      // const treeElm1 = wrapper.find(Tree).props().children;
-      // const treeElm2 = treeNode1.props().children;
 
       const nodeData00 = { title: 'parent 1', key: '0-0' };
       const nodeData000 = { title: 'leaf 1', key: '0-0-0' };
 
+      let node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .first()
+          .props(),
+      );
       wrapper
         .find('.rc-tree-checkbox')
         .first()
         .simulate('click');
-
       expect(handleCheck).toHaveBeenCalledWith(
         ['0-0', '0-0-0'],
         objectMatcher({
@@ -336,11 +349,17 @@ describe('Tree Basic', () => {
           ],
           event: 'check',
           halfCheckedKeys: [],
-          node: treeNode1.instance(),
+          node,
           nativeEvent: {},
         }),
       );
 
+      node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .last()
+          .props(),
+      );
       wrapper
         .find('.rc-tree-checkbox')
         .last()
@@ -353,7 +372,7 @@ describe('Tree Basic', () => {
           checkedNodesPositions: [],
           event: 'check',
           halfCheckedKeys: [],
-          node: treeNode2.instance(),
+          node,
           nativeEvent: {},
         }),
       );
@@ -777,12 +796,13 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       const nodeContent = wrapper.find('.rc-tree-node-content-wrapper');
-      const node = wrapper
-        .find(InternalTreeNode)
-        .first()
-        .instance();
-      const nodeElm = wrapper.find(Tree).props().children;
 
+      let node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .first()
+          .props(),
+      );
       nodeContent.simulate('click');
       expect(handleSelect).toHaveBeenCalledWith(
         ['0-0'],
@@ -795,6 +815,12 @@ describe('Tree Basic', () => {
         }),
       );
 
+      node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .first()
+          .props(),
+      );
       nodeContent.simulate('click');
       expect(handleSelect).toHaveBeenCalledWith(
         [],
@@ -820,12 +846,16 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       wrapper.find('.rc-tree-switcher').simulate('click');
-      const treeNode1 = wrapper.find(InternalTreeNode).first();
-      const treeNode2 = wrapper.find(InternalTreeNode).last();
 
       const dataNode1 = { title: 'parent 1', key: '0-0' };
       const dataNode2 = { title: 'leaf 1', key: '0-0-0' };
 
+      let node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .first()
+          .props(),
+      );
       wrapper
         .find('.rc-tree-node-content-wrapper')
         .first()
@@ -841,11 +871,17 @@ describe('Tree Basic', () => {
           ],
           event: 'check',
           halfCheckedKeys: [],
-          node: treeNode1.instance(),
+          node,
           nativeEvent: {},
         }),
       );
 
+      node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .last()
+          .props(),
+      );
       wrapper
         .find('.rc-tree-node-content-wrapper')
         .last()
@@ -858,7 +894,7 @@ describe('Tree Basic', () => {
           checkedNodesPositions: [],
           event: 'check',
           halfCheckedKeys: [],
-          node: treeNode2.instance(),
+          node,
           nativeEvent: {},
         }),
       );
@@ -874,8 +910,9 @@ describe('Tree Basic', () => {
         </TreeNode>
       </Tree>,
     );
+    const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
     wrapper.find('.rc-tree-node-content-wrapper').simulate('contextMenu');
-    expect(handleRightClick.mock.calls[0][0].node).toBe(wrapper.find(InternalTreeNode).instance());
+    expect(handleRightClick.mock.calls[0][0].node).toEqual(node);
   });
 
   it('fires rightClick should not change selected item', () => {
@@ -900,8 +937,9 @@ describe('Tree Basic', () => {
         </TreeNode>
       </Tree>,
     );
+    const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
     wrapper.find('.rc-tree-node-content-wrapper').simulate('mouseEnter');
-    expect(handleMouseEnter.mock.calls[0][0].node).toBe(wrapper.find(InternalTreeNode).instance());
+    expect(handleMouseEnter.mock.calls[0][0].node).toEqual(node);
   });
 
   it('fires mouseLeave events', () => {
@@ -913,13 +951,14 @@ describe('Tree Basic', () => {
         </TreeNode>
       </Tree>,
     );
+    const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
     wrapper.find('.rc-tree-node-content-wrapper').simulate('mouseLeave');
-    expect(handleMouseLeave.mock.calls[0][0].node).toBe(wrapper.find(InternalTreeNode).instance());
+    expect(handleMouseLeave.mock.calls[0][0].node).toEqual(node);
   });
 
   it('filters nodes', () => {
     function filterTreeNode(treeNode) {
-      return treeNode.props.title.indexOf('parent') > -1;
+      return treeNode.title.indexOf('parent') > -1;
     }
     const wrapper = mount(
       <Tree filterTreeNode={filterTreeNode}>
@@ -949,8 +988,9 @@ describe('Tree Basic', () => {
         <TreeNode title="parent 1" key="0-0" />
       </Tree>,
     );
+    const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
     wrapper.find('.rc-tree-switcher').simulate('click');
-    expect(loadData).toHaveBeenCalledWith(wrapper.find(InternalTreeNode).instance());
+    expect(loadData).toHaveBeenCalledWith(node);
     expect(then).toHaveBeenCalled();
   });
 
@@ -970,19 +1010,21 @@ describe('Tree Basic', () => {
       const onDragStart = jest.fn();
       const wrapper = mount(createTree({ onDragStart }));
       const treeNode = wrapper.find('.dragTarget > .rc-tree-node-content-wrapper');
-      treeNode.simulate('dragStart');
-      const event = onDragStart.mock.calls[0][0];
-      expect(event.node).toBe(
+      const node = convertNodePropsToEventData(
         wrapper
           .find(InternalTreeNode)
           .at(1)
-          .instance(),
+          .props(),
       );
+      treeNode.simulate('dragStart');
+      const event = onDragStart.mock.calls[0][0];
+      expect(event.node).toEqual(node);
     });
 
     it('fires dragEnter event', done => {
       const onDragEnter = jest.fn();
       const wrapper = mount(createTree({ onDragEnter }));
+
       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
       wrapper
         .find('.dropTarget')
@@ -990,13 +1032,15 @@ describe('Tree Basic', () => {
         .simulate('dragEnter');
       expect(onDragEnter).not.toHaveBeenCalled();
       setTimeout(() => {
-        const event = onDragEnter.mock.calls[0][0];
-        expect(event.node).toBe(
+        wrapper.update();
+        const node = convertNodePropsToEventData(
           wrapper
             .find(InternalTreeNode)
             .at(2)
-            .instance(),
+            .props(),
         );
+        const event = onDragEnter.mock.calls[0][0];
+        expect(event.node).toEqual(node);
         expect(event.expandedKeys).toEqual(['0-0', '0-0-0-1']);
         done();
       }, 500);
@@ -1005,70 +1049,76 @@ describe('Tree Basic', () => {
     it('fires dragOver event', () => {
       const onDragOver = jest.fn();
       const wrapper = mount(createTree({ onDragOver }));
+      const node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .at(2)
+          .props(),
+      );
       wrapper
         .find('.dropTarget')
         .at(0)
         .simulate('dragOver');
+
       const event = onDragOver.mock.calls[0][0];
-      expect(event.node).toBe(
-        wrapper
-          .find(InternalTreeNode)
-          .at(2)
-          .instance(),
-      );
+      expect(event.node).toEqual(node);
     });
 
     it('fires dragLeave event', () => {
       const onDragLeave = jest.fn();
       const wrapper = mount(createTree({ onDragLeave }));
+      const node = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .at(2)
+          .props(),
+      );
       wrapper
         .find('.dropTarget')
         .at(0)
         .simulate('dragLeave');
       const event = onDragLeave.mock.calls[0][0];
-      expect(event.node).toBe(
-        wrapper
-          .find(InternalTreeNode)
-          .at(2)
-          .instance(),
-      );
+      expect(event.node).toEqual(node);
     });
 
     it('fires drop event', () => {
       const onDrop = jest.fn();
       const wrapper = mount(createTree({ onDrop }));
       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+      const dropNode = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .at(2)
+          .props(),
+      );
+      const dragNode = convertNodePropsToEventData(
+        wrapper
+          .find(InternalTreeNode)
+          .at(1)
+          .props(),
+      );
       wrapper
         .find('.dropTarget')
         .at(0)
         .simulate('drop');
       const event = onDrop.mock.calls[0][0];
-      expect(event.node).toBe(
-        wrapper
-          .find(InternalTreeNode)
-          .at(2)
-          .instance(),
-      );
-      expect(event.dragNode).toBe(
-        wrapper
-          .find(InternalTreeNode)
-          .at(1)
-          .instance(),
-      );
+      expect(event.node).toEqual(dropNode);
+      expect(event.dragNode).toEqual(dragNode);
       expect(event.dragNodesKeys).toEqual(['0-0-0-0']);
     });
 
     it('fires dropEnd event', () => {
       const onDragEnd = jest.fn();
       const wrapper = mount(createTree({ onDragEnd }));
-      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragEnd');
-      const event = onDragEnd.mock.calls[0][0];
-      expect(event.node).toBe(
+      const node = convertNodePropsToEventData(
         wrapper
           .find(InternalTreeNode)
           .at(1)
-          .instance(),
+          .props(),
       );
+      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragEnd');
+      const event = onDragEnd.mock.calls[0][0];
+      expect(event.node).toEqual(node);
     });
 
     it('do not throw error when drag into another non-drag-able tree', () => {

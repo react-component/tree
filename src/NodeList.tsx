@@ -9,7 +9,7 @@ import { FlattenNode, Key, DataEntity, DataNode } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { TreeContext, TreeContextProps } from './contextTypes';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
-import { getTreeNodeProps, getKey } from './utils/treeUtil';
+import { getTreeNodeProps, getKey, convertNodePropsToEventData } from './utils/treeUtil';
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
@@ -235,7 +235,7 @@ const NodeList: React.FC<NodeListProps> = ({
 
     // Expand operation
     const item = data.find(({ data: { key } }) => key === activeKey);
-    const node = item ? item.data : null;
+    if (!item) return;
 
     switch (event.which) {
       case KeyCode.ENTER:
@@ -244,7 +244,14 @@ const NodeList: React.FC<NodeListProps> = ({
         break;
       }
       case KeyCode.LEFT: {
-        onNodeExpand({ ctrlKey: false, shiftKey: false } as MouseEvent, node);
+        onNodeExpand(
+          { ctrlKey: false, shiftKey: false } as React.MouseEvent<HTMLDivElement>,
+          convertNodePropsToEventData({
+            ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
+            data: item.data,
+            active: true,
+          }),
+        );
         break;
       }
       case KeyCode.RIGHT: {
@@ -257,8 +264,6 @@ const NodeList: React.FC<NodeListProps> = ({
       onKeyDown(event);
     }
   };
-
-  console.log('~~>', activeKey);
 
   return (
     <VirtualList

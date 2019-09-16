@@ -4,6 +4,7 @@ exports[`TreeNode Props className 1`] = `
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -12,8 +13,6 @@ exports[`TreeNode Props className 1`] = `
     >
       <div
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
@@ -34,8 +33,6 @@ exports[`TreeNode Props className 1`] = `
       </div>
       <div
         class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           aria-hidden="true"
@@ -63,9 +60,7 @@ exports[`TreeNode Props className 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-active"
       >
         <span
           aria-hidden="true"
@@ -97,8 +92,6 @@ exports[`TreeNode Props className 1`] = `
       </div>
       <div
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           aria-hidden="true"
@@ -127,8 +120,6 @@ exports[`TreeNode Props className 1`] = `
       </div>
       <div
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -156,6 +147,7 @@ exports[`TreeNode Props customize icon component 1`] = `
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -163,9 +155,7 @@ exports[`TreeNode Props customize icon component 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-active"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -197,6 +187,7 @@ exports[`TreeNode Props customize icon element 1`] = `
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -204,9 +195,7 @@ exports[`TreeNode Props customize icon element 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-active"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -238,6 +227,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -245,9 +235,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-active"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -272,6 +260,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -281,8 +270,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       <div
         aria-label="0-0"
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
@@ -304,8 +291,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       <div
         aria-label="0-0-0"
         class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           aria-hidden="true"
@@ -334,9 +319,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       </div>
       <div
         aria-label="0-0-0-0"
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-active"
       >
         <span
           aria-hidden="true"
@@ -369,8 +352,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       <div
         aria-label="0-0-1"
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           aria-hidden="true"
@@ -400,8 +381,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       <div
         aria-label="0-1"
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -429,6 +408,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -438,8 +418,6 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
       <div
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-0"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
@@ -461,8 +439,6 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
       <div
         class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-0-0"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           aria-hidden="true"
@@ -490,10 +466,8 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-active"
         data-test="0-0-0-0"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           aria-hidden="true"
@@ -526,8 +500,6 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
       <div
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-0-1"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           aria-hidden="true"
@@ -557,8 +529,6 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
       <div
         class="rc-tree-treenode rc-tree-treenode-switcher-open"
         data-test="0-1"
-        role="treeitem"
-        tabindex="0"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -586,6 +556,7 @@ exports[`TreeNode Props isLeaf 1`] = `
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -593,9 +564,7 @@ exports[`TreeNode Props isLeaf 1`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-active"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -612,9 +581,7 @@ exports[`TreeNode Props isLeaf 1`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-active"
       >
         <span
           aria-hidden="true"
@@ -647,6 +614,7 @@ exports[`TreeNode Props isLeaf 2`] = `
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -654,9 +622,7 @@ exports[`TreeNode Props isLeaf 2`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-active"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher-noop"
@@ -676,9 +642,7 @@ exports[`TreeNode Props isLeaf 2`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-active"
       >
         <span
           aria-hidden="true"
@@ -714,6 +678,7 @@ exports[`TreeNode Props isLeaf 3`] = `
 <div
   class="rc-tree-list rc-tree"
   role="tree"
+  tabindex="0"
 >
   <div>
     <div
@@ -721,9 +686,7 @@ exports[`TreeNode Props isLeaf 3`] = `
       style="display:flex;flex-direction:column"
     >
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-active"
       >
         <span
           class="rc-tree-switcher rc-tree-switcher_open"
@@ -743,9 +706,7 @@ exports[`TreeNode Props isLeaf 3`] = `
         </span>
       </div>
       <div
-        class="rc-tree-treenode rc-tree-treenode-switcher-open"
-        role="treeitem"
-        tabindex="0"
+        class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-active"
       >
         <span
           aria-hidden="true"
