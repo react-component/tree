@@ -97,15 +97,6 @@ export function calcSelectedKeys(selectedKeys: Key[], props: TreeProps) {
   return selectedKeys;
 }
 
-/**
- * Since React internal will convert key to string,
- * we need do this to avoid `checkStrictly` use number match
- */
-function keyListToString(keyList: Key[]) {
-  if (!keyList) return keyList;
-  return keyList.map(key => String(key));
-}
-
 const internalProcessProps = (props: DataNode): Partial<TreeNodeProps> => props;
 export function convertDataToTree(
   treeData: DataNode[],
@@ -155,9 +146,6 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
     warning(false, '`checkedKeys` is not an array or an object');
     return null;
   }
-
-  keyProps.checkedKeys = keyListToString(keyProps.checkedKeys);
-  keyProps.halfCheckedKeys = keyListToString(keyProps.halfCheckedKeys);
 
   return keyProps;
 }

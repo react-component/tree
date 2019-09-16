@@ -1224,4 +1224,41 @@ describe('Tree Basic', () => {
       );
     });
   });
+
+  it('Number key', () => {
+    const onCheck = jest.fn();
+
+    const Demo = () => {
+      const [checkedKeys, setCheckedKeys] = React.useState([]);
+
+      return (
+        <Tree
+          checkable
+          defaultExpandAll
+          checkedKeys={checkedKeys}
+          onCheck={keys => {
+            setCheckedKeys(keys);
+            onCheck(keys);
+          }}
+          treeData={[{ key: 11, title: 11, children: [{ key: 22, title: 22 }] }]}
+        />
+      );
+    };
+
+    const wrapper = mount(<Demo />);
+    wrapper.update();
+
+    wrapper
+      .find('.rc-tree-checkbox')
+      .first()
+      .simulate('click');
+    expect(onCheck).toHaveBeenCalledWith([11, 22]);
+
+    onCheck.mockReset();
+    wrapper
+      .find('.rc-tree-checkbox')
+      .last()
+      .simulate('click');
+    expect(onCheck).toHaveBeenCalledWith([]);
+  });
 });

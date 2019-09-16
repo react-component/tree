@@ -77,7 +77,7 @@ function itemKey(item: FlattenNode) {
     data: { key },
     pos,
   } = item;
-  return getKey(key, pos);
+  return String(getKey(key, pos));
 }
 
 const NodeList: React.FC<NodeListProps> = ({

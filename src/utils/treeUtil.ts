@@ -6,7 +6,7 @@ import { getPosition, isTreeNode } from '../util';
 
 export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
-    return String(key);
+    return key;
   }
   return pos;
 }

@@ -287,7 +287,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     } else if (!prevProps && props.defaultExpandAll) {
       const cloneKeyEntities = { ...keyEntities };
       delete cloneKeyEntities[MOTION_KEY];
-      newState.expandedKeys = Object.keys(cloneKeyEntities);
+      newState.expandedKeys = Object.keys(cloneKeyEntities).map(key => cloneKeyEntities[key].key);
     } else if (!prevProps && props.defaultExpandedKeys) {
       newState.expandedKeys =
         props.autoExpandParent || props.defaultExpandParent
