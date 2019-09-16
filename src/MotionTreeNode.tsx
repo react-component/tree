@@ -8,6 +8,7 @@ import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
 import { TreeContext } from './contextTypes';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
+  active: boolean;
   motion?: any;
   motionNodes?: FlattenNode[];
   onMotionEnd: () => void;
@@ -24,6 +25,7 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
     motionNodes,
     motionType,
     onMotionEnd,
+    active,
     treeNodeRequiredProps,
     ...props
   },
@@ -68,6 +70,7 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
                 <TreeNode
                   {...restProps}
                   {...treeNodeProps}
+                  active={active}
                   data={treeNode.data}
                   key={key}
                   isStart={isStart}
@@ -80,7 +83,7 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
       </CSSMotion>
     );
   }
-  return <TreeNode domRef={ref} className={className} style={style} {...props} />;
+  return <TreeNode domRef={ref} className={className} style={style} {...props} active={active} />;
 };
 
 MotionTreeNode.displayName = 'MotionTreeNode';

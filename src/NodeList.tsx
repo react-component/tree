@@ -4,8 +4,10 @@
 
 import * as React from 'react';
 import VirtualList from 'rc-virtual-list';
+import KeyCode from 'rc-util/lib/KeyCode';
 import { FlattenNode, Key, DataEntity, DataNode } from './interface';
 import MotionTreeNode from './MotionTreeNode';
+import { TreeContext, TreeContextProps } from './contextTypes';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
 
@@ -39,6 +41,7 @@ interface NodeListProps {
   style: React.CSSProperties;
   data: FlattenNode[];
   motion: any;
+  focusable?: boolean;
   tabIndex: number;
 
   expandedKeys: Key[];
@@ -56,6 +59,8 @@ interface NodeListProps {
   // Virtual list
   height: number;
   itemHeight: number;
+
+  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
 }
 
 /**
@@ -100,8 +105,14 @@ const NodeList: React.FC<NodeListProps> = ({
   height,
   itemHeight,
 
+  focusable,
+  tabIndex,
+
+  onKeyDown,
+
   ...domProps
 }) => {
+  // ============================== Motion ==============================
   const [disableVirtual, setDisableVirtual] = React.useState(false);
   const [prevExpandedKeys, setPrevExpandedKeys] = React.useState(expandedKeys);
   const [prevData, setPrevData] = React.useState(data);
@@ -185,6 +196,70 @@ const NodeList: React.FC<NodeListProps> = ({
     keyEntities,
   };
 
+  // =========================== Accessibility ==========================
+  const [activeKey, setActiveKey] = React.useState<Key>(null);
+
+  const changeActive = (offset: number) => {
+    let index = data.findIndex(({ data: { key } }) => key === activeKey);
+
+    // Align with index
+    if (index === -1 && offset < 0) {
+      index = data.length;
+    }
+
+    index = (index + offset + data.length) % data.length;
+
+    const item = data[index];
+    if (item) {
+      setActiveKey(item.data.key);
+    } else {
+      setActiveKey(null);
+    }
+  };
+
+  // ============================= Keyboard =============================
+  const { onNodeExpand } = React.useContext(TreeContext);
+
+  const onInternalKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
+    // Change active is no need to check if current node not exist
+    switch (event.which) {
+      case KeyCode.UP: {
+        changeActive(-1);
+        break;
+      }
+      case KeyCode.DOWN: {
+        changeActive(1);
+        break;
+      }
+    }
+
+    // Expand operation
+    const item = data.find(({ data: { key } }) => key === activeKey);
+    const node = item ? item.data : null;
+
+    switch (event.which) {
+      case KeyCode.ENTER:
+      case KeyCode.SPACE: {
+        console.log('select it!!!');
+        break;
+      }
+      case KeyCode.LEFT: {
+        onNodeExpand({ ctrlKey: false, shiftKey: false } as MouseEvent, node);
+        break;
+      }
+      case KeyCode.RIGHT: {
+        console.log('open or next it!!!');
+        break;
+      }
+    }
+
+    if (onKeyDown) {
+      onKeyDown(event);
+    }
+  };
+
+  console.log('~~>', activeKey);
+
   return (
     <VirtualList
       {...domProps}
@@ -196,6 +271,8 @@ const NodeList: React.FC<NodeListProps> = ({
       itemHeight={itemHeight}
       onSkipRender={onMotionEnd}
       prefixCls={`${prefixCls}-list`}
+      onKeyDown={onInternalKeyDown}
+      tabIndex={focusable !== false ? tabIndex : null}
     >
       {(treeNode: FlattenNode) => {
         const {
@@ -213,6 +290,7 @@ const NodeList: React.FC<NodeListProps> = ({
           <MotionTreeNode
             {...restProps}
             {...treeNodeProps}
+            active={key === activeKey}
             pos={pos}
             data={treeNode.data}
             isStart={isStart}

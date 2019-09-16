@@ -36,6 +36,7 @@ export interface TreeNodeProps {
   data?: DataNode;
   isStart?: boolean[];
   isEnd?: boolean[];
+  active: boolean;
 
   // By user
   isLeaf?: boolean;
@@ -499,6 +500,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       halfChecked,
       loading,
       domRef,
+      active,
       ...otherProps
     } = this.props;
     const {
@@ -518,6 +520,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
           [`${prefixCls}-treenode-selected`]: selected,
           [`${prefixCls}-treenode-loading`]: loading,
+          [`${prefixCls}-treenode-active`]: active,
 
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,

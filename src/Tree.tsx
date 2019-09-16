@@ -43,6 +43,7 @@ export interface TreeProps {
   prefixCls: string;
   className?: string;
   style?: React.CSSProperties;
+  focusable?: boolean;
   tabIndex?: number;
   children?: React.ReactNode;
   treeData?: DataNode[]; // Generate treeNode by children
@@ -799,6 +800,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       className,
       style,
       showLine,
+      focusable,
       tabIndex = 0,
       selectable,
       showIcon,
@@ -814,7 +816,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       height,
       itemHeight,
     } = this.props;
-    const domProps: React.HTMLAttributes<HTMLUListElement> = getDataAndAria(this.props);
+    const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
     return (
       <TreeContext.Provider
@@ -870,6 +872,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dragging={dragging}
           height={height}
           itemHeight={itemHeight}
+          focusable={focusable}
           tabIndex={tabIndex}
           {...domProps}
         />
