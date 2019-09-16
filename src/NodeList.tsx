@@ -39,6 +39,7 @@ interface NodeListProps {
   style: React.CSSProperties;
   data: FlattenNode[];
   motion: any;
+  tabIndex: number;
 
   expandedKeys: Key[];
   selectedKeys: Key[];

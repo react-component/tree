@@ -525,14 +525,12 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           'filter-node': filterTreeNode && filterTreeNode(this),
         })}
         style={style}
-        role="treeitem"
         onDragEnter={draggable ? this.onDragEnter : undefined}
         onDragOver={draggable ? this.onDragOver : undefined}
         onDragLeave={draggable ? this.onDragLeave : undefined}
         onDrop={draggable ? this.onDrop : undefined}
         onDragEnd={draggable ? this.onDragEnd : undefined}
         {...dataOrAriaAttributeProps}
-        tabIndex={0}
       >
         <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
         {this.renderSwitcher()}

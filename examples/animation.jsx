@@ -88,7 +88,7 @@ function getTreeData() {
 }
 
 const Demo = () => (
-  <div>
+  <div className="animation">
     <h2>expanded</h2>
     <style dangerouslySetInnerHTML={{ __html: STYLE }} />
 

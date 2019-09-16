@@ -102,7 +102,8 @@ class Demo extends React.Component {
     return (
       <div style={{ margin: '0 20px' }}>
         <h2>simple</h2>
-        <Tree
+        <input aria-label="good" />
+        {/* <Tree
           ref={this.setTreeRef}
           className="myCls"
           showLine
@@ -129,7 +130,7 @@ class Demo extends React.Component {
               <TreeNode title="parent 1-2-1" key="0-0-2-1" />
             </TreeNode>
           </TreeNode>
-        </Tree>
+        </Tree> */}
 
         <h2>Check on Click TreeNode</h2>
         <Tree
@@ -145,6 +146,7 @@ class Demo extends React.Component {
           onCheck={this.onCheck}
           treeData={treeData}
         />
+        <input aria-label="bad" />
       </div>
     );
   }

@@ -49,7 +49,6 @@ export interface TreeProps {
   showLine?: boolean;
   showIcon?: boolean;
   icon?: IconType;
-  focusable?: boolean;
   selectable?: boolean;
   disabled?: boolean;
   multiple?: boolean;
@@ -156,7 +155,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     showLine: PropTypes.bool,
     showIcon: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    focusable: PropTypes.bool,
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
     multiple: PropTypes.bool,
@@ -799,7 +797,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const {
       prefixCls,
       className,
-      focusable,
       style,
       showLine,
       tabIndex = 0,
@@ -818,10 +815,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       itemHeight,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLUListElement> = getDataAndAria(this.props);
-
-    if (focusable) {
-      domProps.tabIndex = tabIndex;
-    }
 
     return (
       <TreeContext.Provider
@@ -877,6 +870,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dragging={dragging}
           height={height}
           itemHeight={itemHeight}
+          tabIndex={tabIndex}
+          {...domProps}
         />
       </TreeContext.Provider>
     );
