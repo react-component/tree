@@ -20,7 +20,7 @@ import {
   posToArr,
   conductCheck,
 } from './util';
-import { DataNode, IconType, Key, FlattenNode, DataEntity, NodeInstance } from './interface';
+import { DataNode, IconType, Key, FlattenNode, DataEntity, EventNode } from './interface';
 import {
   flattenTreeData,
   convertTreeToData,
@@ -31,7 +31,7 @@ import NodeList, { MOTION_KEY, MotionEntity } from './NodeList';
 
 interface CheckInfo {
   event: 'check';
-  node: NodeInstance;
+  node: EventNode;
   checked: boolean;
   nativeEvent: MouseEvent;
   checkedNodes: DataNode[];
@@ -65,12 +65,12 @@ export interface TreeProps {
   checkedKeys?: (Key)[] | { checked: (Key)[]; halfChecked: Key[] };
   defaultSelectedKeys?: Key[];
   selectedKeys?: Key[];
-  onClick?: (e: React.MouseEvent, treeNode: DataNode) => void;
-  onDoubleClick?: (e: React.MouseEvent, treeNode: DataNode) => void;
+  onClick?: (e: React.MouseEvent, treeNode: EventNode) => void;
+  onDoubleClick?: (e: React.MouseEvent, treeNode: EventNode) => void;
   onExpand?: (
     expandedKeys: Key[],
     info: {
-      node: NodeInstance;
+      node: EventNode;
       expanded: boolean;
       nativeEvent: MouseEvent;
     },
@@ -81,7 +81,7 @@ export interface TreeProps {
     info: {
       event: 'select';
       selected: boolean;
-      node: NodeInstance;
+      node: EventNode;
       selectedNodes: DataNode[];
       nativeEvent: MouseEvent;
     },
@@ -90,32 +90,28 @@ export interface TreeProps {
     loadedKeys: Key[],
     info: {
       event: 'load';
-      node: NodeInstance;
+      node: EventNode;
     },
   ) => void;
-  loadData?: (treeNode: NodeInstance) => Promise<void>;
+  loadData?: (treeNode: EventNode) => Promise<void>;
   loadedKeys?: Key[];
-  onMouseEnter?: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
-  onMouseLeave?: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
-  onRightClick?: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
-  onDragStart?: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
-  onDragEnter?: (info: {
-    event: React.MouseEvent;
-    node: NodeInstance;
-    expandedKeys: Key[];
-  }) => void;
-  onDragOver?: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
-  onDragLeave?: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
-  onDragEnd?: (info: { event: React.MouseEvent; node: NodeInstance }) => void;
+  onMouseEnter?: (info: { event: React.MouseEvent; node: EventNode }) => void;
+  onMouseLeave?: (info: { event: React.MouseEvent; node: EventNode }) => void;
+  onRightClick?: (info: { event: React.MouseEvent; node: EventNode }) => void;
+  onDragStart?: (info: { event: React.MouseEvent; node: EventNode }) => void;
+  onDragEnter?: (info: { event: React.MouseEvent; node: EventNode; expandedKeys: Key[] }) => void;
+  onDragOver?: (info: { event: React.MouseEvent; node: EventNode }) => void;
+  onDragLeave?: (info: { event: React.MouseEvent; node: EventNode }) => void;
+  onDragEnd?: (info: { event: React.MouseEvent; node: EventNode }) => void;
   onDrop?: (info: {
     event: React.MouseEvent;
-    node: NodeInstance;
-    dragNode: NodeInstance;
+    node: EventNode;
+    dragNode: EventNode;
     dragNodesKeys: Key[];
     dropPosition: number;
     dropToGap: boolean;
   }) => void;
-  filterTreeNode?: (treeNode: NodeInstance) => boolean;
+  filterTreeNode?: (treeNode: EventNode) => boolean;
   motion?: any;
   switcherIcon?: IconType;
 
@@ -237,7 +233,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     prevProps: null,
   };
 
-  dragNode: NodeInstance;
+  dragNode: EventNode;
 
   static getDerivedStateFromProps(props: TreeProps, prevState: TreeState) {
     const { prevProps } = prevState;
@@ -348,10 +344,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     return newState;
   }
 
-  onNodeDragStart = (event, node: NodeInstance) => {
+  onNodeDragStart = (event: React.MouseEvent<HTMLDivElement>, node: EventNode) => {
     const { expandedKeys, keyEntities } = this.state;
     const { onDragStart } = this.props;
-    const { eventKey } = node.props;
+    const { eventKey } = node;
 
     this.dragNode = node;
 
@@ -373,7 +369,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * Better for use mouse move event to refresh drag state.
    * But let's just keep it to avoid event trigger logic change.
    */
-  onNodeDragEnter = (event, node) => {
+  onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node) => {
     const { expandedKeys, keyEntities } = this.state;
     const { onDragEnter } = this.props;
     const { pos, eventKey } = node.props;
@@ -383,7 +379,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const dropPosition = calcDropPosition(event, node);
 
     // Skip if drag node is self
-    if (this.dragNode.props.eventKey === eventKey && dropPosition === 0) {
+    if (this.dragNode.eventKey === eventKey && dropPosition === 0) {
       this.setState({
         dragOverNodeKey: '',
         dropPosition: null,
@@ -433,7 +429,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }, 0);
   };
 
-  onNodeDragOver = (event, node) => {
+  onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node) => {
     const { onDragOver } = this.props;
     const { eventKey } = node.props;
 
@@ -453,7 +449,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeDragLeave = (event, node) => {
+  onNodeDragLeave = (event: React.MouseEvent<HTMLDivElement>, node) => {
     const { onDragLeave } = this.props;
 
     this.setState({
@@ -465,7 +461,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeDragEnd = (event, node) => {
+  onNodeDragEnd = (event: React.MouseEvent<HTMLDivElement>, node) => {
     const { onDragEnd } = this.props;
     this.setState({
       dragOverNodeKey: '',
@@ -479,7 +475,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.dragNode = null;
   };
 
-  onNodeDrop = (event, node) => {
+  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node) => {
     const { dragNodesKeys = [], dropPosition } = this.state;
     const { onDrop } = this.props;
     const { eventKey, pos } = node.props;
@@ -525,21 +521,21 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeClick = (e, treeNode) => {
+  onNodeClick = (e: React.MouseEvent<HTMLDivElement>, treeNode) => {
     const { onClick } = this.props;
     if (onClick) {
       onClick(e, treeNode);
     }
   };
 
-  onNodeDoubleClick = (e, treeNode) => {
+  onNodeDoubleClick = (e: React.MouseEvent<HTMLDivElement>, treeNode) => {
     const { onDoubleClick } = this.props;
     if (onDoubleClick) {
       onDoubleClick(e, treeNode);
     }
   };
 
-  onNodeSelect = (e, treeNode) => {
+  onNodeSelect = (e: React.MouseEvent<HTMLDivElement>, treeNode) => {
     let { selectedKeys } = this.state;
     const { keyEntities } = this.state;
     const { onSelect, multiple } = this.props;
@@ -578,7 +574,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeCheck = (e, treeNode, checked) => {
+  onNodeCheck = (e: React.MouseEvent<HTMLDivElement>, treeNode, checked) => {
     const {
       keyEntities,
       checkedKeys: oriCheckedKeys,
@@ -693,7 +689,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       });
     });
 
-  onNodeExpand = (e, treeNode) => {
+  onNodeExpand = (e: React.MouseEvent<HTMLDivElement>, treeNode) => {
     let { expandedKeys } = this.state;
     const { treeData } = this.state;
     const { onExpand, loadData } = this.props;
@@ -740,21 +736,21 @@ class Tree extends React.Component<TreeProps, TreeState> {
     return null;
   };
 
-  onNodeMouseEnter = (event, node) => {
+  onNodeMouseEnter = (event: React.MouseEvent<HTMLDivElement>, node) => {
     const { onMouseEnter } = this.props;
     if (onMouseEnter) {
       onMouseEnter({ event, node });
     }
   };
 
-  onNodeMouseLeave = (event, node) => {
+  onNodeMouseLeave = (event: React.MouseEvent<HTMLDivElement>, node) => {
     const { onMouseLeave } = this.props;
     if (onMouseLeave) {
       onMouseLeave({ event, node });
     }
   };
 
-  onNodeContextMenu = (event, node) => {
+  onNodeContextMenu = (event: React.MouseEvent<HTMLDivElement>, node) => {
     const { onRightClick } = this.props;
     if (onRightClick) {
       event.preventDefault();

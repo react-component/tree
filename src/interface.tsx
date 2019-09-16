@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { TreeNodeProps } from './TreeNode';
 
+export interface EventNode extends TreeNodeProps {
+}
 export interface DataNode {
   checkable?: boolean;
   children?: DataNode[];
@@ -29,7 +31,7 @@ export type NodeElement = React.ReactElement<TreeNodeProps> & {
   };
 };
 
-export type NodeInstance = React.Component<TreeNodeProps>;
+export type NodeInstance = React.ReactElement<TreeNodeProps>;
 
 export interface Entity {
   node: NodeElement;

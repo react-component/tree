@@ -3,10 +3,9 @@
  * When util.js imports the TreeNode for tree generate will cause treeContextTypes be empty.
  */
 import * as React from 'react';
-import { IconType, Key, DataEntity, NodeInstance } from './interface';
-import { InternalTreeNodeProps } from './TreeNode';
+import { IconType, Key, DataEntity, EventNode } from './interface';
 
-type NodeMouseEventHandler = (e: MouseEvent, node: React.Component<InternalTreeNodeProps>) => void;
+type NodeMouseEventHandler = (e: React.MouseEvent<HTMLDivElement>, node: EventNode) => void;
 
 export interface TreeContextProps {
   prefixCls: string;
@@ -20,15 +19,15 @@ export interface TreeContextProps {
   disabled: boolean;
   keyEntities: Record<Key, DataEntity>;
 
-  loadData: (treeNode: NodeInstance) => Promise<void>;
-  filterTreeNode: (treeNode: NodeInstance) => boolean;
+  loadData: (treeNode: EventNode) => Promise<void>;
+  filterTreeNode: (treeNode: EventNode) => boolean;
 
   onNodeClick: NodeMouseEventHandler;
   onNodeDoubleClick: NodeMouseEventHandler;
   onNodeExpand: NodeMouseEventHandler;
   onNodeSelect: NodeMouseEventHandler;
-  onNodeCheck: (e: MouseEvent, treeNode: NodeInstance, checked: boolean) => void;
-  onNodeLoad: (treeNode: NodeInstance) => void;
+  onNodeCheck: (e: React.MouseEvent<HTMLDivElement>, treeNode: EventNode, checked: boolean) => void;
+  onNodeLoad: (treeNode: EventNode) => void;
   onNodeMouseEnter: NodeMouseEventHandler;
   onNodeMouseLeave: NodeMouseEventHandler;
   onNodeContextMenu: NodeMouseEventHandler;
