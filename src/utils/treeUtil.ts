@@ -76,10 +76,13 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
 
 /**
  * Flat nest tree data into flatten list. This is used for virtual list render.
+ * @param treeNodeList Origin data node list
+ * @param expandedKeys
+ * need expanded keys, provides `true` means all expanded (used in `rc-tree-select`).
  */
 export function flattenTreeData(
   treeNodeList: DataNode[] = [],
-  expandedKeys: Key[] = [],
+  expandedKeys: Key[] | true = [],
 ): FlattenNode[] {
   const flattenList: FlattenNode[] = [];
 
@@ -102,7 +105,7 @@ export function flattenTreeData(
       flattenList.push(flattenNode);
 
       // Loop treeNode children
-      if (expandedKeys.includes(mergedKey)) {
+      if (expandedKeys === true || expandedKeys.includes(mergedKey)) {
         flattenNode.children = dig(treeNode.children || [], flattenNode);
       } else {
         flattenNode.children = [];

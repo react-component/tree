@@ -312,7 +312,7 @@ describe('Util', () => {
     errorSpy.mockRestore();
   });
 
-  it('flatten treeNode', () => {
+  describe('flatten treeNode', () => {
     function getNode(key, children) {
       return {
         key,
@@ -321,27 +321,53 @@ describe('Util', () => {
       };
     }
 
-    const flattenList = flattenTreeData(
-      [
-        getNode('0', [
-          getNode('0-0'),
-          getNode('0-1'),
-          getNode('0-2', [getNode('0-2-0'), getNode('0-2-1')]),
-        ]),
-        getNode('1'),
-      ],
-      ['0-2', '0'],
-    );
+    it('with expanded keys', () => {
+      const flattenList = flattenTreeData(
+        [
+          getNode('0', [
+            getNode('0-0'),
+            getNode('0-1'),
+            getNode('0-2', [getNode('0-2-0'), getNode('0-2-1')]),
+          ]),
+          getNode('1'),
+        ],
+        ['0-2', '0'],
+      );
 
-    expect(flattenList.map(({ key }) => key)).toEqual([
-      '0',
-      '0-0',
-      '0-1',
-      '0-2',
-      '0-2-0',
-      '0-2-1',
-      '1',
-    ]);
+      expect(flattenList.map(({ key }) => key)).toEqual([
+        '0',
+        '0-0',
+        '0-1',
+        '0-2',
+        '0-2-0',
+        '0-2-1',
+        '1',
+      ]);
+    });
+
+    it('with all', () => {
+      const flattenList = flattenTreeData(
+        [
+          getNode('0', [
+            getNode('0-0'),
+            getNode('0-1'),
+            getNode('0-2', [getNode('0-2-0'), getNode('0-2-1')]),
+          ]),
+          getNode('1'),
+        ],
+        true,
+      );
+
+      expect(flattenList.map(({ key }) => key)).toEqual([
+        '0',
+        '0-0',
+        '0-1',
+        '0-2',
+        '0-2-0',
+        '0-2-1',
+        '1',
+      ]);
+    });
   });
 
   it('not crash if node not exist with getTreeNodeProps', () => {
