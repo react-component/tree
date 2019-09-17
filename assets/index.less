@@ -1,8 +1,16 @@
-@treePrefixCls: rc-tree;
+@treePrefixCls: ~'rc-tree';
+@treeNodePrefixCls: ~'@{treePrefixCls}-treenode';
+
 .@{treePrefixCls} {
   margin: 0;
+  border: 1px solid transparent;
+  
+  &-focused {
+    border-color: cyan;
+  }
+
   // padding: 5px;
-  [role='treeitem'] {
+  .@{treeNodePrefixCls} {
     margin: 0;
     padding: 0;
     line-height: 20px;
@@ -134,14 +142,14 @@
     }
   }
   &:not(.@{treePrefixCls}-show-line) {
-    [role='treeitem'] {
+    .@{treeNodePrefixCls} {
       .@{treePrefixCls}-switcher-noop {
         background: none;
       }
     }
   }
   &.@{treePrefixCls}-show-line {
-    [role='treeitem']:not(:last-child) {
+    .@{treeNodePrefixCls}:not(:last-child) {
       > ul {
         background: url('data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7')
           0 0 repeat-y;
@@ -150,7 +158,7 @@
         background-position: -56px -18px;
       }
     }
-    [role='treeitem']:last-child {
+    .@{treeNodePrefixCls}:last-child {
       > .@{treePrefixCls}-switcher-noop {
         background-position: -56px -36px;
       }
@@ -169,6 +177,13 @@
       color: #767676;
       cursor: not-allowed;
     }
+  }
+  &-treenode-active {
+    background: rgba(0, 0, 0, 0.1);
+
+    // .@{treePrefixCls}-node-content-wrapper {
+    //   background: rgba(0, 0, 0, 0.1);
+    // }
   }
   &-node-selected {
     background-color: #ffe6b0;

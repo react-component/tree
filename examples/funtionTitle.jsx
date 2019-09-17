@@ -71,7 +71,7 @@ function getTreeData() {
 const Demo = () => {
   const [keys, setKeys] = useState(data.map(item => item.fieldName));
   return (
-    <div>
+    <div className="animation">
       <h2>expanded</h2>
       <style dangerouslySetInnerHTML={{ __html: STYLE }} />
 

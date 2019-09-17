@@ -3,9 +3,9 @@
  */
 
 import React from 'react';
-import warning from 'warning';
+import warning from 'rc-util/lib/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, Entity, DataEntity } from './interface';
+import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance } from './interface';
 import { TreeProps } from './Tree';
 
 const DRAG_SIDE_RANGE = 0.25;
@@ -62,7 +62,7 @@ export function getDragNodesKeys(dragNodeKey: Key, keyEntities: Record<Key, Data
 }
 
 // Only used when drag, not affect SSR.
-export function calcDropPosition(event: React.MouseEvent, treeNode: NodeElement) {
+export function calcDropPosition(event: React.MouseEvent, treeNode: NodeInstance) {
   const { clientY } = event;
   const { top, bottom, height } = treeNode.selectHandle.getBoundingClientRect();
   const des = Math.max(height * DRAG_SIDE_RANGE, DRAG_MIN_GAP);

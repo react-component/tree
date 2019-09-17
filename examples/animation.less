@@ -1,37 +1,39 @@
-.rc-tree-treenode {
-  display: flex;
+.animation {
+  .rc-tree-treenode {
+    display: flex;
 
-  .rc-tree-indent {
-    position: relative;
-    align-self: stretch;
-
-    .rc-tree-indent-unit {
+    .rc-tree-indent {
       position: relative;
-      height: 100%;
+      align-self: stretch;
 
-      &::before {
-        position: absolute;
-        top: 100%;
-        right: -26px;
-        bottom: -100%;
-        border-right: 1px solid blue;
-        content: '';
-      }
+      .rc-tree-indent-unit {
+        position: relative;
+        height: 100%;
 
-      // End should ignore
-      &-end {
         &::before {
-          display: none;
+          position: absolute;
+          top: 100%;
+          right: -26px;
+          bottom: -100%;
+          border-right: 1px solid blue;
+          content: '';
+        }
+
+        // End should ignore
+        &-end {
+          &::before {
+            display: none;
+          }
         }
       }
     }
-  }
 
-  // Motion
-  &-motion:not(.node-motion-appear-active) {
-    .rc-tree-indent-unit {
-      &::before {
-        display: none;
+    // Motion
+    &-motion:not(.node-motion-appear-active) {
+      .rc-tree-indent-unit {
+        &::before {
+          display: none;
+        }
       }
     }
   }

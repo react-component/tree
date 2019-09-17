@@ -1,8 +1,9 @@
 import * as React from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
-import warning from 'warning';
-import { DataNode, FlattenNode, NodeElement, DataEntity, Key } from '../interface';
+import warning from 'rc-util/lib/warning';
+import { DataNode, FlattenNode, NodeElement, DataEntity, Key, EventDataNode } from '../interface';
 import { getPosition, isTreeNode } from '../util';
+import { TreeNodeProps } from '../TreeNode';
 
 export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
@@ -275,4 +276,50 @@ export function getTreeNodeProps(
   };
 
   return treeNodeProps;
+}
+
+export function convertNodePropsToEventData(props: TreeNodeProps): EventDataNode {
+  const {
+    data,
+    expanded,
+    selected,
+    checked,
+    loaded,
+    loading,
+    halfChecked,
+    dragOver,
+    dragOverGapTop,
+    dragOverGapBottom,
+    pos,
+    active,
+  } = props;
+
+  const eventData = {
+    ...data,
+    expanded,
+    selected,
+    checked,
+    loaded,
+    loading,
+    halfChecked,
+    dragOver,
+    dragOverGapTop,
+    dragOverGapBottom,
+    pos,
+    active,
+  };
+
+  if (!('props' in eventData)) {
+    Object.defineProperty(eventData, 'props', {
+      get() {
+        warning(
+          false,
+          'Second param return from event is node data instead of TreeNode instance. Please read value directly instead of reading from `props`.',
+        );
+        return props;
+      },
+    });
+  }
+
+  return eventData;
 }

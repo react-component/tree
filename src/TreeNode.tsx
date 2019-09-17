@@ -7,6 +7,7 @@ import { TreeContext, TreeContextProps } from './contextTypes';
 import { getDataAndAria } from './util';
 import { IconType, Key, DataNode } from './interface';
 import Indent from './Indent';
+import { convertNodePropsToEventData } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -36,6 +37,8 @@ export interface TreeNodeProps {
   data?: DataNode;
   isStart?: boolean[];
   isEnd?: boolean[];
+  active: boolean;
+  onMouseMove?: React.MouseEventHandler<HTMLDivElement>;
 
   // By user
   isLeaf?: boolean;
@@ -107,7 +110,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const {
       context: { onNodeClick },
     } = this.props;
-    onNodeClick(e, this);
+    onNodeClick(e, convertNodePropsToEventData(this.props));
 
     if (this.isSelectable()) {
       this.onSelect(e);
@@ -120,7 +123,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const {
       context: { onNodeDoubleClick },
     } = this.props;
-    onNodeDoubleClick(e, this);
+    onNodeDoubleClick(e, convertNodePropsToEventData(this.props));
   };
 
   onSelect = e => {
@@ -130,7 +133,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       context: { onNodeSelect },
     } = this.props;
     e.preventDefault();
-    onNodeSelect(e, this);
+    onNodeSelect(e, convertNodePropsToEventData(this.props));
   };
 
   onCheck = e => {
@@ -145,28 +148,28 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 
     e.preventDefault();
     const targetChecked = !checked;
-    onNodeCheck(e, this, targetChecked);
+    onNodeCheck(e, convertNodePropsToEventData(this.props), targetChecked);
   };
 
   onMouseEnter = e => {
     const {
       context: { onNodeMouseEnter },
     } = this.props;
-    onNodeMouseEnter(e, this);
+    onNodeMouseEnter(e, convertNodePropsToEventData(this.props));
   };
 
   onMouseLeave = e => {
     const {
       context: { onNodeMouseLeave },
     } = this.props;
-    onNodeMouseLeave(e, this);
+    onNodeMouseLeave(e, convertNodePropsToEventData(this.props));
   };
 
   onContextMenu = e => {
     const {
       context: { onNodeContextMenu },
     } = this.props;
-    onNodeContextMenu(e, this);
+    onNodeContextMenu(e, convertNodePropsToEventData(this.props));
   };
 
   onDragStart = e => {
@@ -244,11 +247,11 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // Disabled item still can be switch
-  onExpand = e => {
+  onExpand: React.MouseEventHandler<HTMLDivElement> = e => {
     const {
       context: { onNodeExpand },
     } = this.props;
-    onNodeExpand(e, this);
+    onNodeExpand(e, convertNodePropsToEventData(this.props));
   };
 
   // Drag usage
@@ -325,7 +328,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
       if (!this.hasChildren() && !loaded) {
-        onNodeLoad(this);
+        onNodeLoad(convertNodePropsToEventData(this.props));
       }
     }
   };
@@ -499,6 +502,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       halfChecked,
       loading,
       domRef,
+      active,
+      onMouseMove,
       ...otherProps
     } = this.props;
     const {
@@ -518,21 +523,21 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
           [`${prefixCls}-treenode-selected`]: selected,
           [`${prefixCls}-treenode-loading`]: loading,
+          [`${prefixCls}-treenode-active`]: active,
 
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,
           'drag-over-gap-bottom': !disabled && dragOverGapBottom,
-          'filter-node': filterTreeNode && filterTreeNode(this),
+          'filter-node': filterTreeNode && filterTreeNode(convertNodePropsToEventData(this.props)),
         })}
         style={style}
-        role="treeitem"
         onDragEnter={draggable ? this.onDragEnter : undefined}
         onDragOver={draggable ? this.onDragOver : undefined}
         onDragLeave={draggable ? this.onDragLeave : undefined}
         onDrop={draggable ? this.onDrop : undefined}
         onDragEnd={draggable ? this.onDragEnd : undefined}
+        onMouseMove={onMouseMove}
         {...dataOrAriaAttributeProps}
-        tabIndex={0}
       >
         <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
         {this.renderSwitcher()}

@@ -51,13 +51,6 @@ class Demo extends React.Component {
   onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
     this.selKey = info.node.props.eventKey;
-
-    if (this.tree) {
-      console.log(
-        'Selected DOM node:',
-        selectedKeys.map(key => ReactDOM.findDOMNode(this.tree.domTreeNodes[key])),
-      );
-    }
   };
 
   onCheck = (checkedKeys, info) => {
@@ -102,6 +95,7 @@ class Demo extends React.Component {
     return (
       <div style={{ margin: '0 20px' }}>
         <h2>simple</h2>
+        <input aria-label="good" />
         <Tree
           ref={this.setTreeRef}
           className="myCls"
@@ -145,6 +139,11 @@ class Demo extends React.Component {
           onCheck={this.onCheck}
           treeData={treeData}
         />
+
+        <h2>Select</h2>
+        <Tree className="myCls" defaultExpandAll treeData={treeData} onSelect={this.onSelect} />
+
+        <input aria-label="bad" />
       </div>
     );
   }
