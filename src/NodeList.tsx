@@ -7,9 +7,11 @@ import VirtualList from 'rc-virtual-list';
 import KeyCode from 'rc-util/lib/KeyCode';
 import { FlattenNode, Key, DataEntity, DataNode } from './interface';
 import MotionTreeNode from './MotionTreeNode';
-import { TreeContext, TreeContextProps } from './contextTypes';
+import { TreeContext } from './contextTypes';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey, convertNodePropsToEventData } from './utils/treeUtil';
+
+const HIDDEN_STYLE = { width: 0, height: 0, display: 'flex', overflow: 'hidden', opacity: 0 };
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
@@ -88,6 +90,18 @@ function itemKey(item: FlattenNode) {
     pos,
   } = item;
   return String(getKey(key, pos));
+}
+
+function getAccessibilityPath(item: FlattenNode): string {
+  let path = String(item.data.key);
+  let current = item;
+
+  while (current.parent) {
+    current = current.parent;
+    path = `${current.data.key} > ${path}`;
+  }
+
+  return path;
 }
 
 const NodeList: React.FC<NodeListProps> = ({
@@ -208,6 +222,8 @@ const NodeList: React.FC<NodeListProps> = ({
   const [activeKey, setActiveKey] = React.useState<Key>(null);
   const [focused, setFocused] = React.useState(false);
 
+  const activeItem = data.find(({ data: { key } }) => key === activeKey);
+
   const changeActive = (offset: number) => {
     let index = data.findIndex(({ data: { key } }) => key === activeKey);
 
@@ -258,14 +274,14 @@ const NodeList: React.FC<NodeListProps> = ({
       }
     }
 
-    const item = data.find(({ data: { key } }) => key === activeKey);
-    if (!item || !item.data) return;
+    if (!activeItem || !activeItem.data) return;
 
     // >>>>>>>>>> Expand & Selection
-    const expandable = item.data.isLeaf === false || !!(item.data.children || []).length;
+    const expandable =
+      activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length;
     const eventNode = convertNodePropsToEventData({
       ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
-      data: item.data,
+      data: activeItem.data,
       active: true,
     });
 
@@ -275,8 +291,8 @@ const NodeList: React.FC<NodeListProps> = ({
         // Collapse if possible
         if (expandable && expandedKeys.includes(activeKey)) {
           onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
-        } else if (item.parent) {
-          setActiveKey(item.parent.data.key);
+        } else if (activeItem.parent) {
+          setActiveKey(activeItem.parent.data.key);
         }
         event.preventDefault();
         break;
@@ -285,8 +301,8 @@ const NodeList: React.FC<NodeListProps> = ({
         // Expand if possible
         if (expandable && !expandedKeys.includes(activeKey)) {
           onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
-        } else if (item.children && item.children.length) {
-          setActiveKey(item.children[0].data.key);
+        } else if (activeItem.children && activeItem.children.length) {
+          setActiveKey(activeItem.children[0].data.key);
         }
         event.preventDefault();
         break;
@@ -325,29 +341,32 @@ const NodeList: React.FC<NodeListProps> = ({
 
   return (
     <>
-      {focused && activeKey !== null && (
-        <span
-          style={{ width: 0, height: 0, display: 'flex', overflow: 'hidden', opacity: 0 }}
-          aria-live="polite"
-        >
-          {activeKey}
+      {focused && activeItem && (
+        <span style={HIDDEN_STYLE} aria-live="assertive">
+          {getAccessibilityPath(activeItem)}
         </span>
       )}
+
+      <div role="tree">
+        <input
+          style={HIDDEN_STYLE}
+          disabled={focusable === false}
+          tabIndex={focusable !== false ? tabIndex : null}
+          onKeyDown={onInternalKeyDown}
+          onFocus={onInternalFocus}
+          onBlur={onInternalBlur}
+        />
+      </div>
 
       <VirtualList
         {...domProps}
         disabled={disableVirtual}
-        role="tree"
         data={mergedData}
         itemKey={itemKey}
         height={height}
         itemHeight={itemHeight}
         onSkipRender={onMotionEnd}
         prefixCls={`${prefixCls}-list`}
-        onKeyDown={onInternalKeyDown}
-        onFocus={onInternalFocus}
-        onBlur={onInternalBlur}
-        tabIndex={focusable !== false ? tabIndex : null}
       >
         {(treeNode: FlattenNode) => {
           const {
