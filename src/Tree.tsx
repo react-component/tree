@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import warning from 'warning';
+import warning from 'rc-util/lib/warning';
 import classNames from 'classnames';
 import { polyfill } from 'react-lifecycles-compat';
 

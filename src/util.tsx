@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import warning from 'warning';
+import warning from 'rc-util/lib/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance } from './interface';
 import { TreeProps } from './Tree';

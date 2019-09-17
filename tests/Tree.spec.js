@@ -7,6 +7,7 @@ import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
 import { objectMatcher, spyConsole, spyError } from './util';
 import { convertNodePropsToEventData } from '../src/utils/treeUtil';
+import { resetWarned } from 'rc-util/lib/warning';
 
 const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
@@ -1258,6 +1259,7 @@ describe('Tree Basic', () => {
     });
 
     it('Sub TreeNode', () => {
+      resetWarned();
       const wrapper = mount(
         <Tree defaultExpandAll>
           <TreeNode key="00" title="00" />
