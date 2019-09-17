@@ -43,6 +43,8 @@ interface NodeListProps {
   motion: any;
   focusable?: boolean;
   tabIndex: number;
+  checkable?: boolean;
+  selectable?: boolean;
 
   expandedKeys: Key[];
   selectedKeys: Key[];
@@ -89,6 +91,8 @@ function itemKey(item: FlattenNode) {
 const NodeList: React.FC<NodeListProps> = ({
   prefixCls,
   data,
+  selectable,
+  checkable,
   expandedKeys,
   selectedKeys,
   checkedKeys,
@@ -218,44 +222,79 @@ const NodeList: React.FC<NodeListProps> = ({
   };
 
   // ============================= Keyboard =============================
-  const { onNodeExpand } = React.useContext(TreeContext);
+  const { onNodeExpand, onNodeCheck, onNodeSelect } = React.useContext(TreeContext);
 
   const onInternalKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
-    // Change active is no need to check if current node not exist
+    // >>>>>>>>>> Direction
     switch (event.which) {
       case KeyCode.UP: {
         changeActive(-1);
+        event.preventDefault();
         break;
       }
       case KeyCode.DOWN: {
         changeActive(1);
+        event.preventDefault();
         break;
       }
     }
 
-    // Expand operation
     const item = data.find(({ data: { key } }) => key === activeKey);
-    if (!item) return;
+    if (!item || !item.data) return;
+
+    // >>>>>>>>>> Expand & Selection
+    const expandable = item.data.isLeaf === false || !!(item.data.children || []).length;
+    const eventNode = convertNodePropsToEventData({
+      ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
+      data: item.data,
+      active: true,
+    });
 
     switch (event.which) {
-      case KeyCode.ENTER:
-      case KeyCode.SPACE: {
-        console.log('select it!!!');
-        break;
-      }
+      // >>> Expand
       case KeyCode.LEFT: {
-        onNodeExpand(
-          { ctrlKey: false, shiftKey: false } as React.MouseEvent<HTMLDivElement>,
-          convertNodePropsToEventData({
-            ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
-            data: item.data,
-            active: true,
-          }),
-        );
+        // Collapse if possible
+        if (expandable && expandedKeys.includes(activeKey)) {
+          onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+        } else if (item.parent) {
+          setActiveKey(item.parent.data.key);
+        }
+        event.preventDefault();
         break;
       }
       case KeyCode.RIGHT: {
-        console.log('open or next it!!!');
+        // Expand if possible
+        if (expandable && !expandedKeys.includes(activeKey)) {
+          onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+        } else if (item.children && item.children.length) {
+          setActiveKey(item.children[0].data.key);
+        }
+        event.preventDefault();
+        break;
+      }
+
+      // Selection
+      case KeyCode.ENTER:
+      case KeyCode.SPACE: {
+        if (
+          checkable &&
+          !eventNode.disabled &&
+          eventNode.checkable !== false &&
+          !eventNode.disableCheckbox
+        ) {
+          onNodeCheck(
+            {} as React.MouseEvent<HTMLDivElement>,
+            eventNode,
+            !checkedKeys.includes(activeKey),
+          );
+        } else if (
+          !checkable &&
+          selectable &&
+          !eventNode.disabled &&
+          eventNode.selectable !== false
+        ) {
+          onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
+        }
         break;
       }
     }

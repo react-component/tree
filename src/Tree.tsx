@@ -571,8 +571,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // [Legacy] Not found related usage in doc or upper libs
     const selectedNodes = selectedKeys
-      .map(key => {
-        const entity = keyEntities[key];
+      .map(selectedKey => {
+        const entity = keyEntities[selectedKey];
         if (!entity) return null;
 
         return entity.node;
@@ -620,7 +620,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
 
       eventObj.checkedNodes = checkedKeys
-        .map(key => keyEntities[key])
+        .map(checkedKey => keyEntities[checkedKey])
         .filter(entity => entity)
         .map(entity => entity.node);
 
@@ -638,8 +638,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
       eventObj.checkedNodesPositions = [];
       eventObj.halfCheckedKeys = halfCheckedKeys;
 
-      checkedKeys.forEach(key => {
-        const entity = keyEntities[key];
+      checkedKeys.forEach(checkedKey => {
+        const entity = keyEntities[checkedKey];
         if (!entity) return;
 
         const { node, pos } = entity;
@@ -869,6 +869,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
           prefixCls={prefixCls}
           style={style}
           data={flattenNodes}
+          selectable={selectable}
+          checkable={!!checkable}
           keyEntities={keyEntities}
           expandedKeys={expandedKeys}
           selectedKeys={selectedKeys}
