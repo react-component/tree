@@ -154,8 +154,10 @@ interface TreeState {
   treeData: DataNode[];
   flattenNodes: FlattenNode[];
 
-  prevProps: TreeProps;
   focused: boolean;
+  activeKey: Key;
+
+  prevProps: TreeProps;
 }
 
 class Tree extends React.Component<TreeProps, TreeState> {
@@ -248,6 +250,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     flattenNodes: [],
 
     focused: false,
+    activeKey: null,
 
     prevProps: null,
   };
@@ -793,6 +796,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
+  onActiveChange = (activeKey: Key) => {
+    this.setState({ activeKey });
+  };
+
   /**
    * Only update the value which is not in props
    */
@@ -826,6 +833,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragging,
       dragOverNodeKey,
       dropPosition,
+      activeKey,
     } = this.state;
     const {
       prefixCls,
@@ -889,6 +897,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           className={classNames(prefixCls, className, {
             [`${prefixCls}-show-line`]: showLine,
             [`${prefixCls}-focused`]: focused,
+            [`${prefixCls}-active-focused`]: activeKey !== null,
           })}
           prefixCls={prefixCls}
           style={style}
@@ -914,6 +923,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onKeyDown={onKeyDown}
+          onActiveChange={this.onActiveChange}
           {...domProps}
         />
       </TreeContext.Provider>

@@ -68,6 +68,7 @@ interface NodeListProps {
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
+  onActiveChange: (key: Key) => void;
 }
 
 /**
@@ -133,6 +134,7 @@ const NodeList: React.FC<NodeListProps> = ({
   onKeyDown,
   onFocus,
   onBlur,
+  onActiveChange,
 
   ...domProps
 }) => {
@@ -221,7 +223,12 @@ const NodeList: React.FC<NodeListProps> = ({
   };
 
   // =========================== Accessibility ==========================
-  const [activeKey, setActiveKey] = React.useState<Key>(null);
+  const [activeKey, setInnerActiveKey] = React.useState<Key>(null);
+
+  function setActiveKey(key: Key) {
+    setInnerActiveKey(key);
+    onActiveChange(key);
+  }
 
   const activeItem = data.find(({ data: { key } }) => key === activeKey);
 
