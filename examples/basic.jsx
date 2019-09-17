@@ -141,13 +141,7 @@ class Demo extends React.Component {
         />
 
         <h2>Select</h2>
-        <Tree
-          className="myCls"
-          showLine
-          defaultExpandAll
-          treeData={treeData}
-          onSelect={this.onSelect}
-        />
+        <Tree className="myCls" defaultExpandAll treeData={treeData} onSelect={this.onSelect} />
 
         <input aria-label="bad" />
       </div>

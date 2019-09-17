@@ -63,6 +63,8 @@ interface NodeListProps {
   itemHeight: number;
 
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
+  onFocus?: React.FocusEventHandler<HTMLDivElement>;
+  onBlur?: React.FocusEventHandler<HTMLDivElement>;
 }
 
 /**
@@ -113,6 +115,8 @@ const NodeList: React.FC<NodeListProps> = ({
   tabIndex,
 
   onKeyDown,
+  onFocus,
+  onBlur,
 
   ...domProps
 }) => {
@@ -202,6 +206,7 @@ const NodeList: React.FC<NodeListProps> = ({
 
   // =========================== Accessibility ==========================
   const [activeKey, setActiveKey] = React.useState<Key>(null);
+  const [focused, setFocused] = React.useState(false);
 
   const changeActive = (offset: number) => {
     let index = data.findIndex(({ data: { key } }) => key === activeKey);
@@ -218,6 +223,20 @@ const NodeList: React.FC<NodeListProps> = ({
       setActiveKey(item.data.key);
     } else {
       setActiveKey(null);
+    }
+  };
+
+  const onInternalFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
+    setFocused(true);
+    if (onFocus) {
+      onFocus(...args);
+    }
+  };
+
+  const onInternalBlur: React.FocusEventHandler<HTMLDivElement> = (...args) => {
+    setFocused(false);
+    if (onBlur) {
+      onBlur(...args);
     }
   };
 
@@ -305,49 +324,62 @@ const NodeList: React.FC<NodeListProps> = ({
   };
 
   return (
-    <VirtualList
-      {...domProps}
-      disabled={disableVirtual}
-      role="tree"
-      data={mergedData}
-      itemKey={itemKey}
-      height={height}
-      itemHeight={itemHeight}
-      onSkipRender={onMotionEnd}
-      prefixCls={`${prefixCls}-list`}
-      onKeyDown={onInternalKeyDown}
-      tabIndex={focusable !== false ? tabIndex : null}
-    >
-      {(treeNode: FlattenNode) => {
-        const {
-          pos,
-          data: { key, ...restProps },
-          isStart,
-          isEnd,
-        } = treeNode;
-        const mergedKey = getKey(key, pos);
-        delete restProps.children;
+    <>
+      {focused && activeKey !== null && (
+        <span
+          style={{ width: 0, height: 0, display: 'flex', overflow: 'hidden', opacity: 0 }}
+          aria-live="polite"
+        >
+          {activeKey}
+        </span>
+      )}
 
-        const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
+      <VirtualList
+        {...domProps}
+        disabled={disableVirtual}
+        role="tree"
+        data={mergedData}
+        itemKey={itemKey}
+        height={height}
+        itemHeight={itemHeight}
+        onSkipRender={onMotionEnd}
+        prefixCls={`${prefixCls}-list`}
+        onKeyDown={onInternalKeyDown}
+        onFocus={onInternalFocus}
+        onBlur={onInternalBlur}
+        tabIndex={focusable !== false ? tabIndex : null}
+      >
+        {(treeNode: FlattenNode) => {
+          const {
+            pos,
+            data: { key, ...restProps },
+            isStart,
+            isEnd,
+          } = treeNode;
+          const mergedKey = getKey(key, pos);
+          delete restProps.children;
 
-        return (
-          <MotionTreeNode
-            {...restProps}
-            {...treeNodeProps}
-            active={key === activeKey}
-            pos={pos}
-            data={treeNode.data}
-            isStart={isStart}
-            isEnd={isEnd}
-            motion={motion}
-            motionNodes={key === MOTION_KEY ? transitionRange : null}
-            motionType={motionType}
-            onMotionEnd={onMotionEnd}
-            treeNodeRequiredProps={treeNodeRequiredProps}
-          />
-        );
-      }}
-    </VirtualList>
+          const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
+
+          return (
+            <MotionTreeNode
+              {...restProps}
+              {...treeNodeProps}
+              active={key === activeKey}
+              pos={pos}
+              data={treeNode.data}
+              isStart={isStart}
+              isEnd={isEnd}
+              motion={motion}
+              motionNodes={key === MOTION_KEY ? transitionRange : null}
+              motionType={motionType}
+              onMotionEnd={onMotionEnd}
+              treeNodeRequiredProps={treeNodeRequiredProps}
+            />
+          );
+        }}
+      </VirtualList>
+    </>
   );
 };
 
