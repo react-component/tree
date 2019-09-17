@@ -38,6 +38,7 @@ export interface TreeNodeProps {
   isStart?: boolean[];
   isEnd?: boolean[];
   active: boolean;
+  onMouseMove?: React.MouseEventHandler<HTMLDivElement>;
 
   // By user
   isLeaf?: boolean;
@@ -502,6 +503,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       loading,
       domRef,
       active,
+      onMouseMove,
       ...otherProps
     } = this.props;
     const {
@@ -534,6 +536,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         onDragLeave={draggable ? this.onDragLeave : undefined}
         onDrop={draggable ? this.onDrop : undefined}
         onDragEnd={draggable ? this.onDragEnd : undefined}
+        onMouseMove={onMouseMove}
         {...dataOrAriaAttributeProps}
       >
         <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />

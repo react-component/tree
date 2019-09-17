@@ -44,6 +44,7 @@ interface NodeListProps {
   data: FlattenNode[];
   motion: any;
   focusable?: boolean;
+  focused?: boolean;
   tabIndex: number;
   checkable?: boolean;
   selectable?: boolean;
@@ -126,6 +127,7 @@ const NodeList: React.FC<NodeListProps> = ({
   itemHeight,
 
   focusable,
+  focused,
   tabIndex,
 
   onKeyDown,
@@ -220,7 +222,6 @@ const NodeList: React.FC<NodeListProps> = ({
 
   // =========================== Accessibility ==========================
   const [activeKey, setActiveKey] = React.useState<Key>(null);
-  const [focused, setFocused] = React.useState(false);
 
   const activeItem = data.find(({ data: { key } }) => key === activeKey);
 
@@ -242,19 +243,12 @@ const NodeList: React.FC<NodeListProps> = ({
     }
   };
 
-  const onInternalFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
-    setFocused(true);
-    if (onFocus) {
-      onFocus(...args);
+  // Clean up `activeKey` if blur
+  React.useEffect(() => {
+    if (!focused) {
+      setActiveKey(null);
     }
-  };
-
-  const onInternalBlur: React.FocusEventHandler<HTMLDivElement> = (...args) => {
-    setFocused(false);
-    if (onBlur) {
-      onBlur(...args);
-    }
-  };
+  }, [focused]);
 
   // ============================= Keyboard =============================
   const { onNodeExpand, onNodeCheck, onNodeSelect } = React.useContext(TreeContext);
@@ -274,63 +268,63 @@ const NodeList: React.FC<NodeListProps> = ({
       }
     }
 
-    if (!activeItem || !activeItem.data) return;
+    if (activeItem && activeItem.data) {
+      // >>>>>>>>>> Expand & Selection
+      const expandable =
+        activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length;
+      const eventNode = convertNodePropsToEventData({
+        ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
+        data: activeItem.data,
+        active: true,
+      });
 
-    // >>>>>>>>>> Expand & Selection
-    const expandable =
-      activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length;
-    const eventNode = convertNodePropsToEventData({
-      ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
-      data: activeItem.data,
-      active: true,
-    });
+      switch (event.which) {
+        // >>> Expand
+        case KeyCode.LEFT: {
+          // Collapse if possible
+          if (expandable && expandedKeys.includes(activeKey)) {
+            onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          } else if (activeItem.parent) {
+            setActiveKey(activeItem.parent.data.key);
+          }
+          event.preventDefault();
+          break;
+        }
+        case KeyCode.RIGHT: {
+          // Expand if possible
+          if (expandable && !expandedKeys.includes(activeKey)) {
+            onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          } else if (activeItem.children && activeItem.children.length) {
+            setActiveKey(activeItem.children[0].data.key);
+          }
+          event.preventDefault();
+          break;
+        }
 
-    switch (event.which) {
-      // >>> Expand
-      case KeyCode.LEFT: {
-        // Collapse if possible
-        if (expandable && expandedKeys.includes(activeKey)) {
-          onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
-        } else if (activeItem.parent) {
-          setActiveKey(activeItem.parent.data.key);
+        // Selection
+        case KeyCode.ENTER:
+        case KeyCode.SPACE: {
+          if (
+            checkable &&
+            !eventNode.disabled &&
+            eventNode.checkable !== false &&
+            !eventNode.disableCheckbox
+          ) {
+            onNodeCheck(
+              {} as React.MouseEvent<HTMLDivElement>,
+              eventNode,
+              !checkedKeys.includes(activeKey),
+            );
+          } else if (
+            !checkable &&
+            selectable &&
+            !eventNode.disabled &&
+            eventNode.selectable !== false
+          ) {
+            onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          }
+          break;
         }
-        event.preventDefault();
-        break;
-      }
-      case KeyCode.RIGHT: {
-        // Expand if possible
-        if (expandable && !expandedKeys.includes(activeKey)) {
-          onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
-        } else if (activeItem.children && activeItem.children.length) {
-          setActiveKey(activeItem.children[0].data.key);
-        }
-        event.preventDefault();
-        break;
-      }
-
-      // Selection
-      case KeyCode.ENTER:
-      case KeyCode.SPACE: {
-        if (
-          checkable &&
-          !eventNode.disabled &&
-          eventNode.checkable !== false &&
-          !eventNode.disableCheckbox
-        ) {
-          onNodeCheck(
-            {} as React.MouseEvent<HTMLDivElement>,
-            eventNode,
-            !checkedKeys.includes(activeKey),
-          );
-        } else if (
-          !checkable &&
-          selectable &&
-          !eventNode.disabled &&
-          eventNode.selectable !== false
-        ) {
-          onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
-        }
-        break;
       }
     }
 
@@ -353,8 +347,8 @@ const NodeList: React.FC<NodeListProps> = ({
           disabled={focusable === false}
           tabIndex={focusable !== false ? tabIndex : null}
           onKeyDown={onInternalKeyDown}
-          onFocus={onInternalFocus}
-          onBlur={onInternalBlur}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
       </div>
 
@@ -384,7 +378,7 @@ const NodeList: React.FC<NodeListProps> = ({
             <MotionTreeNode
               {...restProps}
               {...treeNodeProps}
-              active={key === activeKey}
+              active={focused && key === activeKey}
               pos={pos}
               data={treeNode.data}
               isStart={isStart}
@@ -394,6 +388,9 @@ const NodeList: React.FC<NodeListProps> = ({
               motionType={motionType}
               onMotionEnd={onMotionEnd}
               treeNodeRequiredProps={treeNodeRequiredProps}
+              onMouseMove={() => {
+                setActiveKey(null);
+              }}
             />
           );
         }}

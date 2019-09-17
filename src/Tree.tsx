@@ -27,7 +27,6 @@ import {
   FlattenNode,
   DataEntity,
   EventDataNode,
-  NodeElement,
   NodeInstance,
 } from './interface';
 import {
@@ -75,6 +74,9 @@ export interface TreeProps {
   checkedKeys?: (Key)[] | { checked: (Key)[]; halfChecked: Key[] };
   defaultSelectedKeys?: Key[];
   selectedKeys?: Key[];
+  onFocus?: React.FocusEventHandler<HTMLDivElement>;
+  onBlur?: React.FocusEventHandler<HTMLDivElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onClick?: (e: React.MouseEvent, treeNode: EventDataNode) => void;
   onDoubleClick?: (e: React.MouseEvent, treeNode: EventDataNode) => void;
   onExpand?: (
@@ -153,6 +155,7 @@ interface TreeState {
   flattenNodes: FlattenNode[];
 
   prevProps: TreeProps;
+  focused: boolean;
 }
 
 class Tree extends React.Component<TreeProps, TreeState> {
@@ -243,6 +246,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     treeData: [],
     flattenNodes: [],
+
+    focused: false,
 
     prevProps: null,
   };
@@ -772,6 +777,22 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
+  onFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
+    const { onFocus } = this.props;
+    this.setState({ focused: true });
+    if (onFocus) {
+      onFocus(...args);
+    }
+  };
+
+  onBlur: React.FocusEventHandler<HTMLDivElement> = (...args) => {
+    const { onBlur } = this.props;
+    this.setState({ focused: false });
+    if (onBlur) {
+      onBlur(...args);
+    }
+  };
+
   /**
    * Only update the value which is not in props
    */
@@ -793,6 +814,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   render() {
     const {
+      focused,
       flattenNodes,
       keyEntities,
       expandedKeys,
@@ -825,6 +847,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       filterTreeNode,
       height,
       itemHeight,
+      onKeyDown,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -865,6 +888,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         <NodeList
           className={classNames(prefixCls, className, {
             [`${prefixCls}-show-line`]: showLine,
+            [`${prefixCls}-focused`]: focused,
           })}
           prefixCls={prefixCls}
           style={style}
@@ -885,7 +909,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
           height={height}
           itemHeight={itemHeight}
           focusable={focusable}
+          focused={focused}
           tabIndex={tabIndex}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          onKeyDown={onKeyDown}
           {...domProps}
         />
       </TreeContext.Provider>
