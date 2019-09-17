@@ -664,6 +664,7 @@ Array [
     role="tree"
   >
     <input
+      disabled=""
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0"
       tabindex="0"
     />
@@ -708,6 +709,7 @@ Array [
     role="tree"
   >
     <input
+      disabled=""
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0"
       tabindex="0"
     />

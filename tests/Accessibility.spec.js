@@ -184,4 +184,9 @@ describe('Tree Accessibility', () => {
       expect(wrapper.find(InternalTreeNode).find('.rc-tree-treenode-active').length).toBeFalsy();
     });
   });
+
+  it('disabled should prevent keyboard', () => {
+    const wrapper = mount(<Tree disabled />);
+    expect(wrapper.find('input').props().disabled).toBeTruthy();
+  });
 });

@@ -48,6 +48,7 @@ interface NodeListProps {
   tabIndex: number;
   checkable?: boolean;
   selectable?: boolean;
+  disabled?: boolean;
 
   expandedKeys: Key[];
   selectedKeys: Key[];
@@ -118,6 +119,7 @@ const NodeList: React.FC<NodeListProps> = ({
   loadingKeys,
   halfCheckedKeys,
   keyEntities,
+  disabled,
 
   dragging,
   dragOverNodeKey,
@@ -351,7 +353,7 @@ const NodeList: React.FC<NodeListProps> = ({
       <div role="tree">
         <input
           style={HIDDEN_STYLE}
-          disabled={focusable === false}
+          disabled={focusable === false || disabled}
           tabIndex={focusable !== false ? tabIndex : null}
           onKeyDown={onInternalKeyDown}
           onFocus={onFocus}

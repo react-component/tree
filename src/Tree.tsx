@@ -902,6 +902,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           prefixCls={prefixCls}
           style={style}
           data={flattenNodes}
+          disabled={disabled}
           selectable={selectable}
           checkable={!!checkable}
           keyEntities={keyEntities}
