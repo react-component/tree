@@ -27,7 +27,11 @@ export interface TreeContextProps {
   onNodeDoubleClick: NodeMouseEventHandler;
   onNodeExpand: NodeMouseEventHandler;
   onNodeSelect: NodeMouseEventHandler;
-  onNodeCheck: (e: React.MouseEvent<HTMLDivElement>, treeNode: EventDataNode, checked: boolean) => void;
+  onNodeCheck: (
+    e: React.MouseEvent<HTMLDivElement>,
+    treeNode: EventDataNode,
+    checked: boolean,
+  ) => void;
   onNodeLoad: (treeNode: EventDataNode) => void;
   onNodeMouseEnter: NodeMouseEventHandler;
   onNodeMouseLeave: NodeMouseEventHandler;
