@@ -11,7 +11,16 @@ import { TreeContext } from './contextTypes';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey, convertNodePropsToEventData } from './utils/treeUtil';
 
-const HIDDEN_STYLE = { width: 0, height: 0, display: 'flex', overflow: 'hidden', opacity: 0 };
+const HIDDEN_STYLE = {
+  width: 0,
+  height: 0,
+  display: 'flex',
+  overflow: 'hidden',
+  opacity: 0,
+  border: 0,
+  padding: 0,
+  margin: 0,
+};
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
