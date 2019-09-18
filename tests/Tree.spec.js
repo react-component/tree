@@ -3,11 +3,11 @@ react/no-unused-state, react/prop-types, no-return-assign, import/no-named-as-de
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
+import { resetWarned } from 'rc-util/lib/warning';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
 import { objectMatcher, spyConsole, spyError } from './util';
 import { convertNodePropsToEventData } from '../src/utils/treeUtil';
-import { resetWarned } from 'rc-util/lib/warning';
 
 const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
@@ -1312,5 +1312,15 @@ describe('Tree Basic', () => {
       .last()
       .simulate('click');
     expect(onCheck).toHaveBeenCalledWith([]);
+  });
+
+  it('scrollTo should work', () => {
+    const wrapper = mount(<Tree />);
+
+    const scrollTo = jest.fn();
+    wrapper.find('NodeList List').instance().scrollTo = scrollTo;
+    wrapper.instance().scrollTo({ key: 'light' });
+
+    expect(scrollTo).toHaveBeenCalled();
   });
 });

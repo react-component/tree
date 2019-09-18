@@ -40,6 +40,7 @@ import {
   getTreeNodeProps,
 } from './utils/treeUtil';
 import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
+import TreeNode from './TreeNode';
 
 interface CheckInfo {
   event: 'check';
@@ -232,6 +233,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
     defaultSelectedKeys: [],
   };
 
+  static TreeNode = TreeNode;
+
   delayedDragEnterLogic: Record<Key, number>;
 
   state: TreeState = {
@@ -363,6 +366,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         newState.halfCheckedKeys = halfCheckedKeys;
       }
     }
+
     // ================= loadedKeys ==================
     if (needSync('loadedKeys')) {
       newState.loadedKeys = props.loadedKeys;
@@ -788,6 +792,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   onFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
     const { onFocus } = this.props;
     this.setState({ focused: true });
+
     if (onFocus) {
       onFocus(...args);
     }
@@ -796,6 +801,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
   onBlur: React.FocusEventHandler<HTMLDivElement> = (...args) => {
     const { onBlur } = this.props;
     this.setState({ focused: false });
+    this.onActiveChange(null);
+
     if (onBlur) {
       onBlur(...args);
     }

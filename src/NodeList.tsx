@@ -160,7 +160,9 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
   // =============================== Ref ================================
   const listRef = React.useRef<VirtualList<FlattenNode>>(null);
   React.useImperativeHandle(ref, () => ({
-    scrollTo: listRef.current.scrollTo,
+    scrollTo: scroll => {
+      listRef.current.scrollTo(scroll);
+    },
   }));
 
   // ============================== Motion ==============================
@@ -246,14 +248,6 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     dropPosition,
     keyEntities,
   };
-
-  // =========================== Accessibility ==========================
-  // Clean up `activeKey` if blur
-  React.useEffect(() => {
-    if (!focused) {
-      onActiveChange(null);
-    }
-  }, [focused]);
 
   return (
     <>
