@@ -106,7 +106,7 @@ function itemKey(item: FlattenNode) {
     data: { key },
     pos,
   } = item;
-  return String(getKey(key, pos));
+  return getKey(key, pos);
 }
 
 function getAccessibilityPath(item: FlattenNode): string {
