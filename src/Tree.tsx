@@ -54,6 +54,7 @@ export interface TreeProps {
   style?: React.CSSProperties;
   focusable?: boolean;
   tabIndex?: number;
+  activeKey?: Key;
   children?: React.ReactNode;
   treeData?: DataNode[]; // Generate treeNode by children
   showLine?: boolean;
@@ -265,6 +266,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     function needSync(name: string) {
       return (!prevProps && name in props) || (prevProps && prevProps[name] !== props[name]);
+    }
+
+    // ================== ActiveKey ==================
+    if ('activeKey' in props) {
+      newState.activeKey = props.activeKey;
     }
 
     // ================== Tree Node ==================
@@ -920,6 +926,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           itemHeight={itemHeight}
           focusable={focusable}
           focused={focused}
+          activeKey={activeKey}
           tabIndex={tabIndex}
           onFocus={this.onFocus}
           onBlur={this.onBlur}

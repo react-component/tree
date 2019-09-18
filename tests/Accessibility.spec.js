@@ -189,4 +189,34 @@ describe('Tree Accessibility', () => {
     const wrapper = mount(<Tree disabled />);
     expect(wrapper.find('input').props().disabled).toBeTruthy();
   });
+
+  it('`activeKey` can be controlled', () => {
+    const wrapper = mount(
+      <Tree
+        defaultExpandAll
+        activeKey="bamboo"
+        treeData={[{ key: 'light', children: [{ key: 'bamboo' }, { key: 'cat' }] }]}
+      />,
+    );
+
+    expect(
+      wrapper
+        .find(InternalTreeNode)
+        .find('.rc-tree-treenode')
+        .at(1)
+        .hasClass('rc-tree-treenode-active'),
+    ).toBeTruthy();
+
+    // Key operation
+    wrapper.find('input').simulate('focus');
+    wrapper.find('input').simulate('keyDown', { which: KeyCode.DOWN });
+
+    expect(
+      wrapper
+        .find(InternalTreeNode)
+        .find('.rc-tree-treenode')
+        .at(1)
+        .hasClass('rc-tree-treenode-active'),
+    ).toBeTruthy();
+  });
 });

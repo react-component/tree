@@ -22,6 +22,8 @@ const HIDDEN_STYLE = {
   margin: 0,
 };
 
+const noop = () => {};
+
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
 const MotionNode: DataNode = {
@@ -53,6 +55,7 @@ interface NodeListProps {
   data: FlattenNode[];
   motion: any;
   focusable?: boolean;
+  activeKey?: Key;
   focused?: boolean;
   tabIndex: number;
   checkable?: boolean;
@@ -116,39 +119,42 @@ function getAccessibilityPath(item: FlattenNode): string {
   return path;
 }
 
-const NodeList: React.FC<NodeListProps> = ({
-  prefixCls,
-  data,
-  selectable,
-  checkable,
-  expandedKeys,
-  selectedKeys,
-  checkedKeys,
-  loadedKeys,
-  loadingKeys,
-  halfCheckedKeys,
-  keyEntities,
-  disabled,
+const NodeList: React.FC<NodeListProps> = props => {
+  const {
+    prefixCls,
+    data,
+    selectable,
+    checkable,
+    expandedKeys,
+    selectedKeys,
+    checkedKeys,
+    loadedKeys,
+    loadingKeys,
+    halfCheckedKeys,
+    keyEntities,
+    disabled,
 
-  dragging,
-  dragOverNodeKey,
-  dropPosition,
-  motion,
+    dragging,
+    dragOverNodeKey,
+    dropPosition,
+    motion,
 
-  height,
-  itemHeight,
+    height,
+    itemHeight,
 
-  focusable,
-  focused,
-  tabIndex,
+    focusable,
+    activeKey,
+    focused,
+    tabIndex,
 
-  onKeyDown,
-  onFocus,
-  onBlur,
-  onActiveChange,
+    onKeyDown,
+    onFocus,
+    onBlur,
+    onActiveChange,
 
-  ...domProps
-}) => {
+    ...domProps
+  } = props;
+
   // ============================== Motion ==============================
   const [disableVirtual, setDisableVirtual] = React.useState(false);
   const [prevExpandedKeys, setPrevExpandedKeys] = React.useState(expandedKeys);
@@ -234,10 +240,7 @@ const NodeList: React.FC<NodeListProps> = ({
   };
 
   // =========================== Accessibility ==========================
-  const [activeKey, setInnerActiveKey] = React.useState<Key>(null);
-
   function setActiveKey(key: Key) {
-    setInnerActiveKey(key);
     onActiveChange(key);
   }
 
@@ -368,6 +371,7 @@ const NodeList: React.FC<NodeListProps> = ({
           onFocus={onFocus}
           onBlur={onBlur}
           value=""
+          onChange={noop}
         />
       </div>
 
@@ -397,7 +401,7 @@ const NodeList: React.FC<NodeListProps> = ({
             <MotionTreeNode
               {...restProps}
               {...treeNodeProps}
-              active={focused && key === activeKey}
+              active={activeKey !== null && key === activeKey}
               pos={pos}
               data={treeNode.data}
               isStart={isStart}
