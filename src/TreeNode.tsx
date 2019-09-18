@@ -61,13 +61,13 @@ export interface TreeNodeState {
 
 class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
   static propTypes = {
-    eventKey: PropTypes.string, // Pass by parent `cloneElement`
     prefixCls: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
     onSelect: PropTypes.func,
 
     // By parent
+    eventKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     expanded: PropTypes.bool,
     selected: PropTypes.bool,
     checked: PropTypes.bool,
