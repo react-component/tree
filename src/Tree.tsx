@@ -3,6 +3,7 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import KeyCode from 'rc-util/lib/KeyCode';
 import warning from 'rc-util/lib/warning';
 import classNames from 'classnames';
 import { polyfill } from 'react-lifecycles-compat';
@@ -35,6 +36,7 @@ import {
   convertDataToEntities,
   warningWithoutKey,
   convertNodePropsToEventData,
+  getTreeNodeProps,
 } from './utils/treeUtil';
 import NodeList, { MOTION_KEY, MotionEntity } from './NodeList';
 
@@ -54,7 +56,6 @@ export interface TreeProps {
   style?: React.CSSProperties;
   focusable?: boolean;
   tabIndex?: number;
-  activeKey?: Key;
   children?: React.ReactNode;
   treeData?: DataNode[]; // Generate treeNode by children
   showLine?: boolean;
@@ -266,11 +267,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     function needSync(name: string) {
       return (!prevProps && name in props) || (prevProps && prevProps[name] !== props[name]);
-    }
-
-    // ================== ActiveKey ==================
-    if ('activeKey' in props) {
-      newState.activeKey = props.activeKey;
     }
 
     // ================== Tree Node ==================
@@ -802,8 +798,149 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
+  getTreeNodeRequiredProps = () => {
+    const {
+      expandedKeys,
+      selectedKeys,
+      loadedKeys,
+      loadingKeys,
+      checkedKeys,
+      halfCheckedKeys,
+      dragOverNodeKey,
+      dropPosition,
+      keyEntities,
+    } = this.state;
+    return {
+      expandedKeys,
+      selectedKeys,
+      loadedKeys,
+      loadingKeys,
+      checkedKeys,
+      halfCheckedKeys,
+      dragOverNodeKey,
+      dropPosition,
+      keyEntities,
+    };
+  };
+
+  // =========================== Keyboard ===========================
   onActiveChange = (activeKey: Key) => {
     this.setState({ activeKey });
+  };
+
+  getActiveItem = () => {
+    const { activeKey, flattenNodes } = this.state;
+    if (activeKey === null) {
+      return null;
+    }
+
+    return flattenNodes.find(({ data: { key } }) => key === activeKey) || null;
+  };
+
+  offsetActiveKey = (offset: number) => {
+    const { flattenNodes, activeKey } = this.state;
+
+    let index = flattenNodes.findIndex(({ data: { key } }) => key === activeKey);
+
+    // Align with index
+    if (index === -1 && offset < 0) {
+      index = flattenNodes.length;
+    }
+
+    index = (index + offset + flattenNodes.length) % flattenNodes.length;
+
+    const item = flattenNodes[index];
+    if (item) {
+      this.onActiveChange(item.data.key);
+    } else {
+      this.onActiveChange(null);
+    }
+  };
+
+  onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
+    const { activeKey, expandedKeys, checkedKeys } = this.state;
+    const { onKeyDown, checkable, selectable } = this.props;
+
+    // >>>>>>>>>> Direction
+    switch (event.which) {
+      case KeyCode.UP: {
+        this.offsetActiveKey(-1);
+        event.preventDefault();
+        break;
+      }
+      case KeyCode.DOWN: {
+        this.offsetActiveKey(1);
+        event.preventDefault();
+        break;
+      }
+    }
+
+    // >>>>>>>>>> Expand & Selection
+    const activeItem = this.getActiveItem();
+    if (activeItem && activeItem.data) {
+      const treeNodeRequiredProps = this.getTreeNodeRequiredProps();
+
+      const expandable =
+        activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length;
+      const eventNode = convertNodePropsToEventData({
+        ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
+        data: activeItem.data,
+        active: true,
+      });
+
+      switch (event.which) {
+        // >>> Expand
+        case KeyCode.LEFT: {
+          // Collapse if possible
+          if (expandable && expandedKeys.includes(activeKey)) {
+            this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          } else if (activeItem.parent) {
+            this.onActiveChange(activeItem.parent.data.key);
+          }
+          event.preventDefault();
+          break;
+        }
+        case KeyCode.RIGHT: {
+          // Expand if possible
+          if (expandable && !expandedKeys.includes(activeKey)) {
+            this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          } else if (activeItem.children && activeItem.children.length) {
+            this.onActiveChange(activeItem.children[0].data.key);
+          }
+          event.preventDefault();
+          break;
+        }
+
+        // Selection
+        case KeyCode.ENTER:
+        case KeyCode.SPACE: {
+          if (
+            checkable &&
+            !eventNode.disabled &&
+            eventNode.checkable !== false &&
+            !eventNode.disableCheckbox
+          ) {
+            this.onNodeCheck(
+              {} as React.MouseEvent<HTMLDivElement>,
+              eventNode,
+              !checkedKeys.includes(activeKey),
+            );
+          } else if (
+            !checkable &&
+            selectable &&
+            !eventNode.disabled &&
+            eventNode.selectable !== false
+          ) {
+            this.onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          }
+          break;
+        }
+      }
+    }
+
+    if (onKeyDown) {
+      onKeyDown(event);
+    }
   };
 
   /**
@@ -826,21 +963,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   render() {
-    const {
-      focused,
-      flattenNodes,
-      keyEntities,
-      expandedKeys,
-      selectedKeys,
-      checkedKeys,
-      loadedKeys,
-      loadingKeys,
-      halfCheckedKeys,
-      dragging,
-      dragOverNodeKey,
-      dropPosition,
-      activeKey,
-    } = this.state;
+    const { focused, flattenNodes, keyEntities, dragging, activeKey } = this.state;
     const {
       prefixCls,
       className,
@@ -861,7 +984,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       filterTreeNode,
       height,
       itemHeight,
-      onKeyDown,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -911,27 +1033,19 @@ class Tree extends React.Component<TreeProps, TreeState> {
           disabled={disabled}
           selectable={selectable}
           checkable={!!checkable}
-          keyEntities={keyEntities}
-          expandedKeys={expandedKeys}
-          selectedKeys={selectedKeys}
-          checkedKeys={checkedKeys}
-          loadedKeys={loadedKeys}
-          loadingKeys={loadingKeys}
-          halfCheckedKeys={halfCheckedKeys}
-          dragOverNodeKey={dragOverNodeKey}
-          dropPosition={dropPosition}
           motion={motion}
           dragging={dragging}
           height={height}
           itemHeight={itemHeight}
           focusable={focusable}
           focused={focused}
-          activeKey={activeKey}
           tabIndex={tabIndex}
+          activeItem={this.getActiveItem()}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          onKeyDown={onKeyDown}
+          onKeyDown={this.onKeyDown}
           onActiveChange={this.onActiveChange}
+          {...this.getTreeNodeRequiredProps()}
           {...domProps}
         />
       </TreeContext.Provider>

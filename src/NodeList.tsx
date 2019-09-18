@@ -4,12 +4,10 @@
 
 import * as React from 'react';
 import VirtualList from 'rc-virtual-list';
-import KeyCode from 'rc-util/lib/KeyCode';
 import { FlattenNode, Key, DataEntity, DataNode } from './interface';
 import MotionTreeNode from './MotionTreeNode';
-import { TreeContext } from './contextTypes';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
-import { getTreeNodeProps, getKey, convertNodePropsToEventData } from './utils/treeUtil';
+import { getTreeNodeProps, getKey } from './utils/treeUtil';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -55,7 +53,7 @@ interface NodeListProps {
   data: FlattenNode[];
   motion: any;
   focusable?: boolean;
-  activeKey?: Key;
+  activeItem: FlattenNode;
   focused?: boolean;
   tabIndex: number;
   checkable?: boolean;
@@ -143,7 +141,7 @@ const NodeList: React.FC<NodeListProps> = props => {
     itemHeight,
 
     focusable,
-    activeKey,
+    activeItem,
     focused,
     tabIndex,
 
@@ -240,119 +238,12 @@ const NodeList: React.FC<NodeListProps> = props => {
   };
 
   // =========================== Accessibility ==========================
-  function setActiveKey(key: Key) {
-    onActiveChange(key);
-  }
-
-  const activeItem = data.find(({ data: { key } }) => key === activeKey);
-
-  const changeActive = (offset: number) => {
-    let index = data.findIndex(({ data: { key } }) => key === activeKey);
-
-    // Align with index
-    if (index === -1 && offset < 0) {
-      index = data.length;
-    }
-
-    index = (index + offset + data.length) % data.length;
-
-    const item = data[index];
-    if (item) {
-      setActiveKey(item.data.key);
-    } else {
-      setActiveKey(null);
-    }
-  };
-
   // Clean up `activeKey` if blur
   React.useEffect(() => {
     if (!focused) {
-      setActiveKey(null);
+      onActiveChange(null);
     }
   }, [focused]);
-
-  // ============================= Keyboard =============================
-  const { onNodeExpand, onNodeCheck, onNodeSelect } = React.useContext(TreeContext);
-
-  const onInternalKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
-    // >>>>>>>>>> Direction
-    switch (event.which) {
-      case KeyCode.UP: {
-        changeActive(-1);
-        event.preventDefault();
-        break;
-      }
-      case KeyCode.DOWN: {
-        changeActive(1);
-        event.preventDefault();
-        break;
-      }
-    }
-
-    if (activeItem && activeItem.data) {
-      // >>>>>>>>>> Expand & Selection
-      const expandable =
-        activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length;
-      const eventNode = convertNodePropsToEventData({
-        ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
-        data: activeItem.data,
-        active: true,
-      });
-
-      switch (event.which) {
-        // >>> Expand
-        case KeyCode.LEFT: {
-          // Collapse if possible
-          if (expandable && expandedKeys.includes(activeKey)) {
-            onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
-          } else if (activeItem.parent) {
-            setActiveKey(activeItem.parent.data.key);
-          }
-          event.preventDefault();
-          break;
-        }
-        case KeyCode.RIGHT: {
-          // Expand if possible
-          if (expandable && !expandedKeys.includes(activeKey)) {
-            onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
-          } else if (activeItem.children && activeItem.children.length) {
-            setActiveKey(activeItem.children[0].data.key);
-          }
-          event.preventDefault();
-          break;
-        }
-
-        // Selection
-        case KeyCode.ENTER:
-        case KeyCode.SPACE: {
-          if (
-            checkable &&
-            !eventNode.disabled &&
-            eventNode.checkable !== false &&
-            !eventNode.disableCheckbox
-          ) {
-            onNodeCheck(
-              {} as React.MouseEvent<HTMLDivElement>,
-              eventNode,
-              !checkedKeys.includes(activeKey),
-            );
-          } else if (
-            !checkable &&
-            selectable &&
-            !eventNode.disabled &&
-            eventNode.selectable !== false
-          ) {
-            onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
-          }
-          break;
-        }
-      }
-    }
-
-    if (onKeyDown) {
-      onKeyDown(event);
-    }
-  };
 
   return (
     <>
@@ -367,7 +258,7 @@ const NodeList: React.FC<NodeListProps> = props => {
           style={HIDDEN_STYLE}
           disabled={focusable === false || disabled}
           tabIndex={focusable !== false ? tabIndex : null}
-          onKeyDown={onInternalKeyDown}
+          onKeyDown={onKeyDown}
           onFocus={onFocus}
           onBlur={onBlur}
           value=""
@@ -401,7 +292,7 @@ const NodeList: React.FC<NodeListProps> = props => {
             <MotionTreeNode
               {...restProps}
               {...treeNodeProps}
-              active={activeKey !== null && key === activeKey}
+              active={activeItem && key === activeItem.data.key}
               pos={pos}
               data={treeNode.data}
               isStart={isStart}
@@ -412,7 +303,7 @@ const NodeList: React.FC<NodeListProps> = props => {
               onMotionEnd={onMotionEnd}
               treeNodeRequiredProps={treeNodeRequiredProps}
               onMouseMove={() => {
-                setActiveKey(null);
+                onActiveChange(null);
               }}
             />
           );
