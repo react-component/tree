@@ -861,7 +861,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     const item = flattenNodes[index];
     if (item) {
-      this.onActiveChange(item.data.key);
+      const { key } = item.data;
+      this.onActiveChange(key);
+      this.scrollTo({ key });
     } else {
       this.onActiveChange(null);
     }

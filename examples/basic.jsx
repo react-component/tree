@@ -2,7 +2,6 @@
 no-alert, no-console, react/no-find-dom-node */
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import '../assets/index.less';
 import './basic.less';
 import Tree, { TreeNode } from '../src';
