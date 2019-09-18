@@ -112,6 +112,11 @@ describe('Util', () => {
     expect(treeNodes[0].props.children[0].props.value).toBe('0-0-0');
   });
 
+  it('convertDataToEntities', () => {
+    const entities = convertDataToEntities([{ key: 'parent', children: [{ key: 0 }, { key: 1 }] }]);
+    expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
+  });
+
   it('convertTreeToEntities with additional handler', () => {
     const onProcessFinished = jest.fn();
 

@@ -150,7 +150,7 @@ export function traverseDataNodes(
         node,
         index,
         pos,
-        key: node.key || pos,
+        key: node.key !== null ? node.key : pos,
         parentPos: parent.node ? parent.pos : null,
         level: parent.level + 1,
       };
