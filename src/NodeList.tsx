@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 import VirtualList from 'rc-virtual-list';
-import { FlattenNode, Key, DataEntity, DataNode } from './interface';
+import { FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
@@ -45,6 +45,10 @@ const MotionFlattenData: FlattenNode = {
   isStart: [],
   isEnd: [],
 };
+
+export interface NodeListRef {
+  scrollTo: ScrollTo;
+}
 
 interface NodeListProps {
   prefixCls: string;
@@ -117,7 +121,7 @@ function getAccessibilityPath(item: FlattenNode): string {
   return path;
 }
 
-const NodeList: React.FC<NodeListProps> = props => {
+const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (props, ref) => {
   const {
     prefixCls,
     data,
@@ -152,6 +156,12 @@ const NodeList: React.FC<NodeListProps> = props => {
 
     ...domProps
   } = props;
+
+  // =============================== Ref ================================
+  const listRef = React.useRef<VirtualList<FlattenNode>>(null);
+  React.useImperativeHandle(ref, () => ({
+    scrollTo: listRef.current.scrollTo,
+  }));
 
   // ============================== Motion ==============================
   const [disableVirtual, setDisableVirtual] = React.useState(false);
@@ -266,7 +276,7 @@ const NodeList: React.FC<NodeListProps> = props => {
         />
       </div>
 
-      <VirtualList
+      <VirtualList<FlattenNode>
         {...domProps}
         disabled={disableVirtual}
         data={mergedData}
@@ -275,6 +285,7 @@ const NodeList: React.FC<NodeListProps> = props => {
         itemHeight={itemHeight}
         onSkipRender={onMotionEnd}
         prefixCls={`${prefixCls}-list`}
+        ref={listRef}
       >
         {(treeNode: FlattenNode) => {
           const {
@@ -312,5 +323,8 @@ const NodeList: React.FC<NodeListProps> = props => {
     </>
   );
 };
+
+const NodeList = React.forwardRef(RefNodeList);
+NodeList.displayName = 'NodeList';
 
 export default NodeList;

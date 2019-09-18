@@ -71,3 +71,5 @@ export interface FlattenNode {
   isStart: boolean[];
   isEnd: boolean[];
 }
+
+export type ScrollTo = (scroll: { key: Key }) => void;

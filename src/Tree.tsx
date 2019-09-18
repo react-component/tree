@@ -29,6 +29,7 @@ import {
   DataEntity,
   EventDataNode,
   NodeInstance,
+  ScrollTo,
 } from './interface';
 import {
   flattenTreeData,
@@ -38,7 +39,7 @@ import {
   convertNodePropsToEventData,
   getTreeNodeProps,
 } from './utils/treeUtil';
-import NodeList, { MOTION_KEY, MotionEntity } from './NodeList';
+import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
 
 interface CheckInfo {
   event: 'check';
@@ -258,6 +259,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   dragNode: NodeInstance;
+
+  listRef = React.createRef<NodeListRef>();
 
   static getDerivedStateFromProps(props: TreeProps, prevState: TreeState) {
     const { prevProps } = prevState;
@@ -962,6 +965,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
+  scrollTo: ScrollTo = scroll => {
+    this.listRef.current.scrollTo(scroll);
+  };
+
   render() {
     const { focused, flattenNodes, keyEntities, dragging, activeKey } = this.state;
     const {
@@ -1022,6 +1029,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         }}
       >
         <NodeList
+          ref={this.listRef}
           className={classNames(prefixCls, className, {
             [`${prefixCls}-show-line`]: showLine,
             [`${prefixCls}-focused`]: focused,

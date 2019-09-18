@@ -19,6 +19,14 @@ const treeData = [
         children: [
           { key: '0-0-1-0', title: 'parent 1-2-0', disableCheckbox: true },
           { key: '0-0-1-1', title: 'parent 1-2-1' },
+          { key: '0-0-1-2', title: 'parent 1-2-2' },
+          { key: '0-0-1-3', title: 'parent 1-2-3' },
+          { key: '0-0-1-4', title: 'parent 1-2-4' },
+          { key: '0-0-1-5', title: 'parent 1-2-5' },
+          { key: '0-0-1-6', title: 'parent 1-2-6' },
+          { key: '0-0-1-7', title: 'parent 1-2-7' },
+          { key: '0-0-1-8', title: 'parent 1-2-8' },
+          { key: '0-0-1-9', title: 'parent 1-2-9' },
         ],
       },
     ],
@@ -42,6 +50,8 @@ class Demo extends React.Component {
       defaultSelectedKeys: keys,
       defaultCheckedKeys: keys,
     };
+
+    this.treeRef = React.createRef();
   }
 
   onExpand = expandedKeys => {
@@ -141,9 +151,26 @@ class Demo extends React.Component {
         />
 
         <h2>Select</h2>
-        <Tree className="myCls" defaultExpandAll treeData={treeData} onSelect={this.onSelect} />
+        <Tree
+          ref={this.treeRef}
+          className="myCls"
+          defaultExpandAll
+          treeData={treeData}
+          onSelect={this.onSelect}
+          height={150}
+        />
 
-        <input aria-label="bad" />
+        <button
+          type="button"
+          onClick={() => {
+            setTimeout(() => {
+              console.log('scroll!!!');
+              this.treeRef.current.scrollTo({ key: '0-0-1-9' });
+            }, 100);
+          }}
+        >
+          Scroll Last
+        </button>
       </div>
     );
   }
