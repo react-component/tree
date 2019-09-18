@@ -358,6 +358,7 @@ const NodeList: React.FC<NodeListProps> = ({
           onKeyDown={onInternalKeyDown}
           onFocus={onFocus}
           onBlur={onBlur}
+          value=""
         />
       </div>
 
