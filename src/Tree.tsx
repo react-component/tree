@@ -169,6 +169,8 @@ interface TreeState {
   prevProps: TreeProps;
 }
 
+const keyPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
+
 class Tree extends React.Component<TreeProps, TreeState> {
   static propTypes = {
     prefixCls: PropTypes.string,
@@ -189,15 +191,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
     defaultExpandParent: PropTypes.bool,
     autoExpandParent: PropTypes.bool,
     defaultExpandAll: PropTypes.bool,
-    defaultExpandedKeys: PropTypes.arrayOf(PropTypes.string),
-    expandedKeys: PropTypes.arrayOf(PropTypes.string),
-    defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
-    checkedKeys: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-      PropTypes.object,
-    ]),
-    defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
-    selectedKeys: PropTypes.arrayOf(PropTypes.string),
+    defaultExpandedKeys: PropTypes.arrayOf(keyPropType),
+    expandedKeys: PropTypes.arrayOf(keyPropType),
+    defaultCheckedKeys: PropTypes.arrayOf(keyPropType),
+    checkedKeys: PropTypes.oneOfType([PropTypes.arrayOf(keyPropType), PropTypes.object]),
+    defaultSelectedKeys: PropTypes.arrayOf(keyPropType),
+    selectedKeys: PropTypes.arrayOf(keyPropType),
     onClick: PropTypes.func,
     onDoubleClick: PropTypes.func,
     onExpand: PropTypes.func,
@@ -205,7 +204,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     onSelect: PropTypes.func,
     onLoad: PropTypes.func,
     loadData: PropTypes.func,
-    loadedKeys: PropTypes.arrayOf(PropTypes.string),
+    loadedKeys: PropTypes.arrayOf(keyPropType),
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     onRightClick: PropTypes.func,
