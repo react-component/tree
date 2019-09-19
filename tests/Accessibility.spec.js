@@ -15,10 +15,16 @@ describe('Tree Accessibility', () => {
       const onFocus = jest.fn();
       const onBlur = jest.fn();
       const onKeyDown = jest.fn();
+      const onActiveChange = jest.fn();
 
       function checkKeyDownTrigger() {
         expect(onKeyDown).toHaveBeenCalled();
         onKeyDown.mockReset();
+      }
+
+      function checkActiveTrigger(key) {
+        expect(onActiveChange).toHaveBeenCalledWith(key);
+        onActiveChange.mockReset();
       }
 
       const wrapper = mount(
@@ -28,6 +34,7 @@ describe('Tree Accessibility', () => {
           onFocus={onFocus}
           onBlur={onBlur}
           onKeyDown={onKeyDown}
+          onActiveChange={onActiveChange}
           defaultExpandAll
           treeData={[{ key: 'parent', children: [{ key: 'child 1' }, { key: 'child 2' }] }]}
         />,
@@ -47,6 +54,7 @@ describe('Tree Accessibility', () => {
           .hasClass('rc-tree-treenode-active'),
       ).toBeTruthy();
       checkKeyDownTrigger();
+      checkActiveTrigger('child 2');
 
       // Arrow down: first one
       wrapper.find('input').simulate('keyDown', { which: KeyCode.DOWN });
@@ -58,6 +66,7 @@ describe('Tree Accessibility', () => {
           .hasClass('rc-tree-treenode-active'),
       ).toBeTruthy();
       checkKeyDownTrigger();
+      checkActiveTrigger('parent');
 
       // Arrow up: last one again
       wrapper.find('input').simulate('keyDown', { which: KeyCode.UP });
@@ -69,6 +78,7 @@ describe('Tree Accessibility', () => {
           .hasClass('rc-tree-treenode-active'),
       ).toBeTruthy();
       checkKeyDownTrigger();
+      checkActiveTrigger('child 2');
 
       // Arrow left: parent
       wrapper.find('input').simulate('keyDown', { which: KeyCode.LEFT });
@@ -80,6 +90,7 @@ describe('Tree Accessibility', () => {
           .hasClass('rc-tree-treenode-active'),
       ).toBeTruthy();
       checkKeyDownTrigger();
+      checkActiveTrigger('parent');
 
       // Arrow left: collapse
       wrapper.find('input').simulate('keyDown', { which: KeyCode.LEFT });
@@ -117,6 +128,7 @@ describe('Tree Accessibility', () => {
           .hasClass('rc-tree-treenode-active'),
       ).toBeTruthy();
       checkKeyDownTrigger();
+      checkActiveTrigger('child 1');
 
       // SPACE: confirm
       wrapper.find('input').simulate('keyDown', { which: KeyCode.SPACE });

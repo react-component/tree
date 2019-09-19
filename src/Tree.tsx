@@ -131,6 +131,11 @@ export interface TreeProps {
     dropPosition: number;
     dropToGap: boolean;
   }) => void;
+  /**
+   * Used for `rc-tree-select` only.
+   * Do not use in your production code directly since this will be refactor.
+   */
+  onActiveChange?: (key: Key) => void;
   filterTreeNode?: (treeNode: EventDataNode) => boolean;
   motion?: any;
   switcherIcon?: IconType;
@@ -835,7 +840,16 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   // =========================== Keyboard ===========================
   onActiveChange = (activeKey: Key) => {
+    const { onActiveChange } = this.props;
+
     this.setState({ activeKey });
+    if (activeKey !== null) {
+      this.scrollTo({ key: activeKey });
+    }
+
+    if (onActiveChange) {
+      onActiveChange(activeKey);
+    }
   };
 
   getActiveItem = () => {
@@ -863,7 +877,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (item) {
       const { key } = item.data;
       this.onActiveChange(key);
-      this.scrollTo({ key });
     } else {
       this.onActiveChange(null);
     }
