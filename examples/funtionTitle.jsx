@@ -25,11 +25,9 @@ const motion = {
   onLeaveActive: () => ({ height: 0 }),
 };
 
-const renderTitle = title => {
-  console.log('run');
-  return title;
-};
-
+const renderTitle = title =>
+  // console.log('run');
+  title;
 const groupList = (list, targetVar) => {
   const obj = {};
   list.forEach(item => {
@@ -43,7 +41,7 @@ const groupList = (list, targetVar) => {
       disabled,
     });
   });
-  console.log(obj);
+  // console.log(obj);
   return (
     Object.keys(obj)
       .map(key => ({
@@ -56,6 +54,11 @@ const groupList = (list, targetVar) => {
 };
 
 function getTreeData() {
+  // return [
+  //   { key: '00', children: [{ key: '000' }, { key: '001' }] },
+  //   { key: '01', children: [{ key: '010' }, { key: '011' }] },
+  // ];
+
   return groupList(
     data.map(item => ({
       title: () => renderTitle(item.fieldName),
@@ -70,6 +73,8 @@ function getTreeData() {
 
 const Demo = () => {
   const [keys, setKeys] = useState(data.map(item => item.fieldName));
+  // const [keys, setKeys] = useState(['00', '01']);
+
   return (
     <div className="animation">
       <h2>expanded</h2>
@@ -85,7 +90,10 @@ const Demo = () => {
             height={200}
             checkedKeys={keys}
             itemHeight={20}
-            onCheck={checkedKeys => setKeys(checkedKeys)}
+            onCheck={checkedKeys => {
+              console.log('onCheck:', checkedKeys);
+              setKeys(checkedKeys);
+            }}
             style={{ border: '1px solid #000' }}
             treeData={getTreeData()}
           />

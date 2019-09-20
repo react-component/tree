@@ -4,7 +4,6 @@ import React from 'react';
 import Tree, { TreeNode } from '../src';
 import {
   convertDataToTree,
-  conductCheck,
   conductExpandParent,
   getDragNodesKeys,
   getDataAndAria,
@@ -17,6 +16,7 @@ import {
   getTreeNodeProps,
 } from '../src/utils/treeUtil';
 import { spyConsole, spyError } from './util';
+import { conductCheck } from '../src/utils/conductUtil';
 
 describe('Util', () => {
   spyConsole();
@@ -183,10 +183,13 @@ describe('Util', () => {
         const allCheckedKeys = conductCheck(['greed', 'good'], true, keyEntities).checkedKeys;
         expect(allCheckedKeys.length).toEqual(11);
 
-        // Then uncheck one of then
-        const { checkedKeys, halfCheckedKeys } = conductCheck(['spoon'], false, keyEntities, {
-          checkedKeys: allCheckedKeys,
-        });
+        // Then un-check one of then
+        const removedKeys = allCheckedKeys.filter(key => key !== 'spoon');
+        const { checkedKeys, halfCheckedKeys } = conductCheck(
+          removedKeys,
+          { checked: false, halfCheckedKeys: [] },
+          keyEntities,
+        );
         expect(checkedKeys.sort()).toEqual(['greed', 'there', 'no'].sort());
         expect(halfCheckedKeys.sort()).toEqual(['good', 'is'].sort());
       });
@@ -243,13 +246,19 @@ describe('Util', () => {
         expect(allCheckedKeys.length).toEqual(6);
 
         // Then uncheck one of then
-        const result1 = conductCheck(['not'], false, keyEntities, { checkedKeys: allCheckedKeys });
+        const result1 = conductCheck(
+          allCheckedKeys.filter(key => key !== 'not'),
+          { checked: false, halfCheckedKeys: [] },
+          keyEntities,
+        );
         expect(result1.checkedKeys.sort()).toEqual(['are', 'to', 'be'].sort());
         expect(result1.halfCheckedKeys.sort()).toEqual(['war'].sort());
 
-        const result2 = conductCheck(['to', 'be'], false, keyEntities, {
-          checkedKeys: allCheckedKeys,
-        });
+        const result2 = conductCheck(
+          allCheckedKeys.filter(key => key !== 'to' && key !== 'be'),
+          { checked: false, halfCheckedKeys: [] },
+          keyEntities,
+        );
         expect(result2.checkedKeys.sort()).toEqual(['war', 'are', 'not', 'it'].sort());
         expect(result2.halfCheckedKeys.sort()).toEqual([].sort());
       });
