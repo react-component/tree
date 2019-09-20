@@ -19,7 +19,6 @@ import {
   arrAdd,
   arrDel,
   posToArr,
-  conductCheck,
 } from './util';
 import {
   DataNode,
@@ -41,6 +40,7 @@ import {
 } from './utils/treeUtil';
 import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
+import { conductCheck } from './utils/conductUtil';
 
 interface CheckInfo {
   event: 'check';
@@ -647,10 +647,23 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
       this.setUncontrolledState({ checkedKeys });
     } else {
-      const { checkedKeys, halfCheckedKeys } = conductCheck([key], checked, keyEntities, {
-        checkedKeys: oriCheckedKeys,
-        halfCheckedKeys: oriHalfCheckedKeys,
-      });
+      // Always fill first
+      let { checkedKeys, halfCheckedKeys } = conductCheck(
+        [...oriCheckedKeys, key],
+        true,
+        keyEntities,
+      );
+
+      // If remove, we do it again to correction
+      if (!checked) {
+        const keySet = new Set(checkedKeys);
+        keySet.delete(key);
+        ({ checkedKeys, halfCheckedKeys } = conductCheck(
+          Array.from(keySet),
+          { checked: false, halfCheckedKeys },
+          keyEntities,
+        ));
+      }
 
       checkedObj = checkedKeys;
 
