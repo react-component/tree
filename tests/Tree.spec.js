@@ -1323,4 +1323,12 @@ describe('Tree Basic', () => {
 
     expect(scrollTo).toHaveBeenCalled();
   });
+
+  it('not crash if expandedKeys is null', () => {
+    mount(
+      <Tree expandedKeys={null}>
+        <TreeNode key="test" title="alive" />
+      </Tree>,
+    );
+  });
 });

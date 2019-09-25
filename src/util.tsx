@@ -40,11 +40,6 @@ export function isTreeNode(node: NodeElement) {
   return node && node.type && node.type.isTreeNode;
 }
 
-export function isCheckDisabled(node: DataNode) {
-  const { disabled, disableCheckbox, checkable } = (node || {}) as DataNode;
-  return !!(disabled || disableCheckbox) || checkable === false;
-}
-
 export function getDragNodesKeys(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key[] {
   const dragNodesKeys = [dragNodeKey];
 

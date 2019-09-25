@@ -838,12 +838,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
       keyEntities,
     } = this.state;
     return {
-      expandedKeys,
-      selectedKeys,
-      loadedKeys,
-      loadingKeys,
-      checkedKeys,
-      halfCheckedKeys,
+      expandedKeys: expandedKeys || [],
+      selectedKeys: selectedKeys || [],
+      loadedKeys: loadedKeys || [],
+      loadingKeys: loadingKeys || [],
+      checkedKeys: checkedKeys || [],
+      halfCheckedKeys: halfCheckedKeys || [],
       dragOverNodeKey,
       dropPosition,
       keyEntities,
