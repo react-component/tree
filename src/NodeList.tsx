@@ -276,6 +276,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         data={mergedData}
         itemKey={itemKey}
         height={height}
+        fullHeight={false}
         itemHeight={itemHeight}
         onSkipRender={onMotionEnd}
         prefixCls={`${prefixCls}-list`}
