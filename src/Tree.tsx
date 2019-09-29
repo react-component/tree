@@ -1062,34 +1062,37 @@ class Tree extends React.Component<TreeProps, TreeState> {
           onNodeDrop: this.onNodeDrop,
         }}
       >
-        <NodeList
-          ref={this.listRef}
+        <div
           className={classNames(prefixCls, className, {
             [`${prefixCls}-show-line`]: showLine,
             [`${prefixCls}-focused`]: focused,
             [`${prefixCls}-active-focused`]: activeKey !== null,
           })}
-          prefixCls={prefixCls}
-          style={style}
-          data={flattenNodes}
-          disabled={disabled}
-          selectable={selectable}
-          checkable={!!checkable}
-          motion={motion}
-          dragging={dragging}
-          height={height}
-          itemHeight={itemHeight}
-          focusable={focusable}
-          focused={focused}
-          tabIndex={tabIndex}
-          activeItem={this.getActiveItem()}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          onKeyDown={this.onKeyDown}
-          onActiveChange={this.onActiveChange}
-          {...this.getTreeNodeRequiredProps()}
-          {...domProps}
-        />
+        >
+          <NodeList
+            ref={this.listRef}
+            prefixCls={prefixCls}
+            style={style}
+            data={flattenNodes}
+            disabled={disabled}
+            selectable={selectable}
+            checkable={!!checkable}
+            motion={motion}
+            dragging={dragging}
+            height={height}
+            itemHeight={itemHeight}
+            focusable={focusable}
+            focused={focused}
+            tabIndex={tabIndex}
+            activeItem={this.getActiveItem()}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            onKeyDown={this.onKeyDown}
+            onActiveChange={this.onActiveChange}
+            {...this.getTreeNodeRequiredProps()}
+            {...domProps}
+          />
+        </div>
       </TreeContext.Provider>
     );
   }

@@ -274,7 +274,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const {
       context: { keyEntities },
     } = this.props;
-    const { children } = keyEntities[eventKey];
+    const { children } = keyEntities[eventKey] || {};
 
     return !!(children || []).length;
   };
@@ -511,7 +511,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
-    const { level } = keyEntities[eventKey];
+    const { level } = keyEntities[eventKey] || {};
 
     return (
       <div

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tree Props checkStrictly 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -10,9 +12,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -75,12 +77,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props checkable default 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -89,9 +93,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -154,12 +158,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props checkable without selectable 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -168,9 +174,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -233,12 +239,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props custom switcher icon switcher icon 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -247,9 +255,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -358,12 +366,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -372,9 +382,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -539,12 +549,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props data and aria props renders aria attributes 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -553,10 +565,10 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
     aria-label="name"
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -564,12 +576,14 @@ Array [
         style="display:flex;flex-direction:column"
       />
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props data and aria props renders data attributes 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -578,9 +592,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
     data-test="tree"
   >
     <div>
@@ -589,12 +603,14 @@ Array [
         style="display:flex;flex-direction:column"
       />
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props defaultExpandAll 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -603,9 +619,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -662,12 +678,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props disabled basic 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -677,9 +695,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -708,12 +726,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props disabled treeNode should disabled when tree disabled 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -723,9 +743,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -754,12 +774,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props icon 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -768,9 +790,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -835,12 +857,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props invalidate checkedKeys null 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -849,9 +873,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -914,12 +938,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props invalidate checkedKeys number 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -928,9 +954,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -993,12 +1019,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props loadData basic 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1007,9 +1035,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1060,12 +1088,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props multiple 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1074,9 +1104,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1133,12 +1163,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props prefixCls 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1147,9 +1179,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1157,12 +1189,14 @@ Array [
         style="display:flex;flex-direction:column"
       />
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props prefixCls 2`] = `
-Array [
+<div
+  class="test-prefix"
+>
   <div
     role="tree"
   >
@@ -1171,9 +1205,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="test-prefix-list test-prefix"
+    class="test-prefix-list"
   >
     <div>
       <div
@@ -1181,12 +1215,14 @@ Array [
         style="display:flex;flex-direction:column"
       />
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props selectable with selectable 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1195,9 +1231,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1254,12 +1290,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props selectable without selectable 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1268,9 +1306,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1327,12 +1365,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props showIcon 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1341,9 +1381,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1392,12 +1432,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props showIcon 2`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1406,9 +1448,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1451,12 +1493,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props showIcon 3`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1465,9 +1509,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1611,12 +1655,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props showLine 1`] = `
-Array [
+<div
+  class="rc-tree rc-tree-show-line"
+>
   <div
     role="tree"
   >
@@ -1625,9 +1671,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree rc-tree-show-line"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1635,12 +1681,14 @@ Array [
         style="display:flex;flex-direction:column"
       />
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props treeData 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1649,9 +1697,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1846,12 +1894,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Props treeData 2`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -1860,9 +1910,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -1891,6 +1941,6 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;

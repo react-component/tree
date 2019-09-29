@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TreeNode Props className 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -10,9 +12,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -148,12 +150,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props customize icon component 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -162,9 +166,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -197,12 +201,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props customize icon element 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -211,9 +217,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -246,12 +252,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props customize icon hide icon 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -260,9 +268,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -288,12 +296,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -302,9 +312,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -445,12 +455,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props data and aria props renders data attributes on li 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -459,9 +471,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -602,12 +614,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props isLeaf 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -616,9 +630,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -669,12 +683,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props isLeaf 2`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -683,9 +699,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -742,12 +758,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`TreeNode Props isLeaf 3`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -756,9 +774,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -815,6 +833,6 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;

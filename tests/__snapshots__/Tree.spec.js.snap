@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tree Basic check basic render 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -10,9 +12,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -106,12 +108,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Basic check check after data ready works 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -120,9 +124,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -185,12 +189,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Basic check check update when Tree trigger componentWillReceiveProps 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -199,9 +205,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -233,12 +239,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -247,9 +255,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -298,12 +306,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -312,9 +322,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -419,12 +429,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Basic renders correctly 1`] = `
-Array [
+<div
+  class="rc-tree forTest rc-tree-show-line"
+>
   <div
     role="tree"
   >
@@ -433,9 +445,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree forTest rc-tree-show-line"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -597,12 +609,14 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Tree Basic renders opaque children correctly 1`] = `
-Array [
+<div
+  class="rc-tree"
+>
   <div
     role="tree"
   >
@@ -611,9 +625,9 @@ Array [
       tabindex="0"
       value=""
     />
-  </div>,
+  </div>
   <div
-    class="rc-tree-list rc-tree"
+    class="rc-tree-list"
   >
     <div>
       <div
@@ -642,6 +656,6 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;

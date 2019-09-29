@@ -52,7 +52,6 @@ export interface NodeListRef {
 
 interface NodeListProps {
   prefixCls: string;
-  className: string;
   style: React.CSSProperties;
   data: FlattenNode[];
   motion: any;

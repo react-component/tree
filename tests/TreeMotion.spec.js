@@ -58,4 +58,16 @@ describe('Tree Motion', () => {
 
     expect(visibleList.length < 10).toBeTruthy();
   });
+
+  it('not crash', () => {
+    const wrapper = mount(
+      <Tree
+        treeData={[{ key: '0-0', children: [{ key: '0-0-0' }] }]}
+        expandedKeys={['0-0']}
+        motion={{}}
+      />,
+    );
+
+    wrapper.setProps({ treeData: [] });
+  });
 });
