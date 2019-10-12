@@ -32,7 +32,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development father doc dev --storybook",
     "build": "father doc build --storybook",
-    "compile": "father build",
+    "compile": "father build && lessc assets/index.less assets/index.css",
     "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish --any-branch",
     "lint": "eslint src/ examples/ --ext .tsx,.ts,.jsx,.js",
     "test": "father test",
@@ -52,6 +52,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.0.0",
     "father": "^2.13.2",
+    "less": "^3.10.3",
     "np": "^5.0.3",
     "rc-dialog": "^7.3.1",
     "rc-tools": "^9.x",
