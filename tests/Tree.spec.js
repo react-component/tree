@@ -4,6 +4,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import { resetWarned } from 'rc-util/lib/warning';
+import VirtualList from 'rc-virtual-list';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
 import { objectMatcher, spyConsole, spyError } from './util';
@@ -224,10 +225,14 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>,
       );
-      const firstCheckboxClassNames = wrapper.find('.rc-tree-checkbox').instance().classList;
-      expect([].slice.call(firstCheckboxClassNames).includes(CHECKED_CLASSNAME.slice(1))).toBe(
-        false,
-      );
+      const firstCheckboxClassNames = wrapper
+        .find('.rc-tree-checkbox')
+        .instance().classList;
+      expect(
+        [].slice
+          .call(firstCheckboxClassNames)
+          .includes(CHECKED_CLASSNAME.slice(1)),
+      ).toBe(false);
     });
 
     it('controlled by checkedKeys', () => {
@@ -446,9 +451,21 @@ describe('Tree Basic', () => {
         return (
           <Tree checkable onCheck={mockHandleCheck}>
             <TreeNode title="parent 1" key="0-0">
-              <TreeNode title="leaf 1" key="0-0-1" disableCheckbox={disableCheckbox} />
-              <TreeNode title="leaf 2" key="0-0-2" disableCheckbox={disableCheckbox} />
-              <TreeNode title="leaf 3" key="0-0-3" disableCheckbox={disableCheckbox} />
+              <TreeNode
+                title="leaf 1"
+                key="0-0-1"
+                disableCheckbox={disableCheckbox}
+              />
+              <TreeNode
+                title="leaf 2"
+                key="0-0-2"
+                disableCheckbox={disableCheckbox}
+              />
+              <TreeNode
+                title="leaf 3"
+                key="0-0-3"
+                disableCheckbox={disableCheckbox}
+              />
             </TreeNode>
           </Tree>
         );
@@ -518,7 +535,9 @@ describe('Tree Basic', () => {
       it('works', () => {
         const checkedKeys = ['0-0-0'];
         const wrapper = mount(<Tree checkable checkedKeys={checkedKeys} />);
-        expect(errorSpy()).toHaveBeenCalledWith("Warning: Tree missing follow keys: '0-0-0'");
+        expect(errorSpy()).toHaveBeenCalledWith(
+          "Warning: Tree missing follow keys: '0-0-0'",
+        );
 
         wrapper.setProps({
           expandedKeys: ['0-0'],
@@ -632,7 +651,9 @@ describe('Tree Basic', () => {
 
         it('do not uncheck parent', () => {
           const wrapper = mount(<App />);
-          wrapper.setState({ checkedKeys: { checked: ['0-0', '0-0-0'], halfChecked: [] } });
+          wrapper.setState({
+            checkedKeys: { checked: ['0-0', '0-0-0'], halfChecked: [] },
+          });
           wrapper.find('.rc-tree-switcher').simulate('click');
           wrapper
             .find('.rc-tree-checkbox')
@@ -673,7 +694,9 @@ describe('Tree Basic', () => {
       firstNode().simulate('click');
 
       expect(firstNode().hasClass('rc-tree-checkbox-checked')).toBe(true);
-      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(
+        false,
+      );
       expect(
         wrapper
           .state()
@@ -683,7 +706,9 @@ describe('Tree Basic', () => {
 
       firstNode().simulate('click');
       expect(firstNode().hasClass('rc-tree-checkbox-checked')).toBe(false);
-      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(
+        false,
+      );
       expect(wrapper.state().checkedKeys).toEqual([]);
     });
 
@@ -710,7 +735,9 @@ describe('Tree Basic', () => {
 
       firstNode().simulate('click');
       expect(firstNode().hasClass('rc-tree-checkbox-checked')).toBe(true);
-      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(
+        false,
+      );
       expect(
         wrapper
           .state()
@@ -720,7 +747,9 @@ describe('Tree Basic', () => {
 
       firstNode().simulate('click');
       expect(firstNode().hasClass('rc-tree-checkbox-checked')).toBe(false);
-      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(firstNode().hasClass('rc-tree-checkbox-indeterminate')).toBe(
+        false,
+      );
       expect(wrapper.state().checkedKeys).toEqual([]);
     });
 
@@ -753,11 +782,15 @@ describe('Tree Basic', () => {
 
       getNode().simulate('click');
       expect(getNode().hasClass('rc-tree-checkbox-checked')).toBe(true);
-      expect(getParent().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(getParent().hasClass('rc-tree-checkbox-indeterminate')).toBe(
+        false,
+      );
       expect(getParent().hasClass('rc-tree-checkbox-checked')).toBe(true);
       getNode().simulate('click');
       expect(getNode().hasClass('rc-tree-checkbox-checked')).toBe(false);
-      expect(getParent().hasClass('rc-tree-checkbox-indeterminate')).toBe(false);
+      expect(getParent().hasClass('rc-tree-checkbox-indeterminate')).toBe(
+        false,
+      );
       expect(getParent().hasClass('rc-tree-checkbox-checked')).toBe(false);
     });
   });
@@ -771,7 +804,9 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>,
       );
-      expect(wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME)).toBe(true);
+      expect(
+        wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME),
+      ).toBe(true);
     });
 
     it('controlled by selectedKeys', () => {
@@ -782,9 +817,13 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>,
       );
-      expect(wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME)).toBe(false);
+      expect(
+        wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME),
+      ).toBe(false);
       wrapper.setProps({ selectedKeys: ['0-0'] });
-      expect(wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME)).toBe(true);
+      expect(
+        wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME),
+      ).toBe(true);
     });
 
     it('fires select event', () => {
@@ -911,7 +950,9 @@ describe('Tree Basic', () => {
         </TreeNode>
       </Tree>,
     );
-    const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
+    const node = convertNodePropsToEventData(
+      wrapper.find(InternalTreeNode).props(),
+    );
     wrapper.find('.rc-tree-node-content-wrapper').simulate('contextMenu');
     expect(handleRightClick.mock.calls[0][0].node).toEqual(node);
   });
@@ -938,7 +979,9 @@ describe('Tree Basic', () => {
         </TreeNode>
       </Tree>,
     );
-    const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
+    const node = convertNodePropsToEventData(
+      wrapper.find(InternalTreeNode).props(),
+    );
     wrapper.find('.rc-tree-node-content-wrapper').simulate('mouseEnter');
     expect(handleMouseEnter.mock.calls[0][0].node).toEqual(node);
   });
@@ -952,7 +995,9 @@ describe('Tree Basic', () => {
         </TreeNode>
       </Tree>,
     );
-    const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
+    const node = convertNodePropsToEventData(
+      wrapper.find(InternalTreeNode).props(),
+    );
     wrapper.find('.rc-tree-node-content-wrapper').simulate('mouseLeave');
     expect(handleMouseLeave.mock.calls[0][0].node).toEqual(node);
   });
@@ -989,7 +1034,9 @@ describe('Tree Basic', () => {
         <TreeNode title="parent 1" key="0-0" />
       </Tree>,
     );
-    const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
+    const node = convertNodePropsToEventData(
+      wrapper.find(InternalTreeNode).props(),
+    );
     wrapper.find('.rc-tree-switcher').simulate('click');
     expect(loadData).toHaveBeenCalledWith(node);
     expect(then).toHaveBeenCalled();
@@ -1010,7 +1057,9 @@ describe('Tree Basic', () => {
     it('fires dragStart event', () => {
       const onDragStart = jest.fn();
       const wrapper = mount(createTree({ onDragStart }));
-      const treeNode = wrapper.find('.dragTarget > .rc-tree-node-content-wrapper');
+      const treeNode = wrapper.find(
+        '.dragTarget > .rc-tree-node-content-wrapper',
+      );
       const node = convertNodePropsToEventData(
         wrapper
           .find(InternalTreeNode)
@@ -1026,7 +1075,9 @@ describe('Tree Basic', () => {
       const onDragEnter = jest.fn();
       const wrapper = mount(createTree({ onDragEnter }));
 
-      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+      wrapper
+        .find('.dragTarget > .rc-tree-node-content-wrapper')
+        .simulate('dragStart');
       wrapper
         .find('.dropTarget')
         .at(0)
@@ -1085,7 +1136,9 @@ describe('Tree Basic', () => {
     it('fires drop event', () => {
       const onDrop = jest.fn();
       const wrapper = mount(createTree({ onDrop }));
-      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+      wrapper
+        .find('.dragTarget > .rc-tree-node-content-wrapper')
+        .simulate('dragStart');
       const dropNode = convertNodePropsToEventData(
         wrapper
           .find(InternalTreeNode)
@@ -1117,7 +1170,9 @@ describe('Tree Basic', () => {
           .at(1)
           .props(),
       );
-      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragEnd');
+      wrapper
+        .find('.dragTarget > .rc-tree-node-content-wrapper')
+        .simulate('dragEnd');
       const event = onDragEnd.mock.calls[0][0];
       expect(event.node).toEqual(node);
     });
@@ -1133,7 +1188,9 @@ describe('Tree Basic', () => {
       const dragTree = wrapper.find(Tree).at(0);
       const normalTree = wrapper.find(Tree).at(1);
 
-      dragTree.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+      dragTree
+        .find('.dragTarget > .rc-tree-node-content-wrapper')
+        .simulate('dragStart');
       normalTree
         .find('.dropTarget')
         .at(0)
@@ -1162,7 +1219,9 @@ describe('Tree Basic', () => {
             </Tree>,
           );
 
-          wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+          wrapper
+            .find('.dragTarget > .rc-tree-node-content-wrapper')
+            .simulate('dragStart');
 
           // 1. Move into target (first in the middle of the node)
           wrapper.find(targetSelector).simulate('dragEnter', { clientY: 10 });
@@ -1175,7 +1234,9 @@ describe('Tree Basic', () => {
             // 3. Move in again
             wrapper.find(targetSelector).simulate('dragEnter', { clientY: 0 });
             setTimeout(() => {
-              wrapper.find(targetSelector).simulate('dragOver', { clientY: 999 });
+              wrapper
+                .find(targetSelector)
+                .simulate('dragOver', { clientY: 999 });
 
               // 4. Drop
               wrapper.find(targetSelector).simulate('drop');
@@ -1292,7 +1353,9 @@ describe('Tree Basic', () => {
             setCheckedKeys(keys);
             onCheck(keys);
           }}
-          treeData={[{ key: 11, title: 11, children: [{ key: 22, title: 22 }] }]}
+          treeData={[
+            { key: 11, title: 11, children: [{ key: 22, title: 22 }] },
+          ]}
         />
       );
     };
@@ -1330,5 +1393,25 @@ describe('Tree Basic', () => {
         <TreeNode key="test" title="alive" />
       </Tree>,
     );
+  });
+
+  it('not crash if expandedKeys change to undefined', () => {
+    const wrapper = mount(
+      <Tree expandedKeys={['light']}>
+        <TreeNode key="light" title="light">
+          <TreeNode key="bamboo" title="bamboo" />
+        </TreeNode>
+      </Tree>,
+    );
+    const { data } = wrapper.find(VirtualList).props();
+    expect(data).toHaveLength(2);
+
+    wrapper.setProps({ expandedKeys: undefined });
+
+    // Click should not crash
+    wrapper
+      .find('.rc-tree-switcher')
+      .first()
+      .simulate('click');
   });
 });
