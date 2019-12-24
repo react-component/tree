@@ -1,7 +1,14 @@
 import * as React from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'rc-util/lib/warning';
-import { DataNode, FlattenNode, NodeElement, DataEntity, Key, EventDataNode } from '../interface';
+import {
+  DataNode,
+  FlattenNode,
+  NodeElement,
+  DataEntity,
+  Key,
+  EventDataNode,
+} from '../interface';
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
 
@@ -45,12 +52,15 @@ export function warningWithoutKey(treeData: DataNode[] = []) {
  */
 export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
   function dig(node: React.ReactNode): DataNode[] {
-    const treeNodes: NodeElement[] = toArray(node);
+    const treeNodes = toArray(node) as NodeElement[];
     return treeNodes
       .map(treeNode => {
         // Filter invalidate node
         if (!isTreeNode(treeNode)) {
-          warning(!treeNode, 'Tree/TreeNode can only accept TreeNode as children.');
+          warning(
+            !treeNode,
+            'Tree/TreeNode can only accept TreeNode as children.',
+          );
           return null;
         }
 
@@ -161,7 +171,11 @@ export function traverseDataNodes(
     // Process children node
     if (children) {
       children.forEach((subNode, subIndex) => {
-        processNode(subNode, subIndex, { node, pos, level: parent ? parent.level + 1 : -1 });
+        processNode(subNode, subIndex, {
+          node,
+          pos,
+          level: parent ? parent.level + 1 : -1,
+        });
       });
     }
   }
@@ -278,7 +292,9 @@ export function getTreeNodeProps(
   return treeNodeProps;
 }
 
-export function convertNodePropsToEventData(props: TreeNodeProps): EventDataNode {
+export function convertNodePropsToEventData(
+  props: TreeNodeProps,
+): EventDataNode {
   const {
     data,
     expanded,
