@@ -27,6 +27,7 @@ const motion = {
 };
 
 function getTreeData() {
+  // big-data: generateData(1000, 3, 2)
   return [
     {
       key: '0',
