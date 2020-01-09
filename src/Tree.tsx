@@ -836,7 +836,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       expandedKeys = arrDel(expandedKeys, key);
     }
 
-    // TODO: optimize big data flatten logic
     const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys);
     this.setUncontrolledState({ expandedKeys, flattenNodes }, true);
 

@@ -95,6 +95,7 @@ export function flattenTreeData(
   treeNodeList: DataNode[] = [],
   expandedKeys: Key[] | true = [],
 ): FlattenNode[] {
+  const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
   const flattenList: FlattenNode[] = [];
 
   function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
@@ -116,7 +117,7 @@ export function flattenTreeData(
       flattenList.push(flattenNode);
 
       // Loop treeNode children
-      if (expandedKeys === true || expandedKeys.includes(mergedKey)) {
+      if (expandedKeys === true || expandedKeySet.has(mergedKey)) {
         flattenNode.children = dig(treeNode.children || [], flattenNode);
       } else {
         flattenNode.children = [];
