@@ -75,7 +75,7 @@ export interface TreeProps {
   defaultExpandedKeys?: Key[];
   expandedKeys?: Key[];
   defaultCheckedKeys?: Key[];
-  checkedKeys?: (Key)[] | { checked: (Key)[]; halfChecked: Key[] };
+  checkedKeys?: Key[] | { checked: Key[]; halfChecked: Key[] };
   defaultSelectedKeys?: Key[];
   selectedKeys?: Key[];
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
@@ -838,7 +838,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // TODO: optimize big data flatten logic
     const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys);
-    this.setUncontrolledState({ expandedKeys, flattenNodes });
+    this.setUncontrolledState({ expandedKeys, flattenNodes }, true);
 
     if (onExpand) {
       onExpand(expandedKeys, {
@@ -1086,18 +1086,25 @@ class Tree extends React.Component<TreeProps, TreeState> {
   /**
    * Only update the value which is not in props
    */
-  setUncontrolledState = state => {
+  setUncontrolledState = (
+    state: Partial<TreeState>,
+    atomic: boolean = false,
+  ) => {
     let needSync = false;
+    let allPassed = true;
     const newState = {};
 
     Object.keys(state).forEach(name => {
-      if (name in this.props) return;
+      if (name in this.props) {
+        allPassed = false;
+        return;
+      }
 
       needSync = true;
       newState[name] = state[name];
     });
 
-    if (needSync) {
+    if (needSync && (!atomic || allPassed)) {
       this.setState(newState);
     }
   };

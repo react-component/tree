@@ -2,6 +2,9 @@
   "name": "rc-tree",
   "version": "3.0.0-alpha.38",
   "description": "tree ui component for react",
+  "engines": {
+    "node": ">=8.x"
+  },
   "keywords": [
     "react",
     "react-component",

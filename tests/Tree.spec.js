@@ -1414,4 +1414,19 @@ describe('Tree Basic', () => {
       .first()
       .simulate('click');
   });
+
+  it('controlled should block expanded', () => {
+    const wrapper = mount(
+      <Tree
+        expandedKeys={['1']}
+        treeData={[{ key: '1', title: 1, children: [{ key: '2', title: 2 }] }]}
+      />,
+    );
+
+    wrapper
+      .find('.rc-tree-switcher')
+      .first()
+      .simulate('click');
+    expect(wrapper.find('List').props().data).toHaveLength(2);
+  });
 });
