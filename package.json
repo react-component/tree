@@ -57,7 +57,7 @@
     "np": "^6.0.0",
     "rc-dialog": "^7.3.1",
     "rc-tooltip": "3.x",
-    "rc-trigger": "^2.0.0",
+    "rc-trigger": "^3.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "typescript": "^3.5.2"
