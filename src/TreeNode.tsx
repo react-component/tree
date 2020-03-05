@@ -37,7 +37,7 @@ export interface TreeNodeProps {
   data?: DataNode;
   isStart?: boolean[];
   isEnd?: boolean[];
-  active: boolean;
+  active?: boolean;
   onMouseMove?: React.MouseEventHandler<HTMLDivElement>;
 
   // By user
