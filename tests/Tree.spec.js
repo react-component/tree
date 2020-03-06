@@ -1429,4 +1429,20 @@ describe('Tree Basic', () => {
       .simulate('click');
     expect(wrapper.find('List').props().data).toHaveLength(2);
   });
+
+  it('support virtual', () => {
+    const data = [];
+    for (let i = 0; i < 99; i += 1) {
+      data.push({
+        key: i,
+        title: i,
+      });
+    }
+
+    const wrapper = mount(
+      <Tree itemHeight={10} height={100} treeData={data} virtual={false} />,
+    );
+
+    expect(wrapper.find('List').props().virtual).toBe(false);
+  });
 });

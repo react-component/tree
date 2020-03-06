@@ -161,6 +161,7 @@ export interface TreeProps {
   // Virtual List
   height?: number;
   itemHeight?: number;
+  virtual?: boolean;
 }
 
 interface TreeState {
@@ -1140,6 +1141,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       filterTreeNode,
       height,
       itemHeight,
+      virtual,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(
       this.props,
@@ -1198,6 +1200,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             dragging={dragging}
             height={height}
             itemHeight={itemHeight}
+            virtual={virtual}
             focusable={focusable}
             focused={focused}
             tabIndex={tabIndex}

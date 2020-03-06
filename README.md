@@ -85,6 +85,7 @@ see examples
 | onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
 | onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
+| virtual | Disable virtual scroll when `false` | boolean | - |
 
 ### TreeNode props
 
