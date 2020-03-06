@@ -17,7 +17,10 @@ interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   treeNodeRequiredProps: TreeNodeRequiredProps;
 }
 
-const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
+const MotionTreeNode: React.ForwardRefRenderFunction<
+  CSSMotion,
+  MotionTreeNodeProps
+> = (
   {
     className,
     style,
@@ -53,7 +56,10 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
         {({ className: motionClassName, style: motionStyle }, motionRef) => (
           <div
             ref={motionRef}
-            className={classNames(`${prefixCls}-treenode-motion`, motionClassName)}
+            className={classNames(
+              `${prefixCls}-treenode-motion`,
+              motionClassName,
+            )}
             style={motionStyle}
           >
             {motionNodes.map((treeNode: FlattenNode) => {
@@ -64,7 +70,10 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
               } = treeNode;
               delete restProps.children;
 
-              const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
+              const treeNodeProps = getTreeNodeProps(
+                key,
+                treeNodeRequiredProps,
+              );
 
               return (
                 <TreeNode
@@ -83,7 +92,15 @@ const MotionTreeNode: React.FC<MotionTreeNodeProps> = (
       </CSSMotion>
     );
   }
-  return <TreeNode domRef={ref} className={className} style={style} {...props} active={active} />;
+  return (
+    <TreeNode
+      domRef={ref}
+      className={className}
+      style={style}
+      {...props}
+      active={active}
+    />
+  );
 };
 
 MotionTreeNode.displayName = 'MotionTreeNode';
