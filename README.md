@@ -29,9 +29,9 @@ tree ui component for react
 
 ## Example
 
-http://localhost:8018/examples/
+http://localhost:9001/
 
-online example: http://react-component.github.io/tree/examples/
+online example: http://react-component.github.io/tree/
 
 ## install
 
