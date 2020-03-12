@@ -59,7 +59,7 @@
     "less": "^3.11.1",
     "np": "^6.0.0",
     "rc-dialog": "^7.3.1",
-    "rc-tooltip": "3.x",
+    "rc-tooltip": "4.x",
     "rc-trigger": "^4.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
