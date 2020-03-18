@@ -194,6 +194,28 @@ describe('Util', () => {
         expect(halfCheckedKeys.sort()).toEqual(['good', 'is'].sort());
       });
 
+      it('uncheck partial', () => {
+        const tree = (
+          <Tree>
+            <TreeNode key="0-0" title="0-0">
+              <TreeNode key="0-0-0" title="0-0-0" />
+              <TreeNode key="0-0-1" title="0-0-1" />
+            </TreeNode>
+          </Tree>
+        );
+        const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
+        const { checkedKeys, halfCheckedKeys } = conductCheck(
+          [],
+          {
+            checked: false,
+            halfCheckedKeys: ['0-0', '0-0-0'],
+          },
+          keyEntities,
+        );
+        expect(checkedKeys).toEqual([]);
+        expect(halfCheckedKeys).toEqual([]);
+      });
+
       describe('not exist', () => {
         const errorSpy = spyError();
 

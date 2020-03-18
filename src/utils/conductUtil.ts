@@ -104,7 +104,7 @@ function cleanConductCheck(
   maxLevel: number,
 ): ConductReturnType {
   const checkedKeys = new Set<Key>(keys);
-  const halfCheckedKeys = new Set<Key>(halfKeys);
+  let halfCheckedKeys = new Set<Key>(halfKeys);
 
   // Remove checked keys from top to bottom
   for (let level = 0; level <= maxLevel; level += 1) {
@@ -123,6 +123,7 @@ function cleanConductCheck(
   }
 
   // Remove checked keys form bottom to top
+  halfCheckedKeys = new Set<Key>();
   const visitedKeys = new Set<Key>();
   for (let level = maxLevel; level >= 0; level -= 1) {
     const entities = levelEntities.get(level) || new Set();
