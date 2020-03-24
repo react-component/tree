@@ -18,7 +18,7 @@ export interface DataNode {
   style?: React.CSSProperties;
 }
 
-export interface EventDataNode extends Omit<DataNode, 'children'> {
+export interface EventDataNode extends DataNode {
   expanded: boolean;
   selected: boolean;
   checked: boolean;
