@@ -143,6 +143,21 @@ describe('Tree Accessibility', () => {
       // Blur
       wrapper.find('input').simulate('blur');
       expect(onBlur).toHaveBeenCalled();
+
+      // null activeKey
+      wrapper
+        .find('.rc-tree-treenode')
+        .first()
+        .simulate('mouseMove');
+      checkActiveTrigger(null);
+
+      for (let i = 0; i < 10; i += 1) {
+        wrapper
+          .find('.rc-tree-treenode')
+          .first()
+          .simulate('mouseMove');
+        expect(onActiveChange).not.toHaveBeenCalled();
+      }
     }
 
     it('onSelect', () => {

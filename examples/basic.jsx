@@ -118,6 +118,7 @@ class Demo extends React.Component {
           defaultCheckedKeys={this.state.defaultCheckedKeys}
           onSelect={this.onSelect}
           onCheck={this.onCheck}
+          onActiveChange={key => console.log('Active:', key)}
         >
           <TreeNode title="parent 1" key="0-0">
             <TreeNode title={customLabel} key="0-0-0">
