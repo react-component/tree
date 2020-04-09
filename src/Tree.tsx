@@ -687,10 +687,15 @@ class Tree extends React.Component<TreeProps, TreeState> {
         eventObj.checkedNodesPositions.push({ node, pos });
       });
 
-      this.setUncontrolledState({
-        checkedKeys,
-        halfCheckedKeys,
-      });
+      this.setUncontrolledState(
+        {
+          checkedKeys,
+        },
+        false,
+        {
+          halfCheckedKeys,
+        },
+      );
     }
 
     if (onCheck) {
@@ -993,7 +998,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
   /**
    * Only update the value which is not in props
    */
-  setUncontrolledState = (state: Partial<TreeState>, atomic: boolean = false) => {
+  setUncontrolledState = (
+    state: Partial<TreeState>,
+    atomic: boolean = false,
+    forceState: Partial<TreeState> | null = null,
+  ) => {
     let needSync = false;
     let allPassed = true;
     const newState = {};
@@ -1009,7 +1018,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     });
 
     if (needSync && (!atomic || allPassed)) {
-      this.setState(newState);
+      this.setState({
+        ...newState,
+        ...forceState,
+      } as TreeState);
     }
   };
 
