@@ -49,6 +49,8 @@ export interface TreeNodeProps {
   icon?: IconType;
   switcherIcon?: IconType;
   children?: React.ReactNode;
+
+  external?: boolean;
 }
 
 export interface InternalTreeNodeProps extends TreeNodeProps {

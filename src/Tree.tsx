@@ -131,6 +131,7 @@ export interface TreeProps {
     dropPosition: number;
     dropToGap: boolean;
   }) => void;
+  onExternalDrop?: (node: EventDataNode) => Promise<void>;
   /**
    * Used for `rc-tree-select` only.
    * Do not use in your production code directly since this will be refactor.
@@ -519,10 +520,56 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.dragNode = null;
   };
 
-  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
+  handleOutsideDrop = (items: DataTransferItemList) => {
+    const handleNewItem = itemData => {
+      const treeNodeRequiredProps = this.getTreeNodeRequiredProps();
+      const eventNode = convertNodePropsToEventData({
+        ...getTreeNodeProps(itemData.key, treeNodeRequiredProps),
+        data: itemData,
+        active: true,
+        external: true,
+      });
+
+      this.onNodeLoad(eventNode);
+    };
+
+    for (let i = 0; i < items.length; i += 1) {
+      const { kind, type } = items[i];
+      if (kind === 'string') {
+        items[i].getAsString(s => {
+          const newItem = {
+            key: s,
+            title: s,
+            type,
+            kind,
+          };
+          handleNewItem(newItem);
+        });
+      } else {
+        const file = items[i].getAsFile();
+        const newFileItem = {
+          key: file.name,
+          title: file.name,
+          type,
+          kind,
+          file,
+        };
+        handleNewItem(newFileItem);
+      }
+    }
+  };
+
+  onNodeDrop = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance) => {
     const { dragNodesKeys = [], dropPosition } = this.state;
     const { onDrop } = this.props;
     const { eventKey, pos } = node.props;
+
+    // handle external item drop
+    const outsideDropData = event.dataTransfer.items;
+    if (outsideDropData.length > 0) {
+      this.handleOutsideDrop(outsideDropData);
+      return;
+    }
 
     this.setState({
       dragOverNodeKey: '',
@@ -707,8 +754,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
     new Promise(resolve => {
       // We need to get the latest state of loading/loaded keys
       this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
-        const { loadData, onLoad } = this.props;
+        const { loadData, onLoad, onExternalDrop } = this.props;
         const { key } = treeNode;
+
+        if (onExternalDrop && treeNode.external) {
+          onExternalDrop(treeNode);
+          return {};
+        }
 
         if (!loadData || loadedKeys.indexOf(key) !== -1 || loadingKeys.indexOf(key) !== -1) {
           // react 15 will warn if return null

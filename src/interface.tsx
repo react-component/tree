@@ -30,6 +30,7 @@ export interface EventDataNode extends DataNode {
   dragOverGapBottom: boolean;
   pos: string;
   active: boolean;
+  external?: boolean;
 }
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
