@@ -58,6 +58,7 @@ export interface TreeProps {
   style?: React.CSSProperties;
   focusable?: boolean;
   tabIndex?: number;
+  titleEllipsis?: boolean;
   children?: React.ReactNode;
   treeData?: DataNode[]; // Generate treeNode by children
   showLine?: boolean;
@@ -178,6 +179,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     className: PropTypes.string,
     style: PropTypes.object,
     tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    titleEllipsis: PropTypes.bool,
     children: PropTypes.any,
     treeData: PropTypes.array, // Generate treeNode by children
     showLine: PropTypes.bool,
@@ -222,6 +224,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   static defaultProps = {
     prefixCls: 'rc-tree',
+    titleEllipsis: false,
     showLine: false,
     showIcon: true,
     selectable: true,
@@ -1038,6 +1041,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       showLine,
       focusable,
       tabIndex = 0,
+      titleEllipsis,
       selectable,
       showIcon,
       icon,
@@ -1112,6 +1116,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             focusable={focusable}
             focused={focused}
             tabIndex={tabIndex}
+            titleEllipsis={titleEllipsis}
             activeItem={this.getActiveItem()}
             onFocus={this.onFocus}
             onBlur={this.onBlur}

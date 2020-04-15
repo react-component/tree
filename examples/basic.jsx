@@ -109,6 +109,7 @@ class Demo extends React.Component {
         <Tree
           ref={this.setTreeRef}
           className="myCls"
+          titleEllipsis
           showLine
           checkable
           defaultExpandAll

@@ -28,6 +28,7 @@ export interface TreeNodeProps {
   loading?: boolean;
   halfChecked?: boolean;
   title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
+  titleEllipsis?: boolean;
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
@@ -75,6 +76,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     loading: PropTypes.bool,
     halfChecked: PropTypes.bool,
     title: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    titleEllipsis: PropTypes.bool,
     dragOver: PropTypes.bool,
     dragOverGapTop: PropTypes.bool,
     dragOverGapBottom: PropTypes.bool,
@@ -428,13 +430,14 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // Icon + Title
   renderSelector = () => {
     const { dragNodeHighlight } = this.state;
-    const { title, selected, icon, loading, data } = this.props;
+    const { title, titleEllipsis, selected, icon, loading, data } = this.props;
     const {
       context: { prefixCls, showIcon, icon: treeIcon, draggable, loadData },
     } = this.props;
     const disabled = this.isDisabled();
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
+    const titleEllipsisClass = `${prefixCls}-node-content-ellipsis`;
 
     // Icon - Still show loading icon when loading without showIcon
     let $icon;
@@ -469,6 +472,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           `${wrapClass}-${this.getNodeState() || 'normal'}`,
           !disabled && (selected || dragNodeHighlight) && `${prefixCls}-node-selected`,
           !disabled && draggable && 'draggable',
+          { [`${titleEllipsisClass}`]: titleEllipsis },
         )}
         draggable={(!disabled && draggable) || undefined}
         aria-grabbed={(!disabled && draggable) || undefined}
