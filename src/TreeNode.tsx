@@ -564,7 +564,6 @@ ContextTreeNode.displayName = 'TreeNode';
 
 ContextTreeNode.defaultProps = {
   title: defaultTitle,
-  titleEllipsis: false,
 };
 
 (ContextTreeNode as any).isTreeNode = 1;

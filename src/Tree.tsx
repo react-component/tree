@@ -224,6 +224,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   static defaultProps = {
     prefixCls: 'rc-tree',
+    titleEllipsis: false,
     showLine: false,
     showIcon: true,
     selectable: true,

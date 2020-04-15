@@ -464,7 +464,7 @@ exports[`Tree Basic renders correctly 1`] = `
             class="rc-tree-checkbox"
           />
           <span
-            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open rc-tree-node-content-ellipsis"
             title="parent 1"
           >
             <span
@@ -495,7 +495,7 @@ exports[`Tree Basic renders correctly 1`] = `
             class="rc-tree-checkbox rc-tree-checkbox-disabled"
           />
           <span
-            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open rc-tree-node-content-ellipsis"
             title="leaf 1"
           >
             <span
@@ -529,7 +529,7 @@ exports[`Tree Basic renders correctly 1`] = `
             class="rc-tree-checkbox"
           />
           <span
-            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal rc-tree-node-content-ellipsis"
             title="leaf"
           >
             <span
@@ -563,7 +563,7 @@ exports[`Tree Basic renders correctly 1`] = `
             class="rc-tree-checkbox"
           />
           <span
-            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal rc-tree-node-content-ellipsis"
             title="leaf"
           >
             <span
@@ -594,7 +594,7 @@ exports[`Tree Basic renders correctly 1`] = `
             class="rc-tree-checkbox rc-tree-checkbox-disabled"
           />
           <span
-            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+            class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal rc-tree-node-content-ellipsis"
             title="leaf 2"
           >
             <span
