@@ -1035,6 +1035,12 @@ describe('Tree Basic', () => {
       const wrapper = mount(createTree({ onDragEnter }));
 
       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+
+      // Not trigger self
+      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragEnter');
+      await delay(500);
+      expect(onDragEnter).not.toHaveBeenCalled();
+
       wrapper
         .find('.dropTarget')
         .at(0)
@@ -1042,7 +1048,6 @@ describe('Tree Basic', () => {
       expect(onDragEnter).not.toHaveBeenCalled();
 
       await delay(500);
-
       wrapper.update();
       const node = convertNodePropsToEventData(
         wrapper
@@ -1053,6 +1058,7 @@ describe('Tree Basic', () => {
       const event = onDragEnter.mock.calls[0][0];
       expect(event.node).toEqual(node);
       expect(event.expandedKeys).toEqual(['0-0', '0-0-0-1']);
+      expect(onDragEnter).toHaveBeenCalledTimes(1);
     });
 
     it('fires dragOver event', () => {
