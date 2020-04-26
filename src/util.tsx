@@ -91,7 +91,7 @@ export function traverseTreeNodes(
 
     // Process children node
     Children.forEach(childList, (subNode, subIndex) => {
-      processNode(subNode, subIndex, { node, pos });
+      processNode(subNode as NodeElement, subIndex, { node, pos });
     });
   }
 
