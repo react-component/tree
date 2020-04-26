@@ -385,16 +385,20 @@ class Tree extends React.Component<TreeProps, TreeState> {
   }
 
   onNodeDragStart = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { expandedKeys, keyEntities } = this.state;
+    const { expandedKeys, keyEntities, treeData } = this.state;
     const { onDragStart } = this.props;
     const { eventKey } = node.props;
 
     this.dragNode = node;
 
+    const newExpandedKeys = arrDel(expandedKeys, eventKey);
+    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, newExpandedKeys);
+
     this.setState({
       dragging: true,
       dragNodesKeys: getDragNodesKeys(eventKey, keyEntities),
-      expandedKeys: arrDel(expandedKeys, eventKey),
+      expandedKeys: newExpandedKeys,
+      flattenNodes,
     });
 
     if (onDragStart) {
