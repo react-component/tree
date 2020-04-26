@@ -342,11 +342,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * But let's just keep it to avoid event trigger logic change.
    */
   onNodeDragEnter = (event, node) => {
-    const { expandedKeys } = this.state;
+    const { expandedKeys, dragNodesKeys } = this.state;
     const { onDragEnter } = this.props;
     const { pos, eventKey } = node.props;
 
-    if (!this.dragNode) return;
+    if (!this.dragNode || dragNodesKeys.indexOf(eventKey) !== -1) return;
 
     const dropPosition = calcDropPosition(event, node);
 
@@ -394,8 +394,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDragOver = (event, node) => {
+    const { dragNodesKeys } = this.state;
     const { onDragOver } = this.props;
     const { eventKey } = node.props;
+
+    if (dragNodesKeys.indexOf(eventKey) !== -1) {
+      return;
+    }
 
     // Update drag position
     if (this.dragNode && eventKey === this.state.dragOverNodeKey) {
