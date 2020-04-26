@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
-import Tree, { TreeNode } from '..';
+import Tree, { TreeNode } from '../src';
 
 /**
  * For refactor purpose. All the props should be passed by test
@@ -22,7 +22,7 @@ describe('TreeNode Props', () => {
           <TreeNode key="0-0-1" />
         </TreeNode>
         <TreeNode key="0-1" />
-      </Tree>
+      </Tree>,
     );
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
@@ -38,7 +38,7 @@ describe('TreeNode Props', () => {
         <TreeNode isLeaf>
           <TreeNode isLeaf />
         </TreeNode>
-      </Tree>
+      </Tree>,
     );
     expect(renderToJson(withoutLoadData)).toMatchSnapshot();
 
@@ -47,7 +47,7 @@ describe('TreeNode Props', () => {
         <TreeNode isLeaf>
           <TreeNode isLeaf />
         </TreeNode>
-      </Tree>
+      </Tree>,
     );
     expect(renderToJson(withLoadData)).toMatchSnapshot();
 
@@ -56,7 +56,7 @@ describe('TreeNode Props', () => {
         <TreeNode>
           <TreeNode isLeaf={false} />
         </TreeNode>
-      </Tree>
+      </Tree>,
     );
     expect(renderToJson(forceNoLeaf)).toMatchSnapshot();
   });
@@ -66,20 +66,18 @@ describe('TreeNode Props', () => {
       const withoutLoadData = render(
         <Tree defaultExpandAll>
           <TreeNode icon={<span className="cust-icon" />} />
-        </Tree>
+        </Tree>,
       );
       expect(renderToJson(withoutLoadData)).toMatchSnapshot();
     });
 
     it('component', () => {
-      const Icon = () => (
-        <span className="cust-icon" />
-      );
+      const Icon = () => <span className="cust-icon" />;
 
       const withoutLoadData = render(
         <Tree defaultExpandAll>
           <TreeNode icon={Icon} />
-        </Tree>
+        </Tree>,
       );
       expect(renderToJson(withoutLoadData)).toMatchSnapshot();
     });
@@ -88,7 +86,7 @@ describe('TreeNode Props', () => {
       const withoutLoadData = render(
         <Tree showIcon={false} defaultExpandAll>
           <TreeNode icon={<span className="cust-icon" />} />
-        </Tree>
+        </Tree>,
       );
       expect(renderToJson(withoutLoadData)).toMatchSnapshot();
     });
@@ -100,7 +98,7 @@ describe('TreeNode Props', () => {
       const wrapper = mount(
         <Tree loadData={loadData}>
           <TreeNode icon={iconFn} title="parent 1" key="0-0" />
-        </Tree>
+        </Tree>,
       );
 
       wrapper.find('.rc-tree-switcher').simulate('click');
@@ -116,12 +114,12 @@ describe('TreeNode Props', () => {
         <Tree defaultExpandAll>
           <TreeNode key="0-0" data-test="0-0">
             <TreeNode key="0-0-0" className="tree-node-cls" data-test="0-0-0">
-              <TreeNode data-test="0-0-0-0"/>
+              <TreeNode data-test="0-0-0-0" />
             </TreeNode>
             <TreeNode key="0-0-1" data-test="0-0-1" />
           </TreeNode>
           <TreeNode key="0-1" data-test="0-1" />
-        </Tree>
+        </Tree>,
       );
       expect(renderToJson(wrapper)).toMatchSnapshot();
     });
@@ -131,12 +129,12 @@ describe('TreeNode Props', () => {
         <Tree defaultExpandAll>
           <TreeNode key="0-0" aria-label="0-0">
             <TreeNode key="0-0-0" className="tree-node-cls" aria-label="0-0-0">
-              <TreeNode aria-label="0-0-0-0"/>
+              <TreeNode aria-label="0-0-0-0" />
             </TreeNode>
             <TreeNode key="0-0-1" aria-label="0-0-1" />
           </TreeNode>
           <TreeNode key="0-1" aria-label="0-1" />
-        </Tree>
+        </Tree>,
       );
       expect(renderToJson(wrapper)).toMatchSnapshot();
     });
@@ -149,12 +147,12 @@ describe('TreeNode Props', () => {
     const wrapper = mount(
       <Tree selectable onClick={onClick} onSelect={onSelect}>
         <TreeNode selectable={false} />
-      </Tree>
+      </Tree>,
     );
 
     wrapper.find('.rc-tree-node-content-wrapper').simulate('click');
 
-    expect(onClick).toBeCalled();
-    expect(onSelect).not.toBeCalled();
+    expect(onClick).toHaveBeenCalled();
+    expect(onSelect).not.toHaveBeenCalled();
   });
 });

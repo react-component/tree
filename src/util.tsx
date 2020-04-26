@@ -1,7 +1,9 @@
 import React, { Children } from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'warning';
-import TreeNode from './TreeNode';
+import TreeNode, { TreeNodeProps } from './TreeNode';
+import { NodeElement, Key, DataNode, Entity } from './interface';
+import { TreeProps } from './Tree';
 
 const DRAG_SIDE_RANGE = 0.25;
 const DRAG_MIN_GAP = 2;
@@ -15,7 +17,7 @@ export function warnOnlyTreeNode() {
   warning(false, 'Tree only accept TreeNode as children.');
 }
 
-export function arrDel(list, value) {
+export function arrDel(list: Key[], value: Key) {
   const clone = list.slice();
   const index = clone.indexOf(value);
   if (index >= 0) {
@@ -24,7 +26,7 @@ export function arrDel(list, value) {
   return clone;
 }
 
-export function arrAdd(list, value) {
+export function arrAdd(list: Key[], value: Key) {
   const clone = list.slice();
   if (clone.indexOf(value) === -1) {
     clone.push(value);
@@ -32,29 +34,42 @@ export function arrAdd(list, value) {
   return clone;
 }
 
-export function posToArr(pos) {
+export function posToArr(pos: string) {
   return pos.split('-');
 }
 
-export function getPosition(level, index) {
+export function getPosition(level: string | number, index: number) {
   return `${level}-${index}`;
 }
 
-export function isTreeNode(node) {
+export function isTreeNode(node: NodeElement) {
   return node && node.type && node.type.isTreeNode;
 }
 
-export function getNodeChildren(children) {
+export function getNodeChildren(children: React.ReactNode) {
   return toArray(children).filter(isTreeNode);
 }
 
-export function isCheckDisabled(node) {
-  const { disabled, disableCheckbox } = node.props || {};
-  return !!(disabled || disableCheckbox);
+export function isCheckDisabled(node: NodeElement) {
+  const { disabled, disableCheckbox, checkable } = (node.props || {}) as NodeElement['props'];
+  return !!(disabled || disableCheckbox) || checkable === false;
 }
 
-export function traverseTreeNodes(treeNodes, callback) {
-  function processNode(node, index, parent) {
+export function traverseTreeNodes(
+  treeNodes: NodeElement[],
+  callback: (data: {
+    node: NodeElement;
+    index: number;
+    pos: string | number;
+    key: Key;
+    parentPos: string | number;
+  }) => void,
+) {
+  function processNode(
+    node: NodeElement,
+    index?: number,
+    parent?: { node: NodeElement; pos: string | number },
+  ) {
     const children = node ? node.props.children : treeNodes;
     const pos = node ? getPosition(parent.pos, index) : 0;
 
@@ -87,7 +102,10 @@ export function traverseTreeNodes(treeNodes, callback) {
  * Use `rc-util` `toArray` to get the children list which keeps the key.
  * And return single node if children is only one(This can avoid `key` missing check).
  */
-export function mapChildren(children, func) {
+export function mapChildren(
+  children: React.ReactNode,
+  func: (node: NodeElement, index: number) => React.ReactElement,
+) {
   const list = toArray(children).map(func);
   if (list.length === 1) {
     return list[0];
@@ -95,7 +113,7 @@ export function mapChildren(children, func) {
   return list;
 }
 
-export function getDragNodesKeys(treeNodes, node) {
+export function getDragNodesKeys(treeNodes: NodeElement[], node: NodeElement) {
   const { eventKey, pos } = node.props;
   const dragNodesKeys = [];
 
@@ -107,14 +125,15 @@ export function getDragNodesKeys(treeNodes, node) {
 }
 
 // Only used when drag, not affect SSR.
-export function calcDropPosition(event, treeNode) {
+export function calcDropPosition(event: React.MouseEvent, treeNode: NodeElement) {
   const { clientY } = event;
   const { top, bottom, height } = treeNode.selectHandle.getBoundingClientRect();
   const des = Math.max(height * DRAG_SIDE_RANGE, DRAG_MIN_GAP);
 
   if (clientY <= top + des) {
     return -1;
-  } else if (clientY >= bottom - des) {
+  }
+  if (clientY >= bottom - des) {
     return 1;
   }
 
@@ -127,7 +146,7 @@ export function calcDropPosition(event, treeNode) {
  * @param props
  * @returns [string]
  */
-export function calcSelectedKeys(selectedKeys, props) {
+export function calcSelectedKeys(selectedKeys: Key[], props: TreeProps) {
   if (!selectedKeys) return undefined;
 
   const { multiple } = props;
@@ -145,37 +164,50 @@ export function calcSelectedKeys(selectedKeys, props) {
  * Since React internal will convert key to string,
  * we need do this to avoid `checkStrictly` use number match
  */
-function keyListToString(keyList) {
+function keyListToString(keyList: Key[]) {
   if (!keyList) return keyList;
   return keyList.map(key => String(key));
 }
 
-const internalProcessProps = props => props;
-export function convertDataToTree(treeData, processer) {
+const internalProcessProps = (props: DataNode): Partial<TreeNodeProps> => props;
+export function convertDataToTree(
+  treeData: DataNode[],
+  processor?: { processProps: (prop: DataNode) => any },
+): React.ReactNode {
   if (!treeData) return [];
 
-  const { processProps = internalProcessProps } = processer || {};
+  const { processProps = internalProcessProps } = processor || {};
   const list = Array.isArray(treeData) ? treeData : [treeData];
   return list.map(({ children, ...props }) => {
-    const childrenNodes = convertDataToTree(children, processer);
+    const childrenNodes = convertDataToTree(children, processor);
 
-    return (
-      <TreeNode {...processProps(props)}>
-        {childrenNodes}
-      </TreeNode>
-    );
+    return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
   });
 }
 
 // TODO: ========================= NEW LOGIC =========================
+interface Wrapper {
+  posEntities: Record<string, Entity>;
+  keyEntities: Record<Key, Entity>;
+}
+
 /**
  * Calculate treeNodes entities. `processTreeEntity` is used for `rc-tree-select`
  * @param treeNodes
  * @param processTreeEntity  User can customize the entity
  */
-export function convertTreeToEntities(treeNodes, { initWrapper, processEntity, onProcessFinished } = {}) {
-
-
+export function convertTreeToEntities(
+  treeNodes: NodeElement[],
+  {
+    initWrapper,
+    processEntity,
+    onProcessFinished,
+  }: {
+    initWrapper?: (wrapper: Wrapper) => Wrapper;
+    processEntity?: (entity: Entity, wrapper: Wrapper) => void;
+    onProcessFinished?: (wrapper: Wrapper) => void;
+  } = {},
+) {
   const posEntities = {};
   const keyEntities = {};
   let wrapper = {
@@ -187,9 +219,9 @@ export function convertTreeToEntities(treeNodes, { initWrapper, processEntity, o
     wrapper = initWrapper(wrapper) || wrapper;
   }
 
-  traverseTreeNodes(treeNodes, (item) => {
+  traverseTreeNodes(treeNodes, item => {
     const { node, index, pos, key, parentPos } = item;
-    const entity = { node, index, key, pos };
+    const entity: Entity = { node, index, key, pos };
 
     posEntities[pos] = entity;
     keyEntities[key] = entity;
@@ -216,7 +248,7 @@ export function convertTreeToEntities(treeNodes, { initWrapper, processEntity, o
 /**
  * Parse `checkedKeys` to { checkedKeys, halfCheckedKeys } style
  */
-export function parseCheckedKeys(keys) {
+export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Key[] }) {
   if (!keys) {
     return null;
   }
@@ -248,26 +280,30 @@ export function parseCheckedKeys(keys) {
 /**
  * Conduct check state by the keyList. It will conduct up & from the provided key.
  * If the conduct path reach the disabled or already checked / unchecked node will stop conduct.
- * @param keyList       list of keys
- * @param isCheck       is check the node or not
- * @param keyEntities   parsed by `convertTreeToEntities` function in Tree
- * @param checkStatus   Can pass current checked status for process (usually for uncheck operation)
- * @returns {{checkedKeys: [], halfCheckedKeys: []}}
  */
-export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
+export function conductCheck(
+  /** list of keys */
+  keyList: Key[],
+  /** is check the node or not */
+  isCheck: boolean,
+  /** parsed by `convertTreeToEntities` function in Tree */
+  keyEntities: Record<Key, Entity>,
+  /** Can pass current checked status for process (usually for uncheck operation) */
+  checkStatus: { checkedKeys?: Key[]; halfCheckedKeys?: Key[] } = {},
+) {
   const checkedKeys = {};
   const halfCheckedKeys = {}; // Record the key has some child checked (include child half checked)
 
-  (checkStatus.checkedKeys || []).forEach((key) => {
+  (checkStatus.checkedKeys || []).forEach(key => {
     checkedKeys[key] = true;
   });
 
-  (checkStatus.halfCheckedKeys || []).forEach((key) => {
+  (checkStatus.halfCheckedKeys || []).forEach(key => {
     halfCheckedKeys[key] = true;
   });
 
   // Conduct up
-  function conductUp(key) {
+  function conductUp(key: Key) {
     if (checkedKeys[key] === isCheck) return;
 
     const entity = keyEntities[key];
@@ -305,7 +341,7 @@ export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
   }
 
   // Conduct down
-  function conductDown(key) {
+  function conductDown(key: Key) {
     if (checkedKeys[key] === isCheck) return;
 
     const entity = keyEntities[key];
@@ -317,12 +353,12 @@ export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
 
     checkedKeys[key] = isCheck;
 
-    (children || []).forEach((child) => {
+    (children || []).forEach(child => {
       conductDown(child.key);
     });
   }
 
-  function conduct(key) {
+  function conduct(key: Key) {
     const entity = keyEntities[key];
 
     if (!entity) {
@@ -338,7 +374,7 @@ export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
     // Conduct down
     (children || [])
       .filter(child => !isCheckDisabled(child.node))
-      .forEach((child) => {
+      .forEach(child => {
         conductDown(child.key);
       });
 
@@ -348,7 +384,7 @@ export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
     }
   }
 
-  (keyList || []).forEach((key) => {
+  (keyList || []).forEach(key => {
     conduct(key);
   });
 
@@ -356,14 +392,14 @@ export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
   const halfCheckedKeyList = [];
 
   // Fill checked list
-  Object.keys(checkedKeys).forEach((key) => {
+  Object.keys(checkedKeys).forEach(key => {
     if (checkedKeys[key]) {
       checkedKeyList.push(key);
     }
   });
 
   // Fill half checked list
-  Object.keys(halfCheckedKeys).forEach((key) => {
+  Object.keys(halfCheckedKeys).forEach(key => {
     if (!checkedKeys[key] && halfCheckedKeys[key]) {
       halfCheckedKeyList.push(key);
     }
@@ -380,10 +416,10 @@ export function conductCheck(keyList, isCheck, keyEntities, checkStatus = {}) {
  * @param keyList
  * @param keyEntities
  */
-export function conductExpandParent(keyList, keyEntities) {
+export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Entity>) {
   const expandedKeys = {};
 
-  function conductUp(key) {
+  function conductUp(key: Key) {
     if (expandedKeys[key]) return;
 
     const entity = keyEntities[key];
@@ -393,14 +429,14 @@ export function conductExpandParent(keyList, keyEntities) {
 
     const { parent, node } = entity;
 
-    if (isCheckDisabled(node)) return;
+    if (node.props && node.props.disabled) return;
 
     if (parent) {
       conductUp(parent.key);
     }
   }
 
-  (keyList || []).forEach((key) => {
+  (keyList || []).forEach(key => {
     conductUp(key);
   });
 
@@ -409,11 +445,10 @@ export function conductExpandParent(keyList, keyEntities) {
 
 /**
  * Returns only the data- and aria- key/value pairs
- * @param {object} props 
  */
-export function getDataAndAria(props) {
+export function getDataAndAria(props: Partial<TreeProps | TreeNodeProps>) {
   return Object.keys(props).reduce((prev, key) => {
-    if ((key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-')) {
+    if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
       prev[key] = props[key];
     }
     return prev;

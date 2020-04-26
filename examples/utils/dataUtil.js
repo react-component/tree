@@ -1,5 +1,4 @@
-/* eslint no-loop-func: 0 */
-/* eslint no-console:0 */
+/* eslint-disable no-loop-func, no-mixed-operators, no-console, no-plusplus, no-underscore-dangle */
 
 export function generateData(x = 3, y = 2, z = 1, gData = []) {
   // x：每一级下的节点总数。y：每级节点里有y个节点、存在子节点。z：树的level层级数（0表示一级）
@@ -31,7 +30,7 @@ export function generateData(x = 3, y = 2, z = 1, gData = []) {
 }
 export function calcTotal(x = 3, y = 2, z = 1) {
   /* eslint no-param-reassign:0 */
-  const rec = (n) => n >= 0 ? x * (y ** n--) + rec(n) : 0;
+  const rec = n => (n >= 0 ? x * y ** n-- + rec(n) : 0);
   return rec(z + 1);
 }
 console.log('总节点数（单个tree）：', calcTotal());
@@ -44,18 +43,17 @@ function isPositionPrefix(smallPos, bigPos) {
     return false;
   }
   // attention: "0-0-1" "0-0-10"
-  if ((bigPos.length > smallPos.length) && (bigPos.charAt(smallPos.length) !== '-')) {
+  if (bigPos.length > smallPos.length && bigPos.charAt(smallPos.length) !== '-') {
     return false;
   }
   return bigPos.substr(0, smallPos.length) === smallPos;
 }
 // console.log(isPositionPrefix("0-1", "0-10-1"));
 
-
 // arr.length === 628, use time: ~20ms
 export function filterParentPosition(arr) {
   const levelObj = {};
-  arr.forEach((item) => {
+  arr.forEach(item => {
     const posLen = item.split('-').length;
     if (!levelObj[posLen]) {
       levelObj[posLen] = [];
@@ -63,10 +61,10 @@ export function filterParentPosition(arr) {
     levelObj[posLen].push(item);
   });
   const levelArr = Object.keys(levelObj).sort();
-  for (let i = 0; i < levelArr.length; i++) {
+  for (let i = 0; i < levelArr.length; i += 1) {
     if (levelArr[i + 1]) {
       levelObj[levelArr[i]].forEach(ii => {
-        for (let j = i + 1; j < levelArr.length; j++) {
+        for (let j = i + 1; j < levelArr.length; j += 1) {
           levelObj[levelArr[j]].forEach((_i, index) => {
             if (isPositionPrefix(ii, _i)) {
               levelObj[levelArr[j]][index] = null;
@@ -86,7 +84,6 @@ export function filterParentPosition(arr) {
 // console.log(filterParentPosition(
 //   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
 // ));
-
 
 function loopData(data, callback) {
   const loop = (d, level = 0) => {
@@ -118,9 +115,10 @@ export function getFilterExpandedKeys(data, expandedKeys) {
   const filterExpandedKeys = [];
   loopData(data, (item, index, pos) => {
     expandedPosArr.forEach(p => {
-      if ((splitLen(pos) < splitLen(p)
-        && p.indexOf(pos) === 0 || pos === p)
-        && filterExpandedKeys.indexOf(item.key) === -1) {
+      if (
+        ((splitLen(pos) < splitLen(p) && p.indexOf(pos) === 0) || pos === p) &&
+        filterExpandedKeys.indexOf(item.key) === -1
+      ) {
         filterExpandedKeys.push(item.key);
       }
     });
@@ -162,15 +160,15 @@ export function getRadioSelectKeys(data, selectedKeys, key) {
       });
     }
   };
-  pkObjArr.forEach((pk) => {
+  pkObjArr.forEach(pk => {
     getPosKey(pk[0], pk[1]);
   });
   if (key) {
     getPosKey(selPkObjArr[0], selPkObjArr[1]);
   }
 
-  Object.keys(lenObj).forEach((item) => {
-    lenObj[item].forEach((i) => {
+  Object.keys(lenObj).forEach(item => {
+    lenObj[item].forEach(i => {
       if (res.indexOf(i[1]) === -1) {
         res.push(i[1]);
       }

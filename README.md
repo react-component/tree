@@ -100,6 +100,7 @@ see examples
 | name     | description    | type     | default      |
 |----------|----------------|----------|--------------|
 |className | additional class to treeNode | String | '' |
+|checkable | control node checkable if Tree is checkable | bool | - |
 |style | set style to treeNode | Object | '' |
 |disabled | whether disabled the treeNode | bool | false |
 |disableCheckbox | whether disable the treeNode' checkbox | bool | false |
