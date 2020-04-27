@@ -35,6 +35,7 @@ describe('Tree Basic', () => {
           </TreeNode>
           <TreeNode title="leaf 2" key="0-0-1" disableCheckbox />
         </TreeNode>
+        {null /* Supports conditional rendering */}
       </Tree>,
     );
     expect(renderToJson(wrapper)).toMatchSnapshot();

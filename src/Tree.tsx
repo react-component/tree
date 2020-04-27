@@ -749,6 +749,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * We have to use `cloneElement` to pass `key`.
    */
   renderTreeNode = (child, index, level = 0) => {
+    if (!React.isValidElement(child)) {
+      return null;
+    }
     const {
       keyEntities,
       expandedKeys = [],
