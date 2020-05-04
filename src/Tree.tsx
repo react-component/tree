@@ -895,8 +895,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onListChangeEnd = () => {
-    this.setUncontrolledState({
-      listChanging: false,
+    setTimeout(() => {
+      this.setUncontrolledState({
+        listChanging: false,
+      });
     });
   };
 
