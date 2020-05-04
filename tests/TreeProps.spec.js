@@ -3,11 +3,11 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import PropTypes from 'prop-types';
+import { resetWarned } from 'rc-util/lib/warning';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
 import { objectMatcher, spyConsole, spyError } from './util';
 import { convertNodePropsToEventData } from '../src/utils/treeUtil';
-import { resetWarned } from 'rc-util/lib/warning';
 
 /**
  * For refactor purpose. All the props should be passed by test
@@ -834,24 +834,6 @@ describe('Tree Props', () => {
       );
       expect(wrapper).toMatchSnapshot();
     });
-  });
-
-  it('motion', () => {
-    const motion = {
-      motionName: 'bamboo',
-    };
-    const wrapper = mount(
-      <Tree motion={motion}>
-        <TreeNode key="0-0">
-          <TreeNode key="0-0-0" />
-        </TreeNode>
-      </Tree>,
-    );
-
-    const switcher = wrapper.find('.rc-tree-switcher');
-    switcher.simulate('click');
-
-    expect(wrapper.find('CSSMotion').props()).toMatchObject(motion);
   });
 
   describe('data and aria props', () => {

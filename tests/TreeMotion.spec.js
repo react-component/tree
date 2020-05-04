@@ -2,10 +2,28 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import VirtualList from 'rc-virtual-list';
-import Tree from '../src';
+import Tree, { TreeNode } from '../src';
 import { getMinimumRangeTransitionRange } from '../src/NodeList';
 
 describe('Tree Motion', () => {
+  it('basic', () => {
+    const motion = {
+      motionName: 'bamboo',
+    };
+    const wrapper = mount(
+      <Tree motion={motion}>
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>,
+    );
+
+    const switcher = wrapper.find('.rc-tree-switcher');
+    switcher.simulate('click');
+
+    expect(wrapper.find('CSSMotion').props()).toMatchObject(motion);
+  });
+
   it('hide item', done => {
     const wrapper = mount(
       <Tree
@@ -69,5 +87,45 @@ describe('Tree Motion', () => {
     );
 
     wrapper.setProps({ treeData: [] });
+  });
+
+  it('should not expanded when in motion', () => {
+    const raf = jest
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation(fn => window.setTimeout(fn, 16));
+    jest.useFakeTimers();
+
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      <Tree
+        onExpand={onExpand}
+        motion={{
+          motionName: 'bamboo',
+          motionDeadline: 1000,
+          motionAppear: true,
+        }}
+      >
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>,
+    );
+
+    function doExpand() {
+      const switcher = wrapper.find('.rc-tree-switcher').first();
+      switcher.simulate('click');
+    }
+
+    // First click should work
+    doExpand();
+    expect(onExpand).toHaveBeenCalled();
+    onExpand.mockReset();
+
+    // Not trigger when in motion
+    doExpand();
+    expect(onExpand).not.toHaveBeenCalled();
+
+    raf.mockRestore();
+    jest.useRealTimers();
   });
 });
