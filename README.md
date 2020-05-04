@@ -2,22 +2,30 @@
 
 ---
 
-tree ui component for react
+Tree component.
 
-[![NPM version][npm-image]][npm-url] [![build status][travis-image]][travis-url] [![Test coverage][codecov-image]][codecov-url] [![gemnasium deps][gemnasium-image]][gemnasium-url] [![npm download][download-image]][download-url]
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![Dependencies][david-image]][david-url]
+[![DevDependencies][david-dev-image]][david-dev-url]
+[![npm download][download-image]][download-url]
+[![bundle size][bundlephobia-image]][bundlephobia-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree
 [travis-image]: https://img.shields.io/travis/react-component/tree.svg?style=flat-square
 [travis-url]: https://travis-ci.org/react-component/tree
-[codecov-image]: https://img.shields.io/codecov/c/github/react-component/tree/master.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/react-component/tree/branch/master
-[gemnasium-image]: http://img.shields.io/gemnasium/react-component/tree.svg?style=flat-square
-[gemnasium-url]: https://gemnasium.com/react-component/tree
-[node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
-[node-url]: http://nodejs.org/download/
+[coveralls-image]: https://img.shields.io/coveralls/react-component/tree.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/react-component/tree?branch=master
+[david-url]: https://david-dm.org/react-component/tree
+[david-image]: https://david-dm.org/react-component/tree/status.svg?style=flat-square
+[david-dev-url]: https://david-dm.org/react-component/tree?type=dev
+[david-dev-image]: https://david-dm.org/react-component/tree/dev-status.svg?style=flat-square
 [download-image]: https://img.shields.io/npm/dm/rc-tree.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-tree
+[bundlephobia-url]: https://bundlephobia.com/result?p=rc-tree
+[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-tree
 
 ## Screenshots
 
