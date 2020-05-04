@@ -385,21 +385,20 @@ class Tree extends React.Component<TreeProps, TreeState> {
   }
 
   onNodeDragStart = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { expandedKeys, keyEntities, treeData } = this.state;
+    const { expandedKeys, keyEntities } = this.state;
     const { onDragStart } = this.props;
     const { eventKey } = node.props;
 
     this.dragNode = node;
 
     const newExpandedKeys = arrDel(expandedKeys, eventKey);
-    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, newExpandedKeys);
 
     this.setState({
       dragging: true,
       dragNodesKeys: getDragNodesKeys(eventKey, keyEntities),
-      expandedKeys: newExpandedKeys,
-      flattenNodes,
     });
+
+    this.setExpandedKeys(newExpandedKeys);
 
     if (onDragStart) {
       onDragStart({ event, node: convertNodePropsToEventData(node.props) });
@@ -461,9 +460,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         }
 
         if (!('expandedKeys' in this.props)) {
-          this.setState({
-            expandedKeys: newExpandedKeys,
-          });
+          this.setExpandedKeys(newExpandedKeys);
         }
 
         if (onDragEnter) {
@@ -758,7 +755,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeExpand = (e: React.MouseEvent<HTMLDivElement>, treeNode: EventDataNode) => {
     let { expandedKeys } = this.state;
-    const { treeData } = this.state;
     const { onExpand, loadData } = this.props;
     const { key, expanded } = treeNode;
 
@@ -777,8 +773,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       expandedKeys = arrDel(expandedKeys, key);
     }
 
-    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys);
-    this.setUncontrolledState({ expandedKeys, flattenNodes }, true);
+    this.setExpandedKeys(expandedKeys);
 
     if (onExpand) {
       onExpand(expandedKeys, {
@@ -1002,6 +997,20 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (onKeyDown) {
       onKeyDown(event);
     }
+  };
+
+  /** Set uncontrolled `expandedKeys`. This will also auto update `flattenNodes`. */
+  setExpandedKeys = (expandedKeys: Key[]) => {
+    const { treeData } = this.state;
+
+    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys);
+    this.setUncontrolledState(
+      {
+        expandedKeys,
+        flattenNodes,
+      },
+      true,
+    );
   };
 
   /**
