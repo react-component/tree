@@ -167,6 +167,9 @@ interface TreeState {
   focused: boolean;
   activeKey: Key;
 
+  // Record if list is changing
+  listChanging: boolean;
+
   prevProps: TreeProps;
 }
 
@@ -262,6 +265,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     focused: false,
     activeKey: null,
+
+    listChanging: false,
 
     prevProps: null,
   };
@@ -753,51 +758,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       });
     });
 
-  onNodeExpand = (e: React.MouseEvent<HTMLDivElement>, treeNode: EventDataNode) => {
-    let { expandedKeys } = this.state;
-    const { onExpand, loadData } = this.props;
-    const { key, expanded } = treeNode;
-
-    // Update selected keys
-    const index = expandedKeys.indexOf(key);
-    const targetExpanded = !expanded;
-
-    warning(
-      (expanded && index !== -1) || (!expanded && index === -1),
-      'Expand state not sync with index check',
-    );
-
-    if (targetExpanded) {
-      expandedKeys = arrAdd(expandedKeys, key);
-    } else {
-      expandedKeys = arrDel(expandedKeys, key);
-    }
-
-    this.setExpandedKeys(expandedKeys);
-
-    if (onExpand) {
-      onExpand(expandedKeys, {
-        node: treeNode,
-        expanded: targetExpanded,
-        nativeEvent: e.nativeEvent,
-      });
-    }
-
-    // Async Load data
-    if (targetExpanded && loadData) {
-      const loadPromise = this.onNodeLoad(treeNode);
-      return loadPromise
-        ? loadPromise.then(() => {
-            // [Legacy] Refresh logic
-            const newFlattenTreeData = flattenTreeData(this.state.treeData, expandedKeys);
-            this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
-          })
-        : null;
-    }
-
-    return null;
-  };
-
   onNodeMouseEnter = (event: React.MouseEvent<HTMLDivElement>, node: EventDataNode) => {
     const { onMouseEnter } = this.props;
     if (onMouseEnter) {
@@ -862,6 +822,82 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropPosition,
       keyEntities,
     };
+  };
+
+  // =========================== Expanded ===========================
+  /** Set uncontrolled `expandedKeys`. This will also auto update `flattenNodes`. */
+  setExpandedKeys = (expandedKeys: Key[]) => {
+    const { treeData } = this.state;
+
+    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys);
+    this.setUncontrolledState(
+      {
+        expandedKeys,
+        flattenNodes,
+      },
+      true,
+    );
+  };
+
+  onNodeExpand = (e: React.MouseEvent<HTMLDivElement>, treeNode: EventDataNode) => {
+    let { expandedKeys } = this.state;
+    const { listChanging } = this.state;
+    const { onExpand, loadData } = this.props;
+    const { key, expanded } = treeNode;
+
+    // Do nothing when motion is in progress
+    if (listChanging) {
+      return;
+    }
+
+    // Update selected keys
+    const index = expandedKeys.indexOf(key);
+    const targetExpanded = !expanded;
+
+    warning(
+      (expanded && index !== -1) || (!expanded && index === -1),
+      'Expand state not sync with index check',
+    );
+
+    if (targetExpanded) {
+      expandedKeys = arrAdd(expandedKeys, key);
+    } else {
+      expandedKeys = arrDel(expandedKeys, key);
+    }
+
+    this.setExpandedKeys(expandedKeys);
+
+    if (onExpand) {
+      onExpand(expandedKeys, {
+        node: treeNode,
+        expanded: targetExpanded,
+        nativeEvent: e.nativeEvent,
+      });
+    }
+
+    // Async Load data
+    if (targetExpanded && loadData) {
+      const loadPromise = this.onNodeLoad(treeNode);
+      if (loadPromise) {
+        loadPromise.then(() => {
+          // [Legacy] Refresh logic
+          const newFlattenTreeData = flattenTreeData(this.state.treeData, expandedKeys);
+          this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
+        });
+      }
+    }
+  };
+
+  onListChangeStart = () => {
+    this.setUncontrolledState({
+      listChanging: true,
+    });
+  };
+
+  onListChangeEnd = () => {
+    this.setUncontrolledState({
+      listChanging: false,
+    });
   };
 
   // =========================== Keyboard ===========================
@@ -999,20 +1035,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  /** Set uncontrolled `expandedKeys`. This will also auto update `flattenNodes`. */
-  setExpandedKeys = (expandedKeys: Key[]) => {
-    const { treeData } = this.state;
-
-    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys);
-    this.setUncontrolledState(
-      {
-        expandedKeys,
-        flattenNodes,
-      },
-      true,
-    );
-  };
-
   /**
    * Only update the value which is not in props
    */
@@ -1135,6 +1157,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
             onBlur={this.onBlur}
             onKeyDown={this.onKeyDown}
             onActiveChange={this.onActiveChange}
+            onListChangeStart={this.onListChangeStart}
+            onListChangeEnd={this.onListChangeEnd}
             {...this.getTreeNodeRequiredProps()}
             {...domProps}
           />

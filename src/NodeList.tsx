@@ -84,6 +84,9 @@ interface NodeListProps {
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onActiveChange: (key: Key) => void;
+
+  onListChangeStart: () => void;
+  onListChangeEnd: () => void;
 }
 
 /**
@@ -121,10 +124,7 @@ function getAccessibilityPath(item: FlattenNode): string {
   return path;
 }
 
-const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (
-  props,
-  ref,
-) => {
+const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (props, ref) => {
   const {
     prefixCls,
     data,
@@ -158,6 +158,9 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (
     onBlur,
     onActiveChange,
 
+    onListChangeStart,
+    onListChangeEnd,
+
     ...domProps
   } = props;
 
@@ -175,9 +178,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (
   const [prevData, setPrevData] = React.useState(data);
   const [transitionData, setTransitionData] = React.useState(data);
   const [transitionRange, setTransitionRange] = React.useState([]);
-  const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(
-    null,
-  );
+  const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
   function onMotionEnd() {
     setPrevData(data);
@@ -185,6 +186,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (
     setTransitionRange([]);
     setMotionType(null);
     setDisableVirtual(false);
+
+    onListChangeEnd();
   }
 
   // Do animation if expanded keys changed
@@ -195,9 +198,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (
 
     if (diffExpanded.key !== null) {
       if (diffExpanded.add) {
-        const keyIndex = prevData.findIndex(
-          ({ data: { key } }) => key === diffExpanded.key,
-        );
+        const keyIndex = prevData.findIndex(({ data: { key } }) => key === diffExpanded.key);
 
         if (motion) setDisableVirtual(true);
         const rangeNodes = getMinimumRangeTransitionRange(
@@ -213,9 +214,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (
         setTransitionRange(rangeNodes);
         setMotionType('show');
       } else {
-        const keyIndex = data.findIndex(
-          ({ data: { key } }) => key === diffExpanded.key,
-        );
+        const keyIndex = data.findIndex(({ data: { key } }) => key === diffExpanded.key);
 
         if (motion) setDisableVirtual(true);
         const rangeNodes = getMinimumRangeTransitionRange(
@@ -230,6 +229,11 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (
         setTransitionData(newTransitionData);
         setTransitionRange(rangeNodes);
         setMotionType('hide');
+      }
+
+      // Trigger when `motion` provided
+      if (motion) {
+        onListChangeStart();
       }
     } else if (prevData !== data) {
       // If whole data changed, we just refresh the list
@@ -303,10 +307,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (
           const mergedKey = getKey(key, pos);
           delete restProps.children;
 
-          const treeNodeProps = getTreeNodeProps(
-            mergedKey,
-            treeNodeRequiredProps,
-          );
+          const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
 
           return (
             <MotionTreeNode
