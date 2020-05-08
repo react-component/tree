@@ -3,6 +3,8 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import VirtualList from 'rc-virtual-list';
 import Tree, { TreeNode } from '../src';
+import MotionTreeNode from '../src/MotionTreeNode';
+import { TreeContext } from '../src/contextTypes';
 import { getMinimumRangeTransitionRange } from '../src/NodeList';
 
 describe('Tree Motion', () => {
@@ -127,5 +129,19 @@ describe('Tree Motion', () => {
 
     raf.mockRestore();
     jest.useRealTimers();
+  });
+
+  it('MotionTreeNode should always trigger motion end', () => {
+    const onMotionEnd = jest.fn();
+    const wrapper = mount(
+      <TreeContext.Provider value={{ prefixCls: 'test' }}>
+        <MotionTreeNode motionNodes={[]} onMotionEnd={onMotionEnd} />
+      </TreeContext.Provider>,
+    );
+
+    expect(onMotionEnd).not.toHaveBeenCalled();
+
+    wrapper.unmount();
+    expect(onMotionEnd).toHaveBeenCalled();
   });
 });
