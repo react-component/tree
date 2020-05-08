@@ -2,7 +2,6 @@
 /* eslint no-console:0 */
 /* eslint react/no-string-refs:0 */
 import React from 'react';
-import PropTypes from 'prop-types';
 import Trigger from 'rc-trigger';
 import { gData } from './utils/dataUtil';
 import './dropdown.less';
@@ -30,22 +29,6 @@ const placements = {
   },
 };
 class DropdownTree extends React.Component {
-  static propTypes = {
-    onVisibleChange: PropTypes.func,
-    prefixCls: PropTypes.string,
-    children: PropTypes.any,
-    transitionName: PropTypes.string,
-    overlay: PropTypes.object,
-    overlayClassName: PropTypes.string,
-    animation: PropTypes.any,
-    align: PropTypes.object,
-    overlayStyle: PropTypes.object,
-    placement: PropTypes.string,
-    trigger: PropTypes.array,
-    defaultVisible: PropTypes.bool,
-    visible: PropTypes.bool,
-  };
-
   static defaultProps = {
     prefixCls: 'demo-dropdown-tree',
     trigger: ['hover'],

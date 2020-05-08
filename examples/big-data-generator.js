@@ -1,17 +1,9 @@
 /* eslint react/no-string-refs:0 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { generateData, calcTotal } from './utils/dataUtil';
 
 class Gen extends React.Component {
-  static propTypes = {
-    onGen: PropTypes.func,
-    x: PropTypes.number,
-    y: PropTypes.number,
-    z: PropTypes.number,
-  };
-
   static defaultProps = {
     onGen: () => {},
     x: 20,

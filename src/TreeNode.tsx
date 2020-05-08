@@ -1,8 +1,6 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 // @ts-ignore
-import { polyfill } from 'react-lifecycles-compat';
 import { TreeContext, TreeContextProps } from './contextTypes';
 import { getDataAndAria } from './util';
 import { IconType, Key, DataNode } from './interface';
@@ -60,36 +58,6 @@ export interface TreeNodeState {
 }
 
 class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeState> {
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    onSelect: PropTypes.func,
-
-    // By parent
-    eventKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    expanded: PropTypes.bool,
-    selected: PropTypes.bool,
-    checked: PropTypes.bool,
-    loaded: PropTypes.bool,
-    loading: PropTypes.bool,
-    halfChecked: PropTypes.bool,
-    title: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    dragOver: PropTypes.bool,
-    dragOverGapTop: PropTypes.bool,
-    dragOverGapBottom: PropTypes.bool,
-    pos: PropTypes.string,
-
-    // By user
-    isLeaf: PropTypes.bool,
-    checkable: PropTypes.bool,
-    selectable: PropTypes.bool,
-    disabled: PropTypes.bool,
-    disableCheckbox: PropTypes.bool,
-    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  };
-
   public state = {
     dragNodeHighlight: false,
   };
@@ -547,8 +515,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     );
   }
 }
-
-polyfill(InternalTreeNode);
 
 const ContextTreeNode: React.FC<TreeNodeProps> = props => (
   <TreeContext.Consumer>

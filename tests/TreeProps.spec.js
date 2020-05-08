@@ -2,7 +2,6 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
-import PropTypes from 'prop-types';
 import { resetWarned } from 'rc-util/lib/warning';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
@@ -855,10 +854,6 @@ describe('Tree Props', () => {
           return isLeaf ? <span>{text}</span> : null;
         }
         return isLeaf ? null : <span>{text}</span>;
-      };
-
-      sfc.propTypes = {
-        isLeaf: PropTypes.bool,
       };
 
       return sfc;

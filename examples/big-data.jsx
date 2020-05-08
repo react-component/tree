@@ -1,15 +1,10 @@
 /* eslint-disable no-console, prefer-destructuring */
 import React from 'react';
-import PropTypes from 'prop-types';
 import Gen from './big-data-generator';
 import '../assets/index.less';
 import Tree, { TreeNode } from '../src';
 
 class Demo extends React.Component {
-  static propTypes = {
-    multiple: PropTypes.bool,
-  };
-
   state = {
     gData: [],
     expandedKeys: [],

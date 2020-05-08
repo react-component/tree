@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
 no-alert, no-console, react/no-find-dom-node */
 import React from 'react';
-import PropTypes from 'prop-types';
 import '../assets/index.less';
 import './basic.less';
 import Tree, { TreeNode } from '../src';
@@ -34,10 +33,6 @@ const treeData = [
 ];
 
 class Demo extends React.Component {
-  static propTypes = {
-    keys: PropTypes.array,
-  };
-
   static defaultProps = {
     keys: ['0-0-0-0'],
   };

@@ -2,7 +2,6 @@
 /* eslint no-alert:0 */
 /* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React from 'react';
-import PropTypes from 'prop-types';
 import '../assets/index.less';
 import Tree, { TreeNode } from '../src';
 
@@ -27,10 +26,6 @@ const getSvgIcon = (path, iStyle = {}, style = {}) => (
 );
 
 class Demo extends React.Component {
-  static propTypes = {
-    keys: PropTypes.array,
-  };
-
   static defaultProps = {
     keys: ['0-0-0-0'],
   };

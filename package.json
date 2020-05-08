@@ -56,6 +56,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.0.0",
+    "eslint": "^6.8.0",
     "father": "^2.25.0-alpha.1",
     "less": "^3.11.1",
     "np": "^6.0.0",
@@ -68,10 +69,8 @@
   },
   "dependencies": {
     "classnames": "2.x",
-    "prop-types": "^15.5.8",
     "rc-animate": "^3.0.0",
     "rc-util": "^4.11.0",
-    "rc-virtual-list": "^1.1.0",
-    "react-lifecycles-compat": "^3.0.4"
+    "rc-virtual-list": "^1.1.0"
   }
 }

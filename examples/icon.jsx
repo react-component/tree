@@ -1,7 +1,6 @@
 /* eslint no-console:0 */
 /* eslint no-alert:0 */
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Tree, { TreeNode } from '../src';
 import '../assets/index.less';
@@ -10,9 +9,6 @@ import './icon.less';
 const Icon = ({ selected }) => (
   <span className={classNames('customize-icon', selected && 'selected-icon')} />
 );
-Icon.propTypes = {
-  selected: PropTypes.bool,
-};
 
 const Demo = () => (
   <div>

@@ -1,17 +1,12 @@
 /* eslint-disable no-console, react/no-unescaped-entities */
 import '../assets/index.less';
 import React from 'react';
-import PropTypes from 'prop-types';
 import 'rc-dialog/assets/index.css';
 import Modal from 'rc-dialog';
 import Tree, { TreeNode } from '../src';
 import { gData, getRadioSelectKeys } from './utils/dataUtil';
 
 class Demo extends React.Component {
-  static propTypes = {
-    multiple: PropTypes.bool,
-  };
-
   static defaultProps = {
     multiple: true,
   };

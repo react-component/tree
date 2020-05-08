@@ -1,6 +1,11 @@
 # History
 ---
 
+## 3.2.0 `2020-05-08`
+
+- Upgrade `rc-animate`.
+- Remove `react-lifecycles-compat` and `prop-types`.
+
 ## 2.1.0 / 2019-04-28
 
 - TreeNode support `checkable`.
