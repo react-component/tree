@@ -69,7 +69,7 @@
   "dependencies": {
     "classnames": "2.x",
     "prop-types": "^15.5.8",
-    "rc-animate": "^2.9.2",
+    "rc-animate": "^3.0.0",
     "rc-util": "^4.11.0",
     "rc-virtual-list": "^1.1.0",
     "react-lifecycles-compat": "^3.0.4"
