@@ -499,7 +499,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const dropResult = {
       event,
       node: convertNodePropsToEventData(node.props),
-      dragNode: convertNodePropsToEventData(this.dragNode.props),
+      dragNode: this.dragNode ? convertNodePropsToEventData(this.dragNode.props) : null,
       dragNodesKeys: dragNodesKeys.slice(),
       dropPosition: dropPosition + Number(posArr[posArr.length - 1]),
       dropToGap: false,
