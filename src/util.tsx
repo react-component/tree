@@ -151,15 +151,15 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
  * @param keyEntities
  */
 export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, DataEntity>) {
-  const expandedKeys = [];
+  const expandedKeys = new Set();
 
   function conductUp(key: Key) {
-    if (expandedKeys.indexOf(key) !== -1) return;
+    if (expandedKeys.has(key)) return;
 
     const entity = keyEntities[key];
     if (!entity) return;
 
-    expandedKeys.push(key);
+    expandedKeys.add(key);
 
     const { parent, node } = entity;
 
@@ -174,7 +174,7 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
     conductUp(key);
   });
 
-  return expandedKeys;
+  return [...expandedKeys];
 }
 
 /**
