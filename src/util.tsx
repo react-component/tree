@@ -150,8 +150,8 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
  * @param keyList
  * @param keyEntities
  */
-export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, DataEntity>) {
-  const expandedKeys = new Set();
+export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, DataEntity>): Key[] {
+  const expandedKeys = new Set<Key>();
 
   function conductUp(key: Key) {
     if (expandedKeys.has(key)) return;
