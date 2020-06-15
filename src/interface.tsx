@@ -74,4 +74,4 @@ export interface FlattenNode {
 
 export type ScrollTo = (scroll: { key: Key }) => void;
 
-export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
+export type GetKey<RecordType> = (record: RecordType, index?: number) => Key;

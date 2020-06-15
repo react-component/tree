@@ -8,12 +8,12 @@ import {
   DataEntity,
   Key,
   EventDataNode,
-  GetRowKey,
+  GetKey,
 } from '../interface';
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
 
-export function getKey(key: Key, pos: string) {
+export function basicGetKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
     return key;
   }
@@ -99,7 +99,7 @@ export function flattenTreeData(
   function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
-      const mergedKey = getKey(treeNode.key, pos);
+      const mergedKey = basicGetKey(treeNode.key, pos);
 
       // Add FlattenDataNode into list
       const flattenNode: FlattenNode = {
@@ -144,22 +144,17 @@ export function traverseDataNodes(
     parentPos: string | number;
     level: number;
   }) => void,
-  rowKey: GetRowKey<DataNode> | string,
+  getKey?: GetKey<DataNode> | string,
 ) {
-  const rowKeyIsFunction = typeof rowKey === 'function';
-  const rowKeyIsString = typeof rowKey === 'string';
-
-  function getKeyOfNode(node: DataNode, pos: string): Key {
-    if (rowKey) {
-      if (rowKeyIsString) {
-        return (node as any)[rowKey as string];
-      }
-      if (rowKeyIsFunction) {
-        return (rowKey as GetRowKey<DataNode>)(node);
-      }
+  let syntheticGetKey: (node: DataNode, pos?: string) => Key;
+  if (getKey) {
+    if (typeof getKey === 'string') {
+      syntheticGetKey = (node: DataNode) => (node as any)[getKey as string];
+    } else if (typeof getKey === 'function') {
+      syntheticGetKey = (node: DataNode) => (getKey as GetKey<DataNode>)(node);
     }
-
-    return node.key === null || node.key === undefined ? pos : node.key;
+  } else {
+    syntheticGetKey = (node, pos) => basicGetKey(node.key, pos);
   }
 
   function processNode(
@@ -172,7 +167,7 @@ export function traverseDataNodes(
 
     // Process node if is not root
     if (node) {
-      const key: Key = getKeyOfNode(node, pos);
+      const key: Key = syntheticGetKey(node, pos);
       const data = {
         node,
         index,
@@ -219,7 +214,7 @@ export function convertDataToEntities(
     processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
     onProcessFinished?: (wrapper: Wrapper) => void;
   } = {},
-  rowKey?: GetRowKey<DataNode> | string,
+  rowKey?: GetKey<DataNode> | string,
 ) {
   const posEntities = {};
   const keyEntities = {};
@@ -238,7 +233,7 @@ export function convertDataToEntities(
       const { node, index, pos, key, parentPos, level } = item;
       const entity: DataEntity = { node, index, key, pos, level };
 
-      const mergedKey = getKey(key, pos);
+      const mergedKey = basicGetKey(key, pos);
 
       posEntities[pos] = entity;
       keyEntities[mergedKey] = entity;
