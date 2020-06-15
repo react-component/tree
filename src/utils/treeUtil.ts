@@ -214,7 +214,7 @@ export function convertDataToEntities(
     processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
     onProcessFinished?: (wrapper: Wrapper) => void;
   } = {},
-  rowKey?: GetKey<DataNode> | string,
+  getKey?: GetKey<DataNode> | string,
 ) {
   const posEntities = {};
   const keyEntities = {};
@@ -249,7 +249,7 @@ export function convertDataToEntities(
         processEntity(entity, wrapper);
       }
     },
-    rowKey,
+    getKey,
   );
 
   if (onProcessFinished) {
