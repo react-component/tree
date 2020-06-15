@@ -53,6 +53,7 @@ class Demo extends React.Component {
     if (!info.dropToGap) {
       // Drop on the content
       loop(data, dropKey, item => {
+        // eslint-disable-next-line no-param-reassign
         item.children = item.children || [];
         // where to insert 示例添加到尾部，可以是随意位置
         item.children.push(dragObj);
@@ -63,6 +64,7 @@ class Demo extends React.Component {
       dropPosition === 1 // On the bottom gap
     ) {
       loop(data, dropKey, item => {
+        // eslint-disable-next-line no-param-reassign
         item.children = item.children || [];
         // where to insert 示例添加到尾部，可以是随意位置
         item.children.unshift(dragObj);

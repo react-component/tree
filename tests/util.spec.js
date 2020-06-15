@@ -117,6 +117,44 @@ describe('Util', () => {
     expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
   });
 
+  it('convertDataToEntities with string rowKey', () => {
+    const entities = convertDataToEntities(
+      [
+        {
+          key: 'parent',
+          notKey: 'let it be',
+          children: [{ key: 0, notKey: 'penny lane' }, { key: 1, notKey: 'please please me' }],
+        },
+      ],
+      undefined,
+      'notKey',
+    );
+    expect(Object.keys(entities.keyEntities).sort()).toEqual([
+      'let it be',
+      'penny lane',
+      'please please me',
+    ]);
+  });
+
+  it('convertDataToEntities with function rowKey', () => {
+    const entities = convertDataToEntities(
+      [
+        {
+          key: 'parent',
+          notKey: 'let it be',
+          children: [{ key: 0, notKey: 'penny lane' }, { key: 1, notKey: 'please please me' }],
+        },
+      ],
+      undefined,
+      entity => entity.notKey,
+    );
+    expect(Object.keys(entities.keyEntities).sort()).toEqual([
+      'let it be',
+      'penny lane',
+      'please please me',
+    ]);
+  });
+
   it('convertTreeToEntities with additional handler', () => {
     const onProcessFinished = jest.fn();
 
@@ -134,6 +172,7 @@ describe('Util', () => {
           valueEntities: {},
         }),
         processEntity: (entity, wrapper) => {
+          // eslint-disable-next-line no-param-reassign
           wrapper.valueEntities[entity.node.value] = entity;
         },
         onProcessFinished,

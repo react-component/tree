@@ -1,10 +1,17 @@
 import * as React from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'rc-util/lib/warning';
-import { DataNode, FlattenNode, NodeElement, DataEntity, Key, EventDataNode } from '../interface';
+import {
+  DataNode,
+  FlattenNode,
+  NodeElement,
+  DataEntity,
+  Key,
+  EventDataNode,
+  GetRowKey,
+} from '../interface';
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
-import { GetRowKey } from './TableType';
 
 export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
@@ -137,8 +144,24 @@ export function traverseDataNodes(
     parentPos: string | number;
     level: number;
   }) => void,
-  rowKey: GetRowKey<any>,
+  rowKey: GetRowKey<DataNode> | string,
 ) {
+  const rowKeyIsFunction = typeof rowKey === 'function';
+  const rowKeyIsString = typeof rowKey === 'string';
+
+  function getKeyOfNode(node: DataNode, pos: string): Key {
+    if (rowKey) {
+      if (rowKeyIsString) {
+        return (node as any)[rowKey as string];
+      }
+      if (rowKeyIsFunction) {
+        return (rowKey as GetRowKey<DataNode>)(node);
+      }
+    }
+
+    return node.key === null || node.key === undefined ? pos : node.key;
+  }
+
   function processNode(
     node: DataNode,
     index?: number,
@@ -149,14 +172,7 @@ export function traverseDataNodes(
 
     // Process node if is not root
     if (node) {
-      let key: string | number;
-      if (rowKey) {
-        if (typeof rowKey === 'function') {
-          key = rowKey(node, index);
-        }
-      } else {
-        key = node.key === null || node.key === undefined ? pos : node.key;
-      }
+      const key: Key = getKeyOfNode(node, pos);
       const data = {
         node,
         index,
@@ -203,7 +219,7 @@ export function convertDataToEntities(
     processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
     onProcessFinished?: (wrapper: Wrapper) => void;
   } = {},
-  rowKey: GetRowKey<any>,
+  rowKey?: GetRowKey<DataNode> | string,
 ) {
   const posEntities = {};
   const keyEntities = {};

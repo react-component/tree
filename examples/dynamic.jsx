@@ -26,6 +26,7 @@ function setLeaf(treeData, curKey, level) {
       if (item.children) {
         loopLeaf(item.children, l);
       } else if (l < 1) {
+        // eslint-disable-next-line no-param-reassign
         item.isLeaf = true;
       }
     });
@@ -41,6 +42,7 @@ function getNewTreeData(treeData, curKey, child, level) {
         if (item.children) {
           loop(item.children);
         } else {
+          // eslint-disable-next-line no-param-reassign
           item.children = child;
         }
       }
