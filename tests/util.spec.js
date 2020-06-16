@@ -323,6 +323,79 @@ describe('Util', () => {
         expect(result2.checkedKeys.sort()).toEqual(['war', 'are', 'not', 'it'].sort());
         expect(result2.halfCheckedKeys.sort()).toEqual([].sort());
       });
+
+      const genNonDisabledTree = props => (
+        <Tree {...props}>
+          <TreeNode key="war">
+            <TreeNode key="are" />
+            <TreeNode key="not">
+              <TreeNode key="it" />
+              <TreeNode key="used">
+                <TreeNode key="to" />
+                <TreeNode key="be" />
+              </TreeNode>
+            </TreeNode>
+          </TreeNode>
+        </Tree>
+      );
+
+      it('check with custom checkbox disabled', () => {
+        const tree = genNonDisabledTree();
+        const { keyEntities } = convertDataToEntities(
+          convertTreeToData(tree.props.children),
+          undefined,
+          undefined,
+        );
+
+        const getCheckDisabled = data => data.key === 'used';
+
+        const result1 = conductCheck(['not'], true, keyEntities, getCheckDisabled);
+        expect(result1.checkedKeys.sort()).toEqual(['not', 'it'].sort());
+        expect(result1.halfCheckedKeys.sort()).toEqual(['war'].sort());
+
+        const result2 = conductCheck(['to', 'be'], true, keyEntities, getCheckDisabled);
+        expect(result2.checkedKeys.sort()).toEqual(['to', 'be'].sort());
+        expect(result2.halfCheckedKeys.sort()).toEqual([].sort());
+      });
+
+      it('uncheck with custom checkbox disabled', () => {
+        const tree = genNonDisabledTree();
+        const { keyEntities } = convertDataToEntities(
+          convertTreeToData(tree.props.children),
+          undefined,
+          undefined,
+        );
+
+        const getCheckDisabled = data => data.key === 'used';
+
+        // First, we check all
+        const allCheckedKeys = conductCheck(
+          ['war', 'to', 'be'],
+          true,
+          keyEntities,
+          getCheckDisabled,
+        ).checkedKeys;
+        expect(allCheckedKeys.length).toEqual(6);
+
+        // Then uncheck one of then
+        const result1 = conductCheck(
+          allCheckedKeys.filter(key => key !== 'not'),
+          { checked: false, halfCheckedKeys: [] },
+          keyEntities,
+          getCheckDisabled,
+        );
+        expect(result1.checkedKeys.sort()).toEqual(['are', 'to', 'be'].sort());
+        expect(result1.halfCheckedKeys.sort()).toEqual(['war'].sort());
+
+        const result2 = conductCheck(
+          allCheckedKeys.filter(key => key !== 'to' && key !== 'be'),
+          { checked: false, halfCheckedKeys: [] },
+          keyEntities,
+          getCheckDisabled,
+        );
+        expect(result2.checkedKeys.sort()).toEqual(['war', 'are', 'not', 'it'].sort());
+        expect(result2.halfCheckedKeys.sort()).toEqual([].sort());
+      });
     });
   });
 

@@ -1,5 +1,5 @@
 import warning from 'rc-util/lib/warning';
-import { Key, DataEntity, DataNode } from '../interface';
+import { Key, DataEntity, DataNode, GetCheckDisabled } from '../interface';
 
 interface ConductReturnType {
   checkedKeys: Key[];
@@ -26,6 +26,7 @@ function fillConductCheck(
   keys: Set<Key>,
   levelEntities: Map<number, Set<DataEntity>>,
   maxLevel: number,
+  syntheticGetCheckDisabled: GetCheckDisabled<DataNode>,
 ): ConductReturnType {
   const checkedKeys = new Set<Key>(keys);
   const halfCheckedKeys = new Set<Key>();
@@ -36,9 +37,9 @@ function fillConductCheck(
     entities.forEach(entity => {
       const { key, node, children = [] } = entity;
 
-      if (checkedKeys.has(key) && !isCheckDisabled(node)) {
+      if (checkedKeys.has(key) && !syntheticGetCheckDisabled(node)) {
         children
-          .filter(childEntity => !isCheckDisabled(childEntity.node))
+          .filter(childEntity => !syntheticGetCheckDisabled(childEntity.node))
           .forEach(childEntity => {
             checkedKeys.add(childEntity.key);
           });
@@ -54,12 +55,12 @@ function fillConductCheck(
       const { parent, node } = entity;
 
       // Skip if no need to check
-      if (isCheckDisabled(node) || !entity.parent || visitedKeys.has(entity.parent.key)) {
+      if (syntheticGetCheckDisabled(node) || !entity.parent || visitedKeys.has(entity.parent.key)) {
         return;
       }
 
       // Skip if parent is disabled
-      if (isCheckDisabled(entity.parent.node)) {
+      if (syntheticGetCheckDisabled(entity.parent.node)) {
         visitedKeys.add(parent.key);
         return;
       }
@@ -68,7 +69,7 @@ function fillConductCheck(
       let partialChecked = false;
 
       (parent.children || [])
-        .filter(childEntity => !isCheckDisabled(childEntity.node))
+        .filter(childEntity => !syntheticGetCheckDisabled(childEntity.node))
         .forEach(({ key }) => {
           const checked = checkedKeys.has(key);
           if (allChecked && !checked) {
@@ -102,6 +103,7 @@ function cleanConductCheck(
   halfKeys: Key[],
   levelEntities: Map<number, Set<DataEntity>>,
   maxLevel: number,
+  syntheticGetCheckDisabled: GetCheckDisabled<DataNode>,
 ): ConductReturnType {
   const checkedKeys = new Set<Key>(keys);
   let halfCheckedKeys = new Set<Key>(halfKeys);
@@ -112,9 +114,9 @@ function cleanConductCheck(
     entities.forEach(entity => {
       const { key, node, children = [] } = entity;
 
-      if (!checkedKeys.has(key) && !halfCheckedKeys.has(key) && !isCheckDisabled(node)) {
+      if (!checkedKeys.has(key) && !halfCheckedKeys.has(key) && !syntheticGetCheckDisabled(node)) {
         children
-          .filter(childEntity => !isCheckDisabled(childEntity.node))
+          .filter(childEntity => !syntheticGetCheckDisabled(childEntity.node))
           .forEach(childEntity => {
             checkedKeys.delete(childEntity.key);
           });
@@ -132,12 +134,12 @@ function cleanConductCheck(
       const { parent, node } = entity;
 
       // Skip if no need to check
-      if (isCheckDisabled(node) || !entity.parent || visitedKeys.has(entity.parent.key)) {
+      if (syntheticGetCheckDisabled(node) || !entity.parent || visitedKeys.has(entity.parent.key)) {
         return;
       }
 
       // Skip if parent is disabled
-      if (isCheckDisabled(entity.parent.node)) {
+      if (syntheticGetCheckDisabled(entity.parent.node)) {
         visitedKeys.add(parent.key);
         return;
       }
@@ -146,7 +148,7 @@ function cleanConductCheck(
       let partialChecked = false;
 
       (parent.children || [])
-        .filter(childEntity => !isCheckDisabled(childEntity.node))
+        .filter(childEntity => !syntheticGetCheckDisabled(childEntity.node))
         .forEach(({ key }) => {
           const checked = checkedKeys.has(key);
           if (allChecked && !checked) {
@@ -184,8 +186,16 @@ export function conductCheck(
   keyList: Key[],
   checked: true | { checked: false; halfCheckedKeys: Key[] },
   keyEntities: Record<Key, DataEntity>,
+  getCheckDisabled?: GetCheckDisabled<DataNode>,
 ): ConductReturnType {
   const warningMissKeys: Key[] = [];
+
+  let syntheticGetCheckDisabled: GetCheckDisabled<DataNode>;
+  if (getCheckDisabled) {
+    syntheticGetCheckDisabled = getCheckDisabled;
+  } else {
+    syntheticGetCheckDisabled = isCheckDisabled;
+  }
 
   // We only handle exist keys
   const keys = new Set<Key>(
@@ -227,9 +237,15 @@ export function conductCheck(
 
   let result: ConductReturnType;
   if (checked === true) {
-    result = fillConductCheck(keys, levelEntities, maxLevel);
+    result = fillConductCheck(keys, levelEntities, maxLevel, syntheticGetCheckDisabled);
   } else {
-    result = cleanConductCheck(keys, checked.halfCheckedKeys, levelEntities, maxLevel);
+    result = cleanConductCheck(
+      keys,
+      checked.halfCheckedKeys,
+      levelEntities,
+      maxLevel,
+      syntheticGetCheckDisabled,
+    );
   }
 
   return result;
