@@ -13,7 +13,7 @@ import {
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
 
-export function basicGetKey(key: Key, pos: string) {
+export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
     return key;
   }
@@ -99,7 +99,7 @@ export function flattenTreeData(
   function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
-      const mergedKey = basicGetKey(treeNode.key, pos);
+      const mergedKey = getKey(treeNode.key, pos);
 
       // Add FlattenDataNode into list
       const flattenNode: FlattenNode = {
@@ -144,17 +144,17 @@ export function traverseDataNodes(
     parentPos: string | number;
     level: number;
   }) => void,
-  getKey?: GetKey<DataNode> | string,
+  externalGetKey?: GetKey<DataNode> | string,
 ) {
   let syntheticGetKey: (node: DataNode, pos?: string) => Key;
-  if (getKey) {
-    if (typeof getKey === 'string') {
-      syntheticGetKey = (node: DataNode) => (node as any)[getKey as string];
-    } else if (typeof getKey === 'function') {
-      syntheticGetKey = (node: DataNode) => (getKey as GetKey<DataNode>)(node);
+  if (externalGetKey) {
+    if (typeof externalGetKey === 'string') {
+      syntheticGetKey = (node: DataNode) => (node as any)[externalGetKey as string];
+    } else if (typeof externalGetKey === 'function') {
+      syntheticGetKey = (node: DataNode) => (externalGetKey as GetKey<DataNode>)(node);
     }
   } else {
-    syntheticGetKey = (node, pos) => basicGetKey(node.key, pos);
+    syntheticGetKey = (node, pos) => getKey(node.key, pos);
   }
 
   function processNode(
@@ -214,7 +214,7 @@ export function convertDataToEntities(
     processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
     onProcessFinished?: (wrapper: Wrapper) => void;
   } = {},
-  getKey?: GetKey<DataNode> | string,
+  externalGetKey?: GetKey<DataNode> | string,
 ) {
   const posEntities = {};
   const keyEntities = {};
@@ -233,7 +233,7 @@ export function convertDataToEntities(
       const { node, index, pos, key, parentPos, level } = item;
       const entity: DataEntity = { node, index, key, pos, level };
 
-      const mergedKey = basicGetKey(key, pos);
+      const mergedKey = getKey(key, pos);
 
       posEntities[pos] = entity;
       keyEntities[mergedKey] = entity;
@@ -249,7 +249,7 @@ export function convertDataToEntities(
         processEntity(entity, wrapper);
       }
     },
-    getKey,
+    externalGetKey,
   );
 
   if (onProcessFinished) {

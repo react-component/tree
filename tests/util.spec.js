@@ -117,7 +117,7 @@ describe('Util', () => {
     expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
   });
 
-  it('convertDataToEntities with string getKey', () => {
+  it('convertDataToEntities with string externalGetKey', () => {
     const entities = convertDataToEntities(
       [
         {
@@ -136,7 +136,7 @@ describe('Util', () => {
     ]);
   });
 
-  it('convertDataToEntities with function getKey', () => {
+  it('convertDataToEntities with function externalGetKey', () => {
     const entities = convertDataToEntities(
       [
         {
