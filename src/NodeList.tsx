@@ -7,7 +7,7 @@ import VirtualList from 'rc-virtual-list';
 import { FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
-import { getTreeNodeProps, getKey } from './utils/treeUtil';
+import { getTreeNodeProps, basicGetKey } from './utils/treeUtil';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -109,7 +109,7 @@ function itemKey(item: FlattenNode) {
     data: { key },
     pos,
   } = item;
-  return getKey(key, pos);
+  return basicGetKey(key, pos);
 }
 
 function getAccessibilityPath(item: FlattenNode): string {
@@ -304,7 +304,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
             isStart,
             isEnd,
           } = treeNode;
-          const mergedKey = getKey(key, pos);
+          const mergedKey = basicGetKey(key, pos);
           delete restProps.children;
 
           const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
