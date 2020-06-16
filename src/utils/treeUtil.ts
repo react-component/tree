@@ -8,6 +8,7 @@ import {
   DataEntity,
   Key,
   EventDataNode,
+  GetKey,
 } from '../interface';
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
@@ -57,10 +58,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
       .map(treeNode => {
         // Filter invalidate node
         if (!isTreeNode(treeNode)) {
-          warning(
-            !treeNode,
-            'Tree/TreeNode can only accept TreeNode as children.',
-          );
+          warning(!treeNode, 'Tree/TreeNode can only accept TreeNode as children.');
           return null;
         }
 
@@ -146,7 +144,19 @@ export function traverseDataNodes(
     parentPos: string | number;
     level: number;
   }) => void,
+  externalGetKey?: GetKey<DataNode> | string,
 ) {
+  let syntheticGetKey: (node: DataNode, pos?: string) => Key;
+  if (externalGetKey) {
+    if (typeof externalGetKey === 'string') {
+      syntheticGetKey = (node: DataNode) => (node as any)[externalGetKey as string];
+    } else if (typeof externalGetKey === 'function') {
+      syntheticGetKey = (node: DataNode) => (externalGetKey as GetKey<DataNode>)(node);
+    }
+  } else {
+    syntheticGetKey = (node, pos) => getKey(node.key, pos);
+  }
+
   function processNode(
     node: DataNode,
     index?: number,
@@ -157,11 +167,12 @@ export function traverseDataNodes(
 
     // Process node if is not root
     if (node) {
+      const key: Key = syntheticGetKey(node, pos);
       const data = {
         node,
         index,
         pos,
-        key: node.key !== null ? node.key : pos,
+        key,
         parentPos: parent.node ? parent.pos : null,
         level: parent.level + 1,
       };
@@ -203,6 +214,7 @@ export function convertDataToEntities(
     processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
     onProcessFinished?: (wrapper: Wrapper) => void;
   } = {},
+  externalGetKey?: GetKey<DataNode> | string,
 ) {
   const posEntities = {};
   const keyEntities = {};
@@ -215,26 +227,30 @@ export function convertDataToEntities(
     wrapper = initWrapper(wrapper) || wrapper;
   }
 
-  traverseDataNodes(dataNodes, item => {
-    const { node, index, pos, key, parentPos, level } = item;
-    const entity: DataEntity = { node, index, key, pos, level };
+  traverseDataNodes(
+    dataNodes,
+    item => {
+      const { node, index, pos, key, parentPos, level } = item;
+      const entity: DataEntity = { node, index, key, pos, level };
 
-    const mergedKey = getKey(key, pos);
+      const mergedKey = getKey(key, pos);
 
-    posEntities[pos] = entity;
-    keyEntities[mergedKey] = entity;
+      posEntities[pos] = entity;
+      keyEntities[mergedKey] = entity;
 
-    // Fill children
-    entity.parent = posEntities[parentPos];
-    if (entity.parent) {
-      entity.parent.children = entity.parent.children || [];
-      entity.parent.children.push(entity);
-    }
+      // Fill children
+      entity.parent = posEntities[parentPos];
+      if (entity.parent) {
+        entity.parent.children = entity.parent.children || [];
+        entity.parent.children.push(entity);
+      }
 
-    if (processEntity) {
-      processEntity(entity, wrapper);
-    }
-  });
+      if (processEntity) {
+        processEntity(entity, wrapper);
+      }
+    },
+    externalGetKey,
+  );
 
   if (onProcessFinished) {
     onProcessFinished(wrapper);
@@ -293,9 +309,7 @@ export function getTreeNodeProps(
   return treeNodeProps;
 }
 
-export function convertNodePropsToEventData(
-  props: TreeNodeProps,
-): EventDataNode {
+export function convertNodePropsToEventData(props: TreeNodeProps): EventDataNode {
   const {
     data,
     expanded,
