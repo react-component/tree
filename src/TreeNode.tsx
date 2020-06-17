@@ -317,8 +317,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 
   // Switcher
   renderSwitcher = () => {
-    const { expanded, switcherIcon: switcherIconFromProps } = this.props;
     const {
+      expanded,
+      switcherIcon: switcherIconFromProps,
       context: { prefixCls, switcherIcon: switcherIconFromCtx },
     } = this.props;
 

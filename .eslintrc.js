@@ -13,4 +13,5 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': 0,
     'no-loop-func': 0,
   },
+  parser: '@typescript-eslint/parser'
 };

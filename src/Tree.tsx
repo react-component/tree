@@ -58,7 +58,7 @@ export interface TreeProps {
   tabIndex?: number;
   children?: React.ReactNode;
   treeData?: DataNode[]; // Generate treeNode by children
-  showLine?: boolean;
+  showLine?: boolean | { hideLeafIcon: boolean };
   showIcon?: boolean;
   icon?: IconType;
   selectable?: boolean;
