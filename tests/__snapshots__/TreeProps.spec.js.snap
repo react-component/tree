@@ -1685,6 +1685,32 @@ exports[`Tree Props showLine 1`] = `
 </div>
 `;
 
+exports[`Tree Props showLine object 1`] = `
+<div
+  class="rc-tree rc-tree-show-line"
+>
+  <div
+    role="tree"
+  >
+    <input
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      tabindex="0"
+      value=""
+    />
+  </div>
+  <div
+    class="rc-tree-list"
+  >
+    <div>
+      <div
+        class="rc-tree-list-holder-inner"
+        style="display:flex;flex-direction:column"
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Tree Props treeData 1`] = `
 <div
   class="rc-tree"

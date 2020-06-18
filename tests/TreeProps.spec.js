@@ -37,6 +37,11 @@ describe('Tree Props', () => {
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
 
+  it('showLine object', () => {
+    const wrapper = render(<Tree showLine={{ hideLeafIcon: true }} />);
+    expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
+
   // showIcon
   it('showIcon', () => {
     const withIcon = render(
