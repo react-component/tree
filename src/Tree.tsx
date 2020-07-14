@@ -76,6 +76,7 @@ export interface TreeProps {
   checkedKeys?: Key[] | { checked: Key[]; halfChecked: Key[] };
   defaultSelectedKeys?: Key[];
   selectedKeys?: Key[];
+  titleRender?: (node: DataNode) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
@@ -1043,6 +1044,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       height,
       itemHeight,
       virtual,
+      titleRender,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -1062,6 +1064,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
           loadData,
           filterTreeNode,
+
+          titleRender,
 
           onNodeClick: this.onNodeClick,
           onNodeDoubleClick: this.onNodeDoubleClick,

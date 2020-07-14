@@ -895,4 +895,32 @@ describe('Tree Props', () => {
     const wrapper = mount(<Tree style={style} />);
     expect(wrapper.props().style).toEqual(style);
   });
+
+  it('titleRender', () => {
+    const wrapper = mount(
+      <Tree
+        defaultExpandAll
+        titleRender={({ value }) => <span className="bamboo-span">{value}</span>}
+        treeData={[
+          { title: ({ value }) => <span className="light-span">{value}</span>, value: 'light' },
+          { value: 'bamboo' },
+        ]}
+      />,
+    );
+
+    expect(
+      wrapper
+        .find('.rc-tree-title')
+        .first()
+        .find('.light-span')
+        .text(),
+    ).toEqual('light');
+    expect(
+      wrapper
+        .find('.rc-tree-title')
+        .last()
+        .find('.bamboo-span')
+        .text(),
+    ).toEqual('bamboo');
+  });
 });
