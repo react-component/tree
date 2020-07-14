@@ -398,7 +398,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const { dragNodeHighlight } = this.state;
     const { title, selected, icon, loading, data } = this.props;
     const {
-      context: { prefixCls, showIcon, icon: treeIcon, draggable, loadData },
+      context: { prefixCls, showIcon, icon: treeIcon, draggable, loadData, titleRender },
     } = this.props;
     const disabled = this.isDisabled();
 
@@ -422,11 +422,16 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     }
 
     // Title
-    const $title = (
-      <span className={`${prefixCls}-title`}>
-        {typeof title === 'function' ? title(data) : title}
-      </span>
-    );
+    let titleNode: React.ReactNode;
+    if (typeof title === 'function') {
+      titleNode = title(data);
+    } else if (titleRender) {
+      titleNode = titleRender(data);
+    } else {
+      titleNode = title;
+    }
+
+    const $title = <span className={`${prefixCls}-title`}>{titleNode}</span>;
 
     return (
       <span
