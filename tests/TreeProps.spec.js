@@ -923,21 +923,4 @@ describe('Tree Props', () => {
         .text(),
     ).toEqual('bamboo');
   });
-
-  it('treeNodeLabelProp', () => {
-    const wrapper = mount(
-      <Tree
-        treeNodeLabelProp="replacedTitle"
-        defaultExpandAll
-        treeData={[
-          {
-            replacedTitle: 'real-parent',
-            key: 1,
-          },
-        ]}
-      />,
-    );
-
-    expect(wrapper.find('.rc-tree-title').text()).toEqual('real-parent');
-  });
 });

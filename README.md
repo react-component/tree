@@ -79,7 +79,6 @@ see examples
 | showIcon | whether show icon | bool | true |
 | showLine | whether show line | bool | false |
 | treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array) | array<{key,title,children, [disabled, selectable]}> | - |
-| treeNodeLabelProp | Set display title node of treeNode | string | title |
 | onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent}) | - |
 | onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node, nativeEvent}) | - |
 | onDragEnd | it execs when fire the tree's dragend event | function({event,node}) | - |
