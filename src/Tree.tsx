@@ -77,6 +77,7 @@ export interface TreeProps {
   defaultSelectedKeys?: Key[];
   selectedKeys?: Key[];
   titleRender?: (node: DataNode) => React.ReactNode;
+  treeNodeLabelProp?: string;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
@@ -1045,6 +1046,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       itemHeight,
       virtual,
       titleRender,
+      treeNodeLabelProp = 'title',
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -1114,6 +1116,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             onActiveChange={this.onActiveChange}
             onListChangeStart={this.onListChangeStart}
             onListChangeEnd={this.onListChangeEnd}
+            treeNodeLabelProp={treeNodeLabelProp}
             {...this.getTreeNodeRequiredProps()}
             {...domProps}
           />

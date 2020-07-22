@@ -75,6 +75,8 @@ interface NodeListProps {
   dragOverNodeKey: Key;
   dropPosition: number;
 
+  treeNodeLabelProp: string;
+
   // Virtual list
   height: number;
   itemHeight: number;
@@ -152,6 +154,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     activeItem,
     focused,
     tabIndex,
+
+    treeNodeLabelProp,
 
     onKeyDown,
     onFocus,
@@ -312,6 +316,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           return (
             <MotionTreeNode
               {...restProps}
+              title={restProps[treeNodeLabelProp]}
               {...treeNodeProps}
               active={activeItem && key === activeItem.data.key}
               pos={pos}
