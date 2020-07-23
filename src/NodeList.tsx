@@ -94,10 +94,11 @@ interface NodeListProps {
  */
 export function getMinimumRangeTransitionRange(
   list: FlattenNode[],
+  virtual: boolean,
   height: number,
   itemHeight: number,
 ) {
-  if (!height) {
+  if (!virtual || !height) {
     return list;
   }
 
@@ -203,6 +204,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         if (motion) setDisableVirtual(true);
         const rangeNodes = getMinimumRangeTransitionRange(
           getExpandRange(prevData, data, diffExpanded.key),
+          virtual,
           height,
           itemHeight,
         );
@@ -219,6 +221,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         if (motion) setDisableVirtual(true);
         const rangeNodes = getMinimumRangeTransitionRange(
           getExpandRange(data, prevData, diffExpanded.key),
+          virtual,
           height,
           itemHeight,
         );
