@@ -454,9 +454,36 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       >
         {$icon}
         {$title}
+        {this.renderDragIndicator()}
       </span>
     );
   };
+
+  renderDragIndicator = () => {
+    const {
+      disabled,
+      dragOver,
+      dragOverGapTop,
+      dragOverGapBottom
+    } = this.props
+    const {
+      context: { draggable, levelAscended },
+    } = this.props;
+    let top
+    if (dragOverGapTop) top = 0;
+    else if (dragOverGapBottom) top = 'calc(100% - 2px)';
+    else top = '50%'
+    return (
+      (!disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop)) ? <div style={{
+        position: 'absolute',
+        left: -levelAscended * 18,
+        right: 0,
+        top,
+        height: 2,
+        backgroundColor: 'red',
+      }}/> : null
+    )
+  }
 
   render() {
     const {

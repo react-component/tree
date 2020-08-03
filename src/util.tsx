@@ -56,20 +56,52 @@ export function getDragNodesKeys(dragNodeKey: Key, keyEntities: Record<Key, Data
   return dragNodesKeys;
 }
 
+function getEntity (treeNode: NodeInstance) {
+  return ((treeNode.props as any).context.keyEntities as any)[treeNode.props.eventKey]
+}
+
 // Only used when drag, not affect SSR.
-export function calcDropPosition(event: React.MouseEvent, treeNode: NodeInstance) {
-  const { clientY } = event;
-  const { top, bottom, height } = treeNode.selectHandle.getBoundingClientRect();
+export function calcDropPosition(event: React.MouseEvent, targetNode: NodeInstance) {
+  const { clientX, clientY } = event;
+  const { top, bottom, height, left: selectHandleX } = targetNode.selectHandle.getBoundingClientRect();
   const des = Math.max(height * DRAG_SIDE_RANGE, DRAG_MIN_GAP);
+  const horizontalMouseOffset = selectHandleX - clientX
+  const levelToAscend = horizontalMouseOffset / 18
 
-  if (clientY <= top + des) {
-    return -1;
-  }
-  if (clientY >= bottom - des) {
-    return 1;
+  console.log('levelToAscend', levelToAscend)
+
+  let targetContainerNodeEntity = getEntity(targetNode).parent || null
+  let targetSiblingNodeEntity = getEntity(targetNode)
+  let levelAscended = 0
+  if (targetContainerNodeEntity) {
+    for (let i = 0; i < levelToAscend; ++i) {
+      levelAscended += 1
+      if (targetContainerNodeEntity?.parent) {
+        targetContainerNodeEntity = targetContainerNodeEntity.parent
+        targetSiblingNodeEntity = targetSiblingNodeEntity.parent
+      } else {
+        targetContainerNodeEntity = null
+        targetSiblingNodeEntity = targetSiblingNodeEntity.parent
+        break
+      }
+    }
   }
 
-  return 0;
+  let ret = [0]
+
+  if (levelAscended === 0) {
+    if (clientY <= top + des) {
+      ret = [-1];
+    }
+
+    if (clientY >= bottom - des) {
+      ret = [1];
+    }
+  } else {
+    ret = [-1];
+  }
+
+  return [...ret, levelAscended, targetContainerNodeEntity, targetSiblingNodeEntity]
 }
 
 /**

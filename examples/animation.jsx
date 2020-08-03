@@ -10,7 +10,7 @@ const STYLE = `
 }
 
 .node-motion {
-  transition: all .3s;
+  transition: all 10s;
   overflow-y: hidden;
 }
 `;

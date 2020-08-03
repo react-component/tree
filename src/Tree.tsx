@@ -160,7 +160,11 @@ interface TreeState {
   dragging: boolean;
   dragNodesKeys: Key[];
   dragOverNodeKey: Key;
+  
   dropPosition: number;
+  dropContainerKey: Key | null;
+  dropSiblingKey: Key;
+  levelAscended: number;
 
   treeData: DataNode[];
   flattenNodes: FlattenNode[];
@@ -210,7 +214,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
     dragging: false,
     dragNodesKeys: [],
     dragOverNodeKey: null,
+    
     dropPosition: null,
+    dropContainerKey: null,
+    dropSiblingKey: null,
+    levelAscended: null,
 
     treeData: [],
     flattenNodes: [],
@@ -365,7 +373,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   /**
-   * [Legacy] Select handler is less small than node,
+   * [Legacy] Select handler is smaller than node,
    * so that this will trigger when drag enter node or select handler.
    * This is a little tricky if customize css without padding.
    * Better for use mouse move event to refresh drag state.
@@ -378,7 +386,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     if (!this.dragNode || dragNodesKeys.indexOf(eventKey) !== -1) return;
 
-    const dropPosition = calcDropPosition(event, node);
+    const [dropPosition] = calcDropPosition(event, node);
 
     // Update drag over node
     this.setState({
@@ -439,12 +447,20 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Update drag position
     if (this.dragNode && eventKey === this.state.dragOverNodeKey) {
-      const dropPosition = calcDropPosition(event, node);
 
-      if (dropPosition === this.state.dropPosition) return;
+      const [dropPosition, levelAscended, parentEntity, siblingEntity] = calcDropPosition(event, node);
+
+      console.log('dropPosition', dropPosition)
+      // console.log('onNodeDragOver', levelAscended, parentEntity, siblingEntity)
+
+      if (
+        dropPosition === this.state.dropPosition &&
+        levelAscended === this.state.levelAscended
+      ) return;
 
       this.setState({
         dropPosition,
+        levelAscended
       });
     }
 
@@ -1027,7 +1043,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   render() {
-    const { focused, flattenNodes, keyEntities, dragging, activeKey } = this.state;
+    const { focused, flattenNodes, keyEntities, dragging, activeKey, levelAscended } = this.state;
     const {
       prefixCls,
       className,
@@ -1066,6 +1082,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           checkStrictly,
           disabled,
           keyEntities,
+          levelAscended,
 
           loadData,
           filterTreeNode,
