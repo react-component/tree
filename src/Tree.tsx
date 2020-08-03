@@ -380,22 +380,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     const dropPosition = calcDropPosition(event, node);
 
-    // Skip if drag node is self
-    if (this.dragNode.props.eventKey === eventKey && dropPosition === 0) {
-      this.setState({
-        dragOverNodeKey: '',
-        dropPosition: null,
-      });
-      this.pendingDragOverNodeKey = '';
-      return;
-    }
-
-    // Ref: https://github.com/react-component/tree/issues/132
-    // Add timeout to let onDragLevel fire before onDragEnter,
-    // so that we can clean drag props for onDragLeave node.
-    // Macro task for this:
-    // https://html.spec.whatwg.org/multipage/webappapis.html#clean-up-after-running-script
-
     // Update drag over node
     this.setState({
       dragOverNodeKey: eventKey,
@@ -412,6 +396,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
     Object.keys(this.delayedDragEnterLogic).forEach(key => {
       clearTimeout(this.delayedDragEnterLogic[key]);
     });
+
+    // Skip if drag node is self
+    if (this.dragNode.props.eventKey === eventKey && dropPosition === 0) {
+      return;
+    }
+
+    event.persist();
+
     this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
       if (!this.state.dragging) return;
 

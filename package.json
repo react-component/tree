@@ -40,6 +40,7 @@
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ examples/ --ext .tsx,.ts,.jsx,.js",
     "test": "father test",
+    "coverage": "father test --coverage",
     "gh-pages": "npm run build && father doc deploy",
     "now-build": "npm run build"
   },
