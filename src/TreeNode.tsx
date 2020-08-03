@@ -73,7 +73,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     this.syncLoadData(this.props);
   }
 
-  onSelectorClick = e => {
+  onSelectorClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     // Click trigger before select/check operation
     const {
       context: { onNodeClick },
@@ -87,14 +87,14 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     }
   };
 
-  onSelectorDoubleClick = e => {
+  onSelectorDoubleClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const {
       context: { onNodeDoubleClick },
     } = this.props;
     onNodeDoubleClick(e, convertNodePropsToEventData(this.props));
   };
 
-  onSelect = e => {
+  onSelect = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     if (this.isDisabled()) return;
 
     const {
@@ -104,7 +104,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     onNodeSelect(e, convertNodePropsToEventData(this.props));
   };
 
-  onCheck = e => {
+  onCheck = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     if (this.isDisabled()) return;
 
     const { disableCheckbox, checked } = this.props;
@@ -119,28 +119,28 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     onNodeCheck(e, convertNodePropsToEventData(this.props), targetChecked);
   };
 
-  onMouseEnter = e => {
+  onMouseEnter = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const {
       context: { onNodeMouseEnter },
     } = this.props;
     onNodeMouseEnter(e, convertNodePropsToEventData(this.props));
   };
 
-  onMouseLeave = e => {
+  onMouseLeave = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const {
       context: { onNodeMouseLeave },
     } = this.props;
     onNodeMouseLeave(e, convertNodePropsToEventData(this.props));
   };
 
-  onContextMenu = e => {
+  onContextMenu = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const {
       context: { onNodeContextMenu },
     } = this.props;
     onNodeContextMenu(e, convertNodePropsToEventData(this.props));
   };
 
-  onDragStart = e => {
+  onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     const {
       context: { onNodeDragStart },
     } = this.props;
@@ -160,7 +160,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     }
   };
 
-  onDragEnter = e => {
+  onDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     const {
       context: { onNodeDragEnter },
     } = this.props;
@@ -170,7 +170,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     onNodeDragEnter(e, this);
   };
 
-  onDragOver = e => {
+  onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     const {
       context: { onNodeDragOver },
     } = this.props;
@@ -180,7 +180,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     onNodeDragOver(e, this);
   };
 
-  onDragLeave = e => {
+  onDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     const {
       context: { onNodeDragLeave },
     } = this.props;
@@ -189,7 +189,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     onNodeDragLeave(e, this);
   };
 
-  onDragEnd = e => {
+  onDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     const {
       context: { onNodeDragEnd },
     } = this.props;
@@ -201,7 +201,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     onNodeDragEnd(e, this);
   };
 
-  onDrop = e => {
+  onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     const {
       context: { onNodeDrop },
     } = this.props;
