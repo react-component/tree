@@ -223,6 +223,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
     prevProps: null,
   };
 
+  pendingDragOverNodeKey = null;
+
   dragNode: NodeInstance;
 
   listRef = React.createRef<NodeListRef>();
@@ -384,6 +386,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dragOverNodeKey: '',
         dropPosition: null,
       });
+      this.pendingDragOverNodeKey = '';
       return;
     }
 
@@ -392,43 +395,45 @@ class Tree extends React.Component<TreeProps, TreeState> {
     // so that we can clean drag props for onDragLeave node.
     // Macro task for this:
     // https://html.spec.whatwg.org/multipage/webappapis.html#clean-up-after-running-script
-    setTimeout(() => {
-      // Update drag over node
-      this.setState({
-        dragOverNodeKey: eventKey,
-        dropPosition,
-      });
 
-      // Side effect for delay drag
-      if (!this.delayedDragEnterLogic) {
-        this.delayedDragEnterLogic = {};
+    // Update drag over node
+    this.setState({
+      dragOverNodeKey: eventKey,
+      dropPosition,
+    });
+
+    // the key may be cleared by onDragLeave
+    this.pendingDragOverNodeKey = eventKey;
+
+    // Side effect for delay drag
+    if (!this.delayedDragEnterLogic) {
+      this.delayedDragEnterLogic = {};
+    }
+    Object.keys(this.delayedDragEnterLogic).forEach(key => {
+      clearTimeout(this.delayedDragEnterLogic[key]);
+    });
+    this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
+      if (!this.state.dragging) return;
+
+      let newExpandedKeys = [...expandedKeys];
+      const entity = keyEntities[eventKey];
+
+      if (entity && (entity.children || []).length) {
+        newExpandedKeys = arrAdd(expandedKeys, eventKey);
       }
-      Object.keys(this.delayedDragEnterLogic).forEach(key => {
-        clearTimeout(this.delayedDragEnterLogic[key]);
-      });
-      this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
-        if (!this.state.dragging) return;
 
-        let newExpandedKeys = [...expandedKeys];
-        const entity = keyEntities[eventKey];
+      if (!('expandedKeys' in this.props)) {
+        this.setExpandedKeys(newExpandedKeys);
+      }
 
-        if (entity && (entity.children || []).length) {
-          newExpandedKeys = arrAdd(expandedKeys, eventKey);
-        }
-
-        if (!('expandedKeys' in this.props)) {
-          this.setExpandedKeys(newExpandedKeys);
-        }
-
-        if (onDragEnter) {
-          onDragEnter({
-            event,
-            node: convertNodePropsToEventData(node.props),
-            expandedKeys: newExpandedKeys,
-          });
-        }
-      }, 400);
-    }, 0);
+      if (onDragEnter) {
+        onDragEnter({
+          event,
+          node: convertNodePropsToEventData(node.props),
+          expandedKeys: newExpandedKeys,
+        });
+      }
+    }, 400);
   };
 
   onNodeDragOver: NodeDragEventHandler = (event, node) => {
@@ -458,10 +463,15 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeDragLeave: NodeDragEventHandler = (event, node) => {
     const { onDragLeave } = this.props;
-
-    this.setState({
-      dragOverNodeKey: '',
-    });
+    if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget as HTMLElement)) {
+      if (!this.pendingDragOverNodeKey) {
+        this.setState({
+          dragOverNodeKey: '',
+        });
+      } else {
+        this.pendingDragOverNodeKey = '';
+      }
+    }
 
     if (onDragLeave) {
       onDragLeave({ event, node: convertNodePropsToEventData(node.props) });
