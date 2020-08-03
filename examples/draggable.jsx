@@ -3,7 +3,7 @@ import React from 'react';
 import { gData } from './utils/dataUtil';
 import './draggable.less';
 import '../assets/index.less';
-import Tree, { TreeNode } from '../src';
+import Tree from '../src';
 
 class Demo extends React.Component {
   state = {
@@ -25,9 +25,9 @@ class Demo extends React.Component {
 
   onDrop = info => {
     console.log('drop', info);
-    const dropKey = info.node.props.eventKey;
-    const dragKey = info.dragNode.props.eventKey;
-    const dropPos = info.node.props.pos.split('-');
+    const dropKey = info.node.key;
+    const dragKey = info.dragNode.key;
+    const dropPos = info.node.pos.split('-');
     const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
 
     const loop = (data, key, callback) => {
@@ -59,8 +59,8 @@ class Demo extends React.Component {
         item.children.push(dragObj);
       });
     } else if (
-      (info.node.props.children || []).length > 0 && // Has children
-      info.node.props.expanded && // Is expanded
+      (info.node.children || []).length > 0 && // Has children
+      info.node.expanded && // Is expanded
       dropPosition === 1 // On the bottom gap
     ) {
       loop(data, dropKey, item => {
@@ -98,17 +98,6 @@ class Demo extends React.Component {
   };
 
   render() {
-    const loop = data =>
-      data.map(item => {
-        if (item.children && item.children.length) {
-          return (
-            <TreeNode key={item.key} title={item.title}>
-              {loop(item.children)}
-            </TreeNode>
-          );
-        }
-        return <TreeNode key={item.key} title={item.title} />;
-      });
     return (
       <div className="draggable-demo">
         <h2>draggable</h2>
@@ -122,9 +111,8 @@ class Demo extends React.Component {
             onDragStart={this.onDragStart}
             onDragEnter={this.onDragEnter}
             onDrop={this.onDrop}
-          >
-            {loop(this.state.gData)}
-          </Tree>
+            treeData={this.state.gData}
+          />
         </div>
       </div>
     );
