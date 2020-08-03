@@ -465,6 +465,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const { onDragLeave } = this.props;
     if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget as HTMLElement)) {
       if (!this.pendingDragOverNodeKey) {
+        // Actually leave
         this.setState({
           dragOverNodeKey: '',
         });
