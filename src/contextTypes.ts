@@ -5,8 +5,23 @@
 import * as React from 'react';
 import { IconType, Key, DataEntity, EventDataNode, NodeInstance, DataNode } from './interface';
 
-type NodeMouseEventHandler = (e: React.MouseEvent<HTMLDivElement>, node: EventDataNode) => void;
-type NodeDragEventHandler = (e: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => void;
+export type NodeMouseEventParams<T = HTMLSpanElement> = {
+  event: React.MouseEvent<T>;
+  node: EventDataNode;
+};
+export type NodeDragEventParams<T = HTMLSpanElement> = {
+  event: React.MouseEvent<T>;
+  node: EventDataNode;
+};
+
+export type NodeMouseEventHandler<T = HTMLSpanElement> = (
+  e: React.MouseEvent<T>,
+  node: EventDataNode,
+) => void;
+export type NodeDragEventHandler<T = HTMLDivElement> = (
+  e: React.MouseEvent<T>,
+  node: NodeInstance,
+) => void;
 
 export interface TreeContextProps {
   prefixCls: string;
@@ -29,7 +44,7 @@ export interface TreeContextProps {
   onNodeExpand: NodeMouseEventHandler;
   onNodeSelect: NodeMouseEventHandler;
   onNodeCheck: (
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.MouseEvent<HTMLSpanElement>,
     treeNode: EventDataNode,
     checked: boolean,
   ) => void;
