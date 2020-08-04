@@ -5,7 +5,7 @@ import Tree, { TreeNode } from '../src';
 import {
   convertDataToTree,
   conductExpandParent,
-  getDragNodesKeys,
+  getDragChildrenKeys,
   getDataAndAria,
   parseCheckedKeys,
 } from '../src/util';
@@ -415,7 +415,7 @@ describe('Util', () => {
     expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
   });
 
-  it('getDragNodesKeys', () => {
+  it('getDragChildrenKeys', () => {
     const tree = (
       <Tree defaultExpandAll>
         <TreeNode key="000">
@@ -428,11 +428,11 @@ describe('Util', () => {
     );
 
     const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
-    const keys0 = getDragNodesKeys('000', keyEntities);
-    expect(keys0.sort()).toEqual(['000', '111', '222', '333'].sort());
+    const keys0 = getDragChildrenKeys('000', keyEntities);
+    expect(keys0.sort()).toEqual(['111', '222', '333'].sort());
 
-    const keys1 = getDragNodesKeys('111', keyEntities);
-    expect(keys1.sort()).toEqual(['111', '222', '333'].sort());
+    const keys1 = getDragChildrenKeys('111', keyEntities);
+    expect(keys1.sort()).toEqual(['222', '333'].sort());
   });
 
   describe('getDataAndAria', () => {

@@ -471,7 +471,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   renderDragIndicator = () => {
     const { disabled, dragOver, dragOverGapTop, dragOverGapBottom } = this.props;
     const {
-      context: { draggable, levelAscended, prefixCls, dropContainerKey, dropPosition },
+      context: { draggable, elevatedDropLevel, prefixCls, dropContainerKey, dropPosition },
       eventKey
     } = this.props;
     const isOuterDropContainer = (dropContainerKey === eventKey) && dropPosition !== 0
@@ -485,13 +485,13 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       positionStyle.height = 2;
       positionStyle.right = 0;
       positionStyle.backgroundColor = 'red';
-      positionStyle.left = -levelAscended * 18;
+      positionStyle.left = -elevatedDropLevel * 18;
     } else if (dragOverGapBottom) {
       positionStyle.bottom = 0;
       positionStyle.height = 2;
       positionStyle.right = 0;
       positionStyle.backgroundColor = 'red';
-      positionStyle.left = -levelAscended * 18;
+      positionStyle.left = -elevatedDropLevel * 18;
     } else {
       positionStyle.left = 0;
       positionStyle.right = 0;

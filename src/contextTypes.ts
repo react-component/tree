@@ -34,7 +34,7 @@ export interface TreeContextProps {
   checkStrictly: boolean;
   disabled: boolean;
   keyEntities: Record<Key, DataEntity>;
-  levelAscended?: number;
+  elevatedDropLevel?: number;
   nodeInstances: Map<Key, NodeInstance>;
   dropContainerKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;

@@ -40,22 +40,22 @@ export function isTreeNode(node: NodeElement) {
   return node && node.type && node.type.isTreeNode;
 }
 
-export function getDragNodesKeys(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key[] {
+export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key[] {
   // not contains self
   // for left or right drag
-  const dragNodesKeys = [];
+  const dragChildrenKeys = [];
 
   const entity = keyEntities[dragNodeKey];
   function dig(list: DataEntity[] = []) {
     list.forEach(({ key, children }) => {
-      dragNodesKeys.push(key);
+      dragChildrenKeys.push(key);
       dig(children);
     });
   }
 
   dig(entity.children);
 
-  return dragNodesKeys;
+  return dragChildrenKeys;
 }
 
 function getEntity (treeNode: NodeInstance): DataEntity {
@@ -63,47 +63,45 @@ function getEntity (treeNode: NodeInstance): DataEntity {
 }
 
 // Only used when drag, not affect SSR.
-export function calcDropPosition(event: React.MouseEvent, targetNode: NodeInstance) {
+export function calcDropPosition(event: React.MouseEvent, targetNode: NodeInstance) : [-1 | 0 | 1, number, DataEntity | null, DataEntity] {
   const { clientX, clientY } = event;
   const { top, bottom, height, left: selectHandleX } = targetNode.selectHandle.getBoundingClientRect();
   const des = Math.max(height * DRAG_SIDE_RANGE, DRAG_MIN_GAP);
   const horizontalMouseOffset = selectHandleX - clientX
   const levelToAscend = horizontalMouseOffset / 18
 
-  // console.log('levelToAscend', levelToAscend)
-
-  let targetContainerNodeEntity: DataEntity | null = getEntity(targetNode).parent || null
-  let targetSiblingNodeEntity: DataEntity = getEntity(targetNode)
-  let levelAscended = 0
-  if (targetContainerNodeEntity) {
+  let abstractDropNodeParentEntity: DataEntity | null = getEntity(targetNode).parent || null
+  let abstractDropNodeEntity: DataEntity = getEntity(targetNode)
+  let elevatedDropLevel = 0
+  if (abstractDropNodeParentEntity) {
     for (let i = 0; i < levelToAscend; ++i) {
-      levelAscended += 1
-      if (targetContainerNodeEntity?.parent) {
-        targetContainerNodeEntity = targetContainerNodeEntity.parent
-        targetSiblingNodeEntity = targetSiblingNodeEntity.parent
+      elevatedDropLevel += 1
+      if (abstractDropNodeParentEntity?.parent) {
+        abstractDropNodeParentEntity = abstractDropNodeParentEntity.parent
+        abstractDropNodeEntity = abstractDropNodeEntity.parent
       } else {
-        targetContainerNodeEntity = null
-        targetSiblingNodeEntity = targetSiblingNodeEntity.parent
+        abstractDropNodeParentEntity = null
+        abstractDropNodeEntity = abstractDropNodeEntity.parent
         break
       }
     }
   }
 
-  let ret = [0]
+  const ret: [-1 | 0 | 1, number, DataEntity | null, DataEntity] = [0, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity]
 
-  if (levelAscended === 0) {
+  if (elevatedDropLevel === 0) {
     if (clientY <= top + des) {
-      ret = [-1];
+      ret[0] = -1;
     }
 
     if (clientY >= bottom - des) {
-      ret = [1];
+      ret[0] = 1;
     }
   } else {
-    ret = [-1];
+    ret[0] = -1;
   }
 
-  return [...ret, levelAscended, targetContainerNodeEntity, targetSiblingNodeEntity] as [-1 | 0 | 1, number, DataEntity, DataEntity]
+  return ret;
 }
 
 /**
