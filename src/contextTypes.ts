@@ -35,6 +35,9 @@ export interface TreeContextProps {
   disabled: boolean;
   keyEntities: Record<Key, DataEntity>;
   levelAscended?: number;
+  nodeInstances: Map<Key, NodeInstance>;
+  dropContainerKey: Key | null;
+  dropPosition: -1 | 0 | 1 | null;
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode) => boolean;

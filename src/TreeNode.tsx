@@ -67,10 +67,19 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // Isomorphic needn't load data in server side
   componentDidMount() {
     this.syncLoadData(this.props);
+    this.props.context.nodeInstances.set(this.props.eventKey, this)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.syncLoadData(this.props);
+    if (prevProps.eventKey !== this.props.eventKey) {
+      this.props.context.nodeInstances.delete(prevProps.eventKey)
+      this.props.context.nodeInstances.set(this.props.eventKey, this)
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.context.nodeInstances.delete(this.props.eventKey)
   }
 
   onSelectorClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -462,8 +471,12 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   renderDragIndicator = () => {
     const { disabled, dragOver, dragOverGapTop, dragOverGapBottom } = this.props;
     const {
-      context: { draggable, levelAscended, prefixCls },
+      context: { draggable, levelAscended, prefixCls, dropContainerKey, dropPosition },
+      eventKey
     } = this.props;
+    const isOuterDropContainer = (dropContainerKey === eventKey) && dropPosition !== 0
+    const showIndicator =
+      !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop || isOuterDropContainer);
     const positionStyle: React.CSSProperties = {
       position: 'absolute',
     };
@@ -472,26 +485,26 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       positionStyle.height = 2;
       positionStyle.right = 0;
       positionStyle.backgroundColor = 'red';
+      positionStyle.left = -levelAscended * 18;
     } else if (dragOverGapBottom) {
       positionStyle.bottom = 0;
       positionStyle.height = 2;
       positionStyle.right = 0;
       positionStyle.backgroundColor = 'red';
+      positionStyle.left = -levelAscended * 18;
     } else {
       positionStyle.left = 0;
       positionStyle.right = 0;
       positionStyle.top = 0;
       positionStyle.bottom = 0;
       positionStyle.border = '2px solid red';
+      positionStyle.left = 0;
     }
-    const showIndicator =
-      !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop);
     return showIndicator ? (
       <div
         className={`${prefixCls}-drag-indicator`}
         style={{
           ...positionStyle,
-          left: -levelAscended * 18,
         }}
       />
     ) : null;

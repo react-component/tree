@@ -41,7 +41,9 @@ export function isTreeNode(node: NodeElement) {
 }
 
 export function getDragNodesKeys(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key[] {
-  const dragNodesKeys = [dragNodeKey];
+  // not contains self
+  // for left or right drag
+  const dragNodesKeys = [];
 
   const entity = keyEntities[dragNodeKey];
   function dig(list: DataEntity[] = []) {
@@ -56,7 +58,7 @@ export function getDragNodesKeys(dragNodeKey: Key, keyEntities: Record<Key, Data
   return dragNodesKeys;
 }
 
-function getEntity (treeNode: NodeInstance) {
+function getEntity (treeNode: NodeInstance): DataEntity {
   return ((treeNode.props as any).context.keyEntities as any)[treeNode.props.eventKey]
 }
 
@@ -68,10 +70,10 @@ export function calcDropPosition(event: React.MouseEvent, targetNode: NodeInstan
   const horizontalMouseOffset = selectHandleX - clientX
   const levelToAscend = horizontalMouseOffset / 18
 
-  console.log('levelToAscend', levelToAscend)
+  // console.log('levelToAscend', levelToAscend)
 
-  let targetContainerNodeEntity = getEntity(targetNode).parent || null
-  let targetSiblingNodeEntity = getEntity(targetNode)
+  let targetContainerNodeEntity: DataEntity | null = getEntity(targetNode).parent || null
+  let targetSiblingNodeEntity: DataEntity = getEntity(targetNode)
   let levelAscended = 0
   if (targetContainerNodeEntity) {
     for (let i = 0; i < levelToAscend; ++i) {
@@ -101,7 +103,7 @@ export function calcDropPosition(event: React.MouseEvent, targetNode: NodeInstan
     ret = [-1];
   }
 
-  return [...ret, levelAscended, targetContainerNodeEntity, targetSiblingNodeEntity]
+  return [...ret, levelAscended, targetContainerNodeEntity, targetSiblingNodeEntity] as [-1 | 0 | 1, number, DataEntity, DataEntity]
 }
 
 /**
