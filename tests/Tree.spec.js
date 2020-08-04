@@ -107,12 +107,12 @@ describe('Tree Basic', () => {
 
     it('use treeData to expand the parent node when the parent node key type is numeric', () => {
       const Demo = () => (
-          <Tree
-            defaultExpandParent
-            defaultExpandedKeys={[22]}
-            treeData={[{ key: 11, title: 11, children: [{ key: 22, title: 22 }] }]}
-          />
-        );
+        <Tree
+          defaultExpandParent
+          defaultExpandedKeys={[22]}
+          treeData={[{ key: 11, title: 11, children: [{ key: 22, title: 22 }] }]}
+        />
+      );
 
       const wrapper = mount(<Demo />);
 
