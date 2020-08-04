@@ -460,30 +460,42 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   renderDragIndicator = () => {
+    const { disabled, dragOver, dragOverGapTop, dragOverGapBottom } = this.props;
     const {
-      disabled,
-      dragOver,
-      dragOverGapTop,
-      dragOverGapBottom
-    } = this.props
-    const {
-      context: { draggable, levelAscended },
+      context: { draggable, levelAscended, prefixCls },
     } = this.props;
-    let top
-    if (dragOverGapTop) top = 0;
-    else if (dragOverGapBottom) top = 'calc(100% - 2px)';
-    else top = '50%'
-    return (
-      (!disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop)) ? <div style={{
-        position: 'absolute',
-        left: -levelAscended * 18,
-        right: 0,
-        top,
-        height: 2,
-        backgroundColor: 'red',
-      }}/> : null
-    )
-  }
+    const positionStyle: React.CSSProperties = {
+      position: 'absolute',
+    };
+    if (dragOverGapTop) {
+      positionStyle.top = 0;
+      positionStyle.height = 2;
+      positionStyle.right = 0;
+      positionStyle.backgroundColor = 'red';
+    } else if (dragOverGapBottom) {
+      positionStyle.bottom = 0;
+      positionStyle.height = 2;
+      positionStyle.right = 0;
+      positionStyle.backgroundColor = 'red';
+    } else {
+      positionStyle.left = 0;
+      positionStyle.right = 0;
+      positionStyle.top = 0;
+      positionStyle.bottom = 0;
+      positionStyle.border = '2px solid red';
+    }
+    const showIndicator =
+      !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop);
+    return showIndicator ? (
+      <div
+        className={`${prefixCls}-drag-indicator`}
+        style={{
+          ...positionStyle,
+          left: -levelAscended * 18,
+        }}
+      />
+    ) : null;
+  };
 
   render() {
     const {
