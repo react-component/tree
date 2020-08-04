@@ -22,6 +22,7 @@ const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd }) => 
         className={classNames(baseClassName, {
           [`${baseClassName}-start`]: isStart[i + 1],
           [`${baseClassName}-end`]: isEnd[i + 1],
+          [`${baseClassName}-end-first-level`]: !i && isEnd[0],
         })}
       />,
     );
