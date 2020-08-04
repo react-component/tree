@@ -1236,7 +1236,7 @@ describe('Tree Basic', () => {
 
       it('self', () => dropTarget('div.dragTarget'));
 
-      // it('target', () => dropTarget('div.dropTarget'));
+      it('target', () => dropTarget('div.dropTarget'));
     });
   });
 

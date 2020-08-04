@@ -215,7 +215,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     dragChildrenKeys: [],
     dragOverNodeKey: null,
     
-    dropPosition: null,
+    dropPosition: null, // inside 0, top -1, bottom 1
     abstractDropNodeParentEntity: null,
     abstractDropNodeEntity: null,
     elevatedDropLevel: null,
@@ -231,6 +231,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
     prevProps: null,
   };
 
+  // since dragenter is triggered before dragleave (as DOM is)
+  // it is required for record pending state to check whether the mouse enter another node
+  // or just leave the drag area
   pendingDragOverNodeKey = null;
 
   dragNode: NodeInstance;
@@ -543,7 +546,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.cleanDragState();
 
     if (dragChildrenKeys.indexOf(eventKey) !== -1) {
-      warning(false, "Can not drop to dragNode(include it's children node)");
+      warning(false, "Can not drop to dragNode's children node");
       return;
     }
 
