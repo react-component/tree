@@ -74,7 +74,7 @@ export function calcDropPosition(event: React.MouseEvent, targetNode: NodeInstan
   let abstractDropNodeEntity: DataEntity = getEntity(targetNode)
   let elevatedDropLevel = 0
   if (abstractDropNodeParentEntity) {
-    for (let i = 0; i < levelToAscend; ++i) {
+    for (let i = 0; i < levelToAscend; i += 1) {
       elevatedDropLevel += 1
       if (abstractDropNodeParentEntity?.parent) {
         abstractDropNodeParentEntity = abstractDropNodeParentEntity.parent
