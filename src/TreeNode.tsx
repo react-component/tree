@@ -67,19 +67,19 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // Isomorphic needn't load data in server side
   componentDidMount() {
     this.syncLoadData(this.props);
-    this.props.context.nodeInstances.set(this.props.eventKey, this)
+    this.props.context.nodeInstances.set(this.props.eventKey, this);
   }
 
   componentDidUpdate(prevProps) {
     this.syncLoadData(this.props);
     if (prevProps.eventKey !== this.props.eventKey) {
-      this.props.context.nodeInstances.delete(prevProps.eventKey)
-      this.props.context.nodeInstances.set(this.props.eventKey, this)
+      this.props.context.nodeInstances.delete(prevProps.eventKey);
+      this.props.context.nodeInstances.set(this.props.eventKey, this);
     }
   }
 
   componentWillUnmount() {
-    this.props.context.nodeInstances.delete(this.props.eventKey)
+    this.props.context.nodeInstances.delete(this.props.eventKey);
   }
 
   onSelectorClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -471,10 +471,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   renderDragIndicator = () => {
     const { disabled, dragOver, dragOverGapTop, dragOverGapBottom } = this.props;
     const {
-      context: { draggable, elevatedDropLevel, prefixCls, dropContainerKey, dropPosition, indent },
-      eventKey
+      context: { draggable, elevatedDropLevel, prefixCls, indent },
     } = this.props;
-    // const isDropNodeContainer = (dropContainerKey === eventKey) && dropPosition !== 0
     const showIndicator =
       !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop);
     const positionStyle: React.CSSProperties = {
@@ -564,7 +562,13 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         onMouseMove={onMouseMove}
         {...dataOrAriaAttributeProps}
       >
-        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} width={indent}/>
+        <Indent
+          prefixCls={prefixCls}
+          level={level}
+          isStart={isStart}
+          isEnd={isEnd}
+          width={indent}
+        />
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}
