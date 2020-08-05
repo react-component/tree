@@ -463,47 +463,20 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       >
         {$icon}
         {$title}
-        {this.renderDragIndicator()}
+        {this.renderDropIndicator()}
       </span>
     );
   };
 
-  renderDragIndicator = () => {
+  renderDropIndicator = () => {
     const { disabled, dragOver, dragOverGapTop, dragOverGapBottom } = this.props;
     const {
-      context: { draggable, elevatedDropLevel, prefixCls, indent },
+      context: { draggable, elevatedDropLevel, dropPosition, prefixCls, indent, dropIndicatorRender },
     } = this.props;
     const showIndicator =
       !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop);
-    const positionStyle: React.CSSProperties = {
-      position: 'absolute',
-    };
-    if (dragOverGapTop) {
-      positionStyle.top = 0;
-      positionStyle.height = 2;
-      positionStyle.right = 0;
-      positionStyle.backgroundColor = 'red';
-      positionStyle.left = -elevatedDropLevel * indent;
-    } else if (dragOverGapBottom) {
-      positionStyle.bottom = 0;
-      positionStyle.height = 2;
-      positionStyle.right = 0;
-      positionStyle.backgroundColor = 'red';
-      positionStyle.left = -elevatedDropLevel * indent;
-    } else {
-      positionStyle.bottom = 0;
-      positionStyle.height = 2;
-      positionStyle.right = 0;
-      positionStyle.backgroundColor = 'red';
-      positionStyle.left = indent;
-    }
     return showIndicator ? (
-      <div
-        className={`${prefixCls}-drag-indicator`}
-        style={{
-          ...positionStyle,
-        }}
-      />
+      dropIndicatorRender(dropPosition, elevatedDropLevel, indent, prefixCls)
     ) : null;
   };
 

@@ -84,6 +84,7 @@ export interface TreeProps {
   selectedKeys?: Key[];
   indent?: number;
   titleRender?: (node: DataNode) => React.ReactNode;
+  dropIndicatorRender?: (dropPosition: -1 | 0 | 1, levelAscended: number) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
@@ -149,6 +150,31 @@ export interface TreeProps {
 }
 
 const DEFAULT_INDENT = 24;
+const DEFAULT_DROP_INDICATOR_RENDER = function (dropPosition: -1 | 0 | 1, elevatedDropLevel: number, indent: number) {
+  const style: React.CSSProperties = {
+    position: 'absolute',
+  };
+  if (dropPosition === -1) {
+    style.top = 0;
+    style.height = 2;
+    style.right = 0;
+    style.backgroundColor = 'red';
+    style.left = -elevatedDropLevel * indent;
+  } else if (dropPosition === 1) {
+    style.bottom = 0;
+    style.height = 2;
+    style.right = 0;
+    style.backgroundColor = 'red';
+    style.left = -elevatedDropLevel * indent;
+  } else {
+    style.bottom = 0;
+    style.height = 2;
+    style.right = 0;
+    style.backgroundColor = 'red';
+    style.left = indent;
+  }
+  return <div style={style} />
+}
 
 interface TreeState {
   keyEntities: Record<Key, DataEntity>;
@@ -1136,6 +1162,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       virtual,
       titleRender,
       indent = DEFAULT_INDENT,
+      dropIndicatorRender = DEFAULT_DROP_INDICATOR_RENDER,
     } = this.props;
     const {
       nodeInstances
@@ -1160,6 +1187,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dropContainerKey,
           dropPosition,
           indent,
+          dropIndicatorRender,
 
           loadData,
           filterTreeNode,
