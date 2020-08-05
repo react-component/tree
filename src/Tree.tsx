@@ -424,7 +424,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
     // don't allow drop inside its children
     if (!this.dragNode || dragChildrenKeys.indexOf(eventKey) !== -1) return;
 
-    const [dropPosition, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity] = calcDropPosition(event, node, indent);
+    const [
+      dropPosition,
+      elevatedDropLevel,
+      abstractDropNodeParentEntity,
+      abstractDropNodeEntity
+    ] = calcDropPosition(event, node, indent);
 
     // Update drag over node
     this.setState({
@@ -444,6 +449,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Skip if drag node is self
     if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
+      this.setState({
+        dropPosition: null,
+        elevatedDropLevel: null,
+        abstractDropNodeParentEntity: null,
+        abstractDropNodeEntity: null,
+      })
       return;
     }
 
