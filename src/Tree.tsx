@@ -82,6 +82,7 @@ export interface TreeProps {
   checkedKeys?: Key[] | { checked: Key[]; halfChecked: Key[] };
   defaultSelectedKeys?: Key[];
   selectedKeys?: Key[];
+  indent?: number;
   titleRender?: (node: DataNode) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
@@ -146,6 +147,8 @@ export interface TreeProps {
   itemHeight?: number;
   virtual?: boolean;
 }
+
+const DEFAULT_INDENT = 24;
 
 interface TreeState {
   keyEntities: Record<Key, DataEntity>;
@@ -356,6 +359,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     return newState;
   }
 
+
   onNodeDragStart: NodeDragEventHandler = (event, node) => {
     const { expandedKeys, keyEntities } = this.state;
     const { onDragStart } = this.props;
@@ -372,6 +376,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     this.setExpandedKeys(newExpandedKeys);
 
+    window.addEventListener('dragend', this.onWindowDragEnd);
+
     if (onDragStart) {
       onDragStart({ event, node: convertNodePropsToEventData(node.props) });
     }
@@ -386,13 +392,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
    */
   onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
     const { expandedKeys, keyEntities, dragChildrenKeys } = this.state;
-    const { onDragEnter } = this.props;
+    const { onDragEnter, indent = DEFAULT_INDENT } = this.props;
     const { pos, eventKey } = node.props;
 
     // don't allow drop inside its children
     if (!this.dragNode || dragChildrenKeys.indexOf(eventKey) !== -1) return;
 
-    const [dropPosition, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity] = calcDropPosition(event, node);
+    const [dropPosition, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity] = calcDropPosition(event, node, indent);
 
     // Update drag over node
     this.setState({
@@ -450,7 +456,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
     const { dragChildrenKeys } = this.state;
-    const { onDragOver } = this.props;
+    const { onDragOver, indent = DEFAULT_INDENT } = this.props;
     const { eventKey } = node.props;
 
     if (dragChildrenKeys.indexOf(eventKey) !== -1) {
@@ -461,7 +467,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     // Update drag position
     if (this.dragNode && eventKey === this.state.dragOverNodeKey) {
 
-      const [dropPosition, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity] = calcDropPosition(event, node);
+      const [dropPosition, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity] = calcDropPosition(event, node, indent);
       if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
         this.setState({
           dropPosition: null,
@@ -497,10 +503,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget as HTMLElement)) {
       if (!this.pendingDragOverNodeKey) {
         // Actually leave
+        // do not clean drag state, clean drag state only on window dragend
         this.setState({
           dragOverNodeKey: '',
         });
-        this.cleanDragState();
       } else {
         this.pendingDragOverNodeKey = '';
       }
@@ -511,21 +517,38 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeDragEnd: NodeDragEventHandler = (event, node) => {
+  // since stopPropagation() is called in treeNode
+  // if onWindowDrag is called, whice means state is keeped, drag state should be cleared
+  onWindowDragEnd = (event) => {
+    this.onNodeDragEnd(event, null, true);
+    window.removeEventListener('dragend', this.onWindowDragEnd);
+  }
+
+  // since stopPropagation() is called in treeNode
+  // if onWindowDrop is called, it should apply drop too
+  // onWindowDrop fires before onWindowDragEnd
+  onWindowDrop = (event) => {
+    this.onNodeDrop(event, null, true);
+    window.removeEventListener('drop', this.onWindowDrop);
+  }
+
+  // if onNodeDragEnd is called, onWindowDragEnd won't be called since stopPropagation() is called
+  onNodeDragEnd: NodeDragEventHandler = (event, node, fromWindow = false) => {
     const { onDragEnd } = this.props;
     this.setState({
       dragOverNodeKey: '',
     });
+
     this.cleanDragState();
 
-    if (onDragEnd) {
+    if (onDragEnd && !fromWindow) {
       onDragEnd({ event, node: convertNodePropsToEventData(node.props) });
     }
 
     this.dragNode = null;
   };
 
-  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>) => {
+  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node, fromWindow: boolean = false) => {
     const { dragChildrenKeys = [], dropPosition, abstractDropNodeEntity } = this.state;
     const { onDrop } = this.props;
 
@@ -563,7 +586,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropPosition: dropPosition + Number(posArr[posArr.length - 1]),
     };
 
-    if (onDrop) {
+    if (onDrop && !fromWindow) {
       onDrop(dropResult);
     }
 
@@ -1112,6 +1135,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       itemHeight,
       virtual,
       titleRender,
+      indent = DEFAULT_INDENT,
     } = this.props;
     const {
       nodeInstances
@@ -1135,6 +1159,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           nodeInstances,
           dropContainerKey,
           dropPosition,
+          indent,
 
           loadData,
           filterTreeNode,

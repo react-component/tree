@@ -21,6 +21,7 @@ export type NodeMouseEventHandler<T = HTMLSpanElement> = (
 export type NodeDragEventHandler<T = HTMLDivElement> = (
   e: React.MouseEvent<T>,
   node: NodeInstance,
+  fromWindow?: boolean,
 ) => void;
 
 export interface TreeContextProps {
@@ -38,6 +39,7 @@ export interface TreeContextProps {
   nodeInstances: Map<Key, NodeInstance>;
   dropContainerKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
+  indent: number;
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode) => boolean;

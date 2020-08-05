@@ -471,12 +471,12 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   renderDragIndicator = () => {
     const { disabled, dragOver, dragOverGapTop, dragOverGapBottom } = this.props;
     const {
-      context: { draggable, elevatedDropLevel, prefixCls, dropContainerKey, dropPosition },
+      context: { draggable, elevatedDropLevel, prefixCls, dropContainerKey, dropPosition, indent },
       eventKey
     } = this.props;
-    const isOuterDropContainer = (dropContainerKey === eventKey) && dropPosition !== 0
+    // const isDropNodeContainer = (dropContainerKey === eventKey) && dropPosition !== 0
     const showIndicator =
-      !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop || isOuterDropContainer);
+      !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop);
     const positionStyle: React.CSSProperties = {
       position: 'absolute',
     };
@@ -485,20 +485,19 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       positionStyle.height = 2;
       positionStyle.right = 0;
       positionStyle.backgroundColor = 'red';
-      positionStyle.left = -elevatedDropLevel * 18;
+      positionStyle.left = -elevatedDropLevel * indent;
     } else if (dragOverGapBottom) {
       positionStyle.bottom = 0;
       positionStyle.height = 2;
       positionStyle.right = 0;
       positionStyle.backgroundColor = 'red';
-      positionStyle.left = -elevatedDropLevel * 18;
+      positionStyle.left = -elevatedDropLevel * indent;
     } else {
-      positionStyle.left = 0;
-      positionStyle.right = 0;
-      positionStyle.top = 0;
       positionStyle.bottom = 0;
-      positionStyle.border = '2px solid red';
-      positionStyle.left = 0;
+      positionStyle.height = 2;
+      positionStyle.right = 0;
+      positionStyle.backgroundColor = 'red';
+      positionStyle.left = indent;
     }
     return showIndicator ? (
       <div
@@ -532,7 +531,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       ...otherProps
     } = this.props;
     const {
-      context: { prefixCls, filterTreeNode, draggable, keyEntities },
+      context: { prefixCls, filterTreeNode, draggable, keyEntities, indent },
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
@@ -565,7 +564,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         onMouseMove={onMouseMove}
         {...dataOrAriaAttributeProps}
       >
-        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
+        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} width={indent}/>
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}

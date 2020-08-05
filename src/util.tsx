@@ -8,7 +8,7 @@ import TreeNode, { TreeNodeProps } from './TreeNode';
 import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance } from './interface';
 import { TreeProps } from './Tree';
 
-const DRAG_SIDE_RANGE = 0.25;
+const DRAG_SIDE_RANGE = 0.5;
 const DRAG_MIN_GAP = 2;
 
 export function arrDel(list: Key[], value: Key) {
@@ -63,12 +63,16 @@ function getEntity (treeNode: NodeInstance): DataEntity {
 }
 
 // Only used when drag, not affect SSR.
-export function calcDropPosition(event: React.MouseEvent, targetNode: NodeInstance) : [-1 | 0 | 1, number, DataEntity | null, DataEntity] {
+export function calcDropPosition(
+  event: React.MouseEvent,
+  targetNode: NodeInstance,
+  indent: number,
+) : [-1 | 0 | 1, number, DataEntity | null, DataEntity] {
   const { clientX, clientY } = event;
   const { top, bottom, height, left: selectHandleX } = targetNode.selectHandle.getBoundingClientRect();
   const des = Math.max(height * DRAG_SIDE_RANGE, DRAG_MIN_GAP);
   const horizontalMouseOffset = selectHandleX - clientX
-  const levelToAscend = horizontalMouseOffset / 18
+  const levelToAscend = horizontalMouseOffset / indent
 
   let abstractDropNodeParentEntity: DataEntity | null = getEntity(targetNode).parent || null
   let abstractDropNodeEntity: DataEntity = getEntity(targetNode)
@@ -95,7 +99,11 @@ export function calcDropPosition(event: React.MouseEvent, targetNode: NodeInstan
     }
 
     if (clientY >= bottom - des) {
-      ret[0] = 1;
+      if (-1 < levelToAscend && levelToAscend < 0) {
+        ret[0] = 1;
+      } else {
+        ret[0] = 0;
+      }
     }
   } else {
     ret[0] = -1;
