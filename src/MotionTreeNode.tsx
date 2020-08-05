@@ -1,7 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-// @ts-ignore
-import CSSMotion from 'rc-animate/lib/CSSMotion';
+import CSSMotion from 'rc-motion';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { FlattenNode } from './interface';
 import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
@@ -17,7 +16,7 @@ interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   treeNodeRequiredProps: TreeNodeRequiredProps;
 }
 
-const MotionTreeNode: React.ForwardRefRenderFunction<typeof CSSMotion, MotionTreeNodeProps> = (
+const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeNodeProps> = (
   {
     className,
     style,
