@@ -40,7 +40,12 @@ export interface TreeContextProps {
   dropContainerKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number;
-  dropIndicatorRender: (dropPosition: -1 | 0 | 1, levelAscended: number, indent, prefixCls) => React.ReactNode;
+  dropIndicatorRender: (
+    dropPosition: -1 | 0 | 1,
+    levelAscended: number,
+    indent,
+    prefixCls,
+  ) => React.ReactNode;
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode) => boolean;

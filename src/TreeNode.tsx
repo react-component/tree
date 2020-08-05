@@ -471,13 +471,20 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   renderDropIndicator = () => {
     const { disabled, dragOver, dragOverGapTop, dragOverGapBottom } = this.props;
     const {
-      context: { draggable, elevatedDropLevel, dropPosition, prefixCls, indent, dropIndicatorRender },
+      context: {
+        draggable,
+        elevatedDropLevel,
+        dropPosition,
+        prefixCls,
+        indent,
+        dropIndicatorRender,
+      },
     } = this.props;
     const showIndicator =
       !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop);
-    return showIndicator ? (
-      dropIndicatorRender(dropPosition, elevatedDropLevel, indent, prefixCls)
-    ) : null;
+    return showIndicator
+      ? dropIndicatorRender(dropPosition, elevatedDropLevel, indent, prefixCls)
+      : null;
   };
 
   render() {

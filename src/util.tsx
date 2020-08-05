@@ -68,9 +68,8 @@ export function calcDropPosition(
   targetNode: NodeInstance,
   indent: number,
 ) : [-1 | 0 | 1, number, DataEntity | null, DataEntity] {
-  const { clientX, clientY } = event;
-  const { top, bottom, height, left: selectHandleX } = targetNode.selectHandle.getBoundingClientRect();
-  const des = Math.max(height * DRAG_SIDE_RANGE, DRAG_MIN_GAP);
+  const { clientX } = event;
+  const { left: selectHandleX } = targetNode.selectHandle.getBoundingClientRect();
   const horizontalMouseOffset = selectHandleX - clientX
   const levelToAscend = horizontalMouseOffset / indent
 
@@ -94,16 +93,10 @@ export function calcDropPosition(
   const ret: [-1 | 0 | 1, number, DataEntity | null, DataEntity] = [0, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity]
 
   if (elevatedDropLevel === 0) {
-    if (clientY <= top + des) {
-      ret[0] = -1;
-    }
-
-    if (clientY >= bottom - des) {
-      if (-1 < levelToAscend && levelToAscend < 0) {
-        ret[0] = 1;
-      } else {
-        ret[0] = 0;
-      }
+    if (-1 < levelToAscend && levelToAscend < 0) {
+      ret[0] = 1;
+    } else {
+      ret[0] = 0;
     }
   } else {
     ret[0] = -1;
