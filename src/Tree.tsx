@@ -269,6 +269,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
   // or just leave the drag area
   pendingDragOverNodeKey = null;
 
+  dragStartMousePosition = null;
+
   dragNode: NodeInstance;
 
   listRef = React.createRef<NodeListRef>();
@@ -396,6 +398,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const { eventKey } = node.props;
 
     this.dragNode = node;
+    this.dragStartMousePosition = {
+      x: event.clientX,
+      y: event.clientY,
+    };
 
     const newExpandedKeys = arrDel(expandedKeys, eventKey);
 
@@ -439,7 +445,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropPosition,
       elevatedDropLevel,
       abstractDropNodeEntity,
-    ] = calcDropPosition(event, node, indent);
+    ] = calcDropPosition(event, node, indent, this.dragStartMousePosition);
 
     // the key may be cleared by onDragLeave
     this.pendingDragOverNodeKey = eventKey;
@@ -521,7 +527,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropPosition,
         elevatedDropLevel,
         abstractDropNodeEntity,
-      ] = calcDropPosition(event, node, indent);
+      ] = calcDropPosition(event, node, indent, this.dragStartMousePosition);
       if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
         this.setState({
           dropPosition: null,
@@ -653,6 +659,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         elevatedDropLevel: null,
       });
     }
+    this.dragStartMousePosition = null;
   };
 
   onNodeClick: NodeMouseEventHandler = (e, treeNode) => {

@@ -73,10 +73,14 @@ export function calcDropPosition(
   event: React.MouseEvent,
   targetNode: NodeInstance,
   indent: number,
+  startMousePosition: {
+    x: number,
+    y: number,
+  }
 ) : [-1 | 0 | 1, number, DataEntity] {
   const { clientX } = event;
   const { left: selectHandleX } = targetNode.selectHandle.getBoundingClientRect();
-  const horizontalMouseOffset = selectHandleX - clientX;
+  const horizontalMouseOffset = startMousePosition.x - clientX;
   const levelToAscend = horizontalMouseOffset / indent;
   const targetEntity = getEntity(targetNode);
 
