@@ -1053,16 +1053,16 @@ describe('Tree Basic', () => {
 
       // Not trigger self
       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragEnter');
-      await delay(500);
+      await delay(900);
       expect(onDragEnter).not.toHaveBeenCalled();
 
       wrapper
         .find('.dropTarget')
         .at(0)
         .simulate('dragEnter');
-      expect(onDragEnter).not.toHaveBeenCalled();
+      expect(onDragEnter).toHaveBeenCalled();
 
-      await delay(500);
+      await delay(900);
       wrapper.update();
       const node = convertNodePropsToEventData(
         wrapper
@@ -1071,7 +1071,7 @@ describe('Tree Basic', () => {
           .props(),
       );
       const event = onDragEnter.mock.calls[0][0];
-      expect(event.node).toEqual(node);
+      expect(event.node.key).toEqual(node.key);
       expect(event.expandedKeys).toEqual(['0-0', '0-0-0-1']);
       expect(onDragEnter).toHaveBeenCalledTimes(1);
     });

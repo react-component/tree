@@ -418,11 +418,19 @@ class Tree extends React.Component<TreeProps, TreeState> {
    */
   onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
     const { expandedKeys, keyEntities, dragChildrenKeys } = this.state;
-    const { onDragEnter, indent = DEFAULT_INDENT } = this.props;
+    const { onDragEnter, onExpand, indent = DEFAULT_INDENT } = this.props;
     const { pos, eventKey } = node.props;
 
     // don't allow drop inside its children
-    if (!this.dragNode || dragChildrenKeys.indexOf(eventKey) !== -1) return;
+    if (!this.dragNode || dragChildrenKeys.indexOf(eventKey) !== -1) {
+      this.setState({
+        dragOverNodeKey: '',
+        dropPosition: null,
+        elevatedDropLevel: null,
+        abstractDropNodeParentEntity: null,
+        abstractDropNodeEntity: null,
+      });
+    }
 
     const [
       dropPosition,
@@ -430,11 +438,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       abstractDropNodeParentEntity,
       abstractDropNodeEntity
     ] = calcDropPosition(event, node, indent);
-
-    // Update drag over node
-    this.setState({
-      dragOverNodeKey: eventKey,
-    });
 
     // the key may be cleared by onDragLeave
     this.pendingDragOverNodeKey = eventKey;
@@ -450,6 +453,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     // Skip if drag node is self
     if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
       this.setState({
+        dragOverNodeKey: '',
         dropPosition: null,
         elevatedDropLevel: null,
         abstractDropNodeParentEntity: null,
@@ -458,14 +462,22 @@ class Tree extends React.Component<TreeProps, TreeState> {
       return;
     }
 
+    // Update drag over node and drag state
     this.setState({
+      dragOverNodeKey: eventKey,
       dropPosition,
       elevatedDropLevel,
       abstractDropNodeParentEntity,
       abstractDropNodeEntity,
     })
 
-    event.persist();
+    if (onDragEnter) {
+      onDragEnter({
+        event,
+        node: convertNodePropsToEventData(node.props),
+        expandedKeys,
+      });
+    }
 
     this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
       if (!this.state.dragging) return;
@@ -481,14 +493,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
         this.setExpandedKeys(newExpandedKeys);
       }
 
-      if (onDragEnter) {
-        onDragEnter({
-          event,
+      if (onExpand) {
+        onExpand(newExpandedKeys, {
           node: convertNodePropsToEventData(node.props),
-          expandedKeys: newExpandedKeys,
+          expanded: true,
+          nativeEvent: event.nativeEvent,
         });
       }
-    }, 400);
+    }, 800);
   };
 
   onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
@@ -596,9 +608,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     if (!abstractDropNodeEntity) return
 
-    const { key: targetKey, pos } = abstractDropNodeEntity
-
-    const abstractDropNodeKey: Key = targetKey
+    const { key: abstractDropNodeKey, pos } = abstractDropNodeEntity
     const abstractDropNode = this.nodeInstances.get(abstractDropNodeKey) ?? null
 
     if (abstractDropNode === null) {

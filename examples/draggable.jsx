@@ -18,9 +18,6 @@ class Demo extends React.Component {
 
   onDragEnter = info => {
     console.log('enter', info);
-    this.setState({
-      expandedKeys: info.expandedKeys,
-    });
   };
 
   onDrop = info => {
