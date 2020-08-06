@@ -8,9 +8,6 @@ import TreeNode, { TreeNodeProps } from './TreeNode';
 import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance } from './interface';
 import { TreeProps } from './Tree';
 
-const DRAG_SIDE_RANGE = 0.5;
-const DRAG_MIN_GAP = 2;
-
 export function arrDel(list: Key[], value: Key) {
   const clone = list.slice();
   const index = clone.indexOf(value);
@@ -90,10 +87,15 @@ export function calcDropPosition(
     }
   }
 
-  const ret: [-1 | 0 | 1, number, DataEntity | null, DataEntity] = [0, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity]
+  const ret: [-1 | 0 | 1, number, DataEntity | null, DataEntity] = [
+    0,
+    elevatedDropLevel,
+    abstractDropNodeParentEntity,
+    abstractDropNodeEntity,
+  ]
 
   if (elevatedDropLevel === 0) {
-    if (-1 < levelToAscend && levelToAscend < 0) {
+    if (levelToAscend > -1 && levelToAscend < 0) {
       ret[0] = 1;
     } else {
       ret[0] = 0;

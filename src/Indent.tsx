@@ -26,7 +26,7 @@ const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd, width
           [`${baseClassName}-end-first-level`]: !i && isEnd[0],
         })}
         style={{
-          width
+          width,
         }}
       />,
     );

@@ -150,7 +150,11 @@ export interface TreeProps {
 }
 
 const DEFAULT_INDENT = 24;
-const DEFAULT_DROP_INDICATOR_RENDER = function (dropPosition: -1 | 0 | 1, elevatedDropLevel: number, indent: number) {
+const DEFAULT_DROP_INDICATOR_RENDER = function dropIndicatorRender (
+  dropPosition: -1 | 0 | 1,
+  elevatedDropLevel: number,
+  indent: number,
+) {
   const style: React.CSSProperties = {
     position: 'absolute',
   };
@@ -189,7 +193,7 @@ interface TreeState {
   dragging: boolean;
   dragChildrenKeys: Key[];
   dragOverNodeKey: Key;
-  
+
   dropPosition: -1 | 0 | 1 | null;
   abstractDropNodeParentEntity: DataEntity | null;
   abstractDropNodeEntity: DataEntity | null;
@@ -243,7 +247,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     dragging: false,
     dragChildrenKeys: [],
     dragOverNodeKey: null,
-    
+
     dropPosition: null, // inside 0, top -1, bottom 1
     abstractDropNodeParentEntity: null,
     abstractDropNodeEntity: null,
@@ -436,7 +440,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropPosition,
       elevatedDropLevel,
       abstractDropNodeParentEntity,
-      abstractDropNodeEntity
+      abstractDropNodeEntity,
     ] = calcDropPosition(event, node, indent);
 
     // the key may be cleared by onDragLeave
@@ -515,14 +519,18 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Update drag position
     if (this.dragNode && eventKey === this.state.dragOverNodeKey) {
-
-      const [dropPosition, elevatedDropLevel, abstractDropNodeParentEntity, abstractDropNodeEntity] = calcDropPosition(event, node, indent);
+      const [
+        dropPosition,
+        elevatedDropLevel,
+        abstractDropNodeParentEntity,
+        abstractDropNodeEntity,
+      ] = calcDropPosition(event, node, indent);
       if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
         this.setState({
           dropPosition: null,
           elevatedDropLevel: 0,
           abstractDropNodeParentEntity: null,
-          abstractDropNodeEntity: null
+          abstractDropNodeEntity: null,
         });
         return;
       }
@@ -533,12 +541,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
         abstractDropNodeParentEntity === this.state.abstractDropNodeParentEntity &&
         abstractDropNodeEntity === this.state.abstractDropNodeEntity
       ) return;
-      
+
       this.setState({
         dropPosition,
         elevatedDropLevel,
         abstractDropNodeParentEntity,
-        abstractDropNodeEntity
+        abstractDropNodeEntity,
       });
     }
 
@@ -568,7 +576,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   // since stopPropagation() is called in treeNode
   // if onWindowDrag is called, whice means state is keeped, drag state should be cleared
-  onWindowDragEnd = (event) => {
+  onWindowDragEnd = event => {
     this.onNodeDragEnd(event, null, true);
     window.removeEventListener('dragend', this.onWindowDragEnd);
   }
@@ -576,7 +584,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   // since stopPropagation() is called in treeNode
   // if onWindowDrop is called, it should apply drop too
   // onWindowDrop fires before onWindowDragEnd
-  onWindowDrop = (event) => {
+  onWindowDrop = event => {
     this.onNodeDrop(event, null, true);
     window.removeEventListener('drop', this.onWindowDrop);
   }
@@ -609,7 +617,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (!abstractDropNodeEntity) return
 
     const { key: abstractDropNodeKey, pos } = abstractDropNodeEntity
-    const abstractDropNode = this.nodeInstances.get(abstractDropNodeKey) ?? null
+    const abstractDropNode = this.nodeInstances.get(abstractDropNodeKey) || null
 
     if (abstractDropNode === null) {
       warning(false, "Can't find dropNode")
@@ -1186,7 +1194,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropIndicatorRender = DEFAULT_DROP_INDICATOR_RENDER,
     } = this.props;
     const {
-      nodeInstances
+      nodeInstances,
     } = this
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
