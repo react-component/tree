@@ -16,6 +16,9 @@ import {
 import {
   getDataAndAria,
   getDragChildrenKeys,
+  getDragParentKey,
+  getEntity,
+  isFirstChild,
   parseCheckedKeys,
   conductExpandParent,
   calcSelectedKeys,
@@ -192,6 +195,7 @@ interface TreeState {
 
   dragging: boolean;
   dragChildrenKeys: Key[];
+  dragParentKey: Key;
   dragOverNodeKey: Key;
 
   dropPosition: -1 | 0 | 1 | null;
@@ -246,6 +250,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     dragging: false,
     dragChildrenKeys: [],
+    dragParentKey: null,
     dragOverNodeKey: null,
 
     dropPosition: null, // inside 0, top -1, bottom 1
@@ -408,6 +413,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.setState({
       dragging: true,
       dragChildrenKeys: getDragChildrenKeys(eventKey, keyEntities),
+      dragParentKey: getDragParentKey(eventKey, keyEntities),
     });
 
     this.setExpandedKeys(newExpandedKeys);
@@ -427,18 +433,24 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * But let's just keep it to avoid event trigger logic change.
    */
   onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { expandedKeys, keyEntities, dragChildrenKeys } = this.state;
+    const { expandedKeys, keyEntities, dragChildrenKeys, dragParentKey } = this.state;
     const { onDragEnter, onExpand, indent = DEFAULT_INDENT } = this.props;
     const { pos, eventKey } = node.props;
 
-    // don't allow drop inside its children
-    if (!this.dragNode || dragChildrenKeys.indexOf(eventKey) !== -1) {
+    if (
+      !this.dragNode ||
+      // don't allow drop inside its children
+      dragChildrenKeys.indexOf(eventKey) !== -1 ||
+      // don't allow drop inside its direct parent
+      (dragParentKey !== null && dragParentKey === eventKey && isFirstChild(getEntity(this.dragNode)))
+    ) {
       this.setState({
         dragOverNodeKey: '',
         dropPosition: null,
         elevatedDropLevel: null,
         abstractDropNodeEntity: null,
       });
+      return;
     }
 
     const [
@@ -461,7 +473,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     // Skip if drag node is self
     if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
       this.setState({
-        dragOverNodeKey: '',
+        dragOverNodeKey: eventKey,
         dropPosition: null,
         elevatedDropLevel: null,
         abstractDropNodeEntity: null,
@@ -512,12 +524,17 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { dragChildrenKeys } = this.state;
+    const { dragChildrenKeys, dragParentKey } = this.state;
     const { onDragOver, indent = DEFAULT_INDENT } = this.props;
     const { eventKey } = node.props;
 
-    if (dragChildrenKeys.indexOf(eventKey) !== -1) {
+    if (
+      !this.dragNode ||
+      dragChildrenKeys.indexOf(eventKey) !== -1 ||
+      (dragParentKey !== null && dragParentKey === eventKey && isFirstChild(getEntity(this.dragNode)))
+    ) {
       // don't allow drop inside its children
+      // don't allow drop inside its direct parent when drag node is first child
       return;
     }
 
@@ -528,26 +545,32 @@ class Tree extends React.Component<TreeProps, TreeState> {
         elevatedDropLevel,
         abstractDropNodeEntity,
       ] = calcDropPosition(event, node, indent, this.dragStartMousePosition);
+
       if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
-        this.setState({
-          dropPosition: null,
-          elevatedDropLevel: 0,
-          abstractDropNodeEntity: null,
-        });
-        return;
+        if (!(
+          this.state.dropPosition === null &&
+          this.state.elevatedDropLevel === 0 &&
+          this.state.abstractDropNodeEntity === null
+        )) {
+          this.setState({
+            dropPosition: null,
+            elevatedDropLevel: 0,
+            abstractDropNodeEntity: null,
+          });
+        }
+      } else {
+        if (!(
+          dropPosition === this.state.dropPosition &&
+          elevatedDropLevel === this.state.elevatedDropLevel &&
+          abstractDropNodeEntity === this.state.abstractDropNodeEntity
+        )) {
+          this.setState({
+            dropPosition,
+            elevatedDropLevel,
+            abstractDropNodeEntity,
+          });
+        }
       }
-
-      if (
-        dropPosition === this.state.dropPosition &&
-        elevatedDropLevel === this.state.elevatedDropLevel &&
-        abstractDropNodeEntity === this.state.abstractDropNodeEntity
-      ) return;
-
-      this.setState({
-        dropPosition,
-        elevatedDropLevel,
-        abstractDropNodeEntity,
-      });
     }
 
     if (onDragOver) {

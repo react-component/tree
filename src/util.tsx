@@ -39,7 +39,7 @@ export function isTreeNode(node: NodeElement) {
 
 export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key[] {
   // not contains self
-  // for left or right drag
+  // self for left or right drag
   const dragChildrenKeys = [];
 
   const entity = keyEntities[dragNodeKey];
@@ -55,14 +55,28 @@ export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, D
   return dragChildrenKeys;
 }
 
-function getEntity (treeNode: NodeInstance): DataEntity {
+export function getDragParentKey(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key {
+  const entity = keyEntities[dragNodeKey];
+  return entity?.parent.key || null;
+}
+
+export function getEntity (treeNode: NodeInstance): DataEntity {
   return ((treeNode.props as any).context.keyEntities as any)[treeNode.props.eventKey]
 }
 
-function isLastChild (treeNodeEntity: DataEntity) {
+export function isLastChild (treeNodeEntity: DataEntity) {
   if (treeNodeEntity.parent) {
     const posArr = posToArr(treeNodeEntity.pos)
     return Number(posArr[posArr.length - 1]) === treeNodeEntity.parent.children.length - 1;
+  } else {
+    return false
+  }
+}
+
+export function isFirstChild (treeNodeEntity: DataEntity) {
+  if (treeNodeEntity.parent) {
+    const posArr = posToArr(treeNodeEntity.pos)
+    return Number(posArr[posArr.length - 1]) === 0;
   } else {
     return false
   }
@@ -79,7 +93,6 @@ export function calcDropPosition(
   }
 ) : [-1 | 0 | 1, number, DataEntity] {
   const { clientX } = event;
-  const { left: selectHandleX } = targetNode.selectHandle.getBoundingClientRect();
   const horizontalMouseOffset = startMousePosition.x - clientX;
   const levelToAscend = horizontalMouseOffset / indent;
   const targetEntity = getEntity(targetNode);

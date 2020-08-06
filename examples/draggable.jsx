@@ -53,7 +53,7 @@ class Demo extends React.Component {
         // eslint-disable-next-line no-param-reassign
         item.children = item.children || [];
         // where to insert 示例添加到尾部，可以是随意位置
-        item.children.push(dragObj);
+        item.children.unshift(dragObj);
       });
     } else {
       // Drop on the gap (insert before or insert after)
