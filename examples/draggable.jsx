@@ -47,7 +47,7 @@ class Demo extends React.Component {
       dragObj = item;
     });
 
-    if (!info.dropToGap) {
+    if (dropPosition === 0) {
       // Drop on the content
       loop(data, dropKey, item => {
         // eslint-disable-next-line no-param-reassign
@@ -55,19 +55,8 @@ class Demo extends React.Component {
         // where to insert 示例添加到尾部，可以是随意位置
         item.children.push(dragObj);
       });
-    } else if (
-      (info.node.children || []).length > 0 && // Has children
-      info.node.expanded && // Is expanded
-      dropPosition === 1 // On the bottom gap
-    ) {
-      loop(data, dropKey, item => {
-        // eslint-disable-next-line no-param-reassign
-        item.children = item.children || [];
-        // where to insert 示例添加到尾部，可以是随意位置
-        item.children.unshift(dragObj);
-      });
     } else {
-      // Drop on the gap
+      // Drop on the gap (insert before or insert after)
       let ar;
       let i;
       loop(data, dropKey, (item, index, arr) => {

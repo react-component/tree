@@ -431,7 +431,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dragOverNodeKey: '',
         dropPosition: null,
         elevatedDropLevel: null,
-        abstractDropNodeParentEntity: null,
         abstractDropNodeEntity: null,
       });
     }
@@ -439,7 +438,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const [
       dropPosition,
       elevatedDropLevel,
-      abstractDropNodeParentEntity,
       abstractDropNodeEntity,
     ] = calcDropPosition(event, node, indent);
 
@@ -460,7 +458,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dragOverNodeKey: '',
         dropPosition: null,
         elevatedDropLevel: null,
-        abstractDropNodeParentEntity: null,
         abstractDropNodeEntity: null,
       })
       return;
@@ -471,7 +468,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragOverNodeKey: eventKey,
       dropPosition,
       elevatedDropLevel,
-      abstractDropNodeParentEntity,
       abstractDropNodeEntity,
     })
 
@@ -482,6 +478,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
         expandedKeys,
       });
     }
+
+    event.persist();
 
     this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
       if (!this.state.dragging) return;
@@ -522,14 +520,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
       const [
         dropPosition,
         elevatedDropLevel,
-        abstractDropNodeParentEntity,
         abstractDropNodeEntity,
       ] = calcDropPosition(event, node, indent);
       if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
         this.setState({
           dropPosition: null,
           elevatedDropLevel: 0,
-          abstractDropNodeParentEntity: null,
           abstractDropNodeEntity: null,
         });
         return;
@@ -538,14 +534,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
       if (
         dropPosition === this.state.dropPosition &&
         elevatedDropLevel === this.state.elevatedDropLevel &&
-        abstractDropNodeParentEntity === this.state.abstractDropNodeParentEntity &&
         abstractDropNodeEntity === this.state.abstractDropNodeEntity
       ) return;
 
       this.setState({
         dropPosition,
         elevatedDropLevel,
-        abstractDropNodeParentEntity,
         abstractDropNodeEntity,
       });
     }

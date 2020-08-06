@@ -59,52 +59,68 @@ function getEntity (treeNode: NodeInstance): DataEntity {
   return ((treeNode.props as any).context.keyEntities as any)[treeNode.props.eventKey]
 }
 
+function isLastChild (treeNodeEntity: DataEntity) {
+  if (treeNodeEntity.parent) {
+    const posArr = posToArr(treeNodeEntity.pos)
+    return Number(posArr[posArr.length - 1]) === treeNodeEntity.parent.children.length - 1;
+  } else {
+    return false
+  }
+}
+
 // Only used when drag, not affect SSR.
 export function calcDropPosition(
   event: React.MouseEvent,
   targetNode: NodeInstance,
   indent: number,
-) : [-1 | 0 | 1, number, DataEntity | null, DataEntity] {
+) : [-1 | 0 | 1, number, DataEntity] {
   const { clientX } = event;
   const { left: selectHandleX } = targetNode.selectHandle.getBoundingClientRect();
-  const horizontalMouseOffset = selectHandleX - clientX
-  const levelToAscend = horizontalMouseOffset / indent
+  const horizontalMouseOffset = selectHandleX - clientX;
+  const levelToAscend = horizontalMouseOffset / indent;
+  const targetEntity = getEntity(targetNode);
 
-  let abstractDropNodeParentEntity: DataEntity | null = getEntity(targetNode).parent || null
-  let abstractDropNodeEntity: DataEntity = getEntity(targetNode)
-  let elevatedDropLevel = 0
-  if (abstractDropNodeParentEntity) {
+  let abstractDropNodeEntity: DataEntity = getEntity(targetNode);
+  let dropPosition: -1 | 0 | 1 = 0;
+  let elevatedDropLevel = 0;
+  if (
+    abstractDropNodeEntity.parent // has parent
+  ) {
     for (let i = 0; i < levelToAscend; i += 1) {
-      elevatedDropLevel += 1
-      if (abstractDropNodeParentEntity?.parent) {
-        abstractDropNodeParentEntity = abstractDropNodeParentEntity.parent
-        abstractDropNodeEntity = abstractDropNodeEntity.parent
+      if (isLastChild(abstractDropNodeEntity)) {
+        abstractDropNodeEntity = abstractDropNodeEntity.parent;
+        elevatedDropLevel += 1;
       } else {
-        abstractDropNodeParentEntity = null
-        abstractDropNodeEntity = abstractDropNodeEntity.parent
-        break
+        break;
       }
     }
   }
 
-  const ret: [-1 | 0 | 1, number, DataEntity | null, DataEntity] = [
-    0,
-    elevatedDropLevel,
-    abstractDropNodeParentEntity,
-    abstractDropNodeEntity,
-  ]
+  // TODO, for the very first item, set dropPosition to -1 on top half area
 
-  if (elevatedDropLevel === 0) {
-    if (levelToAscend > -1 && levelToAscend < 0) {
-      ret[0] = 1;
+  if (
+    elevatedDropLevel === 0
+  ) {
+    if (!targetEntity.children?.length) {
+      // has no child
+      if (levelToAscend > -1) {
+        dropPosition = 1;
+      } else {
+        dropPosition = 0;
+      }
     } else {
-      ret[0] = 0;
+      // has children
+      dropPosition = 0;
     }
   } else {
-    ret[0] = -1;
+    dropPosition = 1;
   }
 
-  return ret;
+  return [
+    dropPosition,
+    elevatedDropLevel,
+    abstractDropNodeEntity,
+  ];
 }
 
 /**
