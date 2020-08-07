@@ -59,6 +59,11 @@ interface CheckInfo {
   halfCheckedKeys?: Key[];
 }
 
+export type AllowDrop = (options: {
+  node: DataNode,
+  dropPosition: -1 | 0 | 1,
+}) => boolean;
+
 export interface TreeProps {
   prefixCls: string;
   className?: string;
@@ -86,6 +91,7 @@ export interface TreeProps {
   defaultSelectedKeys?: Key[];
   selectedKeys?: Key[];
   indent?: number;
+  allowDrop?: AllowDrop;
   titleRender?: (node: DataNode) => React.ReactNode;
   dropIndicatorRender?: (dropPosition: -1 | 0 | 1, levelAscended: number) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
@@ -232,6 +238,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
     defaultSelectedKeys: [],
+    indent: DEFAULT_INDENT,
+    allowDrop: () => true,
   };
 
   static TreeNode = TreeNode;
@@ -434,15 +442,24 @@ class Tree extends React.Component<TreeProps, TreeState> {
    */
   onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
     const { expandedKeys, keyEntities, dragChildrenKeys, dragParentKey } = this.state;
-    const { onDragEnter, onExpand, indent = DEFAULT_INDENT } = this.props;
+    const { onDragEnter, onExpand, indent, allowDrop } = this.props;
     const { pos, eventKey } = node.props;
+
+    const [
+      dropPosition,
+      elevatedDropLevel,
+      abstractDropNodeEntity,
+      dropAllowed
+    ] = calcDropPosition(event, node, indent, this.dragStartMousePosition, allowDrop);
 
     if (
       !this.dragNode ||
       // don't allow drop inside its children
       dragChildrenKeys.indexOf(eventKey) !== -1 ||
       // don't allow drop inside its direct parent
-      (dragParentKey !== null && dragParentKey === eventKey && isFirstChild(getEntity(this.dragNode)))
+      (dragParentKey !== null && dragParentKey === eventKey && isFirstChild(getEntity(this.dragNode)) && elevatedDropLevel === 0) ||
+      // don't allow drop when drop is not allowed caculated by calcDropPosition
+      !dropAllowed
     ) {
       this.setState({
         dragOverNodeKey: '',
@@ -452,12 +469,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       });
       return;
     }
-
-    const [
-      dropPosition,
-      elevatedDropLevel,
-      abstractDropNodeEntity,
-    ] = calcDropPosition(event, node, indent, this.dragStartMousePosition);
 
     // the key may be cleared by onDragLeave
     this.pendingDragOverNodeKey = eventKey;
@@ -525,27 +536,30 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
     const { dragChildrenKeys, dragParentKey } = this.state;
-    const { onDragOver, indent = DEFAULT_INDENT } = this.props;
+    const { onDragOver, indent, allowDrop } = this.props;
     const { eventKey } = node.props;
+
+    const [
+      dropPosition,
+      elevatedDropLevel,
+      abstractDropNodeEntity,
+      dropAllowed,
+    ] = calcDropPosition(event, node, indent, this.dragStartMousePosition, allowDrop);
 
     if (
       !this.dragNode ||
       dragChildrenKeys.indexOf(eventKey) !== -1 ||
-      (dragParentKey !== null && dragParentKey === eventKey && isFirstChild(getEntity(this.dragNode)))
+      (dragParentKey !== null && dragParentKey === eventKey && isFirstChild(getEntity(this.dragNode)) && elevatedDropLevel === 0) ||
+      !dropAllowed
     ) {
       // don't allow drop inside its children
       // don't allow drop inside its direct parent when drag node is first child
+      // don't allow drop when drop is not allowed caculated by calcDropPosition
       return;
     }
 
     // Update drag position
     if (this.dragNode && eventKey === this.state.dragOverNodeKey) {
-      const [
-        dropPosition,
-        elevatedDropLevel,
-        abstractDropNodeEntity,
-      ] = calcDropPosition(event, node, indent, this.dragStartMousePosition);
-
       if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
         if (!(
           this.state.dropPosition === null &&
