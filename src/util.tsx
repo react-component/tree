@@ -77,7 +77,7 @@ export function isFirstChild (treeNodeEntity: DataEntity) {
     const posArr = posToArr(treeNodeEntity.pos)
     return Number(posArr[posArr.length - 1]) === 0;
   }
-    return false
+  return false;
 }
 
 // Only used when drag, not affect SSR.
@@ -100,7 +100,10 @@ export function calcDropPosition(
   let dropPosition: -1 | 0 | 1 = 0;
   let elevatedDropLevel = 0;
   for (let i = 0; i < levelToElevate; i += 1) {
-    if (isLastChild(abstractDropNodeEntity)) {
+    if (
+      isLastChild(abstractDropNodeEntity) || 
+      (abstractDropNodeEntity.parent && i === 0)
+    ) {
       abstractDropNodeEntity = abstractDropNodeEntity.parent;
       elevatedDropLevel += 1;
     } else {
