@@ -6,7 +6,6 @@ import '../assets/index.less';
 import Tree from '../src';
 
 function allowDrop({ node, dropPosition }) {
-  console.log(node);
   if (!node.children) {
     if (dropPosition === 0) return false;
   }
