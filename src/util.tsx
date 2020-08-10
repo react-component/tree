@@ -61,15 +61,15 @@ export function getDragParentKey(dragNodeKey: Key, keyEntities: Record<Key, Data
 }
 
 export function getEntity (treeNode: NodeInstance): DataEntity {
-  return ((treeNode.props as any).context.keyEntities as any)[treeNode.props.eventKey]
+  return ((treeNode.props as any).context.keyEntities as any)[treeNode.props.eventKey];
 }
 
 export function isLastChild (treeNodeEntity: DataEntity) {
   if (treeNodeEntity.parent) {
-    const posArr = posToArr(treeNodeEntity.pos)
+    const posArr = posToArr(treeNodeEntity.pos);
     return Number(posArr[posArr.length - 1]) === treeNodeEntity.parent.children.length - 1;
   }
-    return false
+  return false;
 }
 
 export function isFirstChild (treeNodeEntity: DataEntity) {
