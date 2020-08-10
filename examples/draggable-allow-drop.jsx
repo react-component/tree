@@ -5,15 +5,12 @@ import './draggable.less';
 import '../assets/index.less';
 import Tree from '../src';
 
-function allowDrop ({
-  node,
-  dropPosition,
-}) {
-  console.log(node)
+function allowDrop({ node, dropPosition }) {
+  console.log(node);
   if (!node.children) {
-    if (dropPosition === 0) return false
+    if (dropPosition === 0) return false;
   }
-  return true
+  return true;
 }
 
 class Demo extends React.Component {
@@ -97,8 +94,8 @@ class Demo extends React.Component {
   render() {
     return (
       <div className="draggable-demo">
-        <h2>draggable</h2>
-        <p>drag a node into another node</p>
+        <h2>draggable with allow drop</h2>
+        <p>node can not be dropped inside a leaf node</p>
         <div className="draggable-container">
           <Tree
             allowDrop={allowDrop}
