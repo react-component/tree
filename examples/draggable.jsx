@@ -16,8 +16,8 @@ class Demo extends React.Component {
     console.log('start', info);
   };
 
-  onDragEnter = info => {
-    console.log('enter', info);
+  onDragEnter = () => {
+    console.log('enter');
   };
 
   onDrop = info => {

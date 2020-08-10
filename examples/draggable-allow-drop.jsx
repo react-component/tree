@@ -24,8 +24,8 @@ class Demo extends React.Component {
     console.log('start', info);
   };
 
-  onDragEnter = info => {
-    console.log('enter', info);
+  onDragEnter = () => {
+    console.log('enter');
   };
 
   onDrop = info => {
@@ -104,7 +104,6 @@ class Demo extends React.Component {
             autoExpandParent={this.state.autoExpandParent}
             draggable
             onDragStart={this.onDragStart}
-            onDragEnter={this.onDragEnter}
             onDrop={this.onDrop}
             treeData={this.state.gData}
           />
