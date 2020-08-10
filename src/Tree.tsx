@@ -449,7 +449,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropPosition,
       elevatedDropLevel,
       abstractDropNodeEntity,
-      dropAllowed
+      dropAllowed,
     ] = calcDropPosition(event, node, indent, this.dragStartMousePosition, allowDrop);
 
     if (
@@ -457,7 +457,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
       // don't allow drop inside its children
       dragChildrenKeys.indexOf(eventKey) !== -1 ||
       // don't allow drop inside its direct parent
-      (dragParentKey !== null && dragParentKey === eventKey && isFirstChild(getEntity(this.dragNode)) && elevatedDropLevel === 0) ||
+      (
+        dragParentKey !== null &&
+        dragParentKey === eventKey &&
+        isFirstChild(getEntity(this.dragNode)) &&
+        elevatedDropLevel === 0
+      ) ||
       // don't allow drop when drop is not allowed caculated by calcDropPosition
       !dropAllowed
     ) {
@@ -549,7 +554,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (
       !this.dragNode ||
       dragChildrenKeys.indexOf(eventKey) !== -1 ||
-      (dragParentKey !== null && dragParentKey === eventKey && isFirstChild(getEntity(this.dragNode)) && elevatedDropLevel === 0) ||
+      (
+        dragParentKey !== null &&
+        dragParentKey === eventKey &&
+        isFirstChild(getEntity(this.dragNode)) &&
+        elevatedDropLevel === 0
+      ) ||
       !dropAllowed
     ) {
       // don't allow drop inside its children
@@ -572,8 +582,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             abstractDropNodeEntity: null,
           });
         }
-      } else {
-        if (!(
+      } else if (!(
           dropPosition === this.state.dropPosition &&
           elevatedDropLevel === this.state.elevatedDropLevel &&
           abstractDropNodeEntity === this.state.abstractDropNodeEntity
@@ -584,7 +593,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
             abstractDropNodeEntity,
           });
         }
-      }
     }
 
     if (onDragOver) {

@@ -68,18 +68,16 @@ export function isLastChild (treeNodeEntity: DataEntity) {
   if (treeNodeEntity.parent) {
     const posArr = posToArr(treeNodeEntity.pos)
     return Number(posArr[posArr.length - 1]) === treeNodeEntity.parent.children.length - 1;
-  } else {
-    return false
   }
+    return false
 }
 
 export function isFirstChild (treeNodeEntity: DataEntity) {
   if (treeNodeEntity.parent) {
     const posArr = posToArr(treeNodeEntity.pos)
     return Number(posArr[posArr.length - 1]) === 0;
-  } else {
-    return false
   }
+    return false
 }
 
 // Only used when drag, not affect SSR.
@@ -114,7 +112,6 @@ export function calcDropPosition(
 
   const abstractDropDataNode = abstractDropNodeEntity.node
   let dropAllowed = true;
-  console.log(abstractDropDataNode.key)
   if (
     elevatedDropLevel === 0
   ) {
@@ -125,7 +122,7 @@ export function calcDropPosition(
       // 2. do not allow drop
       if (allowDrop({
         node: abstractDropDataNode,
-        dropPosition: 1
+        dropPosition: 1,
       })) {
         dropPosition = 1;
       } else {
@@ -134,7 +131,7 @@ export function calcDropPosition(
         abstractDropNodeEntity = null;
         dropAllowed = false;
       }
-    } else {
+    } else if (levelToElevate <= -1) {
       // | Node     | <- abstractDropNode
       // | ---==^== | <- mousePosition
       // whether it has children or doesn't has children
@@ -144,12 +141,12 @@ export function calcDropPosition(
       // 3. do not allow drop
       if (allowDrop({
         node: abstractDropDataNode,
-        dropPosition: 0
+        dropPosition: 0,
       })) {
         dropPosition = 0;
       } else if (allowDrop({
         node: abstractDropDataNode,
-        dropPosition: 1
+        dropPosition: 1,
       })) {
         dropPosition = 1;
       } else {
@@ -159,7 +156,7 @@ export function calcDropPosition(
         dropAllowed = false;
       }
     }
-  } else {
+  } else if (elevatedDropLevel > 0) {
     // | Node1 | <- abstractDropNode
     //      |  Node2  |
     // --^--|----=====| <- mousePosition
@@ -167,7 +164,7 @@ export function calcDropPosition(
     // 2. do not allow drop
     if (allowDrop({
       node: abstractDropDataNode,
-      dropPosition: 1
+      dropPosition: 1,
     })) {
       dropPosition = 1;
     } else {
@@ -182,7 +179,7 @@ export function calcDropPosition(
     dropPosition,
     elevatedDropLevel,
     abstractDropNodeEntity,
-    dropAllowed
+    dropAllowed,
   ];
 }
 
