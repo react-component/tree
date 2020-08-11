@@ -509,7 +509,15 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       ...otherProps
     } = this.props;
     const {
-      context: { prefixCls, filterTreeNode, draggable, keyEntities, indent },
+      context: {
+        prefixCls,
+        filterTreeNode,
+        draggable,
+        keyEntities,
+        indent,
+        dropContainerKey,
+        dropTargetKey,
+      },
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
@@ -528,6 +536,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-active`]: active,
           [`${prefixCls}-treenode-leaf-last`]: isEndNode,
 
+          'drop-target': dropTargetKey === this.props.eventKey,
+          'drop-container': dropContainerKey === this.props.eventKey,
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,
           'drag-over-gap-bottom': !disabled && dragOverGapBottom,

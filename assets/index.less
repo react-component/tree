@@ -27,24 +27,20 @@
       -khtml-user-drag: element;
       -webkit-user-drag: element;
     }
-    // &.drag-over {
-    //   > .draggable {
-    //     color: white;
-    //     background-color: #316ac5;
-    //     border: 1px #316ac5 solid;
-    //     opacity: 0.8;
-    //   }
-    // }
-    // &.drag-over-gap-top {
-    //   > .draggable {
-    //     border-top: 2px blue solid;
-    //   }
-    // }
-    // &.drag-over-gap-bottom {
-    //   > .draggable {
-    //     border-bottom: 2px blue solid;
-    //   }
-    // }
+    &.drop-target {
+      background-color: yellowgreen;
+    }
+    &.drop-container {
+      > .draggable::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        box-shadow: inset 0 0 0 2px red;
+        content: "";
+      }
+    }
     &.filter-node {
       > .@{treePrefixCls}-node-content-wrapper {
         color: #a60000 !important;

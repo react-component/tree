@@ -38,6 +38,7 @@ export interface TreeContextProps {
   elevatedDropLevel?: number;
   nodeInstances: Map<Key, NodeInstance>;
   dropContainerKey: Key | null;
+  dropTargetKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number;
   dropIndicatorRender: (
