@@ -57,7 +57,7 @@ export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, D
 
 export function getDragParentKey(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key {
   const entity = keyEntities[dragNodeKey];
-  return entity?.parent.key || null;
+  return entity?.parent?.key || null;
 }
 
 export function getEntity (treeNode: NodeInstance): DataEntity {
@@ -92,7 +92,8 @@ export function calcDropPosition(
   allowDrop: AllowDrop,
 ) : [-1 | 0 | 1, number, DataEntity, boolean] {
   const { clientX } = event;
-  const horizontalMouseOffset = startMousePosition.x - clientX;
+  // optional chain for testing
+  const horizontalMouseOffset = (startMousePosition?.x || 0) - clientX;
   const levelToElevate = horizontalMouseOffset / indent;
 
   // find abstract drop node by horizontal offset
