@@ -27,9 +27,7 @@
       -khtml-user-drag: element;
       -webkit-user-drag: element;
     }
-    &.drop-target {
-      background-color: yellowgreen;
-    }
+    
     &.drop-container {
       > .draggable::after {
         position: absolute;
@@ -39,6 +37,15 @@
         bottom: 0;
         box-shadow: inset 0 0 0 2px red;
         content: "";
+      }
+      & ~ .@{treeNodePrefixCls} {
+        border-left: 2px solid chocolate;
+      }
+    }
+    &.drop-target {
+      background-color: yellowgreen;
+      & ~ .@{treeNodePrefixCls} {
+        border-left: none;
       }
     }
     &.filter-node {
