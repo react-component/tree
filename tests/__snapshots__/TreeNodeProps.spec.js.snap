@@ -676,7 +676,7 @@ exports[`TreeNode Props isLeaf 1`] = `
             class="rc-tree-indent"
           >
             <span
-              class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+              class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
               style="width:24px"
             />
           </span>
@@ -749,7 +749,7 @@ exports[`TreeNode Props isLeaf 2`] = `
             class="rc-tree-indent"
           >
             <span
-              class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+              class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
               style="width:24px"
             />
           </span>
@@ -825,7 +825,7 @@ exports[`TreeNode Props isLeaf 3`] = `
             class="rc-tree-indent"
           >
             <span
-              class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+              class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
               style="width:24px"
             />
           </span>

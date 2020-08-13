@@ -67,14 +67,19 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // Isomorphic needn't load data in server side
   componentDidMount() {
     this.syncLoadData(this.props);
-    this.props.context.nodeInstances.set(this.props.eventKey, this);
+    const {
+      context: { nodeInstances },
+      eventKey,
+    } = this.props;
+    nodeInstances.set(eventKey, this);
   }
 
   componentDidUpdate(prevProps) {
     this.syncLoadData(this.props);
     if (prevProps.eventKey !== this.props.eventKey) {
-      this.props.context.nodeInstances.delete(prevProps.eventKey);
-      this.props.context.nodeInstances.set(this.props.eventKey, this);
+      const { nodeInstances } = this.props.context;
+      nodeInstances.delete(prevProps.eventKey);
+      nodeInstances.set(this.props.eventKey, this);
     }
   }
 
@@ -536,8 +541,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-active`]: active,
           [`${prefixCls}-treenode-leaf-last`]: isEndNode,
 
-          'drop-target': dropTargetKey === this.props.eventKey,
-          'drop-container': dropContainerKey === this.props.eventKey,
+          'drop-target': dropTargetKey === eventKey,
+          'drop-container': dropContainerKey === eventKey,
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,
           'drag-over-gap-bottom': !disabled && dragOverGapBottom,

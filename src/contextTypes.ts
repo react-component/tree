@@ -21,7 +21,7 @@ export type NodeMouseEventHandler<T = HTMLSpanElement> = (
 export type NodeDragEventHandler<T = HTMLDivElement> = (
   e: React.MouseEvent<T>,
   node: NodeInstance,
-  fromWindow?: boolean,
+  outsideTree?: boolean,
 ) => void;
 
 export interface TreeContextProps {

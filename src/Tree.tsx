@@ -647,7 +647,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   // if onNodeDragEnd is called, onWindowDragEnd won't be called since stopPropagation() is called
-  onNodeDragEnd: NodeDragEventHandler = (event, node, fromWindow = false) => {
+  onNodeDragEnd: NodeDragEventHandler = (event, node, outsideTree = false) => {
     const { onDragEnd } = this.props;
     this.setState({
       dragOverNodeKey: '',
@@ -655,14 +655,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     this.cleanDragState();
 
-    if (onDragEnd && !fromWindow) {
+    if (onDragEnd && !outsideTree) {
       onDragEnd({ event, node: convertNodePropsToEventData(node.props) });
     }
 
     this.dragNode = null;
   };
 
-  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node, fromWindow: boolean = false) => {
+  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {
     const { dragChildrenKeys = [], dropPosition, abstractDropNodeEntity } = this.state;
     const { onDrop } = this.props;
 
@@ -698,7 +698,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropPosition: dropPosition + Number(posArr[posArr.length - 1]),
     };
 
-    if (onDrop && !fromWindow) {
+    if (onDrop && !outsideTree) {
       onDrop(dropResult);
     }
 
