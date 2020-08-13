@@ -1,7 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import VirtualList from 'rc-virtual-list';
 import Tree, { TreeNode } from '../src';
 import MotionTreeNode from '../src/MotionTreeNode';
 import { TreeContext } from '../src/contextTypes';
@@ -42,31 +40,6 @@ describe('Tree Motion', () => {
       expect(wrapper.find('CSSMotion').props().visible).toBeFalsy();
       done();
     }, 100);
-  });
-
-  /**
-   * Mock show item
-   */
-  it('`onSkipRender` should clean up', () => {
-    const wrapper = mount(
-      <Tree
-        treeData={[{ key: '0-0', children: [{ key: '0-0-0' }] }]}
-        expandedKeys={[]}
-        motion={{}}
-      />,
-    );
-
-    wrapper.setProps({ expandedKeys: ['0-0'] });
-    act(() => {
-      wrapper
-        .find(VirtualList)
-        .props()
-        .onSkipRender();
-    });
-
-    const { data } = wrapper.find(VirtualList).props();
-    expect(data.length).toBe(1);
-    expect(data[0].key).toBe('0-0');
   });
 
   it('getMinimumRangeTransitionRange', () => {
