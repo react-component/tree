@@ -1085,11 +1085,11 @@ describe('Tree Basic', () => {
           .at(2)
           .props(),
       );
+      wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
       wrapper
         .find('.dropTarget')
         .at(0)
         .simulate('dragOver');
-
       const event = onDragOver.mock.calls[0][0];
       expect(event.node).toEqual(node);
     });
