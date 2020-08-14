@@ -90,23 +90,30 @@ export function calcDropPosition(
     y: number,
   },
   allowDrop: AllowDrop,
-) : [-1 | 0 | 1, number, DataEntity, boolean] {
+) : {
+  dropPosition: -1 | 0 | 1,
+  dropLevelOffset: number,
+  dropTargetKey: Key,
+  dropTargetPos:  string,
+  dropContainerKey: Key,
+  dropAllowed: boolean,
+} {
   const { clientX } = event;
   // optional chain for testing
   const horizontalMouseOffset = (startMousePosition?.x || 0) - clientX;
-  const levelToElevate = horizontalMouseOffset / indent;
+  const rawDropLevelOffset = horizontalMouseOffset / indent;
 
   // find abstract drop node by horizontal offset
   let abstractDropNodeEntity: DataEntity = getEntity(targetNode);
   let dropPosition: -1 | 0 | 1 = 0;
-  let elevatedDropLevel = 0;
-  for (let i = 0; i < levelToElevate; i += 1) {
+  let dropLevelOffset = 0;
+  for (let i = 0; i < rawDropLevelOffset; i += 1) {
     if (
       isLastChild(abstractDropNodeEntity) || 
       (abstractDropNodeEntity.parent && i === 0)
     ) {
       abstractDropNodeEntity = abstractDropNodeEntity.parent;
-      elevatedDropLevel += 1;
+      dropLevelOffset += 1;
     } else {
       break;
     }
@@ -117,9 +124,9 @@ export function calcDropPosition(
   const abstractDropDataNode = abstractDropNodeEntity.node
   let dropAllowed = true;
   if (
-    elevatedDropLevel === 0
+    dropLevelOffset === 0
   ) {
-    if (levelToElevate > -1) {
+    if (rawDropLevelOffset > -1) {
       // | Node     | <- abstractDropNode
       // | -^-===== | <- mousePosition
       // 1. try drop after
@@ -131,11 +138,11 @@ export function calcDropPosition(
         dropPosition = 1;
       } else {
         dropPosition = null;
-        elevatedDropLevel = null;
+        dropLevelOffset = null;
         abstractDropNodeEntity = null;
         dropAllowed = false;
       }
-    } else if (levelToElevate <= -1) {
+    } else if (rawDropLevelOffset <= -1) {
       // | Node     | <- abstractDropNode
       // | ---==^== | <- mousePosition
       // whether it has children or doesn't has children
@@ -155,12 +162,12 @@ export function calcDropPosition(
         dropPosition = 1;
       } else {
         dropPosition = null;
-        elevatedDropLevel = null;
+        dropLevelOffset = null;
         abstractDropNodeEntity = null;
         dropAllowed = false;
       }
     }
-  } else if (elevatedDropLevel > 0) {
+  } else if (dropLevelOffset > 0) {
     // | Node1 | <- abstractDropNode
     //      |  Node2  |
     // --^--|----=====| <- mousePosition
@@ -173,18 +180,20 @@ export function calcDropPosition(
       dropPosition = 1;
     } else {
       dropPosition = null;
-      elevatedDropLevel = null;
+      dropLevelOffset = null;
       abstractDropNodeEntity = null;
       dropAllowed = false;
     }
   }
 
-  return [
+  return {
     dropPosition,
-    elevatedDropLevel,
-    abstractDropNodeEntity,
+    dropLevelOffset,
+    dropTargetKey: abstractDropNodeEntity.key,
+    dropTargetPos:  abstractDropNodeEntity.pos,
+    dropContainerKey: dropPosition === 0 ? null : (abstractDropNodeEntity.parent?.key || null),
     dropAllowed,
-  ];
+  };
 }
 
 /**

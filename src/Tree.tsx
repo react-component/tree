@@ -158,7 +158,7 @@ export interface TreeProps {
 const DEFAULT_INDENT = 24;
 const DEFAULT_DROP_INDICATOR_RENDER = function dropIndicatorRender(
   dropPosition: -1 | 0 | 1,
-  elevatedDropLevel: number,
+  dropLevelOffset: number,
   indent: number,
 ) {
   const style: React.CSSProperties = {
@@ -169,13 +169,13 @@ const DEFAULT_DROP_INDICATOR_RENDER = function dropIndicatorRender(
     style.height = 2;
     style.right = 0;
     style.backgroundColor = 'red';
-    style.left = -elevatedDropLevel * indent;
+    style.left = -dropLevelOffset * indent;
   } else if (dropPosition === 1) {
     style.bottom = 0;
     style.height = 2;
     style.right = 0;
     style.backgroundColor = 'red';
-    style.left = -elevatedDropLevel * indent;
+    style.left = -dropLevelOffset * indent;
   } else {
     style.bottom = 0;
     style.height = 2;
@@ -202,9 +202,10 @@ interface TreeState {
   dragOverNodeKey: Key;
 
   dropPosition: -1 | 0 | 1 | null;
-  abstractDropNodeParentEntity: DataEntity | null;
-  abstractDropNodeEntity: DataEntity | null;
-  elevatedDropLevel: number | null;
+  dropLevelOffset: number | null;
+  dropContainerKey: Key | null;
+  dropTargetKey: Key | null;
+  dropTargetPos: string | null;
 
   treeData: DataNode[];
   flattenNodes: FlattenNode[];
@@ -260,9 +261,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     dragOverNodeKey: null,
 
     dropPosition: null, // inside 0, top -1, bottom 1
-    abstractDropNodeParentEntity: null,
-    abstractDropNodeEntity: null,
-    elevatedDropLevel: null,
+    dropContainerKey: null,
+    dropTargetKey: null,
+    dropLevelOffset: null,
+    dropTargetPos: null,
 
     treeData: [],
     flattenNodes: [],
@@ -442,7 +444,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const { onDragEnter, onExpand, indent, allowDrop } = this.props;
     const { pos, eventKey } = node.props;
 
-    const [dropPosition, elevatedDropLevel, abstractDropNodeEntity, dropAllowed] = calcDropPosition(
+    const {
+      dropPosition,
+      dropLevelOffset,
+      dropTargetKey,
+      dropContainerKey,
+      dropTargetPos,
+      dropAllowed
+    } = calcDropPosition(
       event,
       node,
       indent,
@@ -450,27 +459,27 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop,
     );
 
-    const abstractDropNodeParentEntity =
-      dropPosition === 0 ? null : abstractDropNodeEntity.parent || null;
-
     if (
       !this.dragNode ||
       // don't allow drop inside its children
       dragChildrenKeys.indexOf(eventKey) !== -1 ||
       // don't allow drop inside its direct parent
-      (dragParentKey !== null &&
+      (
+        dragParentKey !== null &&
         dragParentKey === eventKey &&
         isFirstChild(getEntity(this.dragNode)) &&
-        elevatedDropLevel === 0) ||
+        dropLevelOffset === 0
+      ) ||
       // don't allow drop when drop is not allowed caculated by calcDropPosition
       !dropAllowed
     ) {
       this.setState({
         dragOverNodeKey: '',
         dropPosition: null,
-        elevatedDropLevel: null,
-        abstractDropNodeEntity: null,
-        abstractDropNodeParentEntity: null,
+        dropLevelOffset: null,
+        dropTargetKey: null,
+        dropContainerKey: null,
+        dropTargetPos: null
       });
       return;
     }
@@ -487,13 +496,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
     });
 
     // Skip if drag node is self
-    if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
+    if (this.dragNode.props.eventKey === eventKey && dropLevelOffset === 0) {
       this.setState({
         dragOverNodeKey: eventKey,
         dropPosition: null,
-        elevatedDropLevel: null,
-        abstractDropNodeEntity: null,
-        abstractDropNodeParentEntity: null,
+        dropLevelOffset: null,
+        dropTargetKey: null,
+        dropContainerKey: null,
+        dropTargetPos: null
       });
       return;
     }
@@ -502,9 +512,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.setState({
       dragOverNodeKey: eventKey,
       dropPosition,
-      elevatedDropLevel,
-      abstractDropNodeEntity,
-      abstractDropNodeParentEntity,
+      dropLevelOffset,
+      dropTargetKey,
+      dropContainerKey,
+      dropTargetPos
     });
 
     if (onDragEnter) {
@@ -546,7 +557,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const { onDragOver, indent, allowDrop } = this.props;
     const { eventKey } = node.props;
 
-    const [dropPosition, elevatedDropLevel, abstractDropNodeEntity, dropAllowed] = calcDropPosition(
+    const {
+      dropPosition,
+      dropLevelOffset,
+      dropTargetKey,
+      dropContainerKey,
+      dropAllowed,
+      dropTargetPos
+     } = calcDropPosition(
       event,
       node,
       indent,
@@ -554,16 +572,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop,
     );
 
-    const abstractDropNodeParentEntity =
-      dropPosition === 0 ? null : abstractDropNodeEntity.parent || null;
-
     if (
       !this.dragNode ||
       dragChildrenKeys.indexOf(eventKey) !== -1 ||
       (dragParentKey !== null &&
         dragParentKey === eventKey &&
         isFirstChild(getEntity(this.dragNode)) &&
-        elevatedDropLevel === 0) ||
+        dropLevelOffset === 0) ||
       !dropAllowed
     ) {
       // don't allow drop inside its children
@@ -574,35 +589,38 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Update drag position
     if (this.dragNode && eventKey === this.state.dragOverNodeKey) {
-      if (this.dragNode.props.eventKey === eventKey && elevatedDropLevel === 0) {
+      if (this.dragNode.props.eventKey === eventKey && dropLevelOffset === 0) {
         if (
           !(
             this.state.dropPosition === null &&
-            this.state.elevatedDropLevel === 0 &&
-            this.state.abstractDropNodeEntity === null &&
-            this.state.abstractDropNodeParentEntity === null
+            this.state.dropLevelOffset === 0 &&
+            this.state.dropTargetKey === null &&
+            this.state.dropContainerKey === null &&
+            this.state.dropTargetPos === null
           )
         ) {
           this.setState({
             dropPosition: null,
-            elevatedDropLevel: 0,
-            abstractDropNodeEntity: null,
-            abstractDropNodeParentEntity: null,
+            dropLevelOffset: 0,
+            dropTargetKey: null,
+            dropContainerKey: null,
+            dropTargetPos: null
           });
         }
       } else if (
         !(
           dropPosition === this.state.dropPosition &&
-          elevatedDropLevel === this.state.elevatedDropLevel &&
-          abstractDropNodeEntity === this.state.abstractDropNodeEntity &&
-          abstractDropNodeParentEntity === this.state.abstractDropNodeParentEntity
+          dropLevelOffset === this.state.dropLevelOffset &&
+          dropTargetKey === this.state.dropTargetKey &&
+          dropContainerKey === this.state.dropContainerKey &&
+          dropTargetPos === this.state.dropTargetPos
         )
       ) {
         this.setState({
           dropPosition,
-          elevatedDropLevel,
-          abstractDropNodeEntity,
-          abstractDropNodeParentEntity,
+          dropLevelOffset,
+          dropTargetKey,
+          dropContainerKey,
         });
       }
     }
@@ -663,7 +681,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {
-    const { dragChildrenKeys = [], dropPosition, abstractDropNodeEntity } = this.state;
+    const { dragChildrenKeys = [], dropPosition, dropTargetKey, dropTargetPos } = this.state;
     const { onDrop } = this.props;
 
     this.setState({
@@ -671,10 +689,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
     });
     this.cleanDragState();
 
-    if (!abstractDropNodeEntity) return;
+    if (dropTargetKey === null) return;
 
-    const { key: abstractDropNodeKey, pos } = abstractDropNodeEntity;
-    const abstractDropNode = this.nodeInstances.get(abstractDropNodeKey) || null;
+    const abstractDropNode = this.nodeInstances.get(dropTargetKey) || null;
 
     if (abstractDropNode === null) {
       warning(false, "Can't find dropNode");
@@ -687,7 +704,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       return;
     }
 
-    const posArr = posToArr(pos);
+    const posArr = posToArr(dropTargetPos);
 
     const dropResult = {
       event,
@@ -711,9 +728,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
       this.setState({
         dragging: false,
         dropPosition: null,
-        abstractDropNodeParentEntity: null,
-        abstractDropNodeEntity: null,
-        elevatedDropLevel: null,
+        dropContainerKey: null,
+        dropTargetKey: null,
+        dropLevelOffset: null,
       });
     }
     this.dragStartMousePosition = null;
@@ -1221,13 +1238,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
       keyEntities,
       dragging,
       activeKey,
-      elevatedDropLevel,
-      abstractDropNodeParentEntity,
-      abstractDropNodeEntity,
+      dropLevelOffset,
+      dropContainerKey,
+      dropTargetKey,
       dropPosition,
     } = this.state;
-    const dropContainerKey = abstractDropNodeParentEntity && abstractDropNodeParentEntity.key;
-    const dropTargetKey = abstractDropNodeEntity && abstractDropNodeEntity.key;
     const {
       prefixCls,
       className,
@@ -1269,7 +1284,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           checkStrictly,
           disabled,
           keyEntities,
-          elevatedDropLevel,
+          dropLevelOffset,
           nodeInstances,
           dropContainerKey,
           dropTargetKey,
