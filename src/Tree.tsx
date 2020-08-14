@@ -77,7 +77,7 @@ export interface TreeProps {
   multiple?: boolean;
   checkable?: boolean | React.ReactNode;
   checkStrictly?: boolean;
-  draggable?: boolean;
+  draggable?: ((node: DataNode) => boolean) | boolean;
   defaultExpandParent?: boolean;
   autoExpandParent?: boolean;
   defaultExpandAll?: boolean;
@@ -450,26 +450,18 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropTargetKey,
       dropContainerKey,
       dropTargetPos,
-      dropAllowed
-    } = calcDropPosition(
-      event,
-      node,
-      indent,
-      this.dragStartMousePosition,
-      allowDrop,
-    );
+      dropAllowed,
+    } = calcDropPosition(event, node, indent, this.dragStartMousePosition, allowDrop);
 
     if (
       !this.dragNode ||
       // don't allow drop inside its children
       dragChildrenKeys.indexOf(eventKey) !== -1 ||
       // don't allow drop inside its direct parent
-      (
-        dragParentKey !== null &&
+      (dragParentKey !== null &&
         dragParentKey === eventKey &&
         isFirstChild(getEntity(this.dragNode)) &&
-        dropLevelOffset === 0
-      ) ||
+        dropLevelOffset === 0) ||
       // don't allow drop when drop is not allowed caculated by calcDropPosition
       !dropAllowed
     ) {
@@ -479,7 +471,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropLevelOffset: null,
         dropTargetKey: null,
         dropContainerKey: null,
-        dropTargetPos: null
+        dropTargetPos: null,
       });
       return;
     }
@@ -503,7 +495,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropLevelOffset: null,
         dropTargetKey: null,
         dropContainerKey: null,
-        dropTargetPos: null
+        dropTargetPos: null,
       });
       return;
     }
@@ -515,7 +507,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropLevelOffset,
       dropTargetKey,
       dropContainerKey,
-      dropTargetPos
+      dropTargetPos,
     });
 
     if (onDragEnter) {
@@ -563,14 +555,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropTargetKey,
       dropContainerKey,
       dropAllowed,
-      dropTargetPos
-     } = calcDropPosition(
-      event,
-      node,
-      indent,
-      this.dragStartMousePosition,
-      allowDrop,
-    );
+      dropTargetPos,
+    } = calcDropPosition(event, node, indent, this.dragStartMousePosition, allowDrop);
 
     if (
       !this.dragNode ||
@@ -604,7 +590,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             dropLevelOffset: 0,
             dropTargetKey: null,
             dropContainerKey: null,
-            dropTargetPos: null
+            dropTargetPos: null,
           });
         }
       } else if (

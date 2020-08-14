@@ -415,6 +415,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       context: { prefixCls, showIcon, icon: treeIcon, draggable, loadData, titleRender },
     } = this.props;
     const disabled = this.isDisabled();
+    const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
 
@@ -455,16 +456,16 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           `${wrapClass}`,
           `${wrapClass}-${this.getNodeState() || 'normal'}`,
           !disabled && (selected || dragNodeHighlight) && `${prefixCls}-node-selected`,
-          !disabled && draggable && 'draggable',
+          !disabled && mergedDraggable && 'draggable',
         )}
-        draggable={(!disabled && draggable) || undefined}
-        aria-grabbed={(!disabled && draggable) || undefined}
+        draggable={(!disabled && mergedDraggable) || undefined}
+        aria-grabbed={(!disabled && mergedDraggable) || undefined}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
         onClick={this.onSelectorClick}
         onDoubleClick={this.onSelectorDoubleClick}
-        onDragStart={draggable ? this.onDragStart : undefined}
+        onDragStart={mergedDraggable ? this.onDragStart : undefined}
       >
         {$icon}
         {$title}
@@ -474,19 +475,13 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   renderDropIndicator = () => {
-    const { disabled, dragOver, dragOverGapTop, dragOverGapBottom } = this.props;
+    const { disabled, dragOver, dragOverGapTop, dragOverGapBottom, data } = this.props;
     const {
-      context: {
-        draggable,
-        dropLevelOffset,
-        dropPosition,
-        prefixCls,
-        indent,
-        dropIndicatorRender,
-      },
+      context: { draggable, dropLevelOffset, dropPosition, prefixCls, indent, dropIndicatorRender },
     } = this.props;
+    const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
     const showIndicator =
-      !disabled && draggable && (dragOver || dragOverGapBottom || dragOverGapTop);
+      !disabled && mergedDraggable && (dragOver || dragOverGapBottom || dragOverGapTop);
     return showIndicator
       ? dropIndicatorRender(dropPosition, dropLevelOffset, indent, prefixCls)
       : null;
@@ -510,6 +505,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       loading,
       domRef,
       active,
+      data,
       onMouseMove,
       ...otherProps
     } = this.props;
@@ -528,6 +524,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
     const { level } = keyEntities[eventKey] || {};
     const isEndNode = isEnd[isEnd.length - 1];
+    const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
     return (
       <div
         ref={domRef}
@@ -549,11 +546,11 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           'filter-node': filterTreeNode && filterTreeNode(convertNodePropsToEventData(this.props)),
         })}
         style={style}
-        onDragEnter={draggable ? this.onDragEnter : undefined}
-        onDragOver={draggable ? this.onDragOver : undefined}
-        onDragLeave={draggable ? this.onDragLeave : undefined}
-        onDrop={draggable ? this.onDrop : undefined}
-        onDragEnd={draggable ? this.onDragEnd : undefined}
+        onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
+        onDragOver={mergedDraggable ? this.onDragOver : undefined}
+        onDragLeave={mergedDraggable ? this.onDragLeave : undefined}
+        onDrop={mergedDraggable ? this.onDrop : undefined}
+        onDragEnd={mergedDraggable ? this.onDragEnd : undefined}
         onMouseMove={onMouseMove}
         {...dataOrAriaAttributeProps}
       >

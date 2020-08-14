@@ -30,7 +30,7 @@ export interface TreeContextProps {
   showIcon: boolean;
   icon: IconType;
   switcherIcon: IconType;
-  draggable: boolean;
+  draggable: ((node: DataNode) => boolean) | boolean;
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
