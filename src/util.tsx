@@ -101,7 +101,7 @@ export function calcDropPosition(
   const { clientX } = event;
   // optional chain for testing
   const horizontalMouseOffset = (startMousePosition?.x || 0) - clientX;
-  const rawDropLevelOffset = horizontalMouseOffset / indent;
+  const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
   // find abstract drop node by horizontal offset
   let abstractDropNodeEntity: DataEntity = getEntity(targetNode);
@@ -126,7 +126,7 @@ export function calcDropPosition(
   if (
     dropLevelOffset === 0
   ) {
-    if (rawDropLevelOffset > -1) {
+    if (rawDropLevelOffset > -1.5) {
       // | Node     | <- abstractDropNode
       // | -^-===== | <- mousePosition
       // 1. try drop after
@@ -142,7 +142,7 @@ export function calcDropPosition(
         abstractDropNodeEntity = null;
         dropAllowed = false;
       }
-    } else if (rawDropLevelOffset <= -1) {
+    } else {
       // | Node     | <- abstractDropNode
       // | ---==^== | <- mousePosition
       // whether it has children or doesn't has children
@@ -167,7 +167,7 @@ export function calcDropPosition(
         dropAllowed = false;
       }
     }
-  } else if (dropLevelOffset > 0) {
+  } else {
     // | Node1 | <- abstractDropNode
     //      |  Node2  |
     // --^--|----=====| <- mousePosition
