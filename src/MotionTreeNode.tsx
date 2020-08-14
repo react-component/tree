@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 import TreeNode, { TreeNodeProps } from './TreeNode';
@@ -42,13 +43,13 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     motionedRef.current = true;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (motionNodes && motionType === 'hide' && visible) {
       setVisible(false);
     }
   }, [motionNodes]);
 
-  React.useEffect(
+  useEffect(
     () => () => {
       if (motionNodes) {
         onMotionEnd();

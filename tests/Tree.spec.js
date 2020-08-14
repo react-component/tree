@@ -4,6 +4,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
 import { resetWarned } from 'rc-util/lib/warning';
+import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import VirtualList from 'rc-virtual-list';
 import Tree, { TreeNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
@@ -107,12 +108,12 @@ describe('Tree Basic', () => {
 
     it('use treeData to expand the parent node when the parent node key type is numeric', () => {
       const Demo = () => (
-          <Tree
-            defaultExpandParent
-            defaultExpandedKeys={[22]}
-            treeData={[{ key: 11, title: 11, children: [{ key: 22, title: 22 }] }]}
-          />
-        );
+        <Tree
+          defaultExpandParent
+          defaultExpandedKeys={[22]}
+          treeData={[{ key: 11, title: 11, children: [{ key: 22, title: 22 }] }]}
+        />
+      );
 
       const wrapper = mount(<Demo />);
 
@@ -1343,14 +1344,35 @@ describe('Tree Basic', () => {
     expect(onCheck).toHaveBeenCalledWith([]);
   });
 
-  it('scrollTo should work', () => {
-    const wrapper = mount(<Tree />);
+  describe('scrollTo should work', () => {
+    let domSpy;
+    let called = false;
 
-    const scrollTo = jest.fn();
-    wrapper.find('NodeList List').instance().scrollTo = scrollTo;
-    wrapper.instance().scrollTo({ key: 'light' });
+    beforeAll(() => {
+      domSpy = spyElementPrototypes(HTMLDivElement, {
+        scrollTop: {
+          get: () => 233,
+          set: () => {
+            called = true;
+          },
+        },
+      });
+    });
 
-    expect(scrollTo).toHaveBeenCalled();
+    afterAll(() => {
+      domSpy.mockRestore();
+    });
+
+    it('work', () => {
+      jest.useFakeTimers();
+      const wrapper = mount(<Tree />);
+
+      wrapper.instance().scrollTo({ key: 'light', align: 'top' });
+      jest.runAllTimers();
+
+      expect(called).toBeTruthy();
+      jest.useRealTimers();
+    });
   });
 
   it('not crash if expandedKeys is null', () => {

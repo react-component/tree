@@ -88,36 +88,45 @@ function getTreeData() {
   ];
 }
 
-const Demo = () => (
-  <div className="animation">
-    <h2>expanded</h2>
-    <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+const Demo = () => {
+  const treeRef = React.useRef();
 
-    <div style={{ display: 'flex' }}>
-      <div style={{ flex: '1 1 50%' }}>
-        <h3>With Virtual</h3>
-        <Tree
-          defaultExpandAll={false}
-          defaultExpandedKeys={defaultExpandedKeys}
-          motion={motion}
-          height={200}
-          itemHeight={20}
-          style={{ border: '1px solid #000' }}
-          treeData={getTreeData()}
-        />
-      </div>
-      <div style={{ flex: '1 1 50%' }}>
-        <h3>Without Virtual</h3>
-        <Tree
-          defaultExpandAll={false}
-          defaultExpandedKeys={defaultExpandedKeys}
-          motion={motion}
-          style={{ border: '1px solid #000' }}
-          treeData={getTreeData()}
-        />
+  setTimeout(() => {
+    treeRef.current.scrollTo({ key: '0-9-2' });
+  }, 100);
+
+  return (
+    <div className="animation">
+      <h2>expanded</h2>
+      <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: '1 1 50%' }}>
+          <h3>With Virtual</h3>
+          <Tree
+            ref={treeRef}
+            defaultExpandAll={false}
+            defaultExpandedKeys={defaultExpandedKeys}
+            motion={motion}
+            height={200}
+            itemHeight={20}
+            style={{ border: '1px solid #000' }}
+            treeData={getTreeData()}
+          />
+        </div>
+        <div style={{ flex: '1 1 50%' }}>
+          <h3>Without Virtual</h3>
+          <Tree
+            defaultExpandAll={false}
+            defaultExpandedKeys={defaultExpandedKeys}
+            motion={motion}
+            style={{ border: '1px solid #000' }}
+            treeData={getTreeData()}
+          />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Demo;
