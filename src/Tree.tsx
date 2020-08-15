@@ -474,7 +474,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropTargetKey: null,
         dropContainerKey: null,
         dropTargetPos: null,
-        dropAllowed: false
+        dropAllowed: false,
       });
       return;
     }
@@ -499,7 +499,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropTargetKey: null,
         dropContainerKey: null,
         dropTargetPos: null,
-        dropAllowed: false
+        dropAllowed: false,
       });
       return;
     }
@@ -616,7 +616,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dropTargetKey,
           dropContainerKey,
           dropTargetPos,
-          dropAllowed
+          dropAllowed,
         });
       }
     }
@@ -677,8 +677,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {
-    const { dragChildrenKeys = [], dropPosition, dropTargetKey, dropTargetPos, dropAllowed } = this.state;
-    
+    const {
+      dragChildrenKeys = [],
+      dropPosition,
+      dropTargetKey,
+      dropTargetPos,
+      dropAllowed,
+    } = this.state;
+
     if (!dropAllowed) return
 
     const { onDrop } = this.props;

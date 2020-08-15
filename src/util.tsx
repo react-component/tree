@@ -1,3 +1,4 @@
+/* eslint-disable no-lonely-if */
 /**
  * Legacy code. Should avoid to use if you are new to import these code.
  */
@@ -94,7 +95,7 @@ export function calcDropPosition(
   dropPosition: -1 | 0 | 1,
   dropLevelOffset: number,
   dropTargetKey: Key,
-  dropTargetPos:  string,
+  dropTargetPos: string,
   dropContainerKey: Key,
   dropAllowed: boolean,
 } {
@@ -109,7 +110,7 @@ export function calcDropPosition(
   let dropLevelOffset = 0;
   for (let i = 0; i < rawDropLevelOffset; i += 1) {
     if (
-      isLastChild(abstractDropNodeEntity) || 
+      isLastChild(abstractDropNodeEntity) ||
       (abstractDropNodeEntity.parent && i === 0)
     ) {
       abstractDropNodeEntity = abstractDropNodeEntity.parent;
@@ -181,7 +182,7 @@ export function calcDropPosition(
     dropPosition,
     dropLevelOffset,
     dropTargetKey: abstractDropNodeEntity.key,
-    dropTargetPos:  abstractDropNodeEntity.pos,
+    dropTargetPos: abstractDropNodeEntity.pos,
     dropContainerKey: dropPosition === 0 ? null : (abstractDropNodeEntity.parent?.key || null),
     dropAllowed,
   };
