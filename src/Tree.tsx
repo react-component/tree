@@ -685,7 +685,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropAllowed,
     } = this.state;
 
-    if (!dropAllowed) return
+    if (!dropAllowed) return;
 
     const { onDrop } = this.props;
 
@@ -702,7 +702,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     const { eventKey } = abstractDropNode.props;
 
-    const dropToChild = dragChildrenKeys.indexOf(eventKey) !== -1
+    const dropToChild = dragChildrenKeys.indexOf(eventKey) !== -1;
 
     warning(!dropToChild, "Can not drop to dragNode's children node");
     if (dropToChild) {

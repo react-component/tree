@@ -1243,8 +1243,10 @@ describe('Tree Basic', () => {
       it('allowDrop all nodes', () => {
         const wrapper = mount(
           <Tree draggable defaultExpandAll>
-            <TreeNode key="0-0" className="dragTarget">
-              <TreeNode key="0-0-0" className="dragTargetChild" />
+            <TreeNode key="0-0" className="dragTargetParent">
+              <TreeNode key="0-0-0" className="dragTarget">
+                <TreeNode key="0-0-0-0" className="dragTargetChild" />
+              </TreeNode>
             </TreeNode>
             <TreeNode key="0-1">
               <TreeNode key="0-1-0">
@@ -1275,6 +1277,26 @@ describe('Tree Basic', () => {
           clientY: 600,
         });
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 550,
+          clientY: 600,
+        });
+        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 450,
+          clientY: 600,
+        });
+        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 500,
+          clientY: 600,
+        });
+        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
           clientX: 550,
           clientY: 600,
         });
