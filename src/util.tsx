@@ -74,11 +74,8 @@ export function isLastChild (treeNodeEntity: DataEntity) {
 }
 
 export function isFirstChild (treeNodeEntity: DataEntity) {
-  if (treeNodeEntity.parent) {
-    const posArr = posToArr(treeNodeEntity.pos)
-    return Number(posArr[posArr.length - 1]) === 0;
-  }
-  return false;
+  const posArr = posToArr(treeNodeEntity.pos);
+  return Number(posArr[posArr.length - 1]) === 0;
 }
 
 // Only used when drag, not affect SSR.
