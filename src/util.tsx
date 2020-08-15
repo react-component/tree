@@ -96,7 +96,8 @@ export function calcDropPosition(
   dropContainerKey: Key,
   dropAllowed: boolean,
 } {
-  const { clientX } = event;
+  const { clientX, clientY } = event;
+  const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
   // optional chain for testing
   const horizontalMouseOffset = (startMousePosition?.x || 0) - clientX;
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
@@ -122,6 +123,17 @@ export function calcDropPosition(
   const abstractDropDataNode = abstractDropNodeEntity.node
   let dropAllowed = true;
   if (
+    isFirstChild(abstractDropNodeEntity) &&
+    abstractDropNodeEntity.level === 0 &&
+    clientY < top + height / 2 &&
+    allowDrop({
+      node: abstractDropDataNode,
+      dropPosition: -1
+    })
+  ) {
+    // first half of first node in first level
+    dropPosition = -1
+  } else if (
     dropLevelOffset === 0
   ) {
     if (rawDropLevelOffset > -1.5) {
