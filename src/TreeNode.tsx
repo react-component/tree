@@ -74,13 +74,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     nodeInstances.set(eventKey, this);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     this.syncLoadData(this.props);
-    if (prevProps.eventKey !== this.props.eventKey) {
-      const { nodeInstances } = this.props.context;
-      nodeInstances.delete(prevProps.eventKey);
-      nodeInstances.set(this.props.eventKey, this);
-    }
+    // if eventKey doesn't equal, the component will unmount not update
+    // so there's no need for update nodeInstances here
   }
 
   componentWillUnmount() {

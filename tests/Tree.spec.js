@@ -1248,7 +1248,7 @@ describe('Tree Basic', () => {
             </TreeNode>
             <TreeNode key="0-1">
               <TreeNode key="0-1-0">
-                <TreeNode key="0-1-0-0" className="dropTarget"/>
+                <TreeNode key="0-1-0-0" className="dropTarget" />
               </TreeNode>
             </TreeNode>
           </Tree>,
@@ -1278,7 +1278,7 @@ describe('Tree Basic', () => {
           clientX: 550,
           clientY: 600,
         });
-        console.log('!!!dragOverPosition end')
+        console.log('!!!dragOverPosition end');
       });
       it('allowDrop no node', () => {
         const wrapper = mount(
@@ -1288,7 +1288,7 @@ describe('Tree Basic', () => {
             </TreeNode>
             <TreeNode key="0-1">
               <TreeNode key="0-1-0">
-                <TreeNode key="0-1-0-0" className="dropTarget"/>
+                <TreeNode key="0-1-0-0" className="dropTarget" />
               </TreeNode>
             </TreeNode>
           </Tree>,
@@ -1318,7 +1318,7 @@ describe('Tree Basic', () => {
           clientX: 550,
           clientY: 600,
         });
-        console.log('!!!dragOverPosition end')
+        console.log('!!!dragOverPosition end');
       });
       it('not allowDrop on node which has children', () => {
         const allowDrop = ({ node, dropPosition }) => {
@@ -1326,7 +1326,7 @@ describe('Tree Basic', () => {
             if (dropPosition === 0) return false;
           }
           return true;
-        }
+        };
         const wrapper = mount(
           <Tree draggable defaultExpandAll allowDrop={allowDrop}>
             <TreeNode key="0-0" className="dragTarget">
@@ -1334,11 +1334,10 @@ describe('Tree Basic', () => {
             </TreeNode>
             <TreeNode key="0-1">
               <TreeNode key="0-1-0">
-                <TreeNode key="0-1-0-0" className="dropTarget"/>
+                <TreeNode key="0-1-0-0" className="dropTarget" />
               </TreeNode>
             </TreeNode>
-            <TreeNode key="0-2">
-            </TreeNode>
+            <TreeNode key="0-2"></TreeNode>
           </Tree>,
         );
         console.log('!!!dragOverPosition');
@@ -1366,9 +1365,9 @@ describe('Tree Basic', () => {
           clientX: 550,
           clientY: 600,
         });
-        console.log('!!!dragOverPosition end')
+        console.log('!!!dragOverPosition end');
       });
-    })
+    });
   });
 
   it('renders without errors', () => {
