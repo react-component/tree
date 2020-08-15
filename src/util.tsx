@@ -132,7 +132,6 @@ export function calcDropPosition(
     })
   ) {
     // first half of first node in first level
-    console.log('dropposition === -1')
     dropPosition = -1
   } else if (
     dropLevelOffset === 0

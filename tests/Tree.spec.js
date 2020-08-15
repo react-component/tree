@@ -1418,6 +1418,27 @@ describe('Tree Basic', () => {
           clientY: -1000,
         });
         console.log('!!!dragOverPosition end4');
+      });
+      it('cov window dragend', () => {
+        const wrapper = mount(
+          <Tree draggable defaultExpandAll>
+            <TreeNode key="0-1" className="dropTarget">
+              <TreeNode key="0-1-0">
+                <TreeNode key="0-1-0-0" />
+              </TreeNode>
+            </TreeNode>
+            <TreeNode key="0-0" className="dragTargetParent">
+              <TreeNode key="0-0-0" className="dragTarget">
+                <TreeNode key="0-0-0-0" className="dragTargetChild" />
+              </TreeNode>
+            </TreeNode>
+          </Tree>,
+        );
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.unmount();
       })
     });
   });

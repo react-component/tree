@@ -292,6 +292,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   nodeInstances: Map<Key, NodeInstance> = new Map();
 
+  componentWillUnmount () {
+    window.removeEventListener('dragend', this.onWindowDragEnd);
+  }
+
   static getDerivedStateFromProps(props: TreeProps, prevState: TreeState) {
     const { prevProps } = prevState;
     const newState: Partial<TreeState> = {
@@ -650,14 +654,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
   onWindowDragEnd = event => {
     this.onNodeDragEnd(event, null, true);
     window.removeEventListener('dragend', this.onWindowDragEnd);
-  };
-
-  // since stopPropagation() is called in treeNode
-  // if onWindowDrop is called, it should apply drop too
-  // onWindowDrop fires before onWindowDragEnd
-  onWindowDrop = event => {
-    this.onNodeDrop(event, null, true);
-    window.removeEventListener('drop', this.onWindowDrop);
   };
 
   // if onNodeDragEnd is called, onWindowDragEnd won't be called since stopPropagation() is called
