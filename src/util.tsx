@@ -137,9 +137,6 @@ export function calcDropPosition(
       })) {
         dropPosition = 1;
       } else {
-        dropPosition = null;
-        dropLevelOffset = null;
-        abstractDropNodeEntity = null;
         dropAllowed = false;
       }
     } else {
@@ -161,9 +158,6 @@ export function calcDropPosition(
       })) {
         dropPosition = 1;
       } else {
-        dropPosition = null;
-        dropLevelOffset = null;
-        abstractDropNodeEntity = null;
         dropAllowed = false;
       }
     }
@@ -179,9 +173,6 @@ export function calcDropPosition(
     })) {
       dropPosition = 1;
     } else {
-      dropPosition = null;
-      dropLevelOffset = null;
-      abstractDropNodeEntity = null;
       dropAllowed = false;
     }
   }

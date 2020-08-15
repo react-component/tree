@@ -1238,6 +1238,137 @@ describe('Tree Basic', () => {
 
       it('target', () => dropTarget('div.dropTarget'));
     });
+
+    describe('not easy to test drag and drop', () => {
+      it('allowDrop all nodes', () => {
+        const wrapper = mount(
+          <Tree draggable defaultExpandAll>
+            <TreeNode key="0-0" className="dragTarget">
+              <TreeNode key="0-0-0" className="dragTargetChild" />
+            </TreeNode>
+            <TreeNode key="0-1">
+              <TreeNode key="0-1-0">
+                <TreeNode key="0-1-0-0" className="dropTarget"/>
+              </TreeNode>
+            </TreeNode>
+          </Tree>,
+        );
+        console.log('!!!dragOverPosition');
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 450,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 500,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 550,
+          clientY: 600,
+        });
+        console.log('!!!dragOverPosition end')
+      });
+      it('allowDrop no node', () => {
+        const wrapper = mount(
+          <Tree draggable defaultExpandAll allowDrop={() => false}>
+            <TreeNode key="0-0" className="dragTarget">
+              <TreeNode key="0-0-0" className="dragTargetChild" />
+            </TreeNode>
+            <TreeNode key="0-1">
+              <TreeNode key="0-1-0">
+                <TreeNode key="0-1-0-0" className="dropTarget"/>
+              </TreeNode>
+            </TreeNode>
+          </Tree>,
+        );
+        console.log('!!!dragOverPosition');
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 450,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 500,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 550,
+          clientY: 600,
+        });
+        console.log('!!!dragOverPosition end')
+      });
+      it('not allowDrop on node which has children', () => {
+        const allowDrop = ({ node, dropPosition }) => {
+          if (!node.children) {
+            if (dropPosition === 0) return false;
+          }
+          return true;
+        }
+        const wrapper = mount(
+          <Tree draggable defaultExpandAll allowDrop={allowDrop}>
+            <TreeNode key="0-0" className="dragTarget">
+              <TreeNode key="0-0-0" className="dragTargetChild" />
+            </TreeNode>
+            <TreeNode key="0-1">
+              <TreeNode key="0-1-0">
+                <TreeNode key="0-1-0-0" className="dropTarget"/>
+              </TreeNode>
+            </TreeNode>
+            <TreeNode key="0-2">
+            </TreeNode>
+          </Tree>,
+        );
+        console.log('!!!dragOverPosition');
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 450,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 500,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 550,
+          clientY: 600,
+        });
+        console.log('!!!dragOverPosition end')
+      });
+    })
   });
 
   it('renders without errors', () => {
