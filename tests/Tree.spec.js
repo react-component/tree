@@ -1183,7 +1183,7 @@ describe('Tree Basic', () => {
       function dropTarget(targetSelector) {
         return new Promise(resolve => {
           const wrapper = mount(
-            <Tree draggable defaultExpandAll>
+            <Tree draggable={() => true} defaultExpandAll>
               <TreeNode key="0-0" className="dragTarget">
                 <TreeNode key="0-0-0" className="dragTargetChild" />
               </TreeNode>
