@@ -1438,8 +1438,9 @@ describe('Tree Basic', () => {
           clientX: 500,
           clientY: 500,
         });
+        window.dispatchEvent(new Event('dragend'));
         wrapper.unmount();
-      })
+      });
     });
   });
 
