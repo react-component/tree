@@ -1183,7 +1183,7 @@ describe('Tree Basic', () => {
       function dropTarget(targetSelector) {
         return new Promise(resolve => {
           const wrapper = mount(
-            <Tree draggable={() => true} defaultExpandAll>
+            <Tree draggable={() => true} defaultExpandAll onExpand={() => {}}>
               <TreeNode key="0-0" className="dragTarget">
                 <TreeNode key="0-0-0" className="dragTargetChild" />
               </TreeNode>
@@ -1207,13 +1207,12 @@ describe('Tree Basic', () => {
             wrapper.find(targetSelector).simulate('dragEnter', { clientY: 0 });
             setTimeout(() => {
               wrapper.find(targetSelector).simulate('dragOver', { clientY: 999 });
-
               // 4. Drop
               wrapper.find(targetSelector).simulate('drop');
               wrapper.find('div.dragTarget').simulate('dragEnd');
 
               resolve();
-            }, 500);
+            }, 1000);
           }, 10);
         });
       }
@@ -1440,6 +1439,38 @@ describe('Tree Basic', () => {
         });
         window.dispatchEvent(new Event('dragend'));
         wrapper.unmount();
+      });
+      it('dragover self', () => {
+        const wrapper = mount(
+          <Tree draggable defaultExpandAll>
+            <TreeNode key="0-1" className="dropTarget">
+              <TreeNode key="0-1-0">
+                <TreeNode key="0-1-0-0" />
+              </TreeNode>
+            </TreeNode>
+            <TreeNode key="0-0" className="dragTargetParent">
+              <TreeNode key="0-0-0" className="dragTarget">
+                <TreeNode key="0-0-0-0" className="dragTargetChild" />
+              </TreeNode>
+            </TreeNode>
+          </Tree>,
+        );
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 400,
+          clientY: 500,
+        });
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 600,
+          clientY: 500,
+        });
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 600,
+          clientY: 500,
+        });
       });
     });
   });

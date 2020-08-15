@@ -292,7 +292,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   nodeInstances: Map<Key, NodeInstance> = new Map();
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('dragend', this.onWindowDragEnd);
   }
 
@@ -588,7 +588,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         if (
           !(
             this.state.dropPosition === null &&
-            this.state.dropLevelOffset === 0 &&
+            this.state.dropLevelOffset === null &&
             this.state.dropTargetKey === null &&
             this.state.dropContainerKey === null &&
             this.state.dropTargetPos === null &&
@@ -597,7 +597,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         ) {
           this.setState({
             dropPosition: null,
-            dropLevelOffset: 0,
+            dropLevelOffset: null,
             dropTargetKey: null,
             dropContainerKey: null,
             dropTargetPos: null,
