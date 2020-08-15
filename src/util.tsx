@@ -128,7 +128,7 @@ export function calcDropPosition(
     clientY < top + height / 2 &&
     allowDrop({
       node: abstractDropDataNode,
-      dropPosition: -1
+      dropPosition: -1,
     })
   ) {
     // first half of first node in first level
