@@ -700,10 +700,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     const dropToChild = dragChildrenKeys.indexOf(eventKey) !== -1;
 
-    warning(!dropToChild, "Can not drop to dragNode's children node");
-    if (dropToChild) {
-      return;
-    }
+    warning(
+      !dropToChild,
+      "Can not drop to dragNode's children node. This is a bug of rc-tree. Please report an issue.",
+    );
 
     const posArr = posToArr(dropTargetPos);
 
