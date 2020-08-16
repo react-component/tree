@@ -674,7 +674,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {
     const {
-      dragChildrenKeys = [],
+      dragChildrenKeys,
       dropPosition,
       dropTargetKey,
       dropTargetPos,

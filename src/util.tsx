@@ -118,8 +118,6 @@ export function calcDropPosition(
     }
   }
 
-  // TODO, for the very first item, set dropPosition to -1 on top half area
-
   const abstractDropDataNode = abstractDropNodeEntity.node
   let dropAllowed = true;
   if (

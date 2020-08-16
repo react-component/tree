@@ -1505,6 +1505,37 @@ describe('Tree Basic', () => {
         expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1');
         expect(onDrop.mock.calls[0][0].dropPosition).toEqual(-1);
       });
+      it('shouldn\'t drop on its direct parent', () => {
+        const onDrop = jest.fn();
+        const wrapper = mount(
+          <Tree draggable defaultExpandAll onDrop={onDrop}>
+            <TreeNode key="0-1" className="dropTarget">
+              <TreeNode key="0-1-0">
+                <TreeNode key="0-1-0-0" />
+              </TreeNode>
+            </TreeNode>
+            <TreeNode key="0-0" className="dragTargetParent">
+              <TreeNode key="0-0-0" className="dragTarget">
+                <TreeNode key="0-0-0-0" className="dragTargetChild" />
+              </TreeNode>
+            </TreeNode>
+          </Tree>,
+        );
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop).not.toHaveBeenCalled();
+      });
       it('cover window dragend & componentWillUnmount', () => {
         const wrapper = mount(
           <Tree draggable defaultExpandAll>
