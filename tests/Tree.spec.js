@@ -1238,10 +1238,11 @@ describe('Tree Basic', () => {
       it('target', () => dropTarget('div.dropTarget'));
     });
 
-    describe('not easy to test drag and drop', () => {
+    describe('new drop logic', () => {
       it('allowDrop all nodes', () => {
+        const onDrop = jest.fn();
         const wrapper = mount(
-          <Tree draggable defaultExpandAll>
+          <Tree draggable defaultExpandAll onDrop={onDrop}>
             <TreeNode key="0-0" className="dragTargetParent">
               <TreeNode key="0-0-0" className="dragTarget">
                 <TreeNode key="0-0-0-0" className="dragTargetChild" />
@@ -1252,9 +1253,9 @@ describe('Tree Basic', () => {
                 <TreeNode key="0-1-0-0" className="dropTarget" />
               </TreeNode>
             </TreeNode>
+            <TreeNode key="0-2"></TreeNode>
           </Tree>,
         );
-        console.log('!!!dragOverPosition1');
         wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
           clientX: 500,
           clientY: 500,
@@ -1267,54 +1268,72 @@ describe('Tree Basic', () => {
           clientX: 400,
           clientY: 600,
         });
-        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-          clientX: 450,
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1');
+        expect(onDrop.mock.calls[0][0].dropPosition).toEqual(2);
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 500,
           clientY: 600,
         });
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
           clientX: 500,
           clientY: 600,
         });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[1][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[1][0].dropPosition).toEqual(1);
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 550,
+          clientY: 600,
+        });
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
           clientX: 550,
           clientY: 600,
         });
-        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragEnter', {
-          clientX: 400,
-          clientY: 600,
-        });
-        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
-          clientX: 400,
-          clientY: 600,
-        });
-        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
-          clientX: 450,
-          clientY: 600,
-        });
-        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[2][0].dropPosition).toEqual(0);
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
           clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 600,
           clientY: 600,
         });
-        wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
-          clientX: 550,
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 600,
           clientY: 600,
         });
-        console.log('!!!dragOverPosition end1');
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[2][0].dropPosition).toEqual(0);
       });
       it('allowDrop no node', () => {
+        const onDrop = jest.fn();
         const wrapper = mount(
-          <Tree draggable defaultExpandAll allowDrop={() => false}>
-            <TreeNode key="0-0" className="dragTarget">
-              <TreeNode key="0-0-0" className="dragTargetChild" />
+          <Tree draggable defaultExpandAll onDrop={onDrop} allowDrop={() => false}>
+            <TreeNode key="0-0" className="dragTargetParent">
+              <TreeNode key="0-0-0" className="dragTarget">
+                <TreeNode key="0-0-0-0" className="dragTargetChild" />
+              </TreeNode>
             </TreeNode>
             <TreeNode key="0-1">
               <TreeNode key="0-1-0">
                 <TreeNode key="0-1-0-0" className="dropTarget" />
               </TreeNode>
             </TreeNode>
+            <TreeNode key="0-2"></TreeNode>
           </Tree>,
         );
-        console.log('!!!dragOverPosition2');
         wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
           clientX: 500,
           clientY: 500,
@@ -1327,21 +1346,53 @@ describe('Tree Basic', () => {
           clientX: 400,
           clientY: 600,
         });
-        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-          clientX: 450,
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop).not.toHaveBeenCalled();
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 500,
           clientY: 600,
         });
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
           clientX: 500,
           clientY: 600,
         });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop).not.toHaveBeenCalled();
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 550,
+          clientY: 600,
+        });
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
           clientX: 550,
           clientY: 600,
         });
-        console.log('!!!dragOverPosition end2');
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop).not.toHaveBeenCalled();
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 600,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 600,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop).not.toHaveBeenCalled();
       });
       it('not allowDrop on node which has children', () => {
+        const onDrop = jest.fn();
         const allowDrop = ({ node, dropPosition }) => {
           if (!node.children) {
             if (dropPosition === 0) return false;
@@ -1349,7 +1400,7 @@ describe('Tree Basic', () => {
           return true;
         };
         const wrapper = mount(
-          <Tree draggable defaultExpandAll allowDrop={allowDrop}>
+          <Tree draggable defaultExpandAll allowDrop={allowDrop} onDrop={onDrop}>
             <TreeNode key="0-0" className="dragTarget">
               <TreeNode key="0-0-0" className="dragTargetChild" />
             </TreeNode>
@@ -1361,7 +1412,6 @@ describe('Tree Basic', () => {
             <TreeNode key="0-2"></TreeNode>
           </Tree>,
         );
-        console.log('!!!dragOverPosition3');
         wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
           clientX: 500,
           clientY: 500,
@@ -1374,23 +1424,59 @@ describe('Tree Basic', () => {
           clientX: 400,
           clientY: 600,
         });
-        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-          clientX: 450,
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1');
+        expect(onDrop.mock.calls[0][0].dropPosition).toEqual(2);
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 500,
           clientY: 600,
         });
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
           clientX: 500,
           clientY: 600,
         });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[1][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[1][0].dropPosition).toEqual(1);
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 550,
+          clientY: 600,
+        });
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
           clientX: 550,
           clientY: 600,
         });
-        console.log('!!!dragOverPosition end3');
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[2][0].dropPosition).toEqual(1);
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 600,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 600,
+          clientY: 600,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[2][0].dropPosition).toEqual(1);
       });
       it('drop to top half of first node', () => {
+        const onDrop = jest.fn();
         const wrapper = mount(
-          <Tree draggable defaultExpandAll>
+          <Tree draggable defaultExpandAll onDrop={onDrop}>
             <TreeNode key="0-1" className="dropTarget">
               <TreeNode key="0-1-0">
                 <TreeNode key="0-1-0-0" />
@@ -1403,7 +1489,6 @@ describe('Tree Basic', () => {
             </TreeNode>
           </Tree>,
         );
-        console.log('!!!dragOverPosition4');
         wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
           clientX: 500,
           clientY: 500,
@@ -1416,9 +1501,11 @@ describe('Tree Basic', () => {
           clientX: 400,
           clientY: -1000,
         });
-        console.log('!!!dragOverPosition end4');
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1');
+        expect(onDrop.mock.calls[0][0].dropPosition).toEqual(-1);
       });
-      it('cov window dragend', () => {
+      it('cover window dragend & componentWillUnmount', () => {
         const wrapper = mount(
           <Tree draggable defaultExpandAll>
             <TreeNode key="0-1" className="dropTarget">
@@ -1438,11 +1525,13 @@ describe('Tree Basic', () => {
           clientY: 500,
         });
         window.dispatchEvent(new Event('dragend'));
+        expect(wrapper.instance().state.dragging).toEqual(false);
         wrapper.unmount();
       });
       it('dragover self', () => {
+        const onDrop = jest.fn();
         const wrapper = mount(
-          <Tree draggable defaultExpandAll>
+          <Tree draggable defaultExpandAll onDrop={onDrop}>
             <TreeNode key="0-1" className="dropTarget">
               <TreeNode key="0-1-0">
                 <TreeNode key="0-1-0-0" />
@@ -1471,6 +1560,8 @@ describe('Tree Basic', () => {
           clientX: 600,
           clientY: 500,
         });
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop).not.toHaveBeenCalled();
       });
     });
   });
