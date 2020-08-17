@@ -459,7 +459,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropTargetPos,
       dropAllowed,
     } = calcDropPosition(
-      event, 
+      event,
       node,
       indent,
       this.dragStartMousePosition,
