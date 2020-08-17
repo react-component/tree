@@ -17,7 +17,6 @@ import {
   getDataAndAria,
   getDragChildrenKeys,
   getDragParentKey,
-  getEntity,
   isFirstChild,
   parseCheckedKeys,
   conductExpandParent,
@@ -162,6 +161,7 @@ const DEFAULT_DROP_INDICATOR_RENDER = function dropIndicatorRender(
   indent: number,
 ) {
   const style: React.CSSProperties = {
+    pointerEvents: 'none',
     position: 'absolute',
   };
   if (dropPosition === -1) {
@@ -446,7 +446,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * But let's just keep it to avoid event trigger logic change.
    */
   onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { expandedKeys, keyEntities, dragChildrenKeys, dragParentKey } = this.state;
+    const { expandedKeys, keyEntities, dragChildrenKeys, dragParentKey, flattenNodes } = this.state;
     const { onDragEnter, onExpand, indent, allowDrop } = this.props;
     const { pos, eventKey } = node.props;
 
@@ -457,7 +457,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropTargetPos,
       dropAllowed,
-    } = calcDropPosition(event, node, indent, this.dragStartMousePosition, allowDrop);
+    } = calcDropPosition(event, node, indent, this.dragStartMousePosition, allowDrop, flattenNodes, keyEntities);
 
     if (
       !this.dragNode ||
@@ -466,7 +466,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       // don't allow drop inside its direct parent
       (dragParentKey !== null &&
         dragParentKey === eventKey &&
-        isFirstChild(getEntity(this.dragNode)) &&
+        isFirstChild(keyEntities[this.dragNode.props.eventKey]) &&
         dropLevelOffset === 0) ||
       // don't allow drop when drop is not allowed caculated by calcDropPosition
       !dropAllowed
@@ -554,7 +554,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { dragChildrenKeys, dragParentKey } = this.state;
+    const { dragChildrenKeys, dragParentKey, flattenNodes, keyEntities } = this.state;
     const { onDragOver, indent, allowDrop } = this.props;
     const { eventKey } = node.props;
 
@@ -565,14 +565,22 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropAllowed,
       dropTargetPos,
-    } = calcDropPosition(event, node, indent, this.dragStartMousePosition, allowDrop);
+    } = calcDropPosition(
+      event,
+      node,
+      indent,
+      this.dragStartMousePosition,
+      allowDrop,
+      flattenNodes,
+      keyEntities
+    );
 
     if (
       !this.dragNode ||
       dragChildrenKeys.indexOf(eventKey) !== -1 ||
       (dragParentKey !== null &&
         dragParentKey === eventKey &&
-        isFirstChild(getEntity(this.dragNode)) &&
+        isFirstChild(keyEntities[this.dragNode.props.eventKey]) &&
         dropLevelOffset === 0) ||
       !dropAllowed
     ) {

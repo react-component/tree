@@ -1505,7 +1505,7 @@ describe('Tree Basic', () => {
         expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1');
         expect(onDrop.mock.calls[0][0].dropPosition).toEqual(-1);
       });
-      it('shouldn\'t drop on its direct parent', () => {
+      it("shouldn't drop on its direct parent", () => {
         const onDrop = jest.fn();
         const wrapper = mount(
           <Tree draggable defaultExpandAll onDrop={onDrop}>
@@ -1594,6 +1594,44 @@ describe('Tree Basic', () => {
         wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('drop');
         expect(onDrop).not.toHaveBeenCalled();
       });
+      it('dragover first half of non-first child', () => {
+        const { getBoundingClientRect } = Element.prototype;
+        Element.prototype.getBoundingClientRect = jest.fn(() => ({
+          width: 100,
+          height: 20,
+          top: 0,
+          left: 0,
+          bottom: 20,
+          right: 100,
+        }));
+        const onDrop = jest.fn();
+        const wrapper = mount(
+          <Tree draggable defaultExpandAll onDrop={onDrop}>
+            <TreeNode key="0-0" className="dragTargetParent">
+              <TreeNode key="0-0-0" className="dragTarget">
+                <TreeNode key="0-0-0-0" className="dragTargetChild" />
+              </TreeNode>
+              <TreeNode key="0-0-1" className="dropTarget"></TreeNode>
+            </TreeNode>
+          </Tree>,
+        );
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 500,
+          clientY: 1,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 500,
+          clientY: 1,
+        });
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+        expect(onDrop.mock.calls[0][0].node.key).toEqual('0-0-0');
+        expect(onDrop.mock.calls[0][0].dropPosition).toEqual(1);
+        Element.prototype.getBoundingClientRect = getBoundingClientRect;
+      })
     });
   });
 

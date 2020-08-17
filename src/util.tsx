@@ -6,7 +6,7 @@
 import React from 'react';
 import warning from 'rc-util/lib/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance } from './interface';
+import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance, FlattenNode } from './interface';
 import { TreeProps, AllowDrop } from './Tree';
 
 export function arrDel(list: Key[], value: Key) {
@@ -61,10 +61,6 @@ export function getDragParentKey(dragNodeKey: Key, keyEntities: Record<Key, Data
   return entity?.parent?.key || null;
 }
 
-export function getEntity (treeNode: NodeInstance): DataEntity {
-  return ((treeNode.props as any).context.keyEntities as any)[treeNode.props.eventKey];
-}
-
 export function isLastChild (treeNodeEntity: DataEntity) {
   if (treeNodeEntity.parent) {
     const posArr = posToArr(treeNodeEntity.pos);
@@ -88,6 +84,8 @@ export function calcDropPosition(
     y: number,
   },
   allowDrop: AllowDrop,
+  flattenedNodes: FlattenNode[],
+  keyEntities: Record<Key, DataEntity>
 ) : {
   dropPosition: -1 | 0 | 1,
   dropLevelOffset: number,
@@ -103,7 +101,18 @@ export function calcDropPosition(
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
   // find abstract drop node by horizontal offset
-  let abstractDropNodeEntity: DataEntity = getEntity(targetNode);
+  let abstractDropNodeEntity: DataEntity = keyEntities[targetNode.props.eventKey];
+
+  if (clientY < top + height / 2) {
+    // first half, set abstract drop node to previous node
+    const nodeIndex = flattenedNodes.findIndex(flattenedNode => {
+      return flattenedNode.data.key === abstractDropNodeEntity.key
+    });
+    const prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
+    const prevNodeKey = flattenedNodes[prevNodeIndex].data.key;
+    abstractDropNodeEntity = keyEntities[prevNodeKey];
+  }
+
   let dropPosition: -1 | 0 | 1 = 0;
   let dropLevelOffset = 0;
   for (let i = 0; i < rawDropLevelOffset; i += 1) {
