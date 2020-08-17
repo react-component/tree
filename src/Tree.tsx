@@ -471,10 +471,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (
       !dragNode ||
       // don't allow drop inside its children
-      dragChildrenKeys.indexOf(eventKey) !== -1 ||
+      dragChildrenKeys.indexOf(dropTargetKey) !== -1 ||
       // don't allow drop inside its direct parent
       (dragParentKey !== null &&
-        dragParentKey === eventKey &&
+        dragParentKey === dropTargetKey &&
         isFirstChild(keyEntities[dragNode.props.eventKey]) &&
         dropLevelOffset === 0) ||
       // don't allow drop when drop is not allowed caculated by calcDropPosition
@@ -504,7 +504,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     });
 
     // Skip if drag node is self
-    if (dragNode.props.eventKey === eventKey && dropLevelOffset === 0) {
+    if (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0) {
       this.setState({
         dragOverNodeKey: eventKey,
         dropPosition: null,
@@ -587,9 +587,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     if (
       !dragNode ||
-      dragChildrenKeys.indexOf(eventKey) !== -1 ||
+      dragChildrenKeys.indexOf(dropTargetKey) !== -1 ||
       (dragParentKey !== null &&
-        dragParentKey === eventKey &&
+        dragParentKey === dropTargetKey &&
         isFirstChild(keyEntities[dragNode.props.eventKey]) &&
         dropLevelOffset === 0) ||
       !dropAllowed
@@ -602,7 +602,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Update drag position
     if (eventKey === this.state.dragOverNodeKey) {
-      if (dragNode.props.eventKey === eventKey && dropLevelOffset === 0) {
+      if (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0) {
         if (
           !(
             this.state.dropPosition === null &&
