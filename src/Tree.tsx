@@ -507,6 +507,36 @@ class Tree extends React.Component<TreeProps, TreeState> {
       clearTimeout(this.delayedDragEnterLogic[key]);
     });
 
+    if (dragNode.props.eventKey !== node.props.eventKey) {
+      // hoist expand logic here
+      // since if logic is on the bottom
+      // it will be blocked by abstract dragover node check
+      //   => if you dragenter from top, you mouse will still be consider as in the top node
+      event.persist();
+      this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
+        if (!this.state.dragging) return;
+
+        let newExpandedKeys = [...expandedKeys];
+        const entity = keyEntities[node.props.eventKey];
+
+        if (entity && (entity.children || []).length) {
+          newExpandedKeys = arrAdd(expandedKeys, node.props.eventKey);
+        }
+
+        if (!('expandedKeys' in this.props)) {
+          this.setExpandedKeys(newExpandedKeys);
+        }
+
+        if (onExpand) {
+          onExpand(newExpandedKeys, {
+            node: convertNodePropsToEventData(node.props),
+            expanded: true,
+            nativeEvent: event.nativeEvent,
+          });
+        }
+      }, 800);
+    }
+
     // Skip if drag node is self
     if (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0) {
       this.setState({
@@ -541,31 +571,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
         expandedKeys,
       });
     }
-
-    event.persist();
-
-    this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
-      if (!this.state.dragging) return;
-
-      let newExpandedKeys = [...expandedKeys];
-      const entity = keyEntities[eventKey];
-
-      if (entity && (entity.children || []).length) {
-        newExpandedKeys = arrAdd(expandedKeys, eventKey);
-      }
-
-      if (!('expandedKeys' in this.props)) {
-        this.setExpandedKeys(newExpandedKeys);
-      }
-
-      if (onExpand) {
-        onExpand(newExpandedKeys, {
-          node: convertNodePropsToEventData(node.props),
-          expanded: true,
-          nativeEvent: event.nativeEvent,
-        });
-      }
-    }, 800);
   };
 
   onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
