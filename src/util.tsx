@@ -85,7 +85,7 @@ export function calcDropPosition(
   },
   allowDrop: AllowDrop,
   flattenedNodes: FlattenNode[],
-  keyEntities: Record<Key, DataEntity>
+  keyEntities: Record<Key, DataEntity>,
 ) : {
   dropPosition: -1 | 0 | 1,
   dropLevelOffset: number,
@@ -136,7 +136,8 @@ export function calcDropPosition(
     allowDrop({
       node: abstractDropDataNode,
       dropPosition: -1,
-    })
+    }) &&
+    abstractDropNodeEntity.key === targetNode.props.eventKey
   ) {
     // first half of first node in first level
     dropPosition = -1
