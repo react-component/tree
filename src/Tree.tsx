@@ -601,7 +601,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     // Update drag position
-    if (dragNode && eventKey === this.state.dragOverNodeKey) {
+    if (eventKey === this.state.dragOverNodeKey) {
       if (dragNode.props.eventKey === eventKey && dropLevelOffset === 0) {
         if (
           !(
