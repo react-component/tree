@@ -207,6 +207,7 @@ interface TreeState {
   dropTargetKey: Key | null;
   dropTargetPos: string | null;
   dropAllowed: boolean;
+  abstractDragOverKey: Key | null;
 
   treeData: DataNode[];
   flattenNodes: FlattenNode[];
@@ -267,6 +268,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     dropLevelOffset: null,
     dropTargetPos: null,
     dropAllowed: true,
+    abstractDragOverKey: null,
 
     treeData: [],
     flattenNodes: [],
@@ -458,6 +460,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropTargetPos,
       dropAllowed,
+      abstractDragOverKey,
     } = calcDropPosition(
       event,
       node,
@@ -488,6 +491,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropContainerKey: null,
         dropTargetPos: null,
         dropAllowed: false,
+        abstractDragOverKey: null
       });
       return;
     }
@@ -513,6 +517,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropContainerKey: null,
         dropTargetPos: null,
         dropAllowed: false,
+        abstractDragOverKey: null,
       });
       return;
     }
@@ -526,6 +531,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropTargetPos,
       dropAllowed,
+      abstractDragOverKey,
     });
 
     if (onDragEnter) {
@@ -575,6 +581,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropAllowed,
       dropTargetPos,
+      abstractDragOverKey
     } = calcDropPosition(
       event,
       node,
@@ -610,7 +617,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
             this.state.dropTargetKey === null &&
             this.state.dropContainerKey === null &&
             this.state.dropTargetPos === null &&
-            this.state.dropAllowed === false
+            this.state.dropAllowed === false &&
+            this.state.abstractDragOverKey === null
           )
         ) {
           this.setState({
@@ -620,6 +628,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             dropContainerKey: null,
             dropTargetPos: null,
             dropAllowed: false,
+            abstractDragOverKey: null
           });
         }
       } else if (
@@ -629,7 +638,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dropTargetKey === this.state.dropTargetKey &&
           dropContainerKey === this.state.dropContainerKey &&
           dropTargetPos === this.state.dropTargetPos &&
-          dropAllowed === this.state.dropAllowed
+          dropAllowed === this.state.dropAllowed &&
+          abstractDragOverKey === this.state.abstractDragOverKey
         )
       ) {
         this.setState({
@@ -639,6 +649,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dropContainerKey,
           dropTargetPos,
           dropAllowed,
+          abstractDragOverKey,
         });
       }
     }
@@ -751,6 +762,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropTargetKey: null,
         dropLevelOffset: null,
         dropAllowed: true,
+        abstractDragOverKey: null,
       });
     }
     this.dragStartMousePosition = null;
@@ -1262,6 +1274,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropTargetKey,
       dropPosition,
+      abstractDragOverKey
     } = this.state;
     const {
       prefixCls,
@@ -1309,6 +1322,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dropContainerKey,
           dropTargetKey,
           dropPosition,
+          abstractDragOverKey,
           indent,
           dropIndicatorRender,
 

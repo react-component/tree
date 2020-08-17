@@ -92,6 +92,7 @@ export function calcDropPosition(
   dropTargetKey: Key,
   dropTargetPos: string,
   dropContainerKey: Key,
+  abstractDragOverKey: Key,
   dropAllowed: boolean,
 } {
   const { clientX, clientY } = event;
@@ -112,6 +113,8 @@ export function calcDropPosition(
     const prevNodeKey = flattenedNodes[prevNodeIndex].data.key;
     abstractDropNodeEntity = keyEntities[prevNodeKey];
   }
+
+  const abstractDragOverKey = abstractDropNodeEntity.key;
 
   let dropPosition: -1 | 0 | 1 = 0;
   let dropLevelOffset = 0;
@@ -200,6 +203,7 @@ export function calcDropPosition(
     dropLevelOffset,
     dropTargetKey: abstractDropNodeEntity.key,
     dropTargetPos: abstractDropNodeEntity.pos,
+    abstractDragOverKey,
     dropContainerKey: dropPosition === 0 ? null : (abstractDropNodeEntity.parent?.key || null),
     dropAllowed,
   };

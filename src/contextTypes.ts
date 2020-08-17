@@ -47,6 +47,7 @@ export interface TreeContextProps {
     indent,
     prefixCls,
   ) => React.ReactNode;
+  abstractDragOverKey: Key | null;
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode) => boolean;
