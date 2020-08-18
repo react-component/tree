@@ -469,6 +469,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop,
       flattenNodes,
       keyEntities,
+      expandedKeys,
     );
 
     if (
@@ -574,7 +575,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { dragChildrenKeys, dragParentKey, flattenNodes, keyEntities } = this.state;
+    const { dragChildrenKeys, dragParentKey, flattenNodes, keyEntities, expandedKeys } = this.state;
     const { onDragOver, indent, allowDrop } = this.props;
     const { eventKey } = node.props;
     const { dragNode } = this;
@@ -595,6 +596,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop,
       flattenNodes,
       keyEntities,
+      expandedKeys,
     );
 
     if (

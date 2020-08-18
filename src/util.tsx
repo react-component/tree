@@ -86,6 +86,7 @@ export function calcDropPosition(
   allowDrop: AllowDrop,
   flattenedNodes: FlattenNode[],
   keyEntities: Record<Key, DataEntity>,
+  expandKeys: Key[],
 ) : {
   dropPosition: -1 | 0 | 1,
   dropLevelOffset: number,
@@ -114,6 +115,7 @@ export function calcDropPosition(
     abstractDropNodeEntity = keyEntities[prevNodeKey];
   }
 
+  const abstractDragOverEntity = abstractDropNodeEntity;
   const abstractDragOverKey = abstractDropNodeEntity.key;
 
   let dropPosition: -1 | 0 | 1 = 0;
@@ -143,6 +145,20 @@ export function calcDropPosition(
   ) {
     // first half of first node in first level
     dropPosition = -1
+  } else if (
+    (abstractDragOverEntity.children || []).length &&
+    expandKeys.includes(abstractDragOverKey)
+  ) {
+    // drop on expanded node
+    // only allow drop inside
+    if (allowDrop({
+      node: abstractDropDataNode,
+      dropPosition: 0,
+    })) {
+      dropPosition = 0;
+    } else {
+      dropAllowed = false
+    }
   } else if (
     dropLevelOffset === 0
   ) {

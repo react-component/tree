@@ -1344,13 +1344,28 @@ describe('Tree Basic', () => {
               </TreeNode>
             </TreeNode>
             <TreeNode key="0-1">
-              <TreeNode key="0-1-0">
+              <TreeNode key="0-1-0" className="dropTargetParent">
                 <TreeNode key="0-1-0-0" className="dropTarget" />
               </TreeNode>
             </TreeNode>
             <TreeNode key="0-2"></TreeNode>
           </Tree>,
         );
+        wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+          clientX: 500,
+          clientY: 500,
+        });
+        wrapper.find('.dropTargetParent > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dropTargetParent > .rc-tree-node-content-wrapper').simulate('dragOver', {
+          clientX: 400,
+          clientY: 600,
+        });
+        wrapper.find('.dropTargetParent > .rc-tree-node-content-wrapper').simulate('drop');
+        // not allow any dropPosition except 0 on expanded node
+        expect(onDrop).not.toHaveBeenCalled();
         wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
           clientX: 500,
           clientY: 500,
