@@ -120,8 +120,7 @@ export function calcDropPosition(
   let dropLevelOffset = 0;
   for (let i = 0; i < rawDropLevelOffset; i += 1) {
     if (
-      isLastChild(abstractDropNodeEntity) ||
-      (abstractDropNodeEntity.parent && i === 0)
+      isLastChild(abstractDropNodeEntity)
     ) {
       abstractDropNodeEntity = abstractDropNodeEntity.parent;
       dropLevelOffset += 1;
