@@ -187,6 +187,8 @@ const DEFAULT_DROP_INDICATOR_RENDER = function dropIndicatorRender(
 interface TreeState {
   keyEntities: Record<Key, DataEntity>;
 
+  indent: number | null;
+
   selectedKeys: Key[];
   checkedKeys: Key[];
   halfCheckedKeys: Key[];
@@ -247,6 +249,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
   state: TreeState = {
     keyEntities: {},
 
+    indent: null,
+
     selectedKeys: [],
     checkedKeys: [],
     halfCheckedKeys: [],
@@ -286,8 +290,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
   dragStartMousePosition = null;
 
   dragNode: NodeInstance;
-
-  indent: number | null = null;
 
   listRef = React.createRef<NodeListRef>();
 
@@ -421,7 +423,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       x: event.clientX,
       y: event.clientY,
     };
-    this.indent = (node as InternalTreeNode).getIndentWidth();
 
     const newExpandedKeys = arrDel(expandedKeys, eventKey);
 
@@ -429,6 +430,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragging: true,
       dragChildrenKeys: getDragChildrenKeys(eventKey, keyEntities),
       dragParentKey: getDragParentKey(eventKey, keyEntities),
+      indent: (node as InternalTreeNode).getIndentWidth(),
     });
 
     this.setExpandedKeys(newExpandedKeys);
@@ -448,10 +450,17 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * But let's just keep it to avoid event trigger logic change.
    */
   onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { expandedKeys, keyEntities, dragChildrenKeys, dragParentKey, flattenNodes } = this.state;
+    const {
+      expandedKeys,
+      keyEntities,
+      dragChildrenKeys,
+      dragParentKey,
+      flattenNodes,
+      indent,
+    } = this.state;
     const { onDragEnter, onExpand, allowDrop } = this.props;
     const { pos, eventKey } = node.props;
-    const { dragNode, indent } = this;
+    const { dragNode } = this;
 
     const {
       dropPosition,
@@ -575,10 +584,17 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
-    const { dragChildrenKeys, dragParentKey, flattenNodes, keyEntities, expandedKeys } = this.state;
+    const {
+      dragChildrenKeys,
+      dragParentKey,
+      flattenNodes,
+      keyEntities,
+      expandedKeys,
+      indent,
+    } = this.state;
     const { onDragOver, allowDrop } = this.props;
     const { eventKey } = node.props;
-    const { dragNode, indent } = this;
+    const { dragNode } = this;
 
     const {
       dropPosition,
@@ -1282,6 +1298,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropTargetKey,
       dropPosition,
       abstractDragOverKey,
+      indent,
     } = this.state;
     const {
       prefixCls,
@@ -1307,7 +1324,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       titleRender,
       dropIndicatorRender,
     } = this.props;
-    const { nodeInstances, indent } = this;
+    const { nodeInstances } = this;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
     return (
