@@ -40,7 +40,7 @@ export interface TreeContextProps {
   dropContainerKey: Key | null;
   dropTargetKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
-  indent: number;
+  indent: number | null;
   dropIndicatorRender: (
     dropPosition: -1 | 0 | 1,
     levelAscended: number,
