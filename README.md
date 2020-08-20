@@ -95,7 +95,6 @@ see examples
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 | virtual | Disable virtual scroll when `false` | boolean | - |
 | allowDrop | whether to allow drop on node | ({ node, dropPosition }) => boolean | - |
-| indent | indent of tree node | number | 24 |
 
 ### TreeNode props
 
