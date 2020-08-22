@@ -195,6 +195,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   static TreeNode = TreeNode;
 
+  destroyed: boolean = false;
+
   delayedDragEnterLogic: Record<Key, number>;
 
   state: TreeState = {
@@ -339,6 +341,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     return newState;
+  }
+
+  componentWillUnmount() {
+    this.destroyed = true;
   }
 
   onNodeDragStart: NodeDragEventHandler = (event, node) => {
@@ -997,6 +1003,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
     atomic: boolean = false,
     forceState: Partial<TreeState> | null = null,
   ) => {
+    if (this.destroyed) {
+      return;
+    }
+
     let needSync = false;
     let allPassed = true;
     const newState = {};
