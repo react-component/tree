@@ -88,7 +88,11 @@ export interface TreeProps {
   selectedKeys?: Key[];
   allowDrop?: AllowDrop;
   titleRender?: (node: DataNode) => React.ReactNode;
-  dropIndicatorRender?: (dropPosition: -1 | 0 | 1, levelAscended: number) => React.ReactNode;
+  dropIndicatorRender?: (
+    dropPosition: -1 | 0 | 1,
+    dropLevelOffset: number,
+    indent: number,
+  ) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
