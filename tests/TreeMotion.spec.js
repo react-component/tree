@@ -104,17 +104,42 @@ describe('Tree Motion', () => {
     jest.useRealTimers();
   });
 
-  it('MotionTreeNode should always trigger motion end', () => {
-    const onMotionEnd = jest.fn();
-    const wrapper = mount(
-      <TreeContext.Provider value={{ prefixCls: 'test' }}>
-        <MotionTreeNode motionNodes={[]} onMotionEnd={onMotionEnd} />
-      </TreeContext.Provider>,
-    );
+  describe('MotionTreeNode should always trigger motion end', () => {
+    it('with motionNodes', () => {
+      const onMotionStart = jest.fn();
+      const onMotionEnd = jest.fn();
+      const wrapper = mount(
+        <TreeContext.Provider value={{ prefixCls: 'test' }}>
+          <MotionTreeNode
+            motionNodes={[]}
+            onMotionStart={onMotionStart}
+            onMotionEnd={onMotionEnd}
+          />
+        </TreeContext.Provider>,
+      );
 
-    expect(onMotionEnd).not.toHaveBeenCalled();
+      expect(onMotionStart).toHaveBeenCalled();
+      expect(onMotionEnd).not.toHaveBeenCalled();
 
-    wrapper.unmount();
-    expect(onMotionEnd).toHaveBeenCalled();
+      wrapper.unmount();
+      expect(onMotionEnd).toHaveBeenCalled();
+    });
+
+    it('without motionNodes', () => {
+      const onMotionStart = jest.fn();
+      const onMotionEnd = jest.fn();
+      const wrapper = mount(
+        <TreeContext.Provider value={{ prefixCls: 'test', keyEntities: {} }}>
+          <MotionTreeNode onMotionStart={onMotionStart} onMotionEnd={onMotionEnd} isEnd={[false]} />
+        </TreeContext.Provider>,
+      );
+
+      expect(onMotionStart).not.toHaveBeenCalled();
+      expect(onMotionEnd).not.toHaveBeenCalled();
+
+      wrapper.unmount();
+      expect(onMotionStart).not.toHaveBeenCalled();
+      expect(onMotionEnd).not.toHaveBeenCalled();
+    });
   });
 });

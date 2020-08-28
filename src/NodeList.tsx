@@ -229,11 +229,6 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         setTransitionRange(rangeNodes);
         setMotionType('hide');
       }
-
-      // Trigger when `motion` provided
-      if (motion) {
-        onListChangeStart();
-      }
     } else if (prevData !== data) {
       // If whole data changed, we just refresh the list
       setPrevData(data);
@@ -318,6 +313,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
               motion={motion}
               motionNodes={key === MOTION_KEY ? transitionRange : null}
               motionType={motionType}
+              onMotionStart={onListChangeStart}
               onMotionEnd={onMotionEnd}
               treeNodeRequiredProps={treeNodeRequiredProps}
               onMouseMove={() => {
