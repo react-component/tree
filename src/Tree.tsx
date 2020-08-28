@@ -165,25 +165,25 @@ const DEFAULT_DROP_INDICATOR_RENDER = function dropIndicatorRender(
   const style: React.CSSProperties = {
     pointerEvents: 'none',
     position: 'absolute',
+    right: 0,
+    backgroundColor: 'red',
+    height: 2,
   };
-  if (dropPosition === -1) {
-    style.top = 0;
-    style.height = 2;
-    style.right = 0;
-    style.backgroundColor = 'red';
-    style.left = -dropLevelOffset * indent;
-  } else if (dropPosition === 1) {
-    style.bottom = 0;
-    style.height = 2;
-    style.right = 0;
-    style.backgroundColor = 'red';
-    style.left = -dropLevelOffset * indent;
-  } else {
-    style.bottom = 0;
-    style.height = 2;
-    style.right = 0;
-    style.backgroundColor = 'red';
-    style.left = indent;
+  switch (dropPosition) {
+    case -1:
+      style.top = 0;
+      style.left = -dropLevelOffset * indent;
+      break;
+    case 1:
+      style.bottom = 0;
+      style.left = -dropLevelOffset * indent;
+      break;
+    case 0:
+      style.bottom = 0;
+      style.left = indent;
+      break;
+    default:
+      break;
   }
   return <div style={style} />;
 };
