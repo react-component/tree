@@ -11,6 +11,7 @@ interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;
   motion?: any;
   motionNodes?: FlattenNode[];
+  onMotionStart: () => void;
   onMotionEnd: () => void;
   motionType?: 'show' | 'hide';
 
@@ -24,6 +25,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     motion,
     motionNodes,
     motionType,
+    onMotionStart: onOriginMotionStart,
     onMotionEnd: onOriginMotionEnd,
     active,
     treeNodeRequiredProps,
@@ -49,14 +51,18 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     }
   }, [motionNodes]);
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    // Trigger motion only when patched
+    if (motionNodes) {
+      onOriginMotionStart();
+    }
+
+    return () => {
       if (motionNodes) {
         onMotionEnd();
       }
-    },
-    [],
-  );
+    };
+  }, []);
 
   if (motionNodes) {
     return (
