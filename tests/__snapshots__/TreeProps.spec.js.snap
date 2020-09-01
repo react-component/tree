@@ -25,6 +25,15 @@ exports[`Tree Props checkStrictly 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -52,8 +61,11 @@ exports[`Tree Props checkStrictly 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -107,6 +119,15 @@ exports[`Tree Props checkable default 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -134,8 +155,11 @@ exports[`Tree Props checkable default 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -189,6 +213,15 @@ exports[`Tree Props checkable without selectable 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -216,8 +249,11 @@ exports[`Tree Props checkable without selectable 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -271,6 +307,15 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           />
           <span
@@ -290,6 +335,15 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
         <div
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
+          <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
           <span
             class="rc-tree-switcher rc-tree-switcher_open"
           >
@@ -319,8 +373,11 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -348,8 +405,11 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -400,6 +460,15 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           >
             <span>
@@ -423,6 +492,15 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
         <div
           class="rc-tree-treenode rc-tree-treenode-switcher-open"
         >
+          <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
           <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           >
@@ -448,6 +526,15 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -472,8 +559,11 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              style="width:24px"
             />
           </span>
           <span
@@ -505,8 +595,11 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-end"
-              style="width:24px"
             />
           </span>
           <span
@@ -533,6 +626,15 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
         <div
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
+          <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
           <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           >
@@ -639,6 +741,15 @@ exports[`Tree Props defaultExpandAll 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -663,8 +774,11 @@ exports[`Tree Props defaultExpandAll 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -716,6 +830,15 @@ exports[`Tree Props disabled basic 1`] = `
           class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           />
           <span
@@ -764,6 +887,15 @@ exports[`Tree Props disabled treeNode should disabled when tree disabled 1`] = `
           class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           />
           <span
@@ -811,6 +943,15 @@ exports[`Tree Props icon 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -839,8 +980,11 @@ exports[`Tree Props icon 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -895,6 +1039,15 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -922,8 +1075,11 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -977,6 +1133,15 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -1004,8 +1169,11 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -1059,6 +1227,15 @@ exports[`Tree Props loadData basic 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -1080,8 +1257,11 @@ exports[`Tree Props loadData basic 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -1129,6 +1309,15 @@ exports[`Tree Props multiple 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -1153,8 +1342,11 @@ exports[`Tree Props multiple 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -1257,6 +1449,15 @@ exports[`Tree Props selectable with selectable 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -1281,8 +1482,11 @@ exports[`Tree Props selectable with selectable 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -1333,6 +1537,15 @@ exports[`Tree Props selectable without selectable 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
           <span
@@ -1357,8 +1570,11 @@ exports[`Tree Props selectable without selectable 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width:24px"
             />
           </span>
           <span
@@ -1409,6 +1625,15 @@ exports[`Tree Props showIcon 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-close"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_close"
           />
           <span
@@ -1428,6 +1653,15 @@ exports[`Tree Props showIcon 1`] = `
         <div
           class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
         >
+          <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
           <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           />
@@ -1476,6 +1710,15 @@ exports[`Tree Props showIcon 2`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-close"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher_close"
           />
           <span
@@ -1492,6 +1735,15 @@ exports[`Tree Props showIcon 2`] = `
         <div
           class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
         >
+          <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
           <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           />
@@ -1542,7 +1794,10 @@ exports[`Tree Props showIcon 3`] = `
           >
             <span
               class="rc-tree-indent-unit"
-              style="width:24px"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
+              class="rc-tree-indent-unit"
             />
           </span>
           <span
@@ -1570,8 +1825,11 @@ exports[`Tree Props showIcon 3`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              style="width:24px"
             />
           </span>
           <span
@@ -1599,12 +1857,14 @@ exports[`Tree Props showIcon 3`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              style="width:24px"
             />
             <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
-              style="width:24px"
             />
           </span>
           <span
@@ -1632,8 +1892,11 @@ exports[`Tree Props showIcon 3`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-end"
-              style="width:24px"
             />
           </span>
           <span
@@ -1656,6 +1919,15 @@ exports[`Tree Props showIcon 3`] = `
         <div
           class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
         >
+          <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position:absolute;pointer-events:none;visibility:hidden"
+            />
+          </span>
           <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           />
@@ -1730,6 +2002,15 @@ exports[`Tree Props treeData 1`] = `
           class="rc-tree-treenode rc-tree-treenode-switcher-open"
         >
           <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+          </span>
+          <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           />
           <span
@@ -1749,6 +2030,15 @@ exports[`Tree Props treeData 1`] = `
         <div
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
+          <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+          </span>
           <span
             class="rc-tree-switcher rc-tree-switcher_open"
           />
@@ -1774,8 +2064,11 @@ exports[`Tree Props treeData 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -1803,8 +2096,11 @@ exports[`Tree Props treeData 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -1832,12 +2128,14 @@ exports[`Tree Props treeData 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
             <span
               class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -1865,12 +2163,14 @@ exports[`Tree Props treeData 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
             <span
               class="rc-tree-indent-unit rc-tree-indent-unit-end"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -1898,8 +2198,11 @@ exports[`Tree Props treeData 1`] = `
             class="rc-tree-indent"
           >
             <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+            <span
               class="rc-tree-indent-unit rc-tree-indent-unit-end rc-tree-indent-unit-end-first-level"
-              style="width: 24px;"
             />
           </span>
           <span
@@ -1949,6 +2252,15 @@ exports[`Tree Props treeData 2`] = `
         <div
           class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
         >
+          <span
+            aria-hidden="true"
+            class="rc-tree-indent"
+          >
+            <span
+              class="rc-tree-indent-unit"
+              style="position: absolute; pointer-events: none; visibility: hidden;"
+            />
+          </span>
           <span
             class="rc-tree-switcher rc-tree-switcher-noop"
           />

@@ -1230,6 +1230,15 @@ describe('Tree Basic', () => {
           bottom: 20,
           right: 100,
         }));
+        Object.defineProperties(window.HTMLElement.prototype, {
+          // mock indent as 24
+          // no need for clearing it, since jest make each file a independent env
+          offsetWidth: {
+            get() {
+              return 24;
+            },
+          },
+        });
       });
 
       afterEach(() => {
