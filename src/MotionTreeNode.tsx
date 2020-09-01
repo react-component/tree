@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 import TreeNode, { TreeNodeProps } from './TreeNode';
@@ -10,6 +11,7 @@ interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;
   motion?: any;
   motionNodes?: FlattenNode[];
+  onMotionStart: () => void;
   onMotionEnd: () => void;
   motionType?: 'show' | 'hide';
 
@@ -23,6 +25,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     motion,
     motionNodes,
     motionType,
+    onMotionStart: onOriginMotionStart,
     onMotionEnd: onOriginMotionEnd,
     active,
     treeNodeRequiredProps,
@@ -42,20 +45,24 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     motionedRef.current = true;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (motionNodes && motionType === 'hide' && visible) {
       setVisible(false);
     }
   }, [motionNodes]);
 
-  React.useEffect(
-    () => () => {
+  useEffect(() => {
+    // Trigger motion only when patched
+    if (motionNodes) {
+      onOriginMotionStart();
+    }
+
+    return () => {
       if (motionNodes) {
         onMotionEnd();
       }
-    },
-    [],
-  );
+    };
+  }, []);
 
   if (motionNodes) {
     return (
