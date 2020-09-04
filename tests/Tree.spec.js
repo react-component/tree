@@ -1785,6 +1785,9 @@ describe('Tree Basic', () => {
             called = true;
           },
         },
+        clientHeight: {
+          get: () => 23,
+        },
       });
     });
 
