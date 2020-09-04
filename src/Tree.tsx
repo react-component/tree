@@ -183,8 +183,6 @@ const DEFAULT_DROP_INDICATOR_RENDER = function dropIndicatorRender(
       style.bottom = 0;
       style.left = indent;
       break;
-    default:
-      break;
   }
   return <div style={style} />;
 };
