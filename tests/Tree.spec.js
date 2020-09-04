@@ -1220,30 +1220,36 @@ describe('Tree Basic', () => {
           }, 10);
         });
       }
-
-      const { getBoundingClientRect } = Element.prototype;
+      let domSpy;
       beforeEach(() => {
-        Element.prototype.getBoundingClientRect = jest.fn(() => ({
-          width: 100,
-          height: 20,
-          top: 0,
-          left: 0,
-          bottom: 20,
-          right: 100,
-        }));
-        Object.defineProperties(window.HTMLElement.prototype, {
-          // mock indent as 24
-          // no need for clearing it, since jest make each file a independent env
+        domSpy = spyElementPrototypes(HTMLElement, {
           offsetWidth: {
             get() {
               return 24;
             },
           },
+          getBoundingClientRect: jest.fn(() => ({
+            width: 100,
+            height: 20,
+            top: 0,
+            left: 0,
+            bottom: 20,
+            right: 100,
+          })),
         });
+        // Object.defineProperties(window.HTMLElement.prototype, {
+        //   // mock indent as 24
+        //   // no need for clearing it, since jest make each file a independent env
+        //   offsetWidth: {
+        //     get() {
+        //       return 24;
+        //     },
+        //   },
+        // });
       });
 
       afterEach(() => {
-        Element.prototype.getBoundingClientRect = getBoundingClientRect;
+        domSpy.mockRestore();
       });
 
       it('self', () => dropTarget('div.dragTarget'));
@@ -1252,19 +1258,26 @@ describe('Tree Basic', () => {
     });
 
     describe('new drop logic', () => {
-      const { getBoundingClientRect } = Element.prototype;
+      let domSpy;
       beforeEach(() => {
-        Element.prototype.getBoundingClientRect = jest.fn(() => ({
-          width: 100,
-          height: 20,
-          top: 0,
-          left: 0,
-          bottom: 20,
-          right: 100,
-        }));
+        domSpy = spyElementPrototypes(HTMLElement, {
+          getBoundingClientRect: () => ({
+            width: 100,
+            height: 20,
+            top: 0,
+            left: 0,
+            bottom: 20,
+            right: 100,
+          }),
+          offsetWidth: {
+            get() {
+              return 24;
+            },
+          },
+        });
       });
       afterEach(() => {
-        Element.prototype.getBoundingClientRect = getBoundingClientRect;
+        domSpy.mockRestore();
       });
       it('allowDrop all nodes', () => {
         const onDrop = jest.fn();
