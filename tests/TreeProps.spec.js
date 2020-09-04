@@ -738,6 +738,28 @@ describe('Tree Props', () => {
     expect(onDoubleClick).toHaveBeenCalledWith(expect.objectContaining({}), node);
   });
 
+  it('onContextMenu', () => {
+    const onClick = jest.fn();
+    const onContextMenu = jest.fn();
+
+    const wrapper = mount(
+      <Tree onClick={onClick} onContextMenu={onContextMenu} defaultExpandedKeys={['0-0']}>
+        <TreeNode key="0-0">
+          <TreeNode key="0-0-0" />
+        </TreeNode>
+      </Tree>,
+    );
+
+    const parentNode = wrapper.find(InternalTreeNode).first();
+    const targetNode = parentNode.find(InternalTreeNode).last();
+
+    // Select leaf
+    targetNode.find('.rc-tree-node-content-wrapper').simulate('contextmenu');
+
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onContextMenu).toHaveBeenCalled();
+  });
+
   describe('loadedKeys & onLoad', () => {
     it('has loadedKeys', () => {
       const loadData = jest.fn(() => Promise.resolve());
