@@ -48,6 +48,7 @@ const MotionFlattenData: FlattenNode = {
 
 export interface NodeListRef {
   scrollTo: ScrollTo;
+  getIndentWidth: () => number;
 }
 
 interface NodeListProps {
@@ -167,10 +168,12 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
   // =============================== Ref ================================
   const listRef = React.useRef<ListRef>(null);
+  const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => ({
     scrollTo: scroll => {
       listRef.current.scrollTo(scroll);
     },
+    getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
   }));
 
   // ============================== Motion ==============================
@@ -276,6 +279,19 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           value=""
           onChange={noop}
         />
+      </div>
+
+      <div
+        className={`${prefixCls}-treenode`}
+        style={{
+          position: 'absolute',
+          pointerEvents: 'none',
+          visibility: 'hidden',
+        }}
+      >
+        <div className={`${prefixCls}-indent`}>
+          <div ref={indentMeasurerRef} className={`${prefixCls}-indent-unit`} />
+        </div>
       </div>
 
       <VirtualList<FlattenNode>

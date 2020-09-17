@@ -64,12 +64,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 
   public selectHandle: HTMLSpanElement;
 
-  public indentRef = React.createRef<{ getWidth(): number }>();
-
-  getIndentWidth() {
-    return this.indentRef.current.getWidth();
-  }
-
   // Isomorphic needn't load data in server side
   componentDidMount() {
     this.syncLoadData(this.props);
@@ -564,13 +558,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         onMouseMove={onMouseMove}
         {...dataOrAriaAttributeProps}
       >
-        <Indent
-          prefixCls={prefixCls}
-          level={level}
-          isStart={isStart}
-          isEnd={isEnd}
-          ref={this.indentRef}
-        />
+        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}

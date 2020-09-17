@@ -45,9 +45,9 @@ import {
   getTreeNodeProps,
 } from './utils/treeUtil';
 import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
-import TreeNode, { InternalTreeNode } from './TreeNode';
+import TreeNode from './TreeNode';
 import { conductCheck } from './utils/conductUtil';
-import DropIndicator from './DropIndicator'
+import DropIndicator from './DropIndicator';
 
 interface CheckInfo {
   event: 'check';
@@ -90,10 +90,10 @@ export interface TreeProps {
   allowDrop?: AllowDrop;
   titleRender?: (node: DataNode) => React.ReactNode;
   dropIndicatorRender?: (props: {
-    dropPosition: -1 | 0 | 1,
-    dropLevelOffset: number,
-    indent: number,
-    prefixCls: string
+    dropPosition: -1 | 0 | 1;
+    dropLevelOffset: number;
+    indent: number;
+    prefixCls: string;
   }) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
@@ -409,7 +409,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragging: true,
       dragChildrenKeys: getDragChildrenKeys(eventKey, keyEntities),
       dragParentKey: getDragParentKey(eventKey, keyEntities),
-      indent: (node as InternalTreeNode).getIndentWidth(),
+      indent: this.listRef.current.getIndentWidth(),
     });
 
     this.setExpandedKeys(newExpandedKeys);
