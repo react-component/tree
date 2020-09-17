@@ -283,6 +283,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
       <div
         className={`${prefixCls}-treenode`}
+        aria-hidden
         style={{
           position: 'absolute',
           pointerEvents: 'none',
