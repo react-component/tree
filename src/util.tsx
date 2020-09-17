@@ -58,7 +58,9 @@ export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, D
 
 export function getDragParentKey(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key {
   const entity = keyEntities[dragNodeKey];
-  return entity?.parent?.key || null;
+  if (!entity.parent) return null
+  const { key } = entity.parent
+  return key === undefined ? null : key;
 }
 
 export function isLastChild (treeNodeEntity: DataEntity) {

@@ -47,6 +47,7 @@ import {
 import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
 import TreeNode, { InternalTreeNode } from './TreeNode';
 import { conductCheck } from './utils/conductUtil';
+import DropIndicator from './DropIndicator'
 
 interface CheckInfo {
   event: 'check';
@@ -88,11 +89,12 @@ export interface TreeProps {
   selectedKeys?: Key[];
   allowDrop?: AllowDrop;
   titleRender?: (node: DataNode) => React.ReactNode;
-  dropIndicatorRender?: (
+  dropIndicatorRender?: (props: {
     dropPosition: -1 | 0 | 1,
     dropLevelOffset: number,
     indent: number,
-  ) => React.ReactNode;
+    prefixCls: string
+  }) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
@@ -158,35 +160,6 @@ export interface TreeProps {
   virtual?: boolean;
 }
 
-const DEFAULT_DROP_INDICATOR_RENDER = function dropIndicatorRender(
-  dropPosition: -1 | 0 | 1,
-  dropLevelOffset: number,
-  indent: number,
-) {
-  const style: React.CSSProperties = {
-    pointerEvents: 'none',
-    position: 'absolute',
-    right: 0,
-    backgroundColor: 'red',
-    height: 2,
-  };
-  switch (dropPosition) {
-    case -1:
-      style.top = 0;
-      style.left = -dropLevelOffset * indent;
-      break;
-    case 1:
-      style.bottom = 0;
-      style.left = -dropLevelOffset * indent;
-      break;
-    case 0:
-      style.bottom = 0;
-      style.left = indent;
-      break;
-  }
-  return <div style={style} />;
-};
-
 interface TreeState {
   keyEntities: Record<Key, DataEntity>;
 
@@ -241,7 +214,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
     defaultSelectedKeys: [],
-    dropIndicatorRender: DEFAULT_DROP_INDICATOR_RENDER,
+    dropIndicatorRender: DropIndicator,
     allowDrop: () => true,
   };
 

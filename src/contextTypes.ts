@@ -41,12 +41,12 @@ export interface TreeContextProps {
   dropTargetKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number | null;
-  dropIndicatorRender: (
+  dropIndicatorRender: (props: {
     dropPosition: -1 | 0 | 1,
-    levelAscended: number,
+    dropLevelOffset: number,
     indent,
     prefixCls,
-  ) => React.ReactNode;
+  }) => React.ReactNode;
   abstractDragOverKey: Key | null;
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
