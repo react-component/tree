@@ -1448,8 +1448,8 @@ describe('Tree Basic', () => {
       });
       it('not allowDrop on node which has children', () => {
         const onDrop = jest.fn();
-        const allowDrop = ({ node, dropPosition }) => {
-          if (!node.children) {
+        const allowDrop = ({ dropNode, dropPosition }) => {
+          if (!dropNode.children) {
             if (dropPosition === 0) return false;
           }
           return true;

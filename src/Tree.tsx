@@ -59,7 +59,7 @@ interface CheckInfo {
   halfCheckedKeys?: Key[];
 }
 
-export type AllowDrop = (options: { node: DataNode; dropPosition: -1 | 0 | 1 }) => boolean;
+export type AllowDrop = (options: { dropNode: DataNode; dropPosition: -1 | 0 | 1 }) => boolean;
 
 export interface TreeProps {
   prefixCls: string;

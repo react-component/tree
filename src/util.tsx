@@ -140,7 +140,7 @@ export function calcDropPosition(
     abstractDropNodeEntity.level === 0 &&
     clientY < top + height / 2 &&
     allowDrop({
-      node: abstractDropDataNode,
+      dropNode: abstractDropDataNode,
       dropPosition: -1,
     }) &&
     abstractDropNodeEntity.key === targetNode.props.eventKey
@@ -154,7 +154,7 @@ export function calcDropPosition(
     // drop on expanded node
     // only allow drop inside
     if (allowDrop({
-      node: abstractDropDataNode,
+      dropNode: abstractDropDataNode,
       dropPosition: 0,
     })) {
       dropPosition = 0;
@@ -170,7 +170,7 @@ export function calcDropPosition(
       // 1. try drop after
       // 2. do not allow drop
       if (allowDrop({
-        node: abstractDropDataNode,
+        dropNode: abstractDropDataNode,
         dropPosition: 1,
       })) {
         dropPosition = 1;
@@ -186,12 +186,12 @@ export function calcDropPosition(
       // 2. try drop after
       // 3. do not allow drop
       if (allowDrop({
-        node: abstractDropDataNode,
+        dropNode: abstractDropDataNode,
         dropPosition: 0,
       })) {
         dropPosition = 0;
       } else if (allowDrop({
-        node: abstractDropDataNode,
+        dropNode: abstractDropDataNode,
         dropPosition: 1,
       })) {
         dropPosition = 1;
@@ -206,7 +206,7 @@ export function calcDropPosition(
     // 1. try insert after Node1
     // 2. do not allow drop
     if (allowDrop({
-      node: abstractDropDataNode,
+      dropNode: abstractDropDataNode,
       dropPosition: 1,
     })) {
       dropPosition = 1;

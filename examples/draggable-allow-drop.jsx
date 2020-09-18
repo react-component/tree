@@ -5,8 +5,8 @@ import './draggable.less';
 import '../assets/index.less';
 import Tree from '../src';
 
-function allowDrop({ node, dropPosition }) {
-  if (!node.children) {
+function allowDrop({ dropNode, dropPosition }) {
+  if (!dropNode.children) {
     if (dropPosition === 0) return false;
   }
   return true;
