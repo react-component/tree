@@ -133,7 +133,6 @@ describe('Tree Motion', () => {
           value={{
             prefixCls: 'test',
             keyEntities: {},
-            nodeInstances: new Map(),
             dropIndicatorRender: () => null,
           }}
         >

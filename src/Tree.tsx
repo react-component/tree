@@ -278,8 +278,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   listRef = React.createRef<NodeListRef>();
 
-  nodeInstances: Map<Key, NodeInstance> = new Map();
-
   componentWillUnmount() {
     window.removeEventListener('dragend', this.onWindowDragEnd);
     this.destroyed = true;
@@ -730,13 +728,15 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     if (dropTargetKey === null) return;
 
-    const abstractDropNode = this.nodeInstances.get(dropTargetKey) || null;
-
-    warning(!(abstractDropNode === null), "Can't find dropNode");
-
-    const { eventKey } = abstractDropNode.props;
-
-    const dropToChild = dragChildrenKeys.indexOf(eventKey) !== -1;
+    const abstractDropNodeProps = {
+      ...getTreeNodeProps(
+        dropTargetKey,
+        this.getTreeNodeRequiredProps(),
+      ),
+      active: this.getActiveItem()?.data.key === dropTargetKey,
+      data: this.state.keyEntities[dropTargetKey].node,
+    }
+    const dropToChild = dragChildrenKeys.indexOf(dropTargetKey) !== -1;
 
     warning(
       !dropToChild,
@@ -747,7 +747,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     const dropResult = {
       event,
-      node: convertNodePropsToEventData(abstractDropNode.props),
+      node: convertNodePropsToEventData(abstractDropNodeProps),
       dragNode: this.dragNode ? convertNodePropsToEventData(this.dragNode.props) : null,
       dragNodesKeys: [this.dragNode.props.eventKey].concat(dragChildrenKeys),
       dropToGap: dropPosition !== 0,
@@ -1315,7 +1315,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropIndicatorRender,
       onContextMenu,
     } = this.props;
-    const { nodeInstances } = this;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
     return (
@@ -1332,7 +1331,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
           disabled,
           keyEntities,
           dropLevelOffset,
-          nodeInstances,
           dropContainerKey,
           dropTargetKey,
           dropPosition,

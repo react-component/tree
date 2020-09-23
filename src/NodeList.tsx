@@ -322,7 +322,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
             <MotionTreeNode
               {...restProps}
               {...treeNodeProps}
-              active={activeItem && key === activeItem.data.key}
+              active={!!activeItem && key === activeItem.data.key}
               pos={pos}
               data={treeNode.data}
               isStart={isStart}

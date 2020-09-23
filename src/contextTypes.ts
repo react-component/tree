@@ -36,16 +36,15 @@ export interface TreeContextProps {
   disabled: boolean;
   keyEntities: Record<Key, DataEntity>;
   dropLevelOffset?: number;
-  nodeInstances: Map<Key, NodeInstance>;
   dropContainerKey: Key | null;
   dropTargetKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number | null;
   dropIndicatorRender: (props: {
-    dropPosition: -1 | 0 | 1,
-    dropLevelOffset: number,
-    indent,
-    prefixCls,
+    dropPosition: -1 | 0 | 1;
+    dropLevelOffset: number;
+    indent;
+    prefixCls;
   }) => React.ReactNode;
   abstractDragOverKey: Key | null;
 

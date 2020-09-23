@@ -67,21 +67,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // Isomorphic needn't load data in server side
   componentDidMount() {
     this.syncLoadData(this.props);
-    const {
-      context: { nodeInstances },
-      eventKey,
-    } = this.props;
-    nodeInstances.set(eventKey, this);
   }
 
   componentDidUpdate() {
     this.syncLoadData(this.props);
-    // if eventKey doesn't equal, the component will unmount not update
-    // so there's no need for update nodeInstances here
-  }
-
-  componentWillUnmount() {
-    this.props.context.nodeInstances.delete(this.props.eventKey);
   }
 
   onSelectorClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
