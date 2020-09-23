@@ -35,6 +35,7 @@ export interface TreeContextProps {
   checkStrictly: boolean;
   disabled: boolean;
   keyEntities: Record<Key, DataEntity>;
+  // for details see comment in Tree.state (Tree.tsx)
   dropLevelOffset?: number;
   dropContainerKey: Key | null;
   dropTargetKey: Key | null;
