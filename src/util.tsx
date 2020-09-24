@@ -95,7 +95,7 @@ export function calcDropPosition(
   dropTargetKey: Key,
   dropTargetPos: string,
   dropContainerKey: Key,
-  abstractDragOverKey: Key,
+  dragOverNodeKey: Key,
   dropAllowed: boolean,
 } {
   const { clientX, clientY } = event;
@@ -118,7 +118,7 @@ export function calcDropPosition(
   }
 
   const abstractDragOverEntity = abstractDropNodeEntity;
-  const abstractDragOverKey = abstractDropNodeEntity.key;
+  const dragOverNodeKey = abstractDropNodeEntity.key;
 
   let dropPosition: -1 | 0 | 1 = 0;
   let dropLevelOffset = 0;
@@ -149,7 +149,7 @@ export function calcDropPosition(
     dropPosition = -1
   } else if (
     (abstractDragOverEntity.children || []).length &&
-    expandKeys.includes(abstractDragOverKey)
+    expandKeys.includes(dragOverNodeKey)
   ) {
     // drop on expanded node
     // only allow drop inside
@@ -220,7 +220,7 @@ export function calcDropPosition(
     dropLevelOffset,
     dropTargetKey: abstractDropNodeEntity.key,
     dropTargetPos: abstractDropNodeEntity.pos,
-    abstractDragOverKey,
+    dragOverNodeKey,
     dropContainerKey: dropPosition === 0 ? null : (abstractDropNodeEntity.parent?.key || null),
     dropAllowed,
   };
