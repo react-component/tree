@@ -16,7 +16,7 @@ exports[`Tree Basic check basic render 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -150,7 +150,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -253,7 +253,7 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -325,7 +325,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -418,7 +418,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -567,7 +567,7 @@ exports[`Tree Basic renders correctly 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -769,7 +769,7 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"

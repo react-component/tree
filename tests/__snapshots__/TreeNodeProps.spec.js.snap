@@ -16,7 +16,7 @@ exports[`TreeNode Props className 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -196,7 +196,7 @@ exports[`TreeNode Props customize icon component 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -269,7 +269,7 @@ exports[`TreeNode Props customize icon element 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -342,7 +342,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -408,7 +408,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -593,7 +593,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -778,7 +778,7 @@ exports[`TreeNode Props isLeaf 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -869,7 +869,7 @@ exports[`TreeNode Props isLeaf 2`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
@@ -966,7 +966,7 @@ exports[`TreeNode Props isLeaf 3`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
   >
     <div
       class="rc-tree-indent"
