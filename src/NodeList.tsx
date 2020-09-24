@@ -288,6 +288,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           position: 'absolute',
           pointerEvents: 'none',
           visibility: 'hidden',
+          height: 0,
+          overflow: 'hidden',
         }}
       >
         <div className={`${prefixCls}-indent`}>
