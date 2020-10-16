@@ -1560,7 +1560,7 @@ describe('Tree Basic', () => {
         expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1');
         expect(onDrop.mock.calls[0][0].dropPosition).toEqual(-1);
       });
-      it("shouldn't drop on its direct parent", () => {
+      it('can drop on its direct parent', () => {
         const onDrop = jest.fn();
         const wrapper = mount(
           <Tree draggable defaultExpandAll onDrop={onDrop}>
@@ -1589,7 +1589,7 @@ describe('Tree Basic', () => {
           clientY: 500,
         });
         wrapper.find('.dragTargetParent > .rc-tree-node-content-wrapper').simulate('drop');
-        expect(onDrop).not.toHaveBeenCalled();
+        expect(onDrop).toHaveBeenCalled();
       });
       it('cover window dragend & componentWillUnmount', () => {
         const wrapper = mount(
