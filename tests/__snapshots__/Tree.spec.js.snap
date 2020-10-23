@@ -14,6 +14,19 @@ exports[`Tree Basic check basic render 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -28,6 +41,10 @@ exports[`Tree Basic check basic render 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
             />
@@ -131,6 +148,19 @@ exports[`Tree Basic check check after data ready works 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position: relative;"
   >
@@ -145,6 +175,10 @@ exports[`Tree Basic check check after data ready works 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
             />
@@ -217,6 +251,19 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position: relative;"
   >
@@ -231,6 +278,10 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -272,6 +323,19 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position: relative;"
   >
@@ -286,6 +350,10 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -306,6 +374,10 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -344,6 +416,19 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position: relative;"
   >
@@ -358,6 +443,10 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -378,6 +467,10 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
             />
@@ -472,6 +565,19 @@ exports[`Tree Basic renders correctly 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -486,6 +592,10 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             class="spe rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
             />
@@ -657,6 +767,19 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -671,6 +794,10 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_close"
             />

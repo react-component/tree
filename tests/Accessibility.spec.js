@@ -207,7 +207,10 @@ describe('Tree Accessibility', () => {
       expect(wrapper.find(InternalTreeNode).find('.rc-tree-treenode-active').length).toBeTruthy();
 
       // Mouse move
-      wrapper.find('.rc-tree-treenode').simulate('mouseMove');
+      wrapper
+        .find('.rc-tree-treenode')
+        .at(1)
+        .simulate('mouseMove');
       expect(wrapper.find(InternalTreeNode).find('.rc-tree-treenode-active').length).toBeFalsy();
     });
   });

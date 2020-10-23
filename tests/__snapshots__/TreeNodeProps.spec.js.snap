@@ -14,6 +14,19 @@ exports[`TreeNode Props className 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -28,6 +41,10 @@ exports[`TreeNode Props className 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
             />
@@ -136,6 +153,10 @@ exports[`TreeNode Props className 1`] = `
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
             <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
             <span
@@ -173,6 +194,19 @@ exports[`TreeNode Props customize icon component 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -187,6 +221,10 @@ exports[`TreeNode Props customize icon component 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -229,6 +267,19 @@ exports[`TreeNode Props customize icon element 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -243,6 +294,10 @@ exports[`TreeNode Props customize icon element 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -285,6 +340,19 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -299,6 +367,10 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -334,6 +406,19 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -349,6 +434,10 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             aria-label="0-0"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
             />
@@ -461,6 +550,10 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
             <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
             <span
@@ -498,6 +591,19 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -513,6 +619,10 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
             data-test="0-0"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
             />
@@ -625,6 +735,10 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             data-test="0-1"
           >
             <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
             <span
@@ -662,6 +776,19 @@ exports[`TreeNode Props isLeaf 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -676,6 +803,10 @@ exports[`TreeNode Props isLeaf 1`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -736,6 +867,19 @@ exports[`TreeNode Props isLeaf 2`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -750,6 +894,10 @@ exports[`TreeNode Props isLeaf 2`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
@@ -816,6 +964,19 @@ exports[`TreeNode Props isLeaf 3`] = `
     />
   </div>
   <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
     class="rc-tree-list"
     style="position:relative"
   >
@@ -830,6 +991,10 @@ exports[`TreeNode Props isLeaf 3`] = `
           <div
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
           >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
             />

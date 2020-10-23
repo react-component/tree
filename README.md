@@ -66,7 +66,7 @@ see examples
 | defaultExpandParent | auto expand parent treeNodes when init | bool | true |
 | defaultSelectedKeys | default selected treeNodes | String[] | [] |
 | disabled | whether disabled the tree | bool | false |
-| draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool | false |
+| draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool \| ({ node }) => boolean | false |
 | expandedKeys | Controlled expand specific treeNodes | String[] | - |
 | filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
 | icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
@@ -94,6 +94,7 @@ see examples
 | onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 | virtual | Disable virtual scroll when `false` | boolean | - |
+| allowDrop | whether to allow drop on node | ({ dropNode, dropPosition }) => boolean | - |
 
 ### TreeNode props
 
@@ -143,3 +144,4 @@ rc-tree is released under the MIT license.
 - [jqTree](http://mbraak.github.io/jqTree/)
 - [jquery.treeselect](http://travistidwell.com/jquery.treeselect.js/)
 - [angular Select Tree](http://a5hik.github.io/angular-multi-select-tree/)
+

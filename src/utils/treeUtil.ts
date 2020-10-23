@@ -301,6 +301,8 @@ export function getTreeNodeProps(
     pos: String(entity ? entity.pos : ''),
 
     // [Legacy] Drag props
+    // Since the interaction of drag is changed, the semantic of the props are
+    // not accuracy, I think it should be finally removed
     dragOver: dragOverNodeKey === key && dropPosition === 0,
     dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
     dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,

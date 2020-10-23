@@ -21,6 +21,7 @@ export type NodeMouseEventHandler<T = HTMLSpanElement> = (
 export type NodeDragEventHandler<T = HTMLDivElement> = (
   e: React.MouseEvent<T>,
   node: NodeInstance,
+  outsideTree?: boolean,
 ) => void;
 
 export interface TreeContextProps {
@@ -29,11 +30,24 @@ export interface TreeContextProps {
   showIcon: boolean;
   icon: IconType;
   switcherIcon: IconType;
-  draggable: boolean;
+  draggable: ((node: DataNode) => boolean) | boolean;
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
   keyEntities: Record<Key, DataEntity>;
+  // for details see comment in Tree.state (Tree.tsx)
+  dropLevelOffset?: number;
+  dropContainerKey: Key | null;
+  dropTargetKey: Key | null;
+  dropPosition: -1 | 0 | 1 | null;
+  indent: number | null;
+  dropIndicatorRender: (props: {
+    dropPosition: -1 | 0 | 1;
+    dropLevelOffset: number;
+    indent;
+    prefixCls;
+  }) => React.ReactNode;
+  dragOverNodeKey: Key | null;
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode) => boolean;

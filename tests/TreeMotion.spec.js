@@ -129,7 +129,13 @@ describe('Tree Motion', () => {
       const onMotionStart = jest.fn();
       const onMotionEnd = jest.fn();
       const wrapper = mount(
-        <TreeContext.Provider value={{ prefixCls: 'test', keyEntities: {} }}>
+        <TreeContext.Provider
+          value={{
+            prefixCls: 'test',
+            keyEntities: {},
+            dropIndicatorRender: () => null,
+          }}
+        >
           <MotionTreeNode onMotionStart={onMotionStart} onMotionEnd={onMotionEnd} isEnd={[false]} />
         </TreeContext.Provider>,
       );

@@ -8,11 +8,7 @@ interface IndentProps {
   isEnd: boolean[];
 }
 
-const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd }) => {
-  if (!level) {
-    return null;
-  }
-
+const Indent = ({ prefixCls, level, isStart, isEnd }: IndentProps) => {
   const baseClassName = `${prefixCls}-indent-unit`;
   const list: React.ReactElement[] = [];
   for (let i = 0; i < level; i += 1) {
