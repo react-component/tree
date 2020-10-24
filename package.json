@@ -45,8 +45,8 @@
     "now-build": "npm run build"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.4",
