@@ -46,8 +46,10 @@ export interface TreeContextProps {
     dropLevelOffset: number;
     indent;
     prefixCls;
+    direction: 'ltr' | 'rtl';
   }) => React.ReactNode;
   dragOverNodeKey: Key | null;
+  direction: 'ltr' | 'rtl';
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode) => boolean;

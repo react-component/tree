@@ -6,7 +6,7 @@
 import React from 'react';
 import warning from 'rc-util/lib/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance, FlattenNode } from './interface';
+import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance, FlattenNode, Direction } from './interface';
 import { TreeProps, AllowDrop } from './Tree';
 
 export function arrDel(list: Key[], value: Key) {
@@ -82,7 +82,7 @@ export function calcDropPosition(
   flattenedNodes: FlattenNode[],
   keyEntities: Record<Key, DataEntity>,
   expandKeys: Key[],
-  direction: 'ltr' | 'rtl',
+  direction: Direction,
 ) : {
   dropPosition: -1 | 0 | 1,
   dropLevelOffset: number,

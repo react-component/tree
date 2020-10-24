@@ -33,6 +33,7 @@ import {
   EventDataNode,
   NodeInstance,
   ScrollTo,
+  Direction,
 } from './interface';
 import {
   flattenTreeData,
@@ -92,7 +93,7 @@ export interface TreeProps {
     dropLevelOffset: number;
     indent: number;
     prefixCls: string;
-    direction: 'ltr'
+    direction: Direction;
   }) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
@@ -159,7 +160,7 @@ export interface TreeProps {
   virtual?: boolean;
 
   // direction for drag logic
-  direction?: 'ltr' | 'rtl'
+  direction?: Direction
 }
 
 interface TreeState {
@@ -1278,6 +1279,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       titleRender,
       dropIndicatorRender,
       onContextMenu,
+      direction,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -1300,6 +1302,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dropPosition,
           dragOverNodeKey,
           indent,
+          direction,
           dropIndicatorRender,
 
           loadData,

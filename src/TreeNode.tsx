@@ -471,13 +471,14 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         indent,
         dropIndicatorRender,
         dragOverNodeKey,
+        direction,
       },
     } = this.props;
     const mergedDraggable = draggable !== false;
     // allowDrop is calculated in Tree.tsx, there is no need for calc it here
     const showIndicator = !disabled && mergedDraggable && dragOverNodeKey === eventKey;
     return showIndicator
-      ? dropIndicatorRender({ dropPosition, dropLevelOffset, indent, prefixCls })
+      ? dropIndicatorRender({ dropPosition, dropLevelOffset, indent, prefixCls, direction })
       : null;
   };
 
