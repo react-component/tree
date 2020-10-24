@@ -96,7 +96,7 @@ see examples
 | virtual | Disable virtual scroll when `false` | boolean | - |
 | allowDrop | Whether to allow drop on node | ({ dropNode, dropPosition }) => boolean | - |
 | dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode| - |
-| direction | Display direction of the tree, it may change drag logic | `ltr` \| `rtl` | `ltr` |
+| direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | `ltr` |
 
 ### TreeNode props
 
