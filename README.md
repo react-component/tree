@@ -94,7 +94,8 @@ see examples
 | onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 | virtual | Disable virtual scroll when `false` | boolean | - |
-| allowDrop | whether to allow drop on node | ({ dropNode, dropPosition }) => boolean | - |
+| allowDrop | Whether to allow drop on node | ({ dropNode, dropPosition }) => boolean | - |
+| dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode| - |
 
 ### TreeNode props
 
