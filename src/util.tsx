@@ -82,6 +82,7 @@ export function calcDropPosition(
   flattenedNodes: FlattenNode[],
   keyEntities: Record<Key, DataEntity>,
   expandKeys: Key[],
+  direction: 'ltr' | 'rtl',
 ) : {
   dropPosition: -1 | 0 | 1,
   dropLevelOffset: number,
@@ -94,7 +95,7 @@ export function calcDropPosition(
   const { clientX, clientY } = event;
   const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
   // optional chain for testing
-  const horizontalMouseOffset = (startMousePosition?.x || 0) - clientX;
+  const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || 0) - clientX);
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
   // find abstract drop node by horizontal offset
