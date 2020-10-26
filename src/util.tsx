@@ -6,7 +6,14 @@
 import React from 'react';
 import warning from 'rc-util/lib/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance, FlattenNode } from './interface';
+import {
+  NodeElement,
+  Key,
+  DataNode,
+  DataEntity,
+  NodeInstance,
+  FlattenNode,
+} from './interface';
 import { TreeProps, AllowDrop } from './Tree';
 
 export function arrDel(list: Key[], value: Key) {
@@ -56,7 +63,7 @@ export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, D
   return dragChildrenKeys;
 }
 
-export function isLastChild (treeNodeEntity: DataEntity) {
+export function isLastChild(treeNodeEntity: DataEntity) {
   if (treeNodeEntity.parent) {
     const posArr = posToArr(treeNodeEntity.pos);
     return Number(posArr[posArr.length - 1]) === treeNodeEntity.parent.children.length - 1;
@@ -64,7 +71,7 @@ export function isLastChild (treeNodeEntity: DataEntity) {
   return false;
 }
 
-export function isFirstChild (treeNodeEntity: DataEntity) {
+export function isFirstChild(treeNodeEntity: DataEntity) {
   const posArr = posToArr(treeNodeEntity.pos);
   return Number(posArr[posArr.length - 1]) === 0;
 }
@@ -75,21 +82,21 @@ export function calcDropPosition(
   targetNode: NodeInstance,
   indent: number,
   startMousePosition: {
-    x: number,
-    y: number,
+    x: number;
+    y: number;
   },
   allowDrop: AllowDrop,
   flattenedNodes: FlattenNode[],
   keyEntities: Record<Key, DataEntity>,
   expandKeys: Key[],
-) : {
-  dropPosition: -1 | 0 | 1,
-  dropLevelOffset: number,
-  dropTargetKey: Key,
-  dropTargetPos: string,
-  dropContainerKey: Key,
-  dragOverNodeKey: Key,
-  dropAllowed: boolean,
+): {
+  dropPosition: -1 | 0 | 1;
+  dropLevelOffset: number;
+  dropTargetKey: Key;
+  dropTargetPos: string;
+  dropContainerKey: Key;
+  dragOverNodeKey: Key;
+  dropAllowed: boolean;
 } {
   const { clientX, clientY } = event;
   const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
@@ -116,9 +123,7 @@ export function calcDropPosition(
   let dropPosition: -1 | 0 | 1 = 0;
   let dropLevelOffset = 0;
   for (let i = 0; i < rawDropLevelOffset; i += 1) {
-    if (
-      isLastChild(abstractDropNodeEntity)
-    ) {
+    if (isLastChild(abstractDropNodeEntity)) {
       abstractDropNodeEntity = abstractDropNodeEntity.parent;
       dropLevelOffset += 1;
     } else {
@@ -126,7 +131,7 @@ export function calcDropPosition(
     }
   }
 
-  const abstractDropDataNode = abstractDropNodeEntity.node
+  const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (
     isFirstChild(abstractDropNodeEntity) &&
@@ -139,33 +144,35 @@ export function calcDropPosition(
     abstractDropNodeEntity.key === targetNode.props.eventKey
   ) {
     // first half of first node in first level
-    dropPosition = -1
+    dropPosition = -1;
   } else if (
     (abstractDragOverEntity.children || []).length &&
     expandKeys.includes(dragOverNodeKey)
   ) {
     // drop on expanded node
     // only allow drop inside
-    if (allowDrop({
-      dropNode: abstractDropDataNode,
-      dropPosition: 0,
-    })) {
+    if (
+      allowDrop({
+        dropNode: abstractDropDataNode,
+        dropPosition: 0,
+      })
+    ) {
       dropPosition = 0;
     } else {
-      dropAllowed = false
+      dropAllowed = false;
     }
-  } else if (
-    dropLevelOffset === 0
-  ) {
+  } else if (dropLevelOffset === 0) {
     if (rawDropLevelOffset > -1.5) {
       // | Node     | <- abstractDropNode
       // | -^-===== | <- mousePosition
       // 1. try drop after
       // 2. do not allow drop
-      if (allowDrop({
-        dropNode: abstractDropDataNode,
-        dropPosition: 1,
-      })) {
+      if (
+        allowDrop({
+          dropNode: abstractDropDataNode,
+          dropPosition: 1,
+        })
+      ) {
         dropPosition = 1;
       } else {
         dropAllowed = false;
@@ -178,15 +185,19 @@ export function calcDropPosition(
       // 1. try drop inside
       // 2. try drop after
       // 3. do not allow drop
-      if (allowDrop({
-        dropNode: abstractDropDataNode,
-        dropPosition: 0,
-      })) {
+      if (
+        allowDrop({
+          dropNode: abstractDropDataNode,
+          dropPosition: 0,
+        })
+      ) {
         dropPosition = 0;
-      } else if (allowDrop({
-        dropNode: abstractDropDataNode,
-        dropPosition: 1,
-      })) {
+      } else if (
+        allowDrop({
+          dropNode: abstractDropDataNode,
+          dropPosition: 1,
+        })
+      ) {
         dropPosition = 1;
       } else {
         dropAllowed = false;
@@ -198,10 +209,12 @@ export function calcDropPosition(
     // --^--|----=====| <- mousePosition
     // 1. try insert after Node1
     // 2. do not allow drop
-    if (allowDrop({
-      dropNode: abstractDropDataNode,
-      dropPosition: 1,
-    })) {
+    if (
+      allowDrop({
+        dropNode: abstractDropDataNode,
+        dropPosition: 1,
+      })
+    ) {
       dropPosition = 1;
     } else {
       dropAllowed = false;
@@ -214,7 +227,7 @@ export function calcDropPosition(
     dropTargetKey: abstractDropNodeEntity.key,
     dropTargetPos: abstractDropNodeEntity.pos,
     dragOverNodeKey,
-    dropContainerKey: dropPosition === 0 ? null : (abstractDropNodeEntity.parent?.key || null),
+    dropContainerKey: dropPosition === 0 ? null : abstractDropNodeEntity.parent?.key || null,
     dropAllowed,
   };
 }
@@ -255,12 +268,6 @@ export function convertDataToTree(
       return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
     },
   );
-}
-
-// TODO: ========================= NEW LOGIC =========================
-interface Wrapper {
-  posEntities: Record<string, Entity>;
-  keyEntities: Record<Key, Entity>;
 }
 
 /**

@@ -44,6 +44,9 @@
     "gh-pages": "npm run build && father doc deploy",
     "now-build": "npm run build"
   },
+  "resolutions": {
+    "@umijs/fabric": "^2.3.1"
+  },
   "peerDependencies": {
     "react": "*",
     "react-dom": "*"
@@ -53,7 +56,7 @@
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.8.4",
     "@types/warning": "^3.0.0",
-    "@typescript-eslint/parser": "^4.0.1",
+    "@umijs/fabric": "^2.3.1",
     "css-animation": "^1.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
