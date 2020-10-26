@@ -52,12 +52,13 @@ class DropdownTree extends React.Component {
     };
   }
 
-  componentWillReceiveProps(props) {
+  static getDerivedStateFromProps(props) {
     if ('visible' in props) {
-      this.setState({
+      return {
         visible: props.visible,
-      });
+      };
     }
+    return null;
   }
 
   onChange = value => {
