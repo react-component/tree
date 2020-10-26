@@ -10,5 +10,7 @@ module.exports = {
     'jsx-a11y/label-has-for': 0,
     'jsx-a11y/label-has-associated-control': 0,
     'no-loop-func': 0,
+    '@typescript-eslint/no-loop-func': 0,
+    'max-classes-per-file': 0,
   },
 };

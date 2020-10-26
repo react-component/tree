@@ -10,7 +10,6 @@ import {
   NodeElement,
   Key,
   DataNode,
-  Entity,
   DataEntity,
   NodeInstance,
   FlattenNode,
