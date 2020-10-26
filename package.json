@@ -44,6 +44,9 @@
     "gh-pages": "npm run build && father doc deploy",
     "now-build": "npm run build"
   },
+  "resolutions": {
+    "@umijs/fabric": "^2.3.1"
+  },
   "peerDependencies": {
     "react": "*",
     "react-dom": "*"
