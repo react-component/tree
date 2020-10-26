@@ -1,9 +1,7 @@
-const base = require('@umijs/fabric/dist/eslint');
-
 module.exports = {
-  ...base,
+  extends: [require.resolve('@umijs/fabric/dist/eslint')],
+
   rules: {
-    ...base.rules,
     'react/sort-comp': 0,
     'default-case': 0,
     'eslint-comments/disable-enable-pair': 0,
