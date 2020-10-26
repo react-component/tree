@@ -5,7 +5,7 @@
 import React from 'react';
 import warning from 'rc-util/lib/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance } from './interface';
+import { NodeElement, Key, DataNode, DataEntity, NodeInstance } from './interface';
 import { TreeProps } from './Tree';
 
 const DRAG_SIDE_RANGE = 0.25;
@@ -108,12 +108,6 @@ export function convertDataToTree(
       return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
     },
   );
-}
-
-// TODO: ========================= NEW LOGIC =========================
-interface Wrapper {
-  posEntities: Record<string, Entity>;
-  keyEntities: Record<Key, Entity>;
 }
 
 /**
