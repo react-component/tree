@@ -36,7 +36,7 @@
     "start": "father doc dev --storybook",
     "build": "father doc build --storybook",
     "compile": "father build && lessc assets/index.less assets/index.css",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
+    "prepublishOnly": "npm run compile && np --yolo --no-publish --any-branch",
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ examples/ --ext .tsx,.ts,.jsx,.js",
     "test": "father test",
