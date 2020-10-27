@@ -81,9 +81,27 @@ function getTreeData() {
     {
       key: '1',
       title: 'node 1',
-      children: new Array(1000)
-        .fill(null)
-        .map((_, index) => ({ title: `auto ${index}`, key: `auto-${index}` })),
+      // children: new Array(1000)
+      //   .fill(null)
+      //   .map((_, index) => ({ title: `auto ${index}`, key: `auto-${index}` })),
+      children: [
+        {
+          key: '1-0',
+          title: 'node 1-0',
+          children: [
+            { key: '1-0-0', title: 'node 1-0-0' },
+            {
+              key: '1-0-1',
+              title: 'node 1-0-1',
+              children: [
+                { key: '1-0-1-0', title: 'node 1-0-1-0' },
+                { key: '1-0-1-1', title: 'node 1-0-1-1' },
+              ],
+            },
+            { key: '1-0-2', title: 'node 1-0-2' },
+          ],
+        },
+      ],
     },
   ];
 }
@@ -105,7 +123,8 @@ const Demo = () => {
           <h3>With Virtual</h3>
           <Tree
             ref={treeRef}
-            defaultExpandAll={false}
+            // defaultExpandAll={false}
+            defaultExpandAll
             defaultExpandedKeys={defaultExpandedKeys}
             motion={motion}
             height={200}

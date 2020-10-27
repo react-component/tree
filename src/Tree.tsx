@@ -33,6 +33,7 @@ import {
   EventDataNode,
   NodeInstance,
   ScrollTo,
+  Direction,
 } from './interface';
 import {
   flattenTreeData,
@@ -92,6 +93,7 @@ export interface TreeProps {
     dropLevelOffset: number;
     indent: number;
     prefixCls: string;
+    direction: Direction;
   }) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
@@ -156,6 +158,9 @@ export interface TreeProps {
   height?: number;
   itemHeight?: number;
   virtual?: boolean;
+
+  // direction for drag logic
+  direction?: Direction
 }
 
 interface TreeState {
@@ -429,7 +434,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       flattenNodes,
       indent,
     } = this.state;
-    const { onDragEnter, onExpand, allowDrop } = this.props;
+    const { onDragEnter, onExpand, allowDrop, direction } = this.props;
     const { pos } = node.props;
     const { dragNode } = this;
 
@@ -450,6 +455,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       flattenNodes,
       keyEntities,
       expandedKeys,
+      direction,
     );
 
     if (
@@ -551,7 +557,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       expandedKeys,
       indent,
     } = this.state;
-    const { onDragOver, allowDrop } = this.props;
+    const { onDragOver, allowDrop, direction } = this.props;
     const { dragNode } = this;
 
     const {
@@ -571,6 +577,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       flattenNodes,
       keyEntities,
       expandedKeys,
+      direction,
     );
 
     if (
@@ -1271,6 +1278,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       titleRender,
       dropIndicatorRender,
       onContextMenu,
+      direction,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -1293,6 +1301,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           dropPosition,
           dragOverNodeKey,
           indent,
+          direction,
           dropIndicatorRender,
 
           loadData,

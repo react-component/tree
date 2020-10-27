@@ -516,6 +516,44 @@ describe('Util', () => {
         '1',
       ]);
     });
+
+    it('isEnd should be correct', () => {
+      const flattenList = flattenTreeData(
+        [
+          getNode('0', [
+            getNode('0-0'),
+            getNode('0-1'),
+            getNode('0-2', [
+              // Break lines
+              getNode('0-2-0'),
+            ]),
+          ]),
+          getNode('1', [
+            // Break lines
+            getNode('1-0'),
+            getNode('1-1'),
+          ]),
+        ],
+        true,
+      );
+
+      expect(
+        flattenList.map(({ isStart, isEnd }) => ({
+          isStart,
+          isEnd,
+        })),
+      ).toEqual([
+        { isStart: [true], isEnd: [false] },
+        { isStart: [true, true], isEnd: [false, false] },
+        { isStart: [true, false], isEnd: [false, false] },
+        { isStart: [true, false], isEnd: [false, true] },
+        { isStart: [true, false, true], isEnd: [false, true, true] },
+
+        { isStart: [false], isEnd: [true] },
+        { isStart: [false, true], isEnd: [true, false] },
+        { isStart: [false, false], isEnd: [true, true] },
+      ]);
+    });
   });
 
   it('not crash if node not exist with getTreeNodeProps', () => {
