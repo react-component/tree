@@ -1280,7 +1280,7 @@ describe('Tree Basic', () => {
         domSpy.mockRestore();
       });
       ['ltr', 'rtl'].forEach(dir => {
-        const base = dir === 'ltr' ? 1 : -1
+        const base = dir === 'ltr' ? 1 : -1;
         it('allowDrop all nodes', () => {
           const onDrop = jest.fn();
           const wrapper = mount(
@@ -1362,8 +1362,13 @@ describe('Tree Basic', () => {
         it('allowDrop no node', () => {
           const onDrop = jest.fn();
           const wrapper = mount(
-            <Tree draggable defaultExpandAll onDrop={onDrop} allowDrop={() => false}
-            direction={dir}>
+            <Tree
+              draggable
+              defaultExpandAll
+              onDrop={onDrop}
+              allowDrop={() => false}
+              direction={dir}
+            >
               <TreeNode key="0-0" className="dragTargetParent">
                 <TreeNode key="0-0-0" className="dragTarget">
                   <TreeNode key="0-0-0-0" className="dragTargetChild" />
@@ -1685,7 +1690,7 @@ describe('Tree Basic', () => {
           expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
           expect(onDrop.mock.calls[2][0].dropPosition).toEqual(1);
         });
-      })
+      });
     });
   });
 

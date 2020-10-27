@@ -3,7 +3,15 @@
  * When util.js imports the TreeNode for tree generate will cause treeContextTypes be empty.
  */
 import * as React from 'react';
-import { IconType, Key, DataEntity, EventDataNode, NodeInstance, DataNode, Direction } from './interface';
+import {
+  IconType,
+  Key,
+  DataEntity,
+  EventDataNode,
+  NodeInstance,
+  DataNode,
+  Direction,
+} from './interface';
 
 export type NodeMouseEventParams<T = HTMLSpanElement> = {
   event: React.MouseEvent<T>;

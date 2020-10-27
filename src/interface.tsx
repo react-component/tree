@@ -78,4 +78,4 @@ export type GetKey<RecordType> = (record: RecordType, index?: number) => Key;
 
 export type GetCheckDisabled<RecordType> = (record: RecordType) => boolean;
 
-export type Direction = 'ltr' | 'rtl' | undefined
+export type Direction = 'ltr' | 'rtl' | undefined;
