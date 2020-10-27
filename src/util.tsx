@@ -6,7 +6,7 @@
 import React from 'react';
 import warning from 'rc-util/lib/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, Entity, DataEntity, NodeInstance, FlattenNode, Direction } from './interface';
+import { NodeElement, Key, DataNode, DataEntity, NodeInstance, FlattenNode, Direction } from './interface';
 import { TreeProps, AllowDrop } from './Tree';
 
 export function arrDel(list: Key[], value: Key) {
@@ -256,12 +256,6 @@ export function convertDataToTree(
       return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
     },
   );
-}
-
-// TODO: ========================= NEW LOGIC =========================
-interface Wrapper {
-  posEntities: Record<string, Entity>;
-  keyEntities: Record<Key, Entity>;
 }
 
 /**

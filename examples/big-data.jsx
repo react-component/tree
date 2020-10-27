@@ -13,7 +13,7 @@ class Demo extends React.Component {
     selectedKeys: [],
   };
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(nextProps, nextState) {
     // invoked immediately before rendering with new props or state, not for initial 'render'
     // see componentWillReceiveProps if you need to call setState
     // console.log(nextState.gData === this.state.gData);
