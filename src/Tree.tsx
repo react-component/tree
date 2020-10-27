@@ -216,7 +216,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     defaultExpandedKeys: [],
     defaultCheckedKeys: [],
     defaultSelectedKeys: [],
-    direction: 'ltr',
     dropIndicatorRender: DropIndicator,
     allowDrop: () => true,
   };
