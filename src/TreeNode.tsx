@@ -217,8 +217,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // Disabled item still can be switch
   onExpand: React.MouseEventHandler<HTMLDivElement> = e => {
     const {
+      loading,
       context: { onNodeExpand },
     } = this.props;
+    if (loading) return;
     onNodeExpand(e, convertNodePropsToEventData(this.props));
   };
 

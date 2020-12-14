@@ -1295,7 +1295,7 @@ describe('Tree Basic', () => {
                   <TreeNode key="0-1-0-0" className="dropTarget" />
                 </TreeNode>
               </TreeNode>
-              <TreeNode key="0-2"></TreeNode>
+              <TreeNode key="0-2" />
             </Tree>,
           );
           wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
@@ -1379,7 +1379,7 @@ describe('Tree Basic', () => {
                   <TreeNode key="0-1-0-0" className="dropTarget" />
                 </TreeNode>
               </TreeNode>
-              <TreeNode key="0-2"></TreeNode>
+              <TreeNode key="0-2" />
             </Tree>,
           );
           wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
@@ -1548,8 +1548,8 @@ describe('Tree Basic', () => {
                 <TreeNode key="0-0-0" className="dragTarget">
                   <TreeNode key="0-0-0-0" className="dragTargetChild" />
                 </TreeNode>
-                <TreeNode key="0-0-1"></TreeNode>
-                <TreeNode key="0-0-2" className="dropTarget"></TreeNode>
+                <TreeNode key="0-0-1" />
+                <TreeNode key="0-0-2" className="dropTarget" />
               </TreeNode>
             </Tree>,
           );
@@ -1626,7 +1626,7 @@ describe('Tree Basic', () => {
                   <TreeNode key="0-1-0-0" className="dropTarget" />
                 </TreeNode>
               </TreeNode>
-              <TreeNode key="0-2"></TreeNode>
+              <TreeNode key="0-2" />
             </Tree>,
           );
           wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
@@ -1888,5 +1888,38 @@ describe('Tree Basic', () => {
     const wrapper = mount(<Tree itemHeight={10} height={100} treeData={data} virtual={false} />);
 
     expect(wrapper.find('List').props().virtual).toBe(false);
+  });
+
+  // https://github.com/ant-design/ant-design/issues/28349
+  it('should not trigger expend when loading data', () => {
+    const then = jest.fn(() => Promise.resolve());
+    const loadData = jest.fn(() => ({ then }));
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      <Tree loadData={loadData} onExpand={onExpand}>
+        <TreeNode title="parent 1" key="0-0" />
+      </Tree>,
+    );
+
+    // trigger click to expand node
+    wrapper.find('.rc-tree-switcher').simulate('click');
+    expect(
+      wrapper
+        .find('.rc-tree-switcher')
+        .first()
+        .is(OPEN_CLASSNAME),
+    ).toBe(true);
+    expect(onExpand).toBeCalled();
+
+    // click again
+    onExpand.mockReset();
+    wrapper.find('.rc-tree-switcher').simulate('click');
+    expect(
+      wrapper
+        .find('.rc-tree-switcher')
+        .first()
+        .is(OPEN_CLASSNAME),
+    ).toBe(true);
+    expect(onExpand).not.toHaveBeenCalled();
   });
 });
