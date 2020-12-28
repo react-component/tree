@@ -41,7 +41,7 @@ http://localhost:9001/
 
 online example: http://react-component.github.io/tree/
 
-## install
+## Install
 
 [![rc-tree](https://nodei.co/npm/rc-tree.png)](https://npmjs.org/package/rc-tree)
 
@@ -117,7 +117,7 @@ see examples
 | icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 
-## note
+## Note
 
 The number of treeNodes can be very large, but when enable `checkable`, it will spend more computing time, so we cached some calculations(e.g. `this.treeNodesStates`), to avoid double computing. But, this bring some restrictions, **when you async load treeNodes, you should render tree like this** `{this.state.treeData.length ? <Tree ...>{this.state.treeData.map(t => <TreeNode ... />)}</Tree> : 'loading tree'}`
 
@@ -140,10 +140,10 @@ http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front
 
 rc-tree is released under the MIT license.
 
-## other tree view
+## Other tree views
 
-- [ztree](http://www.ztree.me/)
-- [jqTree](http://mbraak.github.io/jqTree/)
-- [jquery.treeselect](http://travistidwell.com/jquery.treeselect.js/)
-- [angular Select Tree](http://a5hik.github.io/angular-multi-select-tree/)
+- [zTree](http://www.treejs.cn/)
+- [jqTree](https://mbraak.github.io/jqTree/)
+- [jquery.treeselect](https://travistidwell.com/jquery.treeselect.js/)
+- [Angular Multi Select Tree](https://a5hik.github.io/angular-multi-select-tree/)
 
