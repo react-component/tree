@@ -234,15 +234,20 @@ export function convertDataToEntities(
     initWrapper,
     processEntity,
     onProcessFinished,
+    externalGetKey,
     childrenPropName,
   }: {
     initWrapper?: (wrapper: Wrapper) => Wrapper;
     processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
     onProcessFinished?: (wrapper: Wrapper) => void;
+    externalGetKey?: ExternalGetKey;
     childrenPropName?: string;
   } = {},
-  externalGetKey?: GetKey<DataNode> | string,
+  legacyExternalGetKey?: ExternalGetKey
 ) {
+  // Init config
+  let mergedExternalGetKey = externalGetKey || legacyExternalGetKey;
+
   const posEntities = {};
   const keyEntities = {};
   let wrapper = {
@@ -276,7 +281,7 @@ export function convertDataToEntities(
         processEntity(entity, wrapper);
       }
     },
-    { externalGetKey, childrenPropName },
+    { externalGetKey: mergedExternalGetKey, childrenPropName },
   );
 
   if (onProcessFinished) {

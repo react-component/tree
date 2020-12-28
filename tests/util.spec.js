@@ -112,47 +112,76 @@ describe('Util', () => {
     expect(treeNodes[0].props.children[0].props.value).toBe('0-0-0');
   });
 
-  it('convertDataToEntities', () => {
-    const entities = convertDataToEntities([{ key: 'parent', children: [{ key: 0 }, { key: 1 }] }]);
-    expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
-  });
+  describe('convertDataToEntities', () => {
+    it('basic', () => {
+      const entities = convertDataToEntities([
+        { key: 'parent', children: [{ key: 0 }, { key: 1 }] },
+      ]);
+      expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
+    });
 
-  it('convertDataToEntities with string externalGetKey', () => {
-    const entities = convertDataToEntities(
-      [
-        {
-          key: 'parent',
-          notKey: 'let it be',
-          children: [{ key: 0, notKey: 'penny lane' }, { key: 1, notKey: 'please please me' }],
-        },
-      ],
-      undefined,
-      'notKey',
-    );
-    expect(Object.keys(entities.keyEntities).sort()).toEqual([
-      'let it be',
-      'penny lane',
-      'please please me',
-    ]);
-  });
+    it('with string externalGetKey', () => {
+      const entities = convertDataToEntities(
+        [
+          {
+            key: 'parent',
+            notKey: 'let it be',
+            children: [
+              { key: 0, notKey: 'penny lane' },
+              { key: 1, notKey: 'please please me' },
+            ],
+          },
+        ],
+        undefined,
+        'notKey',
+      );
+      expect(Object.keys(entities.keyEntities).sort()).toEqual([
+        'let it be',
+        'penny lane',
+        'please please me',
+      ]);
+    });
 
-  it('convertDataToEntities with function externalGetKey', () => {
-    const entities = convertDataToEntities(
-      [
+    it('with function externalGetKey', () => {
+      const entities = convertDataToEntities(
+        [
+          {
+            key: 'parent',
+            notKey: 'let it be',
+            children: [
+              { key: 0, notKey: 'penny lane' },
+              { key: 1, notKey: 'please please me' },
+            ],
+          },
+        ],
+        undefined,
+        entity => entity.notKey,
+      );
+      expect(Object.keys(entities.keyEntities).sort()).toEqual([
+        'let it be',
+        'penny lane',
+        'please please me',
+      ]);
+    });
+
+    it('with childrenPropName', () => {
+      const entities = convertDataToEntities(
+        [
+          {
+            rawKey: 'light',
+            childList: [{ rawKey: 'bamboo' }],
+          },
+        ],
         {
-          key: 'parent',
-          notKey: 'let it be',
-          children: [{ key: 0, notKey: 'penny lane' }, { key: 1, notKey: 'please please me' }],
+          externalGetKey: entity => entity.rawKey,
+          childrenPropName: 'childList',
         },
-      ],
-      undefined,
-      entity => entity.notKey,
-    );
-    expect(Object.keys(entities.keyEntities).sort()).toEqual([
-      'let it be',
-      'penny lane',
-      'please please me',
-    ]);
+      );
+      expect(Object.keys(entities.keyEntities).sort()).toEqual(['bamboo', 'light']);
+
+      expect(entities.keyEntities.light.children).toEqual([entities.keyEntities.bamboo]);
+      expect(entities.keyEntities.bamboo.parent).toBe(entities.keyEntities.light);
+    });
   });
 
   it('convertTreeToEntities with additional handler', () => {
