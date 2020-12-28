@@ -1,7 +1,7 @@
-import type * as React from 'react';
+import * as React from 'react';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'rc-util/lib/warning';
-import type {
+import {
   DataNode,
   FlattenNode,
   NodeElement,
@@ -11,7 +11,7 @@ import type {
   GetKey,
 } from '../interface';
 import { getPosition, isTreeNode } from '../util';
-import type { TreeNodeProps } from '../TreeNode';
+import { TreeNodeProps } from '../TreeNode';
 
 export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
@@ -158,11 +158,11 @@ export function traverseDataNodes(
   let externalGetKey: ExternalGetKey = null;
   let childrenPropName: string;
 
-  const configType = typeof externalGetKey;
+  const configType = typeof config;
 
   if (configType === 'function' || configType === 'string') {
     // Legacy getKey param
-    externalGetKey = configType;
+    externalGetKey = config as ExternalGetKey;
   } else if (config && configType === 'object') {
     ({ childrenPropName, externalGetKey } = config as TraverseDataNodesConfig);
   }
@@ -244,10 +244,10 @@ export function convertDataToEntities(
     childrenPropName?: string;
   } = {},
   /** @deprecated Use `config.externalGetKey` instead */
-  legacyExternalGetKey?: ExternalGetKey
+  legacyExternalGetKey?: ExternalGetKey,
 ) {
   // Init config
-  let mergedExternalGetKey = externalGetKey || legacyExternalGetKey;
+  const mergedExternalGetKey = externalGetKey || legacyExternalGetKey;
 
   const posEntities = {};
   const keyEntities = {};

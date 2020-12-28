@@ -14,6 +14,7 @@ import {
   convertTreeToData,
   convertDataToEntities,
   getTreeNodeProps,
+  traverseDataNodes,
 } from '../src/utils/treeUtil';
 import { spyConsole, spyError } from './util';
 import { conductCheck } from '../src/utils/conductUtil';
@@ -126,7 +127,10 @@ describe('Util', () => {
           {
             key: 'parent',
             notKey: 'let it be',
-            children: [{ key: 0, notKey: 'penny lane' }, { key: 1, notKey: 'please please me' }],
+            children: [
+              { key: 0, notKey: 'penny lane' },
+              { key: 1, notKey: 'please please me' },
+            ],
           },
         ],
         undefined,
@@ -145,7 +149,10 @@ describe('Util', () => {
           {
             key: 'parent',
             notKey: 'let it be',
-            children: [{ key: 0, notKey: 'penny lane' }, { key: 1, notKey: 'please please me' }],
+            children: [
+              { key: 0, notKey: 'penny lane' },
+              { key: 1, notKey: 'please please me' },
+            ],
           },
         ],
         undefined,
@@ -604,5 +611,20 @@ describe('Util', () => {
         selected: false,
       }),
     );
+  });
+
+  it('traverseDataNodes legacy externalGetKey', () => {
+    let count = 0;
+
+    traverseDataNodes(
+      [{ rawKey: 'light' }],
+      data => {
+        count += 1;
+        expect(data.key).toBe('light');
+      },
+      'rawKey',
+    );
+
+    expect(count).toEqual(1);
   });
 });
