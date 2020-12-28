@@ -5,7 +5,7 @@
 Tree component.
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
+[![build status][github-actions-image]][github-actions-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![Dependencies][david-image]][david-url]
 [![DevDependencies][david-dev-image]][david-dev-url]
@@ -14,8 +14,8 @@ Tree component.
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree
-[travis-image]: https://img.shields.io/travis/react-component/tree.svg?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/tree
+[github-actions-image]: https://github.com/react-component/tree/workflows/CI/badge.svg
+[github-actions-url]: https://github.com/react-component/tree/actions
 [coveralls-image]: https://img.shields.io/coveralls/react-component/tree.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/react-component/tree?branch=master
 [david-url]: https://david-dm.org/react-component/tree
