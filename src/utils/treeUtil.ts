@@ -243,6 +243,7 @@ export function convertDataToEntities(
     externalGetKey?: ExternalGetKey;
     childrenPropName?: string;
   } = {},
+  /** @deprecated Use `config.externalGetKey` instead */
   legacyExternalGetKey?: ExternalGetKey
 ) {
   // Init config
