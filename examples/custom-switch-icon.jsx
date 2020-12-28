@@ -1,6 +1,5 @@
 /* eslint no-console:0 */
 /* eslint no-alert:0 */
-/* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React from 'react';
 import '../assets/index.less';
 import Tree, { TreeNode } from '../src';

@@ -83,7 +83,7 @@ export function calcDropPosition(
   keyEntities: Record<Key, DataEntity>,
   expandKeys: Key[],
   direction: Direction,
-) : {
+): {
   dropPosition: -1 | 0 | 1,
   dropLevelOffset: number,
   dropTargetKey: Key,
