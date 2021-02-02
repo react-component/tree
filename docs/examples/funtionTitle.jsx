@@ -1,8 +1,8 @@
 /* eslint no-console:0, react/no-danger: 0 */
-import '../assets/index.less';
+import '../../assets/index.less';
 import './animation.less';
 import React, { useState } from 'react';
-import Tree from '../src';
+import Tree from 'rc-tree';
 import data from './longData.json';
 
 const STYLE = `

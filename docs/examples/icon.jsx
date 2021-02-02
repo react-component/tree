@@ -2,8 +2,8 @@
 /* eslint no-alert:0 */
 import React from 'react';
 import classNames from 'classnames';
-import Tree, { TreeNode } from '../src';
-import '../assets/index.less';
+import Tree, { TreeNode } from 'rc-tree';
+import '../../assets/index.less';
 import './icon.less';
 
 const Icon = ({ selected }) => (

@@ -1,9 +1,9 @@
 /* eslint-disable no-console, react/no-unescaped-entities */
-import '../assets/index.less';
+import '../../assets/index.less';
 import React from 'react';
 import 'rc-dialog/assets/index.css';
 import Modal from 'rc-dialog';
-import Tree, { TreeNode } from '../src';
+import Tree, { TreeNode } from 'rc-tree';
 import { gData, getRadioSelectKeys } from './utils/dataUtil';
 
 class Demo extends React.Component {

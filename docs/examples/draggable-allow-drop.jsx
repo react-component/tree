@@ -2,8 +2,8 @@
 import React from 'react';
 import { gData } from './utils/dataUtil';
 import './draggable.less';
-import '../assets/index.less';
-import Tree from '../src';
+import '../../assets/index.less';
+import Tree from 'rc-tree';
 
 function allowDrop({ dropNode, dropPosition }) {
   if (!dropNode.children) {

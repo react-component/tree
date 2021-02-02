@@ -3,8 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Tooltip from 'rc-tooltip';
 import './contextmenu.less';
-import '../assets/index.less';
-import Tree, { TreeNode } from '../src';
+import '../../assets/index.less';
+import Tree, { TreeNode } from 'rc-tree';
 
 function contains(root, n) {
   let node = n;

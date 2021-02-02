@@ -1,8 +1,8 @@
 /* eslint-disable no-console, prefer-destructuring */
 import React from 'react';
 import Gen from './big-data-generator';
-import '../assets/index.less';
-import Tree, { TreeNode } from '../src';
+import '../../assets/index.less';
+import Tree, { TreeNode } from 'rc-tree';
 
 class Demo extends React.Component {
   state = {
