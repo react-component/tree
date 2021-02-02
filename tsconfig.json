@@ -10,7 +10,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@@/*": ["src/.umi/*"],
-      "rc-table": ["src/index.ts"]
+      "rc-tree": ["src/index.ts"]
     }
   }
 }

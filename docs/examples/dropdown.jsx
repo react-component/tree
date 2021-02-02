@@ -5,8 +5,8 @@ import React from 'react';
 import Trigger from 'rc-trigger';
 import { gData } from './utils/dataUtil';
 import './dropdown.less';
-import '../assets/index.less';
-import Tree, { TreeNode } from '../src';
+import '../../assets/index.less';
+import Tree, { TreeNode } from 'rc-tree';
 
 const placements = {
   topLeft: {

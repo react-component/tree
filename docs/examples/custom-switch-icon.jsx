@@ -1,8 +1,8 @@
 /* eslint no-console:0 */
 /* eslint no-alert:0 */
 import React from 'react';
-import '../assets/index.less';
-import Tree, { TreeNode } from '../src';
+import '../../assets/index.less';
+import Tree, { TreeNode } from 'rc-tree';
 
 const arrowPath =
   'M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88' +

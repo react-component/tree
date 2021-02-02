@@ -1,8 +1,8 @@
 /* eslint no-console:0, react/no-danger: 0 */
-import '../assets/index.less';
+import '../../assets/index.less';
 import './animation.less';
 import React from 'react';
-import Tree from '../src';
+import Tree from 'rc-tree';
 
 const STYLE = `
 .rc-tree-child-tree {
