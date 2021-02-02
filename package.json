@@ -43,7 +43,7 @@
     "test": "father test",
     "coverage": "father test --coverage",
     "gh-pages": "npm run build && father doc deploy",
-    "now-build": "npm run build"
+    "now-build": "npm run docs:build"
   },
   "peerDependencies": {
     "react": "*",
