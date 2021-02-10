@@ -1,7 +1,7 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
-import '../assets/index.less';
+import '../../assets/index.less';
 import React from 'react';
-import Tree from '../src';
+import Tree from 'rc-tree';
 
 function generateTreeNodes(treeNode) {
   const arr = [];
@@ -26,6 +26,7 @@ function setLeaf(treeData, curKey, level) {
       if (item.children) {
         loopLeaf(item.children, l);
       } else if (l < 1) {
+        // eslint-disable-next-line no-param-reassign
         item.isLeaf = true;
       }
     });
@@ -41,6 +42,7 @@ function getNewTreeData(treeData, curKey, child, level) {
         if (item.children) {
           loop(item.children);
         } else {
+          // eslint-disable-next-line no-param-reassign
           item.children = child;
         }
       }

@@ -8,6 +8,7 @@ import {
   DataEntity,
   Key,
   EventDataNode,
+  GetKey,
 } from '../interface';
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
@@ -57,10 +58,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
       .map(treeNode => {
         // Filter invalidate node
         if (!isTreeNode(treeNode)) {
-          warning(
-            !treeNode,
-            'Tree/TreeNode can only accept TreeNode as children.',
-          );
+          warning(!treeNode, 'Tree/TreeNode can only accept TreeNode as children.');
           return null;
         }
 
@@ -132,6 +130,13 @@ export function flattenTreeData(
   return flattenList;
 }
 
+type ExternalGetKey = GetKey<DataNode> | string;
+
+interface TraverseDataNodesConfig {
+  childrenPropName?: string;
+  externalGetKey?: ExternalGetKey;
+}
+
 /**
  * Traverse all the data by `treeData`.
  * Please not use it out of the `rc-tree` since we may refactor this code.
@@ -146,22 +151,53 @@ export function traverseDataNodes(
     parentPos: string | number;
     level: number;
   }) => void,
+  // To avoid too many params, let use config instead of origin param
+  config?: TraverseDataNodesConfig | ExternalGetKey,
 ) {
+  // Init config
+  let externalGetKey: ExternalGetKey = null;
+  let childrenPropName: string;
+
+  const configType = typeof config;
+
+  if (configType === 'function' || configType === 'string') {
+    // Legacy getKey param
+    externalGetKey = config as ExternalGetKey;
+  } else if (config && configType === 'object') {
+    ({ childrenPropName, externalGetKey } = config as TraverseDataNodesConfig);
+  }
+
+  childrenPropName = childrenPropName || 'children';
+
+  // Get keys
+  let syntheticGetKey: (node: DataNode, pos?: string) => Key;
+  if (externalGetKey) {
+    if (typeof externalGetKey === 'string') {
+      syntheticGetKey = (node: DataNode) => (node as any)[externalGetKey as string];
+    } else if (typeof externalGetKey === 'function') {
+      syntheticGetKey = (node: DataNode) => (externalGetKey as GetKey<DataNode>)(node);
+    }
+  } else {
+    syntheticGetKey = (node, pos) => getKey(node.key, pos);
+  }
+
+  // Process
   function processNode(
     node: DataNode,
     index?: number,
     parent?: { node: DataNode; pos: string; level: number },
   ) {
-    const children = node ? node.children : dataNodes;
+    const children = node ? node[childrenPropName] : dataNodes;
     const pos = node ? getPosition(parent.pos, index) : '0';
 
     // Process node if is not root
     if (node) {
+      const key: Key = syntheticGetKey(node, pos);
       const data = {
         node,
         index,
         pos,
-        key: node.key !== null ? node.key : pos,
+        key,
         parentPos: parent.node ? parent.pos : null,
         level: parent.level + 1,
       };
@@ -198,12 +234,21 @@ export function convertDataToEntities(
     initWrapper,
     processEntity,
     onProcessFinished,
+    externalGetKey,
+    childrenPropName,
   }: {
     initWrapper?: (wrapper: Wrapper) => Wrapper;
     processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
     onProcessFinished?: (wrapper: Wrapper) => void;
+    externalGetKey?: ExternalGetKey;
+    childrenPropName?: string;
   } = {},
+  /** @deprecated Use `config.externalGetKey` instead */
+  legacyExternalGetKey?: ExternalGetKey,
 ) {
+  // Init config
+  const mergedExternalGetKey = externalGetKey || legacyExternalGetKey;
+
   const posEntities = {};
   const keyEntities = {};
   let wrapper = {
@@ -215,26 +260,30 @@ export function convertDataToEntities(
     wrapper = initWrapper(wrapper) || wrapper;
   }
 
-  traverseDataNodes(dataNodes, item => {
-    const { node, index, pos, key, parentPos, level } = item;
-    const entity: DataEntity = { node, index, key, pos, level };
+  traverseDataNodes(
+    dataNodes,
+    item => {
+      const { node, index, pos, key, parentPos, level } = item;
+      const entity: DataEntity = { node, index, key, pos, level };
 
-    const mergedKey = getKey(key, pos);
+      const mergedKey = getKey(key, pos);
 
-    posEntities[pos] = entity;
-    keyEntities[mergedKey] = entity;
+      posEntities[pos] = entity;
+      keyEntities[mergedKey] = entity;
 
-    // Fill children
-    entity.parent = posEntities[parentPos];
-    if (entity.parent) {
-      entity.parent.children = entity.parent.children || [];
-      entity.parent.children.push(entity);
-    }
+      // Fill children
+      entity.parent = posEntities[parentPos];
+      if (entity.parent) {
+        entity.parent.children = entity.parent.children || [];
+        entity.parent.children.push(entity);
+      }
 
-    if (processEntity) {
-      processEntity(entity, wrapper);
-    }
-  });
+      if (processEntity) {
+        processEntity(entity, wrapper);
+      }
+    },
+    { externalGetKey: mergedExternalGetKey, childrenPropName },
+  );
 
   if (onProcessFinished) {
     onProcessFinished(wrapper);
@@ -285,6 +334,8 @@ export function getTreeNodeProps(
     pos: String(entity ? entity.pos : ''),
 
     // [Legacy] Drag props
+    // Since the interaction of drag is changed, the semantic of the props are
+    // not accuracy, I think it should be finally removed
     dragOver: dragOverNodeKey === key && dropPosition === 0,
     dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
     dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1,
@@ -293,9 +344,7 @@ export function getTreeNodeProps(
   return treeNodeProps;
 }
 
-export function convertNodePropsToEventData(
-  props: TreeNodeProps,
-): EventDataNode {
+export function convertNodePropsToEventData(props: TreeNodeProps): EventDataNode {
   const {
     data,
     expanded,

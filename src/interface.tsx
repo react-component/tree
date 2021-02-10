@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { TreeNodeProps } from './TreeNode';
 
+export { ScrollTo } from 'rc-virtual-list/lib/List';
+
 export interface DataNode {
   checkable?: boolean;
   children?: DataNode[];
@@ -72,4 +74,8 @@ export interface FlattenNode {
   isEnd: boolean[];
 }
 
-export type ScrollTo = (scroll: { key: Key }) => void;
+export type GetKey<RecordType> = (record: RecordType, index?: number) => Key;
+
+export type GetCheckDisabled<RecordType> = (record: RecordType) => boolean;
+
+export type Direction = 'ltr' | 'rtl' | undefined;

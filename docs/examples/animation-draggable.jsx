@@ -1,9 +1,38 @@
-/* eslint-disable no-console, react/no-access-state-in-setstate */
+/* eslint-disable no-console, react/no-access-state-in-setstate,
+react/no-danger, no-param-reassign */
 import React from 'react';
 import { gData } from './utils/dataUtil';
-import './draggable.less';
-import '../assets/index.less';
-import Tree, { TreeNode } from '../src';
+import '../../assets/index.less';
+import Tree from 'rc-tree';
+
+const STYLE = `
+.rc-tree-child-tree {
+  display: block;
+}
+
+.node-motion {
+  transition: all .3s;
+  overflow-y: hidden;
+}
+`;
+
+const motion = {
+  motionName: 'node-motion',
+  motionAppear: false,
+  onAppearStart: node => {
+    console.log('Start Motion:', node);
+    return { height: 0 };
+  },
+  onAppearActive: node => ({ height: node.scrollHeight }),
+  onLeaveStart: node => ({ height: node.offsetHeight }),
+  onLeaveActive: () => ({ height: 0 }),
+};
+
+// const gData = [
+//   { title: '0-0', key: '0-0' },
+//   { title: '0-1', key: '0-1' },
+//   { title: '0-2', key: '0-2', children: [{ title: '0-2-0', key: '0-2-0' }] },
+// ];
 
 class Demo extends React.Component {
   state = {
@@ -12,14 +41,10 @@ class Demo extends React.Component {
     expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
   };
 
-  onDragStart = info => {
-    console.log('start', info);
-  };
-
-  onDragEnter = info => {
-    console.log('enter', info);
+  onDragEnter = ({ expandedKeys }) => {
+    console.log('enter', expandedKeys);
     this.setState({
-      expandedKeys: info.expandedKeys,
+      expandedKeys,
     });
   };
 
@@ -96,34 +121,25 @@ class Demo extends React.Component {
   };
 
   render() {
-    const loop = data =>
-      data.map(item => {
-        if (item.children && item.children.length) {
-          return (
-            <TreeNode key={item.key} title={item.title}>
-              {loop(item.children)}
-            </TreeNode>
-          );
-        }
-        return <TreeNode key={item.key} title={item.title} />;
-      });
+    const { expandedKeys } = this.state;
+
     return (
       <div className="draggable-demo">
+        <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+
         <h2>draggable</h2>
         <p>drag a node into another node</p>
-        <div className="draggable-container">
-          <Tree
-            expandedKeys={this.state.expandedKeys}
-            onExpand={this.onExpand}
-            autoExpandParent={this.state.autoExpandParent}
-            draggable
-            onDragStart={this.onDragStart}
-            onDragEnter={this.onDragEnter}
-            onDrop={this.onDrop}
-          >
-            {loop(this.state.gData)}
-          </Tree>
-        </div>
+        <Tree
+          expandedKeys={expandedKeys}
+          onExpand={this.onExpand}
+          autoExpandParent={this.state.autoExpandParent}
+          draggable
+          onDragStart={this.onDragStart}
+          onDragEnter={this.onDragEnter}
+          onDrop={this.onDrop}
+          treeData={this.state.gData}
+          motion={motion}
+        />
       </div>
     );
   }

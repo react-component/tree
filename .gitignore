@@ -31,3 +31,9 @@ lib
 /coverage
 yarn.lock
 es/
+!tests/__mocks__/rc-util/lib
+# umi
+.umi
+.umi-production
+.umi-test
+.env.local

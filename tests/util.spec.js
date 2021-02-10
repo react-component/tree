@@ -5,7 +5,7 @@ import Tree, { TreeNode } from '../src';
 import {
   convertDataToTree,
   conductExpandParent,
-  getDragNodesKeys,
+  getDragChildrenKeys,
   getDataAndAria,
   parseCheckedKeys,
 } from '../src/util';
@@ -14,6 +14,7 @@ import {
   convertTreeToData,
   convertDataToEntities,
   getTreeNodeProps,
+  traverseDataNodes,
 } from '../src/utils/treeUtil';
 import { spyConsole, spyError } from './util';
 import { conductCheck } from '../src/utils/conductUtil';
@@ -112,9 +113,76 @@ describe('Util', () => {
     expect(treeNodes[0].props.children[0].props.value).toBe('0-0-0');
   });
 
-  it('convertDataToEntities', () => {
-    const entities = convertDataToEntities([{ key: 'parent', children: [{ key: 0 }, { key: 1 }] }]);
-    expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
+  describe('convertDataToEntities', () => {
+    it('basic', () => {
+      const entities = convertDataToEntities([
+        { key: 'parent', children: [{ key: 0 }, { key: 1 }] },
+      ]);
+      expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
+    });
+
+    it('with string externalGetKey', () => {
+      const entities = convertDataToEntities(
+        [
+          {
+            key: 'parent',
+            notKey: 'let it be',
+            children: [
+              { key: 0, notKey: 'penny lane' },
+              { key: 1, notKey: 'please please me' },
+            ],
+          },
+        ],
+        undefined,
+        'notKey',
+      );
+      expect(Object.keys(entities.keyEntities).sort()).toEqual([
+        'let it be',
+        'penny lane',
+        'please please me',
+      ]);
+    });
+
+    it('with function externalGetKey', () => {
+      const entities = convertDataToEntities(
+        [
+          {
+            key: 'parent',
+            notKey: 'let it be',
+            children: [
+              { key: 0, notKey: 'penny lane' },
+              { key: 1, notKey: 'please please me' },
+            ],
+          },
+        ],
+        undefined,
+        entity => entity.notKey,
+      );
+      expect(Object.keys(entities.keyEntities).sort()).toEqual([
+        'let it be',
+        'penny lane',
+        'please please me',
+      ]);
+    });
+
+    it('with childrenPropName', () => {
+      const entities = convertDataToEntities(
+        [
+          {
+            rawKey: 'light',
+            childList: [{ rawKey: 'bamboo' }],
+          },
+        ],
+        {
+          externalGetKey: entity => entity.rawKey,
+          childrenPropName: 'childList',
+        },
+      );
+      expect(Object.keys(entities.keyEntities).sort()).toEqual(['bamboo', 'light']);
+
+      expect(entities.keyEntities.light.children).toEqual([entities.keyEntities.bamboo]);
+      expect(entities.keyEntities.bamboo.parent).toBe(entities.keyEntities.light);
+    });
   });
 
   it('convertTreeToEntities with additional handler', () => {
@@ -134,6 +202,7 @@ describe('Util', () => {
           valueEntities: {},
         }),
         processEntity: (entity, wrapper) => {
+          // eslint-disable-next-line no-param-reassign
           wrapper.valueEntities[entity.node.value] = entity;
         },
         onProcessFinished,
@@ -284,6 +353,79 @@ describe('Util', () => {
         expect(result2.checkedKeys.sort()).toEqual(['war', 'are', 'not', 'it'].sort());
         expect(result2.halfCheckedKeys.sort()).toEqual([].sort());
       });
+
+      const genNonDisabledTree = props => (
+        <Tree {...props}>
+          <TreeNode key="war">
+            <TreeNode key="are" />
+            <TreeNode key="not">
+              <TreeNode key="it" />
+              <TreeNode key="used">
+                <TreeNode key="to" />
+                <TreeNode key="be" />
+              </TreeNode>
+            </TreeNode>
+          </TreeNode>
+        </Tree>
+      );
+
+      it('check with custom checkbox disabled', () => {
+        const tree = genNonDisabledTree();
+        const { keyEntities } = convertDataToEntities(
+          convertTreeToData(tree.props.children),
+          undefined,
+          undefined,
+        );
+
+        const getCheckDisabled = data => data.key === 'used';
+
+        const result1 = conductCheck(['not'], true, keyEntities, getCheckDisabled);
+        expect(result1.checkedKeys.sort()).toEqual(['not', 'it'].sort());
+        expect(result1.halfCheckedKeys.sort()).toEqual(['war'].sort());
+
+        const result2 = conductCheck(['to', 'be'], true, keyEntities, getCheckDisabled);
+        expect(result2.checkedKeys.sort()).toEqual(['to', 'be'].sort());
+        expect(result2.halfCheckedKeys.sort()).toEqual([].sort());
+      });
+
+      it('uncheck with custom checkbox disabled', () => {
+        const tree = genNonDisabledTree();
+        const { keyEntities } = convertDataToEntities(
+          convertTreeToData(tree.props.children),
+          undefined,
+          undefined,
+        );
+
+        const getCheckDisabled = data => data.key === 'used';
+
+        // First, we check all
+        const allCheckedKeys = conductCheck(
+          ['war', 'to', 'be'],
+          true,
+          keyEntities,
+          getCheckDisabled,
+        ).checkedKeys;
+        expect(allCheckedKeys.length).toEqual(6);
+
+        // Then uncheck one of then
+        const result1 = conductCheck(
+          allCheckedKeys.filter(key => key !== 'not'),
+          { checked: false, halfCheckedKeys: [] },
+          keyEntities,
+          getCheckDisabled,
+        );
+        expect(result1.checkedKeys.sort()).toEqual(['are', 'to', 'be'].sort());
+        expect(result1.halfCheckedKeys.sort()).toEqual(['war'].sort());
+
+        const result2 = conductCheck(
+          allCheckedKeys.filter(key => key !== 'to' && key !== 'be'),
+          { checked: false, halfCheckedKeys: [] },
+          keyEntities,
+          getCheckDisabled,
+        );
+        expect(result2.checkedKeys.sort()).toEqual(['war', 'are', 'not', 'it'].sort());
+        expect(result2.halfCheckedKeys.sort()).toEqual([].sort());
+      });
     });
   });
 
@@ -303,7 +445,7 @@ describe('Util', () => {
     expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
   });
 
-  it('getDragNodesKeys', () => {
+  it('getDragChildrenKeys', () => {
     const tree = (
       <Tree defaultExpandAll>
         <TreeNode key="000">
@@ -316,11 +458,11 @@ describe('Util', () => {
     );
 
     const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
-    const keys0 = getDragNodesKeys('000', keyEntities);
-    expect(keys0.sort()).toEqual(['000', '111', '222', '333'].sort());
+    const keys0 = getDragChildrenKeys('000', keyEntities);
+    expect(keys0.sort()).toEqual(['111', '222', '333'].sort());
 
-    const keys1 = getDragNodesKeys('111', keyEntities);
-    expect(keys1.sort()).toEqual(['111', '222', '333'].sort());
+    const keys1 = getDragChildrenKeys('111', keyEntities);
+    expect(keys1.sort()).toEqual(['222', '333'].sort());
   });
 
   describe('getDataAndAria', () => {
@@ -404,6 +546,44 @@ describe('Util', () => {
         '1',
       ]);
     });
+
+    it('isEnd should be correct', () => {
+      const flattenList = flattenTreeData(
+        [
+          getNode('0', [
+            getNode('0-0'),
+            getNode('0-1'),
+            getNode('0-2', [
+              // Break lines
+              getNode('0-2-0'),
+            ]),
+          ]),
+          getNode('1', [
+            // Break lines
+            getNode('1-0'),
+            getNode('1-1'),
+          ]),
+        ],
+        true,
+      );
+
+      expect(
+        flattenList.map(({ isStart, isEnd }) => ({
+          isStart,
+          isEnd,
+        })),
+      ).toEqual([
+        { isStart: [true], isEnd: [false] },
+        { isStart: [true, true], isEnd: [false, false] },
+        { isStart: [true, false], isEnd: [false, false] },
+        { isStart: [true, false], isEnd: [false, true] },
+        { isStart: [true, false, true], isEnd: [false, true, true] },
+
+        { isStart: [false], isEnd: [true] },
+        { isStart: [false, true], isEnd: [true, false] },
+        { isStart: [false, false], isEnd: [true, true] },
+      ]);
+    });
   });
 
   it('not crash if node not exist with getTreeNodeProps', () => {
@@ -431,5 +611,20 @@ describe('Util', () => {
         selected: false,
       }),
     );
+  });
+
+  it('traverseDataNodes legacy externalGetKey', () => {
+    let count = 0;
+
+    traverseDataNodes(
+      [{ rawKey: 'light' }],
+      data => {
+        count += 1;
+        expect(data.key).toBe('light');
+      },
+      'rawKey',
+    );
+
+    expect(count).toEqual(1);
   });
 });

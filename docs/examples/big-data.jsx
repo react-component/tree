@@ -1,8 +1,8 @@
 /* eslint-disable no-console, prefer-destructuring */
 import React from 'react';
 import Gen from './big-data-generator';
-import '../assets/index.less';
-import Tree, { TreeNode } from '../src';
+import '../../assets/index.less';
+import Tree, { TreeNode } from 'rc-tree';
 
 class Demo extends React.Component {
   state = {
@@ -13,7 +13,7 @@ class Demo extends React.Component {
     selectedKeys: [],
   };
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(nextProps, nextState) {
     // invoked immediately before rendering with new props or state, not for initial 'render'
     // see componentWillReceiveProps if you need to call setState
     // console.log(nextState.gData === this.state.gData);

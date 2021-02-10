@@ -3,10 +3,34 @@
  * When util.js imports the TreeNode for tree generate will cause treeContextTypes be empty.
  */
 import * as React from 'react';
-import { IconType, Key, DataEntity, EventDataNode, NodeInstance } from './interface';
+import {
+  IconType,
+  Key,
+  DataEntity,
+  EventDataNode,
+  NodeInstance,
+  DataNode,
+  Direction,
+} from './interface';
 
-type NodeMouseEventHandler = (e: React.MouseEvent<HTMLDivElement>, node: EventDataNode) => void;
-type NodeDragEventHandler = (e: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => void;
+export type NodeMouseEventParams<T = HTMLSpanElement> = {
+  event: React.MouseEvent<T>;
+  node: EventDataNode;
+};
+export type NodeDragEventParams<T = HTMLDivElement> = {
+  event: React.MouseEvent<T>;
+  node: EventDataNode;
+};
+
+export type NodeMouseEventHandler<T = HTMLSpanElement> = (
+  e: React.MouseEvent<T>,
+  node: EventDataNode,
+) => void;
+export type NodeDragEventHandler<T = HTMLDivElement> = (
+  e: React.MouseEvent<T>,
+  node: NodeInstance,
+  outsideTree?: boolean,
+) => void;
 
 export interface TreeContextProps {
   prefixCls: string;
@@ -14,21 +38,37 @@ export interface TreeContextProps {
   showIcon: boolean;
   icon: IconType;
   switcherIcon: IconType;
-  draggable: boolean;
+  draggable: ((node: DataNode) => boolean) | boolean;
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
   keyEntities: Record<Key, DataEntity>;
+  // for details see comment in Tree.state (Tree.tsx)
+  dropLevelOffset?: number;
+  dropContainerKey: Key | null;
+  dropTargetKey: Key | null;
+  dropPosition: -1 | 0 | 1 | null;
+  indent: number | null;
+  dropIndicatorRender: (props: {
+    dropPosition: -1 | 0 | 1;
+    dropLevelOffset: number;
+    indent;
+    prefixCls;
+    direction: Direction;
+  }) => React.ReactNode;
+  dragOverNodeKey: Key | null;
+  direction: Direction;
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode) => boolean;
+  titleRender?: (node: DataNode) => React.ReactNode;
 
   onNodeClick: NodeMouseEventHandler;
   onNodeDoubleClick: NodeMouseEventHandler;
   onNodeExpand: NodeMouseEventHandler;
   onNodeSelect: NodeMouseEventHandler;
   onNodeCheck: (
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.MouseEvent<HTMLSpanElement>,
     treeNode: EventDataNode,
     checked: boolean,
   ) => void;

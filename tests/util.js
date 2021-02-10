@@ -27,9 +27,11 @@ export function spyConsole() {
     'Warning: `children` of Tree is deprecated. Please use `treeData` instead.',
   ];
 
+  // eslint-disable-next-line no-console
   const originConsoleErr = console.error;
 
   beforeAll(() => {
+    // eslint-disable-next-line no-console
     console.error = jest.fn().mockImplementation((...args) => {
       if (errorList.some(tmpl => args[0].includes(tmpl))) {
         return;
@@ -40,6 +42,7 @@ export function spyConsole() {
   });
 
   afterAll(() => {
+    // eslint-disable-next-line no-console
     console.error = originConsoleErr;
   });
 }
