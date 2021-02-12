@@ -459,7 +459,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     );
 
     if (
-       !dragNode || // We should allow drop if dragNode is undefined - it could come from another tree
+      // !dragNode || // We should allow drop if dragNode is undefined - it could come from another tree
       // don't allow drop inside its children
       dragChildrenKeys.indexOf(dropTargetKey) !== -1 ||
       // don't allow drop when drop is not allowed caculated by calcDropPosition
@@ -485,7 +485,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       clearTimeout(this.delayedDragEnterLogic[key]);
     });
     // Check that dropNode exists, it could be undefined if it comes from another tree
-    if (dragNode && dragNode.props.eventKey !== node.props.eventKey) {
+    if (!dragNode || (dragNode.props.eventKey !== node.props.eventKey)) {
       // hoist expand logic here
       // since if logic is on the bottom
       // it will be blocked by abstract dragover node check
@@ -517,7 +517,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Skip if drag node is self
     // Remember to check dragNode exists - it could be undefined if it is from another tree
-    if (!dragNode || (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0)) {
+    if (dragNode && (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0)) {
       this.setState({
         dragOverNodeKey: null,
         dropPosition: null,
