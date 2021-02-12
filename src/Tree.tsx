@@ -516,7 +516,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     // Skip if drag node is self
-    // Remember to check dragNode exists - it could be undefined if iot is from another tree
+    // Remember to check dragNode exists - it could be undefined if it is from another tree
     if (!dragNode || (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0)) {
       this.setState({
         dragOverNodeKey: null,
