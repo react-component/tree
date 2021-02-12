@@ -415,7 +415,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     window.addEventListener('dragend', this.onWindowDragEnd);
 
     if (onDragStart) {
-      onDragStart({ event, node: convertNodePropsToEventData(node.props) });
+      onDragStart({ event, node: convertNodePropsToEventData(node.props), cleanDragState: this.cleanDragState });
     }
   };
 
@@ -459,7 +459,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     );
 
     if (
-      // !dragNode || We should allow drop if dragNode is undefined - it could come from another tree
+       !dragNode || // We should allow drop if dragNode is undefined - it could come from another tree
       // don't allow drop inside its children
       dragChildrenKeys.indexOf(dropTargetKey) !== -1 ||
       // don't allow drop when drop is not allowed caculated by calcDropPosition
@@ -545,6 +545,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       onDragEnter({
         event,
         node: convertNodePropsToEventData(node.props),
+        cleanDragState: this.cleanDragState,
         expandedKeys,
       });
     }
@@ -638,7 +639,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     if (onDragOver) {
-      onDragOver({ event, node: convertNodePropsToEventData(node.props) });
+      onDragOver({ event, node: convertNodePropsToEventData(node.props), cleanDragState: this.cleanDragState });
     }
   };
 
@@ -646,7 +647,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const { onDragLeave } = this.props;
 
     if (onDragLeave) {
-      onDragLeave({ event, node: convertNodePropsToEventData(node.props) });
+      onDragLeave({ event, node: convertNodePropsToEventData(node.props), cleanDragState: this.cleanDragState });
     }
   };
 
@@ -667,7 +668,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.cleanDragState();
 
     if (onDragEnd && !outsideTree) {
-      onDragEnd({ event, node: convertNodePropsToEventData(node.props) });
+      onDragEnd({ event, node: convertNodePropsToEventData(node.props), cleanDragState: this.cleanDragState });
     }
 
     this.dragNode = null;
@@ -717,6 +718,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragNodesKeys: this.dragNode ? [this.dragNode.props.eventKey].concat(dragChildrenKeys) : [],
       dropToGap: dropPosition !== 0,
       dropPosition: dropPosition + Number(posArr[posArr.length - 1]),
+      cleanDragState: this.cleanDragState
     };
 
     if (onDrop && !outsideTree) {
@@ -727,8 +729,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   cleanDragState = () => {
-    const { dragging } = this.state;
-    if (dragging) {
+  // Don´t check if this.dragging is true - it could be dragged from another tree
       this.setState({
         dragging: false,
         dropPosition: null,
@@ -738,7 +739,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropAllowed: true,
         dragOverNodeKey: null,
       });
-    }
     this.dragStartMousePosition = null;
   };
 

@@ -49,12 +49,7 @@ const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, s
   const [expandedKeys, setExpandedKeys] = useState([`0-0-${label}`, `0-0-0-${label}`, `0-0-0-0-${label}`]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
 
-  const onDragEnter = () => {
-    console.log('enter');
-  };
-
   const onDrop = (info) => {
-    console.log('drop', info);
     const dropKey = info.node.key;
     const isFromAnotherTree = dragNodeOrigin !== label;
     const dragKey = isFromAnotherTree ? globalDragNode.key : info.dragNode.key;
@@ -97,13 +92,13 @@ const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, s
       }
     }
     setData(data);
+    info.cleanDragState();
     if(isFromAnotherTree){
        onDragCompleted()
     }
   };
 
   const onExpand = (expandedKeys) => {
-    console.log('onExpand', expandedKeys);
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(false);
   };
@@ -116,7 +111,6 @@ const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, s
         autoExpandParent={autoExpandParent}
         draggable
         onDragStart={onDragStart}
-        onDragEnter={onDragEnter}
         onDrop={onDrop}
         treeData={gData}
       />
@@ -124,39 +118,43 @@ const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, s
   );
 };
 
+let sourceCleanDragState = ()=>{};
 const Demo = () => {
   const [globalDragNode, setGlobalDragNode] = useState(null);
   const [dragNodeOrigin, setDragNodeOrigin] = useState(null)
   const [leftData, setLeftData] = useState(generateData(3, 2, 1, [], 'left'));
   const [rightData, setRightData] = useState(generateData(3, 2, 1, [], 'right'));
 
-  const onDragStart = (node, origin) => {
+  const onDragStart = (node, cleanDragState, origin) => {
     console.log('Drag started');
     setGlobalDragNode(node);
-    setDragNodeOrigin(origin)
+    setDragNodeOrigin(origin);
+    sourceCleanDragState = cleanDragState;
   };
 
   const onDragCompleted = origin => {
+    console.log('Drag completed, remove node from source tree');
     if(!dragNodeOrigin || dragNodeOrigin === origin) {
       return;
     } else if(dragNodeOrigin === "left") {
       const data = [...leftData]
-      loop(data, globalDragNode.key, (item, index, arr) => {
+       loop(data, globalDragNode.key, (item, index, arr) => {
         arr.splice(index, 1);
       });
+      sourceCleanDragState()
       setLeftData(data)
       setGlobalDragNode(null)
       setDragNodeOrigin(null)
 
     } else if(dragNodeOrigin === "right") {
       const data = [...rightData]
-      loop(data, globalDragNode.key, (item, index, arr) => {
+       loop(data, globalDragNode.key, (item, index, arr) => {
         arr.splice(index, 1);
-      });
+      }); 
+      sourceCleanDragState()
       setRightData(data)
       setGlobalDragNode(null)
       setDragNodeOrigin(null)
-
     }
 
   }
@@ -169,7 +167,7 @@ const Demo = () => {
         onDragCompleted={() => onDragCompleted("left")}
         setData={setLeftData}
         gData={leftData}
-        onDragStart={({ node }) => onDragStart(node, "left")}
+        onDragStart={({ node, cleanDragState }) => onDragStart(node,cleanDragState, "left")}
         globalDragNode={globalDragNode}
         dragNodeOrigin={dragNodeOrigin}
       />
@@ -178,7 +176,7 @@ const Demo = () => {
         onDragCompleted={() => onDragCompleted("right")}
         setData={setRightData}
         gData={rightData}
-        onDragStart={({ node }) => onDragStart(node, "right")}
+        onDragStart={({ node, cleanDragState }) => onDragStart(node, cleanDragState, "right")}
         globalDragNode={globalDragNode}
         dragNodeOrigin={dragNodeOrigin}
       />
