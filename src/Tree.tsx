@@ -484,7 +484,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     Object.keys(this.delayedDragEnterLogic).forEach(key => {
       clearTimeout(this.delayedDragEnterLogic[key]);
     });
-    // Check that dropNode exists, it could be undefined if it comes from another tree
+    // Check that dragNode exists, it could be undefined if it comes from another tree
     if (!dragNode || (dragNode.props.eventKey !== node.props.eventKey)) {
       // hoist expand logic here
       // since if logic is on the bottom
@@ -492,7 +492,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       //   => if you dragenter from top, you mouse will still be consider as in the top node
       event.persist();
       this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
-        if (!this.state.dragging) return;
+       // if (!this.state.dragging) return; could be dragging from another tree, so dragging would be false
 
         let newExpandedKeys = [...expandedKeys];
         const entity = keyEntities[node.props.eventKey];

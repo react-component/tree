@@ -215,7 +215,7 @@ export function calcDropPosition(
     dropTargetKey: abstractDropNodeEntity.key,
     dropTargetPos: abstractDropNodeEntity.pos,
     dragOverNodeKey,
-    dropContainerKey: dropPosition === 0 ? null : (abstractDropNodeEntity.parent?.key || null),
+    dropContainerKey: (abstractDropNodeEntity.parent?.key || null),
     dropAllowed,
   };
 }
