@@ -646,7 +646,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   onNodeDragLeave: NodeDragEventHandler = (event, node) => {
     const { onDragLeave } = this.props;
     if(!this.state.dragging) {
-      this.cleanDragState()
+      this.cleanDragState();
     }
     if (onDragLeave) {
       onDragLeave({ event, node: convertNodePropsToEventData(node.props), cleanDragState: this.cleanDragState });
