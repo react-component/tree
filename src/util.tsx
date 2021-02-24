@@ -74,10 +74,6 @@ export function calcDropPosition(
   event: React.MouseEvent,
   targetNode: NodeInstance,
   indent: number,
-  startMousePosition: {
-    x: number,
-    y: number,
-  },
   allowDrop: AllowDrop,
   flattenedNodes: FlattenNode[],
   keyEntities: Record<Key, DataEntity>,
@@ -93,11 +89,10 @@ export function calcDropPosition(
   dropAllowed: boolean,
 } {
   const { clientX, clientY } = event;
-  const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
+  const { top, height, left, right } = (event.target as HTMLElement).getBoundingClientRect();
   // optional chain for testing
-  const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || 0) - clientX);
+  const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((((right + left) / 2) || 0) - clientX);
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
-
   // find abstract drop node by horizontal offset
   let abstractDropNodeEntity: DataEntity = keyEntities[targetNode.props.eventKey];
 
@@ -126,7 +121,6 @@ export function calcDropPosition(
       break;
     }
   }
-
   const abstractDropDataNode = abstractDropNodeEntity.node
   let dropAllowed = true;
   if (

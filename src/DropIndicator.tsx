@@ -27,7 +27,7 @@ export default function DropIndicator ({
       break;
     case 0:
       style.bottom = 0;
-      style.left = indent || 0;
+      style.left = indent;
       break;
   }
   return <div style={style} />;

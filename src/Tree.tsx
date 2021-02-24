@@ -266,8 +266,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     prevProps: null,
   };
 
-  dragStartMousePosition = null;
-
   dragNode: NodeInstance;
 
   listRef = React.createRef<NodeListRef>();
@@ -397,10 +395,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const { eventKey } = node.props;
 
     this.dragNode = node;
-    this.dragStartMousePosition = {
-      x: event.clientX,
-      y: event.clientY,
-    };
 
     const newExpandedKeys = arrDel(expandedKeys, eventKey);
 
@@ -432,12 +426,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
       keyEntities,
       dragChildrenKeys,
       flattenNodes,
-      indent,
     } = this.state;
     const { onDragEnter, onExpand, allowDrop, direction } = this.props;
     const { pos } = node.props;
     const { dragNode } = this;
-
+    const indent = this.listRef.current.getIndentWidth();
     const {
       dropPosition,
       dropLevelOffset,
@@ -450,7 +443,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       event,
       node,
       indent,
-      this.dragStartMousePosition,
       allowDrop,
       flattenNodes,
       keyEntities,
@@ -539,6 +531,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropTargetPos,
       dropAllowed,
+      indent
     });
 
     if (onDragEnter) {
@@ -557,10 +550,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
       flattenNodes,
       keyEntities,
       expandedKeys,
-      indent,
     } = this.state;
     const { onDragOver, allowDrop, direction } = this.props;
     const { dragNode } = this;
+    const indent = this.listRef.current.getIndentWidth();
 
     const {
       dropPosition,
@@ -573,8 +566,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     } = calcDropPosition(
       event,
       node,
-      indent,
-      this.dragStartMousePosition,
+      indent, // indent,
       allowDrop,
       flattenNodes,
       keyEntities,
@@ -624,7 +616,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropContainerKey === this.state.dropContainerKey &&
         dropTargetPos === this.state.dropTargetPos &&
         dropAllowed === this.state.dropAllowed &&
-        dragOverNodeKey === this.state.dragOverNodeKey
+        dragOverNodeKey === this.state.dragOverNodeKey &&
+        indent === this.state.indent
       )
     ) {
       this.setState({
@@ -635,6 +628,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropTargetPos,
         dropAllowed,
         dragOverNodeKey,
+        indent
       });
     }
 
@@ -741,7 +735,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropAllowed: true,
         dragOverNodeKey: null,
       });
-    this.dragStartMousePosition = null;
   };
 
   onNodeClick: NodeMouseEventHandler = (e, treeNode) => {
