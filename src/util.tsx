@@ -129,7 +129,7 @@ export function calcDropPosition(
   let dropPosition: -1 | 0 | 1 = 0;
   let dropLevelOffset = 0;
 
-  // Only allow to cross level drop when dragging on the last child itself
+  // Only allow cross level drop when dragging on the last child itself
   if (initialAbstractDropNodeKey === dragNode.props.eventKey) {
     for (let i = 0; i < rawDropLevelOffset; i += 1) {
       if (isLastChild(abstractDropNodeEntity)) {
