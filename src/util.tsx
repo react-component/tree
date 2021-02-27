@@ -121,20 +121,23 @@ export function calcDropPosition(
     abstractDropNodeEntity = keyEntities[prevNodeKey];
   }
 
+  const initialAbstractDropNodeKey = abstractDropNodeEntity.key;
+
   const abstractDragOverEntity = abstractDropNodeEntity;
   const dragOverNodeKey = abstractDropNodeEntity.key;
 
   let dropPosition: -1 | 0 | 1 = 0;
   let dropLevelOffset = 0;
-  for (let i = 0; i < rawDropLevelOffset; i += 1) {
-    if (
-      isLastChild(abstractDropNodeEntity) &&
-      targetNode.props.eventKey === dragNode.props.eventKey
-    ) {
-      abstractDropNodeEntity = abstractDropNodeEntity.parent;
-      dropLevelOffset += 1;
-    } else {
-      break;
+
+  // Only allow to cross level drop when dragging on the last child itself
+  if (initialAbstractDropNodeKey === dragNode.props.eventKey) {
+    for (let i = 0; i < rawDropLevelOffset; i += 1) {
+      if (isLastChild(abstractDropNodeEntity)) {
+        abstractDropNodeEntity = abstractDropNodeEntity.parent;
+        dropLevelOffset += 1;
+      } else {
+        break;
+      }
     }
   }
 
