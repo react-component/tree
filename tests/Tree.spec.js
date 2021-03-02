@@ -1343,8 +1343,8 @@ describe('Tree Basic', () => {
             clientY: 600,
           });
           wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-          expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1-0-0');
-          expect(onDrop.mock.calls[0][0].dropPosition).toEqual(0);
+          expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1');
+          expect(onDrop.mock.calls[0][0].dropPosition).toEqual(2);
           wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
             clientX: base * 500,
             clientY: 500,
@@ -1359,7 +1359,7 @@ describe('Tree Basic', () => {
           });
           wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
           expect(onDrop.mock.calls[1][0].node.key).toEqual('0-1-0-0');
-          expect(onDrop.mock.calls[1][0].dropPosition).toEqual(0);
+          expect(onDrop.mock.calls[1][0].dropPosition).toEqual(1);
           wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
             clientX: base * 500,
             clientY: 500,
@@ -1599,7 +1599,7 @@ describe('Tree Basic', () => {
           });
           wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
           expect(onDrop.mock.calls[0][0].node.key).toEqual('0-0-1');
-          expect(onDrop.mock.calls[0][0].dropPosition).toEqual(1);
+          expect(onDrop.mock.calls[0][0].dropPosition).toEqual(2);
         });
         it('dragover self', () => {
           const onDrop = jest.fn();
@@ -1674,8 +1674,8 @@ describe('Tree Basic', () => {
             clientY: 600,
           });
           wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-          expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1-0-0');
-          expect(onDrop.mock.calls[0][0].dropPosition).toEqual(1);
+          expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1');
+          expect(onDrop.mock.calls[0][0].dropPosition).toEqual(2);
           wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
             clientX: base * 500,
             clientY: 500,
