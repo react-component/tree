@@ -93,11 +93,14 @@ export function calcDropPosition(
   dropAllowed: boolean,
 } {
   const { clientX, clientY } = event;
-  const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
-  // optional chain for testing
-  const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || 0) - clientX);
-  const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
+  const { top, height, right, left } = (event.target as HTMLElement).getBoundingClientRect();
 
+  // optional chain for testing
+  const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || (right + left) / 2) - clientX);
+  const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
+  if(!startMousePosition){
+    console.log(rawDropLevelOffset)
+  }
   // find abstract drop node by horizontal offset
   let abstractDropNodeEntity: DataEntity = keyEntities[targetNode.props.eventKey];
 

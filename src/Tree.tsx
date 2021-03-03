@@ -432,12 +432,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
       keyEntities,
       dragChildrenKeys,
       flattenNodes,
-      indent,
     } = this.state;
     const { onDragEnter, onExpand, allowDrop, direction } = this.props;
     const { pos } = node.props;
     const { dragNode } = this;
-
+    const indent = this.listRef.current.getIndentWidth();
     const {
       dropPosition,
       dropLevelOffset,
@@ -539,6 +538,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropTargetPos,
       dropAllowed,
+      indent
     });
 
     if (onDragEnter) {
@@ -557,10 +557,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
       flattenNodes,
       keyEntities,
       expandedKeys,
-      indent,
     } = this.state;
     const { onDragOver, allowDrop, direction } = this.props;
     const { dragNode } = this;
+    const indent = this.listRef.current.getIndentWidth();
 
     const {
       dropPosition,
@@ -624,7 +624,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropContainerKey === this.state.dropContainerKey &&
         dropTargetPos === this.state.dropTargetPos &&
         dropAllowed === this.state.dropAllowed &&
-        dragOverNodeKey === this.state.dragOverNodeKey
+        dragOverNodeKey === this.state.dragOverNodeKey &&
+        indent === this.state.indent
       )
     ) {
       this.setState({
@@ -635,6 +636,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropTargetPos,
         dropAllowed,
         dragOverNodeKey,
+        indent
       });
     }
 
