@@ -45,7 +45,7 @@ const loop = (data, key, callback) => {
   });
 };
 
-const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, setData, onDragCompleted, dragStartPosition }) => {
+const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, setData, onDragCompleted }) => {
   const [expandedKeys, setExpandedKeys] = useState([`0-0-${label}`, `0-0-0-${label}`, `0-0-0-0-${label}`]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
 
@@ -113,7 +113,6 @@ const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, s
         onDragStart={onDragStart}
         onDrop={onDrop}
         treeData={gData}
-        dragStartMousePosition={dragStartPosition}
       />
     </div>
   );
@@ -125,10 +124,8 @@ const Demo = () => {
   const [dragNodeOrigin, setDragNodeOrigin] = useState(null)
   const [leftData, setLeftData] = useState(generateData(3, 2, 1, [], 'left'));
   const [rightData, setRightData] = useState(generateData(3, 2, 1, [], 'right'));
-  const [dragStartPosition, setDragStartPosition] = useState(null);
   const onDragStart = (event, node, cleanDragState, origin) => {
     console.log('Drag started');
-    setDragStartPosition({x: event.clientX, y: event.clientY})
     setGlobalDragNode(node);
     setDragNodeOrigin(origin);
     sourceCleanDragState = cleanDragState;
@@ -172,7 +169,6 @@ const Demo = () => {
         onDragStart={({event, node, cleanDragState }) => onDragStart(event, node,cleanDragState, "left")}
         globalDragNode={globalDragNode}
         dragNodeOrigin={dragNodeOrigin}
-        dragStartPosition={dragNodeOrigin === "right" ? dragStartPosition : null}
       />
       <DemoTree
         label="right"
@@ -182,7 +178,6 @@ const Demo = () => {
         onDragStart={({event, node, cleanDragState }) => onDragStart(event, node, cleanDragState, "right")}
         globalDragNode={globalDragNode}
         dragNodeOrigin={dragNodeOrigin}
-        dragStartPosition={dragNodeOrigin === "left" ? dragStartPosition : null}
       />
     </div>
   );
