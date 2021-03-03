@@ -6,7 +6,15 @@
 import React from 'react';
 import warning from 'rc-util/lib/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, DataEntity, NodeInstance, FlattenNode, Direction } from './interface';
+import {
+  NodeElement,
+  Key,
+  DataNode,
+  DataEntity,
+  NodeInstance,
+  FlattenNode,
+  Direction,
+} from './interface';
 import { TreeProps, AllowDrop } from './Tree';
 
 export function arrDel(list: Key[], value: Key) {
@@ -56,7 +64,7 @@ export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, D
   return dragChildrenKeys;
 }
 
-export function isLastChild (treeNodeEntity: DataEntity) {
+export function isLastChild(treeNodeEntity: DataEntity) {
   if (treeNodeEntity.parent) {
     const posArr = posToArr(treeNodeEntity.pos);
     return Number(posArr[posArr.length - 1]) === treeNodeEntity.parent.children.length - 1;
@@ -64,7 +72,7 @@ export function isLastChild (treeNodeEntity: DataEntity) {
   return false;
 }
 
-export function isFirstChild (treeNodeEntity: DataEntity) {
+export function isFirstChild(treeNodeEntity: DataEntity) {
   const posArr = posToArr(treeNodeEntity.pos);
   return Number(posArr[posArr.length - 1]) === 0;
 }
@@ -72,11 +80,12 @@ export function isFirstChild (treeNodeEntity: DataEntity) {
 // Only used when drag, not affect SSR.
 export function calcDropPosition(
   event: React.MouseEvent,
+  dragNode: NodeInstance,
   targetNode: NodeInstance,
   indent: number,
   startMousePosition: {
-    x: number,
-    y: number,
+    x: number;
+    y: number;
   },
   allowDrop: AllowDrop,
   flattenedNodes: FlattenNode[],
@@ -84,53 +93,56 @@ export function calcDropPosition(
   expandKeys: Key[],
   direction: Direction,
 ): {
-  dropPosition: -1 | 0 | 1,
-  dropLevelOffset: number,
-  dropTargetKey: Key,
-  dropTargetPos: string,
-  dropContainerKey: Key,
-  dragOverNodeKey: Key,
-  dropAllowed: boolean,
+  dropPosition: -1 | 0 | 1;
+  dropLevelOffset: number;
+  dropTargetKey: Key;
+  dropTargetPos: string;
+  dropContainerKey: Key;
+  dragOverNodeKey: Key;
+  dropAllowed: boolean;
 } {
   const { clientX, clientY } = event;
   const { top, height, right, left } = (event.target as HTMLElement).getBoundingClientRect();
 
   // optional chain for testing
-  const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || 0) - clientX);
+  const horizontalMouseOffset =
+    (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || (right + left) / 2) - clientX);
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
-  if(!startMousePosition){
-    console.log(rawDropLevelOffset)
-  }
+
   // find abstract drop node by horizontal offset
   let abstractDropNodeEntity: DataEntity = keyEntities[targetNode.props.eventKey];
 
   if (clientY < top + height / 2) {
     // first half, set abstract drop node to previous node
     const nodeIndex = flattenedNodes.findIndex(
-      flattenedNode => flattenedNode.data.key === abstractDropNodeEntity.key,
+      (flattenedNode) => flattenedNode.data.key === abstractDropNodeEntity.key,
     );
     const prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
     const prevNodeKey = flattenedNodes[prevNodeIndex].data.key;
     abstractDropNodeEntity = keyEntities[prevNodeKey];
   }
 
+  const initialAbstractDropNodeKey = abstractDropNodeEntity.key;
+
   const abstractDragOverEntity = abstractDropNodeEntity;
   const dragOverNodeKey = abstractDropNodeEntity.key;
 
   let dropPosition: -1 | 0 | 1 = 0;
   let dropLevelOffset = 0;
-  for (let i = 0; i < rawDropLevelOffset; i += 1) {
-    if (
-      isLastChild(abstractDropNodeEntity)
-    ) {
-      abstractDropNodeEntity = abstractDropNodeEntity.parent;
-      dropLevelOffset += 1;
-    } else {
-      break;
+
+  // Only allow cross level drop when dragging on the last child itself
+  if (dragNode && initialAbstractDropNodeKey === dragNode.props.eventKey) {
+    for (let i = 0; i < rawDropLevelOffset; i += 1) {
+      if (isLastChild(abstractDropNodeEntity)) {
+        abstractDropNodeEntity = abstractDropNodeEntity.parent;
+        dropLevelOffset += 1;
+      } else {
+        break;
+      }
     }
   }
 
-  const abstractDropDataNode = abstractDropNodeEntity.node
+  const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (
     isFirstChild(abstractDropNodeEntity) &&
@@ -143,33 +155,35 @@ export function calcDropPosition(
     abstractDropNodeEntity.key === targetNode.props.eventKey
   ) {
     // first half of first node in first level
-    dropPosition = -1
+    dropPosition = -1;
   } else if (
     (abstractDragOverEntity.children || []).length &&
     expandKeys.includes(dragOverNodeKey)
   ) {
     // drop on expanded node
     // only allow drop inside
-    if (allowDrop({
-      dropNode: abstractDropDataNode,
-      dropPosition: 0,
-    })) {
+    if (
+      allowDrop({
+        dropNode: abstractDropDataNode,
+        dropPosition: 0,
+      })
+    ) {
       dropPosition = 0;
     } else {
-      dropAllowed = false
+      dropAllowed = false;
     }
-  } else if (
-    dropLevelOffset === 0
-  ) {
+  } else if (dropLevelOffset === 0) {
     if (rawDropLevelOffset > -1.5) {
       // | Node     | <- abstractDropNode
       // | -^-===== | <- mousePosition
       // 1. try drop after
       // 2. do not allow drop
-      if (allowDrop({
-        dropNode: abstractDropDataNode,
-        dropPosition: 1,
-      })) {
+      if (
+        allowDrop({
+          dropNode: abstractDropDataNode,
+          dropPosition: 1,
+        })
+      ) {
         dropPosition = 1;
       } else {
         dropAllowed = false;
@@ -182,15 +196,19 @@ export function calcDropPosition(
       // 1. try drop inside
       // 2. try drop after
       // 3. do not allow drop
-      if (allowDrop({
-        dropNode: abstractDropDataNode,
-        dropPosition: 0,
-      })) {
+      if (
+        allowDrop({
+          dropNode: abstractDropDataNode,
+          dropPosition: 0,
+        })
+      ) {
         dropPosition = 0;
-      } else if (allowDrop({
-        dropNode: abstractDropDataNode,
-        dropPosition: 1,
-      })) {
+      } else if (
+        allowDrop({
+          dropNode: abstractDropDataNode,
+          dropPosition: 1,
+        })
+      ) {
         dropPosition = 1;
       } else {
         dropAllowed = false;
@@ -202,10 +220,12 @@ export function calcDropPosition(
     // --^--|----=====| <- mousePosition
     // 1. try insert after Node1
     // 2. do not allow drop
-    if (allowDrop({
-      dropNode: abstractDropDataNode,
-      dropPosition: 1,
-    })) {
+    if (
+      allowDrop({
+        dropNode: abstractDropDataNode,
+        dropPosition: 1,
+      })
+    ) {
       dropPosition = 1;
     } else {
       dropAllowed = false;
@@ -218,7 +238,7 @@ export function calcDropPosition(
     dropTargetKey: abstractDropNodeEntity.key,
     dropTargetPos: abstractDropNodeEntity.pos,
     dragOverNodeKey,
-    dropContainerKey: (abstractDropNodeEntity.parent?.key || null),
+    dropContainerKey: dropPosition === 0 ? null : abstractDropNodeEntity.parent?.key || null,
     dropAllowed,
   };
 }
@@ -315,7 +335,7 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
     }
   }
 
-  (keyList || []).forEach(key => {
+  (keyList || []).forEach((key) => {
     conductUp(key);
   });
 
@@ -327,7 +347,7 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
  */
 export function getDataAndAria(props: Partial<TreeProps | TreeNodeProps>) {
   const omitProps: Record<string, string> = {};
-  Object.keys(props).forEach(key => {
+  Object.keys(props).forEach((key) => {
     if (key.startsWith('data-') || key.startsWith('aria-')) {
       omitProps[key] = props[key];
     }

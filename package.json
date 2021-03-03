@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "tree ui component for react",
   "engines": {
     "node": ">=8.x"
@@ -42,7 +42,7 @@
     "lint": "eslint src/ --ext .tsx,.ts,.jsx,.js",
     "test": "father test",
     "coverage": "father test --coverage",
-    "gh-pages": "npm run build && father doc deploy",
+    "gh-pages": "npm run docs:build && father doc deploy",
     "now-build": "npm run docs:build"
   },
   "peerDependencies": {
