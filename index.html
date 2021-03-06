@@ -1,20 +1,44 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><title>Storybook</title><meta name="viewport" content="width=device-width,initial-scale=1"/><style>html, body {
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }</style><script>/* globals window */
-  /* eslint-disable no-underscore-dangle */
-  try {
-    if (window.top !== window) {
-      window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.top.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-    }
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.warn('unable to connect to top frame for connecting dev tools');
-  }</script><script>// hackcode stroybook no support
-  document.title = 'RC-TREE';</script><link rel="icon" type="image/png" href="https://gw.alipayobjects.com/zos/rmsportal/rlpTLlbMzTNYuZGGCVYM.png"/><style>#root[hidden],
-      #docs-root[hidden] {
-        display: none !important;
-      }</style></head><body><div id="root"></div><div id="docs-root"></div><script></script><script src="runtime~main.286b69a873d49f2f199c.bundle.js"></script><script src="vendors~main.0e6aeb3fe87d417c3900.bundle.js"></script><script src="main.40ebd65bf6a5229ac47f.bundle.js"></script></body></html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://avatars0.githubusercontent.com/u/9441414?s=200&v=4"
+    />
+    <style>
+      .markdown table {
+        width: auto !important;
+      }
+    </style>
+    <link rel="stylesheet" href="/umi.css" />
+    <script>
+      window.routerBase = "/";
+    </script>
+    <script>
+      //! umi version: 3.3.9
+    </script>
+    <script>
+      !(function () {
+        var e = localStorage.getItem("dumi:prefers-color"),
+          t = window.matchMedia("(prefers-color-scheme: dark)").matches,
+          r = ["light", "dark", "auto"];
+        document.documentElement.setAttribute(
+          "data-prefers-color",
+          e === r[2] ? (t ? r[1] : r[0]) : r.includes(e) ? e : r[0]
+        );
+      })();
+    </script>
+    <title>rc-tree</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="/umi.js"></script>
+  </body>
+</html>
