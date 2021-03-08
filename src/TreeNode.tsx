@@ -215,7 +215,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // Disabled item still can be switch
-  onExpand: React.MouseEventHandler<HTMLDivElement> = (e) => {
+  onExpand: React.MouseEventHandler<HTMLDivElement> = e => {
     const {
       loading,
       context: { onNodeExpand },
@@ -225,7 +225,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // Drag usage
-  setSelectHandle = (node) => {
+  setSelectHandle = node => {
     this.selectHandle = node;
   };
 
@@ -285,7 +285,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // Load data to avoid default expanded tree without data
-  syncLoadData = (props) => {
+  syncLoadData = props => {
     const { expanded, loading, loaded } = props;
     const {
       context: { loadData, onNodeLoad },
@@ -354,7 +354,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
     );
 
-    const switcherIconDom = this.renderSwitcherIconDom(true);
+    const switcherIconDom = this.renderSwitcherIconDom(false);
 
     return switcherIconDom !== false ? (
       <span onClick={this.onExpand} className={switcherCls}>
@@ -573,9 +573,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   }
 }
 
-const ContextTreeNode: React.FC<TreeNodeProps> = (props) => (
+const ContextTreeNode: React.FC<TreeNodeProps> = props => (
   <TreeContext.Consumer>
-    {(context) => <InternalTreeNode {...props} context={context} />}
+    {context => <InternalTreeNode {...props} context={context} />}
   </TreeContext.Consumer>
 );
 
