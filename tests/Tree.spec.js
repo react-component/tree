@@ -1313,6 +1313,56 @@ describe('Tree Basic', () => {
       });
       ['ltr', 'rtl'].forEach(dir => {
         const base = dir === 'ltr' ? 1 : -1;
+        it('not allow cross level dnd on expanded nodes', () => {
+          const onDrop = jest.fn();
+          const wrapper = mount(
+            <Tree draggable onDrop={onDrop} direction={dir} expandedKeys={['0-0', '0-1', '0-1-0']}>
+              <TreeNode key="0-0">
+                <TreeNode key="0-0-0" className="dropTarget1">
+                  <TreeNode key="0-0-0-0" />
+                </TreeNode>
+              </TreeNode>
+              <TreeNode key="0-1">
+                <TreeNode key="0-1-0" className="dropTarget2">
+                  <TreeNode key="0-1-0-0" />
+                </TreeNode>
+              </TreeNode>
+              <TreeNode key="0-2" className="dragTarget" />
+            </Tree>,
+          );
+          wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+            clientX: base * 500,
+            clientY: 500,
+          });
+          wrapper.find('.dropTarget1 > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+            clientX: base * 400,
+            clientY: 600,
+          });
+          wrapper.find('.dropTarget1 > .rc-tree-node-content-wrapper').simulate('dragOver', {
+            clientX: base * 400,
+            clientY: 600,
+          });
+          wrapper.find('.dropTarget1 > .rc-tree-node-content-wrapper').simulate('drop');
+          // insert after 0-0, since 0-0-0 is not expanded
+          expect(onDrop.mock.calls[0][0].node.key).toEqual('0-0');
+          expect(onDrop.mock.calls[0][0].dropPosition).toEqual(1);
+          wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+            clientX: base * 500,
+            clientY: 500,
+          });
+          wrapper.find('.dropTarget2 > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+            clientX: base * 400,
+            clientY: 600,
+          });
+          wrapper.find('.dropTarget2 > .rc-tree-node-content-wrapper').simulate('dragOver', {
+            clientX: base * 400,
+            clientY: 600,
+          });
+          wrapper.find('.dropTarget2 > .rc-tree-node-content-wrapper').simulate('drop');
+          // insert into 0-1-0, since it is expanded, do not allow cross level dnd
+          expect(onDrop.mock.calls[1][0].node.key).toEqual('0-1-0');
+          expect(onDrop.mock.calls[1][0].dropPosition).toEqual(0);
+        });
         it('allowDrop all nodes', () => {
           const onDrop = jest.fn();
           const wrapper = mount(
