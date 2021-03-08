@@ -215,7 +215,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // Disabled item still can be switch
-  onExpand: React.MouseEventHandler<HTMLDivElement> = e => {
+  onExpand: React.MouseEventHandler<HTMLDivElement> = (e) => {
     const {
       loading,
       context: { onNodeExpand },
@@ -225,7 +225,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // Drag usage
-  setSelectHandle = node => {
+  setSelectHandle = (node) => {
     this.selectHandle = node;
   };
 
@@ -285,7 +285,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // Load data to avoid default expanded tree without data
-  syncLoadData = props => {
+  syncLoadData = (props) => {
     const { expanded, loading, loaded } = props;
     const {
       context: { loadData, onNodeLoad },
@@ -317,21 +317,30 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     return treeSelectable;
   }
 
-  // Switcher
-  renderSwitcher = () => {
-    const { expanded, switcherIcon: switcherIconFromProps } = this.props;
+  renderSwitcherIconDom = (isLeaf: boolean) => {
+    const { switcherIcon: switcherIconFromProps } = this.props;
     const {
-      context: { prefixCls, switcherIcon: switcherIconFromCtx },
+      context: { switcherIcon: switcherIconFromCtx },
     } = this.props;
 
     const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
+    // if switcherIconDom is null, no render switcher span
+    if (typeof switcherIcon === 'function') {
+      return switcherIcon({ ...this.props, isLeaf });
+    }
+    return switcherIcon;
+  };
+
+  // Switcher
+  renderSwitcher = () => {
+    const { expanded } = this.props;
+    const {
+      context: { prefixCls },
+    } = this.props;
 
     if (this.isLeaf()) {
       // if switcherIconDom is null, no render switcher span
-      const switcherIconDom =
-        typeof switcherIcon === 'function'
-          ? switcherIcon({ ...this.props, isLeaf: true })
-          : switcherIcon;
+      const switcherIconDom = this.renderSwitcherIconDom(true);
 
       return switcherIconDom !== false ? (
         <span className={classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-noop`)}>
@@ -345,17 +354,11 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
     );
 
-    // if switcherIconDom is null, no render switcher span
-    const switcherIconDom =
-      typeof switcherIcon === 'function'
-        ? switcherIcon({ ...this.props, isLeaf: false })
-        : switcherIcon;
+    const switcherIconDom = this.renderSwitcherIconDom(true);
 
     return switcherIconDom !== false ? (
       <span onClick={this.onExpand} className={switcherCls}>
-        {typeof switcherIcon === 'function'
-          ? switcherIcon({ ...this.props, isLeaf: false })
-          : switcherIcon}
+        {switcherIconDom}
       </span>
     ) : null;
   };
@@ -570,9 +573,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   }
 }
 
-const ContextTreeNode: React.FC<TreeNodeProps> = props => (
+const ContextTreeNode: React.FC<TreeNodeProps> = (props) => (
   <TreeContext.Consumer>
-    {context => <InternalTreeNode {...props} context={context} />}
+    {(context) => <InternalTreeNode {...props} context={context} />}
   </TreeContext.Consumer>
 );
 
