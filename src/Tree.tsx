@@ -393,7 +393,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // ================= dragging ===================
     if(props.dragging === true){
-      newState.dragging === props.dragging;
+      newState.dragging = props.dragging;
     }
 
     return newState;
