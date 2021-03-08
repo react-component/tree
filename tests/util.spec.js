@@ -127,10 +127,7 @@ describe('Util', () => {
           {
             key: 'parent',
             notKey: 'let it be',
-            children: [
-              { key: 0, notKey: 'penny lane' },
-              { key: 1, notKey: 'please please me' },
-            ],
+            children: [{ key: 0, notKey: 'penny lane' }, { key: 1, notKey: 'please please me' }],
           },
         ],
         undefined,
@@ -149,10 +146,7 @@ describe('Util', () => {
           {
             key: 'parent',
             notKey: 'let it be',
-            children: [
-              { key: 0, notKey: 'penny lane' },
-              { key: 1, notKey: 'please please me' },
-            ],
+            children: [{ key: 0, notKey: 'penny lane' }, { key: 1, notKey: 'please please me' }],
           },
         ],
         undefined,
