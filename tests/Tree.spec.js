@@ -52,9 +52,9 @@ describe('Tree Basic', () => {
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('switcherIcon = null , no render rc-tree-switcher null', () => {
+  it('switcherIcon = null, no render rc-tree-switcher null', () => {
     const wrapper = mount(
-      <Tree className="forTest" switcherIcon={() => false}>
+      <Tree className="forTest" defaultExpandAll switcherIcon={() => false}>
         <TreeNode title="parent 1" key="0-0" className="spe">
           <TreeNode title="leaf 1" key="0-0-0" disabled>
             <TreeNode title="leaf" key="random" />
@@ -65,7 +65,7 @@ describe('Tree Basic', () => {
       </Tree>,
     );
     wrapper.update();
-    // expect(wrapper.find('.rc-tree-switcher').exists()).toBeFalsy();
+    expect(wrapper.find('.rc-tree-switcher').exists()).toBeFalsy();
   });
 
   describe('expanded', () => {
