@@ -45,13 +45,13 @@ const loop = (data, key, callback) => {
   });
 };
 
-const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, setData, onDragCompleted }) => {
+const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, setData, onDragCompleted, dragging }) => {
   const [expandedKeys, setExpandedKeys] = useState([`0-0-${label}`, `0-0-0-${label}`, `0-0-0-0-${label}`]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
+  const isFromAnotherTree = dragNodeOrigin !== label;
 
   const onDrop = (info) => {
     const dropKey = info.node.key;
-    const isFromAnotherTree = dragNodeOrigin !== label;
     const dragKey = isFromAnotherTree ? globalDragNode.key : info.dragNode.key;
     const dropPos = info.node.pos.split('-');
     const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
@@ -113,6 +113,7 @@ const DemoTree = ({ label, globalDragNode, dragNodeOrigin, onDragStart, gData, s
         onDragStart={onDragStart}
         onDrop={onDrop}
         treeData={gData}
+        dragging={isFromAnotherTree && dragging}
       />
     </div>
   );
@@ -124,8 +125,10 @@ const Demo = () => {
   const [dragNodeOrigin, setDragNodeOrigin] = useState(null)
   const [leftData, setLeftData] = useState(generateData(3, 2, 1, [], 'left'));
   const [rightData, setRightData] = useState(generateData(3, 2, 1, [], 'right'));
+  const [dragging, setDragging] = useState(false)
   const onDragStart = (event, node, cleanDragState, origin) => {
     console.log('Drag started');
+    setDragging(true)
     setGlobalDragNode(node);
     setDragNodeOrigin(origin);
     sourceCleanDragState = cleanDragState;
@@ -133,6 +136,8 @@ const Demo = () => {
 
   const onDragCompleted = origin => {
     console.log('Drag completed, remove node from source tree');
+    setDragging(false)
+
     if(!dragNodeOrigin || dragNodeOrigin === origin) {
       return;
     } else if(dragNodeOrigin === "left") {
@@ -169,6 +174,7 @@ const Demo = () => {
         onDragStart={({event, node, cleanDragState }) => onDragStart(event, node,cleanDragState, "left")}
         globalDragNode={globalDragNode}
         dragNodeOrigin={dragNodeOrigin}
+        dragging={dragging}
       />
       <DemoTree
         label="right"
@@ -178,6 +184,7 @@ const Demo = () => {
         onDragStart={({event, node, cleanDragState }) => onDragStart(event, node, cleanDragState, "right")}
         globalDragNode={globalDragNode}
         dragNodeOrigin={dragNodeOrigin}
+        dragging={dragging}
       />
     </div>
   );
