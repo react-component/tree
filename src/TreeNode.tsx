@@ -327,13 +327,17 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
 
     if (this.isLeaf()) {
-      return (
+      // if switcherIconDom is null, no render switcher span
+      const switcherIconDom =
+        typeof switcherIcon === 'function'
+          ? switcherIcon({ ...this.props, isLeaf: true })
+          : switcherIcon;
+
+      return switcherIconDom ? (
         <span className={classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-noop`)}>
-          {typeof switcherIcon === 'function'
-            ? switcherIcon({ ...this.props, isLeaf: true })
-            : switcherIcon}
+          {switcherIconDom}
         </span>
-      );
+      ) : null;
     }
 
     const switcherCls = classNames(
