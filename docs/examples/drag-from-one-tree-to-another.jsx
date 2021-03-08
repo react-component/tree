@@ -125,7 +125,7 @@ const Demo = () => {
   const [dragNodeOrigin, setDragNodeOrigin] = useState(null)
   const [leftData, setLeftData] = useState(generateData(3, 2, 1, [], 'left'));
   const [rightData, setRightData] = useState(generateData(3, 2, 1, [], 'right'));
-  const [dragging, setDragging] = useState(false)
+  const [dragging, setDragging] = useState(false);
   const onDragStart = (event, node, cleanDragState, origin) => {
     console.log('Drag started');
     setDragging(true)
