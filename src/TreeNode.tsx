@@ -333,7 +333,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           ? switcherIcon({ ...this.props, isLeaf: true })
           : switcherIcon;
 
-      return switcherIconDom ? (
+      return switcherIconDom !== false ? (
         <span className={classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-noop`)}>
           {switcherIconDom}
         </span>
@@ -344,13 +344,20 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       `${prefixCls}-switcher`,
       `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
     );
-    return (
+
+    // if switcherIconDom is null, no render switcher span
+    const switcherIconDom =
+      typeof switcherIcon === 'function'
+        ? switcherIcon({ ...this.props, isLeaf: false })
+        : switcherIcon;
+
+    return switcherIconDom !== false ? (
       <span onClick={this.onExpand} className={switcherCls}>
         {typeof switcherIcon === 'function'
           ? switcherIcon({ ...this.props, isLeaf: false })
           : switcherIcon}
       </span>
-    );
+    ) : null;
   };
 
   // Checkbox
