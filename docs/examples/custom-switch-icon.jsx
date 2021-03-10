@@ -41,6 +41,9 @@ class Demo extends React.Component {
 
   render() {
     const switcherIcon = obj => {
+      if (obj.data.key?.startsWith('0-0-3')) {
+        return false;
+      }
       if (obj.isLeaf) {
         return getSvgIcon(
           arrowPath,

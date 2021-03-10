@@ -317,36 +317,50 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     return treeSelectable;
   }
 
-  // Switcher
-  renderSwitcher = () => {
-    const { expanded, switcherIcon: switcherIconFromProps } = this.props;
+  renderSwitcherIconDom = (isLeaf: boolean) => {
+    const { switcherIcon: switcherIconFromProps } = this.props;
     const {
-      context: { prefixCls, switcherIcon: switcherIconFromCtx },
+      context: { switcherIcon: switcherIconFromCtx },
     } = this.props;
 
     const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
+    // if switcherIconDom is null, no render switcher span
+    if (typeof switcherIcon === 'function') {
+      return switcherIcon({ ...this.props, isLeaf });
+    }
+    return switcherIcon;
+  };
+
+  // Switcher
+  renderSwitcher = () => {
+    const { expanded } = this.props;
+    const {
+      context: { prefixCls },
+    } = this.props;
 
     if (this.isLeaf()) {
-      return (
+      // if switcherIconDom is null, no render switcher span
+      const switcherIconDom = this.renderSwitcherIconDom(true);
+
+      return switcherIconDom !== false ? (
         <span className={classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-noop`)}>
-          {typeof switcherIcon === 'function'
-            ? switcherIcon({ ...this.props, isLeaf: true })
-            : switcherIcon}
+          {switcherIconDom}
         </span>
-      );
+      ) : null;
     }
 
     const switcherCls = classNames(
       `${prefixCls}-switcher`,
       `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
     );
-    return (
+
+    const switcherIconDom = this.renderSwitcherIconDom(false);
+
+    return switcherIconDom !== false ? (
       <span onClick={this.onExpand} className={switcherCls}>
-        {typeof switcherIcon === 'function'
-          ? switcherIcon({ ...this.props, isLeaf: false })
-          : switcherIcon}
+        {switcherIconDom}
       </span>
-    );
+    ) : null;
   };
 
   // Checkbox
