@@ -260,14 +260,17 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     keyEntities,
   };
 
+  let treeElement = <span role="treeitem" style={HIDDEN_STYLE} aria-hidden />;
+  if (focused && activeItem) {
+    treeElement = (
+      <span role="treeitem" style={HIDDEN_STYLE} aria-live="assertive">
+        {getAccessibilityPath(activeItem)}
+      </span>
+    );
+  }
+
   return (
     <>
-      {focused && activeItem && (
-        <span style={HIDDEN_STYLE} aria-live="assertive">
-          {getAccessibilityPath(activeItem)}
-        </span>
-      )}
-
       <div role="tree">
         <input
           style={HIDDEN_STYLE}
@@ -279,6 +282,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           value=""
           onChange={noop}
         />
+        {treeElement}
       </div>
 
       <div
