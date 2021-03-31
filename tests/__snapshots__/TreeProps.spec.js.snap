@@ -12,6 +12,11 @@ exports[`Tree Props checkStrictly 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -114,6 +119,11 @@ exports[`Tree Props checkable default 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -218,6 +228,11 @@ exports[`Tree Props checkable without selectable 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -320,6 +335,11 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -473,6 +493,11 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -691,6 +716,11 @@ exports[`Tree Props data and aria props renders aria attributes 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -736,6 +766,11 @@ exports[`Tree Props data and aria props renders data attributes 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -780,6 +815,11 @@ exports[`Tree Props defaultExpandAll 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -879,6 +919,11 @@ exports[`Tree Props disabled basic 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -949,6 +994,11 @@ exports[`Tree Props disabled treeNode should disabled when tree disabled 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -1017,6 +1067,11 @@ exports[`Tree Props icon 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -1123,6 +1178,11 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -1225,6 +1285,11 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
     />
   </div>
   <div
@@ -1329,6 +1394,11 @@ exports[`Tree Props loadData basic 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -1419,6 +1489,11 @@ exports[`Tree Props multiple 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -1517,6 +1592,11 @@ exports[`Tree Props prefixCls 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -1561,6 +1641,11 @@ exports[`Tree Props prefixCls 2`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -1604,6 +1689,11 @@ exports[`Tree Props selectable with selectable 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -1702,6 +1792,11 @@ exports[`Tree Props selectable without selectable 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -1799,6 +1894,11 @@ exports[`Tree Props showIcon 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -1892,6 +1992,11 @@ exports[`Tree Props showIcon 2`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -1978,6 +2083,11 @@ exports[`Tree Props showIcon 3`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -2163,6 +2273,11 @@ exports[`Tree Props showLine 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -2206,6 +2321,11 @@ exports[`Tree Props treeData 1`] = `
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
     />
   </div>
   <div
@@ -2445,6 +2565,11 @@ exports[`Tree Props treeData 2`] = `
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
     />
   </div>
   <div

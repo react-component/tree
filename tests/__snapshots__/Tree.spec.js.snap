@@ -12,6 +12,11 @@ exports[`Tree Basic check basic render 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -146,6 +151,11 @@ exports[`Tree Basic check check after data ready works 1`] = `
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -249,6 +259,11 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
       tabindex="0"
       value=""
     />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+    />
   </div>
   <div
     aria-hidden="true"
@@ -320,6 +335,11 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
     />
   </div>
   <div
@@ -413,6 +433,11 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
     />
   </div>
   <div
@@ -562,6 +587,11 @@ exports[`Tree Basic renders correctly 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
@@ -764,6 +794,11 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
+    />
+    <span
+      aria-hidden="true"
+      role="treeitem"
+      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
     />
   </div>
   <div
