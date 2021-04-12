@@ -48,7 +48,7 @@ import TreeNode from './TreeNode';
 import { conductCheck } from './utils/conductUtil';
 import DropIndicator from './DropIndicator';
 
-interface CheckInfo {
+export interface CheckInfo {
   event: 'check';
   node: EventDataNode;
   checked: boolean;
