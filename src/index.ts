@@ -1,5 +1,5 @@
-import Tree, { TreeProps } from './Tree';
+import Tree, { TreeProps, CheckInfo } from './Tree';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 
-export { TreeNode, TreeProps, TreeNodeProps };
+export { TreeNode, TreeProps, TreeNodeProps, CheckInfo };
 export default Tree;
