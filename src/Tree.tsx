@@ -750,8 +750,30 @@ class Tree extends React.Component<TreeProps, TreeState> {
       selectedKeys = arrDel(selectedKeys, key);
     } else if (!multiple) {
       selectedKeys = [key];
-    } else {
+    } else if (e.shiftKey) {
+      if (e.shiftKey) {
+        const results = Object.keys(keyEntities)
+          .reduce((pre, cur, i) => {
+            if (selectedKeys[selectedKeys.length - 1] === cur || cur === key) {
+              pre.push(i);
+            }
+            return pre;
+          }, [] as number[])
+          .sort((a, b) => a - b);
+        const ids = Object.keys(keyEntities)
+          .slice(results[0], results[1] + 1)
+          .filter(
+            id =>
+              !selectedKeys.includes(id) &&
+              (typeof keyEntities[id].parent === 'undefined' ||
+                this.props.expandedKeys.includes(keyEntities[id].parent?.key)),
+          );
+        selectedKeys = [...selectedKeys, ...ids];
+      }
+    } else if (e.metaKey) {
       selectedKeys = arrAdd(selectedKeys, key);
+    } else {
+      selectedKeys = [key];
     }
 
     // [Legacy] Not found related usage in doc or upper libs
