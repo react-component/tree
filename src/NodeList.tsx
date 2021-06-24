@@ -42,7 +42,7 @@ const MotionFlattenData: FlattenNode = {
   pos: MotionEntity.pos,
   data: MotionNode,
   title: null,
-  key: null,
+  key: MOTION_KEY,
   /** Hold empty list here since we do not use it */
   isStart: [],
   isEnd: [],
@@ -320,6 +320,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
             isEnd,
           } = treeNode;
           const mergedKey = getKey(key, pos);
+          delete restProps.key;
           delete restProps.children;
 
           const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
@@ -329,7 +330,6 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
               {...restProps}
               {...treeNodeProps}
               title={title}
-              key={key}
               active={!!activeItem && key === activeItem.data.key}
               pos={pos}
               data={treeNode.data}
