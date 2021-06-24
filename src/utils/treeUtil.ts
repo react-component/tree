@@ -1,4 +1,5 @@
 import * as React from 'react';
+import omit from 'rc-util/lib/omit';
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'rc-util/lib/warning';
 import {
@@ -9,6 +10,7 @@ import {
   Key,
   EventDataNode,
   GetKey,
+  FieldNames,
 } from '../interface';
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
@@ -20,15 +22,26 @@ export function getKey(key: Key, pos: string) {
   return pos;
 }
 
+export function fillFieldNames(fieldNames?: FieldNames) {
+  const { title, key, children } = fieldNames || {};
+
+  return {
+    title: title || 'label',
+    key: key || 'key',
+    children: children || 'children',
+  };
+}
+
 /**
  * Warning if TreeNode do not provides key
  */
-export function warningWithoutKey(treeData: DataNode[] = []) {
+export function warningWithoutKey(treeData: DataNode[], fieldNames: FieldNames) {
   const keys: Map<string, boolean> = new Map();
 
   function dig(list: DataNode[], path: string = '') {
-    (list || []).forEach(treeNode => {
-      const { key, children } = treeNode;
+    (list || []).forEach((treeNode) => {
+      const key = treeNode[fieldNames.key];
+      const children = treeNode[fieldNames.children];
       warning(
         key !== null && key !== undefined,
         `Tree node must have a certain key: [${path}${key}]`,
@@ -55,7 +68,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
   function dig(node: React.ReactNode): DataNode[] {
     const treeNodes = toArray(node) as NodeElement[];
     return treeNodes
-      .map(treeNode => {
+      .map((treeNode) => {
         // Filter invalidate node
         if (!isTreeNode(treeNode)) {
           warning(!treeNode, 'Tree/TreeNode can only accept TreeNode as children.');
@@ -90,20 +103,25 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
  * need expanded keys, provides `true` means all expanded (used in `rc-tree-select`).
  */
 export function flattenTreeData(
-  treeNodeList: DataNode[] = [],
-  expandedKeys: Key[] | true = [],
+  treeNodeList: DataNode[],
+  expandedKeys: Key[] | true,
+  fieldNames: FieldNames,
 ): FlattenNode[] {
+  const { title: fieldTitle, key: fieldKey, children: fieldChildren } = fieldNames;
+
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
   const flattenList: FlattenNode[] = [];
 
   function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
-      const mergedKey = getKey(treeNode.key, pos);
+      const mergedKey = getKey(treeNode[fieldKey], pos);
 
       // Add FlattenDataNode into list
       const flattenNode: FlattenNode = {
-        ...treeNode,
+        ...omit(treeNode, [fieldTitle, fieldKey, fieldChildren] as any),
+        title: treeNode[fieldTitle],
+        key: mergedKey,
         parent,
         pos,
         children: null,
@@ -116,7 +134,7 @@ export function flattenTreeData(
 
       // Loop treeNode children
       if (expandedKeys === true || expandedKeySet.has(mergedKey)) {
-        flattenNode.children = dig(treeNode.children || [], flattenNode);
+        flattenNode.children = dig(treeNode[fieldChildren] || [], flattenNode);
       } else {
         flattenNode.children = [];
       }
@@ -135,6 +153,7 @@ type ExternalGetKey = GetKey<DataNode> | string;
 interface TraverseDataNodesConfig {
   childrenPropName?: string;
   externalGetKey?: ExternalGetKey;
+  fieldNames?: FieldNames;
 }
 
 /**
@@ -152,22 +171,16 @@ export function traverseDataNodes(
     level: number;
   }) => void,
   // To avoid too many params, let use config instead of origin param
-  config?: TraverseDataNodesConfig | ExternalGetKey,
+  config?: TraverseDataNodesConfig,
 ) {
   // Init config
-  let externalGetKey: ExternalGetKey = null;
-  let childrenPropName: string;
+  const {
+    childrenPropName,
+    externalGetKey,
+    fieldNames: { key: fieldKey, children: fieldChildren } = {},
+  } = config || ({} as TraverseDataNodesConfig);
 
-  const configType = typeof config;
-
-  if (configType === 'function' || configType === 'string') {
-    // Legacy getKey param
-    externalGetKey = config as ExternalGetKey;
-  } else if (config && configType === 'object') {
-    ({ childrenPropName, externalGetKey } = config as TraverseDataNodesConfig);
-  }
-
-  childrenPropName = childrenPropName || 'children';
+  const mergeChildrenPropName = childrenPropName || fieldChildren || 'children';
 
   // Get keys
   let syntheticGetKey: (node: DataNode, pos?: string) => Key;
@@ -178,7 +191,7 @@ export function traverseDataNodes(
       syntheticGetKey = (node: DataNode) => (externalGetKey as GetKey<DataNode>)(node);
     }
   } else {
-    syntheticGetKey = (node, pos) => getKey(node.key, pos);
+    syntheticGetKey = (node, pos) => getKey(node[fieldKey], pos);
   }
 
   // Process
@@ -187,7 +200,7 @@ export function traverseDataNodes(
     index?: number,
     parent?: { node: DataNode; pos: string; level: number },
   ) {
-    const children = node ? node[childrenPropName] : dataNodes;
+    const children = node ? node[mergeChildrenPropName] : dataNodes;
     const pos = node ? getPosition(parent.pos, index) : '0';
 
     // Process node if is not root
@@ -236,12 +249,14 @@ export function convertDataToEntities(
     onProcessFinished,
     externalGetKey,
     childrenPropName,
+    fieldNames,
   }: {
     initWrapper?: (wrapper: Wrapper) => Wrapper;
     processEntity?: (entity: DataEntity, wrapper: Wrapper) => void;
     onProcessFinished?: (wrapper: Wrapper) => void;
     externalGetKey?: ExternalGetKey;
     childrenPropName?: string;
+    fieldNames?: FieldNames;
   } = {},
   /** @deprecated Use `config.externalGetKey` instead */
   legacyExternalGetKey?: ExternalGetKey,
@@ -262,7 +277,7 @@ export function convertDataToEntities(
 
   traverseDataNodes(
     dataNodes,
-    item => {
+    (item) => {
       const { node, index, pos, key, parentPos, level } = item;
       const entity: DataEntity = { node, index, key, pos, level };
 
@@ -282,7 +297,7 @@ export function convertDataToEntities(
         processEntity(entity, wrapper);
       }
     },
-    { externalGetKey: mergedExternalGetKey, childrenPropName },
+    { externalGetKey: mergedExternalGetKey, childrenPropName, fieldNames },
   );
 
   if (onProcessFinished) {
