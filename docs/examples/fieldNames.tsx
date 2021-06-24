@@ -7,31 +7,33 @@ import Tree from 'rc-tree';
 export default () => {
   return (
     <Tree
-      treeData={
-        [
-          {
-            fieldLabel: 'Root',
-            fieldKey: 'root',
-            fieldChildren: [
-              {
-                fieldLabel: 'Bamboo',
-                fieldKey: 'bamboo',
-              },
-              {
-                fieldLabel: 'Light',
-                fieldKey: 'light',
-              },
-            ],
-          },
-        ] as any
-      }
+      // treeData={
+      //   [
+      //     {
+      //       fieldLabel: 'Root',
+      //       fieldKey: 'root',
+      //       fieldChildren: [
+      //         {
+      //           fieldLabel: 'Bamboo',
+      //           fieldKey: 'bamboo',
+      //         },
+      //         {
+      //           fieldLabel: 'Light',
+      //           fieldKey: 'light',
+      //         },
+      //       ],
+      //     },
+      //   ] as any
+      // }
 
-      fieldNames={{
-        title: 'fieldLabel',
-        key: 'fieldKey',
-        children: 'fieldChildren',
-      }}
+      // fieldNames={{
+      //   title: 'fieldLabel',
+      //   key: 'fieldKey',
+      //   children: 'fieldChildren',
+      // }}
       defaultExpandAll
-    />
+    >
+      <Tree.TreeNode title="Bamboo" key="light" />
+    </Tree>
   );
 };

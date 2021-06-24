@@ -26,7 +26,7 @@ export function fillFieldNames(fieldNames?: FieldNames) {
   const { title, key, children } = fieldNames || {};
 
   return {
-    title: title || 'label',
+    title: title || 'title',
     key: key || 'key',
     children: children || 'children',
   };
