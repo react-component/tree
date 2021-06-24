@@ -755,9 +755,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeSelect: NodeMouseEventHandler = (e, treeNode) => {
     let { selectedKeys } = this.state;
-    const { keyEntities } = this.state;
+    const { keyEntities, fieldNames } = this.state;
     const { onSelect, multiple } = this.props;
-    const { selected, key } = treeNode;
+    const { selected } = treeNode;
+    const key = treeNode[fieldNames.key];
     const targetSelected = !selected;
 
     // Update selected keys
