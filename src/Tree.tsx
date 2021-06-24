@@ -1006,7 +1006,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
     let { expandedKeys } = this.state;
     const { listChanging, fieldNames } = this.state;
     const { onExpand, loadData } = this.props;
-    const { key, expanded } = treeNode;
+    const { expanded } = treeNode;
+    const key = treeNode[fieldNames.key];
 
     // Do nothing when motion is in progress
     if (listChanging) {
