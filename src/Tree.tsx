@@ -1041,6 +1041,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           const { expandedKeys: currentExpandedKeys } = this.state;
           const expandedKeysToRestore = arrDel(currentExpandedKeys, key);
           this.setExpandedKeys(expandedKeysToRestore);
+          throw e;
         });
       }
     }
