@@ -870,7 +870,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
         const { key } = treeNode;
 
         if (!loadData || loadedKeys.indexOf(key) !== -1 || loadingKeys.indexOf(key) !== -1) {
-          // react 15 will warn if return null
           return null;
         }
 
