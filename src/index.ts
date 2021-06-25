@@ -1,5 +1,8 @@
-import Tree, { TreeProps } from './Tree';
-import TreeNode, { TreeNodeProps } from './TreeNode';
+import Tree from './Tree';
+import TreeNode from './TreeNode';
+import type { TreeProps } from './Tree';
+import type { TreeNodeProps } from './TreeNode';
 
-export { TreeNode, TreeProps, TreeNodeProps };
+export { TreeNode };
+export type { TreeProps, TreeNodeProps };
 export default Tree;
