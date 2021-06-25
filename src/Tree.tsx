@@ -863,7 +863,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeLoad = (treeNode: EventDataNode) =>
-    new Promise<void>((resolve) => {
+    new Promise<void>((resolve, reject) => {
       // We need to get the latest state of loading/loaded keys
       this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
         const { loadData, onLoad } = this.props;
@@ -904,7 +904,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           this.setState({
             loadingKeys: newLoadingKeys,
           });
-          resolve();
+          reject(e);
         });;
 
         return {
@@ -1038,6 +1038,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
           // [Legacy] Refresh logic
           const newFlattenTreeData = flattenTreeData(this.state.treeData, expandedKeys);
           this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
+        }).catch(e => {
+          const { expandedKeys: currentExpandedKeys } = this.state;
+          const expandedKeysToRestore = arrDel(currentExpandedKeys, key);
+          this.setExpandedKeys(expandedKeysToRestore);
         });
       }
     }
