@@ -871,7 +871,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
         if (!loadData || loadedKeys.indexOf(key) !== -1 || loadingKeys.indexOf(key) !== -1) {
           // react 15 will warn if return null
-          return {};
+          return null;
         }
 
         // Process load data
@@ -898,7 +898,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
           });
 
           resolve();
-        });
+        }).catch(e => {
+          const { loadingKeys: currentLoadingKeys } = this.state;
+          const newLoadingKeys = arrDel(currentLoadingKeys, key);
+          this.setState({
+            loadingKeys: newLoadingKeys,
+          });
+          resolve();
+        });;
 
         return {
           loadingKeys: arrAdd(loadingKeys, key),
