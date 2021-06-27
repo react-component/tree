@@ -1037,11 +1037,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
           // [Legacy] Refresh logic
           const newFlattenTreeData = flattenTreeData(this.state.treeData, expandedKeys);
           this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
-        }).catch(e => {
+        }).catch(error => {
           const { expandedKeys: currentExpandedKeys } = this.state;
           const expandedKeysToRestore = arrDel(currentExpandedKeys, key);
           this.setExpandedKeys(expandedKeysToRestore);
-          throw e;
+          throw error;
         });
       }
     }
