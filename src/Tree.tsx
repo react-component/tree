@@ -1319,7 +1319,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
         }}
       >
         <div
-          role="tree"
           className={classNames(prefixCls, className, {
             [`${prefixCls}-show-line`]: showLine,
             [`${prefixCls}-focused`]: focused,

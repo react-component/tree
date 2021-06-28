@@ -3,9 +3,10 @@
 exports[`TreeNode Props className 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -182,9 +183,10 @@ exports[`TreeNode Props className 1`] = `
 exports[`TreeNode Props customize icon component 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -254,9 +256,10 @@ exports[`TreeNode Props customize icon component 1`] = `
 exports[`TreeNode Props customize icon element 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -326,9 +329,10 @@ exports[`TreeNode Props customize icon element 1`] = `
 exports[`TreeNode Props customize icon hide icon 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -391,9 +395,10 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
 exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -575,9 +580,10 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
 exports[`TreeNode Props data and aria props renders data attributes on li 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -759,9 +765,10 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
 exports[`TreeNode Props isLeaf 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -849,9 +856,10 @@ exports[`TreeNode Props isLeaf 1`] = `
 exports[`TreeNode Props isLeaf 2`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -945,9 +953,10 @@ exports[`TreeNode Props isLeaf 2`] = `
 exports[`TreeNode Props isLeaf 3`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
