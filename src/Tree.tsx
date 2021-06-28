@@ -904,7 +904,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             loadingKeys: newLoadingKeys,
           });
           reject(e);
-        });;
+        });
 
         return {
           loadingKeys: arrAdd(loadingKeys, key),
