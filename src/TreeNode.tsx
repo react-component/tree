@@ -296,7 +296,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     // read from state to avoid loadData at same time
     if (loadData && expanded && !this.isLeaf()) {
       // We needn't reload data when has children in sync logic
-      // It's only needed in node expandedg
+      // It's only needed in node expanded
       if (!this.hasChildren() && !loaded && loading) {
         onNodeLoad(convertNodePropsToEventData(this.props));
       }
