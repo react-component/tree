@@ -2,14 +2,14 @@
 
 Tree component.
 
-[![NPM version][npm-image]][npm-url] [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi) [![build status][github-actions-image]][github-actions-url] [![Test coverage][coveralls-image]][coveralls-url] [![Dependencies][david-image]][david-url] [![DevDependencies][david-dev-image]][david-dev-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
+[![NPM version][npm-image]][npm-url] [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi) [![build status][github-actions-image]][github-actions-url] [![Test coverage][codecov-image]][codecov-url] [![Dependencies][david-image]][david-url] [![DevDependencies][david-dev-image]][david-dev-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree
 [github-actions-image]: https://github.com/react-component/tree/workflows/CI/badge.svg
 [github-actions-url]: https://github.com/react-component/tree/actions
-[coveralls-image]: https://img.shields.io/coveralls/react-component/tree.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/tree?branch=master
+[codecov-image]: https://img.shields.io/codecov/c/github/react-component/tree/master.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/react-component/tree/branch/master
 [david-url]: https://david-dm.org/react-component/tree
 [david-image]: https://david-dm.org/react-component/tree/status.svg?style=flat-square
 [david-dev-url]: https://david-dm.org/react-component/tree?type=dev
