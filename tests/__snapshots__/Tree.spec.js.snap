@@ -3,9 +3,10 @@
 exports[`Tree Basic check basic render 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -136,9 +137,10 @@ exports[`Tree Basic check basic render 1`] = `
 exports[`Tree Basic check check after data ready works 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
@@ -238,9 +240,10 @@ exports[`Tree Basic check check after data ready works 1`] = `
 exports[`Tree Basic check check update when Tree trigger componentWillReceiveProps 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
@@ -309,9 +312,10 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
 exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
@@ -401,9 +405,10 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
 exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
@@ -549,9 +554,10 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
 exports[`Tree Basic renders correctly 1`] = `
 <div
   class="rc-tree forTest rc-tree-show-line"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -750,9 +756,10 @@ exports[`Tree Basic renders correctly 1`] = `
 exports[`Tree Basic renders opaque children correctly 1`] = `
 <div
   class="rc-tree"
-  role="tree"
 >
-  <div>
+  <div
+    role="tree"
+  >
     <input
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
