@@ -1750,12 +1750,10 @@ describe('Tree Basic', () => {
     );
     // trigger click to expand node
     wrapper.find('.rc-tree-switcher').simulate('click');
-    console.log(wrapper.find('.rc-tree-iconEle').getDOMNode().className, '1');
     expect(
       wrapper.find('.rc-tree-switcher').getDOMNode().className.includes('rc-tree-switcher_open'),
     ).toBe(true);
     await delay();
-    console.log(wrapper.find('.rc-tree-iconEle').getDOMNode().className, '2');
     expect(
       wrapper.find('.rc-tree-switcher').getDOMNode().className.includes('rc-tree-switcher_close'),
     ).toBe(true);
