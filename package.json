@@ -3,7 +3,7 @@
   "version": "4.2.1",
   "description": "tree ui component for react",
   "engines": {
-    "node": ">=12.x"
+    "node": ">=10.x"
   },
   "keywords": [
     "react",
