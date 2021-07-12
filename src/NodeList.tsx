@@ -278,6 +278,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           onBlur={onBlur}
           value=""
           onChange={noop}
+          aria-label="for screen reader"
         />
       </div>
 
