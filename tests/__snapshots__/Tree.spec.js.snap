@@ -7,6 +7,7 @@ exports[`Tree Basic check basic render 1`] = `
 >
   <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -140,6 +141,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
 >
   <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -242,6 +244,7 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
 >
   <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -313,6 +316,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
 >
   <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -405,6 +409,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
 >
   <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -553,6 +558,7 @@ exports[`Tree Basic renders correctly 1`] = `
 >
   <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -754,6 +760,7 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
 >
   <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
