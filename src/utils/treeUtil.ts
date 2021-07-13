@@ -39,7 +39,7 @@ export function warningWithoutKey(treeData: DataNode[], fieldNames: FieldNames) 
   const keys: Map<string, boolean> = new Map();
 
   function dig(list: DataNode[], path: string = '') {
-    (list || []).forEach((treeNode) => {
+    (list || []).forEach(treeNode => {
       const key = treeNode[fieldNames.key];
       const children = treeNode[fieldNames.children];
       warning(
@@ -68,7 +68,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
   function dig(node: React.ReactNode): DataNode[] {
     const treeNodes = toArray(node) as NodeElement[];
     return treeNodes
-      .map((treeNode) => {
+      .map(treeNode => {
         // Filter invalidate node
         if (!isTreeNode(treeNode)) {
           warning(!treeNode, 'Tree/TreeNode can only accept TreeNode as children.');
@@ -174,13 +174,12 @@ export function traverseDataNodes(
   config?: TraverseDataNodesConfig,
 ) {
   // Init config
-  const {
-    childrenPropName,
-    externalGetKey,
-    fieldNames: { key: fieldKey, children: fieldChildren } = {},
-  } = config || ({} as TraverseDataNodesConfig);
+  const { childrenPropName, externalGetKey, fieldNames } =
+    config || ({} as TraverseDataNodesConfig);
 
-  const mergeChildrenPropName = childrenPropName || fieldChildren || 'children';
+  const { key: fieldKey, children: fieldChildren } = fillFieldNames(fieldNames);
+
+  const mergeChildrenPropName = childrenPropName || fieldChildren;
 
   // Get keys
   let syntheticGetKey: (node: DataNode, pos?: string) => Key;
@@ -277,7 +276,7 @@ export function convertDataToEntities(
 
   traverseDataNodes(
     dataNodes,
-    (item) => {
+    item => {
       const { node, index, pos, key, parentPos, level } = item;
       const entity: DataEntity = { node, index, key, pos, level };
 
