@@ -107,7 +107,7 @@ export function flattenTreeData(
   expandedKeys: Key[] | true,
   fieldNames: FieldNames,
 ): FlattenNode[] {
-  const { title: fieldTitle, key: fieldKey, children: fieldChildren } = fieldNames;
+  const { title: fieldTitle, key: fieldKey, children: fieldChildren } = fillFieldNames(fieldNames);
 
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
   const flattenList: FlattenNode[] = [];
