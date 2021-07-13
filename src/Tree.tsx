@@ -338,7 +338,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     } else if (!prevProps && props.defaultExpandAll) {
       const cloneKeyEntities = { ...keyEntities };
       delete cloneKeyEntities[MOTION_KEY];
-      newState.expandedKeys = Object.keys(cloneKeyEntities).map((key) => cloneKeyEntities[key].key);
+      newState.expandedKeys = Object.keys(cloneKeyEntities).map(key => cloneKeyEntities[key].key);
     } else if (!prevProps && props.defaultExpandedKeys) {
       newState.expandedKeys =
         props.autoExpandParent || props.defaultExpandParent
@@ -491,7 +491,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (!this.delayedDragEnterLogic) {
       this.delayedDragEnterLogic = {};
     }
-    Object.keys(this.delayedDragEnterLogic).forEach((key) => {
+    Object.keys(this.delayedDragEnterLogic).forEach(key => {
       clearTimeout(this.delayedDragEnterLogic[key]);
     });
 
@@ -652,7 +652,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   // since stopPropagation() is called in treeNode
   // if onWindowDrag is called, whice means state is keeped, drag state should be cleared
-  onWindowDragEnd = (event) => {
+  onWindowDragEnd = event => {
     this.onNodeDragEnd(event, null, true);
     window.removeEventListener('dragend', this.onWindowDragEnd);
   };
@@ -772,13 +772,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // [Legacy] Not found related usage in doc or upper libs
     const selectedNodes = selectedKeys
-      .map((selectedKey) => {
+      .map(selectedKey => {
         const entity = keyEntities[selectedKey];
         if (!entity) return null;
 
         return entity.node;
       })
-      .filter((node) => node);
+      .filter(node => node);
 
     this.setUncontrolledState({ selectedKeys });
 
@@ -821,9 +821,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
       checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
 
       eventObj.checkedNodes = checkedKeys
-        .map((checkedKey) => keyEntities[checkedKey])
-        .filter((entity) => entity)
-        .map((entity) => entity.node);
+        .map(checkedKey => keyEntities[checkedKey])
+        .filter(entity => entity)
+        .map(entity => entity.node);
 
       this.setUncontrolledState({ checkedKeys });
     } else {
@@ -852,7 +852,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       eventObj.checkedNodesPositions = [];
       eventObj.halfCheckedKeys = halfCheckedKeys;
 
-      checkedKeys.forEach((checkedKey) => {
+      checkedKeys.forEach(checkedKey => {
         const entity = keyEntities[checkedKey];
         if (!entity) return;
 
@@ -879,42 +879,50 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeLoad = (treeNode: EventDataNode) =>
-    new Promise<void>((resolve) => {
+    new Promise<void>((resolve, reject) => {
       // We need to get the latest state of loading/loaded keys
       this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
         const { loadData, onLoad } = this.props;
         const { key } = treeNode;
 
         if (!loadData || loadedKeys.indexOf(key) !== -1 || loadingKeys.indexOf(key) !== -1) {
-          // react 15 will warn if return null
-          return {};
+          return null;
         }
 
         // Process load data
         const promise = loadData(treeNode);
-        promise.then(() => {
-          const { loadedKeys: currentLoadedKeys, loadingKeys: currentLoadingKeys } = this.state;
-          const newLoadedKeys = arrAdd(currentLoadedKeys, key);
-          const newLoadingKeys = arrDel(currentLoadingKeys, key);
+        promise
+          .then(() => {
+            const { loadedKeys: currentLoadedKeys, loadingKeys: currentLoadingKeys } = this.state;
+            const newLoadedKeys = arrAdd(currentLoadedKeys, key);
+            const newLoadingKeys = arrDel(currentLoadingKeys, key);
 
-          // onLoad should trigger before internal setState to avoid `loadData` trigger twice.
-          // https://github.com/ant-design/ant-design/issues/12464
-          if (onLoad) {
-            onLoad(newLoadedKeys, {
-              event: 'load',
-              node: treeNode,
+            // onLoad should trigger before internal setState to avoid `loadData` trigger twice.
+            // https://github.com/ant-design/ant-design/issues/12464
+            if (onLoad) {
+              onLoad(newLoadedKeys, {
+                event: 'load',
+                node: treeNode,
+              });
+            }
+
+            this.setUncontrolledState({
+              loadedKeys: newLoadedKeys,
             });
-          }
+            this.setState({
+              loadingKeys: newLoadingKeys,
+            });
 
-          this.setUncontrolledState({
-            loadedKeys: newLoadedKeys,
+            resolve();
+          })
+          .catch(e => {
+            const { loadingKeys: currentLoadingKeys } = this.state;
+            const newLoadingKeys = arrDel(currentLoadingKeys, key);
+            this.setState({
+              loadingKeys: newLoadingKeys,
+            });
+            reject(e);
           });
-          this.setState({
-            loadingKeys: newLoadingKeys,
-          });
-
-          resolve();
-        });
 
         return {
           loadingKeys: arrAdd(loadingKeys, key),
@@ -1044,11 +1052,21 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (targetExpanded && loadData) {
       const loadPromise = this.onNodeLoad(treeNode);
       if (loadPromise) {
-        loadPromise.then(() => {
-          // [Legacy] Refresh logic
-          const newFlattenTreeData = flattenTreeData(this.state.treeData, expandedKeys, fieldNames);
-          this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
-        });
+        loadPromise
+          .then(() => {
+            // [Legacy] Refresh logic
+            const newFlattenTreeData = flattenTreeData(
+              this.state.treeData,
+              expandedKeys,
+              fieldNames,
+            );
+            this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
+          })
+          .catch(() => {
+            const { expandedKeys: currentExpandedKeys } = this.state;
+            const expandedKeysToRestore = arrDel(currentExpandedKeys, key);
+            this.setExpandedKeys(expandedKeysToRestore);
+          });
       }
     }
   };
@@ -1116,7 +1134,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (event) => {
+  onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
     const { activeKey, expandedKeys, checkedKeys } = this.state;
     const { onKeyDown, checkable, selectable } = this.props;
 
@@ -1218,7 +1236,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     let allPassed = true;
     const newState = {};
 
-    Object.keys(state).forEach((name) => {
+    Object.keys(state).forEach(name => {
       if (name in this.props) {
         allPassed = false;
         return;
@@ -1236,7 +1254,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  scrollTo: ScrollTo = (scroll) => {
+  scrollTo: ScrollTo = scroll => {
     this.listRef.current.scrollTo(scroll);
   };
 
@@ -1327,6 +1345,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         }}
       >
         <div
+          role="tree"
           className={classNames(prefixCls, className, {
             [`${prefixCls}-show-line`]: showLine,
             [`${prefixCls}-focused`]: focused,

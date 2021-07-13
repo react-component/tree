@@ -172,7 +172,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
   const listRef = React.useRef<ListRef>(null);
   const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => ({
-    scrollTo: (scroll) => {
+    scrollTo: scroll => {
       listRef.current.scrollTo(scroll);
     },
     getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
@@ -270,7 +270,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         </span>
       )}
 
-      <div role="tree">
+      <div>
         <input
           style={HIDDEN_STYLE}
           disabled={focusable === false || disabled}
@@ -280,6 +280,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           onBlur={onBlur}
           value=""
           onChange={noop}
+          aria-label="for screen reader"
         />
       </div>
 
