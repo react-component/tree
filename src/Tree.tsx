@@ -118,6 +118,7 @@ export interface TreeProps {
       node: EventDataNode;
       selectedNodes: DataNode[];
       nativeEvent: MouseEvent;
+      expandedKeys: Key[];
     },
   ) => void;
   onLoad?: (
@@ -735,7 +736,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeSelect: NodeMouseEventHandler = (e, treeNode) => {
     let { selectedKeys } = this.state;
-    const { keyEntities } = this.state;
+    const { keyEntities, expandedKeys } = this.state;
     const { onSelect, multiple } = this.props;
     const { selected, key } = treeNode;
     const targetSelected = !selected;
@@ -768,6 +769,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         node: treeNode,
         selectedNodes,
         nativeEvent: e.nativeEvent,
+        expandedKeys,
       });
     }
   };
