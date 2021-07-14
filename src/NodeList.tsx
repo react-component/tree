@@ -41,6 +41,8 @@ const MotionFlattenData: FlattenNode = {
   children: [],
   pos: MotionEntity.pos,
   data: MotionNode,
+  title: null,
+  key: MOTION_KEY,
   /** Hold empty list here since we do not use it */
   isStart: [],
   isEnd: [],
@@ -170,7 +172,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
   const listRef = React.useRef<ListRef>(null);
   const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => ({
-    scrollTo: (scroll) => {
+    scrollTo: scroll => {
       listRef.current.scrollTo(scroll);
     },
     getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
@@ -312,11 +314,14 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         {(treeNode: FlattenNode) => {
           const {
             pos,
-            data: { key, ...restProps },
+            data: { ...restProps },
+            title,
+            key,
             isStart,
             isEnd,
           } = treeNode;
           const mergedKey = getKey(key, pos);
+          delete restProps.key;
           delete restProps.children;
 
           const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
@@ -325,6 +330,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
             <MotionTreeNode
               {...restProps}
               {...treeNodeProps}
+              title={title}
               active={!!activeItem && key === activeItem.data.key}
               pos={pos}
               data={treeNode.data}

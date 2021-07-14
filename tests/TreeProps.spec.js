@@ -14,7 +14,7 @@ import { convertNodePropsToEventData } from '../src/utils/treeUtil';
 
 // Promisify timeout to let jest catch works
 function timeoutPromise(delay = 0) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(resolve, delay);
   });
 }
@@ -366,7 +366,7 @@ describe('Tree Props', () => {
   describe('invalidate checkedKeys', () => {
     const errorSpy = spyError();
 
-    const genWrapper = (checkedKeys) =>
+    const genWrapper = checkedKeys =>
       mount(
         <Tree checkedKeys={checkedKeys} defaultExpandAll checkable>
           <TreeNode key="0-0">
@@ -577,7 +577,7 @@ describe('Tree Props', () => {
     });
 
     // https://github.com/ant-design/ant-design/issues/12464
-    it('by controlled', (done) => {
+    it('by controlled', done => {
       const treeData = [
         {
           title: 'demo1',
@@ -600,7 +600,7 @@ describe('Tree Props', () => {
           loadedKeys: [],
         };
 
-        onLoad = (loadedKeys) => {
+        onLoad = loadedKeys => {
           this.setState({ loadedKeys });
         };
 
@@ -739,7 +739,7 @@ describe('Tree Props', () => {
           this.val = val;
         }
 
-        then = (func) => {
+        then = func => {
           const ret = func(this.val);
           return new FakePromise(ret);
         };

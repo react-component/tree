@@ -82,7 +82,9 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
           >
             {motionNodes.map((treeNode: FlattenNode) => {
               const {
-                data: { key, ...restProps },
+                data: { ...restProps },
+                title,
+                key,
                 isStart,
                 isEnd,
               } = treeNode;
@@ -94,6 +96,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
                 <TreeNode
                   {...restProps}
                   {...treeNodeProps}
+                  title={title}
                   active={active}
                   data={treeNode.data}
                   key={key}

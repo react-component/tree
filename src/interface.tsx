@@ -70,6 +70,8 @@ export interface FlattenNode {
   children: FlattenNode[];
   pos: string;
   data: DataNode;
+  title: React.ReactNode;
+  key: Key;
   isStart: boolean[];
   isEnd: boolean[];
 }
@@ -79,3 +81,9 @@ export type GetKey<RecordType> = (record: RecordType, index?: number) => Key;
 export type GetCheckDisabled<RecordType> = (record: RecordType) => boolean;
 
 export type Direction = 'ltr' | 'rtl' | undefined;
+
+export interface FieldNames {
+  title?: string;
+  key?: string;
+  children?: string;
+}

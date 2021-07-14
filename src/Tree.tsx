@@ -34,6 +34,7 @@ import {
   NodeInstance,
   ScrollTo,
   Direction,
+  FieldNames,
 } from './interface';
 import {
   flattenTreeData,
@@ -42,6 +43,7 @@ import {
   warningWithoutKey,
   convertNodePropsToEventData,
   getTreeNodeProps,
+  fillFieldNames,
 } from './utils/treeUtil';
 import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
@@ -68,6 +70,7 @@ export interface TreeProps {
   tabIndex?: number;
   children?: React.ReactNode;
   treeData?: DataNode[]; // Generate treeNode by children
+  fieldNames?: FieldNames;
   showLine?: boolean;
   showIcon?: boolean;
   icon?: IconType;
@@ -197,6 +200,8 @@ interface TreeState {
   listChanging: boolean;
 
   prevProps: TreeProps;
+
+  fieldNames: FieldNames;
 }
 
 class Tree extends React.Component<TreeProps, TreeState> {
@@ -264,6 +269,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
     listChanging: false,
 
     prevProps: null,
+
+    fieldNames: fillFieldNames(),
   };
 
   dragStartMousePosition = null;
@@ -290,6 +297,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
     // ================== Tree Node ==================
     let treeData: DataNode[];
 
+    // fieldNames
+    let { fieldNames } = prevState;
+    if (needSync('fieldNames')) {
+      fieldNames = fillFieldNames(props.fieldNames);
+      newState.fieldNames = fieldNames;
+    }
+
     // Check if `treeData` or `children` changed and save into the state.
     if (needSync('treeData')) {
       ({ treeData } = props);
@@ -301,7 +315,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     // Save flatten nodes info and convert `treeData` into keyEntities
     if (treeData) {
       newState.treeData = treeData;
-      const entitiesMap = convertDataToEntities(treeData);
+      const entitiesMap = convertDataToEntities(treeData, { fieldNames });
       newState.keyEntities = {
         [MOTION_KEY]: MotionEntity,
         ...entitiesMap.keyEntities,
@@ -309,7 +323,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
       // Warning if treeNode not provide key
       if (process.env.NODE_ENV !== 'production') {
-        warningWithoutKey(treeData);
+        warningWithoutKey(treeData, fieldNames);
       }
     }
 
@@ -324,7 +338,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     } else if (!prevProps && props.defaultExpandAll) {
       const cloneKeyEntities = { ...keyEntities };
       delete cloneKeyEntities[MOTION_KEY];
-      newState.expandedKeys = Object.keys(cloneKeyEntities).map((key) => cloneKeyEntities[key].key);
+      newState.expandedKeys = Object.keys(cloneKeyEntities).map(key => cloneKeyEntities[key].key);
     } else if (!prevProps && props.defaultExpandedKeys) {
       newState.expandedKeys =
         props.autoExpandParent || props.defaultExpandParent
@@ -341,6 +355,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       const flattenNodes: FlattenNode[] = flattenTreeData(
         treeData || prevState.treeData,
         newState.expandedKeys || prevState.expandedKeys,
+        fieldNames,
       );
       newState.flattenNodes = flattenNodes;
     }
@@ -476,7 +491,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     if (!this.delayedDragEnterLogic) {
       this.delayedDragEnterLogic = {};
     }
-    Object.keys(this.delayedDragEnterLogic).forEach((key) => {
+    Object.keys(this.delayedDragEnterLogic).forEach(key => {
       clearTimeout(this.delayedDragEnterLogic[key]);
     });
 
@@ -637,7 +652,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   // since stopPropagation() is called in treeNode
   // if onWindowDrag is called, whice means state is keeped, drag state should be cleared
-  onWindowDragEnd = (event) => {
+  onWindowDragEnd = event => {
     this.onNodeDragEnd(event, null, true);
     window.removeEventListener('dragend', this.onWindowDragEnd);
   };
@@ -659,8 +674,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {
-    const { dragChildrenKeys, dropPosition, dropTargetKey, dropTargetPos, dropAllowed } =
-      this.state;
+    const {
+      dragChildrenKeys,
+      dropPosition,
+      dropTargetKey,
+      dropTargetPos,
+      dropAllowed,
+    } = this.state;
 
     if (!dropAllowed) return;
 
@@ -735,9 +755,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeSelect: NodeMouseEventHandler = (e, treeNode) => {
     let { selectedKeys } = this.state;
-    const { keyEntities } = this.state;
+    const { keyEntities, fieldNames } = this.state;
     const { onSelect, multiple } = this.props;
-    const { selected, key } = treeNode;
+    const { selected } = treeNode;
+    const key = treeNode[fieldNames.key];
     const targetSelected = !selected;
 
     // Update selected keys
@@ -751,13 +772,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // [Legacy] Not found related usage in doc or upper libs
     const selectedNodes = selectedKeys
-      .map((selectedKey) => {
+      .map(selectedKey => {
         const entity = keyEntities[selectedKey];
         if (!entity) return null;
 
         return entity.node;
       })
-      .filter((node) => node);
+      .filter(node => node);
 
     this.setUncontrolledState({ selectedKeys });
 
@@ -800,9 +821,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
       checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
 
       eventObj.checkedNodes = checkedKeys
-        .map((checkedKey) => keyEntities[checkedKey])
-        .filter((entity) => entity)
-        .map((entity) => entity.node);
+        .map(checkedKey => keyEntities[checkedKey])
+        .filter(entity => entity)
+        .map(entity => entity.node);
 
       this.setUncontrolledState({ checkedKeys });
     } else {
@@ -831,7 +852,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       eventObj.checkedNodesPositions = [];
       eventObj.halfCheckedKeys = halfCheckedKeys;
 
-      checkedKeys.forEach((checkedKey) => {
+      checkedKeys.forEach(checkedKey => {
         const entity = keyEntities[checkedKey];
         if (!entity) return;
 
@@ -894,7 +915,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
             resolve();
           })
-          .catch((e) => {
+          .catch(e => {
             const { loadingKeys: currentLoadingKeys } = this.state;
             const newLoadingKeys = arrDel(currentLoadingKeys, key);
             this.setState({
@@ -978,9 +999,9 @@ class Tree extends React.Component<TreeProps, TreeState> {
   // =========================== Expanded ===========================
   /** Set uncontrolled `expandedKeys`. This will also auto update `flattenNodes`. */
   setExpandedKeys = (expandedKeys: Key[]) => {
-    const { treeData } = this.state;
+    const { treeData, fieldNames } = this.state;
 
-    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys);
+    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys, fieldNames);
     this.setUncontrolledState(
       {
         expandedKeys,
@@ -992,9 +1013,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeExpand = (e: React.MouseEvent<HTMLDivElement>, treeNode: EventDataNode) => {
     let { expandedKeys } = this.state;
-    const { listChanging } = this.state;
+    const { listChanging, fieldNames } = this.state;
     const { onExpand, loadData } = this.props;
-    const { key, expanded } = treeNode;
+    const { expanded } = treeNode;
+    const key = treeNode[fieldNames.key];
 
     // Do nothing when motion is in progress
     if (listChanging) {
@@ -1033,7 +1055,11 @@ class Tree extends React.Component<TreeProps, TreeState> {
         loadPromise
           .then(() => {
             // [Legacy] Refresh logic
-            const newFlattenTreeData = flattenTreeData(this.state.treeData, expandedKeys);
+            const newFlattenTreeData = flattenTreeData(
+              this.state.treeData,
+              expandedKeys,
+              fieldNames,
+            );
             this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
           })
           .catch(() => {
@@ -1108,7 +1134,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (event) => {
+  onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
     const { activeKey, expandedKeys, checkedKeys } = this.state;
     const { onKeyDown, checkable, selectable } = this.props;
 
@@ -1210,7 +1236,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     let allPassed = true;
     const newState = {};
 
-    Object.keys(state).forEach((name) => {
+    Object.keys(state).forEach(name => {
       if (name in this.props) {
         allPassed = false;
         return;
@@ -1228,7 +1254,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  scrollTo: ScrollTo = (scroll) => {
+  scrollTo: ScrollTo = scroll => {
     this.listRef.current.scrollTo(scroll);
   };
 

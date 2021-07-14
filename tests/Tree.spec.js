@@ -15,8 +15,8 @@ const OPEN_CLASSNAME = '.rc-tree-switcher_open';
 const CHECKED_CLASSNAME = '.rc-tree-checkbox-checked';
 const SELECTED_CLASSNAME = '.rc-tree-node-selected';
 
-const delay = (timeout) =>
-  new Promise((resolve) => {
+const delay = timeout =>
+  new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
 
@@ -238,7 +238,7 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       wrapper.find('.rc-tree-switcher').simulate('click');
-      wrapper.find('.rc-tree-checkbox').forEach((checkbox) => {
+      wrapper.find('.rc-tree-checkbox').forEach(checkbox => {
         expect(checkbox.is(CHECKED_CLASSNAME)).toBe(true);
       });
     });
@@ -315,7 +315,7 @@ describe('Tree Basic', () => {
       wrapper.find('.rc-tree-switcher').simulate('click');
       wrapper.find('.rc-tree-checkbox').last().simulate('click');
       wrapper.find('.rc-tree-checkbox').first().simulate('click');
-      wrapper.find('.rc-tree-checkbox').forEach((checkbox) => {
+      wrapper.find('.rc-tree-checkbox').forEach(checkbox => {
         expect(checkbox.is(CHECKED_CLASSNAME)).toBe(true);
       });
     });
@@ -414,7 +414,7 @@ describe('Tree Basic', () => {
     // https://github.com/ant-design/ant-design/issues/7353
     it('check children after changing from children[disableCheckbox] from true to false', () => {
       let checkedKeys = null;
-      const mockHandleCheck = (keys) => (checkedKeys = keys);
+      const mockHandleCheck = keys => (checkedKeys = keys);
       function Test({ disableCheckbox }) {
         return (
           <Tree checkable onCheck={mockHandleCheck}>
@@ -536,7 +536,7 @@ describe('Tree Basic', () => {
             },
           };
 
-          handleCheck = (checkedKeys) => {
+          handleCheck = checkedKeys => {
             this.setState({ checkedKeys });
           };
 
@@ -969,7 +969,7 @@ describe('Tree Basic', () => {
 
     describe('full steps', () => {
       function dropTarget(targetSelector) {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           const wrapper = mount(
             <Tree draggable={() => true} defaultExpandAll onExpand={() => {}}>
               <TreeNode key="0-0" className="dragTarget">
@@ -1066,7 +1066,7 @@ describe('Tree Basic', () => {
       afterEach(() => {
         domSpy.mockRestore();
       });
-      ['ltr', 'rtl'].forEach((dir) => {
+      ['ltr', 'rtl'].forEach(dir => {
         const base = dir === 'ltr' ? 1 : -1;
         it('not allow cross level dnd on expanded nodes', () => {
           const onDrop = jest.fn();
@@ -1537,9 +1537,9 @@ describe('Tree Basic', () => {
     expect(() => {
       mount(
         <Tree>
-          {[0, 1].map((i) => (
+          {[0, 1].map(i => (
             <TreeNode title={i} key={i}>
-              {[2, 3].map((j) => (
+              {[2, 3].map(j => (
                 <TreeNode title={j} key={`${i}_${j}`} />
               ))}
               <TreeNode title="4" key={`${i}_4`} />
@@ -1554,7 +1554,7 @@ describe('Tree Basic', () => {
     const wrapper = render(
       <Tree>
         <TreeNode title="0" key="0">
-          {[1, 2].map((i) => (
+          {[1, 2].map(i => (
             <TreeNode title={i} key={i} />
           ))}
           <TreeNode title="3" key="3" />
@@ -1612,7 +1612,7 @@ describe('Tree Basic', () => {
           checkable
           defaultExpandAll
           checkedKeys={checkedKeys}
-          onCheck={(keys) => {
+          onCheck={keys => {
             setCheckedKeys(keys);
             onCheck(keys);
           }}
