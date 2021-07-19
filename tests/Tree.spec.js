@@ -1758,4 +1758,21 @@ describe('Tree Basic', () => {
       wrapper.find('.rc-tree-switcher').getDOMNode().className.includes('rc-tree-switcher_close'),
     ).toBe(true);
   });
+
+  // https://github.com/ant-design/ant-design/issues/31141
+  it('should support onScroll', async () => {
+    const onScroll = jest.fn();
+    const data = [];
+    for (let i = 0; i < 99; i += 1) {
+      data.push({
+        key: i,
+        title: i,
+      });
+    }
+    const wrapper = mount(
+      <Tree itemHeight={10} height={100} treeData={data} onScroll={onScroll} />,
+    );
+    wrapper.find('.rc-tree-list-holder').simulate('scroll');
+    expect(onScroll).toBeCalled();
+  });
 });
