@@ -104,6 +104,7 @@ export interface TreeProps {
   onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
   onClick?: NodeMouseEventHandler;
   onDoubleClick?: NodeMouseEventHandler;
+  onScroll?: React.UIEventHandler<HTMLElement>;
   onExpand?: (
     expandedKeys: Key[],
     info: {
@@ -1296,6 +1297,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       titleRender,
       dropIndicatorRender,
       onContextMenu,
+      onScroll,
       direction,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
@@ -1376,6 +1378,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             onListChangeStart={this.onListChangeStart}
             onListChangeEnd={this.onListChangeEnd}
             onContextMenu={onContextMenu}
+            onScroll={onScroll}
             {...this.getTreeNodeRequiredProps()}
             {...domProps}
           />
