@@ -27,7 +27,7 @@ export type NodeMouseEventHandler<T = HTMLSpanElement> = (
   node: EventDataNode,
 ) => void;
 export type NodeDragEventHandler<T = HTMLDivElement> = (
-  e: React.MouseEvent<T>,
+  e: React.DragEvent<T>,
   node: NodeInstance,
   outsideTree?: boolean,
 ) => void;
