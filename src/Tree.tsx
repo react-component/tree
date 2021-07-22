@@ -442,7 +442,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * Better for use mouse move event to refresh drag state.
    * But let's just keep it to avoid event trigger logic change.
    */
-  onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragEnter = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance) => {
     const { expandedKeys, keyEntities, dragChildrenKeys, flattenNodes, indent } = this.state;
     const { onDragEnter, onExpand, allowDrop, direction } = this.props;
     const { pos } = node.props;
@@ -560,7 +560,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragOver = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance) => {
     const { dragChildrenKeys, flattenNodes, keyEntities, expandedKeys, indent } = this.state;
     const { onDragOver, allowDrop, direction } = this.props;
     const { dragNode } = this;
@@ -674,7 +674,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.dragNode = null;
   };
 
-  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {
+  onNodeDrop = (event: React.DragEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {
     const {
       dragChildrenKeys,
       dropPosition,
