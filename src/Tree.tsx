@@ -60,7 +60,12 @@ interface CheckInfo {
   halfCheckedKeys?: Key[];
 }
 
-export type AllowDrop = (options: { dropNode: DataNode; dropPosition: -1 | 0 | 1 }) => boolean;
+export interface AllowDropOptions {
+  dragNode: DataNode;
+  dropNode: DataNode;
+  dropPosition: -1 | 0 | 1;
+}
+export type AllowDrop = (options: AllowDropOptions) => boolean;
 
 export interface TreeProps {
   prefixCls: string;
@@ -675,13 +680,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDrop = (event: React.DragEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {
-    const {
-      dragChildrenKeys,
-      dropPosition,
-      dropTargetKey,
-      dropTargetPos,
-      dropAllowed,
-    } = this.state;
+    const { dragChildrenKeys, dropPosition, dropTargetKey, dropTargetPos, dropAllowed } =
+      this.state;
 
     if (!dropAllowed) return;
 

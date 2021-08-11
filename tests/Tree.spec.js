@@ -1529,6 +1529,38 @@ describe('Tree Basic', () => {
           expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
           expect(onDrop.mock.calls[2][0].dropPosition).toEqual(1);
         });
+        it('allowDrop should pass dragNode and dropNode', () => {
+          const onDrop = jest.fn();
+          const allowDrop = jest.fn();
+          const wrapper = mount(
+            <Tree draggable defaultExpandAll allowDrop={allowDrop} onDrop={onDrop} direction={dir}>
+              <TreeNode key="0-0" className="dragTarget">
+                <TreeNode key="0-0-0" className="dragTargetChild" />
+              </TreeNode>
+              <TreeNode key="0-1">
+                <TreeNode key="0-1-0">
+                  <TreeNode key="0-1-0-0" className="dropTarget" />
+                </TreeNode>
+              </TreeNode>
+              <TreeNode key="0-2" />
+            </Tree>,
+          );
+          wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
+            clientX: base * 500,
+            clientY: 500,
+          });
+          wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
+            clientX: base * 400,
+            clientY: 600,
+          });
+          wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
+            clientX: base * 400,
+            clientY: 600,
+          });
+          wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
+          expect(allowDrop.mock.calls[0][0].dragNode.key).toEqual('0-0');
+          expect(allowDrop.mock.calls[0][0].dropNode.key).toEqual('0-1-0-0');
+        });
       });
     });
   });
