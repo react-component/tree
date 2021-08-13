@@ -141,7 +141,7 @@ export function calcDropPosition(
     }
   }
 
-  const abstractDragDataNode = keyEntities[dragNode.props.eventKey].node;
+  const abstractDragDataNode = dragNode.props.data;
   const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (
