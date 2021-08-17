@@ -114,7 +114,7 @@ export function calcDropPosition(
   if (clientY < top + height / 2) {
     // first half, set abstract drop node to previous node
     const nodeIndex = flattenedNodes.findIndex(
-      (flattenedNode) => flattenedNode.data.key === abstractDropNodeEntity.key,
+      flattenedNode => flattenedNode.data.key === abstractDropNodeEntity.key,
     );
     const prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
     const prevNodeKey = flattenedNodes[prevNodeIndex].data.key;
@@ -141,6 +141,7 @@ export function calcDropPosition(
     }
   }
 
+  const abstractDragDataNode = dragNode.props.data;
   const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (
@@ -148,6 +149,7 @@ export function calcDropPosition(
     abstractDropNodeEntity.level === 0 &&
     clientY < top + height / 2 &&
     allowDrop({
+      dragNode: abstractDragDataNode,
       dropNode: abstractDropDataNode,
       dropPosition: -1,
     }) &&
@@ -163,6 +165,7 @@ export function calcDropPosition(
     // only allow drop inside
     if (
       allowDrop({
+        dragNode: abstractDragDataNode,
         dropNode: abstractDropDataNode,
         dropPosition: 0,
       })
@@ -179,6 +182,7 @@ export function calcDropPosition(
       // 2. do not allow drop
       if (
         allowDrop({
+          dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 1,
         })
@@ -197,6 +201,7 @@ export function calcDropPosition(
       // 3. do not allow drop
       if (
         allowDrop({
+          dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 0,
         })
@@ -204,6 +209,7 @@ export function calcDropPosition(
         dropPosition = 0;
       } else if (
         allowDrop({
+          dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 1,
         })
@@ -221,6 +227,7 @@ export function calcDropPosition(
     // 2. do not allow drop
     if (
       allowDrop({
+        dragNode: abstractDragDataNode,
         dropNode: abstractDropDataNode,
         dropPosition: 1,
       })
@@ -271,13 +278,11 @@ export function convertDataToTree(
 
   const { processProps = internalProcessProps } = processor || {};
   const list = Array.isArray(treeData) ? treeData : [treeData];
-  return list.map(
-    ({ children, ...props }): NodeElement => {
-      const childrenNodes = convertDataToTree(children, processor);
+  return list.map(({ children, ...props }): NodeElement => {
+    const childrenNodes = convertDataToTree(children, processor);
 
-      return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
-    },
-  );
+    return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
+  });
 }
 
 /**
@@ -334,7 +339,7 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
     }
   }
 
-  (keyList || []).forEach((key) => {
+  (keyList || []).forEach(key => {
     conductUp(key);
   });
 
@@ -346,7 +351,7 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
  */
 export function getDataAndAria(props: Partial<TreeProps | TreeNodeProps>) {
   const omitProps: Record<string, string> = {};
-  Object.keys(props).forEach((key) => {
+  Object.keys(props).forEach(key => {
     if (key.startsWith('data-') || key.startsWith('aria-')) {
       omitProps[key] = props[key];
     }

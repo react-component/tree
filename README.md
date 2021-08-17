@@ -86,7 +86,7 @@ see examples
 | onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 | virtual | Disable virtual scroll when `false` | boolean | - |
-| allowDrop | Whether to allow drop on node | ({ dropNode, dropPosition }) => boolean | - |
+| allowDrop | Whether to allow drop on node | ({ dragNode, dropNode, dropPosition }) => boolean | - |
 | dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode| - |
 | direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | - |
 
@@ -138,4 +138,3 @@ rc-tree is released under the MIT license.
 - [jqTree](https://mbraak.github.io/jqTree/)
 - [jquery.treeselect](https://travistidwell.com/jquery.treeselect.js/)
 - [Angular Multi Select Tree](https://a5hik.github.io/angular-multi-select-tree/)
-
