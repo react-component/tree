@@ -22,7 +22,7 @@ import {
   calcDropPosition,
   arrAdd,
   arrDel,
-  posToArr
+  posToArr,
 } from './util';
 import {
   DataNode,
@@ -278,7 +278,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   dragNode: NodeInstance;
 
-  dragEnterDroppableNodeKey = null;
+  currentMouseOverDroppableNodeKey = null;
 
   listRef = React.createRef<NodeListRef>();
 
@@ -447,11 +447,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
   onNodeDragEnter = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance) => {
     const { expandedKeys, keyEntities, dragChildrenKeys, flattenNodes, indent } = this.state;
     const { onDragEnter, onExpand, allowDrop, direction } = this.props;
-    const { pos } = node.props;
+    const { pos, eventKey } = node.props;
     const { dragNode } = this;
 
     // record the key of node which is latest entered, used in dragleave event.
-    this.dragEnterDroppableNodeKey = node.props.eventKey;
+    if (this.currentMouseOverDroppableNodeKey !== eventKey) {
+      this.currentMouseOverDroppableNodeKey = eventKey;
+    }
 
     const {
       dropPosition,
@@ -649,9 +651,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   onNodeDragLeave: NodeDragEventHandler = (event, node) => {
-    // if it is not in droppable area anymore
-    // dragEnterDroppableNodeKey will be updated in dragenter event when into another droppable receiver.
-    if (this.dragEnterDroppableNodeKey === node.props.eventKey) {
+    // if it is outside the droppable area
+    // currentMouseOverDroppableNodeKey will be updated in dragenter event when into another droppable receiver.
+    if (
+      this.currentMouseOverDroppableNodeKey === node.props.eventKey &&
+      !event.currentTarget.contains(event.relatedTarget as Node)
+    ) {
       this.setState({
         dropPosition: null,
         dropLevelOffset: null,
@@ -661,7 +666,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropAllowed: false,
         dragOverNodeKey: null,
       });
-      this.dragEnterDroppableNodeKey = null;
+      this.currentMouseOverDroppableNodeKey = null;
     }
 
     const { onDragLeave } = this.props;
@@ -758,7 +763,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       });
     }
     this.dragStartMousePosition = null;
-    this.dragEnterDroppableNodeKey = null;
+    this.currentMouseOverDroppableNodeKey = null;
   };
 
   onNodeClick: NodeMouseEventHandler = (e, treeNode) => {
