@@ -310,6 +310,15 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
+        onVisibleChange={(originList, fullList) => {
+          const originSet = new Set(originList);
+          const restList = fullList.filter(item => !originSet.has(item));
+
+          // Motion node is not render. Skip motion
+          if (restList.some(item => itemKey(item) === MOTION_KEY)) {
+            onMotionEnd();
+          }
+        }}
       >
         {(treeNode: FlattenNode) => {
           const {
