@@ -11,7 +11,7 @@ describe('Tree Motion', () => {
       motionName: 'bamboo',
     };
     const wrapper = mount(
-      <Tree motion={motion}>
+      <Tree motion={motion} height={10000}>
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
         </TreeNode>
