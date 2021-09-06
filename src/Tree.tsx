@@ -920,9 +920,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
         const promise = loadData(treeNode);
         promise
           .then(() => {
-            const { loadedKeys: currentLoadedKeys, loadingKeys: currentLoadingKeys } = this.state;
+            const { loadedKeys: currentLoadedKeys } = this.state;
             const newLoadedKeys = arrAdd(currentLoadedKeys, key);
-            const newLoadingKeys = arrDel(currentLoadingKeys, key);
 
             // onLoad should trigger before internal setState to avoid `loadData` trigger twice.
             // https://github.com/ant-design/ant-design/issues/12464
@@ -936,18 +935,16 @@ class Tree extends React.Component<TreeProps, TreeState> {
             this.setUncontrolledState({
               loadedKeys: newLoadedKeys,
             });
-            this.setState({
-              loadingKeys: newLoadingKeys,
-            });
+            this.setState(prevState => ({
+              loadingKeys: arrDel(prevState.loadingKeys, key),
+            }));
 
             resolve();
           })
           .catch(e => {
-            const { loadingKeys: currentLoadingKeys } = this.state;
-            const newLoadingKeys = arrDel(currentLoadingKeys, key);
-            this.setState({
-              loadingKeys: newLoadingKeys,
-            });
+            this.setState(prevState => ({
+              loadingKeys: arrDel(prevState.loadingKeys, key),
+            }));
             reject(e);
           });
 
