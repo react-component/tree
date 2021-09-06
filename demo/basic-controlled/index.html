@@ -9,7 +9,7 @@
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="https://avatars0.githubusercontent.com/u/9441414?s=200&v=4"
+      href="https://avatars0.githubusercontent.com/u/9441414?s=200&amp;v=4"
     />
     <style>
       .markdown table {
@@ -21,7 +21,7 @@
       window.routerBase = "/";
     </script>
     <script>
-      //! umi version: 3.3.9
+      //! umi version: 3.5.17
     </script>
     <script>
       !(function () {
@@ -30,7 +30,7 @@
           r = ["light", "dark", "auto"];
         document.documentElement.setAttribute(
           "data-prefers-color",
-          e === r[2] ? (t ? r[1] : r[0]) : r.includes(e) ? e : r[0]
+          e === r[2] ? (t ? r[1] : r[0]) : r.indexOf(e) > -1 ? e : r[0]
         );
       })();
     </script>
