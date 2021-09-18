@@ -533,6 +533,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       },
     } = this.props;
     const disabled = this.isDisabled();
+    const selectable = this.isSelectable();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
     const { level } = keyEntities[eventKey] || {};
     const isEndNode = isEnd[isEnd.length - 1];
@@ -542,6 +543,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         ref={domRef}
         className={classNames(className, `${prefixCls}-treenode`, {
           [`${prefixCls}-treenode-disabled`]: disabled,
+          [`${prefixCls}-treenode-unselectable`]: !selectable,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
           [`${prefixCls}-treenode-checkbox-checked`]: checked,
           [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
