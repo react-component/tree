@@ -319,6 +319,22 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     return treeSelectable;
   }
 
+  isDraggable = () => {
+    const {
+      data,
+      context: { draggable },
+    } = this.props;
+    const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
+
+    return mergedDraggable;
+  };
+
+  // ==================== Render: Drag Handler ====================
+  renderDragHandler = () => {
+    return null;
+  };
+
+  // ====================== Render: Switcher ======================
   renderSwitcherIconDom = (isLeaf: boolean) => {
     const { switcherIcon: switcherIconFromProps } = this.props;
     const {
@@ -365,6 +381,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     ) : null;
   };
 
+  // ====================== Render: Checkbox ======================
   // Checkbox
   renderCheckbox = () => {
     const { checked, halfChecked, disableCheckbox } = this.props;
@@ -394,6 +411,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     );
   };
 
+  // ==================== Render: Title + Icon ====================
   renderIcon = () => {
     const { loading } = this.props;
     const {
@@ -416,10 +434,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const { dragNodeHighlight } = this.state;
     const { title, selected, icon, loading, data } = this.props;
     const {
-      context: { prefixCls, showIcon, icon: treeIcon, draggable, loadData, titleRender },
+      context: { prefixCls, showIcon, icon: treeIcon, loadData, titleRender },
     } = this.props;
     const disabled = this.isDisabled();
-    const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
+    const mergedDraggable = this.isDraggable();
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
 
@@ -478,6 +496,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     );
   };
 
+  // =================== Render: Drop Indicator ===================
   renderDropIndicator = () => {
     const { disabled, eventKey } = this.props;
     const {
@@ -492,14 +511,15 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         direction,
       },
     } = this.props;
-    const mergedDraggable = draggable !== false;
+    const rootDraggable = draggable !== false;
     // allowDrop is calculated in Tree.tsx, there is no need for calc it here
-    const showIndicator = !disabled && mergedDraggable && dragOverNodeKey === eventKey;
+    const showIndicator = !disabled && rootDraggable && dragOverNodeKey === eventKey;
     return showIndicator
       ? dropIndicatorRender({ dropPosition, dropLevelOffset, indent, prefixCls, direction })
       : null;
   };
 
+  // =========================== Render ===========================
   render() {
     const {
       eventKey,
@@ -523,20 +543,13 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       ...otherProps
     } = this.props;
     const {
-      context: {
-        prefixCls,
-        filterTreeNode,
-        draggable,
-        keyEntities,
-        dropContainerKey,
-        dropTargetKey,
-      },
+      context: { prefixCls, filterTreeNode, keyEntities, dropContainerKey, dropTargetKey },
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
     const { level } = keyEntities[eventKey] || {};
     const isEndNode = isEnd[isEnd.length - 1];
-    const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
+    const mergedDraggable = this.isDraggable();
     return (
       <div
         ref={domRef}
@@ -567,6 +580,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         {...dataOrAriaAttributeProps}
       >
         <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
+        {this.renderDragHandler()}
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}
