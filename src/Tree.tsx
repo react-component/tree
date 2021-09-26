@@ -1253,29 +1253,27 @@ class Tree extends React.Component<TreeProps, TreeState> {
     atomic: boolean = false,
     forceState: Partial<TreeState> | null = null,
   ) => {
-    if (this.destroyed) {
-      return;
-    }
+    if (!this.destroyed) {
+      let needSync = false;
+      let allPassed = true;
+      const newState = {};
 
-    let needSync = false;
-    let allPassed = true;
-    const newState = {};
+      Object.keys(state).forEach(name => {
+        if (name in this.props) {
+          allPassed = false;
+          return;
+        }
 
-    Object.keys(state).forEach(name => {
-      if (name in this.props) {
-        allPassed = false;
-        return;
+        needSync = true;
+        newState[name] = state[name];
+      });
+
+      if (needSync && (!atomic || allPassed)) {
+        this.setState({
+          ...newState,
+          ...forceState,
+        } as TreeState);
       }
-
-      needSync = true;
-      newState[name] = state[name];
-    });
-
-    if (needSync && (!atomic || allPassed)) {
-      this.setState({
-        ...newState,
-        ...forceState,
-      } as TreeState);
     }
   };
 
