@@ -332,21 +332,12 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // ==================== Render: Drag Handler ====================
   renderDragHandler = () => {
     const {
-      disabled,
       context: { draggable, draggableIcon, prefixCls },
     } = this.props;
     const rootDraggable = draggable !== false;
-    const mergedDraggable = this.isDraggable();
 
     return rootDraggable && draggableIcon ? (
-      <span
-        draggable={(!disabled && mergedDraggable) || undefined}
-        aria-grabbed={(!disabled && mergedDraggable) || undefined}
-        className={`${prefixCls}-draggable-icon`}
-        onDragStart={mergedDraggable ? this.onDragStart : undefined}
-      >
-        {draggableIcon}
-      </span>
+      <span className={`${prefixCls}-draggable-icon`}>{draggableIcon}</span>
     ) : null;
   };
 
@@ -496,14 +487,11 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           !disabled && (selected || dragNodeHighlight) && `${prefixCls}-node-selected`,
           !disabled && mergedDraggable && 'draggable',
         )}
-        draggable={(!disabled && mergedDraggable) || undefined}
-        aria-grabbed={(!disabled && mergedDraggable) || undefined}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
         onClick={this.onSelectorClick}
         onDoubleClick={this.onSelectorDoubleClick}
-        onDragStart={mergedDraggable ? this.onDragStart : undefined}
       >
         {$icon}
         {$title}
@@ -587,6 +575,11 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           'filter-node': filterTreeNode && filterTreeNode(convertNodePropsToEventData(this.props)),
         })}
         style={style}
+        // Draggable config
+        draggable={(!disabled && mergedDraggable) || undefined}
+        aria-grabbed={(!disabled && mergedDraggable) || undefined}
+        onDragStart={mergedDraggable ? this.onDragStart : undefined}
+        // Drop config
         onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
         onDragOver={mergedDraggable ? this.onDragOver : undefined}
         onDragLeave={mergedDraggable ? this.onDragLeave : undefined}
