@@ -24,8 +24,8 @@
       -webkit-user-select: none;
       user-select: none;
       /* Required to make elements draggable in old WebKit */
-      -khtml-user-drag: element;
-      -webkit-user-drag: element;
+      // -khtml-user-drag: element;
+      // -webkit-user-drag: element;
     }
 
     &.drop-container {
@@ -227,8 +227,8 @@
   }
 
   &-draggable-icon {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
     width: 16px;
-    background: red;
   }
 }

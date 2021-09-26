@@ -444,7 +444,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       context: { prefixCls, showIcon, icon: treeIcon, loadData, titleRender },
     } = this.props;
     const disabled = this.isDisabled();
-    const mergedDraggable = this.isDraggable();
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
 
@@ -485,7 +484,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           `${wrapClass}`,
           `${wrapClass}-${this.getNodeState() || 'normal'}`,
           !disabled && (selected || dragNodeHighlight) && `${prefixCls}-node-selected`,
-          !disabled && mergedDraggable && 'draggable',
         )}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
@@ -547,13 +545,25 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       ...otherProps
     } = this.props;
     const {
-      context: { prefixCls, filterTreeNode, keyEntities, dropContainerKey, dropTargetKey },
+      context: {
+        prefixCls,
+        filterTreeNode,
+        keyEntities,
+        dropContainerKey,
+        dropTargetKey,
+        draggingNodeKey,
+      },
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
     const { level } = keyEntities[eventKey] || {};
     const isEndNode = isEnd[isEnd.length - 1];
+
     const mergedDraggable = this.isDraggable();
+    const draggableWithoutDisabled = !disabled && mergedDraggable;
+
+    const dragging = draggingNodeKey === eventKey;
+
     return (
       <div
         ref={domRef}
@@ -566,7 +576,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-loading`]: loading,
           [`${prefixCls}-treenode-active`]: active,
           [`${prefixCls}-treenode-leaf-last`]: isEndNode,
+          [`${prefixCls}-treenode-draggable`]: draggableWithoutDisabled,
 
+          dragging,
           'drop-target': dropTargetKey === eventKey,
           'drop-container': dropContainerKey === eventKey,
           'drag-over': !disabled && dragOver,
@@ -576,9 +588,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         })}
         style={style}
         // Draggable config
-        draggable={(!disabled && mergedDraggable) || undefined}
-        aria-grabbed={(!disabled && mergedDraggable) || undefined}
-        onDragStart={mergedDraggable ? this.onDragStart : undefined}
+        draggable={draggableWithoutDisabled}
+        aria-grabbed={dragging}
+        onDragStart={draggableWithoutDisabled ? this.onDragStart : undefined}
         // Drop config
         onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
         onDragOver={mergedDraggable ? this.onDragOver : undefined}

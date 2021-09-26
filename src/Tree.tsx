@@ -185,7 +185,7 @@ interface TreeState {
   loadingKeys: Key[];
   expandedKeys: Key[];
 
-  dragging: boolean;
+  draggingNodeKey: React.Key;
   dragChildrenKeys: Key[];
 
   // for details see comment in Tree.state
@@ -250,7 +250,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     loadingKeys: [],
     expandedKeys: [],
 
-    dragging: false,
+    draggingNodeKey: null,
     dragChildrenKeys: [],
 
     // dropTargetKey is the key of abstract-drop-node
@@ -429,7 +429,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const newExpandedKeys = arrDel(expandedKeys, eventKey);
 
     this.setState({
-      dragging: true,
+      draggingNodeKey: eventKey,
       dragChildrenKeys: getDragChildrenKeys(eventKey, keyEntities),
       indent: this.listRef.current.getIndentWidth(),
     });
@@ -516,7 +516,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       //   => if you dragenter from top, you mouse will still be consider as in the top node
       event.persist();
       this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
-        if (!this.state.dragging) return;
+        if (this.state.draggingNodeKey === null) return;
 
         let newExpandedKeys = [...expandedKeys];
         const entity = keyEntities[node.props.eventKey];
@@ -751,10 +751,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
   };
 
   cleanDragState = () => {
-    const { dragging } = this.state;
-    if (dragging) {
+    const { draggingNodeKey } = this.state;
+    if (draggingNodeKey !== null) {
       this.setState({
-        dragging: false,
+        draggingNodeKey: null,
         dropPosition: null,
         dropContainerKey: null,
         dropTargetKey: null,
@@ -1288,7 +1288,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       focused,
       flattenNodes,
       keyEntities,
-      dragging,
+      draggingNodeKey,
       activeKey,
       dropLevelOffset,
       dropContainerKey,
@@ -1336,6 +1336,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           icon,
           switcherIcon,
           draggable,
+          draggingNodeKey,
           draggableIcon,
           checkable,
           checkStrictly,
@@ -1389,7 +1390,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             selectable={selectable}
             checkable={!!checkable}
             motion={motion}
-            dragging={dragging}
+            dragging={draggingNodeKey !== null}
             height={height}
             itemHeight={itemHeight}
             virtual={virtual}
