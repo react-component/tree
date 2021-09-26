@@ -85,6 +85,7 @@ export interface TreeProps {
   checkable?: boolean | React.ReactNode;
   checkStrictly?: boolean;
   draggable?: ((node: DataNode) => boolean) | boolean;
+  draggableIcon?: React.ReactNode;
   defaultExpandParent?: boolean;
   autoExpandParent?: boolean;
   defaultExpandAll?: boolean;
@@ -1308,6 +1309,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       icon,
       switcherIcon,
       draggable,
+      draggableIcon,
       checkable,
       checkStrictly,
       disabled,
@@ -1334,6 +1336,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           icon,
           switcherIcon,
           draggable,
+          draggableIcon,
           checkable,
           checkStrictly,
           disabled,

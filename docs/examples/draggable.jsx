@@ -3,7 +3,7 @@ import React from 'react';
 import { gData } from './utils/dataUtil';
 import './draggable.less';
 import '../../assets/index.less';
-import Tree from 'rc-tree';
+import Tree from '../../src';
 
 class Demo extends React.Component {
   state = {
@@ -94,6 +94,7 @@ class Demo extends React.Component {
             onExpand={this.onExpand}
             autoExpandParent={this.state.autoExpandParent}
             draggable
+            draggableIcon="↕️"
             onDragStart={this.onDragStart}
             onDragEnter={this.onDragEnter}
             onDrop={this.onDrop}

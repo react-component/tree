@@ -331,7 +331,23 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 
   // ==================== Render: Drag Handler ====================
   renderDragHandler = () => {
-    return null;
+    const {
+      disabled,
+      context: { draggable, draggableIcon, prefixCls },
+    } = this.props;
+    const rootDraggable = draggable !== false;
+    const mergedDraggable = this.isDraggable();
+
+    return rootDraggable && draggableIcon ? (
+      <span
+        draggable={(!disabled && mergedDraggable) || undefined}
+        aria-grabbed={(!disabled && mergedDraggable) || undefined}
+        className={`${prefixCls}-draggable-icon`}
+        onDragStart={mergedDraggable ? this.onDragStart : undefined}
+      >
+        {draggableIcon}
+      </span>
+    ) : null;
   };
 
   // ====================== Render: Switcher ======================
