@@ -324,20 +324,18 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       data,
       context: { draggable },
     } = this.props;
-    const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
 
-    return mergedDraggable;
+    return !!(draggable && (!draggable.nodeDraggable || draggable.nodeDraggable(data)));
   };
 
   // ==================== Render: Drag Handler ====================
   renderDragHandler = () => {
     const {
-      context: { draggable, draggableIcon, prefixCls },
+      context: { draggable, prefixCls },
     } = this.props;
-    const rootDraggable = draggable !== false;
 
-    return rootDraggable && draggableIcon ? (
-      <span className={`${prefixCls}-draggable-icon`}>{draggableIcon}</span>
+    return draggable?.icon ? (
+      <span className={`${prefixCls}-draggable-icon`}>{draggable.icon}</span>
     ) : null;
   };
 

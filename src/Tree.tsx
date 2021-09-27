@@ -67,6 +67,12 @@ export interface AllowDropOptions {
 }
 export type AllowDrop = (options: AllowDropOptions) => boolean;
 
+export type DraggableFn = (node: DataNode) => boolean;
+export type DraggableConfig = {
+  icon?: React.ReactNode | false;
+  nodeDraggable?: DraggableFn;
+};
+
 export interface TreeProps {
   prefixCls: string;
   className?: string;
@@ -84,8 +90,7 @@ export interface TreeProps {
   multiple?: boolean;
   checkable?: boolean | React.ReactNode;
   checkStrictly?: boolean;
-  draggable?: ((node: DataNode) => boolean) | boolean;
-  draggableIcon?: React.ReactNode;
+  draggable?: DraggableFn | boolean | DraggableConfig;
   defaultExpandParent?: boolean;
   autoExpandParent?: boolean;
   defaultExpandAll?: boolean;
@@ -1307,7 +1312,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       icon,
       switcherIcon,
       draggable,
-      draggableIcon,
       checkable,
       checkStrictly,
       disabled,
@@ -1325,6 +1329,20 @@ class Tree extends React.Component<TreeProps, TreeState> {
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
+    // It's better move to hooks but we just simply keep here
+    let draggableConfig: DraggableConfig;
+    if (draggable) {
+      if (typeof draggable === 'object') {
+        draggableConfig = draggable;
+      } else if (typeof draggable === 'function') {
+        draggableConfig = {
+          nodeDraggable: draggable,
+        };
+      } else {
+        draggableConfig = {};
+      }
+    }
+
     return (
       <TreeContext.Provider
         value={{
@@ -1333,9 +1351,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
           showIcon,
           icon,
           switcherIcon,
-          draggable,
+          draggable: draggableConfig,
           draggingNodeKey,
-          draggableIcon,
           checkable,
           checkStrictly,
           disabled,
