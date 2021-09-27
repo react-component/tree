@@ -110,8 +110,9 @@ class Demo extends React.Component {
             expandedKeys={this.state.expandedKeys}
             onExpand={this.onExpand}
             autoExpandParent={this.state.autoExpandParent}
-            draggable
-            draggableIcon="↕️"
+            draggable={{
+              icon: '↕️',
+            }}
             onDragStart={this.onDragStart}
             onDragEnter={this.onDragEnter}
             onDrop={this.onDrop}

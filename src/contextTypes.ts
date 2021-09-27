@@ -12,6 +12,7 @@ import {
   DataNode,
   Direction,
 } from './interface';
+import { DraggableConfig } from './Tree';
 
 export type NodeMouseEventParams<T = HTMLSpanElement> = {
   event: React.MouseEvent<T>;
@@ -38,9 +39,8 @@ export interface TreeContextProps {
   showIcon: boolean;
   icon: IconType;
   switcherIcon: IconType;
-  draggable: ((node: DataNode) => boolean) | boolean;
+  draggable?: DraggableConfig;
   draggingNodeKey?: React.Key;
-  draggableIcon?: React.ReactNode;
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
