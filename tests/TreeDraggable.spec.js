@@ -714,8 +714,9 @@ describe('Tree Draggable', () => {
   it('render handler', () => {
     const wrapper = mount(
       <Tree
-        draggable
-        draggableIcon={<span className="handler" />}
+        draggable={{
+          icon: <span className="handler" />,
+        }}
         defaultExpandAll
         treeData={[
           {
