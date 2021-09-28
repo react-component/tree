@@ -50,6 +50,8 @@ import TreeNode from './TreeNode';
 import { conductCheck } from './utils/conductUtil';
 import DropIndicator from './DropIndicator';
 
+const MAX_RETRY_TIMES = 10;
+
 interface CheckInfo {
   event: 'check';
   node: EventDataNode;
@@ -242,6 +244,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
   destroyed: boolean = false;
 
   delayedDragEnterLogic: Record<Key, number>;
+
+  loadingRetryTimes: Record<Key, number> = {};
 
   state: TreeState = {
     keyEntities: {},
@@ -911,12 +915,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeLoad = (treeNode: EventDataNode) =>
-    new Promise<void>((resolve, reject) => {
+  onNodeLoad = (treeNode: EventDataNode) => {
+    const { key } = treeNode;
+
+    const loadPromise = new Promise<void>((resolve, reject) => {
       // We need to get the latest state of loading/loaded keys
       this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
         const { loadData, onLoad } = this.props;
-        const { key } = treeNode;
 
         if (!loadData || loadedKeys.indexOf(key) !== -1 || loadingKeys.indexOf(key) !== -1) {
           return null;
@@ -951,6 +956,20 @@ class Tree extends React.Component<TreeProps, TreeState> {
             this.setState(prevState => ({
               loadingKeys: arrDel(prevState.loadingKeys, key),
             }));
+
+            // If exceed max retry times, we give up retry
+            this.loadingRetryTimes[key] = (this.loadingRetryTimes[key] || 0) + 1;
+            if (this.loadingRetryTimes[key] > MAX_RETRY_TIMES) {
+              const { loadedKeys: currentLoadedKeys } = this.state;
+
+              warning(false, 'Retry for `loadData` many times but still failed. No more retry.');
+
+              this.setUncontrolledState({
+                loadedKeys: arrAdd(currentLoadedKeys, key),
+              });
+              resolve();
+            }
+
             reject(e);
           });
 
@@ -959,6 +978,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
         };
       });
     });
+
+    // Not care warning if we ignore this
+    loadPromise.catch(() => {});
+
+    return loadPromise;
+  };
 
   onNodeMouseEnter: NodeMouseEventHandler = (event, node) => {
     const { onMouseEnter } = this.props;

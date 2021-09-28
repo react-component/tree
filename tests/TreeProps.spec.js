@@ -636,6 +636,27 @@ describe('Tree Props', () => {
         }, 500);
       }, 500);
     });
+
+    it('reject load', async () => {
+      const wrapper = mount(
+        <Tree
+          loadData={() => Promise.reject()}
+          treeData={[
+            {
+              title: 'parent',
+              key: 'parent',
+            },
+          ]}
+        />,
+      );
+
+      // Do delay
+      for (let i = 0; i < 100; i += 1) {
+        await Promise.resolve();
+      }
+
+      expect(wrapper.exists('.rc-tree-icon_loading')).toBeFalsy();
+    });
   });
 
   it('icon', () => {
