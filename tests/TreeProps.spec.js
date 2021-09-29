@@ -641,6 +641,7 @@ describe('Tree Props', () => {
       const wrapper = mount(
         <Tree
           loadData={() => Promise.reject()}
+          expandedKeys={['parent']}
           treeData={[
             {
               title: 'parent',
@@ -651,11 +652,14 @@ describe('Tree Props', () => {
       );
 
       // Do delay
-      for (let i = 0; i < 100; i += 1) {
-        await Promise.resolve();
-      }
+      await timeoutPromise();
 
+      wrapper.update();
       expect(wrapper.exists('.rc-tree-icon_loading')).toBeFalsy();
+
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: Retry for `loadData` many times but still failed. No more retry.',
+      );
     });
   });
 

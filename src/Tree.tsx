@@ -959,7 +959,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
             // If exceed max retry times, we give up retry
             this.loadingRetryTimes[key] = (this.loadingRetryTimes[key] || 0) + 1;
-            if (this.loadingRetryTimes[key] > MAX_RETRY_TIMES) {
+            if (this.loadingRetryTimes[key] >= MAX_RETRY_TIMES) {
               const { loadedKeys: currentLoadedKeys } = this.state;
 
               warning(false, 'Retry for `loadData` many times but still failed. No more retry.');
