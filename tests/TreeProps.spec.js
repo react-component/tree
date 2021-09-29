@@ -636,6 +636,31 @@ describe('Tree Props', () => {
         }, 500);
       }, 500);
     });
+
+    it('reject load', async () => {
+      const wrapper = mount(
+        <Tree
+          loadData={() => Promise.reject()}
+          expandedKeys={['parent']}
+          treeData={[
+            {
+              title: 'parent',
+              key: 'parent',
+            },
+          ]}
+        />,
+      );
+
+      // Do delay
+      await timeoutPromise();
+
+      wrapper.update();
+      expect(wrapper.exists('.rc-tree-icon_loading')).toBeFalsy();
+
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: Retry for `loadData` many times but still failed. No more retry.',
+      );
+    });
   });
 
   it('icon', () => {
