@@ -112,4 +112,31 @@ describe('FieldNames', () => {
       wrapper.find('.rc-tree-list-holder div.rc-tree-treenode').map(node => node.text()),
     ).toEqual(['New Title', 'New Sub 1', 'New Sub 2', 'New Title 2']);
   });
+
+  it('checkable should work', () => {
+    const onCheck = jest.fn();
+
+    const wrapper = mount(
+      <Tree
+        checkable
+        onCheck={onCheck}
+        fieldNames={{ key: 'val', children: 'child' }}
+        treeData={
+          [
+            {
+              val: 'parent',
+              child: [
+                {
+                  val: 'child',
+                },
+              ],
+            },
+          ] as any
+        }
+      />,
+    );
+
+    wrapper.find('.rc-tree-checkbox').last().simulate('click');
+    expect(onCheck).toHaveBeenCalledWith(['parent', 'child'], expect.anything());
+  });
 });
