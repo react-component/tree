@@ -40,6 +40,7 @@ exports[`Tree Basic check basic render 1`] = `
         >
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -69,6 +70,7 @@ exports[`Tree Basic check basic render 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
             draggable="false"
           >
@@ -102,6 +104,7 @@ exports[`Tree Basic check basic render 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -180,6 +183,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
         >
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -209,6 +213,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -287,6 +292,7 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
         >
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -361,6 +367,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
         >
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
             draggable="false"
           >
@@ -387,6 +394,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -458,6 +466,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
         >
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
             draggable="false"
           >
@@ -484,6 +493,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -510,6 +520,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
             draggable="false"
           >
@@ -540,6 +551,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -615,6 +627,7 @@ exports[`Tree Basic renders correctly 1`] = `
         >
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="spe rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -644,6 +657,7 @@ exports[`Tree Basic renders correctly 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
             draggable="false"
           >
@@ -677,6 +691,7 @@ exports[`Tree Basic renders correctly 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
             draggable="false"
           >
@@ -713,6 +728,7 @@ exports[`Tree Basic renders correctly 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -749,6 +765,7 @@ exports[`Tree Basic renders correctly 1`] = `
           </div>
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -827,6 +844,7 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
         >
           <div
             aria-grabbed="false"
+            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
           >
