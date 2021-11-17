@@ -1,6 +1,5 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import React from 'react';
-import { gData } from './utils/dataUtil';
 import './selectable.less';
 import '../../assets/index.less';
 import Tree, { TreeNode } from 'rc-tree';

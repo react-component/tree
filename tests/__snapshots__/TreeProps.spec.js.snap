@@ -259,7 +259,7 @@ exports[`Tree Props checkable without selectable 1`] = `
           <div
             aria-grabbed="false"
             aria-selected="false"
-            class="rc-tree-treenode rc-tree-treenode-unselectable rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
             <span
@@ -289,7 +289,7 @@ exports[`Tree Props checkable without selectable 1`] = `
           <div
             aria-grabbed="false"
             aria-selected="false"
-            class="rc-tree-treenode rc-tree-treenode-unselectable rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
           >
             <span
@@ -1827,7 +1827,7 @@ exports[`Tree Props selectable without selectable 1`] = `
           <div
             aria-grabbed="false"
             aria-selected="false"
-            class="rc-tree-treenode rc-tree-treenode-unselectable rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
             <span
@@ -1854,7 +1854,7 @@ exports[`Tree Props selectable without selectable 1`] = `
           <div
             aria-grabbed="false"
             aria-selected="false"
-            class="rc-tree-treenode rc-tree-treenode-unselectable rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
           >
             <span

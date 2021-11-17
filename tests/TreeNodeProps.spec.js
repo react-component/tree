@@ -199,9 +199,8 @@ describe('TreeNode Props', () => {
     }
 
     const wrapper = mount(<Demo />);
-
     // tree selectable is false ,then children should be selectable = false if not set selectable alone.
-    expect(wrapper.find('.rc-tree-treenode-unselectable').length).toBe(2);
+    expect(wrapper.find('[aria-selected=false]').length).toBe(2);
     wrapper.find('.rc-tree-node-content-wrapper').at(1).simulate('click');
     expect(onClick).toHaveBeenCalled();
     expect(onSelect).not.toHaveBeenCalled();
@@ -210,8 +209,7 @@ describe('TreeNode Props', () => {
     wrapper.find('.test-button').simulate('click');
     onClick.mockRestore();
     onSelect.mockRestore();
-    expect(wrapper.find('.rc-tree-treenode-unselectable').length).toBe(1);
-    expect(wrapper.find('.rc-tree-treenode-unselectable').prop('aria-selected')).toBeFalsy();
+    expect(wrapper.find('[aria-selected=false]').length).toBe(1);
     wrapper.find('.rc-tree-node-content-wrapper').at(1).simulate('click');
     expect(onClick).toHaveBeenCalled();
     expect(onSelect).not.toHaveBeenCalled();
