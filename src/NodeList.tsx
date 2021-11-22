@@ -72,7 +72,7 @@ interface NodeListProps {
   loadedKeys: Key[];
   loadingKeys: Key[];
   halfCheckedKeys: Key[];
-  keyEntities: Record<Key, DataEntity>;
+  keyEntities: Record<Key, DataEntity<any>>;
 
   dragging: boolean;
   dragOverNodeKey: Key;

@@ -98,12 +98,12 @@ function fillConductCheck<TreeDataType extends BasicDataNode = DataNode>(
 }
 
 // Remove useless key
-function cleanConductCheck(
+function cleanConductCheck<TreeDataType extends BasicDataNode = DataNode>(
   keys: Set<Key>,
   halfKeys: Key[],
-  levelEntities: Map<number, Set<DataEntity>>,
+  levelEntities: Map<number, Set<DataEntity<TreeDataType>>>,
   maxLevel: number,
-  syntheticGetCheckDisabled: GetCheckDisabled<DataNode>,
+  syntheticGetCheckDisabled: GetCheckDisabled<TreeDataType>,
 ): ConductReturnType {
   const checkedKeys = new Set<Key>(keys);
   let halfCheckedKeys = new Set<Key>(halfKeys);

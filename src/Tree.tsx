@@ -468,7 +468,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
    * Better for use mouse move event to refresh drag state.
    * But let's just keep it to avoid event trigger logic change.
    */
-  onNodeDragEnter = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragEnter = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance<TreeDataType>) => {
     const { expandedKeys, keyEntities, dragChildrenKeys, flattenNodes, indent } = this.state;
     const { onDragEnter, onExpand, allowDrop, direction } = this.props;
     const { pos, eventKey } = node.props;
@@ -591,7 +591,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     }
   };
 
-  onNodeDragOver = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragOver = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance<TreeDataType>) => {
     const { dragChildrenKeys, flattenNodes, keyEntities, expandedKeys, indent } = this.state;
     const { onDragOver, allowDrop, direction } = this.props;
     const { dragNode } = this;
@@ -1056,7 +1056,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       halfCheckedKeys: halfCheckedKeys || [],
       dragOverNodeKey,
       dropPosition,
-      keyEntities: keyEntities as any, // NodeList use forwardRef which do not support generic type
+      keyEntities: keyEntities,
     };
   };
 
@@ -1393,7 +1393,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
           checkable,
           checkStrictly,
           disabled,
-          keyEntities: keyEntities as any, // Children not support generic type
+          keyEntities,
           dropLevelOffset,
           dropContainerKey,
           dropTargetKey,
@@ -1406,7 +1406,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
           loadData,
           filterTreeNode,
 
-          titleRender: titleRender as any, // Children not support generic type
+          titleRender,
 
           onNodeClick: this.onNodeClick,
           onNodeDoubleClick: this.onNodeDoubleClick,
