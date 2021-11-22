@@ -53,7 +53,7 @@ see examples
 | checkStrictly | check node precisely, parent and children nodes are not associated | bool | false |
 | className | additional css class of root dom node | String | '' |
 | defaultCheckedKeys | default checked treeNodes | String[] | [] |
-| defaultExpandedKeys | expand specific treeNodes | String[] | - |
+| defaultExpandedKeys | expand specific treeNodes | String[] | [] |
 | defaultExpandAll | expand all treeNodes | bool | false |
 | defaultExpandParent | auto expand parent treeNodes when init | bool | true |
 | defaultSelectedKeys | default selected treeNodes | String[] | [] |
@@ -62,7 +62,7 @@ see examples
 | expandedKeys | Controlled expand specific treeNodes | String[] | - |
 | filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
 | icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
-| loadedKeys | Mark node is loaded when `loadData` is true | string[] | - |
+| loadedKeys | Mark node is loaded when `loadData` is true | String[] | - |
 | loadData | load data asynchronously and the return value should be a promise | function(node) | - |
 | multiple | whether multiple select | bool | false |
 | prefixCls | prefix class | String | 'rc-tree' |
@@ -99,7 +99,7 @@ see examples
 | name | description | type | default |
 | --- | --- | --- | --- |
 | className | additional class to treeNode | String | '' |
-| checkable | control node checkable if Tree is checkable | bool | - |
+| checkable | control node checkable if Tree is checkable | bool | false |
 | style | set style to treeNode | Object | '' |
 | disabled | whether disabled the treeNode | bool | false |
 | disableCheckbox | whether disable the treeNode' checkbox | bool | false |
