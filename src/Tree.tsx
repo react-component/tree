@@ -4,6 +4,7 @@
 import * as React from 'react';
 import KeyCode from 'rc-util/lib/KeyCode';
 import warning from 'rc-util/lib/warning';
+import pickAttrs from 'rc-util/lib/pickAttrs';
 import classNames from 'classnames';
 
 import {
@@ -14,7 +15,6 @@ import {
   NodeMouseEventParams,
 } from './contextTypes';
 import {
-  getDataAndAria,
   getDragChildrenKeys,
   parseCheckedKeys,
   conductExpandParent,
@@ -35,6 +35,7 @@ import {
   ScrollTo,
   Direction,
   FieldNames,
+  BasicDataNode,
 } from './interface';
 import {
   flattenTreeData,
@@ -52,22 +53,24 @@ import DropIndicator from './DropIndicator';
 
 const MAX_RETRY_TIMES = 10;
 
-interface CheckInfo {
+interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
   event: 'check';
   node: EventDataNode;
   checked: boolean;
   nativeEvent: MouseEvent;
-  checkedNodes: DataNode[];
-  checkedNodesPositions?: { node: DataNode; pos: string }[];
+  checkedNodes: TreeDataType[];
+  checkedNodesPositions?: { node: TreeDataType; pos: string }[];
   halfCheckedKeys?: Key[];
 }
 
-export interface AllowDropOptions {
-  dragNode: DataNode;
-  dropNode: DataNode;
+export interface AllowDropOptions<TreeDataType extends BasicDataNode = DataNode> {
+  dragNode: TreeDataType;
+  dropNode: TreeDataType;
   dropPosition: -1 | 0 | 1;
 }
-export type AllowDrop = (options: AllowDropOptions) => boolean;
+export type AllowDrop<TreeDataType extends BasicDataNode = DataNode> = (
+  options: AllowDropOptions<TreeDataType>,
+) => boolean;
 
 export type DraggableFn = (node: DataNode) => boolean;
 export type DraggableConfig = {
@@ -75,14 +78,14 @@ export type DraggableConfig = {
   nodeDraggable?: DraggableFn;
 };
 
-export interface TreeProps {
+export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls: string;
   className?: string;
   style?: React.CSSProperties;
   focusable?: boolean;
   tabIndex?: number;
   children?: React.ReactNode;
-  treeData?: DataNode[]; // Generate treeNode by children
+  treeData?: TreeDataType[]; // Generate treeNode by children
   fieldNames?: FieldNames;
   showLine?: boolean;
   showIcon?: boolean;
@@ -102,8 +105,8 @@ export interface TreeProps {
   checkedKeys?: Key[] | { checked: Key[]; halfChecked: Key[] };
   defaultSelectedKeys?: Key[];
   selectedKeys?: Key[];
-  allowDrop?: AllowDrop;
-  titleRender?: (node: DataNode) => React.ReactNode;
+  allowDrop?: AllowDrop<TreeDataType>;
+  titleRender?: (node: TreeDataType) => React.ReactNode;
   dropIndicatorRender?: (props: {
     dropPosition: -1 | 0 | 1;
     dropLevelOffset: number;
@@ -126,14 +129,17 @@ export interface TreeProps {
       nativeEvent: MouseEvent;
     },
   ) => void;
-  onCheck?: (checked: { checked: Key[]; halfChecked: Key[] } | Key[], info: CheckInfo) => void;
+  onCheck?: (
+    checked: { checked: Key[]; halfChecked: Key[] } | Key[],
+    info: CheckInfo<BasicDataNode>,
+  ) => void;
   onSelect?: (
     selectedKeys: Key[],
     info: {
       event: 'select';
       selected: boolean;
       node: EventDataNode;
-      selectedNodes: DataNode[];
+      selectedNodes: TreeDataType[];
       nativeEvent: MouseEvent;
     },
   ) => void;
@@ -180,8 +186,8 @@ export interface TreeProps {
   direction?: Direction;
 }
 
-interface TreeState {
-  keyEntities: Record<Key, DataEntity>;
+interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
+  keyEntities: Record<Key, DataEntity<TreeDataType>>;
 
   indent: number | null;
 
@@ -218,7 +224,10 @@ interface TreeState {
   fieldNames: FieldNames;
 }
 
-class Tree extends React.Component<TreeProps, TreeState> {
+class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Component<
+  TreeProps<TreeDataType>,
+  TreeState<TreeDataType>
+> {
   static defaultProps = {
     prefixCls: 'rc-tree',
     showLine: false,
@@ -247,7 +256,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   loadingRetryTimes: Record<Key, number> = {};
 
-  state: TreeState = {
+  state: TreeState<TreeDataType> = {
     keyEntities: {},
 
     indent: null,
@@ -291,7 +300,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   dragStartMousePosition = null;
 
-  dragNode: NodeInstance;
+  dragNode: NodeInstance<TreeDataType>;
 
   currentMouseOverDroppableNodeKey = null;
 
@@ -424,7 +433,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     return newState;
   }
 
-  onNodeDragStart: NodeDragEventHandler = (event, node) => {
+  onNodeDragStart: NodeDragEventHandler<HTMLDivElement, TreeDataType> = (event, node) => {
     const { expandedKeys, keyEntities } = this.state;
     const { onDragStart } = this.props;
     const { eventKey } = node.props;
@@ -459,7 +468,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * Better for use mouse move event to refresh drag state.
    * But let's just keep it to avoid event trigger logic change.
    */
-  onNodeDragEnter = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragEnter = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance<TreeDataType>) => {
     const { expandedKeys, keyEntities, dragChildrenKeys, flattenNodes, indent } = this.state;
     const { onDragEnter, onExpand, allowDrop, direction } = this.props;
     const { pos, eventKey } = node.props;
@@ -478,7 +487,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropTargetPos,
       dropAllowed,
       dragOverNodeKey,
-    } = calcDropPosition(
+    } = calcDropPosition<TreeDataType>(
       event,
       dragNode,
       node,
@@ -582,7 +591,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeDragOver = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragOver = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance<TreeDataType>) => {
     const { dragChildrenKeys, flattenNodes, keyEntities, expandedKeys, indent } = this.state;
     const { onDragOver, allowDrop, direction } = this.props;
     const { dragNode } = this;
@@ -845,7 +854,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Prepare trigger arguments
     let checkedObj;
-    const eventObj: Partial<CheckInfo> = {
+    const eventObj: Partial<CheckInfo<TreeDataType>> = {
       event: 'check',
       node: treeNode,
       checked,
@@ -911,7 +920,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     if (onCheck) {
-      onCheck(checkedObj, eventObj as CheckInfo);
+      onCheck(checkedObj, eventObj as CheckInfo<TreeDataType>);
     }
   };
 
@@ -1047,7 +1056,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       halfCheckedKeys: halfCheckedKeys || [],
       dragOverNodeKey,
       dropPosition,
-      keyEntities,
+      keyEntities: keyEntities,
     };
   };
 
@@ -1281,7 +1290,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   setUncontrolledState = (
     state: Partial<TreeState>,
     atomic: boolean = false,
-    forceState: Partial<TreeState> | null = null,
+    forceState: Partial<TreeState<TreeDataType>> | null = null,
   ) => {
     if (!this.destroyed) {
       let needSync = false;
@@ -1302,7 +1311,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         this.setState({
           ...newState,
           ...forceState,
-        } as TreeState);
+        } as TreeState<TreeDataType>);
       }
     }
   };
@@ -1352,7 +1361,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
       onScroll,
       direction,
     } = this.props;
-    const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
+    const domProps: React.HTMLAttributes<HTMLDivElement> = pickAttrs(this.props, {
+      aria: true,
+      data: true,
+    });
 
     // It's better move to hooks but we just simply keep here
     let draggableConfig: DraggableConfig;

@@ -11,6 +11,7 @@ import {
   EventDataNode,
   GetKey,
   FieldNames,
+  BasicDataNode,
 } from '../interface';
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
@@ -313,7 +314,7 @@ export function convertDataToEntities(
   return wrapper;
 }
 
-export interface TreeNodeRequiredProps {
+export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = DataNode> {
   expandedKeys: Key[];
   selectedKeys: Key[];
   loadedKeys: Key[];
@@ -322,13 +323,13 @@ export interface TreeNodeRequiredProps {
   halfCheckedKeys: Key[];
   dragOverNodeKey: Key;
   dropPosition: number;
-  keyEntities: Record<Key, DataEntity>;
+  keyEntities: Record<Key, DataEntity<TreeDataType>>;
 }
 
 /**
  * Get TreeNode props with Tree props.
  */
-export function getTreeNodeProps(
+export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
   key: Key,
   {
     expandedKeys,
@@ -340,7 +341,7 @@ export function getTreeNodeProps(
     dragOverNodeKey,
     dropPosition,
     keyEntities,
-  }: TreeNodeRequiredProps,
+  }: TreeNodeRequiredProps<TreeDataType>,
 ) {
   const entity = keyEntities[key];
 
@@ -365,7 +366,9 @@ export function getTreeNodeProps(
   return treeNodeProps;
 }
 
-export function convertNodePropsToEventData(props: TreeNodeProps): EventDataNode {
+export function convertNodePropsToEventData<TreeDataType extends BasicDataNode = DataNode>(
+  props: TreeNodeProps<TreeDataType>,
+): EventDataNode {
   const {
     data,
     expanded,
