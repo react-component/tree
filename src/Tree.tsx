@@ -1362,7 +1362,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       direction,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = pickAttrs(this.props, {
-      attr: true,
+      aria: true,
       data: true,
     });
 
