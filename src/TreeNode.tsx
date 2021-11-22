@@ -1,9 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import pickAttrs from 'rc-util/lib/pickAttrs';
 // @ts-ignore
 import { TreeContext, TreeContextProps } from './contextTypes';
-import { getDataAndAria } from './util';
-import { IconType, Key, DataNode } from './interface';
+import { IconType, Key, DataNode, BasicDataNode } from './interface';
 import Indent from './Indent';
 import { convertNodePropsToEventData } from './utils/treeUtil';
 
@@ -12,7 +12,7 @@ const ICON_CLOSE = 'close';
 
 const defaultTitle = '---';
 
-export interface TreeNodeProps {
+export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   eventKey?: Key; // Pass by parent `cloneElement`
   prefixCls?: string;
   className?: string;
@@ -25,14 +25,14 @@ export interface TreeNodeProps {
   loaded?: boolean;
   loading?: boolean;
   halfChecked?: boolean;
-  title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
+  title?: React.ReactNode | ((data: TreeDataType) => React.ReactNode);
   dragOver?: boolean;
   dragOverGapTop?: boolean;
   dragOverGapBottom?: boolean;
   pos?: string;
   domRef?: React.Ref<HTMLDivElement>;
   /** New added in Tree for easy data access */
-  data?: DataNode;
+  data?: TreeDataType;
   isStart?: boolean[];
   isEnd?: boolean[];
   active?: boolean;
@@ -553,7 +553,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       },
     } = this.props;
     const disabled = this.isDisabled();
-    const dataOrAriaAttributeProps = getDataAndAria(otherProps);
+    const dataOrAriaAttributeProps = pickAttrs(otherProps, { aria: true, data: true });
     const { level } = keyEntities[eventKey] || {};
     const isEndNode = isEnd[isEnd.length - 1];
 

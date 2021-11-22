@@ -11,6 +11,7 @@ import {
   NodeInstance,
   DataNode,
   Direction,
+  BasicDataNode,
 } from './interface';
 import { DraggableConfig } from './Tree';
 
@@ -27,9 +28,9 @@ export type NodeMouseEventHandler<T = HTMLSpanElement> = (
   e: React.MouseEvent<T>,
   node: EventDataNode,
 ) => void;
-export type NodeDragEventHandler<T = HTMLDivElement> = (
+export type NodeDragEventHandler<T = HTMLDivElement, TreeDataType extends BasicDataNode = DataNode> = (
   e: React.DragEvent<T>,
-  node: NodeInstance,
+  node: NodeInstance<TreeDataType>,
   outsideTree?: boolean,
 ) => void;
 
