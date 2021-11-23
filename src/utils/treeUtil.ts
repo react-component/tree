@@ -114,10 +114,23 @@ export function flattenTreeData(
   const flattenList: FlattenNode[] = [];
 
   function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
+    // Removed the hidden node
+    const shouldShowList = list.filter(item => !item.hidden).map((treeNode, index) => {
+      const shouldShowNode = {
+        ...treeNode,
+        shouldShowIndex: index
+      }
+      return shouldShowNode;
+    });
+    
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode[fieldKey], pos);
 
+      const mapNode = shouldShowList.filter(item => item.key === treeNode.key);
+      // Get index in the list that remove the hidden nodes
+      const shouldShowIndex = mapNode.length > 0 ? mapNode[0].shouldShowIndex: null;
+      
       // Add FlattenDataNode into list
       const flattenNode: FlattenNode = {
         ...omit(treeNode, [fieldTitle, fieldKey, fieldChildren] as any),
@@ -127,8 +140,11 @@ export function flattenTreeData(
         pos,
         children: null,
         data: treeNode,
-        isStart: [...(parent ? parent.isStart : []), index === 0],
-        isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
+        // isStart: [...(parent ? parent.isStart : []), index === 0],
+        // isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
+        // Modify judging condition of two variables(isStart and isEnd)
+        isStart: [...(parent ? parent.isStart : []), shouldShowIndex === 0],
+        isEnd: [...(parent ? parent.isEnd : []), shouldShowIndex === shouldShowList.length - 1],
       };
 
       flattenList.push(flattenNode);

@@ -12,10 +12,12 @@ export interface BasicDataNode {
   isLeaf?: boolean;
   selectable?: boolean;
   switcherIcon?: IconType;
+  hidden: boolean;
 
   /** Set style of TreeNode. This is not recommend if you don't have any force requirement */
   className?: string;
   style?: React.CSSProperties;
+  
 }
 
 export interface DataNode extends BasicDataNode {
