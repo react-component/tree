@@ -131,7 +131,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   ) => void;
   onCheck?: (
     checked: { checked: Key[]; halfChecked: Key[] } | Key[],
-    info: CheckInfo<BasicDataNode>,
+    info: CheckInfo<TreeDataType>,
   ) => void;
   onSelect?: (
     selectedKeys: Key[],
