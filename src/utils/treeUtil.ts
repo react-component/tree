@@ -128,7 +128,7 @@ export function flattenTreeData(
       let mergedTitle: React.ReactNode;
       for (let i = 0; i < fieldTitles.length; i += 1) {
         const fieldTitle = fieldTitles[i];
-        if (treeNode[fieldTitle]) {
+        if (treeNode[fieldTitle] !== undefined) {
           mergedTitle = treeNode[fieldTitle];
           break;
         }
