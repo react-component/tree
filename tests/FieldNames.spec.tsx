@@ -139,4 +139,42 @@ describe('FieldNames', () => {
     wrapper.find('.rc-tree-checkbox').last().simulate('click');
     expect(onCheck).toHaveBeenCalledWith(['parent', 'child'], expect.anything());
   });
+
+  // Internal usage. Safe to remove
+  it('fieldNames using _title', () => {
+    const wrapper = mount(
+      <Tree
+        treeData={
+          [
+            {
+              myTitle: 'Title',
+              myKey: 'title',
+              myChildren: [
+                { myTitle: 'Sub1', myKey: 'sub_1' },
+                { myTitle: 'Sub2', myKey: 'sub_2' },
+              ],
+            },
+          ] as any
+        }
+        defaultExpandAll
+        fieldNames={{
+          _title: ['notExist', 'myTitle'],
+          key: 'myKey',
+          children: 'myChildren',
+        }}
+      />,
+    );
+
+    // Title
+    const titleList = wrapper
+      .find('.rc-tree-list-holder div.rc-tree-treenode')
+      .map(node => node.text());
+
+    expect(titleList).toEqual(['Title', 'Sub1', 'Sub2']);
+
+    // Key
+    const keyList = wrapper.find(InternalTreeNode).map(node => node.props().eventKey);
+
+    expect(keyList).toEqual(['title', 'sub_1', 'sub_2']);
+  });
 });

@@ -23,11 +23,13 @@ export function getKey(key: Key, pos: string) {
   return pos;
 }
 
-export function fillFieldNames(fieldNames?: FieldNames) {
-  const { title, key, children } = fieldNames || {};
+export function fillFieldNames(fieldNames?: FieldNames): Required<FieldNames> {
+  const { title, _title, key, children } = fieldNames || {};
+  const mergedTitle = title || 'title';
 
   return {
-    title: title || 'title',
+    title: mergedTitle,
+    _title: _title || [mergedTitle],
     key: key || 'key',
     children: children || 'children',
   };
@@ -108,7 +110,11 @@ export function flattenTreeData(
   expandedKeys: Key[] | true,
   fieldNames: FieldNames,
 ): FlattenNode[] {
-  const { title: fieldTitle, key: fieldKey, children: fieldChildren } = fillFieldNames(fieldNames);
+  const {
+    _title: fieldTitles,
+    key: fieldKey,
+    children: fieldChildren,
+  } = fillFieldNames(fieldNames);
 
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
   const flattenList: FlattenNode[] = [];
@@ -118,10 +124,20 @@ export function flattenTreeData(
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode[fieldKey], pos);
 
+      // Pick matched title in field title list
+      let mergedTitle: React.ReactNode;
+      for (let i = 0; i < fieldTitles.length; i += 1) {
+        const fieldTitle = fieldTitles[i];
+        if (treeNode[fieldTitle]) {
+          mergedTitle = treeNode[fieldTitle];
+          break;
+        }
+      }
+
       // Add FlattenDataNode into list
       const flattenNode: FlattenNode = {
-        ...omit(treeNode, [fieldTitle, fieldKey, fieldChildren] as any),
-        title: treeNode[fieldTitle],
+        ...omit(treeNode, [...fieldTitles, fieldKey, fieldChildren] as any),
+        title: mergedTitle,
         key: mergedKey,
         parent,
         pos,
