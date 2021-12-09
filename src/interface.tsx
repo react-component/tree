@@ -91,6 +91,8 @@ export type Direction = 'ltr' | 'rtl' | undefined;
 
 export interface FieldNames {
   title?: string;
+  /** @private Internal usage for `rc-tree-select`, safe to remove if no need */
+  _title?: string[];
   key?: string;
   children?: string;
 }
