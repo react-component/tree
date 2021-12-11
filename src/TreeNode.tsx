@@ -553,6 +553,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       },
     } = this.props;
     const disabled = this.isDisabled();
+    const selectable = this.isSelectable();
     const dataOrAriaAttributeProps = pickAttrs(otherProps, { aria: true, data: true });
     const { level } = keyEntities[eventKey] || {};
     const isEndNode = isEnd[isEnd.length - 1];
