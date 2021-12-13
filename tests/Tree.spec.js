@@ -340,15 +340,8 @@ describe('Tree Basic', () => {
         </Tree>,
       );
       wrapper.find('.rc-tree-switcher').simulate('click');
-      wrapper
-        .find('.rc-tree-checkbox')
-        .last()
-        .simulate('click');
-      wrapper
-        .find('.rc-tree-checkbox')
-        .first()
-        .simulate('click');
-      
+      wrapper.find('.rc-tree-checkbox').last().simulate('click');
+      wrapper.find('.rc-tree-checkbox').first().simulate('click');
       wrapper.find('.rc-tree-checkbox').forEach(checkbox => {
         expect(checkbox.is(CHECKED_CLASSNAME)).toBe(true);
       });
