@@ -20,7 +20,7 @@ export type NodeMouseEventParams<T = HTMLSpanElement> = {
   node: EventDataNode;
 };
 export type NodeDragEventParams<T = HTMLDivElement> = {
-  event: React.DragEvent<T>;
+  event: React.MouseEvent<T>;
   node: EventDataNode;
   cleanDragState: Function;
 };
@@ -32,7 +32,7 @@ export type NodeMouseEventHandler<T = HTMLSpanElement> = (
 export type NodeDragEventHandler<
   T = HTMLDivElement,
   TreeDataType extends BasicDataNode = DataNode,
-> = (e: React.DragEvent<T>, node: NodeInstance<TreeDataType>, outsideTree?: boolean) => void;
+> = (e: React.MouseEvent<T>, node: NodeInstance<TreeDataType>, outsideTree?: boolean) => void;
 
 export interface TreeContextProps {
   prefixCls: string;

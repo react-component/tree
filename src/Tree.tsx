@@ -504,7 +504,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       dropTargetPos,
       dropAllowed,
       dragOverNodeKey,
-    } = calcDropPosition<TreeDataType>(
+    } = calcDropPosition(
       event,
       dragNode,
       node,
