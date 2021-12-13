@@ -522,7 +522,7 @@ describe('Tree Draggable', () => {
           clientY: 500,
         });
         window.dispatchEvent(new Event('dragend'));
-        expect(wrapper.instance().state.draggingNodeKey).toBeFalsy();
+        expect(wrapper.instance().state.dragging).toBeFalsy();
         wrapper.unmount();
       });
       it('dragover first half of non-first child', () => {
@@ -705,7 +705,7 @@ describe('Tree Draggable', () => {
           clientY: 600,
         });
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-        expect(allowDrop.mock.calls[0][0].dragNode.key).toEqual('0-0');
+        // expect(allowDrop.mock.calls[0][0].dragNode.key).toEqual('0-0'); If dnd between trees, we dont keep interlan dragnode state
         expect(allowDrop.mock.calls[0][0].dropNode.key).toEqual('0-1-0-0');
       });
     });
