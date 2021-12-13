@@ -6,7 +6,6 @@ import {
   convertDataToTree,
   conductExpandParent,
   getDragChildrenKeys,
-  getDataAndAria,
   parseCheckedKeys,
 } from '../src/util';
 import {
@@ -457,21 +456,6 @@ describe('Util', () => {
 
     const keys1 = getDragChildrenKeys('111', keyEntities);
     expect(keys1.sort()).toEqual(['222', '333'].sort());
-  });
-
-  describe('getDataAndAria', () => {
-    it('should return only data- and aria- properties', () => {
-      const props = {
-        'data-test': 'name',
-        'aria-label': 'name',
-        dataSource: '/api',
-        ariaLabel: 'some-label',
-      };
-      expect(getDataAndAria(props)).toEqual({
-        'data-test': 'name',
-        'aria-label': 'name',
-      });
-    });
   });
 
   it('parseCheckedKeys warning', () => {

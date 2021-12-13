@@ -125,9 +125,7 @@ describe('Tree Props', () => {
 
       // Select leaf
       let node = convertNodePropsToEventData(getTargetNode().props());
-      getTargetNode()
-        .find('.rc-tree-node-content-wrapper')
-        .simulate('click');
+      getTargetNode().find('.rc-tree-node-content-wrapper').simulate('click');
 
       // traverseTreeNodes loops origin TreeNode and
       // onSelect trigger on `cloneElement` which is not the same instance
@@ -145,9 +143,7 @@ describe('Tree Props', () => {
 
       // un-select leaf
       node = convertNodePropsToEventData(getTargetNode().props());
-      getTargetNode()
-        .find('.rc-tree-node-content-wrapper')
-        .simulate('click');
+      getTargetNode().find('.rc-tree-node-content-wrapper').simulate('click');
       expect(handleOnSelect).toHaveBeenCalledWith(
         [],
         objectMatcher({
@@ -162,9 +158,7 @@ describe('Tree Props', () => {
 
       // Select leaf and then parent
       node = convertNodePropsToEventData(getTargetNode().props());
-      getTargetNode()
-        .find('.rc-tree-node-content-wrapper')
-        .simulate('click');
+      getTargetNode().find('.rc-tree-node-content-wrapper').simulate('click');
       expect(handleOnSelect).toHaveBeenCalledWith(
         ['0-0-0'],
         objectMatcher({
@@ -178,10 +172,7 @@ describe('Tree Props', () => {
       handleOnSelect.mockReset();
 
       node = convertNodePropsToEventData(getParentNode().props());
-      getParentNode()
-        .find('.rc-tree-node-content-wrapper')
-        .first()
-        .simulate('click');
+      getParentNode().find('.rc-tree-node-content-wrapper').first().simulate('click');
       expect(handleOnSelect).toHaveBeenCalledWith(
         ['0-0'],
         objectMatcher({
@@ -215,9 +206,7 @@ describe('Tree Props', () => {
 
     // Leaf select
     let node = convertNodePropsToEventData(getTargetNode().props());
-    getTargetNode()
-      .find('.rc-tree-node-content-wrapper')
-      .simulate('click');
+    getTargetNode().find('.rc-tree-node-content-wrapper').simulate('click');
     expect(handleOnSelect).toHaveBeenCalledWith(
       ['0-0-0'],
       objectMatcher({
@@ -232,10 +221,7 @@ describe('Tree Props', () => {
 
     // Parent select
     node = convertNodePropsToEventData(getParentNode().props());
-    getParentNode()
-      .find('.rc-tree-node-content-wrapper')
-      .first()
-      .simulate('click');
+    getParentNode().find('.rc-tree-node-content-wrapper').first().simulate('click');
     expect(handleOnSelect).toHaveBeenCalledWith(
       ['0-0-0', '0-0'],
       objectMatcher({
@@ -250,9 +236,7 @@ describe('Tree Props', () => {
 
     // Leaf un-select
     node = convertNodePropsToEventData(getTargetNode().props());
-    getTargetNode()
-      .find('.rc-tree-node-content-wrapper')
-      .simulate('click');
+    getTargetNode().find('.rc-tree-node-content-wrapper').simulate('click');
     expect(handleOnSelect).toHaveBeenCalledWith(
       ['0-0'],
       objectMatcher({
@@ -291,9 +275,7 @@ describe('Tree Props', () => {
 
       // Click leaf
       let node = convertNodePropsToEventData(getTargetNode().props());
-      getTargetNode()
-        .find('.rc-tree-node-content-wrapper')
-        .simulate('click');
+      getTargetNode().find('.rc-tree-node-content-wrapper').simulate('click');
       expect(handleOnSelect).toHaveBeenCalledWith(
         ['0-0-0'],
         objectMatcher({
@@ -312,9 +294,7 @@ describe('Tree Props', () => {
 
       // Click checkbox
       node = convertNodePropsToEventData(getTargetNode().props());
-      getTargetNode()
-        .find('.rc-tree-checkbox')
-        .simulate('click');
+      getTargetNode().find('.rc-tree-checkbox').simulate('click');
 
       expect(handleOnCheck).toHaveBeenCalledWith(
         ['0-0-0', '0-0'],
@@ -354,9 +334,7 @@ describe('Tree Props', () => {
 
       // Click leaf
       const node = convertNodePropsToEventData(getTargetNode().props());
-      getTargetNode()
-        .find('.rc-tree-node-content-wrapper')
-        .simulate('click');
+      getTargetNode().find('.rc-tree-node-content-wrapper').simulate('click');
       expect(handleOnCheck).toHaveBeenCalledWith(
         ['0-0-0', '0-0'],
         objectMatcher({
@@ -379,18 +357,8 @@ describe('Tree Props', () => {
         </Tree>,
       );
 
-      expect(
-        wrapper
-          .find('TreeNode')
-          .at(0)
-          .find('.rc-tree-checkbox').length,
-      ).toBeTruthy();
-      expect(
-        wrapper
-          .find('TreeNode')
-          .at(1)
-          .find('.rc-tree-checkbox').length,
-      ).toBeFalsy();
+      expect(wrapper.find('TreeNode').at(0).find('.rc-tree-checkbox').length).toBeTruthy();
+      expect(wrapper.find('TreeNode').at(1).find('.rc-tree-checkbox').length).toBeFalsy();
     });
   });
 
@@ -442,9 +410,7 @@ describe('Tree Props', () => {
 
     // Click Leaf
     const node = convertNodePropsToEventData(getTargetNode().props());
-    getTargetNode()
-      .find('.rc-tree-checkbox')
-      .simulate('click');
+    getTargetNode().find('.rc-tree-checkbox').simulate('click');
     expect(handleOnCheck).toHaveBeenCalledWith(
       {
         checked: ['0-0-0'],
@@ -582,14 +548,8 @@ describe('Tree Props', () => {
       );
 
       // Do not trigger loadData
-      wrapper
-        .find('.rc-tree-switcher')
-        .at(0)
-        .simulate('click');
-      wrapper
-        .find('.rc-tree-switcher')
-        .at(0)
-        .simulate('click');
+      wrapper.find('.rc-tree-switcher').at(0).simulate('click');
+      wrapper.find('.rc-tree-switcher').at(0).simulate('click');
 
       return timeoutPromise().then(() => {
         expect(called).toBe(3);
@@ -668,16 +628,38 @@ describe('Tree Props', () => {
 
       setTimeout(() => {
         // Child click
-        wrapper
-          .find('.rc-tree-switcher')
-          .at(1)
-          .simulate('click');
+        wrapper.find('.rc-tree-switcher').at(1).simulate('click');
 
         setTimeout(() => {
           expect(count).toBe(2);
           done();
         }, 500);
       }, 500);
+    });
+
+    it('reject load', async () => {
+      const wrapper = mount(
+        <Tree
+          loadData={() => Promise.reject()}
+          expandedKeys={['parent']}
+          treeData={[
+            {
+              title: 'parent',
+              key: 'parent',
+            },
+          ]}
+        />,
+      );
+
+      // Do delay
+      await timeoutPromise();
+
+      wrapper.update();
+      expect(wrapper.exists('.rc-tree-icon_loading')).toBeFalsy();
+
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: Retry for `loadData` many times but still failed. No more retry.',
+      );
     });
   });
 
@@ -786,6 +768,8 @@ describe('Tree Props', () => {
           const ret = func(this.val);
           return new FakePromise(ret);
         };
+
+        catch = () => {};
       }
 
       let wrapper;
@@ -822,7 +806,10 @@ describe('Tree Props', () => {
           {
             key: 'K11',
             title: 'T11',
-            children: [{ key: 'K110', title: 'T110' }, { key: 'K111', title: 'T111' }],
+            children: [
+              { key: 'K110', title: 'T110' },
+              { key: 'K111', title: 'T111' },
+            ],
           },
           { key: 'K12', title: 'T12' },
         ],
@@ -930,19 +917,7 @@ describe('Tree Props', () => {
       />,
     );
 
-    expect(
-      wrapper
-        .find('.rc-tree-title')
-        .first()
-        .find('.light-span')
-        .text(),
-    ).toEqual('light');
-    expect(
-      wrapper
-        .find('.rc-tree-title')
-        .last()
-        .find('.bamboo-span')
-        .text(),
-    ).toEqual('bamboo');
+    expect(wrapper.find('.rc-tree-title').first().find('.light-span').text()).toEqual('light');
+    expect(wrapper.find('.rc-tree-title').last().find('.bamboo-span').text()).toEqual('bamboo');
   });
 });
