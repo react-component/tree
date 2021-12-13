@@ -85,7 +85,7 @@ export function isFirstChild<TreeDataType extends BasicDataNode = DataNode>(
   return Number(posArr[posArr.length - 1]) === 0;
 }
 
-/* // Only used when drag, not affect SSR.
+ // Only used when drag, not affect SSR.
 export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   event: React.MouseEvent,
   dragNode: NodeInstance<TreeDataType>,
@@ -151,7 +151,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     }
   }
 
-  const abstractDragDataNode = dragNode.props.data;
+  // const abstractDragDataNode = dragNode.props.data;
   const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (
@@ -159,7 +159,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     abstractDropNodeEntity.level === 0 &&
     clientY < top + height / 2 &&
     allowDrop({
-      dragNode: abstractDragDataNode,
+    //  dragNode: abstractDragDataNode,
       dropNode: abstractDropDataNode,
       dropPosition: -1,
     }) &&
@@ -175,7 +175,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     // only allow drop inside
     if (
       allowDrop({
-        dragNode: abstractDragDataNode,
+       // dragNode: abstractDragDataNode,
         dropNode: abstractDropDataNode,
         dropPosition: 0,
       })
@@ -192,7 +192,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
       // 2. do not allow drop
       if (
         allowDrop({
-          dragNode: abstractDragDataNode,
+        //  dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 1,
         })
@@ -211,7 +211,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
       // 3. do not allow drop
       if (
         allowDrop({
-          dragNode: abstractDragDataNode,
+        //  dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 0,
         })
@@ -219,7 +219,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
         dropPosition = 0;
       } else if (
         allowDrop({
-          dragNode: abstractDragDataNode,
+         // dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 1,
         })
@@ -237,7 +237,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     // 2. do not allow drop
     if (
       allowDrop({
-        dragNode: abstractDragDataNode,
+     //   dragNode: abstractDragDataNode,
         dropNode: abstractDropDataNode,
         dropPosition: 1,
       })
@@ -257,12 +257,12 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     dropContainerKey: dropPosition === 0 ? null : abstractDropNodeEntity.parent?.key || null,
     dropAllowed,
   };
-} */
-
-export function calcDropPosition(
+} 
+/* 
+export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   event: React.MouseEvent,
-  dragNode: NodeInstance,
-  targetNode: NodeInstance,
+  dragNode: NodeInstance<TreeDataType>,
+  targetNode: NodeInstance<TreeDataType>,
   indent: number,
   startMousePosition: {
     x: number;
@@ -423,7 +423,7 @@ export function calcDropPosition(
     dropContainerKey: dropPosition === 0 ? null : abstractDropNodeEntity.parent?.key || null,
     dropAllowed,
   };
-}
+} */
 
 /**
  * Return selectedKeys according with multiple prop

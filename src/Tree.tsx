@@ -72,6 +72,7 @@ export type AllowDrop<TreeDataType extends BasicDataNode = DataNode> = (
   options: AllowDropOptions<TreeDataType>,
 ) => boolean;
 
+
 export type DraggableFn = (node: DataNode) => boolean;
 export type DraggableConfig = {
   icon?: React.ReactNode | false;
@@ -483,7 +484,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
    * But let's just keep it to avoid event trigger logic change.
    */
 
-  onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance<TreeDataType>) => {
     const { expandedKeys, keyEntities, dragChildrenKeys, flattenNodes } = this.state;
 
     const { onDragEnter, onExpand, allowDrop, direction } = this.props;
@@ -504,7 +505,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       dropTargetPos,
       dropAllowed,
       dragOverNodeKey,
-    } = calcDropPosition(
+    } = calcDropPosition<TreeDataType>(
       event,
       dragNode,
       node,
@@ -622,7 +623,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       dropAllowed,
       dropTargetPos,
       dragOverNodeKey,
-    } = calcDropPosition(
+    } = calcDropPosition<TreeDataType>(
       event,
       dragNode,
       node,
