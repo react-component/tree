@@ -14,6 +14,7 @@ import {
   NodeInstance,
   FlattenNode,
   Direction,
+  BasicDataNode,
 } from './interface';
 import { TreeProps, AllowDrop } from './Tree';
 
@@ -46,13 +47,16 @@ export function isTreeNode(node: NodeElement) {
   return node && node.type && node.type.isTreeNode;
 }
 
-export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, DataEntity>): Key[] {
+export function getDragChildrenKeys<TreeDataType extends BasicDataNode = DataNode>(
+  dragNodeKey: Key,
+  keyEntities: Record<Key, DataEntity<TreeDataType>>,
+): Key[] {
   // not contains self
   // self for left or right drag
   const dragChildrenKeys = [];
 
   const entity = keyEntities[dragNodeKey];
-  function dig(list: DataEntity[] = []) {
+  function dig(list: DataEntity<TreeDataType>[] = []) {
     list.forEach(({ key, children }) => {
       dragChildrenKeys.push(key);
       dig(children);
@@ -64,7 +68,9 @@ export function getDragChildrenKeys(dragNodeKey: Key, keyEntities: Record<Key, D
   return dragChildrenKeys;
 }
 
-export function isLastChild(treeNodeEntity: DataEntity) {
+export function isLastChild<TreeDataType extends BasicDataNode = DataNode>(
+  treeNodeEntity: DataEntity<TreeDataType>,
+) {
   if (treeNodeEntity.parent) {
     const posArr = posToArr(treeNodeEntity.pos);
     return Number(posArr[posArr.length - 1]) === treeNodeEntity.parent.children.length - 1;
@@ -72,24 +78,26 @@ export function isLastChild(treeNodeEntity: DataEntity) {
   return false;
 }
 
-export function isFirstChild(treeNodeEntity: DataEntity) {
+export function isFirstChild<TreeDataType extends BasicDataNode = DataNode>(
+  treeNodeEntity: DataEntity<TreeDataType>,
+) {
   const posArr = posToArr(treeNodeEntity.pos);
   return Number(posArr[posArr.length - 1]) === 0;
 }
 
 // Only used when drag, not affect SSR.
-export function calcDropPosition(
+export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   event: React.MouseEvent,
-  dragNode: NodeInstance,
-  targetNode: NodeInstance,
+  dragNode: NodeInstance<TreeDataType>,
+  targetNode: NodeInstance<TreeDataType>,
   indent: number,
   startMousePosition: {
     x: number;
     y: number;
   },
-  allowDrop: AllowDrop,
+  allowDrop: AllowDrop<TreeDataType>,
   flattenedNodes: FlattenNode[],
-  keyEntities: Record<Key, DataEntity>,
+  keyEntities: Record<Key, DataEntity<TreeDataType>>,
   expandKeys: Key[],
   direction: Direction,
 ): {
@@ -110,12 +118,12 @@ export function calcDropPosition(
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
   // find abstract drop node by horizontal offset
-  let abstractDropNodeEntity: DataEntity = keyEntities[targetNode.props.eventKey];
+  let abstractDropNodeEntity: DataEntity<TreeDataType> = keyEntities[targetNode.props.eventKey];
 
   if (clientY < top + height / 2) {
     // first half, set abstract drop node to previous node
     const nodeIndex = flattenedNodes.findIndex(
-      (flattenedNode) => flattenedNode.data.key === abstractDropNodeEntity.key,
+      flattenedNode => flattenedNode.data.key === abstractDropNodeEntity.key,
     );
     const prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
     const prevNodeKey = flattenedNodes[prevNodeIndex].data.key;
@@ -143,6 +151,7 @@ export function calcDropPosition(
     }
   }
 
+  const abstractDragDataNode = dragNode.props.data;
   const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (
@@ -150,6 +159,7 @@ export function calcDropPosition(
     abstractDropNodeEntity.level === 0 &&
     clientY < top + height / 2 &&
     allowDrop({
+      dragNode: abstractDragDataNode,
       dropNode: abstractDropDataNode,
       dropPosition: -1,
     }) &&
@@ -165,6 +175,7 @@ export function calcDropPosition(
     // only allow drop inside
     if (
       allowDrop({
+        dragNode: abstractDragDataNode,
         dropNode: abstractDropDataNode,
         dropPosition: 0,
       })
@@ -181,6 +192,7 @@ export function calcDropPosition(
       // 2. do not allow drop
       if (
         allowDrop({
+          dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 1,
         })
@@ -199,6 +211,7 @@ export function calcDropPosition(
       // 3. do not allow drop
       if (
         allowDrop({
+          dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 0,
         })
@@ -206,6 +219,7 @@ export function calcDropPosition(
         dropPosition = 0;
       } else if (
         allowDrop({
+          dragNode: abstractDragDataNode,
           dropNode: abstractDropDataNode,
           dropPosition: 1,
         })
@@ -223,6 +237,7 @@ export function calcDropPosition(
     // 2. do not allow drop
     if (
       allowDrop({
+        dragNode: abstractDragDataNode,
         dropNode: abstractDropDataNode,
         dropPosition: 1,
       })
@@ -273,13 +288,11 @@ export function convertDataToTree(
 
   const { processProps = internalProcessProps } = processor || {};
   const list = Array.isArray(treeData) ? treeData : [treeData];
-  return list.map(
-    ({ children, ...props }): NodeElement => {
-      const childrenNodes = convertDataToTree(children, processor);
+  return list.map(({ children, ...props }): NodeElement => {
+    const childrenNodes = convertDataToTree(children, processor);
 
-      return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
-    },
-  );
+    return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
+  });
 }
 
 /**
@@ -336,23 +349,9 @@ export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, Dat
     }
   }
 
-  (keyList || []).forEach((key) => {
+  (keyList || []).forEach(key => {
     conductUp(key);
   });
 
   return [...expandedKeys];
-}
-
-/**
- * Returns only the data- and aria- key/value pairs
- */
-export function getDataAndAria(props: Partial<TreeProps | TreeNodeProps>) {
-  const omitProps: Record<string, string> = {};
-  Object.keys(props).forEach((key) => {
-    if (key.startsWith('data-') || key.startsWith('aria-')) {
-      omitProps[key] = props[key];
-    }
-  });
-
-  return omitProps;
 }

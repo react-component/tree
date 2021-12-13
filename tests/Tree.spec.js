@@ -1,5 +1,5 @@
 /* eslint-disable no-undef, react/no-multi-comp, no-console,
-react/no-unused-state, react/prop-types, no-return-assign, import/no-named-as-default-member */
+react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
@@ -50,6 +50,22 @@ describe('Tree Basic', () => {
       </Tree>,
     );
     expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('switcherIcon = null, no render rc-tree-switcher null', () => {
+    const wrapper = mount(
+      <Tree className="forTest" defaultExpandAll switcherIcon={() => false}>
+        <TreeNode title="parent 1" key="0-0" className="spe">
+          <TreeNode title="leaf 1" key="0-0-0" disabled>
+            <TreeNode title="leaf" key="random" />
+            <TreeNode title="leaf" />
+          </TreeNode>
+          <TreeNode title="leaf 2" key="0-0-1" disableCheckbox />
+        </TreeNode>
+      </Tree>,
+    );
+    wrapper.update();
+    expect(wrapper.find('.rc-tree-switcher').exists()).toBeFalsy();
   });
 
   describe('expanded', () => {
@@ -332,6 +348,7 @@ describe('Tree Basic', () => {
         .find('.rc-tree-checkbox')
         .first()
         .simulate('click');
+      
       wrapper.find('.rc-tree-checkbox').forEach(checkbox => {
         expect(checkbox.is(CHECKED_CLASSNAME)).toBe(true);
       });
@@ -2005,5 +2022,41 @@ describe('Tree Basic', () => {
         .is(OPEN_CLASSNAME),
     ).toBe(true);
     expect(onExpand).not.toHaveBeenCalled();
+  });
+
+  // https://github.com/ant-design/ant-design/issues/31141
+  it('should restore tree node loading and expand status when loadData fail', async () => {
+    const loadData = () => new Promise((_, reject) => setTimeout(reject));
+    const wrapper = mount(
+      <Tree loadData={loadData}>
+        <TreeNode title="parent 1" key="0-0" />
+      </Tree>,
+    );
+    // trigger click to expand node
+    wrapper.find('.rc-tree-switcher').simulate('click');
+    expect(
+      wrapper.find('.rc-tree-switcher').getDOMNode().className.includes('rc-tree-switcher_open'),
+    ).toBe(true);
+    await delay();
+    expect(
+      wrapper.find('.rc-tree-switcher').getDOMNode().className.includes('rc-tree-switcher_close'),
+    ).toBe(true);
+  });
+
+  // https://github.com/ant-design/ant-design/issues/31141
+  it('should support onScroll', async () => {
+    const onScroll = jest.fn();
+    const data = [];
+    for (let i = 0; i < 99; i += 1) {
+      data.push({
+        key: i,
+        title: i,
+      });
+    }
+    const wrapper = mount(
+      <Tree itemHeight={10} height={100} treeData={data} onScroll={onScroll} />,
+    );
+    wrapper.find('.rc-tree-list-holder').simulate('scroll');
+    expect(onScroll).toBeCalled();
   });
 });

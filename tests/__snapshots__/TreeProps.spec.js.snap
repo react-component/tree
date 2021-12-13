@@ -3,11 +3,11 @@
 exports[`Tree Props checkStrictly 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -39,7 +39,9 @@ exports[`Tree Props checkStrictly 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -66,7 +68,9 @@ exports[`Tree Props checkStrictly 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -106,11 +110,11 @@ exports[`Tree Props checkStrictly 1`] = `
 exports[`Tree Props checkable default 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -142,7 +146,9 @@ exports[`Tree Props checkable default 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -169,7 +175,9 @@ exports[`Tree Props checkable default 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -209,11 +217,11 @@ exports[`Tree Props checkable default 1`] = `
 exports[`Tree Props checkable without selectable 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -245,7 +253,9 @@ exports[`Tree Props checkable without selectable 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -272,7 +282,9 @@ exports[`Tree Props checkable without selectable 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -312,11 +324,11 @@ exports[`Tree Props checkable without selectable 1`] = `
 exports[`Tree Props custom switcher icon switcher icon 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -348,7 +360,9 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -372,7 +386,9 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -400,7 +416,9 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -428,7 +446,9 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -465,11 +485,11 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
 exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -501,7 +521,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -529,7 +551,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -557,7 +581,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -581,7 +607,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -613,7 +641,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -645,7 +675,9 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -682,11 +714,11 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
 exports[`Tree Props data and aria props renders aria attributes 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -727,11 +759,11 @@ exports[`Tree Props data and aria props renders aria attributes 1`] = `
 exports[`Tree Props data and aria props renders data attributes 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -772,11 +804,11 @@ exports[`Tree Props data and aria props renders data attributes 1`] = `
 exports[`Tree Props defaultExpandAll 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -808,7 +840,9 @@ exports[`Tree Props defaultExpandAll 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -832,7 +866,9 @@ exports[`Tree Props defaultExpandAll 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -869,11 +905,11 @@ exports[`Tree Props defaultExpandAll 1`] = `
 exports[`Tree Props disabled basic 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       disabled=""
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -906,7 +942,9 @@ exports[`Tree Props disabled basic 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -939,11 +977,11 @@ exports[`Tree Props disabled basic 1`] = `
 exports[`Tree Props disabled treeNode should disabled when tree disabled 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       disabled=""
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
@@ -976,7 +1014,9 @@ exports[`Tree Props disabled treeNode should disabled when tree disabled 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1009,11 +1049,11 @@ exports[`Tree Props disabled treeNode should disabled when tree disabled 1`] = `
 exports[`Tree Props icon 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -1045,7 +1085,9 @@ exports[`Tree Props icon 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1073,7 +1115,9 @@ exports[`Tree Props icon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1114,11 +1158,11 @@ exports[`Tree Props icon 1`] = `
 exports[`Tree Props invalidate checkedKeys null 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -1150,7 +1194,9 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1177,7 +1223,9 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1217,11 +1265,11 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
 exports[`Tree Props invalidate checkedKeys number 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -1253,7 +1301,9 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1280,7 +1330,9 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1320,11 +1372,11 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
 exports[`Tree Props loadData basic 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -1356,7 +1408,9 @@ exports[`Tree Props loadData basic 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1377,7 +1431,9 @@ exports[`Tree Props loadData basic 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1411,11 +1467,11 @@ exports[`Tree Props loadData basic 1`] = `
 exports[`Tree Props multiple 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -1447,7 +1503,9 @@ exports[`Tree Props multiple 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1471,7 +1529,9 @@ exports[`Tree Props multiple 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1508,11 +1568,11 @@ exports[`Tree Props multiple 1`] = `
 exports[`Tree Props prefixCls 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -1552,11 +1612,11 @@ exports[`Tree Props prefixCls 1`] = `
 exports[`Tree Props prefixCls 2`] = `
 <div
   class="test-prefix"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -1596,11 +1656,11 @@ exports[`Tree Props prefixCls 2`] = `
 exports[`Tree Props selectable with selectable 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -1632,7 +1692,9 @@ exports[`Tree Props selectable with selectable 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1656,7 +1718,9 @@ exports[`Tree Props selectable with selectable 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1693,11 +1757,11 @@ exports[`Tree Props selectable with selectable 1`] = `
 exports[`Tree Props selectable without selectable 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -1729,7 +1793,9 @@ exports[`Tree Props selectable without selectable 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1753,7 +1819,9 @@ exports[`Tree Props selectable without selectable 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1790,11 +1858,11 @@ exports[`Tree Props selectable without selectable 1`] = `
 exports[`Tree Props showIcon 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -1826,7 +1894,9 @@ exports[`Tree Props showIcon 1`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1850,7 +1920,9 @@ exports[`Tree Props showIcon 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1883,11 +1955,11 @@ exports[`Tree Props showIcon 1`] = `
 exports[`Tree Props showIcon 2`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -1919,7 +1991,9 @@ exports[`Tree Props showIcon 2`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1940,7 +2014,9 @@ exports[`Tree Props showIcon 2`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1970,11 +2046,11 @@ exports[`Tree Props showIcon 2`] = `
 exports[`Tree Props showIcon 3`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -2006,7 +2082,9 @@ exports[`Tree Props showIcon 3`] = `
           style="display:flex;flex-direction:column"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2034,7 +2112,9 @@ exports[`Tree Props showIcon 3`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2062,7 +2142,9 @@ exports[`Tree Props showIcon 3`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2093,7 +2175,9 @@ exports[`Tree Props showIcon 3`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2121,7 +2205,9 @@ exports[`Tree Props showIcon 3`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2154,11 +2240,11 @@ exports[`Tree Props showIcon 3`] = `
 exports[`Tree Props showLine 1`] = `
 <div
   class="rc-tree rc-tree-show-line"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
       tabindex="0"
       value=""
@@ -2198,11 +2284,11 @@ exports[`Tree Props showLine 1`] = `
 exports[`Tree Props treeData 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -2234,7 +2320,9 @@ exports[`Tree Props treeData 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2258,7 +2346,9 @@ exports[`Tree Props treeData 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2282,7 +2372,9 @@ exports[`Tree Props treeData 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2310,7 +2402,9 @@ exports[`Tree Props treeData 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2338,7 +2432,9 @@ exports[`Tree Props treeData 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2369,7 +2465,9 @@ exports[`Tree Props treeData 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2400,7 +2498,9 @@ exports[`Tree Props treeData 1`] = `
             </span>
           </div>
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -2437,11 +2537,11 @@ exports[`Tree Props treeData 1`] = `
 exports[`Tree Props treeData 2`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
+      aria-label="for screen reader"
       style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
@@ -2473,7 +2573,9 @@ exports[`Tree Props treeData 2`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"

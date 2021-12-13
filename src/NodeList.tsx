@@ -41,6 +41,8 @@ const MotionFlattenData: FlattenNode = {
   children: [],
   pos: MotionEntity.pos,
   data: MotionNode,
+  title: null,
+  key: MOTION_KEY,
   /** Hold empty list here since we do not use it */
   isStart: [],
   isEnd: [],
@@ -70,7 +72,7 @@ interface NodeListProps {
   loadedKeys: Key[];
   loadingKeys: Key[];
   halfCheckedKeys: Key[];
-  keyEntities: Record<Key, DataEntity>;
+  keyEntities: Record<Key, DataEntity<any>>;
 
   dragging: boolean;
   dragOverNodeKey: Key;
@@ -268,7 +270,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         </span>
       )}
 
-      <div role="tree">
+      <div>
         <input
           style={HIDDEN_STYLE}
           disabled={focusable === false || disabled}
@@ -278,6 +280,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           onBlur={onBlur}
           value=""
           onChange={noop}
+          aria-label="for screen reader"
         />
       </div>
 
@@ -307,15 +310,27 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
+        onVisibleChange={(originList, fullList) => {
+          const originSet = new Set(originList);
+          const restList = fullList.filter(item => !originSet.has(item));
+
+          // Motion node is not render. Skip motion
+          if (restList.some(item => itemKey(item) === MOTION_KEY)) {
+            onMotionEnd();
+          }
+        }}
       >
         {(treeNode: FlattenNode) => {
           const {
             pos,
-            data: { key, ...restProps },
+            data: { ...restProps },
+            title,
+            key,
             isStart,
             isEnd,
           } = treeNode;
           const mergedKey = getKey(key, pos);
+          delete restProps.key;
           delete restProps.children;
 
           const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
@@ -324,6 +339,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
             <MotionTreeNode
               {...restProps}
               {...treeNodeProps}
+              title={title}
               active={!!activeItem && key === activeItem.data.key}
               pos={pos}
               data={treeNode.data}

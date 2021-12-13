@@ -1,9 +1,9 @@
 {
   "name": "rc-tree",
-  "version": "4.1.4",
+  "version": "5.3.2",
   "description": "tree ui component for react",
   "engines": {
-    "node": ">=8.x"
+    "node": ">=10.x"
   },
   "keywords": [
     "react",
@@ -50,12 +50,12 @@
     "react-dom": "*"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.9",
     "@types/jest": "^26.0.4",
-    "@types/react": "^16.8.19",
-    "@types/react-dom": "^16.8.4",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
     "@types/warning": "^3.0.0",
     "@umijs/fabric": "^2.4.8",
-    "css-animation": "^1.2.0",
     "dumi": "^1.1.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -66,7 +66,7 @@
     "less": "^3.11.1",
     "np": "^6.0.0",
     "rc-dialog": "^8.1.0",
-    "rc-tooltip": "4.x",
+    "rc-tooltip": "5.x",
     "rc-trigger": "^5.0.7",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
@@ -76,7 +76,7 @@
     "@babel/runtime": "^7.10.1",
     "classnames": "2.x",
     "rc-motion": "^2.0.1",
-    "rc-util": "^5.0.0",
-    "rc-virtual-list": "^3.0.1"
+    "rc-util": "^5.16.1",
+    "rc-virtual-list": "^3.4.1"
   }
 }
