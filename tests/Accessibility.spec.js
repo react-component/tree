@@ -145,17 +145,11 @@ describe('Tree Accessibility', () => {
       expect(onBlur).toHaveBeenCalled();
 
       // null activeKey
-      wrapper
-        .find('.rc-tree-treenode')
-        .first()
-        .simulate('mouseMove');
+      wrapper.find('.rc-tree-treenode').first().simulate('mouseMove');
       checkActiveTrigger(null);
 
       for (let i = 0; i < 10; i += 1) {
-        wrapper
-          .find('.rc-tree-treenode')
-          .first()
-          .simulate('mouseMove');
+        wrapper.find('.rc-tree-treenode').first().simulate('mouseMove');
         expect(onActiveChange).not.toHaveBeenCalled();
       }
     }
@@ -207,11 +201,29 @@ describe('Tree Accessibility', () => {
       expect(wrapper.find(InternalTreeNode).find('.rc-tree-treenode-active').length).toBeTruthy();
 
       // Mouse move
-      wrapper
-        .find('.rc-tree-treenode')
-        .at(1)
-        .simulate('mouseMove');
+      wrapper.find('.rc-tree-treenode').at(1).simulate('mouseMove');
       expect(wrapper.find(InternalTreeNode).find('.rc-tree-treenode-active').length).toBeFalsy();
+    });
+
+    it('fieldNames should also work', () => {
+      const onActiveChange = jest.fn();
+
+      const wrapper = mount(
+        <Tree
+          defaultExpandAll
+          treeData={[{ value: 'first' }, { value: 'second' }]}
+          fieldNames={{ key: 'value' }}
+          onActiveChange={onActiveChange}
+        />,
+      );
+
+      wrapper.find('input').simulate('focus');
+
+      wrapper.find('input').simulate('keyDown', { which: KeyCode.DOWN });
+      expect(onActiveChange).toHaveBeenCalledWith('first');
+
+      wrapper.find('input').simulate('keyDown', { which: KeyCode.DOWN });
+      expect(onActiveChange).toHaveBeenCalledWith('second');
     });
   });
 

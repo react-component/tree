@@ -1180,7 +1180,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
   offsetActiveKey = (offset: number) => {
     const { flattenNodes, activeKey } = this.state;
 
-    let index = flattenNodes.findIndex(({ data: { key } }) => key === activeKey);
+    let index = flattenNodes.findIndex(({ key }) => key === activeKey);
 
     // Align with index
     if (index === -1 && offset < 0) {
@@ -1191,7 +1191,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
     const item = flattenNodes[index];
     if (item) {
-      const { key } = item.data;
+      const { key } = item;
       this.onActiveChange(key);
     } else {
       this.onActiveChange(null);
