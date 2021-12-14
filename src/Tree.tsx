@@ -1174,7 +1174,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       return null;
     }
 
-    return flattenNodes.find(({ data: { key } }) => key === activeKey) || null;
+    return flattenNodes.find(({ key }) => key === activeKey) || null;
   };
 
   offsetActiveKey = (offset: number) => {

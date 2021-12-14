@@ -207,6 +207,7 @@ describe('Tree Accessibility', () => {
 
     it('fieldNames should also work', () => {
       const onActiveChange = jest.fn();
+      const onSelect = jest.fn();
 
       const wrapper = mount(
         <Tree
@@ -214,6 +215,7 @@ describe('Tree Accessibility', () => {
           treeData={[{ value: 'first' }, { value: 'second' }]}
           fieldNames={{ key: 'value' }}
           onActiveChange={onActiveChange}
+          onSelect={onSelect}
         />,
       );
 
@@ -224,6 +226,9 @@ describe('Tree Accessibility', () => {
 
       wrapper.find('input').simulate('keyDown', { which: KeyCode.DOWN });
       expect(onActiveChange).toHaveBeenCalledWith('second');
+
+      wrapper.find('input').simulate('keyDown', { which: KeyCode.ENTER });
+      expect(onSelect).toHaveBeenCalledWith(['second'], expect.anything());
     });
   });
 
