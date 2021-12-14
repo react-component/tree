@@ -915,6 +915,7 @@ describe('Tree Basic', () => {
       wrapper.find('.dropTarget').at(0).simulate('dragOver');
       const event = onDragOver.mock.calls[0][0];
       expect(event.node).toEqual(node);
+      expect(wrapper.instance().state.dragging).toEqual(false);
     });
 
     it('fires dragLeave event', () => {

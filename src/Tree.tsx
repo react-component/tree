@@ -64,7 +64,7 @@ interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
 }
 
 export interface AllowDropOptions<TreeDataType extends BasicDataNode = DataNode> {
-  // dragNode: TreeDataType;
+  dragNode?: TreeDataType;
   dropNode: TreeDataType;
   dropPosition: -1 | 0 | 1;
 }
@@ -280,11 +280,11 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     // the abstract-drop-node is the real drop node when drag and drop
     // not the DOM drag over node
     dropTargetKey: null,
-    dropPosition: null,
-    dropContainerKey: null,
-    dropLevelOffset: null,
-    dropTargetPos: null,
-    dropAllowed: true,
+    dropPosition: null, // the drop position of abstract-drop-node, inside 0, top -1, bottom 1
+    dropContainerKey: null, // the container key of abstract-drop-node if dropPosition is -1 or 1
+    dropLevelOffset: null, // the drop level offset of abstract-drag-over-node
+    dropTargetPos: null, // the pos of abstract-drop-node
+    dropAllowed: true, // if drop to abstract-drop-node is allowed
 
     // the abstract-drag-over-node
     // if mouse is on the bottom of top dom node or no the top of the bottom dom node
