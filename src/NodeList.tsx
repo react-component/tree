@@ -34,6 +34,7 @@ export const MotionEntity: DataEntity = {
   index: 0,
   pos: '0',
   node: MotionNode,
+  nodes: [MotionNode],
 };
 
 const MotionFlattenData: FlattenNode = {
