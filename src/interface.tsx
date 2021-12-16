@@ -67,6 +67,7 @@ export interface Entity {
 export interface DataEntity<TreeDataType extends BasicDataNode = DataNode>
   extends Omit<Entity, 'node' | 'parent' | 'children'> {
   node: TreeDataType;
+  nodes: TreeDataType[];
   parent?: DataEntity<TreeDataType>;
   children?: DataEntity<TreeDataType>[];
   level: number;

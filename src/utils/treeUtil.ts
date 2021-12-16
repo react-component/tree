@@ -186,6 +186,7 @@ export function traverseDataNodes(
     key: Key;
     parentPos: string | number;
     level: number;
+    nodes: DataNode[];
   }) => void,
   // To avoid too many params, let use config instead of origin param
   config?: TraverseDataNodesConfig | string,
@@ -222,9 +223,11 @@ export function traverseDataNodes(
     node: DataNode,
     index?: number,
     parent?: { node: DataNode; pos: string; level: number },
+    pathNodes?: DataNode[],
   ) {
     const children = node ? node[mergeChildrenPropName] : dataNodes;
     const pos = node ? getPosition(parent.pos, index) : '0';
+    const connectNodes = node ? [...pathNodes, node] : [];
 
     // Process node if is not root
     if (node) {
@@ -236,6 +239,7 @@ export function traverseDataNodes(
         key,
         parentPos: parent.node ? parent.pos : null,
         level: parent.level + 1,
+        nodes: connectNodes,
       };
 
       callback(data);
@@ -244,11 +248,16 @@ export function traverseDataNodes(
     // Process children node
     if (children) {
       children.forEach((subNode, subIndex) => {
-        processNode(subNode, subIndex, {
-          node,
-          pos,
-          level: parent ? parent.level + 1 : -1,
-        });
+        processNode(
+          subNode,
+          subIndex,
+          {
+            node,
+            pos,
+            level: parent ? parent.level + 1 : -1,
+          },
+          connectNodes,
+        );
       });
     }
   }
@@ -301,8 +310,8 @@ export function convertDataToEntities(
   traverseDataNodes(
     dataNodes,
     item => {
-      const { node, index, pos, key, parentPos, level } = item;
-      const entity: DataEntity = { node, index, key, pos, level };
+      const { node, index, pos, key, parentPos, level, nodes } = item;
+      const entity: DataEntity = { node, nodes, index, key, pos, level };
 
       const mergedKey = getKey(key, pos);
 
