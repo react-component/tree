@@ -449,7 +449,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           <div
             aria-grabbed="false"
             aria-label="0-0"
-            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
             draggable="false"
           >
@@ -477,7 +476,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           <div
             aria-grabbed="false"
             aria-label="0-0-0"
-            aria-selected="true"
             class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
             draggable="false"
           >
@@ -509,7 +507,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           <div
             aria-grabbed="false"
             aria-label="0-0-0-0"
-            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -544,7 +541,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           <div
             aria-grabbed="false"
             aria-label="0-0-1"
-            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
@@ -576,7 +572,6 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           <div
             aria-grabbed="false"
             aria-label="0-1"
-            aria-selected="true"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
           >
