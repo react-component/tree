@@ -11,6 +11,7 @@ import {
   NodeInstance,
   DataNode,
   Direction,
+  BasicDataNode,
 } from './interface';
 import { DraggableConfig } from './Tree';
 
@@ -27,11 +28,10 @@ export type NodeMouseEventHandler<T = HTMLSpanElement> = (
   e: React.MouseEvent<T>,
   node: EventDataNode,
 ) => void;
-export type NodeDragEventHandler<T = HTMLDivElement> = (
-  e: React.DragEvent<T>,
-  node: NodeInstance,
-  outsideTree?: boolean,
-) => void;
+export type NodeDragEventHandler<
+  T = HTMLDivElement,
+  TreeDataType extends BasicDataNode = DataNode,
+> = (e: React.DragEvent<T>, node: NodeInstance<TreeDataType>, outsideTree?: boolean) => void;
 
 export interface TreeContextProps {
   prefixCls: string;
@@ -44,7 +44,7 @@ export interface TreeContextProps {
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
-  keyEntities: Record<Key, DataEntity>;
+  keyEntities: Record<Key, DataEntity<any>>;
   // for details see comment in Tree.state (Tree.tsx)
   dropLevelOffset?: number;
   dropContainerKey: Key | null;
@@ -63,7 +63,7 @@ export interface TreeContextProps {
 
   loadData: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode) => boolean;
-  titleRender?: (node: DataNode) => React.ReactNode;
+  titleRender?: (node: any) => React.ReactNode;
 
   onNodeClick: NodeMouseEventHandler;
   onNodeDoubleClick: NodeMouseEventHandler;
@@ -78,12 +78,12 @@ export interface TreeContextProps {
   onNodeMouseEnter: NodeMouseEventHandler;
   onNodeMouseLeave: NodeMouseEventHandler;
   onNodeContextMenu: NodeMouseEventHandler;
-  onNodeDragStart: NodeDragEventHandler;
-  onNodeDragEnter: NodeDragEventHandler;
-  onNodeDragOver: NodeDragEventHandler;
-  onNodeDragLeave: NodeDragEventHandler;
-  onNodeDragEnd: NodeDragEventHandler;
-  onNodeDrop: NodeDragEventHandler;
+  onNodeDragStart: NodeDragEventHandler<any, any>;
+  onNodeDragEnter: NodeDragEventHandler<any, any>;
+  onNodeDragOver: NodeDragEventHandler<any, any>;
+  onNodeDragLeave: NodeDragEventHandler<any, any>;
+  onNodeDragEnd: NodeDragEventHandler<any, any>;
+  onNodeDrop: NodeDragEventHandler<any, any>;
 }
 
 export const TreeContext: React.Context<TreeContextProps | null> = React.createContext(null);

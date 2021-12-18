@@ -3,21 +3,25 @@ import { TreeNodeProps } from './TreeNode';
 
 export { ScrollTo } from 'rc-virtual-list/lib/List';
 
-export interface DataNode {
+/** For fieldNames, we provides a abstract interface */
+export interface BasicDataNode {
   checkable?: boolean;
-  children?: DataNode[];
   disabled?: boolean;
   disableCheckbox?: boolean;
   icon?: IconType;
   isLeaf?: boolean;
-  key: string | number;
-  title?: React.ReactNode;
   selectable?: boolean;
   switcherIcon?: IconType;
 
   /** Set style of TreeNode. This is not recommend if you don't have any force requirement */
   className?: string;
   style?: React.CSSProperties;
+}
+
+export interface DataNode extends BasicDataNode {
+  children?: DataNode[];
+  key: string | number;
+  title?: React.ReactNode;
 }
 
 export interface EventDataNode extends DataNode {
@@ -45,7 +49,9 @@ export type NodeElement = React.ReactElement<TreeNodeProps> & {
   };
 };
 
-export type NodeInstance = React.Component<TreeNodeProps> & {
+export type NodeInstance<TreeDataType extends BasicDataNode = DataNode> = React.Component<
+  TreeNodeProps<TreeDataType>
+> & {
   selectHandle?: HTMLSpanElement;
 };
 
@@ -58,10 +64,11 @@ export interface Entity {
   children?: Entity[];
 }
 
-export interface DataEntity extends Omit<Entity, 'node' | 'parent' | 'children'> {
-  node: DataNode;
-  parent?: DataEntity;
-  children?: DataEntity[];
+export interface DataEntity<TreeDataType extends BasicDataNode = DataNode>
+  extends Omit<Entity, 'node' | 'parent' | 'children'> {
+  node: TreeDataType;
+  parent?: DataEntity<TreeDataType>;
+  children?: DataEntity<TreeDataType>[];
   level: number;
 }
 
