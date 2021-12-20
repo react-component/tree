@@ -166,4 +166,52 @@ describe('TreeNode Props', () => {
     expect(onClick).toHaveBeenCalled();
     expect(onSelect).not.toHaveBeenCalled();
   });
+
+  it('unselectable', () => {
+    const onClick = jest.fn();
+    const onSelect = jest.fn();
+
+    class Demo extends React.Component {
+      state = {
+        treeSelectable: false,
+        treeNodeSelectable: false,
+      };
+
+      render() {
+        return (
+          <div>
+            <Tree selectable={this.state.treeSelectable} onClick={onClick} onSelect={onSelect}>
+              <TreeNode />
+              <TreeNode selectable={this.state.treeNodeSelectable} />
+            </Tree>
+            <button
+              className="test-button"
+              onClick={() => {
+                this.setState({
+                  treeSelectable: true,
+                  treeNodeSelectable: false,
+                });
+              }}
+            />
+          </div>
+        );
+      }
+    }
+
+    const wrapper = mount(<Demo />);
+    // tree selectable is false ,then children should be selectable = false if not set selectable alone.
+    expect(wrapper.find('[aria-selected=false]').length).toBe(1);
+    wrapper.find('.rc-tree-node-content-wrapper').at(1).simulate('click');
+    expect(onClick).toHaveBeenCalled();
+    expect(onSelect).not.toHaveBeenCalled();
+
+    // only set tree node use state.
+    wrapper.find('.test-button').simulate('click');
+    onClick.mockRestore();
+    onSelect.mockRestore();
+    expect(wrapper.find('[aria-selected=false]').length).toBe(1);
+    wrapper.find('.rc-tree-node-content-wrapper').at(1).simulate('click');
+    expect(onClick).toHaveBeenCalled();
+    expect(onSelect).not.toHaveBeenCalled();
+  });
 });

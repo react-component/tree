@@ -1,0 +1,14 @@
+@import '../../assets/index.less';
+.selectable-demo {
+  padding: 0 20px;
+  .selectable-container {
+    margin: 10px 30px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    .@{treeNodePrefixCls}[aria-selected="false"] {
+      .@{treePrefixCls}-node-content-wrapper span:last-child {
+        text-decoration: line-through;
+      }
+    }
+  }
+}
