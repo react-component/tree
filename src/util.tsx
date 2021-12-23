@@ -19,6 +19,7 @@ import {
 import { TreeProps, AllowDrop } from './Tree';
 
 export function arrDel(list: Key[], value: Key) {
+  if (!list) return [];
   const clone = list.slice();
   const index = clone.indexOf(value);
   if (index >= 0) {
@@ -28,7 +29,7 @@ export function arrDel(list: Key[], value: Key) {
 }
 
 export function arrAdd(list: Key[], value: Key) {
-  const clone = list.slice();
+  const clone = (list || []).slice();
   if (clone.indexOf(value) === -1) {
     clone.push(value);
   }
