@@ -480,15 +480,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     }
 
     if (!dragNode) {
-      this.setState({
-        dragOverNodeKey: null,
-        dropPosition: null,
-        dropLevelOffset: null,
-        dropTargetKey: null,
-        dropContainerKey: null,
-        dropTargetPos: null,
-        dropAllowed: false,
-      });
+      this.resetDragState();
       return;
     }
 
@@ -519,15 +511,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       // don't allow drop when drop is not allowed caculated by calcDropPosition
       !dropAllowed
     ) {
-      this.setState({
-        dragOverNodeKey: null,
-        dropPosition: null,
-        dropLevelOffset: null,
-        dropTargetKey: null,
-        dropContainerKey: null,
-        dropTargetPos: null,
-        dropAllowed: false,
-      });
+      this.resetDragState();
       return;
     }
 
@@ -571,15 +555,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
     // Skip if drag node is self
     if (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0) {
-      this.setState({
-        dragOverNodeKey: null,
-        dropPosition: null,
-        dropLevelOffset: null,
-        dropTargetKey: null,
-        dropContainerKey: null,
-        dropTargetPos: null,
-        dropAllowed: false,
-      });
+      this.resetDragState();
       return;
     }
 
@@ -653,15 +629,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
           this.state.dragOverNodeKey === null
         )
       ) {
-        this.setState({
-          dropPosition: null,
-          dropLevelOffset: null,
-          dropTargetKey: null,
-          dropContainerKey: null,
-          dropTargetPos: null,
-          dropAllowed: false,
-          dragOverNodeKey: null,
-        });
+        this.resetDragState();
       }
     } else if (
       !(
@@ -697,15 +665,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       this.currentMouseOverDroppableNodeKey === node.props.eventKey &&
       !event.currentTarget.contains(event.relatedTarget as Node)
     ) {
-      this.setState({
-        dropPosition: null,
-        dropLevelOffset: null,
-        dropTargetKey: null,
-        dropContainerKey: null,
-        dropTargetPos: null,
-        dropAllowed: false,
-        dragOverNodeKey: null,
-      });
+      this.resetDragState();
       this.currentMouseOverDroppableNodeKey = null;
     }
 
@@ -784,18 +744,22 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     this.dragNode = null;
   };
 
+  resetDragState() {
+    this.setState({
+      dragOverNodeKey: null,
+      dropPosition: null,
+      dropLevelOffset: null,
+      dropTargetKey: null,
+      dropContainerKey: null,
+      dropTargetPos: null,
+      dropAllowed: false,
+    });
+  }
+
   cleanDragState = () => {
     const { draggingNodeKey } = this.state;
     if (draggingNodeKey !== null) {
-      this.setState({
-        draggingNodeKey: null,
-        dropPosition: null,
-        dropContainerKey: null,
-        dropTargetKey: null,
-        dropLevelOffset: null,
-        dropAllowed: true,
-        dragOverNodeKey: null,
-      });
+      this.resetDragState();
     }
     this.dragStartMousePosition = null;
     this.currentMouseOverDroppableNodeKey = null;
