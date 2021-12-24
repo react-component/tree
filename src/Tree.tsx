@@ -759,7 +759,15 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
   cleanDragState = () => {
     const { draggingNodeKey } = this.state;
     if (draggingNodeKey !== null) {
-      this.resetDragState();
+      this.setState({
+        draggingNodeKey: null,
+        dropPosition: null,
+        dropContainerKey: null,
+        dropTargetKey: null,
+        dropLevelOffset: null,
+        dropAllowed: true,
+        dragOverNodeKey: null,
+      });
     }
     this.dragStartMousePosition = null;
     this.currentMouseOverDroppableNodeKey = null;
