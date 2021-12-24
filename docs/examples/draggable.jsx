@@ -122,6 +122,7 @@ class Demo extends React.Component {
             itemHeight={20}
             virtual={false}
           />
+          <div draggable>This element is draggable, but it cannot be dragged into tree.</div>
         </div>
       </div>
     );
