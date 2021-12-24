@@ -479,6 +479,19 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       this.currentMouseOverDroppableNodeKey = eventKey;
     }
 
+    if (!dragNode) {
+      this.setState({
+        dragOverNodeKey: null,
+        dropPosition: null,
+        dropLevelOffset: null,
+        dropTargetKey: null,
+        dropContainerKey: null,
+        dropTargetPos: null,
+        dropAllowed: false,
+      });
+      return;
+    }
+
     const {
       dropPosition,
       dropLevelOffset,
@@ -501,7 +514,6 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     );
 
     if (
-      !dragNode ||
       // don't allow drop inside its children
       dragChildrenKeys.indexOf(dropTargetKey) !== -1 ||
       // don't allow drop when drop is not allowed caculated by calcDropPosition
@@ -596,6 +608,10 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     const { onDragOver, allowDrop, direction } = this.props;
     const { dragNode } = this;
 
+    if (!dragNode) {
+      return;
+    }
+
     const {
       dropPosition,
       dropLevelOffset,
@@ -617,7 +633,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       direction,
     );
 
-    if (!dragNode || dragChildrenKeys.indexOf(dropTargetKey) !== -1 || !dropAllowed) {
+    if (dragChildrenKeys.indexOf(dropTargetKey) !== -1 || !dropAllowed) {
       // don't allow drop inside its children
       // don't allow drop when drop is not allowed caculated by calcDropPosition
       return;
