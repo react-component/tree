@@ -708,36 +708,22 @@ describe('Tree Draggable', () => {
         expect(allowDrop.mock.calls[0][0].dragNode.key).toEqual('0-0');
         expect(allowDrop.mock.calls[0][0].dropNode.key).toEqual('0-1-0-0');
       });
+
       it('not allow dragging elements outside into tree', () => {
         const onDrop = jest.fn();
         const wrapper = mount(
           <div>
             <Tree draggable defaultExpandAll onDrop={onDrop} direction={dir}>
               <TreeNode key="0-0">
-                <TreeNode key="0-0-0" />
+                <TreeNode key="0-0-0" className="dropTarget" />
               </TreeNode>
-              <TreeNode key="0-1">
-                <TreeNode key="0-1-0">
-                  <TreeNode key="0-1-0-0" className="dropTarget" />
-                </TreeNode>
-              </TreeNode>
-              <TreeNode key="0-2" />
             </Tree>
             <div className="dragTarget">Element outside</div>
           </div>,
         );
-        wrapper.find('.dragTarget').simulate('dragStart', {
-          clientX: base * 400,
-          clientY: 700,
-        });
-        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
-          clientX: base * 400,
-          clientY: 600,
-        });
-        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-          clientX: base * 400,
-          clientY: 600,
-        });
+        wrapper.find('.dragTarget').simulate('dragStart');
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter');
+        wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver');
         wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
         expect(onDrop).not.toHaveBeenCalled();
       });
