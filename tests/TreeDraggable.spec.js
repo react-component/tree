@@ -735,4 +735,45 @@ describe('Tree Draggable', () => {
 
     expect(wrapper.find('.handler')).toHaveLength(2);
   });
+
+  it('not break with fieldNames', () => {
+    const onDrop = jest.fn();
+
+    const wrapper = mount(
+      <Tree
+        draggable
+        defaultExpandAll
+        onDrop={onDrop}
+        treeData={[
+          {
+            name: 'parent',
+            childList: [
+              {
+                className: 'dragTarget',
+                name: 'child 1',
+              },
+              {
+                className: 'dropTarget',
+                name: 'child 2',
+              },
+            ],
+          },
+        ]}
+        fieldNames={{
+          children: 'childList',
+          title: 'name',
+          key: 'name',
+        }}
+      />,
+    );
+
+    wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+    wrapper.find('.dropTarget').at(0).simulate('dragEnter', {
+      clientY: -9999999,
+    });
+    wrapper.find('.dropTarget').at(0).simulate('dragOver');
+    wrapper.find('.dropTarget').at(0).simulate('drop');
+
+    expect(onDrop).toHaveBeenCalled();
+  });
 });

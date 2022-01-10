@@ -125,7 +125,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
       flattenedNode => flattenedNode.data.key === abstractDropNodeEntity.key,
     );
     const prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
-    const prevNodeKey = flattenedNodes[prevNodeIndex].data.key;
+    const prevNodeKey = flattenedNodes[prevNodeIndex].key;
     abstractDropNodeEntity = keyEntities[prevNodeKey];
   }
 
