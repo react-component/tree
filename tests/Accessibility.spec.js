@@ -237,21 +237,42 @@ describe('Tree Accessibility', () => {
     expect(wrapper.find('input').props().disabled).toBeTruthy();
   });
 
-  it('activeKey in control', () => {
-    const wrapper = mount(
-      <Tree
-        treeData={[
-          {
-            title: 'Parent',
-            key: 'parent',
-          },
-        ]}
-      />,
-    );
+  describe('activeKey in control', () => {
+    it('basic', () => {
+      const wrapper = mount(
+        <Tree
+          treeData={[
+            {
+              title: 'Parent',
+              key: 'parent',
+            },
+          ]}
+        />,
+      );
 
-    expect(wrapper.exists('.rc-tree-treenode-active')).toBeFalsy();
+      expect(wrapper.exists('.rc-tree-treenode-active')).toBeFalsy();
 
-    wrapper.setProps({ activeKey: 'parent' });
-    expect(wrapper.exists('.rc-tree-treenode-active')).toBeTruthy();
+      wrapper.setProps({ activeKey: 'parent' });
+      expect(wrapper.exists('.rc-tree-treenode-active')).toBeTruthy();
+    });
+
+    it('with fieldNames', () => {
+      const wrapper = mount(
+        <Tree
+          fieldNames={{ key: 'value' }}
+          treeData={[
+            {
+              title: 'Parent',
+              value: 'parent',
+            },
+          ]}
+        />,
+      );
+
+      expect(wrapper.exists('.rc-tree-treenode-active')).toBeFalsy();
+
+      wrapper.setProps({ activeKey: 'parent' });
+      expect(wrapper.exists('.rc-tree-treenode-active')).toBeTruthy();
+    });
   });
 });

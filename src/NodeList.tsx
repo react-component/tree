@@ -341,7 +341,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
               {...restProps}
               {...treeNodeProps}
               title={title}
-              active={!!activeItem && key === activeItem.data.key}
+              active={!!activeItem && key === activeItem.key}
               pos={pos}
               data={treeNode.data}
               isStart={isStart}
