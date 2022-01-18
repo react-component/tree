@@ -307,6 +307,17 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
   listRef = React.createRef<NodeListRef>();
 
+  componentDidUpdate(
+    _: Readonly<TreeProps<TreeDataType>>,
+    prevState: Readonly<TreeState<TreeDataType>>,
+  ): void {
+    const { activeKey } = this.state;
+
+    if (activeKey !== null && prevState.activeKey !== activeKey) {
+      this.scrollTo({ key: activeKey });
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('dragend', this.onWindowDragEnd);
     this.destroyed = true;
@@ -1153,9 +1164,6 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     }
 
     this.setState({ activeKey: newActiveKey });
-    if (newActiveKey !== null) {
-      this.scrollTo({ key: newActiveKey });
-    }
 
     if (onActiveChange) {
       onActiveChange(newActiveKey);
