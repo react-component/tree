@@ -83,6 +83,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   className?: string;
   style?: React.CSSProperties;
   focusable?: boolean;
+  activeKey?: Key;
   tabIndex?: number;
   children?: React.ReactNode;
   treeData?: TreeDataType[]; // Generate treeNode by children
@@ -428,6 +429,11 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     // ================= loadedKeys ==================
     if (needSync('loadedKeys')) {
       newState.loadedKeys = props.loadedKeys;
+    }
+
+    // ================== activeKey ==================
+    if (needSync('activeKey')) {
+      newState.activeKey = props.activeKey;
     }
 
     return newState;
