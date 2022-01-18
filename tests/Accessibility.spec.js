@@ -253,6 +253,7 @@ describe('Tree Accessibility', () => {
       expect(wrapper.exists('.rc-tree-treenode-active')).toBeFalsy();
 
       wrapper.setProps({ activeKey: 'parent' });
+      wrapper.update();
       expect(wrapper.exists('.rc-tree-treenode-active')).toBeTruthy();
     });
 
@@ -272,6 +273,7 @@ describe('Tree Accessibility', () => {
       expect(wrapper.exists('.rc-tree-treenode-active')).toBeFalsy();
 
       wrapper.setProps({ activeKey: 'parent' });
+      wrapper.update();
       expect(wrapper.exists('.rc-tree-treenode-active')).toBeTruthy();
     });
   });

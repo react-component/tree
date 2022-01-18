@@ -318,7 +318,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
   onUpdated() {
     const { activeKey } = this.props;
 
-    if (activeKey !== this.state.activeKey) {
+    if (activeKey !== undefined && activeKey !== this.state.activeKey) {
       this.setState({ activeKey });
 
       if (activeKey !== null) {
