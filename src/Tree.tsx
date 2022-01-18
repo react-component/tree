@@ -307,14 +307,23 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
   listRef = React.createRef<NodeListRef>();
 
-  componentDidUpdate(
-    _: Readonly<TreeProps<TreeDataType>>,
-    prevState: Readonly<TreeState<TreeDataType>>,
-  ): void {
-    const { activeKey } = this.state;
+  componentDidMount(): void {
+    this.onUpdated();
+  }
 
-    if (activeKey !== null && prevState.activeKey !== activeKey) {
-      this.scrollTo({ key: activeKey });
+  componentDidUpdate(): void {
+    this.onUpdated();
+  }
+
+  onUpdated() {
+    const { activeKey } = this.props;
+
+    if (activeKey !== this.state.activeKey) {
+      this.setState({ activeKey });
+
+      if (activeKey !== null) {
+        this.scrollTo({ key: activeKey });
+      }
     }
   }
 
@@ -440,11 +449,6 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     // ================= loadedKeys ==================
     if (needSync('loadedKeys')) {
       newState.loadedKeys = props.loadedKeys;
-    }
-
-    // ================== activeKey ==================
-    if (needSync('activeKey')) {
-      newState.activeKey = props.activeKey;
     }
 
     return newState;
@@ -1164,6 +1168,9 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     }
 
     this.setState({ activeKey: newActiveKey });
+    if (newActiveKey !== null) {
+      this.scrollTo({ key: newActiveKey });
+    }
 
     if (onActiveChange) {
       onActiveChange(newActiveKey);

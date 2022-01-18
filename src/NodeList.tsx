@@ -110,10 +110,7 @@ export function getMinimumRangeTransitionRange(
 }
 
 function itemKey(item: FlattenNode) {
-  const {
-    data: { key },
-    pos,
-  } = item;
+  const { key, pos } = item;
   return getKey(key, pos);
 }
 
