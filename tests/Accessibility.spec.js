@@ -236,4 +236,22 @@ describe('Tree Accessibility', () => {
     const wrapper = mount(<Tree disabled />);
     expect(wrapper.find('input').props().disabled).toBeTruthy();
   });
+
+  it('activeKey in control', () => {
+    const wrapper = mount(
+      <Tree
+        treeData={[
+          {
+            title: 'Parent',
+            key: 'parent',
+          },
+        ]}
+      />,
+    );
+
+    expect(wrapper.exists('.rc-tree-treenode-active')).toBeFalsy();
+
+    wrapper.setProps({ activeKey: 'parent' });
+    expect(wrapper.exists('.rc-tree-treenode-active')).toBeTruthy();
+  });
 });
