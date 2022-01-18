@@ -551,6 +551,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         dropContainerKey,
         dropTargetKey,
         draggingNodeKey,
+        draggable,
       },
     } = this.props;
     const disabled = this.isDisabled();
@@ -577,6 +578,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-active`]: active,
           [`${prefixCls}-treenode-leaf-last`]: isEndNode,
           [`${prefixCls}-treenode-draggable`]: draggableWithoutDisabled,
+          [`${prefixCls}-treenode-draggable-disabled`]: !!draggable && !mergedDraggable,
 
           dragging,
           'drop-target': dropTargetKey === eventKey,
