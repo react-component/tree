@@ -290,7 +290,7 @@ export function convertDataToTree(
   return list.map(({ children, ...props }): NodeElement => {
     const childrenNodes = convertDataToTree(children, processor);
 
-    return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
+    return <TreeNode key={props.key} {...processProps(props)}>{childrenNodes}</TreeNode>;
   });
 }
 

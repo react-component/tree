@@ -477,9 +477,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
     window.addEventListener('dragend', this.onWindowDragEnd);
 
-    if (onDragStart) {
-      onDragStart({ event, node: convertNodePropsToEventData(node.props) });
-    }
+    onDragStart?.({ event, node: convertNodePropsToEventData(node.props) });
   };
 
   /**
@@ -564,13 +562,11 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
           this.setExpandedKeys(newExpandedKeys);
         }
 
-        if (onExpand) {
-          onExpand(newExpandedKeys, {
-            node: convertNodePropsToEventData(node.props),
-            expanded: true,
-            nativeEvent: event.nativeEvent,
-          });
-        }
+        onExpand?.(newExpandedKeys, {
+          node: convertNodePropsToEventData(node.props),
+          expanded: true,
+          nativeEvent: event.nativeEvent,
+        });
       }, 800);
     }
 
@@ -591,13 +587,11 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       dropAllowed,
     });
 
-    if (onDragEnter) {
-      onDragEnter({
-        event,
-        node: convertNodePropsToEventData(node.props),
-        expandedKeys,
-      });
-    }
+    onDragEnter?.({
+      event,
+      node: convertNodePropsToEventData(node.props),
+      expandedKeys,
+    });
   };
 
   onNodeDragOver = (event: React.DragEvent<HTMLDivElement>, node: NodeInstance<TreeDataType>) => {
@@ -674,9 +668,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       });
     }
 
-    if (onDragOver) {
-      onDragOver({ event, node: convertNodePropsToEventData(node.props) });
-    }
+    onDragOver?.({ event, node: convertNodePropsToEventData(node.props) });
   };
 
   onNodeDragLeave: NodeDragEventHandler = (event, node) => {
@@ -692,9 +684,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
     const { onDragLeave } = this.props;
 
-    if (onDragLeave) {
-      onDragLeave({ event, node: convertNodePropsToEventData(node.props) });
-    }
+    onDragLeave?.({ event, node: convertNodePropsToEventData(node.props) });
   };
 
   // since stopPropagation() is called in treeNode
@@ -705,7 +695,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
   };
 
   // if onNodeDragEnd is called, onWindowDragEnd won't be called since stopPropagation() is called
-  onNodeDragEnd: NodeDragEventHandler = (event, node, outsideTree = false) => {
+  onNodeDragEnd: NodeDragEventHandler = (event, node) => {
     const { onDragEnd } = this.props;
     this.setState({
       dragOverNodeKey: null,
@@ -713,9 +703,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
     this.cleanDragState();
 
-    if (onDragEnd && !outsideTree) {
-      onDragEnd({ event, node: convertNodePropsToEventData(node.props) });
-    }
+    onDragEnd?.({ event, node: convertNodePropsToEventData(node.props) });
 
     this.dragNode = null;
   };
@@ -758,8 +746,8 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       dropPosition: dropPosition + Number(posArr[posArr.length - 1]),
     };
 
-    if (onDrop && !outsideTree) {
-      onDrop(dropResult);
+    if (!outsideTree) {
+      onDrop?.(dropResult);
     }
 
     this.dragNode = null;
@@ -796,16 +784,13 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
   onNodeClick: NodeMouseEventHandler = (e, treeNode) => {
     const { onClick } = this.props;
-    if (onClick) {
-      onClick(e, treeNode);
-    }
+    onClick?.(e, treeNode);
   };
 
   onNodeDoubleClick: NodeMouseEventHandler = (e, treeNode) => {
     const { onDoubleClick } = this.props;
-    if (onDoubleClick) {
-      onDoubleClick(e, treeNode);
-    }
+
+    onDoubleClick?.(e, treeNode);
   };
 
   onNodeSelect: NodeMouseEventHandler = (e, treeNode) => {
@@ -837,15 +822,13 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
     this.setUncontrolledState({ selectedKeys });
 
-    if (onSelect) {
-      onSelect(selectedKeys, {
-        event: 'select',
-        selected: targetSelected,
-        node: treeNode,
-        selectedNodes,
-        nativeEvent: e.nativeEvent,
-      });
-    }
+    onSelect?.(selectedKeys, {
+      event: 'select',
+      selected: targetSelected,
+      node: treeNode,
+      selectedNodes,
+      nativeEvent: e.nativeEvent,
+    });
   };
 
   onNodeCheck = (
@@ -928,9 +911,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       );
     }
 
-    if (onCheck) {
-      onCheck(checkedObj, eventObj as CheckInfo<TreeDataType>);
-    }
+    onCheck?.(checkedObj, eventObj as CheckInfo<TreeDataType>);
   };
 
   onNodeLoad = (treeNode: EventDataNode) => {
@@ -954,12 +935,10 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
             // onLoad should trigger before internal setState to avoid `loadData` trigger twice.
             // https://github.com/ant-design/ant-design/issues/12464
-            if (onLoad) {
-              onLoad(newLoadedKeys, {
-                event: 'load',
-                node: treeNode,
-              });
-            }
+            onLoad?.(newLoadedKeys, {
+              event: 'load',
+              node: treeNode,
+            });
 
             this.setUncontrolledState({
               loadedKeys: newLoadedKeys,
@@ -1005,16 +984,15 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
   onNodeMouseEnter: NodeMouseEventHandler = (event, node) => {
     const { onMouseEnter } = this.props;
-    if (onMouseEnter) {
-      onMouseEnter({ event, node });
-    }
+
+    onMouseEnter?.({ event, node });
+    
   };
 
   onNodeMouseLeave: NodeMouseEventHandler = (event, node) => {
     const { onMouseLeave } = this.props;
-    if (onMouseLeave) {
-      onMouseLeave({ event, node });
-    }
+    
+    onMouseLeave?.({ event, node });
   };
 
   onNodeContextMenu: NodeMouseEventHandler = (event, node) => {
@@ -1029,9 +1007,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     const { onFocus } = this.props;
     this.setState({ focused: true });
 
-    if (onFocus) {
-      onFocus(...args);
-    }
+    onFocus?.(...args);
   };
 
   onBlur: React.FocusEventHandler<HTMLDivElement> = (...args) => {
@@ -1039,9 +1015,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     this.setState({ focused: false });
     this.onActiveChange(null);
 
-    if (onBlur) {
-      onBlur(...args);
-    }
+    onBlur?.(...args);
   };
 
   getTreeNodeRequiredProps = () => {
@@ -1113,13 +1087,11 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
 
     this.setExpandedKeys(expandedKeys);
 
-    if (onExpand) {
-      onExpand(expandedKeys, {
-        node: treeNode,
-        expanded: targetExpanded,
-        nativeEvent: e.nativeEvent,
-      });
-    }
+    onExpand?.(expandedKeys, {
+      node: treeNode,
+      expanded: targetExpanded,
+      nativeEvent: e.nativeEvent,
+    });
 
     // Async Load data
     if (targetExpanded && loadData) {
@@ -1172,9 +1144,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       this.scrollTo({ key: newActiveKey });
     }
 
-    if (onActiveChange) {
-      onActiveChange(newActiveKey);
-    }
+    onActiveChange?.(newActiveKey);
   };
 
   getActiveItem = () => {
@@ -1288,9 +1258,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       }
     }
 
-    if (onKeyDown) {
-      onKeyDown(event);
-    }
+    onKeyDown?.(event);
   };
 
   /**
