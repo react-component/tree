@@ -38,6 +38,7 @@ online example: https://tree.react-component.now.sh/
 [![rc-tree](https://nodei.co/npm/rc-tree.png)](https://npmjs.org/package/rc-tree)
 
 ## Usage
+> Note: `import "rc-tree/assets/index.css"`
 
 see examples
 
