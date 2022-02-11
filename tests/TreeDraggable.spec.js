@@ -795,4 +795,40 @@ describe('Tree Draggable', () => {
 
     expect(onDrop).toHaveBeenCalled();
   });
+
+  it('render disabled style ICON', () => {
+    const wrapper = mount(
+      <Tree
+        draggable={{
+          icon: '↕️',
+          nodeDraggable: node => Array.isArray(node.children),
+        }}
+        defaultExpandAll
+        treeData={[
+          {
+            title: '0-0-label',
+            key: '0-0-key',
+            children: [
+              {
+                title: '0-0-0-label',
+                key: '0-0-0-key',
+                children: [
+                  {
+                    title: '0-0-0-0-label',
+                    key: '0-0-0-0-key',
+                  },
+                  {
+                    title: '0-0-0-1-label',
+                    key: '0-0-0-1-key',
+                  },
+                ],
+              },
+            ],
+          },
+        ]}
+      />,
+    );
+
+    expect(wrapper.find('.rc-tree-treenode-draggable-disabled')).toHaveLength(2);
+  });
 });
