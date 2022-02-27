@@ -32,13 +32,20 @@ export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
   };
 }
 
-export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], key: Key) {
-  const shorterStartIndex = shorter.findIndex(({ data }) => data.key === key);
+export function getExpandRange(
+  shorter: FlattenNode[],
+  longer: FlattenNode[],
+  key: Key,
+  keyFieldName: string,
+) {
+  const shorterStartIndex = shorter.findIndex(({ data }) => data[keyFieldName] === key);
   const shorterEndNode = shorter[shorterStartIndex + 1];
-  const longerStartIndex = longer.findIndex(({ data }) => data.key === key);
+  const longerStartIndex = longer.findIndex(({ data }) => data[keyFieldName] === key);
 
   if (shorterEndNode) {
-    const longerEndIndex = longer.findIndex(({ data }) => data.key === shorterEndNode.data.key);
+    const longerEndIndex = longer.findIndex(
+      ({ data }) => data[keyFieldName] === shorterEndNode.data[keyFieldName],
+    );
     return longer.slice(longerStartIndex + 1, longerEndIndex);
   }
   return longer.slice(longerStartIndex + 1);

@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 import VirtualList, { ListRef } from 'rc-virtual-list';
-import { FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
+import { FlattenNode, Key, DataEntity, DataNode, ScrollTo, FieldNames } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
@@ -84,6 +84,8 @@ interface NodeListProps {
   itemHeight: number;
   virtual?: boolean;
 
+  fieldNames: FieldNames;
+
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
@@ -155,6 +157,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     focused,
     tabIndex,
 
+    fieldNames,
+
     onKeyDown,
     onFocus,
     onBlur,
@@ -171,6 +175,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
   const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => ({
     scrollTo: scroll => {
+      console.log('789789', scroll);
       listRef.current.scrollTo(scroll);
     },
     getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
@@ -192,6 +197,10 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     onListChangeEnd();
   }
 
+  const { key: keyFieldName } = {
+    ...{ key: 'key' },
+    ...fieldNames,
+  };
   // Do animation if expanded keys changed
   React.useEffect(() => {
     setPrevExpandedKeys(expandedKeys);
@@ -200,10 +209,10 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
     if (diffExpanded.key !== null) {
       if (diffExpanded.add) {
-        const keyIndex = prevData.findIndex(({ data: { key } }) => key === diffExpanded.key);
+        const keyIndex = prevData.findIndex(item => item.data[keyFieldName] === diffExpanded.key);
 
         const rangeNodes = getMinimumRangeTransitionRange(
-          getExpandRange(prevData, data, diffExpanded.key),
+          getExpandRange(prevData, data, diffExpanded.key, keyFieldName),
           virtual,
           height,
           itemHeight,
@@ -216,10 +225,10 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         setTransitionRange(rangeNodes);
         setMotionType('show');
       } else {
-        const keyIndex = data.findIndex(({ data: { key } }) => key === diffExpanded.key);
+        const keyIndex = data.findIndex(item => item.data[keyFieldName] === diffExpanded.key);
 
         const rangeNodes = getMinimumRangeTransitionRange(
-          getExpandRange(data, prevData, diffExpanded.key),
+          getExpandRange(data, prevData, diffExpanded.key, keyFieldName),
           virtual,
           height,
           itemHeight,

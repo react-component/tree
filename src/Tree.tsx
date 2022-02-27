@@ -986,12 +986,11 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     const { onMouseEnter } = this.props;
 
     onMouseEnter?.({ event, node });
-    
   };
 
   onNodeMouseLeave: NodeMouseEventHandler = (event, node) => {
     const { onMouseLeave } = this.props;
-    
+
     onMouseLeave?.({ event, node });
   };
 
@@ -1337,6 +1336,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       onContextMenu,
       onScroll,
       direction,
+      fieldNames,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = pickAttrs(this.props, {
       aria: true,
@@ -1427,6 +1427,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
             focused={focused}
             tabIndex={tabIndex}
             activeItem={this.getActiveItem()}
+            fieldNames={fieldNames}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             onKeyDown={this.onKeyDown}
