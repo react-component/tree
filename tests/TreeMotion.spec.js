@@ -148,4 +148,38 @@ describe('Tree Motion', () => {
       expect(onMotionEnd).not.toHaveBeenCalled();
     });
   });
+
+  it('motion should work well with fieldNames', () => {
+    const Demo = () => (
+      <Tree
+        defaultExpandAll
+        fieldNames={{
+          title: 'name',
+          key: 'id',
+          children: 'sub',
+        }}
+        motion={{
+          motionName: 'bamboo',
+        }}
+        treeData={[
+          {
+            id: '1',
+            name: 'A',
+            sub: [
+              {
+                id: '2',
+                name: 'B',
+                sub: [],
+              },
+            ],
+          },
+        ]}
+      />
+    );
+
+    const wrapper = mount(<Demo />);
+    expect(wrapper.find('[title="B"]').length).toBeTruthy();
+    wrapper.find('.rc-tree-switcher').first().simulate('click');
+    expect(wrapper.find('[title="B"]').length).toBe(0);
+  });
 });
