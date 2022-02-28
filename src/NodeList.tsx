@@ -200,7 +200,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
     if (diffExpanded.key !== null) {
       if (diffExpanded.add) {
-        const keyIndex = prevData.findIndex(({ data: { key } }) => key === diffExpanded.key);
+        const keyIndex = prevData.findIndex(({ key }) => key === diffExpanded.key);
 
         const rangeNodes = getMinimumRangeTransitionRange(
           getExpandRange(prevData, data, diffExpanded.key),
@@ -216,7 +216,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         setTransitionRange(rangeNodes);
         setMotionType('show');
       } else {
-        const keyIndex = data.findIndex(({ data: { key } }) => key === diffExpanded.key);
+        const keyIndex = data.findIndex(({ key }) => key === diffExpanded.key);
 
         const rangeNodes = getMinimumRangeTransitionRange(
           getExpandRange(data, prevData, diffExpanded.key),
