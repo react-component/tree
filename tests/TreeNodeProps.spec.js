@@ -5,6 +5,8 @@ import { renderToJson } from 'enzyme-to-json';
 import Tree, { TreeNode } from '../src';
 import { spyConsole } from './util';
 
+const OPEN_CLASSNAME = '.rc-tree-switcher_open';
+
 /**
  * For refactor purpose. All the props should be passed by test
  */
@@ -213,5 +215,90 @@ describe('TreeNode Props', () => {
     wrapper.find('.rc-tree-node-content-wrapper').at(1).simulate('click');
     expect(onClick).toHaveBeenCalled();
     expect(onSelect).not.toHaveBeenCalled();
+  });
+
+  describe('titleExpandable and selectable props', () => {
+    it('title expandable when selectable is true', () => {
+      const onClick = jest.fn();
+      const onSelect = jest.fn();
+      const handleExpand = jest.fn();
+
+      const wrapper = mount(
+        <Tree
+          onClick={onClick}
+          onSelect={onSelect}
+          onExpand={handleExpand}
+          defaultExpandedKeys={['0-0']}
+        >
+          <TreeNode title="parent 1" key="0-0" selectable={false} titleExpandable={true}>
+            <TreeNode title="leaf 1" key="0-0-0" selectable={false} titleExpandable={true}>
+              <TreeNode title="leaf-1" key="0-0-0-0" selectable={false} titleExpandable={true} />
+            </TreeNode>
+
+            <TreeNode title="leaf 2" key="0-1-0" selectable={false} titleExpandable={false}>
+              <TreeNode title="leaf-2" key="0-1-0-0" selectable={false} titleExpandable={true} />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      // test trigger expand when click title
+      wrapper.find('[title="leaf 1"]').hostNodes().simulate('click');
+
+      expect(onClick).toHaveBeenCalled();
+      expect(onSelect).not.toHaveBeenCalled();
+      expect(handleExpand).toHaveBeenCalledWith(['0-0', '0-0-0'], {
+        expanded: true,
+        node: expect.anything(),
+        nativeEvent: expect.anything(),
+      });
+
+      onClick.mockReset();
+      onSelect.mockReset();
+      handleExpand.mockReset();
+
+      // test trigger un-expand when click title again
+      wrapper.find('[title="leaf 1"]').hostNodes().simulate('click');
+
+      expect(onClick).toHaveBeenCalled();
+      expect(onSelect).not.toHaveBeenCalled();
+      expect(handleExpand).toHaveBeenCalledWith(['0-0'], {
+        expanded: false,
+        node: expect.anything(),
+        nativeEvent: expect.anything(),
+      });
+    });
+
+    it('title un-expandable when selectable is false', () => {
+      const onClick = jest.fn();
+      const onSelect = jest.fn();
+      const handleExpand = jest.fn();
+
+      const wrapper = mount(
+        <Tree
+          onClick={onClick}
+          onSelect={onSelect}
+          onExpand={handleExpand}
+          defaultExpandedKeys={['0-0']}
+        >
+          <TreeNode title="parent 1" key="0-0" selectable={false} titleExpandable={true}>
+            <TreeNode title="leaf 1" key="0-0-0" selectable={false} titleExpandable={true}>
+              <TreeNode title="leaf-1" key="0-0-0-0" selectable={false} titleExpandable={true} />
+            </TreeNode>
+
+            <TreeNode title="leaf 2" key="0-1-0" selectable={false} titleExpandable={false}>
+              <TreeNode title="leaf-2" key="0-1-0-0" selectable={false} titleExpandable={true} />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      // test won't trigger expand when click title if titleExpandable is false
+      wrapper.find('[title="leaf 2"]').hostNodes().simulate('click');
+
+      expect(onClick).toHaveBeenCalled();
+      expect(onSelect).not.toHaveBeenCalled();
+      expect(handleExpand).not.toHaveBeenCalled();
+    });
   });
 });

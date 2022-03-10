@@ -36,6 +36,7 @@ export type NodeDragEventHandler<
 export interface TreeContextProps {
   prefixCls: string;
   selectable: boolean;
+  titleExpandable: boolean;
   showIcon: boolean;
   icon: IconType;
   switcherIcon: IconType;

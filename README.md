@@ -68,6 +68,7 @@ see examples
 | multiple | whether multiple select | bool | false |
 | prefixCls | prefix class | String | 'rc-tree' |
 | selectable | whether can be selected | bool | true |
+| titleExpandable | whether can be expandable by clicking title | bool | false |
 | selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 | showIcon | whether show icon | bool | true |
 | showLine | whether show line | bool | false |

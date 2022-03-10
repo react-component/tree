@@ -42,6 +42,7 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   isLeaf?: boolean;
   checkable?: boolean;
   selectable?: boolean;
+  titleExpandable?: boolean;
   disabled?: boolean;
   disableCheckbox?: boolean;
   icon?: IconType;
@@ -82,6 +83,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 
     if (this.isSelectable()) {
       this.onSelect(e);
+    } else if (this.isExpandable()) {
+      this.onExpand(e as React.MouseEvent<HTMLDivElement, MouseEvent>);
     } else {
       this.onCheck(e);
     }
@@ -317,6 +320,20 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     }
 
     return treeSelectable;
+  }
+
+  isExpandable() {
+    const { titleExpandable } = this.props;
+    const {
+      context: { titleExpandable: treeTitleExpandable },
+    } = this.props;
+
+    // Ignore when titleExpandable is undefined or null
+    if (typeof titleExpandable === 'boolean') {
+      return titleExpandable;
+    }
+
+    return treeTitleExpandable;
   }
 
   isDraggable = () => {

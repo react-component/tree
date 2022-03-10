@@ -92,6 +92,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   showIcon?: boolean;
   icon?: IconType;
   selectable?: boolean;
+  titleExpandable?: boolean;
   disabled?: boolean;
   multiple?: boolean;
   checkable?: boolean | React.ReactNode;
@@ -234,6 +235,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     showLine: false,
     showIcon: true,
     selectable: true,
+    titleExpandable: false,
     multiple: false,
     checkable: false,
     disabled: false,
@@ -986,12 +988,11 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     const { onMouseEnter } = this.props;
 
     onMouseEnter?.({ event, node });
-    
   };
 
   onNodeMouseLeave: NodeMouseEventHandler = (event, node) => {
     const { onMouseLeave } = this.props;
-    
+
     onMouseLeave?.({ event, node });
   };
 
@@ -1319,6 +1320,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       focusable,
       tabIndex = 0,
       selectable,
+      titleExpandable,
       showIcon,
       icon,
       switcherIcon,
@@ -1362,6 +1364,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
         value={{
           prefixCls,
           selectable,
+          titleExpandable,
           showIcon,
           icon,
           switcherIcon,
