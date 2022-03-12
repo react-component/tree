@@ -1102,7 +1102,8 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
             // [Legacy] Refresh logic
             const newFlattenTreeData = flattenTreeData(
               this.state.treeData,
-              expandedKeys,
+              // Use the latest expandedKeys value
+              this.state.expandedKeys,
               fieldNames,
             );
             this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
