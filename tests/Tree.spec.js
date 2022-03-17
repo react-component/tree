@@ -1113,10 +1113,12 @@ describe('Tree Basic', () => {
         title: i,
       });
     }
-    const tree = render(
+    const tree = mount(
       <Tree treeData={data} rootClassName="root-tree" rootStyle={{ backgroundColor: 'cyan' }} />,
     );
 
-    expect(tree).toMatchSnapshot();
+    expect(tree.render()).toMatchSnapshot();
+    expect(tree.getDOMNode().className).toContain('root-tree');
+    expect(tree.getDOMNode().style.backgroundColor).toBe('cyan');
   });
 });
