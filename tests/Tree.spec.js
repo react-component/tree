@@ -1104,4 +1104,21 @@ describe('Tree Basic', () => {
     wrapper.find('.rc-tree-list-holder').simulate('scroll');
     expect(onScroll).toBeCalled();
   });
+
+  it('should support rootStyle and rootClassName', () => {
+    const data = [];
+    for (let i = 0; i < 9; i += 1) {
+      data.push({
+        key: i,
+        title: i,
+      });
+    }
+    const tree = mount(
+      <Tree treeData={data} rootClassName="root-tree" rootStyle={{ backgroundColor: 'cyan' }} />,
+    );
+
+    expect(tree.render()).toMatchSnapshot();
+    expect(tree.getDOMNode().className).toContain('root-tree');
+    expect(tree.getDOMNode().style.backgroundColor).toBe('cyan');
+  });
 });

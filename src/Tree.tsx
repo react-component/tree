@@ -185,6 +185,9 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
 
   // direction for drag logic
   direction?: Direction;
+
+  rootClassName?: string;
+  rootStyle?: React.CSSProperties;
 }
 
 interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
@@ -986,12 +989,11 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     const { onMouseEnter } = this.props;
 
     onMouseEnter?.({ event, node });
-    
   };
 
   onNodeMouseLeave: NodeMouseEventHandler = (event, node) => {
     const { onMouseLeave } = this.props;
-    
+
     onMouseLeave?.({ event, node });
   };
 
@@ -1337,6 +1339,8 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       onContextMenu,
       onScroll,
       direction,
+      rootClassName,
+      rootStyle,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = pickAttrs(this.props, {
       aria: true,
@@ -1404,11 +1408,12 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
       >
         <div
           role="tree"
-          className={classNames(prefixCls, className, {
+          className={classNames(prefixCls, className, rootClassName, {
             [`${prefixCls}-show-line`]: showLine,
             [`${prefixCls}-focused`]: focused,
             [`${prefixCls}-active-focused`]: activeKey !== null,
           })}
+          style={rootStyle}
         >
           <NodeList
             ref={this.listRef}
