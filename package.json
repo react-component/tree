@@ -53,7 +53,7 @@
     "@types/enzyme": "^3.10.9",
     "@types/jest": "^26.0.4",
     "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.8",
+    "@types/react-dom": "^18.0.0",
     "@types/warning": "^3.0.0",
     "@umijs/fabric": "^2.4.8",
     "dumi": "^1.1.4",
