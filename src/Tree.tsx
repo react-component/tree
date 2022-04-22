@@ -78,6 +78,8 @@ export type DraggableConfig = {
   nodeDraggable?: DraggableFn;
 };
 
+export type ExpandAction = false | 'click' | 'doubleClick';
+
 export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls: string;
   className?: string;
@@ -92,6 +94,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   showIcon?: boolean;
   icon?: IconType;
   selectable?: boolean;
+  expandAction: ExpandAction;
   disabled?: boolean;
   multiple?: boolean;
   checkable?: boolean | React.ReactNode;
@@ -250,6 +253,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     defaultSelectedKeys: [],
     dropIndicatorRender: DropIndicator,
     allowDrop: () => true,
+    expandAction: false,
   };
 
   static TreeNode = TreeNode;
@@ -785,13 +789,36 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
     this.currentMouseOverDroppableNodeKey = null;
   };
 
+  triggerExpandActionExpand: NodeMouseEventHandler = (e, treeNode) => {
+    const { expandedKeys, flattenNodes } = this.state;
+    const { expanded, key } = treeNode;
+
+    const node = flattenNodes.filter(nodeItem => nodeItem.key === key)[0];
+    const eventNode = convertNodePropsToEventData({
+      ...getTreeNodeProps(key, this.getTreeNodeRequiredProps()),
+      data: node.data,
+    });
+
+    this.setExpandedKeys(expanded ? arrDel(expandedKeys, key) : arrAdd(expandedKeys, key));
+    this.onNodeExpand(e as React.MouseEvent<HTMLDivElement>, eventNode);
+  };
+
   onNodeClick: NodeMouseEventHandler = (e, treeNode) => {
-    const { onClick } = this.props;
+    const { onClick, expandAction } = this.props;
+
+    if (expandAction === 'click') {
+      this.triggerExpandActionExpand(e, treeNode);
+    }
+
     onClick?.(e, treeNode);
   };
 
   onNodeDoubleClick: NodeMouseEventHandler = (e, treeNode) => {
-    const { onDoubleClick } = this.props;
+    const { onDoubleClick, expandAction } = this.props;
+
+    if (expandAction === 'doubleClick') {
+      this.triggerExpandActionExpand(e, treeNode);
+    }
 
     onDoubleClick?.(e, treeNode);
   };
