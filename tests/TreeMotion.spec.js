@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import Tree, { TreeNode } from '../src';
 import MotionTreeNode from '../src/MotionTreeNode';
 import { TreeContext } from '../src/contextTypes';
@@ -181,5 +182,63 @@ describe('Tree Motion', () => {
     expect(wrapper.find('[title="B"]').length).toBeTruthy();
     wrapper.find('.rc-tree-switcher').first().simulate('click');
     expect(wrapper.find('[title="B"]').length).toBe(0);
+  });
+
+  it('motion should not revert flatten list', () => {
+    jest.useFakeTimers();
+
+    const wrapper = mount(
+      <Tree
+        motion={{
+          motionName: 'little',
+        }}
+        height={100}
+        itemHeight={10}
+        treeData={[
+          {
+            key: 'parent',
+            title: 'parent',
+            children: [
+              {
+                key: 'child',
+                title: 'child',
+              },
+            ],
+          },
+        ]}
+      />,
+    );
+
+    wrapper.setProps({
+      expandedKeys: ['parent'],
+    });
+
+    for (let i = 0; i < 10; i += 1) {
+      act(() => {
+        jest.runAllTimers();
+      });
+    }
+
+    wrapper.setProps({
+      treeData: [
+        {
+          key: 'parent',
+          title: 'parent2',
+          children: [
+            {
+              key: 'child',
+              title: 'child2',
+            },
+          ],
+        },
+      ],
+    });
+
+    wrapper.find('.rc-tree-treenode-motion').simulate('animationEnd');
+
+    expect(wrapper.find('span.rc-tree-title').at(0).text()).toEqual('parent2');
+    expect(wrapper.find('span.rc-tree-title').at(1).text()).toEqual('child2');
+
+    jest.useRealTimers();
   });
 });

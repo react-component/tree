@@ -183,9 +183,15 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
   const [transitionRange, setTransitionRange] = React.useState([]);
   const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
+  // When motion end but data change, this will makes data back to previous one
+  const dataRef = React.useRef(data);
+  dataRef.current = data;
+
   function onMotionEnd() {
-    setPrevData(data);
-    setTransitionData(data);
+    const latestData = dataRef.current;
+
+    setPrevData(latestData);
+    setTransitionData(latestData);
     setTransitionRange([]);
     setMotionType(null);
 
