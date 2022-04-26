@@ -90,6 +90,7 @@ see examples
 | allowDrop | Whether to allow drop on node | ({ dragNode, dropNode, dropPosition }) => boolean | - |
 | dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode| - |
 | direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | - |
+| expandAction | Tree open logic, optional: false \| `click` \| `doubleClick` | string \| boolean | `click` |
 
 ### TreeNode props
 
