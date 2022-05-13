@@ -4,17 +4,14 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import VirtualList from 'rc-virtual-list';
 import Tree, { TreeNode } from '../src';
-import { InternalTreeNode } from '../src/TreeNode';
 import { objectMatcher, spyConsole, spyError } from './util';
-import { convertNodePropsToEventData } from '../src/utils/treeUtil';
 
 const OPEN_CLASSNAME = 'rc-tree-switcher_open';
 const CHECKED_CLASSNAME = 'rc-tree-checkbox-checked';
 const SELECTED_CLASSNAME = 'rc-tree-node-selected';
 
-const delay = timeout =>
+const delay = (timeout = 0) =>
   new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
@@ -699,224 +696,255 @@ describe('Tree Basic', () => {
     });
   });
 
-  // describe('select', () => {
-  //   it('selects default selected keys', () => {
-  //     const wrapper = mount(
-  //       <Tree selectable defaultSelectedKeys={['0-0']}>
-  //         <TreeNode title="parent 1" key="0-0">
-  //           <TreeNode title="leaf 1" key="0-0-0" />
-  //         </TreeNode>
-  //       </Tree>,
-  //     );
-  //     expect(wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME)).toBe(true);
-  //   });
+  describe('select', () => {
+    it('selects default selected keys', () => {
+      const { container } = render(
+        <Tree selectable defaultSelectedKeys={['0-0']}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>,
+      );
+      expect(container.querySelector('.rc-tree-node-content-wrapper')).toHaveClass(
+        SELECTED_CLASSNAME,
+      );
+    });
 
-  //   it('controlled by selectedKeys', () => {
-  //     const wrapper = mount(
-  //       <Tree selectable selectedKeys={[]}>
-  //         <TreeNode title="parent 1" key="0-0">
-  //           <TreeNode title="leaf 1" key="0-0-0" />
-  //         </TreeNode>
-  //       </Tree>,
-  //     );
-  //     expect(wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME)).toBe(false);
-  //     wrapper.setProps({ selectedKeys: ['0-0'] });
-  //     expect(wrapper.find('.rc-tree-node-content-wrapper').is(SELECTED_CLASSNAME)).toBe(true);
-  //   });
+    it('controlled by selectedKeys', () => {
+      const renderTree = (props?: any) => (
+        <Tree selectable selectedKeys={[]} {...props}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>
+      );
 
-  //   it('fires select event', () => {
-  //     const handleSelect = jest.fn();
-  //     const wrapper = mount(
-  //       <Tree selectable onSelect={handleSelect}>
-  //         <TreeNode title="parent 1" key="0-0">
-  //           <TreeNode title="leaf 1" key="0-0-0" />
-  //         </TreeNode>
-  //       </Tree>,
-  //     );
-  //     const nodeContent = wrapper.find('.rc-tree-node-content-wrapper');
+      const { container, rerender } = render(renderTree());
+      expect(container.querySelector('.rc-tree-node-content-wrapper')).not.toHaveClass(
+        SELECTED_CLASSNAME,
+      );
 
-  //     let node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).first().props());
-  //     nodeContent.simulate('click');
-  //     expect(handleSelect).toHaveBeenCalledWith(
-  //       ['0-0'],
-  //       objectMatcher({
-  //         event: 'select',
-  //         node,
-  //         selected: true,
-  //         selectedNodes: [{ title: 'parent 1', key: '0-0' }],
-  //         nativeEvent: {},
-  //       }),
-  //     );
+      rerender(renderTree({ selectedKeys: ['0-0'] }));
+      expect(container.querySelector('.rc-tree-node-content-wrapper')).toHaveClass(
+        SELECTED_CLASSNAME,
+      );
+    });
 
-  //     node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).first().props());
-  //     nodeContent.simulate('click');
-  //     expect(handleSelect).toHaveBeenCalledWith(
-  //       [],
-  //       objectMatcher({
-  //         event: 'select',
-  //         node,
-  //         selected: false,
-  //         selectedNodes: [],
-  //         nativeEvent: {},
-  //       }),
-  //     );
-  //   });
-  // });
+    it('fires select event', () => {
+      const handleSelect = jest.fn();
+      const { container } = render(
+        <Tree selectable onSelect={handleSelect}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>,
+      );
+      const nodeContent = container.querySelector('.rc-tree-node-content-wrapper');
 
-  // describe('checkable but not selectable', () => {
-  //   it('fires check event when click on TreeNode', () => {
-  //     const handleCheck = jest.fn();
-  //     const wrapper = mount(
-  //       <Tree checkable selectable={false} onCheck={handleCheck}>
-  //         <TreeNode title="parent 1" key="0-0">
-  //           <TreeNode title="leaf 1" key="0-0-0" />
-  //         </TreeNode>
-  //       </Tree>,
-  //     );
-  //     wrapper.find('.rc-tree-switcher').simulate('click');
+      fireEvent.click(nodeContent);
+      expect(handleSelect).toHaveBeenCalledWith(
+        ['0-0'],
+        objectMatcher({
+          event: 'select',
+          node: {
+            title: 'parent 1',
+            key: '0-0',
+          },
+          selected: true,
+          selectedNodes: [{ title: 'parent 1', key: '0-0' }],
+          nativeEvent: {},
+        }),
+      );
 
-  //     const dataNode1 = { title: 'parent 1', key: '0-0' };
-  //     const dataNode2 = { title: 'leaf 1', key: '0-0-0' };
+      fireEvent.click(nodeContent);
+      expect(handleSelect).toHaveBeenCalledWith(
+        [],
+        objectMatcher({
+          event: 'select',
+          node: {
+            title: 'parent 1',
+            key: '0-0',
+          },
+          selected: false,
+          selectedNodes: [],
+          nativeEvent: {},
+        }),
+      );
+    });
+  });
 
-  //     let node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).first().props());
-  //     wrapper.find('.rc-tree-node-content-wrapper').first().simulate('click');
-  //     expect(handleCheck).toHaveBeenCalledWith(
-  //       ['0-0', '0-0-0'],
-  //       objectMatcher({
-  //         checked: true,
-  //         checkedNodes: [dataNode1, dataNode2],
-  //         checkedNodesPositions: [
-  //           { node: dataNode1, pos: '0-0' },
-  //           { node: dataNode2, pos: '0-0-0' },
-  //         ],
-  //         event: 'check',
-  //         halfCheckedKeys: [],
-  //         node,
-  //         nativeEvent: {},
-  //       }),
-  //     );
+  describe('checkable but not selectable', () => {
+    it('fires check event when click on TreeNode', () => {
+      const handleCheck = jest.fn();
+      const { container } = render(
+        <Tree checkable selectable={false} onCheck={handleCheck}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>,
+      );
+      fireEvent.click(container.querySelector('.rc-tree-switcher'));
 
-  //     node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).last().props());
-  //     wrapper.find('.rc-tree-node-content-wrapper').last().simulate('click');
-  //     expect(handleCheck).toHaveBeenCalledWith(
-  //       [],
-  //       objectMatcher({
-  //         checked: false,
-  //         checkedNodes: [],
-  //         checkedNodesPositions: [],
-  //         event: 'check',
-  //         halfCheckedKeys: [],
-  //         node,
-  //         nativeEvent: {},
-  //       }),
-  //     );
-  //   });
-  // });
+      const dataNode1 = { title: 'parent 1', key: '0-0' };
+      const dataNode2 = { title: 'leaf 1', key: '0-0-0' };
 
-  // it('fires rightClick event', () => {
-  //   const handleRightClick = jest.fn();
-  //   const wrapper = mount(
-  //     <Tree onRightClick={handleRightClick}>
-  //       <TreeNode title="parent 1" key="0-0">
-  //         <TreeNode title="leaf 1" key="0-0-0" />
-  //       </TreeNode>
-  //     </Tree>,
-  //   );
-  //   const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
-  //   wrapper.find('.rc-tree-node-content-wrapper').simulate('contextMenu');
-  //   expect(handleRightClick.mock.calls[0][0].node).toEqual(node);
-  // });
+      fireEvent.click(container.querySelector('.rc-tree-node-content-wrapper'));
+      expect(handleCheck).toHaveBeenCalledWith(
+        ['0-0', '0-0-0'],
+        objectMatcher({
+          checked: true,
+          checkedNodes: [dataNode1, dataNode2],
+          checkedNodesPositions: [
+            { node: dataNode1, pos: '0-0' },
+            { node: dataNode2, pos: '0-0-0' },
+          ],
+          event: 'check',
+          halfCheckedKeys: [],
+          node: { title: 'parent 1', key: '0-0' },
+          nativeEvent: {},
+        }),
+      );
 
-  // it('fires rightClick should not change selected item', () => {
-  //   const handleRightClick = jest.fn();
-  //   const wrapper = mount(
-  //     <Tree onRightClick={handleRightClick}>
-  //       <TreeNode title="parent 1" key="0-0">
-  //         <TreeNode title="leaf 1" key="0-0-0" />
-  //       </TreeNode>
-  //     </Tree>,
-  //   );
-  //   wrapper.find('.rc-tree-node-content-wrapper').simulate('contextMenu');
-  //   expect(wrapper.state().selectedKeys.length).toBe(0);
-  // });
+      fireEvent.click(container.querySelectorAll('.rc-tree-node-content-wrapper')[1]);
+      expect(handleCheck).toHaveBeenCalledWith(
+        [],
+        objectMatcher({
+          checked: false,
+          checkedNodes: [],
+          checkedNodesPositions: [],
+          event: 'check',
+          halfCheckedKeys: [],
+          node: {
+            title: 'leaf 1',
+            key: '0-0-0',
+          },
+          nativeEvent: {},
+        }),
+      );
+    });
+  });
 
-  // it('fires mouseEnter events', () => {
-  //   const handleMouseEnter = jest.fn();
-  //   const wrapper = mount(
-  //     <Tree onMouseEnter={handleMouseEnter}>
-  //       <TreeNode title="parent 1" key="0-0">
-  //         <TreeNode title="leaf 1" key="0-0-0" />
-  //       </TreeNode>
-  //     </Tree>,
-  //   );
-  //   const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
-  //   wrapper.find('.rc-tree-node-content-wrapper').simulate('mouseEnter');
-  //   expect(handleMouseEnter.mock.calls[0][0].node).toEqual(node);
-  // });
+  it('fires rightClick event', () => {
+    const handleRightClick = jest.fn();
+    const { container } = render(
+      <Tree onRightClick={handleRightClick}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0" />
+        </TreeNode>
+      </Tree>,
+    );
+    fireEvent.contextMenu(container.querySelector('.rc-tree-node-content-wrapper'));
+    expect(handleRightClick.mock.calls[0][0].node).toEqual(
+      expect.objectContaining({
+        title: 'parent 1',
+        key: '0-0',
+      }),
+    );
+  });
 
-  // it('fires mouseLeave events', () => {
-  //   const handleMouseLeave = jest.fn();
-  //   const wrapper = mount(
-  //     <Tree onMouseLeave={handleMouseLeave}>
-  //       <TreeNode title="parent 1" key="0-0">
-  //         <TreeNode title="leaf 1" key="0-0-0" />
-  //       </TreeNode>
-  //     </Tree>,
-  //   );
-  //   const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
-  //   wrapper.find('.rc-tree-node-content-wrapper').simulate('mouseLeave');
-  //   expect(handleMouseLeave.mock.calls[0][0].node).toEqual(node);
-  // });
+  it('fires rightClick should not change selected item', () => {
+    const onRightClick = jest.fn();
+    const onSelect = jest.fn();
+    const { container } = render(
+      <Tree onRightClick={onRightClick} selectedKeys={['0-0-0']} onSelect={onSelect}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0" />
+        </TreeNode>
+      </Tree>,
+    );
+    fireEvent.contextMenu(container.querySelector('.rc-tree-node-content-wrapper'));
+    expect(onRightClick).toHaveBeenCalled();
+    expect(onSelect).not.toHaveBeenCalled();
+    expect(container.querySelector('.rc-tree-node-selected')).toBeFalsy();
+  });
 
-  // it('filters nodes', () => {
-  //   function filterTreeNode(treeNode) {
-  //     return treeNode.title.indexOf('parent') > -1;
-  //   }
-  //   const wrapper = mount(
-  //     <Tree filterTreeNode={filterTreeNode}>
-  //       <TreeNode title="parent 1" key="0-0">
-  //         <TreeNode title="leaf 1" key="0-0-0">
-  //           <TreeNode title="meck" key="0-0-0-0" />
-  //           <TreeNode title="leaf" key="0-0-0-1" />
-  //         </TreeNode>
-  //         <TreeNode title="leaf 2" key="0-0-1" />
-  //       </TreeNode>
-  //     </Tree>,
-  //   );
+  it('fires mouseEnter events', () => {
+    const handleMouseEnter = jest.fn();
+    const { container } = render(
+      <Tree onMouseEnter={handleMouseEnter}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0" />
+        </TreeNode>
+      </Tree>,
+    );
+    fireEvent.mouseEnter(container.querySelector('.rc-tree-node-content-wrapper'));
+    expect(handleMouseEnter.mock.calls[0][0].node).toEqual(
+      expect.objectContaining({
+        key: '0-0',
+      }),
+    );
+  });
 
-  //   expect(wrapper.find(InternalTreeNode).find('div').is('.filter-node')).toBe(true);
-  // });
+  it('fires mouseLeave events', () => {
+    const handleMouseLeave = jest.fn();
+    const { container } = render(
+      <Tree onMouseLeave={handleMouseLeave}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0" />
+        </TreeNode>
+      </Tree>,
+    );
 
-  // it('loads nodes asynchronously', () => {
-  //   const then = jest.fn(() => Promise.resolve());
-  //   const loadData = jest.fn(() => ({ then }));
-  //   const wrapper = mount(
-  //     <Tree loadData={loadData}>
-  //       <TreeNode title="parent 1" key="0-0" />
-  //     </Tree>,
-  //   );
-  //   const node = convertNodePropsToEventData(wrapper.find(InternalTreeNode).props());
-  //   wrapper.find('.rc-tree-switcher').simulate('click');
-  //   expect(loadData).toHaveBeenCalledWith(node);
-  //   expect(then).toHaveBeenCalled();
-  // });
+    fireEvent.mouseLeave(container.querySelector('.rc-tree-node-content-wrapper'));
+    expect(handleMouseLeave.mock.calls[0][0].node).toEqual(
+      expect.objectContaining({
+        key: '0-0',
+      }),
+    );
+  });
 
-  // it('renders without errors', () => {
-  //   expect(() => {
-  //     mount(
-  //       <Tree>
-  //         {[0, 1].map(i => (
-  //           <TreeNode title={i} key={i}>
-  //             {[2, 3].map(j => (
-  //               <TreeNode title={j} key={`${i}_${j}`} />
-  //             ))}
-  //             <TreeNode title="4" key={`${i}_4`} />
-  //           </TreeNode>
-  //         ))}
-  //       </Tree>,
-  //     );
-  //   }).not.toThrow();
-  // });
+  it('filters nodes', () => {
+    function filterTreeNode(treeNode) {
+      return treeNode.title.indexOf('parent') > -1;
+    }
+    const { container } = render(
+      <Tree filterTreeNode={filterTreeNode}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf 1" key="0-0-0">
+            <TreeNode title="meck" key="0-0-0-0" />
+            <TreeNode title="leaf" key="0-0-0-1" />
+          </TreeNode>
+          <TreeNode title="leaf 2" key="0-0-1" />
+        </TreeNode>
+      </Tree>,
+    );
+
+    expect(container.querySelector('.filter-node')).toBeTruthy();
+  });
+
+  it('loads nodes asynchronously', () => {
+    const then = jest.fn(() => Promise.resolve());
+    const loadData: any = jest.fn(() => ({ then }));
+    const { container } = render(
+      <Tree loadData={loadData}>
+        <TreeNode title="parent 1" key="0-0" />
+      </Tree>,
+    );
+    fireEvent.click(container.querySelector('.rc-tree-switcher'));
+    expect(loadData).toHaveBeenCalledWith(
+      expect.objectContaining({
+        key: '0-0',
+      }),
+    );
+    expect(then).toHaveBeenCalled();
+  });
+
+  it('renders without errors', () => {
+    expect(() => {
+      render(
+        <Tree>
+          {[0, 1].map(i => (
+            <TreeNode title={i} key={i}>
+              {[2, 3].map(j => (
+                <TreeNode title={j} key={`${i}_${j}`} />
+              ))}
+              <TreeNode title="4" key={`${i}_4`} />
+            </TreeNode>
+          ))}
+        </Tree>,
+      );
+    }).not.toThrow();
+  });
 
   it('renders opaque children correctly', () => {
     const { asFragment } = render(
@@ -969,180 +997,183 @@ describe('Tree Basic', () => {
     });
   });
 
-  // it('Number key', () => {
-  //   const onCheck = jest.fn();
+  it('Number key', () => {
+    const onCheck = jest.fn();
 
-  //   const Demo = () => {
-  //     const [checkedKeys, setCheckedKeys] = React.useState([]);
+    const Demo = () => {
+      const [checkedKeys, setCheckedKeys] = React.useState<any>([]);
 
-  //     return (
-  //       <Tree
-  //         checkable
-  //         defaultExpandAll
-  //         checkedKeys={checkedKeys}
-  //         onCheck={keys => {
-  //           setCheckedKeys(keys);
-  //           onCheck(keys);
-  //         }}
-  //         treeData={[{ key: 11, title: 11, children: [{ key: 22, title: 22 }] }]}
-  //       />
-  //     );
-  //   };
+      return (
+        <Tree
+          checkable
+          defaultExpandAll
+          checkedKeys={checkedKeys}
+          onCheck={keys => {
+            setCheckedKeys(keys);
+            onCheck(keys);
+          }}
+          treeData={[{ key: 11, title: 11, children: [{ key: 22, title: 22 }] }]}
+        />
+      );
+    };
 
-  //   const wrapper = mount(<Demo />);
-  //   wrapper.update();
+    const { container } = render(<Demo />);
 
-  //   wrapper.find('.rc-tree-checkbox').first().simulate('click');
-  //   expect(onCheck).toHaveBeenCalledWith([11, 22]);
+    fireEvent.click(container.querySelector('.rc-tree-checkbox'));
+    expect(onCheck).toHaveBeenCalledWith([11, 22]);
 
-  //   onCheck.mockReset();
-  //   wrapper.find('.rc-tree-checkbox').last().simulate('click');
-  //   expect(onCheck).toHaveBeenCalledWith([]);
-  // });
+    onCheck.mockReset();
+    fireEvent.click(container.querySelectorAll('.rc-tree-checkbox')[1]);
+    expect(onCheck).toHaveBeenCalledWith([]);
+  });
 
-  // describe('scrollTo should work', () => {
-  //   let domSpy;
-  //   let called = false;
+  describe('scrollTo should work', () => {
+    let domSpy: ReturnType<typeof spyElementPrototypes>;
+    let called = false;
 
-  //   beforeAll(() => {
-  //     domSpy = spyElementPrototypes(HTMLDivElement, {
-  //       scrollTop: {
-  //         get: () => 233,
-  //         set: () => {
-  //           called = true;
-  //         },
-  //       },
-  //       clientHeight: {
-  //         get: () => 100,
-  //       },
-  //     });
-  //   });
+    beforeAll(() => {
+      domSpy = spyElementPrototypes(HTMLDivElement, {
+        scrollTop: {
+          get: () => 233,
+          set: () => {
+            called = true;
+          },
+        },
+        clientHeight: {
+          get: () => 100,
+        },
+      });
+    });
 
-  //   afterAll(() => {
-  //     domSpy.mockRestore();
-  //   });
+    afterAll(() => {
+      domSpy.mockRestore();
+    });
 
-  //   it('work', () => {
-  //     jest.useFakeTimers();
-  //     const wrapper = mount(<Tree />);
+    it('work', () => {
+      jest.useFakeTimers();
+      const treeRef = React.createRef<any>();
+      render(<Tree ref={treeRef} />);
 
-  //     wrapper.instance().scrollTo({ key: 'light', align: 'top' });
-  //     jest.runAllTimers();
+      treeRef.current.scrollTo({ key: 'light', align: 'top' });
+      jest.runAllTimers();
 
-  //     expect(called).toBeTruthy();
-  //     jest.useRealTimers();
-  //   });
-  // });
+      expect(called).toBeTruthy();
+      jest.useRealTimers();
+    });
+  });
 
-  // it('not crash if expandedKeys is null', () => {
-  //   mount(
-  //     <Tree expandedKeys={null}>
-  //       <TreeNode key="test" title="alive" />
-  //     </Tree>,
-  //   );
-  // });
+  it('not crash if expandedKeys is null', () => {
+    render(
+      <Tree expandedKeys={null}>
+        <TreeNode key="test" title="alive" />
+      </Tree>,
+    );
+  });
 
-  // it('not crash if expandedKeys change to undefined', () => {
-  //   const wrapper = mount(
-  //     <Tree expandedKeys={['light']}>
-  //       <TreeNode key="light" title="light">
-  //         <TreeNode key="bamboo" title="bamboo" />
-  //       </TreeNode>
-  //     </Tree>,
-  //   );
-  //   const { data } = wrapper.find(VirtualList).props();
-  //   expect(data).toHaveLength(2);
+  it('not crash if expandedKeys change to undefined', () => {
+    const renderTree = (props?: any) => (
+      <Tree expandedKeys={['light']} {...props}>
+        <TreeNode key="light" title="light">
+          <TreeNode key="bamboo" title="bamboo" />
+        </TreeNode>
+      </Tree>
+    );
+    const { container, rerender } = render(renderTree());
+    expect(
+      container.querySelector('.rc-tree-list-holder').querySelectorAll('.rc-tree-treenode'),
+    ).toHaveLength(2);
 
-  //   wrapper.setProps({ expandedKeys: undefined });
+    rerender(renderTree({ expandedKeys: undefined }));
 
-  //   // Click should not crash
-  //   wrapper.find('.rc-tree-switcher').first().simulate('click');
-  // });
+    // Click should not crash
+    fireEvent.click(container.querySelector('.rc-tree-switcher'));
+  });
 
-  // it('controlled should block expanded', () => {
-  //   const wrapper = mount(
-  //     <Tree
-  //       expandedKeys={['1']}
-  //       treeData={[{ key: '1', title: 1, children: [{ key: '2', title: 2 }] }]}
-  //     />,
-  //   );
+  it('controlled should block expanded', () => {
+    const { container } = render(
+      <Tree
+        expandedKeys={['1']}
+        treeData={[{ key: '1', title: 1, children: [{ key: '2', title: 2 }] }]}
+      />,
+    );
 
-  //   wrapper.find('.rc-tree-switcher').first().simulate('click');
-  //   expect(wrapper.find('List').props().data).toHaveLength(2);
-  // });
+    fireEvent.click(container.querySelector('.rc-tree-switcher'));
+    expect(
+      container.querySelector('.rc-tree-list-holder').querySelectorAll('.rc-tree-treenode'),
+    ).toHaveLength(2);
+  });
 
-  // it('support virtual', () => {
-  //   const data = [];
-  //   for (let i = 0; i < 99; i += 1) {
-  //     data.push({
-  //       key: i,
-  //       title: i,
-  //     });
-  //   }
+  it('support virtual', () => {
+    const data = [];
+    for (let i = 0; i < 99; i += 1) {
+      data.push({
+        key: i,
+        title: i,
+      });
+    }
 
-  //   const wrapper = mount(<Tree itemHeight={10} height={100} treeData={data} virtual={false} />);
+    const { container } = render(
+      <Tree itemHeight={10} height={100} treeData={data} virtual={false} />,
+    );
 
-  //   expect(wrapper.find('List').props().virtual).toBe(false);
-  // });
+    expect(
+      container.querySelector('.rc-tree-list-holder').querySelectorAll('.rc-tree-treenode'),
+    ).toHaveLength(99);
+  });
 
-  // // https://github.com/ant-design/ant-design/issues/28349
-  // it('should not trigger expend when loading data', () => {
-  //   const then = jest.fn(() => Promise.resolve());
-  //   const loadData = jest.fn(() => ({ then }));
-  //   const onExpand = jest.fn();
-  //   const wrapper = mount(
-  //     <Tree loadData={loadData} onExpand={onExpand}>
-  //       <TreeNode title="parent 1" key="0-0" />
-  //     </Tree>,
-  //   );
+  // https://github.com/ant-design/ant-design/issues/28349
+  it('should not trigger expend when loading data', () => {
+    const then = jest.fn(() => Promise.resolve());
+    const loadData: any = jest.fn(() => ({ then }));
+    const onExpand = jest.fn();
+    const { container } = render(
+      <Tree loadData={loadData} onExpand={onExpand}>
+        <TreeNode title="parent 1" key="0-0" />
+      </Tree>,
+    );
 
-  //   // trigger click to expand node
-  //   wrapper.find('.rc-tree-switcher').simulate('click');
-  //   expect(wrapper.find('.rc-tree-switcher').first().is(OPEN_CLASSNAME)).toBe(true);
-  //   expect(onExpand).toBeCalled();
+    // trigger click to expand node
+    fireEvent.click(container.querySelector('.rc-tree-switcher'));
+    expect(container.querySelector('.rc-tree-switcher')).toHaveClass(OPEN_CLASSNAME);
+    expect(onExpand).toBeCalled();
 
-  //   // click again
-  //   onExpand.mockReset();
-  //   wrapper.find('.rc-tree-switcher').simulate('click');
-  //   expect(wrapper.find('.rc-tree-switcher').first().is(OPEN_CLASSNAME)).toBe(true);
-  //   expect(onExpand).not.toHaveBeenCalled();
-  // });
+    // click again
+    onExpand.mockReset();
+    fireEvent.click(container.querySelector('.rc-tree-switcher'));
+    expect(container.querySelector('.rc-tree-switcher')).toHaveClass(OPEN_CLASSNAME);
+    expect(onExpand).not.toHaveBeenCalled();
+  });
 
-  // // https://github.com/ant-design/ant-design/issues/31141
-  // it('should restore tree node loading and expand status when loadData fail', async () => {
-  //   const loadData = () => new Promise((_, reject) => setTimeout(reject));
-  //   const wrapper = mount(
-  //     <Tree loadData={loadData}>
-  //       <TreeNode title="parent 1" key="0-0" />
-  //     </Tree>,
-  //   );
-  //   // trigger click to expand node
-  //   wrapper.find('.rc-tree-switcher').simulate('click');
-  //   expect(
-  //     wrapper.find('.rc-tree-switcher').getDOMNode().className.includes('rc-tree-switcher_open'),
-  //   ).toBe(true);
-  //   await delay();
-  //   expect(
-  //     wrapper.find('.rc-tree-switcher').getDOMNode().className.includes('rc-tree-switcher_close'),
-  //   ).toBe(true);
-  // });
+  // https://github.com/ant-design/ant-design/issues/31141
+  it('should restore tree node loading and expand status when loadData fail', async () => {
+    const loadData = () => new Promise((_, reject) => setTimeout(reject));
+    const { container } = render(
+      <Tree loadData={loadData}>
+        <TreeNode title="parent 1" key="0-0" />
+      </Tree>,
+    );
+    fireEvent.click(container.querySelector('.rc-tree-switcher'));
+    expect(container.querySelector('.rc-tree-switcher')).toHaveClass('rc-tree-switcher_open');
+    await delay(100);
+    expect(container.querySelector('.rc-tree-switcher')).toHaveClass('rc-tree-switcher_close');
+  });
 
-  // // https://github.com/ant-design/ant-design/issues/31141
-  // it('should support onScroll', async () => {
-  //   const onScroll = jest.fn();
-  //   const data = [];
-  //   for (let i = 0; i < 99; i += 1) {
-  //     data.push({
-  //       key: i,
-  //       title: i,
-  //     });
-  //   }
-  //   const wrapper = mount(
-  //     <Tree itemHeight={10} height={100} treeData={data} onScroll={onScroll} />,
-  //   );
-  //   wrapper.find('.rc-tree-list-holder').simulate('scroll');
-  //   expect(onScroll).toBeCalled();
-  // });
+  // https://github.com/ant-design/ant-design/issues/31141
+  it('should support onScroll', async () => {
+    const onScroll = jest.fn();
+    const data = [];
+    for (let i = 0; i < 99; i += 1) {
+      data.push({
+        key: i,
+        title: i,
+      });
+    }
+    const { container } = render(
+      <Tree itemHeight={10} height={100} treeData={data} onScroll={onScroll} />,
+    );
+    fireEvent.scroll(container.querySelector('.rc-tree-list-holder'));
+    expect(onScroll).toBeCalled();
+  });
 
   it('should support rootStyle and rootClassName', () => {
     const data = [];

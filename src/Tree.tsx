@@ -154,7 +154,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
       node: EventDataNode;
     },
   ) => void;
-  loadData?: (treeNode: EventDataNode) => Promise<void>;
+  loadData?: (treeNode: EventDataNode) => Promise<any>;
   loadedKeys?: Key[];
   onMouseEnter?: (info: NodeMouseEventParams) => void;
   onMouseLeave?: (info: NodeMouseEventParams) => void;
