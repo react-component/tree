@@ -3,7 +3,7 @@ react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
 import { render, fireEvent, act, createEvent } from '@testing-library/react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import Tree, { TreeNode } from '../src';
+import Tree, { TreeNode, FieldDataNode } from '../src';
 import { InternalTreeNode } from '../src/TreeNode';
 import { spyConsole } from './util';
 import { convertNodePropsToEventData } from '../src/utils/treeUtil';
@@ -854,206 +854,267 @@ describe('Tree Draggable', () => {
         expect(onDrop).not.toHaveBeenCalled();
       });
 
-      //     it('not allowDrop on node which has children', () => {
-      //       const onDrop = jest.fn();
-      //       const allowDrop = ({ dropNode, dropPosition }) => {
-      //         if (!dropNode.children) {
-      //           if (dropPosition === 0) return false;
-      //         }
-      //         return true;
-      //       };
-      //       const {container} = render(
-      //         <Tree draggable defaultExpandAll allowDrop={allowDrop} onDrop={onDrop} direction={dir}>
-      //           <TreeNode key="0-0" className="dragTarget">
-      //             <TreeNode key="0-0-0" className="dragTargetChild" />
-      //           </TreeNode>
-      //           <TreeNode key="0-1">
-      //             <TreeNode key="0-1-0">
-      //               <TreeNode key="0-1-0-0" className="dropTarget" />
-      //             </TreeNode>
-      //           </TreeNode>
-      //           <TreeNode key="0-2" />
-      //         </Tree>,
-      //       );
-      //       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
-      //         clientX: base * 500,
-      //         clientY: 500,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
-      //         clientX: base * 400,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-      //         clientX: base * 400,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-      //       expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1-0-0');
-      //       // (in ltr) drag from right to left, should be insert after, so drop position is 1
-      //       expect(onDrop.mock.calls[0][0].dropPosition).toEqual(1);
-      //       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
-      //         clientX: base * 500,
-      //         clientY: 500,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
-      //         clientX: base * 500,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-      //         clientX: base * 500,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-      //       expect(onDrop.mock.calls[1][0].node.key).toEqual('0-1-0-0');
-      //       expect(onDrop.mock.calls[1][0].dropPosition).toEqual(1);
-      //       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
-      //         clientX: base * 500,
-      //         clientY: 500,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
-      //         clientX: base * 550,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-      //         clientX: base * 550,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-      //       expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
-      //       expect(onDrop.mock.calls[2][0].dropPosition).toEqual(1);
-      //       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
-      //         clientX: base * 500,
-      //         clientY: 500,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
-      //         clientX: base * 600,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-      //         clientX: base * 600,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-      //       expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
-      //       expect(onDrop.mock.calls[2][0].dropPosition).toEqual(1);
-      //     });
-      //     it('allowDrop should pass dragNode and dropNode', () => {
-      //       const onDrop = jest.fn();
-      //       const allowDrop = jest.fn();
-      //       const {container} = render(
-      //         <Tree draggable defaultExpandAll allowDrop={allowDrop} onDrop={onDrop} direction={dir}>
-      //           <TreeNode key="0-0" className="dragTarget">
-      //             <TreeNode key="0-0-0" className="dragTargetChild" />
-      //           </TreeNode>
-      //           <TreeNode key="0-1">
-      //             <TreeNode key="0-1-0">
-      //               <TreeNode key="0-1-0-0" className="dropTarget" />
-      //             </TreeNode>
-      //           </TreeNode>
-      //           <TreeNode key="0-2" />
-      //         </Tree>,
-      //       );
-      //       wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart', {
-      //         clientX: base * 500,
-      //         clientY: 500,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter', {
-      //         clientX: base * 400,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver', {
-      //         clientX: base * 400,
-      //         clientY: 600,
-      //       });
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-      //       expect(allowDrop.mock.calls[0][0].dragNode.key).toEqual('0-0');
-      //       expect(allowDrop.mock.calls[0][0].dropNode.key).toEqual('0-1-0-0');
-      //     });
+      it('not allowDrop on node which has children', () => {
+        const onDrop = jest.fn();
+        const allowDrop = ({ dropNode, dropPosition }) => {
+          if (!dropNode.children) {
+            if (dropPosition === 0) return false;
+          }
+          return true;
+        };
+        const { container } = render(
+          <Tree draggable defaultExpandAll allowDrop={allowDrop} onDrop={onDrop} direction={dir}>
+            <TreeNode key="0-0" className="dragTarget">
+              <TreeNode key="0-0-0" className="dragTargetChild" />
+            </TreeNode>
+            <TreeNode key="0-1">
+              <TreeNode key="0-1-0">
+                <TreeNode key="0-1-0-0" className="dropTarget" />
+              </TreeNode>
+            </TreeNode>
+            <TreeNode key="0-2" />
+          </Tree>,
+        );
+        fireDragEvent(
+          container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'),
+          'dragStart',
+          {
+            clientX: base * 500,
+            clientY: 500,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragEnter',
+          {
+            clientX: base * 400,
+            clientY: 600,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragOver',
+          {
+            clientX: base * 400,
+            clientY: 600,
+          },
+        );
+        fireEvent.drop(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+        expect(onDrop.mock.calls[0][0].node.key).toEqual('0-1-0-0');
+        // (in ltr) drag from right to left, should be insert after, so drop position is 1
+        expect(onDrop.mock.calls[0][0].dropPosition).toEqual(1);
+        fireDragEvent(
+          container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'),
+          'dragStart',
+          {
+            clientX: base * 500,
+            clientY: 500,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragEnter',
+          {
+            clientX: base * 500,
+            clientY: 600,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragOver',
+          {
+            clientX: base * 500,
+            clientY: 600,
+          },
+        );
+        fireEvent.drop(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+        expect(onDrop.mock.calls[1][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[1][0].dropPosition).toEqual(1);
+        fireDragEvent(
+          container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'),
+          'dragStart',
+          {
+            clientX: base * 500,
+            clientY: 500,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragEnter',
+          {
+            clientX: base * 550,
+            clientY: 600,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragOver',
+          {
+            clientX: base * 550,
+            clientY: 600,
+          },
+        );
+        fireEvent.drop(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+        expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[2][0].dropPosition).toEqual(1);
+        fireDragEvent(
+          container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'),
+          'dragStart',
+          {
+            clientX: base * 500,
+            clientY: 500,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragEnter',
+          {
+            clientX: base * 600,
+            clientY: 600,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragOver',
+          {
+            clientX: base * 600,
+            clientY: 600,
+          },
+        );
+        fireEvent.drop(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+        expect(onDrop.mock.calls[2][0].node.key).toEqual('0-1-0-0');
+        expect(onDrop.mock.calls[2][0].dropPosition).toEqual(1);
+      });
 
-      //     it('not allow dragging elements outside into tree', () => {
-      //       const onDrop = jest.fn();
-      //       const {container} = render(
-      //         <div>
-      //           <Tree draggable defaultExpandAll onDrop={onDrop} direction={dir}>
-      //             <TreeNode key="0-0">
-      //               <TreeNode key="0-0-0" className="dropTarget" />
-      //             </TreeNode>
-      //           </Tree>
-      //           <div className="dragTarget">Element outside</div>
-      //         </div>,
-      //       );
-      //       wrapper.find('.dragTarget').simulate('dragStart');
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragEnter');
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('dragOver');
-      //       wrapper.find('.dropTarget > .rc-tree-node-content-wrapper').simulate('drop');
-      //       expect(onDrop).not.toHaveBeenCalled();
-      //     });
+      it('allowDrop should pass dragNode and dropNode', () => {
+        const onDrop = jest.fn();
+        const allowDrop = jest.fn();
+        const { container } = render(
+          <Tree draggable defaultExpandAll allowDrop={allowDrop} onDrop={onDrop} direction={dir}>
+            <TreeNode key="0-0" className="dragTarget">
+              <TreeNode key="0-0-0" className="dragTargetChild" />
+            </TreeNode>
+            <TreeNode key="0-1">
+              <TreeNode key="0-1-0">
+                <TreeNode key="0-1-0-0" className="dropTarget" />
+              </TreeNode>
+            </TreeNode>
+            <TreeNode key="0-2" />
+          </Tree>,
+        );
+        fireDragEvent(
+          container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'),
+          'dragStart',
+          {
+            clientX: base * 500,
+            clientY: 500,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragEnter',
+          {
+            clientX: base * 400,
+            clientY: 600,
+          },
+        );
+        fireDragEvent(
+          container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+          'dragOver',
+          {
+            clientX: base * 400,
+            clientY: 600,
+          },
+        );
+        fireEvent.drop(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+        expect(allowDrop.mock.calls[0][0].dragNode.key).toEqual('0-0');
+        expect(allowDrop.mock.calls[0][0].dropNode.key).toEqual('0-1-0-0');
+      });
+
+      it('not allow dragging elements outside into tree', () => {
+        const onDrop = jest.fn();
+        const { container } = render(
+          <div>
+            <Tree draggable defaultExpandAll onDrop={onDrop} direction={dir}>
+              <TreeNode key="0-0">
+                <TreeNode key="0-0-0" className="dropTarget" />
+              </TreeNode>
+            </Tree>
+            <div className="dragTarget">Element outside</div>
+          </div>,
+        );
+        fireEvent.dragStart(container.querySelector('.dragTarget'));
+        fireEvent.dragEnter(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+        fireEvent.dragOver(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+        fireEvent.drop(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+        expect(onDrop).not.toHaveBeenCalled();
+      });
     });
   });
 
-  // it('render handler', () => {
-  //   const {container} = render(
-  //     <Tree
-  //       draggable={{
-  //         icon: <span className="handler" />,
-  //       }}
-  //       defaultExpandAll
-  //       treeData={[
-  //         {
-  //           title: 'Parent',
-  //           key: 'parent',
-  //           children: [
-  //             {
-  //               title: 'Child',
-  //               key: 'child',
-  //             },
-  //           ],
-  //         },
-  //       ]}
-  //     />,
-  //   );
+  it('render handler', () => {
+    const { container } = render(
+      <Tree
+        draggable={{
+          icon: <span className="handler" />,
+        }}
+        defaultExpandAll
+        treeData={[
+          {
+            title: 'Parent',
+            key: 'parent',
+            children: [
+              {
+                title: 'Child',
+                key: 'child',
+              },
+            ],
+          },
+        ]}
+      />,
+    );
 
-  //   expect(wrapper.find('.handler')).toHaveLength(2);
-  // });
+    expect(container.querySelectorAll('.handler')).toHaveLength(2);
+  });
 
-  // it('not break with fieldNames', () => {
-  //   const onDrop = jest.fn();
+  it('not break with fieldNames', () => {
+    const onDrop = jest.fn();
 
-  //   const {container} = render(
-  //     <Tree
-  //       draggable
-  //       defaultExpandAll
-  //       onDrop={onDrop}
-  //       treeData={[
-  //         {
-  //           name: 'parent',
-  //           childList: [
-  //             {
-  //               className: 'dragTarget',
-  //               name: 'child 1',
-  //             },
-  //             {
-  //               className: 'dropTarget',
-  //               name: 'child 2',
-  //             },
-  //           ],
-  //         },
-  //       ]}
-  //       fieldNames={{
-  //         children: 'childList',
-  //         title: 'name',
-  //         key: 'name',
-  //       }}
-  //     />,
-  //   );
+    const { container } = render(
+      <Tree<FieldDataNode<{ name: string }, 'childList'>>
+        draggable
+        defaultExpandAll
+        onDrop={onDrop}
+        treeData={[
+          {
+            name: 'parent',
+            childList: [
+              {
+                className: 'dragTarget',
+                name: 'child 1',
+              },
+              {
+                className: 'dropTarget',
+                name: 'child 2',
+              },
+            ],
+          },
+        ]}
+        fieldNames={{
+          children: 'childList',
+          title: 'name',
+          key: 'name',
+        }}
+      />,
+    );
 
-  //   wrapper.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
-  //   wrapper.find('.dropTarget').at(0).simulate('dragEnter', {
-  //     clientY: -9999999,
-  //   });
-  //   wrapper.find('.dropTarget').at(0).simulate('dragOver');
-  //   wrapper.find('.dropTarget').at(0).simulate('drop');
+    fireEvent.dragStart(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'));
+    fireDragEvent(container.querySelector('.dropTarget'), 'dragEnter', {
+      clientY: -9999999,
+    });
+    fireEvent.dragOver(container.querySelector('.dropTarget'));
+    fireEvent.drop(container.querySelector('.dropTarget'));
 
-  //   expect(onDrop).toHaveBeenCalled();
-  // });
+    expect(onDrop).toHaveBeenCalled();
+  });
 });

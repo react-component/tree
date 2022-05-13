@@ -25,7 +25,9 @@ export interface DataNode extends BasicDataNode {
 }
 
 /** Provide a wrap type define for developer to wrap with customize fieldNames data type */
-export type FieldDataNode<T> = BasicDataNode & T & { children?: FieldDataNode<T>[] };
+export type FieldDataNode<T, ChildFieldName extends string = 'children'> = BasicDataNode &
+  T &
+  Partial<Record<ChildFieldName, FieldDataNode<T, ChildFieldName>[]>>;
 
 export interface EventDataNode extends DataNode {
   expanded: boolean;
