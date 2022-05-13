@@ -24,6 +24,9 @@ export interface DataNode extends BasicDataNode {
   title?: React.ReactNode;
 }
 
+/** Provide a wrap type define for developer to wrap with customize fieldNames data type */
+export type FieldDataNode<T> = BasicDataNode & T & { children?: FieldDataNode<T>[] };
+
 export interface EventDataNode extends DataNode {
   expanded: boolean;
   selected: boolean;
