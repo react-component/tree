@@ -1,9 +1,8 @@
 /* eslint-disable no-undef, react/no-multi-comp */
 import React from 'react';
 import KeyCode from 'rc-util/lib/KeyCode';
-import { mount } from 'enzyme';
-import Tree from '../src';
-import { InternalTreeNode } from '../src/TreeNode';
+import { render, fireEvent } from '@testing-library/react';
+import Tree, { FieldDataNode } from '../src';
 import { spyConsole } from './util';
 
 describe('Tree Accessibility', () => {
@@ -27,7 +26,7 @@ describe('Tree Accessibility', () => {
         onActiveChange.mockReset();
       }
 
-      const wrapper = mount(
+      const { container } = render(
         <Tree
           {...props}
           onExpand={onExpand}
@@ -40,116 +39,88 @@ describe('Tree Accessibility', () => {
         />,
       );
 
+      function keyDown(keyCode: number) {
+        fireEvent.keyDown(container.querySelector('input'), {
+          keyCode,
+        });
+      }
+
+      function getTreeNode(index: number) {
+        const treeNodes = container
+          .querySelector('.rc-tree-list-holder')
+          .querySelectorAll('.rc-tree-treenode');
+
+        return treeNodes[(index + treeNodes.length) % treeNodes.length];
+      }
+
       // Focus
-      wrapper.find('input').simulate('focus');
+      fireEvent.focus(container.querySelector('input'));
       expect(onFocus).toHaveBeenCalled();
 
       // Arrow up: last one
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.UP });
-      expect(
-        wrapper
-          .find(InternalTreeNode)
-          .find('.rc-tree-treenode')
-          .last()
-          .hasClass('rc-tree-treenode-active'),
-      ).toBeTruthy();
+      keyDown(KeyCode.UP);
+      expect(getTreeNode(-1)).toHaveClass('rc-tree-treenode-active');
       checkKeyDownTrigger();
       checkActiveTrigger('child 2');
 
       // Arrow down: first one
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.DOWN });
-      expect(
-        wrapper
-          .find(InternalTreeNode)
-          .find('.rc-tree-treenode')
-          .first()
-          .hasClass('rc-tree-treenode-active'),
-      ).toBeTruthy();
+      keyDown(KeyCode.DOWN);
+      expect(getTreeNode(0)).toHaveClass('rc-tree-treenode-active');
       checkKeyDownTrigger();
       checkActiveTrigger('parent');
 
       // Arrow up: last one again
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.UP });
-      expect(
-        wrapper
-          .find(InternalTreeNode)
-          .find('.rc-tree-treenode')
-          .last()
-          .hasClass('rc-tree-treenode-active'),
-      ).toBeTruthy();
+      keyDown(KeyCode.UP);
+      expect(getTreeNode(-1)).toHaveClass('rc-tree-treenode-active');
       checkKeyDownTrigger();
       checkActiveTrigger('child 2');
 
       // Arrow left: parent
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.LEFT });
-      expect(
-        wrapper
-          .find(InternalTreeNode)
-          .find('.rc-tree-treenode')
-          .first()
-          .hasClass('rc-tree-treenode-active'),
-      ).toBeTruthy();
+      keyDown(KeyCode.LEFT);
+      expect(getTreeNode(0)).toHaveClass('rc-tree-treenode-active');
       checkKeyDownTrigger();
       checkActiveTrigger('parent');
 
       // Arrow left: collapse
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.LEFT });
-      expect(
-        wrapper
-          .find(InternalTreeNode)
-          .find('.rc-tree-treenode')
-          .first()
-          .hasClass('rc-tree-treenode-active'),
-      ).toBeTruthy();
+      keyDown(KeyCode.LEFT);
+      expect(getTreeNode(0)).toHaveClass('rc-tree-treenode-active');
       expect(onExpand).toHaveBeenCalledWith(['child 1', 'child 2'], expect.anything());
       checkKeyDownTrigger();
 
       // Arrow right: expand
       onExpand.mockReset();
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.RIGHT });
-      expect(
-        wrapper
-          .find(InternalTreeNode)
-          .find('.rc-tree-treenode')
-          .first()
-          .hasClass('rc-tree-treenode-active'),
-      ).toBeTruthy();
+      keyDown(KeyCode.RIGHT);
+      expect(getTreeNode(0)).toHaveClass('rc-tree-treenode-active');
       expect(onExpand).toHaveBeenCalledWith(['child 1', 'child 2', 'parent'], expect.anything());
       checkKeyDownTrigger();
 
       // Arrow right: first child
       onExpand.mockReset();
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.RIGHT });
-      expect(
-        wrapper
-          .find(InternalTreeNode)
-          .find('.rc-tree-treenode')
-          .at(1)
-          .hasClass('rc-tree-treenode-active'),
-      ).toBeTruthy();
+      keyDown(KeyCode.RIGHT);
+      expect(getTreeNode(1)).toHaveClass('rc-tree-treenode-active');
       checkKeyDownTrigger();
       checkActiveTrigger('child 1');
 
       // SPACE: confirm
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.SPACE });
+      keyDown(KeyCode.SPACE);
       spaceCallback();
       checkKeyDownTrigger();
 
       // ENTER: confirm again
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.ENTER });
+      keyDown(KeyCode.ENTER);
       enterCallback();
       checkKeyDownTrigger();
 
       // Blur
-      wrapper.find('input').simulate('blur');
+      fireEvent.blur(container.querySelector('input'));
       expect(onBlur).toHaveBeenCalled();
 
       // null activeKey
-      wrapper.find('.rc-tree-treenode').first().simulate('mouseMove');
+      fireEvent.mouseMove(getTreeNode(0));
       checkActiveTrigger(null);
 
       for (let i = 0; i < 10; i += 1) {
-        wrapper.find('.rc-tree-treenode').first().simulate('mouseMove');
+        fireEvent.mouseMove(getTreeNode(0));
         expect(onActiveChange).not.toHaveBeenCalled();
       }
     }
@@ -183,34 +154,38 @@ describe('Tree Accessibility', () => {
     });
 
     it('not crash if not exist', () => {
-      const wrapper = mount(<Tree defaultExpandAll treeData={[]} />);
+      const { container } = render(<Tree defaultExpandAll treeData={[]} />);
 
-      wrapper.find('input').simulate('focus');
+      fireEvent.focus(container.querySelector('input'));
 
       // Arrow should not work
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.UP });
-      expect(wrapper.find(InternalTreeNode).find('.rc-tree-treenode-active').length).toBeFalsy();
+      fireEvent.keyDown(container.querySelector('input'), {
+        keyCode: KeyCode.UP,
+      });
+      expect(container.querySelector('.rc-tree-treenode-active')).toBeFalsy();
     });
 
     it('remove active if mouse hover', () => {
-      const wrapper = mount(<Tree defaultExpandAll treeData={[{ key: 'parent' }]} />);
+      const { container } = render(<Tree defaultExpandAll treeData={[{ key: 'parent' }]} />);
 
-      wrapper.find('input').simulate('focus');
+      fireEvent.focus(container.querySelector('input'));
 
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.UP });
-      expect(wrapper.find(InternalTreeNode).find('.rc-tree-treenode-active').length).toBeTruthy();
+      fireEvent.keyDown(container.querySelector('input'), {
+        keyCode: KeyCode.UP,
+      });
+      expect(container.querySelector('.rc-tree-treenode-active')).toBeTruthy();
 
       // Mouse move
-      wrapper.find('.rc-tree-treenode').at(1).simulate('mouseMove');
-      expect(wrapper.find(InternalTreeNode).find('.rc-tree-treenode-active').length).toBeFalsy();
+      fireEvent.mouseMove(container.querySelectorAll('.rc-tree-treenode')[1]);
+      expect(container.querySelector('.rc-tree-treenode-active')).toBeFalsy();
     });
 
     it('fieldNames should also work', () => {
       const onActiveChange = jest.fn();
       const onSelect = jest.fn();
 
-      const wrapper = mount(
-        <Tree
+      const { container } = render(
+        <Tree<FieldDataNode<{ value: string }>>
           defaultExpandAll
           treeData={[{ value: 'first' }, { value: 'second' }]}
           fieldNames={{ key: 'value' }}
@@ -219,27 +194,33 @@ describe('Tree Accessibility', () => {
         />,
       );
 
-      wrapper.find('input').simulate('focus');
+      fireEvent.focus(container.querySelector('input'));
 
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.DOWN });
+      fireEvent.keyDown(container.querySelector('input'), {
+        keyCode: KeyCode.DOWN,
+      });
       expect(onActiveChange).toHaveBeenCalledWith('first');
 
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.DOWN });
+      fireEvent.keyDown(container.querySelector('input'), {
+        keyCode: KeyCode.DOWN,
+      });
       expect(onActiveChange).toHaveBeenCalledWith('second');
 
-      wrapper.find('input').simulate('keyDown', { which: KeyCode.ENTER });
+      fireEvent.keyDown(container.querySelector('input'), {
+        keyCode: KeyCode.ENTER,
+      });
       expect(onSelect).toHaveBeenCalledWith(['second'], expect.anything());
     });
   });
 
   it('disabled should prevent keyboard', () => {
-    const wrapper = mount(<Tree disabled />);
-    expect(wrapper.find('input').props().disabled).toBeTruthy();
+    const { container } = render(<Tree disabled />);
+    expect(container.querySelector('input')).toHaveAttribute('disabled');
   });
 
   describe('activeKey in control', () => {
     it('basic', () => {
-      const wrapper = mount(
+      const { container, rerender } = render(
         <Tree
           treeData={[
             {
@@ -250,16 +231,25 @@ describe('Tree Accessibility', () => {
         />,
       );
 
-      expect(wrapper.exists('.rc-tree-treenode-active')).toBeFalsy();
+      expect(container.querySelector('.rc-tree-treenode-active')).toBeFalsy();
 
-      wrapper.setProps({ activeKey: 'parent' });
-      wrapper.update();
-      expect(wrapper.exists('.rc-tree-treenode-active')).toBeTruthy();
+      rerender(
+        <Tree
+          treeData={[
+            {
+              title: 'Parent',
+              key: 'parent',
+            },
+          ]}
+          activeKey="parent"
+        />,
+      );
+      expect(container.querySelector('.rc-tree-treenode-active')).toBeTruthy();
     });
 
     it('with fieldNames', () => {
-      const wrapper = mount(
-        <Tree
+      const { container, rerender } = render(
+        <Tree<FieldDataNode<{ title: string; value: string }>>
           fieldNames={{ key: 'value' }}
           treeData={[
             {
@@ -270,11 +260,21 @@ describe('Tree Accessibility', () => {
         />,
       );
 
-      expect(wrapper.exists('.rc-tree-treenode-active')).toBeFalsy();
+      expect(container.querySelector('.rc-tree-treenode-active')).toBeFalsy();
 
-      wrapper.setProps({ activeKey: 'parent' });
-      wrapper.update();
-      expect(wrapper.exists('.rc-tree-treenode-active')).toBeTruthy();
+      rerender(
+        <Tree<FieldDataNode<{ title: string; value: string }>>
+          fieldNames={{ key: 'value' }}
+          treeData={[
+            {
+              title: 'Parent',
+              value: 'parent',
+            },
+          ]}
+          activeKey="parent"
+        />,
+      );
+      expect(container.querySelector('.rc-tree-treenode-active')).toBeTruthy();
     });
   });
 });

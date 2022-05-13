@@ -8,7 +8,7 @@ exports[`TreeNode Props className 1`] = `
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -16,7 +16,7 @@ exports[`TreeNode Props className 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -28,7 +28,7 @@ exports[`TreeNode Props className 1`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -36,7 +36,7 @@ exports[`TreeNode Props className 1`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"
@@ -198,7 +198,7 @@ exports[`TreeNode Props customize icon component 1`] = `
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -206,7 +206,7 @@ exports[`TreeNode Props customize icon component 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -218,7 +218,7 @@ exports[`TreeNode Props customize icon component 1`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -226,7 +226,7 @@ exports[`TreeNode Props customize icon component 1`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"
@@ -273,7 +273,7 @@ exports[`TreeNode Props customize icon element 1`] = `
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -281,7 +281,7 @@ exports[`TreeNode Props customize icon element 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -293,7 +293,7 @@ exports[`TreeNode Props customize icon element 1`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -301,7 +301,7 @@ exports[`TreeNode Props customize icon element 1`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"
@@ -348,7 +348,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -356,7 +356,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -368,7 +368,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -376,7 +376,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"
@@ -416,7 +416,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -424,7 +424,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -436,7 +436,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -444,7 +444,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"
@@ -611,7 +611,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -619,7 +619,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -631,7 +631,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -639,7 +639,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"
@@ -806,7 +806,7 @@ exports[`TreeNode Props isLeaf 1`] = `
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -814,7 +814,7 @@ exports[`TreeNode Props isLeaf 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -826,7 +826,7 @@ exports[`TreeNode Props isLeaf 1`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -834,7 +834,7 @@ exports[`TreeNode Props isLeaf 1`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"
@@ -901,7 +901,7 @@ exports[`TreeNode Props isLeaf 2`] = `
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -909,7 +909,7 @@ exports[`TreeNode Props isLeaf 2`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -921,7 +921,7 @@ exports[`TreeNode Props isLeaf 2`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -929,7 +929,7 @@ exports[`TreeNode Props isLeaf 2`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"
@@ -1002,7 +1002,7 @@ exports[`TreeNode Props isLeaf 3`] = `
   <div>
     <input
       aria-label="for screen reader"
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -1010,7 +1010,7 @@ exports[`TreeNode Props isLeaf 3`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -1022,7 +1022,7 @@ exports[`TreeNode Props isLeaf 3`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -1030,7 +1030,7 @@ exports[`TreeNode Props isLeaf 3`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
             aria-grabbed="false"

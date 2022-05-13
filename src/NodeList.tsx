@@ -126,7 +126,7 @@ function getAccessibilityPath(item: FlattenNode): string {
   return path;
 }
 
-const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (props, ref) => {
+const NodeList = React.forwardRef<NodeListRef, NodeListProps>((props, ref) => {
   const {
     prefixCls,
     data,
@@ -324,7 +324,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           }
         }}
       >
-        {(treeNode: FlattenNode) => {
+        {treeNode => {
           const {
             pos,
             data: { ...restProps },
@@ -341,7 +341,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
           return (
             <MotionTreeNode
-              {...restProps}
+              {...(restProps as Omit<typeof restProps, 'children'>)}
               {...treeNodeProps}
               title={title}
               active={!!activeItem && key === activeItem.key}
@@ -364,9 +364,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
       </VirtualList>
     </>
   );
-};
+});
 
-const NodeList = React.forwardRef(RefNodeList);
 NodeList.displayName = 'NodeList';
 
 export default NodeList;

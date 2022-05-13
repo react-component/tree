@@ -1,15 +1,15 @@
 /* eslint-disable no-undef, react/no-multi-comp */
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import Tree from '../src';
-import { InternalTreeNode } from '../src/TreeNode';
 import { spyConsole } from './util';
 
 describe('FieldNames', () => {
   spyConsole();
 
   it('customize fieldNames', () => {
-    const wrapper = mount(
+    const onSelect = jest.fn();
+    const { container } = render(
       <Tree
         treeData={
           [
@@ -29,24 +29,28 @@ describe('FieldNames', () => {
           key: 'myKey',
           children: 'myChildren',
         }}
+        onSelect={onSelect}
+        multiple
       />,
     );
 
     // Title
-    const titleList = wrapper
-      .find('.rc-tree-list-holder div.rc-tree-treenode')
-      .map(node => node.text());
+    const titleList = Array.from(
+      container.querySelectorAll('.rc-tree-list-holder div.rc-tree-treenode'),
+    ).map(node => node.textContent);
 
     expect(titleList).toEqual(['Title', 'Sub1', 'Sub2']);
 
     // Key
-    const keyList = wrapper.find(InternalTreeNode).map(node => node.props().eventKey);
+    container.querySelectorAll('.rc-tree-title').forEach(ele => {
+      fireEvent.click(ele);
+    });
 
-    expect(keyList).toEqual(['title', 'sub_1', 'sub_2']);
+    expect(onSelect).toHaveBeenCalledWith(['title', 'sub_1', 'sub_2'], expect.anything());
   });
 
   it('dynamic change fieldNames', () => {
-    const wrapper = mount(
+    const renderTree = (props?: any) => (
       <Tree
         defaultExpandAll
         treeData={[
@@ -65,58 +69,67 @@ describe('FieldNames', () => {
             ],
           },
         ]}
-      />,
+        {...props}
+      />
     );
+
+    const { container, rerender } = render(renderTree());
 
     // Title
     expect(
-      wrapper.find('.rc-tree-list-holder div.rc-tree-treenode').map(node => node.text()),
+      Array.from(container.querySelectorAll('.rc-tree-list-holder div.rc-tree-treenode')).map(
+        node => node.textContent,
+      ),
     ).toEqual(['Origin Title', 'Origin Sub 1', 'Origin Sub 2']);
 
     // Change it
-    wrapper.setProps({
-      treeData: [
-        {
-          myTitle: 'New Title',
-          myKey: 'parent',
-          myChildren: [
-            {
-              myTitle: 'New Sub 1',
-              myKey: 'sub_1',
-            },
-            {
-              myTitle: 'New Sub 2',
-              myKey: 'sub_2',
-            },
-          ],
+    rerender(
+      renderTree({
+        treeData: [
+          {
+            myTitle: 'New Title',
+            myKey: 'parent',
+            myChildren: [
+              {
+                myTitle: 'New Sub 1',
+                myKey: 'sub_1',
+              },
+              {
+                myTitle: 'New Sub 2',
+                myKey: 'sub_2',
+              },
+            ],
+          },
+          {
+            myTitle: 'New Title 2',
+            myKey: 'parent2',
+            myChildren: [
+              {
+                myTitle: 'New Sub 3',
+                myKey: 'sub_3',
+              },
+            ],
+          },
+        ],
+        fieldNames: {
+          title: 'myTitle',
+          key: 'myKey',
+          children: 'myChildren',
         },
-        {
-          myTitle: 'New Title 2',
-          myKey: 'parent2',
-          myChildren: [
-            {
-              myTitle: 'New Sub 3',
-              myKey: 'sub_3',
-            },
-          ],
-        },
-      ],
-      fieldNames: {
-        title: 'myTitle',
-        key: 'myKey',
-        children: 'myChildren',
-      },
-    });
+      }),
+    );
 
     expect(
-      wrapper.find('.rc-tree-list-holder div.rc-tree-treenode').map(node => node.text()),
+      Array.from(container.querySelectorAll('.rc-tree-list-holder div.rc-tree-treenode')).map(
+        node => node.textContent,
+      ),
     ).toEqual(['New Title', 'New Sub 1', 'New Sub 2', 'New Title 2']);
   });
 
   it('checkable should work', () => {
     const onCheck = jest.fn();
 
-    const wrapper = mount(
+    const { container } = render(
       <Tree
         checkable
         onCheck={onCheck}
@@ -136,13 +149,15 @@ describe('FieldNames', () => {
       />,
     );
 
-    wrapper.find('.rc-tree-checkbox').last().simulate('click');
+    fireEvent.click(container.querySelector('.rc-tree-checkbox'));
     expect(onCheck).toHaveBeenCalledWith(['parent', 'child'], expect.anything());
   });
 
   // Internal usage. Safe to remove
   it('fieldNames using _title', () => {
-    const wrapper = mount(
+    const onSelect = jest.fn();
+
+    const { container } = render(
       <Tree
         treeData={
           [
@@ -162,19 +177,23 @@ describe('FieldNames', () => {
           key: 'myKey',
           children: 'myChildren',
         }}
+        onSelect={onSelect}
+        multiple
       />,
     );
 
     // Title
-    const titleList = wrapper
-      .find('.rc-tree-list-holder div.rc-tree-treenode')
-      .map(node => node.text());
+    const titleList = Array.from(
+      container.querySelectorAll('.rc-tree-list-holder div.rc-tree-treenode'),
+    ).map(node => node.textContent);
 
     expect(titleList).toEqual(['Title', 'Sub1', 'Sub2']);
 
     // Key
-    const keyList = wrapper.find(InternalTreeNode).map(node => node.props().eventKey);
+    container.querySelectorAll('.rc-tree-title').forEach(ele => {
+      fireEvent.click(ele);
+    });
 
-    expect(keyList).toEqual(['title', 'sub_1', 'sub_2']);
+    expect(onSelect).toHaveBeenCalledWith(['title', 'sub_1', 'sub_2'], expect.anything());
   });
 });

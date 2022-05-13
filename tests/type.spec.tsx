@@ -1,6 +1,6 @@
 /* eslint-disable no-undef, react/no-multi-comp */
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import Tree, { BasicDataNode } from '../src';
 
 describe('Tree.TypeScript', () => {
@@ -11,7 +11,7 @@ describe('Tree.TypeScript', () => {
       list?: DataType[];
     }
 
-    const wrapper = mount(
+    render(
       <Tree<DataType>
         treeData={[
           {
@@ -22,7 +22,5 @@ describe('Tree.TypeScript', () => {
         ]}
       />,
     );
-
-    expect(wrapper).toBeTruthy();
   });
 });

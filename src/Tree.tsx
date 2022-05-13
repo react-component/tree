@@ -154,7 +154,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
       node: EventDataNode;
     },
   ) => void;
-  loadData?: (treeNode: EventDataNode) => Promise<void>;
+  loadData?: (treeNode: EventDataNode) => Promise<any>;
   loadedKeys?: Key[];
   onMouseEnter?: (info: NodeMouseEventParams) => void;
   onMouseLeave?: (info: NodeMouseEventParams) => void;
@@ -231,7 +231,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   fieldNames: FieldNames;
 }
 
-class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Component<
+class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends React.Component<
   TreeProps<TreeDataType>,
   TreeState<TreeDataType>
 > {
@@ -315,6 +315,7 @@ class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Componen
   listRef = React.createRef<NodeListRef>();
 
   componentDidMount(): void {
+    this.destroyed = false;
     this.onUpdated();
   }
 
