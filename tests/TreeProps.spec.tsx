@@ -614,7 +614,7 @@ describe('Tree Props', () => {
 
       fireEvent.click(container.querySelector('.rc-tree-switcher'));
 
-      await timeoutPromise();
+      await timeoutPromise(100);
 
       expect(handleLoadData).toHaveBeenCalledWith(
         expect.objectContaining({
