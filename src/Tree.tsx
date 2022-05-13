@@ -231,7 +231,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   fieldNames: FieldNames;
 }
 
-class Tree<TreeDataType extends BasicDataNode = DataNode> extends React.Component<
+class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends React.Component<
   TreeProps<TreeDataType>,
   TreeState<TreeDataType>
 > {
