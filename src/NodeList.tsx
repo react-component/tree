@@ -126,247 +126,248 @@ function getAccessibilityPath(item: FlattenNode): string {
   return path;
 }
 
-const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (props, ref) => {
-  const {
-    prefixCls,
-    data,
-    selectable,
-    checkable,
-    expandedKeys,
-    selectedKeys,
-    checkedKeys,
-    loadedKeys,
-    loadingKeys,
-    halfCheckedKeys,
-    keyEntities,
-    disabled,
+const NodeList = React.forwardRef<NodeListRef, NodeListProps>(
+  (props, ref) => {
+    const {
+      prefixCls,
+      data,
+      selectable,
+      checkable,
+      expandedKeys,
+      selectedKeys,
+      checkedKeys,
+      loadedKeys,
+      loadingKeys,
+      halfCheckedKeys,
+      keyEntities,
+      disabled,
 
-    dragging,
-    dragOverNodeKey,
-    dropPosition,
-    motion,
+      dragging,
+      dragOverNodeKey,
+      dropPosition,
+      motion,
 
-    height,
-    itemHeight,
-    virtual,
+      height,
+      itemHeight,
+      virtual,
 
-    focusable,
-    activeItem,
-    focused,
-    tabIndex,
+      focusable,
+      activeItem,
+      focused,
+      tabIndex,
 
-    onKeyDown,
-    onFocus,
-    onBlur,
-    onActiveChange,
+      onKeyDown,
+      onFocus,
+      onBlur,
+      onActiveChange,
 
-    onListChangeStart,
-    onListChangeEnd,
+      onListChangeStart,
+      onListChangeEnd,
 
-    ...domProps
-  } = props;
+      ...domProps
+    } = props;
 
-  // =============================== Ref ================================
-  const listRef = React.useRef<ListRef>(null);
-  const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
-  React.useImperativeHandle(ref, () => ({
-    scrollTo: scroll => {
-      listRef.current.scrollTo(scroll);
-    },
-    getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
-  }));
+    // =============================== Ref ================================
+    const listRef = React.useRef<ListRef>(null);
+    const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
+    React.useImperativeHandle(ref, () => ({
+      scrollTo: scroll => {
+        listRef.current.scrollTo(scroll);
+      },
+      getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
+    }));
 
-  // ============================== Motion ==============================
-  const [prevExpandedKeys, setPrevExpandedKeys] = React.useState(expandedKeys);
-  const [prevData, setPrevData] = React.useState(data);
-  const [transitionData, setTransitionData] = React.useState(data);
-  const [transitionRange, setTransitionRange] = React.useState([]);
-  const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
+    // ============================== Motion ==============================
+    const [prevExpandedKeys, setPrevExpandedKeys] = React.useState(expandedKeys);
+    const [prevData, setPrevData] = React.useState(data);
+    const [transitionData, setTransitionData] = React.useState(data);
+    const [transitionRange, setTransitionRange] = React.useState([]);
+    const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
-  // When motion end but data change, this will makes data back to previous one
-  const dataRef = React.useRef(data);
-  dataRef.current = data;
+    // When motion end but data change, this will makes data back to previous one
+    const dataRef = React.useRef(data);
+    dataRef.current = data;
 
-  function onMotionEnd() {
-    const latestData = dataRef.current;
+    function onMotionEnd() {
+      const latestData = dataRef.current;
 
-    setPrevData(latestData);
-    setTransitionData(latestData);
-    setTransitionRange([]);
-    setMotionType(null);
+      setPrevData(latestData);
+      setTransitionData(latestData);
+      setTransitionRange([]);
+      setMotionType(null);
 
-    onListChangeEnd();
-  }
-
-  // Do animation if expanded keys changed
-  React.useEffect(() => {
-    setPrevExpandedKeys(expandedKeys);
-
-    const diffExpanded = findExpandedKeys(prevExpandedKeys, expandedKeys);
-
-    if (diffExpanded.key !== null) {
-      if (diffExpanded.add) {
-        const keyIndex = prevData.findIndex(({ key }) => key === diffExpanded.key);
-
-        const rangeNodes = getMinimumRangeTransitionRange(
-          getExpandRange(prevData, data, diffExpanded.key),
-          virtual,
-          height,
-          itemHeight,
-        );
-
-        const newTransitionData: FlattenNode[] = prevData.slice();
-        newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
-
-        setTransitionData(newTransitionData);
-        setTransitionRange(rangeNodes);
-        setMotionType('show');
-      } else {
-        const keyIndex = data.findIndex(({ key }) => key === diffExpanded.key);
-
-        const rangeNodes = getMinimumRangeTransitionRange(
-          getExpandRange(data, prevData, diffExpanded.key),
-          virtual,
-          height,
-          itemHeight,
-        );
-
-        const newTransitionData: FlattenNode[] = data.slice();
-        newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
-
-        setTransitionData(newTransitionData);
-        setTransitionRange(rangeNodes);
-        setMotionType('hide');
-      }
-    } else if (prevData !== data) {
-      // If whole data changed, we just refresh the list
-      setPrevData(data);
-      setTransitionData(data);
+      onListChangeEnd();
     }
-  }, [expandedKeys, data]);
 
-  // We should clean up motion if is changed by dragging
-  React.useEffect(() => {
-    if (!dragging) {
-      onMotionEnd();
-    }
-  }, [dragging]);
+    // Do animation if expanded keys changed
+    React.useEffect(() => {
+      setPrevExpandedKeys(expandedKeys);
 
-  const mergedData = motion ? transitionData : data;
+      const diffExpanded = findExpandedKeys(prevExpandedKeys, expandedKeys);
 
-  const treeNodeRequiredProps = {
-    expandedKeys,
-    selectedKeys,
-    loadedKeys,
-    loadingKeys,
-    checkedKeys,
-    halfCheckedKeys,
-    dragOverNodeKey,
-    dropPosition,
-    keyEntities,
-  };
+      if (diffExpanded.key !== null) {
+        if (diffExpanded.add) {
+          const keyIndex = prevData.findIndex(({ key }) => key === diffExpanded.key);
 
-  return (
-    <>
-      {focused && activeItem && (
-        <span style={HIDDEN_STYLE} aria-live="assertive">
-          {getAccessibilityPath(activeItem)}
-        </span>
-      )}
-
-      <div>
-        <input
-          style={HIDDEN_STYLE}
-          disabled={focusable === false || disabled}
-          tabIndex={focusable !== false ? tabIndex : null}
-          onKeyDown={onKeyDown}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          value=""
-          onChange={noop}
-          aria-label="for screen reader"
-        />
-      </div>
-
-      <div
-        className={`${prefixCls}-treenode`}
-        aria-hidden
-        style={{
-          position: 'absolute',
-          pointerEvents: 'none',
-          visibility: 'hidden',
-          height: 0,
-          overflow: 'hidden',
-        }}
-      >
-        <div className={`${prefixCls}-indent`}>
-          <div ref={indentMeasurerRef} className={`${prefixCls}-indent-unit`} />
-        </div>
-      </div>
-
-      <VirtualList<FlattenNode>
-        {...domProps}
-        data={mergedData}
-        itemKey={itemKey}
-        height={height}
-        fullHeight={false}
-        virtual={virtual}
-        itemHeight={itemHeight}
-        prefixCls={`${prefixCls}-list`}
-        ref={listRef}
-        onVisibleChange={(originList, fullList) => {
-          const originSet = new Set(originList);
-          const restList = fullList.filter(item => !originSet.has(item));
-
-          // Motion node is not render. Skip motion
-          if (restList.some(item => itemKey(item) === MOTION_KEY)) {
-            onMotionEnd();
-          }
-        }}
-      >
-        {(treeNode: FlattenNode) => {
-          const {
-            pos,
-            data: { ...restProps },
-            title,
-            key,
-            isStart,
-            isEnd,
-          } = treeNode;
-          const mergedKey = getKey(key, pos);
-          delete restProps.key;
-          delete restProps.children;
-
-          const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
-
-          return (
-            <MotionTreeNode
-              {...restProps}
-              {...treeNodeProps}
-              title={title}
-              active={!!activeItem && key === activeItem.key}
-              pos={pos}
-              data={treeNode.data}
-              isStart={isStart}
-              isEnd={isEnd}
-              motion={motion}
-              motionNodes={key === MOTION_KEY ? transitionRange : null}
-              motionType={motionType}
-              onMotionStart={onListChangeStart}
-              onMotionEnd={onMotionEnd}
-              treeNodeRequiredProps={treeNodeRequiredProps}
-              onMouseMove={() => {
-                onActiveChange(null);
-              }}
-            />
+          const rangeNodes = getMinimumRangeTransitionRange(
+            getExpandRange(prevData, data, diffExpanded.key),
+            virtual,
+            height,
+            itemHeight,
           );
-        }}
-      </VirtualList>
-    </>
-  );
-};
 
-const NodeList = React.forwardRef(RefNodeList);
+          const newTransitionData: FlattenNode[] = prevData.slice();
+          newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
+
+          setTransitionData(newTransitionData);
+          setTransitionRange(rangeNodes);
+          setMotionType('show');
+        } else {
+          const keyIndex = data.findIndex(({ key }) => key === diffExpanded.key);
+
+          const rangeNodes = getMinimumRangeTransitionRange(
+            getExpandRange(data, prevData, diffExpanded.key),
+            virtual,
+            height,
+            itemHeight,
+          );
+
+          const newTransitionData: FlattenNode[] = data.slice();
+          newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
+
+          setTransitionData(newTransitionData);
+          setTransitionRange(rangeNodes);
+          setMotionType('hide');
+        }
+      } else if (prevData !== data) {
+        // If whole data changed, we just refresh the list
+        setPrevData(data);
+        setTransitionData(data);
+      }
+    }, [expandedKeys, data]);
+
+    // We should clean up motion if is changed by dragging
+    React.useEffect(() => {
+      if (!dragging) {
+        onMotionEnd();
+      }
+    }, [dragging]);
+
+    const mergedData = motion ? transitionData : data;
+
+    const treeNodeRequiredProps = {
+      expandedKeys,
+      selectedKeys,
+      loadedKeys,
+      loadingKeys,
+      checkedKeys,
+      halfCheckedKeys,
+      dragOverNodeKey,
+      dropPosition,
+      keyEntities,
+    };
+
+    return (
+      <>
+        {focused && activeItem && (
+          <span style={HIDDEN_STYLE} aria-live="assertive">
+            {getAccessibilityPath(activeItem)}
+          </span>
+        )}
+
+        <div>
+          <input
+            style={HIDDEN_STYLE}
+            disabled={focusable === false || disabled}
+            tabIndex={focusable !== false ? tabIndex : null}
+            onKeyDown={onKeyDown}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            value=""
+            onChange={noop}
+            aria-label="for screen reader"
+          />
+        </div>
+
+        <div
+          className={`${prefixCls}-treenode`}
+          aria-hidden
+          style={{
+            position: 'absolute',
+            pointerEvents: 'none',
+            visibility: 'hidden',
+            height: 0,
+            overflow: 'hidden',
+          }}
+        >
+          <div className={`${prefixCls}-indent`}>
+            <div ref={indentMeasurerRef} className={`${prefixCls}-indent-unit`} />
+          </div>
+        </div>
+
+        <VirtualList<FlattenNode>
+          {...domProps}
+          data={mergedData}
+          itemKey={itemKey}
+          height={height}
+          fullHeight={false}
+          virtual={virtual}
+          itemHeight={itemHeight}
+          prefixCls={`${prefixCls}-list`}
+          ref={listRef}
+          onVisibleChange={(originList, fullList) => {
+            const originSet = new Set(originList);
+            const restList = fullList.filter(item => !originSet.has(item));
+
+            // Motion node is not render. Skip motion
+            if (restList.some(item => itemKey(item) === MOTION_KEY)) {
+              onMotionEnd();
+            }
+          }}
+        >
+          {(treeNode: FlattenNode) => {
+            const {
+              pos,
+              data: { ...restProps },
+              title,
+              key,
+              isStart,
+              isEnd,
+            } = treeNode;
+            const mergedKey = getKey(key, pos);
+            delete restProps.key;
+            delete restProps.children;
+
+            const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
+
+            return (
+              <MotionTreeNode
+                {...restProps}
+                {...treeNodeProps}
+                title={title}
+                active={!!activeItem && key === activeItem.key}
+                pos={pos}
+                data={treeNode.data}
+                isStart={isStart}
+                isEnd={isEnd}
+                motion={motion}
+                motionNodes={key === MOTION_KEY ? transitionRange : null}
+                motionType={motionType}
+                onMotionStart={onListChangeStart}
+                onMotionEnd={onMotionEnd}
+                treeNodeRequiredProps={treeNodeRequiredProps}
+                onMouseMove={() => {
+                  onActiveChange(null);
+                }}
+              />
+            );
+          }}
+        </VirtualList>
+      </>
+    );
+  },
+);
+
 NodeList.displayName = 'NodeList';
 
 export default NodeList;
