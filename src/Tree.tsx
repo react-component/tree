@@ -315,6 +315,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   listRef = React.createRef<NodeListRef>();
 
   componentDidMount(): void {
+    this.destroyed = false;
     this.onUpdated();
   }
 

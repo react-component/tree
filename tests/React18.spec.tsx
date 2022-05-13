@@ -6,22 +6,24 @@ describe('React 18', () => {
   it('expand work', () => {
     const onExpand = jest.fn();
     const { container } = render(
-      <Tree
-        defaultExpandAll
-        onExpand={onExpand}
-        treeData={[
-          {
-            title: 'Parent',
-            key: 'parent',
-            children: [
-              {
-                title: 'Child',
-                key: 'child',
-              },
-            ],
-          },
-        ]}
-      />,
+      <React.StrictMode>
+        <Tree
+          defaultExpandAll
+          onExpand={onExpand}
+          treeData={[
+            {
+              title: 'Parent',
+              key: 'parent',
+              children: [
+                {
+                  title: 'Child',
+                  key: 'child',
+                },
+              ],
+            },
+          ]}
+        />
+      </React.StrictMode>,
     );
 
     // All opened
@@ -41,17 +43,19 @@ describe('React 18', () => {
   it('checkable work', () => {
     const onCheck = jest.fn();
     const { container } = render(
-      <Tree
-        defaultExpandAll
-        onCheck={onCheck}
-        checkable
-        treeData={[
-          {
-            title: 'Parent',
-            key: 'parent',
-          },
-        ]}
-      />,
+      <React.StrictMode>
+        <Tree
+          defaultExpandAll
+          onCheck={onCheck}
+          checkable
+          treeData={[
+            {
+              title: 'Parent',
+              key: 'parent',
+            },
+          ]}
+        />
+      </React.StrictMode>,
     );
 
     expect(onCheck).not.toHaveBeenCalled();
