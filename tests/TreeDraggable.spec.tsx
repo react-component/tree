@@ -4,9 +4,7 @@ import React from 'react';
 import { render, fireEvent, act, createEvent } from '@testing-library/react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Tree, { TreeNode, FieldDataNode } from '../src';
-import { InternalTreeNode } from '../src/TreeNode';
 import { spyConsole } from './util';
-import { convertNodePropsToEventData } from '../src/utils/treeUtil';
 
 const delay = timeout =>
   new Promise(resolve => {

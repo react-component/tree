@@ -1,17 +1,34 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import Tree, { TreeNode } from '../src';
+import { render, fireEvent, act } from '@testing-library/react';
+import Tree, { TreeNode, FieldDataNode } from '../src';
 import MotionTreeNode from '../src/MotionTreeNode';
 import { TreeContext } from '../src/contextTypes';
 import { getMinimumRangeTransitionRange } from '../src/NodeList';
 
+jest.mock('rc-motion/lib/util/motion', () => {
+  const origin = jest.requireActual('rc-motion/lib/util/motion');
+
+  return {
+    ...origin,
+    supportTransition: () => true,
+  };
+});
+
 describe('Tree Motion', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
   it('basic', () => {
     const motion = {
       motionName: 'bamboo',
     };
-    const wrapper = mount(
+    const { container } = render(
       <Tree motion={motion} height={10000}>
         <TreeNode key="0-0">
           <TreeNode key="0-0-0" />
@@ -19,33 +36,32 @@ describe('Tree Motion', () => {
       </Tree>,
     );
 
-    const switcher = wrapper.find('.rc-tree-switcher');
-    switcher.simulate('click');
+    fireEvent.click(container.querySelector('.rc-tree-switcher'));
 
-    expect(wrapper.find('CSSMotion').props()).toMatchObject(motion);
+    expect(container.querySelector('.bamboo-appear')).toBeTruthy();
   });
 
-  it('hide item', done => {
-    const wrapper = mount(
+  it('hide item', () => {
+    const renderTree = (props?: any) => (
       <Tree
         treeData={[{ key: '0-0', children: [{ key: '0-0-0' }] }]}
         expandedKeys={['0-0']}
         motion={{}}
-      />,
+        {...props}
+      />
     );
-    wrapper.setProps({ expandedKeys: [] });
 
-    setTimeout(() => {
-      wrapper.update();
-      // Confirm CSSMotion is prepare to hide
-      expect(wrapper.find('CSSMotion').props().visible).toBeFalsy();
-      done();
-    }, 100);
+    const { container, rerender } = render(renderTree());
+
+    rerender(renderTree({ expandedKeys: [] }));
+
+    expect(container.querySelector('.bamboo-appear')).toBeFalsy();
   });
 
   it('getMinimumRangeTransitionRange', () => {
     const visibleList = getMinimumRangeTransitionRange(
-      new Array(100).fill(null).map((_, index) => index),
+      new Array(100).fill(null).map((_, index) => index) as any,
+      true,
       100,
       20,
     );
@@ -54,25 +70,26 @@ describe('Tree Motion', () => {
   });
 
   it('not crash', () => {
-    const wrapper = mount(
+    const renderTree = (props?: any) => (
       <Tree
         treeData={[{ key: '0-0', children: [{ key: '0-0-0' }] }]}
         expandedKeys={['0-0']}
         motion={{}}
-      />,
+        {...props}
+      />
     );
+    const { rerender } = render(renderTree());
 
-    wrapper.setProps({ treeData: [] });
+    rerender(renderTree({ treeData: [] }));
   });
 
   it('should not expanded when in motion', () => {
-    const raf = jest
-      .spyOn(window, 'requestAnimationFrame')
-      .mockImplementation(fn => window.setTimeout(fn, 16));
-    jest.useFakeTimers();
+    // const raf = jest
+    //   .spyOn(window, 'requestAnimationFrame')
+    //   .mockImplementation(fn => window.setTimeout(fn, 16));
 
     const onExpand = jest.fn();
-    const wrapper = mount(
+    const { container } = render(
       <Tree
         onExpand={onExpand}
         motion={{
@@ -88,8 +105,7 @@ describe('Tree Motion', () => {
     );
 
     function doExpand() {
-      const switcher = wrapper.find('.rc-tree-switcher').first();
-      switcher.simulate('click');
+      fireEvent.click(container.querySelector('.rc-tree-switcher'));
     }
 
     // First click should work
@@ -100,21 +116,19 @@ describe('Tree Motion', () => {
     // Not trigger when in motion
     doExpand();
     expect(onExpand).not.toHaveBeenCalled();
-
-    raf.mockRestore();
-    jest.useRealTimers();
   });
 
   describe('MotionTreeNode should always trigger motion end', () => {
     it('with motionNodes', () => {
       const onMotionStart = jest.fn();
       const onMotionEnd = jest.fn();
-      const wrapper = mount(
-        <TreeContext.Provider value={{ prefixCls: 'test' }}>
+      const { unmount } = render(
+        <TreeContext.Provider value={{ prefixCls: 'test' } as any}>
           <MotionTreeNode
             motionNodes={[]}
             onMotionStart={onMotionStart}
             onMotionEnd={onMotionEnd}
+            {...({} as any)} // Ignore TS warning
           />
         </TreeContext.Provider>,
       );
@@ -122,29 +136,36 @@ describe('Tree Motion', () => {
       expect(onMotionStart).toHaveBeenCalled();
       expect(onMotionEnd).not.toHaveBeenCalled();
 
-      wrapper.unmount();
+      unmount();
       expect(onMotionEnd).toHaveBeenCalled();
     });
 
     it('without motionNodes', () => {
       const onMotionStart = jest.fn();
       const onMotionEnd = jest.fn();
-      const wrapper = mount(
+      const { unmount } = render(
         <TreeContext.Provider
-          value={{
-            prefixCls: 'test',
-            keyEntities: {},
-            dropIndicatorRender: () => null,
-          }}
+          value={
+            {
+              prefixCls: 'test',
+              keyEntities: {},
+              dropIndicatorRender: () => null,
+            } as any
+          }
         >
-          <MotionTreeNode onMotionStart={onMotionStart} onMotionEnd={onMotionEnd} isEnd={[false]} />
+          <MotionTreeNode
+            onMotionStart={onMotionStart}
+            onMotionEnd={onMotionEnd}
+            isEnd={[false]}
+            {...({} as any)} // Ignore TS warning
+          />
         </TreeContext.Provider>,
       );
 
       expect(onMotionStart).not.toHaveBeenCalled();
       expect(onMotionEnd).not.toHaveBeenCalled();
 
-      wrapper.unmount();
+      unmount();
       expect(onMotionStart).not.toHaveBeenCalled();
       expect(onMotionEnd).not.toHaveBeenCalled();
     });
@@ -152,7 +173,7 @@ describe('Tree Motion', () => {
 
   it('motion should work well with fieldNames', () => {
     const Demo = () => (
-      <Tree
+      <Tree<FieldDataNode<{ id: string; name: string }, 'sub'>>
         defaultExpandAll
         fieldNames={{
           title: 'name',
@@ -178,16 +199,19 @@ describe('Tree Motion', () => {
       />
     );
 
-    const wrapper = mount(<Demo />);
-    expect(wrapper.find('[title="B"]').length).toBeTruthy();
-    wrapper.find('.rc-tree-switcher').first().simulate('click');
-    expect(wrapper.find('[title="B"]').length).toBe(0);
+    const { container } = render(<Demo />);
+    expect(container.querySelector('[title="B"]')).toBeTruthy();
+    // wrapper.find('.rc-tree-switcher').first().simulate('click');
+    fireEvent.click(container.querySelector('.rc-tree-switcher'));
+    act(() => {
+      jest.runAllTimers();
+    });
+    fireEvent.animationEnd(container.querySelector('.bamboo-leave-active'));
+    expect(container.querySelector('[title="B"]')).toBeFalsy();
   });
 
   it('motion should not revert flatten list', () => {
-    jest.useFakeTimers();
-
-    const wrapper = mount(
+    const renderTree = (props?: any) => (
       <Tree
         motion={{
           motionName: 'little',
@@ -206,12 +230,17 @@ describe('Tree Motion', () => {
             ],
           },
         ]}
-      />,
+        {...props}
+      />
     );
 
-    wrapper.setProps({
-      expandedKeys: ['parent'],
-    });
+    const { container, rerender } = render(renderTree());
+
+    rerender(
+      renderTree({
+        expandedKeys: ['parent'],
+      }),
+    );
 
     for (let i = 0; i < 10; i += 1) {
       act(() => {
@@ -219,26 +248,24 @@ describe('Tree Motion', () => {
       });
     }
 
-    wrapper.setProps({
-      treeData: [
-        {
-          key: 'parent',
-          title: 'parent2',
-          children: [
-            {
-              key: 'child',
-              title: 'child2',
-            },
-          ],
-        },
-      ],
-    });
+    rerender(
+      renderTree({
+        treeData: [
+          {
+            key: 'parent',
+            title: 'parent2',
+            children: [
+              {
+                key: 'child',
+                title: 'child2',
+              },
+            ],
+          },
+        ],
+      }),
+    );
 
-    wrapper.find('.rc-tree-treenode-motion').simulate('animationEnd');
-
-    expect(wrapper.find('span.rc-tree-title').at(0).text()).toEqual('parent2');
-    expect(wrapper.find('span.rc-tree-title').at(1).text()).toEqual('child2');
-
-    jest.useRealTimers();
+    expect(container.querySelectorAll('span.rc-tree-title')[0].textContent).toEqual('parent2');
+    expect(container.querySelectorAll('span.rc-tree-title')[1].textContent).toEqual('child2');
   });
 });
