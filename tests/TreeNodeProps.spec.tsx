@@ -26,7 +26,7 @@ describe('TreeNode Props', () => {
         <TreeNode key="0-1" />
       </Tree>,
     );
-    expect(container.innerHTML).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   // disabled - is already full test in Tree.spec.js
@@ -41,7 +41,7 @@ describe('TreeNode Props', () => {
         </TreeNode>
       </Tree>,
     );
-    expect(withoutLoadData.container.innerHTML).toMatchSnapshot();
+    expect(withoutLoadData.container.firstChild).toMatchSnapshot();
 
     const withLoadData = render(
       <Tree defaultExpandAll>
@@ -50,7 +50,7 @@ describe('TreeNode Props', () => {
         </TreeNode>
       </Tree>,
     );
-    expect(withLoadData.container.innerHTML).toMatchSnapshot();
+    expect(withLoadData.container.firstChild).toMatchSnapshot();
 
     const forceNoLeaf = render(
       <Tree defaultExpandAll>
@@ -59,7 +59,7 @@ describe('TreeNode Props', () => {
         </TreeNode>
       </Tree>,
     );
-    expect(forceNoLeaf.container.innerHTML).toMatchSnapshot();
+    expect(forceNoLeaf.container.firstChild).toMatchSnapshot();
   });
 
   it('title function', () => {
@@ -78,7 +78,7 @@ describe('TreeNode Props', () => {
           <TreeNode icon={<span className="cust-icon" />} />
         </Tree>,
       );
-      expect(withoutLoadData.container.innerHTML).toMatchSnapshot();
+      expect(withoutLoadData.container.firstChild).toMatchSnapshot();
     });
 
     it('component', () => {
@@ -89,7 +89,7 @@ describe('TreeNode Props', () => {
           <TreeNode icon={Icon} />
         </Tree>,
       );
-      expect(withoutLoadData.container.innerHTML).toMatchSnapshot();
+      expect(withoutLoadData.container.firstChild).toMatchSnapshot();
     });
 
     it('hide icon', () => {
@@ -98,7 +98,7 @@ describe('TreeNode Props', () => {
           <TreeNode icon={<span className="cust-icon" />} />
         </Tree>,
       );
-      expect(withoutLoadData.container.innerHTML).toMatchSnapshot();
+      expect(withoutLoadData.container.firstChild).toMatchSnapshot();
     });
 
     it('get props when loading', () => {
@@ -131,7 +131,7 @@ describe('TreeNode Props', () => {
           <TreeNode key="0-1" data-test="0-1" />
         </Tree>,
       );
-      expect(wrapper.container.innerHTML).toMatchSnapshot();
+      expect(wrapper.container.firstChild).toMatchSnapshot();
     });
 
     it('renders aria attributes on li', () => {
@@ -146,7 +146,7 @@ describe('TreeNode Props', () => {
           <TreeNode key="0-1" aria-label="0-1" />
         </Tree>,
       );
-      expect(wrapper.container.innerHTML).toMatchSnapshot();
+      expect(wrapper.container.firstChild).toMatchSnapshot();
     });
   });
 
