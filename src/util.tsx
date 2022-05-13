@@ -5,7 +5,7 @@
 
 import React from 'react';
 import warning from 'rc-util/lib/warning';
-import TreeNode, { TreeNodeProps } from './TreeNode';
+import TreeNode from './TreeNode';
 import {
   NodeElement,
   Key,
@@ -278,7 +278,7 @@ export function calcSelectedKeys(selectedKeys: Key[], props: TreeProps) {
   return selectedKeys;
 }
 
-const internalProcessProps = (props: DataNode): Partial<TreeNodeProps> => props;
+const internalProcessProps = (props: DataNode): any => props;
 export function convertDataToTree(
   treeData: DataNode[],
   processor?: { processProps: (prop: DataNode) => any },
@@ -290,7 +290,11 @@ export function convertDataToTree(
   return list.map(({ children, ...props }): NodeElement => {
     const childrenNodes = convertDataToTree(children, processor);
 
-    return <TreeNode key={props.key} {...processProps(props)}>{childrenNodes}</TreeNode>;
+    return (
+      <TreeNode key={props.key} {...processProps(props)}>
+        {childrenNodes}
+      </TreeNode>
+    );
   });
 }
 

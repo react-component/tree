@@ -94,7 +94,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
 
               return (
                 <TreeNode
-                  {...restProps}
+                  {...(restProps as Omit<typeof restProps, 'children'>)}
                   {...treeNodeProps}
                   title={title}
                   active={active}
