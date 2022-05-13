@@ -21,7 +21,7 @@ export interface BasicDataNode {
 export interface DataNode extends BasicDataNode {
   children?: DataNode[];
   key: string | number;
-  title?: React.ReactNode;
+  title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
 }
 
 /** Provide a wrap type define for developer to wrap with customize fieldNames data type */
