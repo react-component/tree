@@ -94,7 +94,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   showIcon?: boolean;
   icon?: IconType;
   selectable?: boolean;
-  expandAction: ExpandAction;
+  expandAction?: ExpandAction;
   disabled?: boolean;
   multiple?: boolean;
   checkable?: boolean | React.ReactNode;
