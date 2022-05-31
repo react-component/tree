@@ -97,7 +97,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     y: number;
   },
   allowDrop: AllowDrop<TreeDataType>,
-  flattenedNodes: FlattenNode[],
+  flattenedNodes: FlattenNode<TreeDataType>[],
   keyEntities: Record<Key, DataEntity<TreeDataType>>,
   expandKeys: Key[],
   direction: Direction,

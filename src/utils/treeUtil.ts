@@ -105,11 +105,11 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
  * @param expandedKeys
  * need expanded keys, provides `true` means all expanded (used in `rc-tree-select`).
  */
-export function flattenTreeData(
+export function flattenTreeData<TreeDataType>(
   treeNodeList: DataNode[],
   expandedKeys: Key[] | true,
   fieldNames: FieldNames,
-): FlattenNode[] {
+): FlattenNode<TreeDataType>[] {
   const {
     _title: fieldTitles,
     key: fieldKey,
@@ -117,9 +117,9 @@ export function flattenTreeData(
   } = fillFieldNames(fieldNames);
 
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
-  const flattenList: FlattenNode[] = [];
+  const flattenList: FlattenNode<TreeDataType>[] = [];
 
-  function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
+  function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode<TreeDataType>[] {
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode[fieldKey], pos);
@@ -135,7 +135,7 @@ export function flattenTreeData(
       }
 
       // Add FlattenDataNode into list
-      const flattenNode: FlattenNode = {
+      const flattenNode: FlattenNode<TreeDataType> = {
         ...omit(treeNode, [...fieldTitles, fieldKey, fieldChildren] as any),
         title: mergedTitle,
         key: mergedKey,
@@ -393,7 +393,7 @@ export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
 
 export function convertNodePropsToEventData<TreeDataType extends BasicDataNode = DataNode>(
   props: TreeNodeProps<TreeDataType>,
-): EventDataNode {
+): EventDataNode<TreeDataType> {
   const {
     data,
     expanded,
