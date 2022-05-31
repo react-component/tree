@@ -55,7 +55,7 @@ const MAX_RETRY_TIMES = 10;
 
 interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
   event: 'check';
-  node: EventDataNode;
+  node: EventDataNode<TreeDataType>;
   checked: boolean;
   nativeEvent: MouseEvent;
   checkedNodes: TreeDataType[];
@@ -128,7 +128,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   onExpand?: (
     expandedKeys: Key[],
     info: {
-      node: EventDataNode;
+      node: EventDataNode<TreeDataType>;
       expanded: boolean;
       nativeEvent: MouseEvent;
     },
@@ -142,7 +142,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
     info: {
       event: 'select';
       selected: boolean;
-      node: EventDataNode;
+      node: EventDataNode<TreeDataType>;
       selectedNodes: TreeDataType[];
       nativeEvent: MouseEvent;
     },
@@ -151,22 +151,22 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
     loadedKeys: Key[],
     info: {
       event: 'load';
-      node: EventDataNode;
+      node: EventDataNode<TreeDataType>;
     },
   ) => void;
-  loadData?: (treeNode: EventDataNode) => Promise<any>;
+  loadData?: (treeNode: EventDataNode<TreeDataType>) => Promise<any>;
   loadedKeys?: Key[];
-  onMouseEnter?: (info: NodeMouseEventParams) => void;
-  onMouseLeave?: (info: NodeMouseEventParams) => void;
-  onRightClick?: (info: { event: React.MouseEvent; node: EventDataNode }) => void;
-  onDragStart?: (info: NodeDragEventParams) => void;
-  onDragEnter?: (info: NodeDragEventParams & { expandedKeys: Key[] }) => void;
-  onDragOver?: (info: NodeDragEventParams) => void;
-  onDragLeave?: (info: NodeDragEventParams) => void;
-  onDragEnd?: (info: NodeDragEventParams) => void;
+  onMouseEnter?: (info: NodeMouseEventParams<TreeDataType>) => void;
+  onMouseLeave?: (info: NodeMouseEventParams<TreeDataType>) => void;
+  onRightClick?: (info: { event: React.MouseEvent; node: EventDataNode<TreeDataType> }) => void;
+  onDragStart?: (info: NodeDragEventParams<TreeDataType>) => void;
+  onDragEnter?: (info: NodeDragEventParams<TreeDataType> & { expandedKeys: Key[] }) => void;
+  onDragOver?: (info: NodeDragEventParams<TreeDataType>) => void;
+  onDragLeave?: (info: NodeDragEventParams<TreeDataType>) => void;
+  onDragEnd?: (info: NodeDragEventParams<TreeDataType>) => void;
   onDrop?: (
-    info: NodeDragEventParams & {
-      dragNode: EventDataNode;
+    info: NodeDragEventParams<TreeDataType> & {
+      dragNode: EventDataNode<TreeDataType>;
       dragNodesKeys: Key[];
       dropPosition: number;
       dropToGap: boolean;
@@ -177,7 +177,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
    * Do not use in your production code directly since this will be refactor.
    */
   onActiveChange?: (key: Key) => void;
-  filterTreeNode?: (treeNode: EventDataNode) => boolean;
+  filterTreeNode?: (treeNode: EventDataNode<TreeDataType>) => boolean;
   motion?: any;
   switcherIcon?: IconType;
 
@@ -217,8 +217,8 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   dropAllowed: boolean;
   dragOverNodeKey: Key | null;
 
-  treeData: DataNode[];
-  flattenNodes: FlattenNode[];
+  treeData: TreeDataType[];
+  flattenNodes: FlattenNode<TreeDataType>[];
 
   focused: boolean;
   activeKey: Key;
@@ -462,7 +462,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     return newState;
   }
 
-  onNodeDragStart: NodeDragEventHandler<HTMLDivElement, TreeDataType> = (event, node) => {
+  onNodeDragStart: NodeDragEventHandler<TreeDataType, HTMLDivElement> = (event, node) => {
     const { expandedKeys, keyEntities } = this.state;
     const { onDragStart } = this.props;
     const { eventKey } = node.props;
@@ -485,7 +485,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     window.addEventListener('dragend', this.onWindowDragEnd);
 
-    onDragStart?.({ event, node: convertNodePropsToEventData(node.props) });
+    onDragStart?.({ event, node: convertNodePropsToEventData<TreeDataType>(node.props) });
   };
 
   /**
@@ -679,7 +679,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     onDragOver?.({ event, node: convertNodePropsToEventData(node.props) });
   };
 
-  onNodeDragLeave: NodeDragEventHandler = (event, node) => {
+  onNodeDragLeave: NodeDragEventHandler<TreeDataType> = (event, node) => {
     // if it is outside the droppable area
     // currentMouseOverDroppableNodeKey will be updated in dragenter event when into another droppable receiver.
     if (
@@ -692,7 +692,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     const { onDragLeave } = this.props;
 
-    onDragLeave?.({ event, node: convertNodePropsToEventData(node.props) });
+    onDragLeave?.({ event, node: convertNodePropsToEventData<TreeDataType>(node.props) });
   };
 
   // since stopPropagation() is called in treeNode
@@ -703,7 +703,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   // if onNodeDragEnd is called, onWindowDragEnd won't be called since stopPropagation() is called
-  onNodeDragEnd: NodeDragEventHandler = (event, node) => {
+  onNodeDragEnd: NodeDragEventHandler<TreeDataType> = (event, node) => {
     const { onDragEnd } = this.props;
     this.setState({
       dragOverNodeKey: null,
@@ -711,7 +711,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     this.cleanDragState();
 
-    onDragEnd?.({ event, node: convertNodePropsToEventData(node.props) });
+    onDragEnd?.({ event, node: convertNodePropsToEventData<TreeDataType>(node.props) });
 
     this.dragNode = null;
   };
@@ -733,7 +733,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     const abstractDropNodeProps = {
       ...getTreeNodeProps(dropTargetKey, this.getTreeNodeRequiredProps()),
-      active: this.getActiveItem()?.data.key === dropTargetKey,
+      active: this.getActiveItem()?.key === dropTargetKey,
       data: this.state.keyEntities[dropTargetKey].node,
     };
     const dropToChild = dragChildrenKeys.indexOf(dropTargetKey) !== -1;
@@ -795,7 +795,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     const { expanded, key } = treeNode;
 
     const node = flattenNodes.filter(nodeItem => nodeItem.key === key)[0];
-    const eventNode = convertNodePropsToEventData({
+    const eventNode = convertNodePropsToEventData<TreeDataType>({
       ...getTreeNodeProps(key, this.getTreeNodeRequiredProps()),
       data: node.data,
     });
@@ -824,7 +824,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     onDoubleClick?.(e, treeNode);
   };
 
-  onNodeSelect: NodeMouseEventHandler = (e, treeNode) => {
+  onNodeSelect: NodeMouseEventHandler<TreeDataType> = (e, treeNode) => {
     let { selectedKeys } = this.state;
     const { keyEntities, fieldNames } = this.state;
     const { onSelect, multiple } = this.props;
@@ -864,7 +864,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   onNodeCheck = (
     e: React.MouseEvent<HTMLSpanElement>,
-    treeNode: EventDataNode,
+    treeNode: EventDataNode<TreeDataType>,
     checked: boolean,
   ) => {
     const {
@@ -945,7 +945,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     onCheck?.(checkedObj, eventObj as CheckInfo<TreeDataType>);
   };
 
-  onNodeLoad = (treeNode: EventDataNode) => {
+  onNodeLoad = (treeNode: EventDataNode<TreeDataType>) => {
     const { key } = treeNode;
 
     const loadPromise = new Promise<void>((resolve, reject) => {
@@ -1013,19 +1013,19 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     return loadPromise;
   };
 
-  onNodeMouseEnter: NodeMouseEventHandler = (event, node) => {
+  onNodeMouseEnter: NodeMouseEventHandler<TreeDataType> = (event, node) => {
     const { onMouseEnter } = this.props;
 
     onMouseEnter?.({ event, node });
   };
 
-  onNodeMouseLeave: NodeMouseEventHandler = (event, node) => {
+  onNodeMouseLeave: NodeMouseEventHandler<TreeDataType> = (event, node) => {
     const { onMouseLeave } = this.props;
 
     onMouseLeave?.({ event, node });
   };
 
-  onNodeContextMenu: NodeMouseEventHandler = (event, node) => {
+  onNodeContextMenu: NodeMouseEventHandler<TreeDataType> = (event, node) => {
     const { onRightClick } = this.props;
     if (onRightClick) {
       event.preventDefault();
@@ -1078,7 +1078,11 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   setExpandedKeys = (expandedKeys: Key[]) => {
     const { treeData, fieldNames } = this.state;
 
-    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys, fieldNames);
+    const flattenNodes: FlattenNode<TreeDataType>[] = flattenTreeData<TreeDataType>(
+      treeData,
+      expandedKeys,
+      fieldNames,
+    );
     this.setUncontrolledState(
       {
         expandedKeys,
@@ -1088,7 +1092,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     );
   };
 
-  onNodeExpand = (e: React.MouseEvent<HTMLDivElement>, treeNode: EventDataNode) => {
+  onNodeExpand = (e: React.MouseEvent<HTMLDivElement>, treeNode: EventDataNode<TreeDataType>) => {
     let { expandedKeys } = this.state;
     const { listChanging, fieldNames } = this.state;
     const { onExpand, loadData } = this.props;
@@ -1130,7 +1134,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
         loadPromise
           .then(() => {
             // [Legacy] Refresh logic
-            const newFlattenTreeData = flattenTreeData(
+            const newFlattenTreeData = flattenTreeData<TreeDataType>(
               this.state.treeData,
               expandedKeys,
               fieldNames,
@@ -1208,7 +1212,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
-    const { activeKey, expandedKeys, checkedKeys } = this.state;
+    const { activeKey, expandedKeys, checkedKeys, fieldNames } = this.state;
     const { onKeyDown, checkable, selectable } = this.props;
 
     // >>>>>>>>>> Direction
@@ -1231,8 +1235,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       const treeNodeRequiredProps = this.getTreeNodeRequiredProps();
 
       const expandable =
-        activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length;
-      const eventNode = convertNodePropsToEventData({
+        activeItem.data.isLeaf === false || !!(activeItem.data[fieldNames.children] || []).length;
+      const eventNode = convertNodePropsToEventData<TreeDataType>({
         ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
         data: activeItem.data,
         active: true,
@@ -1245,7 +1249,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           if (expandable && expandedKeys.includes(activeKey)) {
             this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
           } else if (activeItem.parent) {
-            this.onActiveChange(activeItem.parent.data.key);
+            this.onActiveChange(activeItem.parent.key);
           }
           event.preventDefault();
           break;
@@ -1255,7 +1259,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           if (expandable && !expandedKeys.includes(activeKey)) {
             this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
           } else if (activeItem.children && activeItem.children.length) {
-            this.onActiveChange(activeItem.children[0].data.key);
+            this.onActiveChange(activeItem.children[0].key);
           }
           event.preventDefault();
           break;
@@ -1295,7 +1299,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
    * Only update the value which is not in props
    */
   setUncontrolledState = (
-    state: Partial<TreeState>,
+    state: Partial<TreeState<TreeDataType>>,
     atomic: boolean = false,
     forceState: Partial<TreeState<TreeDataType>> | null = null,
   ) => {

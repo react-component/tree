@@ -18,18 +18,18 @@ export interface BasicDataNode {
   style?: React.CSSProperties;
 }
 
-export interface DataNode extends BasicDataNode {
-  children?: DataNode[];
-  key: string | number;
-  title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
-}
-
 /** Provide a wrap type define for developer to wrap with customize fieldNames data type */
 export type FieldDataNode<T, ChildFieldName extends string = 'children'> = BasicDataNode &
   T &
   Partial<Record<ChildFieldName, FieldDataNode<T, ChildFieldName>[]>>;
 
-export interface EventDataNode extends DataNode {
+export type DataNode = FieldDataNode<{
+  key: string | number;
+  title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
+}>;
+
+export type EventDataNode<TreeDataType> = {
+  key: React.Key;
   expanded: boolean;
   selected: boolean;
   checked: boolean;
@@ -41,7 +41,7 @@ export interface EventDataNode extends DataNode {
   dragOverGapBottom: boolean;
   pos: string;
   active: boolean;
-}
+} & TreeDataType;
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
 
@@ -78,11 +78,11 @@ export interface DataEntity<TreeDataType extends BasicDataNode = DataNode>
   level: number;
 }
 
-export interface FlattenNode {
-  parent: FlattenNode | null;
-  children: FlattenNode[];
+export interface FlattenNode<TreeDataType extends BasicDataNode = DataNode> {
+  parent: FlattenNode<TreeDataType> | null;
+  children: FlattenNode<TreeDataType>[];
   pos: string;
-  data: DataNode;
+  data: TreeDataType;
   title: React.ReactNode;
   key: Key;
   isStart: boolean[];
