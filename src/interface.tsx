@@ -79,8 +79,8 @@ export interface DataEntity<TreeDataType extends BasicDataNode = DataNode>
 }
 
 export interface FlattenNode<TreeDataType extends BasicDataNode = DataNode> {
-  parent: FlattenNode | null;
-  children: FlattenNode[];
+  parent: FlattenNode<TreeDataType> | null;
+  children: FlattenNode<TreeDataType>[];
   pos: string;
   data: TreeDataType;
   title: React.ReactNode;

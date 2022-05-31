@@ -55,7 +55,7 @@ const MAX_RETRY_TIMES = 10;
 
 interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
   event: 'check';
-  node: EventDataNode;
+  node: EventDataNode<TreeDataType>;
   checked: boolean;
   nativeEvent: MouseEvent;
   checkedNodes: TreeDataType[];
@@ -217,7 +217,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   dropAllowed: boolean;
   dragOverNodeKey: Key | null;
 
-  treeData: DataNode[];
+  treeData: TreeDataType[];
   flattenNodes: FlattenNode<TreeDataType>[];
 
   focused: boolean;
@@ -733,7 +733,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     const abstractDropNodeProps = {
       ...getTreeNodeProps(dropTargetKey, this.getTreeNodeRequiredProps()),
-      active: this.getActiveItem()?.data.key === dropTargetKey,
+      active: this.getActiveItem()?.key === dropTargetKey,
       data: this.state.keyEntities[dropTargetKey].node,
     };
     const dropToChild = dragChildrenKeys.indexOf(dropTargetKey) !== -1;
@@ -1078,7 +1078,11 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   setExpandedKeys = (expandedKeys: Key[]) => {
     const { treeData, fieldNames } = this.state;
 
-    const flattenNodes: FlattenNode[] = flattenTreeData(treeData, expandedKeys, fieldNames);
+    const flattenNodes: FlattenNode<TreeDataType>[] = flattenTreeData<TreeDataType>(
+      treeData,
+      expandedKeys,
+      fieldNames,
+    );
     this.setUncontrolledState(
       {
         expandedKeys,
@@ -1130,7 +1134,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
         loadPromise
           .then(() => {
             // [Legacy] Refresh logic
-            const newFlattenTreeData = flattenTreeData(
+            const newFlattenTreeData = flattenTreeData<TreeDataType>(
               this.state.treeData,
               expandedKeys,
               fieldNames,
@@ -1208,7 +1212,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
-    const { activeKey, expandedKeys, checkedKeys } = this.state;
+    const { activeKey, expandedKeys, checkedKeys, fieldNames } = this.state;
     const { onKeyDown, checkable, selectable } = this.props;
 
     // >>>>>>>>>> Direction
@@ -1231,7 +1235,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       const treeNodeRequiredProps = this.getTreeNodeRequiredProps();
 
       const expandable =
-        activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length;
+        activeItem.data.isLeaf === false || !!(activeItem.data[fieldNames.children] || []).length;
       const eventNode = convertNodePropsToEventData<TreeDataType>({
         ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
         data: activeItem.data,
@@ -1245,7 +1249,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           if (expandable && expandedKeys.includes(activeKey)) {
             this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
           } else if (activeItem.parent) {
-            this.onActiveChange(activeItem.parent.data.key);
+            this.onActiveChange(activeItem.parent.key);
           }
           event.preventDefault();
           break;
@@ -1255,7 +1259,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           if (expandable && !expandedKeys.includes(activeKey)) {
             this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
           } else if (activeItem.children && activeItem.children.length) {
-            this.onActiveChange(activeItem.children[0].data.key);
+            this.onActiveChange(activeItem.children[0].key);
           }
           event.preventDefault();
           break;
@@ -1295,7 +1299,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
    * Only update the value which is not in props
    */
   setUncontrolledState = (
-    state: Partial<TreeState>,
+    state: Partial<TreeState<TreeDataType>>,
     atomic: boolean = false,
     forceState: Partial<TreeState<TreeDataType>> | null = null,
   ) => {

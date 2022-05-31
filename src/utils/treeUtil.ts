@@ -105,8 +105,8 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
  * @param expandedKeys
  * need expanded keys, provides `true` means all expanded (used in `rc-tree-select`).
  */
-export function flattenTreeData<TreeDataType>(
-  treeNodeList: DataNode[],
+export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
+  treeNodeList: TreeDataType[],
   expandedKeys: Key[] | true,
   fieldNames: FieldNames,
 ): FlattenNode<TreeDataType>[] {
@@ -119,7 +119,10 @@ export function flattenTreeData<TreeDataType>(
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
   const flattenList: FlattenNode<TreeDataType>[] = [];
 
-  function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode<TreeDataType>[] {
+  function dig(
+    list: TreeDataType[],
+    parent: FlattenNode<TreeDataType> = null,
+  ): FlattenNode<TreeDataType>[] {
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode[fieldKey], pos);

@@ -54,13 +54,13 @@ export interface NodeListRef {
   getIndentWidth: () => number;
 }
 
-interface NodeListProps {
+interface NodeListProps<TreeDataType> {
   prefixCls: string;
   style: React.CSSProperties;
-  data: FlattenNode[];
+  data: FlattenNode<TreeDataType>[];
   motion: any;
   focusable?: boolean;
-  activeItem: FlattenNode;
+  activeItem: FlattenNode<TreeDataType>;
   focused?: boolean;
   tabIndex: number;
   checkable?: boolean;
@@ -126,7 +126,7 @@ function getAccessibilityPath(item: FlattenNode): string {
   return path;
 }
 
-const NodeList = React.forwardRef<NodeListRef, NodeListProps>((props, ref) => {
+const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) => {
   const {
     prefixCls,
     data,
