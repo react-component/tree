@@ -147,7 +147,7 @@ describe('ExpandAction', () => {
     expect(onExpand).not.toHaveBeenCalled();
   });
 
-  it.only('not trigger expand when ctrl pressed', () => {
+  it('not trigger expand when ctrl pressed', () => {
     const onClick = jest.fn();
     const onSelect = jest.fn();
     const onExpand = jest.fn();
