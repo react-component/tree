@@ -792,7 +792,11 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   triggerExpandActionExpand: NodeMouseEventHandler = (e, treeNode) => {
     const { expandedKeys, flattenNodes } = this.state;
-    const { expanded, key } = treeNode;
+    const { expanded, key, isLeaf } = treeNode;
+
+    if (isLeaf || e.shiftKey || e.metaKey || e.ctrlKey) {
+      return;
+    }
 
     const node = flattenNodes.filter(nodeItem => nodeItem.key === key)[0];
     const eventNode = convertNodePropsToEventData<TreeDataType>({
