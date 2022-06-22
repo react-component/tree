@@ -20,6 +20,9 @@ describe('Tree.TypeScript', () => {
             list: [],
           },
         ]}
+        onSelect={(selectedKeys, info) => {
+          console.log('info', info.node.isLeaf);
+        }}
       />,
     );
   });
