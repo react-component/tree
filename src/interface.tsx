@@ -42,7 +42,7 @@ export type EventDataNode<TreeDataType> = {
   pos: string;
   active: boolean;
 } & TreeDataType &
-  DataNode;
+  BasicDataNode;
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
 
