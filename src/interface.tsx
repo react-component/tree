@@ -41,7 +41,8 @@ export type EventDataNode<TreeDataType> = {
   dragOverGapBottom: boolean;
   pos: string;
   active: boolean;
-} & TreeDataType;
+} & TreeDataType &
+  BasicDataNode;
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
 
