@@ -6,6 +6,9 @@ import Tree from 'rc-tree';
 function generateTreeNodes(treeNode) {
   const arr = [];
   const key = treeNode.props.eventKey;
+  if (key === '0-1-0') {
+    return [];
+  }
   for (let i = 0; i < 3; i += 1) {
     arr.push({ title: `leaf ${key}-${i}`, key: `${key}-${i}` });
   }
