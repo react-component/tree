@@ -83,11 +83,6 @@ exports[`Tree Draggable node is not draggable the draggable icon is not displaye
               />
             </span>
             <span
-              class="rc-tree-draggable-icon"
-            >
-              ↕️
-            </span>
-            <span
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
             <span
