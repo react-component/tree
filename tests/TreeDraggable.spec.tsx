@@ -1115,4 +1115,29 @@ describe('Tree Draggable', () => {
 
     expect(onDrop).toHaveBeenCalled();
   });
+
+  it('node is not draggable the draggable icon is not displayed', () => {
+    const { container } = render(
+      <Tree
+        draggable={{
+          icon: '↕️',
+          nodeDraggable: node => Array.isArray(node.children),
+        }}
+        defaultExpandAll
+        treeData={[
+          {
+            title: '0-0-label',
+            key: '0-0-key',
+            children: [
+              {
+                title: '0-0-0-label',
+                key: '0-0-0-key',
+              },
+            ],
+          },
+        ]}
+      />,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
 });
