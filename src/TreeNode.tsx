@@ -334,7 +334,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       context: { draggable, prefixCls },
     } = this.props;
 
-    return draggable?.icon ? (
+    return draggable?.icon && this.isDraggable() ? (
       <span className={`${prefixCls}-draggable-icon`}>{draggable.icon}</span>
     ) : null;
   };
