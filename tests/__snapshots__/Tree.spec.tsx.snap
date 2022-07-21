@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TreeNode Props className 1`] = `
+exports[`Tree Basic check basic render 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      aria-label="for screen reader"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -16,7 +16,7 @@ exports[`TreeNode Props className 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -28,7 +28,7 @@ exports[`TreeNode Props className 1`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -36,10 +36,12 @@ exports[`TreeNode Props className 1`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -47,6 +49,9 @@ exports[`TreeNode Props className 1`] = `
             />
             <span
               class="rc-tree-switcher rc-tree-switcher_open"
+            />
+            <span
+              class="rc-tree-checkbox"
             />
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
@@ -63,766 +68,9 @@ exports[`TreeNode Props className 1`] = `
             </span>
           </div>
           <div
-            class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher_open"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__open"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`TreeNode Props customize icon component 1`] = `
-<div
-  class="rc-tree"
->
-  <div
-    role="tree"
-  >
-    <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
-      tabindex="0"
-      value=""
-    />
-  </div>
-  <div
-    aria-hidden="true"
-    class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
-  >
-    <div
-      class="rc-tree-indent"
-    >
-      <div
-        class="rc-tree-indent-unit"
-      />
-    </div>
-  </div>
-  <div
-    class="rc-tree-list"
-    style="position:relative"
-  >
-    <div
-      class="rc-tree-list-holder"
-    >
-      <div>
-        <div
-          class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
-        >
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__customize"
-              >
-                <span
-                  class="cust-icon"
-                />
-              </span>
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`TreeNode Props customize icon element 1`] = `
-<div
-  class="rc-tree"
->
-  <div
-    role="tree"
-  >
-    <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
-      tabindex="0"
-      value=""
-    />
-  </div>
-  <div
-    aria-hidden="true"
-    class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
-  >
-    <div
-      class="rc-tree-indent"
-    >
-      <div
-        class="rc-tree-indent-unit"
-      />
-    </div>
-  </div>
-  <div
-    class="rc-tree-list"
-    style="position:relative"
-  >
-    <div
-      class="rc-tree-list-holder"
-    >
-      <div>
-        <div
-          class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
-        >
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__customize"
-              >
-                <span
-                  class="cust-icon"
-                />
-              </span>
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`TreeNode Props customize icon hide icon 1`] = `
-<div
-  class="rc-tree"
->
-  <div
-    role="tree"
-  >
-    <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
-      tabindex="0"
-      value=""
-    />
-  </div>
-  <div
-    aria-hidden="true"
-    class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
-  >
-    <div
-      class="rc-tree-indent"
-    >
-      <div
-        class="rc-tree-indent-unit"
-      />
-    </div>
-  </div>
-  <div
-    class="rc-tree-list"
-    style="position:relative"
-  >
-    <div
-      class="rc-tree-list-holder"
-    >
-      <div>
-        <div
-          class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
-        >
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = `
-<div
-  class="rc-tree"
->
-  <div
-    role="tree"
-  >
-    <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
-      tabindex="0"
-      value=""
-    />
-  </div>
-  <div
-    aria-hidden="true"
-    class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
-  >
-    <div
-      class="rc-tree-indent"
-    >
-      <div
-        class="rc-tree-indent-unit"
-      />
-    </div>
-  </div>
-  <div
-    class="rc-tree-list"
-    style="position:relative"
-  >
-    <div
-      class="rc-tree-list-holder"
-    >
-      <div>
-        <div
-          class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
-        >
-          <div
-            aria-label="0-0"
-            class="rc-tree-treenode rc-tree-treenode-switcher-open"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher_open"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__open"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            aria-label="0-0-0"
-            class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher_open"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__open"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            aria-label="0-0-0-0"
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            aria-label="0-0-1"
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            aria-label="0-1"
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`TreeNode Props data and aria props renders data attributes on li 1`] = `
-<div
-  class="rc-tree"
->
-  <div
-    role="tree"
-  >
-    <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
-      tabindex="0"
-      value=""
-    />
-  </div>
-  <div
-    aria-hidden="true"
-    class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
-  >
-    <div
-      class="rc-tree-indent"
-    >
-      <div
-        class="rc-tree-indent-unit"
-      />
-    </div>
-  </div>
-  <div
-    class="rc-tree-list"
-    style="position:relative"
-  >
-    <div
-      class="rc-tree-list-holder"
-    >
-      <div>
-        <div
-          class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
-        >
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open"
-            data-test="0-0"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher_open"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__open"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
-            data-test="0-0-0"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher_open"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__open"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-            data-test="0-0-0-0"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-            data-test="0-0-1"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            >
-              <span
-                class="rc-tree-indent-unit rc-tree-indent-unit-start"
-              />
-            </span>
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
-            data-test="0-1"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-iconEle rc-tree-icon__docu"
-              />
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`TreeNode Props isLeaf 1`] = `
-<div
-  class="rc-tree"
->
-  <div
-    role="tree"
-  >
-    <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
-      tabindex="0"
-      value=""
-    />
-  </div>
-  <div
-    aria-hidden="true"
-    class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
-  >
-    <div
-      class="rc-tree-indent"
-    >
-      <div
-        class="rc-tree-indent-unit"
-      />
-    </div>
-  </div>
-  <div
-    class="rc-tree-list"
-    style="position:relative"
-  >
-    <div
-      class="rc-tree-list-holder"
-    >
-      <div>
-        <div
-          class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
-        >
-          <div
-            class="rc-tree-treenode rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
-            />
-            <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-          <div
-            class="rc-tree-treenode rc-tree-treenode-leaf-last"
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -836,70 +84,7 @@ exports[`TreeNode Props isLeaf 1`] = `
               class="rc-tree-switcher rc-tree-switcher-noop"
             />
             <span
-              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
-            >
-              <span
-                class="rc-tree-title"
-              >
-                ---
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`TreeNode Props isLeaf 2`] = `
-<div
-  class="rc-tree"
->
-  <div
-    role="tree"
-  >
-    <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
-      tabindex="0"
-      value=""
-    />
-  </div>
-  <div
-    aria-hidden="true"
-    class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
-  >
-    <div
-      class="rc-tree-indent"
-    >
-      <div
-        class="rc-tree-indent-unit"
-      />
-    </div>
-  </div>
-  <div
-    class="rc-tree-list"
-    style="position:relative"
-  >
-    <div
-      class="rc-tree-list-holder"
-    >
-      <div>
-        <div
-          class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
-        >
-          <div
-            class="rc-tree-treenode rc-tree-treenode-leaf-last"
-          >
-            <span
-              aria-hidden="true"
-              class="rc-tree-indent"
-            />
-            <span
-              class="rc-tree-switcher rc-tree-switcher-noop"
+              class="rc-tree-checkbox rc-tree-checkbox-disabled"
             />
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
@@ -916,7 +101,9 @@ exports[`TreeNode Props isLeaf 2`] = `
             </span>
           </div>
           <div
-            class="rc-tree-treenode rc-tree-treenode-leaf-last"
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -928,6 +115,9 @@ exports[`TreeNode Props isLeaf 2`] = `
             </span>
             <span
               class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-checkbox"
             />
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
@@ -950,15 +140,15 @@ exports[`TreeNode Props isLeaf 2`] = `
 </div>
 `;
 
-exports[`TreeNode Props isLeaf 3`] = `
+exports[`Tree Basic check check after data ready works 1`] = `
 <div
   class="rc-tree"
+  role="tree"
 >
-  <div
-    role="tree"
-  >
+  <div>
     <input
-      style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+      aria-label="for screen reader"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
       tabindex="0"
       value=""
     />
@@ -966,7 +156,7 @@ exports[`TreeNode Props isLeaf 3`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position:absolute;pointer-events:none;visibility:hidden;height:0;overflow:hidden"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
   >
     <div
       class="rc-tree-indent"
@@ -978,7 +168,7 @@ exports[`TreeNode Props isLeaf 3`] = `
   </div>
   <div
     class="rc-tree-list"
-    style="position:relative"
+    style="position: relative;"
   >
     <div
       class="rc-tree-list-holder"
@@ -986,10 +176,316 @@ exports[`TreeNode Props isLeaf 3`] = `
       <div>
         <div
           class="rc-tree-list-holder-inner"
-          style="display:flex;flex-direction:column"
+          style="display: flex; flex-direction: column;"
         >
           <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher_open"
+            />
+            <span
+              class="rc-tree-checkbox rc-tree-checkbox-checked"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+              title="Light"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__open"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                Light
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            >
+              <span
+                class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+              />
+            </span>
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-checkbox rc-tree-checkbox-checked"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="Bamboo"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                Bamboo
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tree Basic check check update when Tree trigger componentWillReceiveProps 1`] = `
+<div
+  class="rc-tree"
+  role="tree"
+>
+  <div>
+    <input
+      aria-label="for screen reader"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+      tabindex="0"
+      value=""
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
+    class="rc-tree-list"
+    style="position: relative;"
+  >
+    <div
+      class="rc-tree-list-holder"
+    >
+      <div>
+        <div
+          class="rc-tree-list-holder-inner"
+          style="display: flex; flex-direction: column;"
+        >
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-checkbox rc-tree-checkbox-checked"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="parent 1"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                parent 1
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
+<div
+  class="rc-tree"
+  role="tree"
+>
+  <div>
+    <input
+      aria-label="for screen reader"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+      tabindex="0"
+      value=""
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
+    class="rc-tree-list"
+    style="position: relative;"
+  >
+    <div
+      class="rc-tree-list-holder"
+    >
+      <div>
+        <div
+          class="rc-tree-list-holder-inner"
+          style="display: flex; flex-direction: column;"
+        >
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="00"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                00
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="02"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                02
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
+<div
+  class="rc-tree"
+  role="tree"
+>
+  <div>
+    <input
+      aria-label="for screen reader"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+      tabindex="0"
+      value=""
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
+    class="rc-tree-list"
+    style="position: relative;"
+  >
+    <div
+      class="rc-tree-list-holder"
+    >
+      <div>
+        <div
+          class="rc-tree-list-holder-inner"
+          style="display: flex; flex-direction: column;"
+        >
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="00"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                00
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1000,7 +496,7 @@ exports[`TreeNode Props isLeaf 3`] = `
             />
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-              title="---"
+              title="01"
             >
               <span
                 class="rc-tree-iconEle rc-tree-icon__open"
@@ -1008,12 +504,148 @@ exports[`TreeNode Props isLeaf 3`] = `
               <span
                 class="rc-tree-title"
               >
-                ---
+                01
               </span>
             </span>
           </div>
           <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            >
+              <span
+                class="rc-tree-indent-unit rc-tree-indent-unit-end"
+              />
+            </span>
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="010"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                010
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            >
+              <span
+                class="rc-tree-indent-unit rc-tree-indent-unit-end"
+              />
+            </span>
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="012"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                012
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tree Basic renders correctly 1`] = `
+<div
+  class="rc-tree forTest rc-tree-show-line"
+  role="tree"
+>
+  <div>
+    <input
+      aria-label="for screen reader"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+      tabindex="0"
+      value=""
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
+    class="rc-tree-list"
+    style="position: relative;"
+  >
+    <div
+      class="rc-tree-list-holder"
+    >
+      <div>
+        <div
+          class="rc-tree-list-holder-inner"
+          style="display: flex; flex-direction: column;"
+        >
+          <div
+            aria-grabbed="false"
+            class="spe rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher_open"
+            />
+            <span
+              class="rc-tree-checkbox"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
+              title="parent 1"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__open"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                parent 1
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
+            draggable="false"
           >
             <span
               aria-hidden="true"
@@ -1027,8 +659,11 @@ exports[`TreeNode Props isLeaf 3`] = `
               class="rc-tree-switcher rc-tree-switcher_open"
             />
             <span
+              class="rc-tree-checkbox rc-tree-checkbox-disabled"
+            />
+            <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-              title="---"
+              title="leaf 1"
             >
               <span
                 class="rc-tree-iconEle rc-tree-icon__open"
@@ -1036,7 +671,463 @@ exports[`TreeNode Props isLeaf 3`] = `
               <span
                 class="rc-tree-title"
               >
-                ---
+                leaf 1
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            >
+              <span
+                class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+              />
+              <span
+                class="rc-tree-indent-unit rc-tree-indent-unit-start"
+              />
+            </span>
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-checkbox"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="leaf"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                leaf
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            >
+              <span
+                class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+              />
+              <span
+                class="rc-tree-indent-unit rc-tree-indent-unit-start"
+              />
+            </span>
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-checkbox"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="leaf"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                leaf
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            >
+              <span
+                class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+              />
+            </span>
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-checkbox rc-tree-checkbox-disabled"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title="leaf 2"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                leaf 2
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tree Basic renders opaque children correctly 1`] = `
+<div
+  class="rc-tree"
+  role="tree"
+>
+  <div>
+    <input
+      aria-label="for screen reader"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+      tabindex="0"
+      value=""
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
+    class="rc-tree-list"
+    style="position: relative;"
+  >
+    <div
+      class="rc-tree-list-holder"
+    >
+      <div>
+        <div
+          class="rc-tree-list-holder-inner"
+          style="display: flex; flex-direction: column;"
+        >
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher_close"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-close"
+              title="0"
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__close"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                0
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
+<div
+  class="rc-tree root-tree"
+  role="tree"
+  style="background-color: cyan;"
+>
+  <div>
+    <input
+      aria-label="for screen reader"
+      style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+      tabindex="0"
+      value=""
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    class="rc-tree-treenode"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+  >
+    <div
+      class="rc-tree-indent"
+    >
+      <div
+        class="rc-tree-indent-unit"
+      />
+    </div>
+  </div>
+  <div
+    class="rc-tree-list"
+    style="position: relative;"
+  >
+    <div
+      class="rc-tree-list-holder"
+    >
+      <div>
+        <div
+          class="rc-tree-list-holder-inner"
+          style="display: flex; flex-direction: column;"
+        >
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                0
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                1
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                2
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                3
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                4
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                5
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                6
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                7
+              </span>
+            </span>
+          </div>
+          <div
+            aria-grabbed="false"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
+            draggable="false"
+          >
+            <span
+              aria-hidden="true"
+              class="rc-tree-indent"
+            />
+            <span
+              class="rc-tree-switcher rc-tree-switcher-noop"
+            />
+            <span
+              class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
+              title=""
+            >
+              <span
+                class="rc-tree-iconEle rc-tree-icon__docu"
+              />
+              <span
+                class="rc-tree-title"
+              >
+                8
               </span>
             </span>
           </div>

@@ -34,6 +34,7 @@ export const MotionEntity: DataEntity = {
   index: 0,
   pos: '0',
   node: MotionNode,
+  nodes: [MotionNode],
 };
 
 const MotionFlattenData: FlattenNode = {
@@ -41,6 +42,8 @@ const MotionFlattenData: FlattenNode = {
   children: [],
   pos: MotionEntity.pos,
   data: MotionNode,
+  title: null,
+  key: MOTION_KEY,
   /** Hold empty list here since we do not use it */
   isStart: [],
   isEnd: [],
@@ -51,13 +54,13 @@ export interface NodeListRef {
   getIndentWidth: () => number;
 }
 
-interface NodeListProps {
+interface NodeListProps<TreeDataType> {
   prefixCls: string;
   style: React.CSSProperties;
-  data: FlattenNode[];
+  data: FlattenNode<TreeDataType>[];
   motion: any;
   focusable?: boolean;
-  activeItem: FlattenNode;
+  activeItem: FlattenNode<TreeDataType>;
   focused?: boolean;
   tabIndex: number;
   checkable?: boolean;
@@ -70,7 +73,7 @@ interface NodeListProps {
   loadedKeys: Key[];
   loadingKeys: Key[];
   halfCheckedKeys: Key[];
-  keyEntities: Record<Key, DataEntity>;
+  keyEntities: Record<Key, DataEntity<any>>;
 
   dragging: boolean;
   dragOverNodeKey: Key;
@@ -107,10 +110,7 @@ export function getMinimumRangeTransitionRange(
 }
 
 function itemKey(item: FlattenNode) {
-  const {
-    data: { key },
-    pos,
-  } = item;
+  const { key, pos } = item;
   return getKey(key, pos);
 }
 
@@ -126,7 +126,7 @@ function getAccessibilityPath(item: FlattenNode): string {
   return path;
 }
 
-const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (props, ref) => {
+const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) => {
   const {
     prefixCls,
     data,
@@ -183,9 +183,15 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
   const [transitionRange, setTransitionRange] = React.useState([]);
   const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
+  // When motion end but data change, this will makes data back to previous one
+  const dataRef = React.useRef(data);
+  dataRef.current = data;
+
   function onMotionEnd() {
-    setPrevData(data);
-    setTransitionData(data);
+    const latestData = dataRef.current;
+
+    setPrevData(latestData);
+    setTransitionData(latestData);
     setTransitionRange([]);
     setMotionType(null);
 
@@ -200,7 +206,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
     if (diffExpanded.key !== null) {
       if (diffExpanded.add) {
-        const keyIndex = prevData.findIndex(({ data: { key } }) => key === diffExpanded.key);
+        const keyIndex = prevData.findIndex(({ key }) => key === diffExpanded.key);
 
         const rangeNodes = getMinimumRangeTransitionRange(
           getExpandRange(prevData, data, diffExpanded.key),
@@ -216,7 +222,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         setTransitionRange(rangeNodes);
         setMotionType('show');
       } else {
-        const keyIndex = data.findIndex(({ data: { key } }) => key === diffExpanded.key);
+        const keyIndex = data.findIndex(({ key }) => key === diffExpanded.key);
 
         const rangeNodes = getMinimumRangeTransitionRange(
           getExpandRange(data, prevData, diffExpanded.key),
@@ -268,7 +274,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         </span>
       )}
 
-      <div role="tree">
+      <div>
         <input
           style={HIDDEN_STYLE}
           disabled={focusable === false || disabled}
@@ -278,6 +284,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           onBlur={onBlur}
           value=""
           onChange={noop}
+          aria-label="for screen reader"
         />
       </div>
 
@@ -307,24 +314,37 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
+        onVisibleChange={(originList, fullList) => {
+          const originSet = new Set(originList);
+          const restList = fullList.filter(item => !originSet.has(item));
+
+          // Motion node is not render. Skip motion
+          if (restList.some(item => itemKey(item) === MOTION_KEY)) {
+            onMotionEnd();
+          }
+        }}
       >
-        {(treeNode: FlattenNode) => {
+        {treeNode => {
           const {
             pos,
-            data: { key, ...restProps },
+            data: { ...restProps },
+            title,
+            key,
             isStart,
             isEnd,
           } = treeNode;
           const mergedKey = getKey(key, pos);
+          delete restProps.key;
           delete restProps.children;
 
           const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
 
           return (
             <MotionTreeNode
-              {...restProps}
+              {...(restProps as Omit<typeof restProps, 'children'>)}
               {...treeNodeProps}
-              active={!!activeItem && key === activeItem.data.key}
+              title={title}
+              active={!!activeItem && key === activeItem.key}
               pos={pos}
               data={treeNode.data}
               isStart={isStart}
@@ -344,9 +364,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
       </VirtualList>
     </>
   );
-};
+});
 
-const NodeList = React.forwardRef(RefNodeList);
 NodeList.displayName = 'NodeList';
 
 export default NodeList;

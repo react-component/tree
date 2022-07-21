@@ -1,5 +1,11 @@
-import Tree, { TreeProps, CheckInfo } from './Tree';
-import TreeNode, { TreeNodeProps } from './TreeNode';
+import Tree from './Tree';
+import TreeNode from './TreeNode';
+import type { TreeProps } from './Tree';
+import type { CheckInfo } from './Tree';
+import type { TreeNodeProps } from './TreeNode';
+import type { BasicDataNode, FieldDataNode } from './interface';
 
-export { TreeNode, TreeProps, TreeNodeProps, CheckInfo };
+export { TreeNode };
+export type { TreeProps, TreeNodeProps, BasicDataNode, FieldDataNode, CheckInfo };
+
 export default Tree;

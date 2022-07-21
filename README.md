@@ -2,14 +2,14 @@
 
 Tree component.
 
-[![NPM version][npm-image]][npm-url] [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi) [![build status][github-actions-image]][github-actions-url] [![Test coverage][coveralls-image]][coveralls-url] [![Dependencies][david-image]][david-url] [![DevDependencies][david-dev-image]][david-dev-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
+[![NPM version][npm-image]][npm-url] [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi) [![build status][github-actions-image]][github-actions-url] [![Test coverage][codecov-image]][codecov-url] [![Dependencies][david-image]][david-url] [![DevDependencies][david-dev-image]][david-dev-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree
 [github-actions-image]: https://github.com/react-component/tree/workflows/CI/badge.svg
 [github-actions-url]: https://github.com/react-component/tree/actions
-[coveralls-image]: https://img.shields.io/coveralls/react-component/tree.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/tree?branch=master
+[codecov-image]: https://img.shields.io/codecov/c/github/react-component/tree/master.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/react-component/tree/branch/master
 [david-url]: https://david-dm.org/react-component/tree
 [david-image]: https://david-dm.org/react-component/tree/status.svg?style=flat-square
 [david-dev-url]: https://david-dm.org/react-component/tree?type=dev
@@ -38,6 +38,7 @@ online example: https://tree.react-component.now.sh/
 [![rc-tree](https://nodei.co/npm/rc-tree.png)](https://npmjs.org/package/rc-tree)
 
 ## Usage
+> Note: `import "rc-tree/assets/index.css"`
 
 see examples
 
@@ -53,7 +54,7 @@ see examples
 | checkStrictly | check node precisely, parent and children nodes are not associated | bool | false |
 | className | additional css class of root dom node | String | '' |
 | defaultCheckedKeys | default checked treeNodes | String[] | [] |
-| defaultExpandedKeys | expand specific treeNodes | String[] | - |
+| defaultExpandedKeys | expand specific treeNodes | String[] | [] |
 | defaultExpandAll | expand all treeNodes | bool | false |
 | defaultExpandParent | auto expand parent treeNodes when init | bool | true |
 | defaultSelectedKeys | default selected treeNodes | String[] | [] |
@@ -62,7 +63,7 @@ see examples
 | expandedKeys | Controlled expand specific treeNodes | String[] | - |
 | filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
 | icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
-| loadedKeys | Mark node is loaded when `loadData` is true | string[] | - |
+| loadedKeys | Mark node is loaded when `loadData` is true | String[] | - |
 | loadData | load data asynchronously and the return value should be a promise | function(node) | - |
 | multiple | whether multiple select | bool | false |
 | prefixCls | prefix class | String | 'rc-tree' |
@@ -86,9 +87,10 @@ see examples
 | onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 | virtual | Disable virtual scroll when `false` | boolean | - |
-| allowDrop | Whether to allow drop on node | ({ dropNode, dropPosition }) => boolean | - |
+| allowDrop | Whether to allow drop on node | ({ dragNode, dropNode, dropPosition }) => boolean | - |
 | dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode| - |
 | direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | - |
+| expandAction | Tree open logic, optional: false \| `click` \| `doubleClick` | string \| boolean | `click` |
 
 ### TreeNode props
 
@@ -99,7 +101,7 @@ see examples
 | name | description | type | default |
 | --- | --- | --- | --- |
 | className | additional class to treeNode | String | '' |
-| checkable | control node checkable if Tree is checkable | bool | - |
+| checkable | control node checkable if Tree is checkable | bool | false |
 | style | set style to treeNode | Object | '' |
 | disabled | whether disabled the treeNode | bool | false |
 | disableCheckbox | whether disable the treeNode' checkbox | bool | false |
@@ -138,4 +140,3 @@ rc-tree is released under the MIT license.
 - [jqTree](https://mbraak.github.io/jqTree/)
 - [jquery.treeselect](https://travistidwell.com/jquery.treeselect.js/)
 - [Angular Multi Select Tree](https://a5hik.github.io/angular-multi-select-tree/)
-

@@ -1,7 +1,7 @@
 import { ReactWrapper } from 'enzyme';
 import { Component } from 'react';
 
-export function objectMatcher(item) {
+export function objectMatcher(item: object) {
   const result = Array.isArray(item) ? [] : {};
 
   Object.keys(item).forEach(key => {

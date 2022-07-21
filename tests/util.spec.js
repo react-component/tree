@@ -6,7 +6,6 @@ import {
   convertDataToTree,
   conductExpandParent,
   getDragChildrenKeys,
-  getDataAndAria,
   parseCheckedKeys,
 } from '../src/util';
 import {
@@ -114,11 +113,20 @@ describe('Util', () => {
   });
 
   describe('convertDataToEntities', () => {
-    it('basic', () => {
+    it('basic convert', () => {
       const entities = convertDataToEntities([
         { key: 'parent', children: [{ key: 0 }, { key: 1 }] },
       ]);
       expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
+
+      // Used for `rc-cascader` to get fully path
+      expect(entities.keyEntities.parent.nodes).toEqual([
+        expect.objectContaining({ key: 'parent' }),
+      ]);
+      expect(entities.keyEntities[0].nodes).toEqual([
+        expect.objectContaining({ key: 'parent' }),
+        expect.objectContaining({ key: 0 }),
+      ]);
     });
 
     it('with string externalGetKey', () => {
@@ -463,21 +471,6 @@ describe('Util', () => {
 
     const keys1 = getDragChildrenKeys('111', keyEntities);
     expect(keys1.sort()).toEqual(['222', '333'].sort());
-  });
-
-  describe('getDataAndAria', () => {
-    it('should return only data- and aria- properties', () => {
-      const props = {
-        'data-test': 'name',
-        'aria-label': 'name',
-        dataSource: '/api',
-        ariaLabel: 'some-label',
-      };
-      expect(getDataAndAria(props)).toEqual({
-        'data-test': 'name',
-        'aria-label': 'name',
-      });
-    });
   });
 
   it('parseCheckedKeys warning', () => {

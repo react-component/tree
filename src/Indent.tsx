@@ -30,4 +30,4 @@ const Indent = ({ prefixCls, level, isStart, isEnd }: IndentProps) => {
   );
 };
 
-export default Indent;
+export default React.memo(Indent);
