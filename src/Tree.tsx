@@ -714,6 +714,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     onDragEnd?.({ event, node: convertNodePropsToEventData<TreeDataType>(node.props) });
 
     this.dragNode = null;
+
+    window.removeEventListener('dragend', this.onWindowDragEnd);
   };
 
   onNodeDrop = (event: React.DragEvent<HTMLDivElement>, node, outsideTree: boolean = false) => {

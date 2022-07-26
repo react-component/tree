@@ -1115,4 +1115,24 @@ describe('Tree Draggable', () => {
 
     expect(onDrop).toHaveBeenCalled();
   });
+
+  it('not break of other drop node', () => {
+    const onDragStart = jest.fn();
+    const onDragEnd = jest.fn();
+    const { container } = render(
+      <div>
+        {createTree({ onDragStart, onDragEnd })}
+        <div className="test" />
+      </div>,
+    );
+    const treeNode = container.querySelector('.dragTarget > .rc-tree-node-content-wrapper');
+    fireEvent.dragStart(treeNode);
+    expect(onDragStart).toHaveBeenCalled();
+
+    fireEvent.dragEnd(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'));
+    expect(onDragEnd).toHaveBeenCalled();
+
+    // Should not break
+    fireEvent.dragEnd(container.querySelector('.test'));
+  });
 });
