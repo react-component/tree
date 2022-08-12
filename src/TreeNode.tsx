@@ -542,6 +542,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       active,
       data,
       onMouseMove,
+      selectable,
       ...otherProps
     } = this.props;
     const {
@@ -563,6 +564,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const draggableWithoutDisabled = !disabled && mergedDraggable;
 
     const dragging = draggingNodeKey === eventKey;
+    const ariaSelected = selectable !== undefined ? { 'aria-selected': !!selectable } : undefined;
 
     return (
       <div
@@ -599,6 +601,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         onDrop={mergedDraggable ? this.onDrop : undefined}
         onDragEnd={mergedDraggable ? this.onDragEnd : undefined}
         onMouseMove={onMouseMove}
+        {...ariaSelected}
         {...dataOrAriaAttributeProps}
       >
         <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />

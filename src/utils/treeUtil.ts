@@ -23,11 +23,13 @@ export function getKey(key: Key, pos: string) {
   return pos;
 }
 
-export function fillFieldNames(fieldNames?: FieldNames) {
-  const { title, key, children } = fieldNames || {};
+export function fillFieldNames(fieldNames?: FieldNames): Required<FieldNames> {
+  const { title, _title, key, children } = fieldNames || {};
+  const mergedTitle = title || 'title';
 
   return {
-    title: title || 'title',
+    title: mergedTitle,
+    _title: _title || [mergedTitle],
     key: key || 'key',
     children: children || 'children',
   };
@@ -103,18 +105,24 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
  * @param expandedKeys
  * need expanded keys, provides `true` means all expanded (used in `rc-tree-select`).
  */
-export function flattenTreeData(
-  treeNodeList: DataNode[],
+export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
+  treeNodeList: TreeDataType[],
   expandedKeys: Key[] | true,
   fieldNames: FieldNames,
-): FlattenNode[] {
-  const { title: fieldTitle, key: fieldKey, children: fieldChildren } = fillFieldNames(fieldNames);
+): FlattenNode<TreeDataType>[] {
+  const {
+    _title: fieldTitles,
+    key: fieldKey,
+    children: fieldChildren,
+  } = fillFieldNames(fieldNames);
 
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
-  const flattenList: FlattenNode[] = [];
-
-  function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
-    // Removed the hidden node
+  const flattenList: FlattenNode<TreeDataType>[] = [];
+  function dig(
+    list: TreeDataType[],
+    parent: FlattenNode<TreeDataType> = null,
+  ): FlattenNode<TreeDataType>[] {
+     // Removed the hidden node
     const shouldShowList = list.filter(item => !item.hidden).map((treeNode, index) => {
       const shouldShowNode = {
         ...treeNode,
@@ -122,7 +130,6 @@ export function flattenTreeData(
       }
       return shouldShowNode;
     });
-    
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode[fieldKey], pos);
@@ -131,10 +138,19 @@ export function flattenTreeData(
       // Get index in the list that remove the hidden nodes
       const shouldShowIndex = mapNode.length > 0 ? mapNode[0].shouldShowIndex: null;
       
+      // Pick matched title in field title list
+      let mergedTitle: React.ReactNode;
+      for (let i = 0; i < fieldTitles.length; i += 1) {
+        const fieldTitle = fieldTitles[i];
+        if (treeNode[fieldTitle] !== undefined) {
+          mergedTitle = treeNode[fieldTitle];
+          break;
+        }
+      }
       // Add FlattenDataNode into list
-      const flattenNode: FlattenNode = {
-        ...omit(treeNode, [fieldTitle, fieldKey, fieldChildren] as any),
-        title: treeNode[fieldTitle],
+      const flattenNode: FlattenNode<TreeDataType> = {
+        ...omit(treeNode, [...fieldTitles, fieldKey, fieldChildren] as any),
+        title: mergedTitle,
         key: mergedKey,
         parent,
         pos,
@@ -186,6 +202,7 @@ export function traverseDataNodes(
     key: Key;
     parentPos: string | number;
     level: number;
+    nodes: DataNode[];
   }) => void,
   // To avoid too many params, let use config instead of origin param
   config?: TraverseDataNodesConfig | string,
@@ -222,9 +239,11 @@ export function traverseDataNodes(
     node: DataNode,
     index?: number,
     parent?: { node: DataNode; pos: string; level: number },
+    pathNodes?: DataNode[],
   ) {
     const children = node ? node[mergeChildrenPropName] : dataNodes;
     const pos = node ? getPosition(parent.pos, index) : '0';
+    const connectNodes = node ? [...pathNodes, node] : [];
 
     // Process node if is not root
     if (node) {
@@ -236,6 +255,7 @@ export function traverseDataNodes(
         key,
         parentPos: parent.node ? parent.pos : null,
         level: parent.level + 1,
+        nodes: connectNodes,
       };
 
       callback(data);
@@ -244,11 +264,16 @@ export function traverseDataNodes(
     // Process children node
     if (children) {
       children.forEach((subNode, subIndex) => {
-        processNode(subNode, subIndex, {
-          node,
-          pos,
-          level: parent ? parent.level + 1 : -1,
-        });
+        processNode(
+          subNode,
+          subIndex,
+          {
+            node,
+            pos,
+            level: parent ? parent.level + 1 : -1,
+          },
+          connectNodes,
+        );
       });
     }
   }
@@ -301,8 +326,8 @@ export function convertDataToEntities(
   traverseDataNodes(
     dataNodes,
     item => {
-      const { node, index, pos, key, parentPos, level } = item;
-      const entity: DataEntity = { node, index, key, pos, level };
+      const { node, index, pos, key, parentPos, level, nodes } = item;
+      const entity: DataEntity = { node, nodes, index, key, pos, level };
 
       const mergedKey = getKey(key, pos);
 
@@ -384,7 +409,7 @@ export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
 
 export function convertNodePropsToEventData<TreeDataType extends BasicDataNode = DataNode>(
   props: TreeNodeProps<TreeDataType>,
-): EventDataNode {
+): EventDataNode<TreeDataType> {
   const {
     data,
     expanded,

@@ -20,13 +20,18 @@ export interface BasicDataNode {
   
 }
 
-export interface DataNode extends BasicDataNode {
-  children?: DataNode[];
-  key: string | number;
-  title?: React.ReactNode;
-}
+/** Provide a wrap type define for developer to wrap with customize fieldNames data type */
+export type FieldDataNode<T, ChildFieldName extends string = 'children'> = BasicDataNode &
+  T &
+  Partial<Record<ChildFieldName, FieldDataNode<T, ChildFieldName>[]>>;
 
-export interface EventDataNode extends DataNode {
+export type DataNode = FieldDataNode<{
+  key: string | number;
+  title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
+}>;
+
+export type EventDataNode<TreeDataType> = {
+  key: React.Key;
   expanded: boolean;
   selected: boolean;
   checked: boolean;
@@ -38,7 +43,8 @@ export interface EventDataNode extends DataNode {
   dragOverGapBottom: boolean;
   pos: string;
   active: boolean;
-}
+} & TreeDataType &
+  BasicDataNode;
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
 
@@ -51,10 +57,11 @@ export type NodeElement = React.ReactElement<TreeNodeProps> & {
   };
 };
 
-export type NodeInstance<TreeDataType extends BasicDataNode = DataNode> =
-  React.Component<TreeNodeProps<TreeDataType>> & {
-    selectHandle?: HTMLSpanElement;
-  };
+export type NodeInstance<TreeDataType extends BasicDataNode = DataNode> = React.Component<
+  TreeNodeProps<TreeDataType>
+> & {
+  selectHandle?: HTMLSpanElement;
+};
 
 export interface Entity {
   node: NodeElement;
@@ -68,16 +75,17 @@ export interface Entity {
 export interface DataEntity<TreeDataType extends BasicDataNode = DataNode>
   extends Omit<Entity, 'node' | 'parent' | 'children'> {
   node: TreeDataType;
+  nodes: TreeDataType[];
   parent?: DataEntity<TreeDataType>;
   children?: DataEntity<TreeDataType>[];
   level: number;
 }
 
-export interface FlattenNode {
-  parent: FlattenNode | null;
-  children: FlattenNode[];
+export interface FlattenNode<TreeDataType extends BasicDataNode = DataNode> {
+  parent: FlattenNode<TreeDataType> | null;
+  children: FlattenNode<TreeDataType>[];
   pos: string;
-  data: DataNode;
+  data: TreeDataType;
   title: React.ReactNode;
   key: Key;
   isStart: boolean[];
@@ -92,6 +100,8 @@ export type Direction = 'ltr' | 'rtl' | undefined;
 
 export interface FieldNames {
   title?: string;
+  /** @private Internal usage for `rc-tree-select`, safe to remove if no need */
+  _title?: string[];
   key?: string;
   children?: string;
 }

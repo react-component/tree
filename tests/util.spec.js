@@ -113,11 +113,20 @@ describe('Util', () => {
   });
 
   describe('convertDataToEntities', () => {
-    it('basic', () => {
+    it('basic convert', () => {
       const entities = convertDataToEntities([
         { key: 'parent', children: [{ key: 0 }, { key: 1 }] },
       ]);
       expect(Object.keys(entities.keyEntities).sort()).toEqual(['0', '1', 'parent']);
+
+      // Used for `rc-cascader` to get fully path
+      expect(entities.keyEntities.parent.nodes).toEqual([
+        expect.objectContaining({ key: 'parent' }),
+      ]);
+      expect(entities.keyEntities[0].nodes).toEqual([
+        expect.objectContaining({ key: 'parent' }),
+        expect.objectContaining({ key: 0 }),
+      ]);
     });
 
     it('with string externalGetKey', () => {

@@ -5,7 +5,7 @@
 
 import React from 'react';
 import warning from 'rc-util/lib/warning';
-import TreeNode, { TreeNodeProps } from './TreeNode';
+import TreeNode from './TreeNode';
 import {
   NodeElement,
   Key,
@@ -19,6 +19,7 @@ import {
 import { TreeProps, AllowDrop } from './Tree';
 
 export function arrDel(list: Key[], value: Key) {
+  if (!list) return [];
   const clone = list.slice();
   const index = clone.indexOf(value);
   if (index >= 0) {
@@ -28,7 +29,7 @@ export function arrDel(list: Key[], value: Key) {
 }
 
 export function arrAdd(list: Key[], value: Key) {
-  const clone = list.slice();
+  const clone = (list || []).slice();
   if (clone.indexOf(value) === -1) {
     clone.push(value);
   }
@@ -96,7 +97,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     y: number;
   },
   allowDrop: AllowDrop<TreeDataType>,
-  flattenedNodes: FlattenNode[],
+  flattenedNodes: FlattenNode<TreeDataType>[],
   keyEntities: Record<Key, DataEntity<TreeDataType>>,
   expandKeys: Key[],
   direction: Direction,
@@ -122,10 +123,10 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   if (clientY < top + height / 2) {
     // first half, set abstract drop node to previous node
     const nodeIndex = flattenedNodes.findIndex(
-      flattenedNode => flattenedNode.data.key === abstractDropNodeEntity.key,
+      flattenedNode => flattenedNode.key === abstractDropNodeEntity.key,
     );
     const prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
-    const prevNodeKey = flattenedNodes[prevNodeIndex].data.key;
+    const prevNodeKey = flattenedNodes[prevNodeIndex].key;
     abstractDropNodeEntity = keyEntities[prevNodeKey];
   }
 
@@ -277,7 +278,7 @@ export function calcSelectedKeys(selectedKeys: Key[], props: TreeProps) {
   return selectedKeys;
 }
 
-const internalProcessProps = (props: DataNode): Partial<TreeNodeProps> => props;
+const internalProcessProps = (props: DataNode): any => props;
 export function convertDataToTree(
   treeData: DataNode[],
   processor?: { processProps: (prop: DataNode) => any },
@@ -289,7 +290,11 @@ export function convertDataToTree(
   return list.map(({ children, ...props }): NodeElement => {
     const childrenNodes = convertDataToTree(children, processor);
 
-    return <TreeNode {...processProps(props)}>{childrenNodes}</TreeNode>;
+    return (
+      <TreeNode key={props.key} {...processProps(props)}>
+        {childrenNodes}
+      </TreeNode>
+    );
   });
 }
 
