@@ -53,7 +53,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.0",
     "@types/enzyme": "^3.10.9",
-    "@types/jest": "^26.0.4",
+    "@types/jest": "^28.1.7",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^17.0.8",
     "@types/warning": "^3.0.0",
