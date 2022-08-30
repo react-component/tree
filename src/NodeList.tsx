@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 import VirtualList, { ListRef } from 'rc-virtual-list';
-import { FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
+import { FlattenNode, Key, DataEntity, DataNode, ScrollTo, BasicDataNode } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
@@ -54,7 +54,7 @@ export interface NodeListRef {
   getIndentWidth: () => number;
 }
 
-interface NodeListProps<TreeDataType> {
+interface NodeListProps<TreeDataType extends BasicDataNode> {
   prefixCls: string;
   style: React.CSSProperties;
   data: FlattenNode<TreeDataType>[];
