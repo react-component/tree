@@ -26,4 +26,20 @@ describe('Tree.TypeScript', () => {
       />,
     );
   });
+
+  it('throw error when DataType not extends BasicDataNode', () => {
+    // tsconfig default strict: false, null can assign to BasicDataNode, but will throw at runtime
+    const badData: BasicDataNode = null;
+
+    expect(() => {
+      render(
+        <Tree<BasicDataNode>
+          treeData={[badData]}
+          onSelect={(selectedKeys, info) => {
+            console.log('info', info);
+          }}
+        />,
+      );
+    }).toThrowError();
+  });
 });
