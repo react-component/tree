@@ -17,6 +17,7 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
+  id?: string;
 
   // By parent
   expanded?: boolean;
