@@ -17,6 +17,7 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
+  id?: string;
 
   // By parent
   expanded?: boolean;
@@ -47,7 +48,6 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   icon?: IconType;
   switcherIcon?: IconType;
   children?: React.ReactNode;
-  id?: string;
 }
 
 export interface InternalTreeNodeProps extends TreeNodeProps {
