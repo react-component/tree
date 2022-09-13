@@ -1,8 +1,9 @@
 /* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign */
-import { act, createEvent, fireEvent, render } from '@testing-library/react';
+import React from 'react';
+import { render, fireEvent, act, createEvent } from '@testing-library/react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import Tree, { FieldDataNode, TreeNode } from '../src';
+import Tree, { TreeNode, FieldDataNode } from '../src';
 import { spyConsole } from './util';
 
 const delay = timeout =>
