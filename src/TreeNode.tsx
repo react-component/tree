@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import pickAttrs from 'rc-util/lib/pickAttrs';
+import pickAttrs from 'rc-util/lib/pickAttrs'
 // @ts-ignore
 import { TreeContext, TreeContextProps } from './contextTypes';
 import { IconType, Key, DataNode, BasicDataNode } from './interface';
