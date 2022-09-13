@@ -3,7 +3,7 @@ export default {
   esm: { type: 'babel', importLibToEs: true },
   preCommit: {
     eslint: true,
-    prettier: false,
+    prettier: true,
   },
   runtimeHelpers: true,
 };

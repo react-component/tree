@@ -1135,16 +1135,4 @@ describe('Tree Draggable', () => {
     // Should not break
     fireEvent.dragEnd(container.querySelector('.test'));
   });
-
-  it('disabled item should have draggable className', () => {
-    const { container } = render(
-      <Tree draggable defaultExpandAll>
-        <TreeNode title="parent 1" key="0-0">
-          <TreeNode title="leaf" key="0-0-0" disabled />
-          <TreeNode title="leaf" key="0-0-1" />
-        </TreeNode>
-      </Tree>,
-    );
-    expect(container.querySelectorAll('.rc-tree-treenode-draggable').length).toBe(3);
-  });
 });

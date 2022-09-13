@@ -577,7 +577,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-loading`]: loading,
           [`${prefixCls}-treenode-active`]: active,
           [`${prefixCls}-treenode-leaf-last`]: isEndNode,
-          [`${prefixCls}-treenode-draggable`]: mergedDraggable,
+          [`${prefixCls}-treenode-draggable`]: draggableWithoutDisabled,
 
           dragging,
           'drop-target': dropTargetKey === eventKey,
