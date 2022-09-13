@@ -1,9 +1,8 @@
 /* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign */
-import React from 'react';
-import { render, fireEvent, act, createEvent } from '@testing-library/react';
+import { act, createEvent, fireEvent, render } from '@testing-library/react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import Tree, { TreeNode, FieldDataNode } from '../src';
+import Tree, { FieldDataNode, TreeNode } from '../src';
 import { spyConsole } from './util';
 
 const delay = timeout =>
@@ -1134,5 +1133,17 @@ describe('Tree Draggable', () => {
 
     // Should not break
     fireEvent.dragEnd(container.querySelector('.test'));
+  });
+
+  it('disabled item should have draggable className', () => {
+    const { container } = render(
+      <Tree draggable defaultExpandAll>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="leaf" key="0-0-0" disabled />
+          <TreeNode title="leaf" key="0-0-1" />
+        </TreeNode>
+      </Tree>,
+    );
+    expect(container.querySelectorAll('.rc-tree-treenode-draggable').length).toBe(3);
   });
 });
