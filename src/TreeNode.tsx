@@ -17,6 +17,7 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
+  id?: string;
 
   // By parent
   expanded?: boolean;
@@ -578,7 +579,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-loading`]: loading,
           [`${prefixCls}-treenode-active`]: active,
           [`${prefixCls}-treenode-leaf-last`]: isEndNode,
-          [`${prefixCls}-treenode-draggable`]: draggableWithoutDisabled,
+          [`${prefixCls}-treenode-draggable`]: mergedDraggable,
 
           dragging,
           'drop-target': dropTargetKey === eventKey,
