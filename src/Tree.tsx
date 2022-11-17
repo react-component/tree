@@ -85,7 +85,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   className?: string;
   style?: React.CSSProperties;
   focusable?: boolean;
-  activeKey?: Key;
+  activeKey?: Key | null;
   tabIndex?: number;
   children?: React.ReactNode;
   treeData?: TreeDataType[]; // Generate treeNode by children
@@ -221,7 +221,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   flattenNodes: FlattenNode<TreeDataType>[];
 
   focused: boolean;
-  activeKey: Key;
+  activeKey: Key | null;
 
   // Record if list is changing
   listChanging: boolean;
@@ -234,7 +234,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
 class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends React.Component<
   TreeProps<TreeDataType>,
   TreeState<TreeDataType>
-> {
+  > {
   static defaultProps = {
     prefixCls: 'rc-tree',
     showLine: false,
@@ -1171,7 +1171,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   // =========================== Keyboard ===========================
-  onActiveChange = (newActiveKey: Key) => {
+  onActiveChange = (newActiveKey: Key | null) => {
     const { activeKey } = this.state;
     const { onActiveChange } = this.props;
 
