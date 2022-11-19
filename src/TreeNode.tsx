@@ -512,7 +512,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         direction,
       },
     } = this.props;
-    const rootDraggable = draggable !== false;
+    const rootDraggable = !!draggable;
     // allowDrop is calculated in Tree.tsx, there is no need for calc it here
     const showIndicator = !disabled && rootDraggable && dragOverNodeKey === eventKey;
     return showIndicator
