@@ -16,7 +16,7 @@ exports[`Tree Props checkStrictly 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -123,7 +123,7 @@ exports[`Tree Props checkable default 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -230,7 +230,7 @@ exports[`Tree Props checkable without selectable 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -337,7 +337,7 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -498,7 +498,7 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -727,7 +727,7 @@ exports[`Tree Props data and aria props renders aria attributes 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -772,7 +772,7 @@ exports[`Tree Props data and aria props renders data attributes 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -817,7 +817,7 @@ exports[`Tree Props defaultExpandAll 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -919,7 +919,7 @@ exports[`Tree Props disabled basic 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -991,7 +991,7 @@ exports[`Tree Props disabled treeNode should disabled when tree disabled 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1062,7 +1062,7 @@ exports[`Tree Props icon 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1171,7 +1171,7 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1278,7 +1278,7 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1385,7 +1385,7 @@ exports[`Tree Props loadData basic 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1480,7 +1480,7 @@ exports[`Tree Props multiple 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1581,7 +1581,7 @@ exports[`Tree Props prefixCls 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1625,7 +1625,7 @@ exports[`Tree Props prefixCls 2`] = `
   <div
     aria-hidden="true"
     class="test-prefix-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="test-prefix-indent"
@@ -1669,7 +1669,7 @@ exports[`Tree Props selectable with selectable 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1770,7 +1770,7 @@ exports[`Tree Props selectable without selectable 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1871,7 +1871,7 @@ exports[`Tree Props showIcon 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -1968,7 +1968,7 @@ exports[`Tree Props showIcon 2`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -2059,7 +2059,7 @@ exports[`Tree Props showIcon 3`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -2253,7 +2253,7 @@ exports[`Tree Props showLine 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -2297,7 +2297,7 @@ exports[`Tree Props treeData 1`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
@@ -2550,7 +2550,7 @@ exports[`Tree Props treeData 2`] = `
   <div
     aria-hidden="true"
     class="rc-tree-treenode"
-    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden;"
+    style="position: absolute; pointer-events: none; visibility: hidden; height: 0px; overflow: hidden; border: 0px; padding: 0px;"
   >
     <div
       class="rc-tree-indent"
