@@ -297,6 +297,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
           visibility: 'hidden',
           height: 0,
           overflow: 'hidden',
+          border: 0,
+          padding: 0,
         }}
       >
         <div className={`${prefixCls}-indent`}>
