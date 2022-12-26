@@ -346,8 +346,12 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       prevProps: props,
     };
 
+    function needSyncOnInit(name: string) {
+      return !prevProps && name in props && (Array.isArray(props[name]) ? props[name].length > 0 : props[name])
+    }
+
     function needSync(name: string) {
-      return (!prevProps && name in props) || (prevProps && prevProps[name] !== props[name]);
+      return needSyncOnInit(name) || (prevProps && prevProps[name] !== props[name]);
     }
 
     // ================== Tree Node ==================
@@ -388,14 +392,14 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     // ================ expandedKeys =================
     if (needSync('expandedKeys') || (prevProps && needSync('autoExpandParent'))) {
       newState.expandedKeys =
-        props.autoExpandParent || (!prevProps && props.defaultExpandParent)
+        (props.autoExpandParent || needSyncOnInit('defaultExpandParent'))
           ? conductExpandParent(props.expandedKeys, keyEntities)
           : props.expandedKeys;
-    } else if (!prevProps && props.defaultExpandAll) {
+    } else if (needSyncOnInit('defaultExpandAll')) {
       const cloneKeyEntities = { ...keyEntities };
       delete cloneKeyEntities[MOTION_KEY];
       newState.expandedKeys = Object.keys(cloneKeyEntities).map(key => cloneKeyEntities[key].key);
-    } else if (!prevProps && props.defaultExpandedKeys) {
+    } else if (needSyncOnInit('defaultExpandedKeys')) {
       newState.expandedKeys =
         props.autoExpandParent || props.defaultExpandParent
           ? conductExpandParent(props.defaultExpandedKeys, keyEntities)
@@ -420,7 +424,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     if (props.selectable) {
       if (needSync('selectedKeys')) {
         newState.selectedKeys = calcSelectedKeys(props.selectedKeys, props);
-      } else if (!prevProps && props.defaultSelectedKeys) {
+      } else if (needSyncOnInit('defaultSelectedKeys')) {
         newState.selectedKeys = calcSelectedKeys(props.defaultSelectedKeys, props);
       }
     }
@@ -431,7 +435,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
       if (needSync('checkedKeys')) {
         checkedKeyEntity = parseCheckedKeys(props.checkedKeys) || {};
-      } else if (!prevProps && props.defaultCheckedKeys) {
+      } else if (needSyncOnInit('defaultCheckedKeys')) {
         checkedKeyEntity = parseCheckedKeys(props.defaultCheckedKeys) || {};
       } else if (treeData) {
         // If `treeData` changed, we also need check it
