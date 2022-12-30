@@ -858,6 +858,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       .filter(node => node);
 
     this.setUncontrolledState({ selectedKeys, focused: true });
+    this.onActiveChange(key)
 
     onSelect?.(selectedKeys, {
       event: 'select',
@@ -947,6 +948,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           halfCheckedKeys,
         },
       );
+      this.onActiveChange(key)
     }
 
     onCheck?.(checkedObj, eventObj as CheckInfo<TreeDataType>);
