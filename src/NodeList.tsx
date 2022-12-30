@@ -357,9 +357,6 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
               onMotionStart={onListChangeStart}
               onMotionEnd={onMotionEnd}
               treeNodeRequiredProps={treeNodeRequiredProps}
-              onMouseMove={() => {
-                onActiveChange(null);
-              }}
             />
           );
         }}
