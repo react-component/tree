@@ -620,10 +620,6 @@ const ContextTreeNode: React.FC<TreeNodeProps> = props => (
 
 ContextTreeNode.displayName = 'TreeNode';
 
-// ContextTreeNode.defaultProps = {
-//   title: defaultTitle,
-// };
-
 (ContextTreeNode as any).isTreeNode = 1;
 
 export { InternalTreeNode };
