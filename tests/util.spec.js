@@ -1,22 +1,21 @@
 /* eslint-disable no-undef, react/no-multi-comp,
 react/no-unused-state, react/prop-types, no-return-assign */
-import React from 'react';
 import Tree, { TreeNode } from '../src';
 import {
-  convertDataToTree,
   conductExpandParent,
+  convertDataToTree,
   getDragChildrenKeys,
   parseCheckedKeys,
 } from '../src/util';
+import { conductCheck } from '../src/utils/conductUtil';
 import {
-  flattenTreeData,
-  convertTreeToData,
   convertDataToEntities,
+  convertTreeToData,
+  flattenTreeData,
   getTreeNodeProps,
   traverseDataNodes,
 } from '../src/utils/treeUtil';
 import { spyConsole, spyError } from './util';
-import { conductCheck } from '../src/utils/conductUtil';
 
 describe('Util', () => {
   spyConsole();
@@ -58,7 +57,7 @@ describe('Util', () => {
           },
         ],
       },
-      { key: '!', title: '---', really: true },
+      { key: '!', really: true },
     ]);
   });
 

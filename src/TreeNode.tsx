@@ -438,7 +438,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // Icon + Title
   renderSelector = () => {
     const { dragNodeHighlight } = this.state;
-    const { title, selected, icon, loading, data } = this.props;
+    const { title = defaultTitle, selected, icon, loading, data } = this.props;
     const {
       context: { prefixCls, showIcon, icon: treeIcon, loadData, titleRender },
     } = this.props;
@@ -620,9 +620,9 @@ const ContextTreeNode: React.FC<TreeNodeProps> = props => (
 
 ContextTreeNode.displayName = 'TreeNode';
 
-ContextTreeNode.defaultProps = {
-  title: defaultTitle,
-};
+// ContextTreeNode.defaultProps = {
+//   title: defaultTitle,
+// };
 
 (ContextTreeNode as any).isTreeNode = 1;
 

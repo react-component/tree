@@ -1,8 +1,28 @@
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
 import Tree from '../src';
 
 describe('React 18', () => {
+  // This does not real work since waring is in 18.3.0 but current still is next version.
+  it('no warning', () => {
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    render(
+      <React.StrictMode>
+        <Tree
+          defaultExpandAll
+          treeData={[
+            {
+              title: 'Parent',
+              key: 'parent',
+            },
+          ]}
+        />
+      </React.StrictMode>,
+    );
+
+    expect(errSpy).not.toHaveBeenCalled();
+  });
+
   it('expand work', () => {
     const onExpand = jest.fn();
     const { container } = render(
