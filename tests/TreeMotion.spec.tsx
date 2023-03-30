@@ -169,6 +169,9 @@ describe('Tree Motion', () => {
       expect(onMotionEnd).not.toHaveBeenCalled();
 
       unmount();
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(onMotionStart).not.toHaveBeenCalled();
       expect(onMotionEnd).not.toHaveBeenCalled();
     });
