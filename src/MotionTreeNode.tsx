@@ -51,15 +51,21 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     }
   }, [motionNodes]);
 
+  let reruningEffectFlag = null;
+
   useEffect(() => {
     // Trigger motion only when patched
     if (motionNodes) {
-      onOriginMotionStart();
+      if (reruningEffectFlag === null) {
+        onOriginMotionStart();
+      } else {
+        clearTimeout(reruningEffectFlag);
+      }
     }
 
     return () => {
       if (motionNodes) {
-        onMotionEnd();
+        reruningEffectFlag = setTimeout(onMotionEnd, 0);
       }
     };
   }, []);
