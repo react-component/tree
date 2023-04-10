@@ -48,6 +48,7 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   icon?: IconType;
   switcherIcon?: IconType;
   children?: React.ReactNode;
+  hidden?:boolean;
 }
 
 export interface InternalTreeNodeProps extends TreeNodeProps {
@@ -536,6 +537,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       selected,
       checked,
       halfChecked,
+      hidden,
       loading,
       domRef,
       active,
@@ -586,6 +588,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           'drag-over-gap-top': !disabled && dragOverGapTop,
           'drag-over-gap-bottom': !disabled && dragOverGapBottom,
           'filter-node': filterTreeNode && filterTreeNode(convertNodePropsToEventData(this.props)),
+          'hide-node' : hidden
         })}
         style={style}
         // Draggable config

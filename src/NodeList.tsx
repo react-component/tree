@@ -167,6 +167,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   } = props;
 
   // =============================== Ref ================================
+  const showingData = data.filter(item => !item.hidden);
   const listRef = React.useRef<ListRef>(null);
   const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => ({
@@ -179,7 +180,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   // ============================== Motion ==============================
   const [prevExpandedKeys, setPrevExpandedKeys] = React.useState(expandedKeys);
   const [prevData, setPrevData] = React.useState(data);
-  const [transitionData, setTransitionData] = React.useState(data);
+  const [transitionData, setTransitionData] = React.useState(showingData);
   const [transitionRange, setTransitionRange] = React.useState([]);
   const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
@@ -191,7 +192,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     const latestData = dataRef.current;
 
     setPrevData(latestData);
-    setTransitionData(latestData);
+    setTransitionData(showingData);
     setTransitionRange([]);
     setMotionType(null);
 
@@ -215,7 +216,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
           itemHeight,
         );
 
-        const newTransitionData: FlattenNode[] = prevData.slice();
+        const newTransitionData: FlattenNode[] = prevData.slice().filter(item => !item.hidden);
         newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
 
         setTransitionData(newTransitionData);
@@ -231,7 +232,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
           itemHeight,
         );
 
-        const newTransitionData: FlattenNode[] = data.slice();
+        const newTransitionData: FlattenNode[] = data.slice().filter(item => !item.hidden);
         newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
 
         setTransitionData(newTransitionData);

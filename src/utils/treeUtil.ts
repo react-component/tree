@@ -118,15 +118,26 @@ export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
 
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
   const flattenList: FlattenNode<TreeDataType>[] = [];
-
   function dig(
     list: TreeDataType[],
     parent: FlattenNode<TreeDataType> = null,
   ): FlattenNode<TreeDataType>[] {
+     // Removed the hidden node
+    const shouldShowList = list.filter(item => !item.hidden).map((treeNode, index) => {
+      const shouldShowNode = {
+        ...treeNode,
+        shouldShowIndex: index
+      }
+      return shouldShowNode;
+    });
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode[fieldKey], pos);
 
+      const mapNode = shouldShowList.filter(item => item.key === treeNode.key);
+      // Get index in the list that remove the hidden nodes
+      const shouldShowIndex = mapNode.length > 0 ? mapNode[0].shouldShowIndex: null;
+      
       // Pick matched title in field title list
       let mergedTitle: React.ReactNode;
       for (let i = 0; i < fieldTitles.length; i += 1) {
@@ -136,7 +147,6 @@ export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
           break;
         }
       }
-
       // Add FlattenDataNode into list
       const flattenNode: FlattenNode<TreeDataType> = {
         ...omit(treeNode, [...fieldTitles, fieldKey, fieldChildren] as any),
@@ -146,8 +156,11 @@ export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
         pos,
         children: null,
         data: treeNode,
-        isStart: [...(parent ? parent.isStart : []), index === 0],
-        isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
+        // isStart: [...(parent ? parent.isStart : []), index === 0],
+        // isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
+        // Modify judging condition of two variables(isStart and isEnd)
+        isStart: [...(parent ? parent.isStart : []), shouldShowIndex === 0],
+        isEnd: [...(parent ? parent.isEnd : []), shouldShowIndex === shouldShowList.length - 1],
       };
 
       flattenList.push(flattenNode);
