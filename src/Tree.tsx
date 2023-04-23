@@ -64,7 +64,6 @@ interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
 }
 
 export interface AllowDropOptions<TreeDataType extends BasicDataNode = DataNode> {
-  dragNode: TreeDataType;
   dropNode: TreeDataType;
   dropPosition: -1 | 0 | 1;
 }
