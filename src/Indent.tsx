@@ -1,5 +1,5 @@
-import * as React from 'react';
 import classNames from 'classnames';
+import * as React from 'react';
 
 interface IndentProps {
   prefixCls: string;
@@ -9,6 +9,7 @@ interface IndentProps {
 }
 
 const Indent = ({ prefixCls, level, isStart, isEnd }: IndentProps) => {
+  const indentRef = React.useRef(null);
   const baseClassName = `${prefixCls}-indent-unit`;
   const list: React.ReactElement[] = [];
   for (let i = 0; i < level; i += 1) {
@@ -23,8 +24,12 @@ const Indent = ({ prefixCls, level, isStart, isEnd }: IndentProps) => {
     );
   }
 
+  React.useEffect(() => {
+    indentRef.current.style.width = indentRef.current.clientWidth + 'px';
+  }, []);
+
   return (
-    <span aria-hidden="true" className={`${prefixCls}-indent`}>
+    <span aria-hidden="true" className={`${prefixCls}-indent`} ref={indentRef}>
       {list}
     </span>
   );
