@@ -1,10 +1,10 @@
-import * as React from 'react';
 import classNames from 'classnames';
 import pickAttrs from 'rc-util/lib/pickAttrs';
+import * as React from 'react';
 // @ts-ignore
 import { TreeContext, TreeContextProps } from './contextTypes';
-import { IconType, Key, DataNode, BasicDataNode } from './interface';
 import Indent from './Indent';
+import { BasicDataNode, DataEntity, DataNode, IconType, Key } from './interface';
 import { convertNodePropsToEventData } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
@@ -20,6 +20,7 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   id?: string;
 
   // By parent
+  keyEntities: Record<Key, DataEntity<any>>;
   expanded?: boolean;
   selected?: boolean;
   checked?: boolean;
@@ -542,13 +543,14 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       data,
       onMouseMove,
       selectable,
+      keyEntities,
       ...otherProps
     } = this.props;
     const {
       context: {
         prefixCls,
+        keyEntities: contextKeyEntities,
         filterTreeNode,
-        keyEntities,
         dropContainerKey,
         dropTargetKey,
         draggingNodeKey,
@@ -556,7 +558,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = pickAttrs(otherProps, { aria: true, data: true });
-    const { level } = keyEntities[eventKey] || {};
+    const { level } = keyEntities?.[eventKey] || contextKeyEntities[eventKey] || {};
+
     const isEndNode = isEnd[isEnd.length - 1];
 
     const mergedDraggable = this.isDraggable();

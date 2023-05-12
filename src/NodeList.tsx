@@ -2,12 +2,12 @@
  * Handle virtual list of the TreeNodes.
  */
 
-import * as React from 'react';
 import VirtualList, { ListRef } from 'rc-virtual-list';
-import { BasicDataNode, FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
+import * as React from 'react';
+import { BasicDataNode, DataEntity, DataNode, FlattenNode, Key, ScrollTo } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
-import { getTreeNodeProps, getKey } from './utils/treeUtil';
+import { getKey, getTreeNodeProps } from './utils/treeUtil';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -181,17 +181,22 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   const [prevData, setPrevData] = React.useState(data);
   const [transitionData, setTransitionData] = React.useState(data);
   const [transitionRange, setTransitionRange] = React.useState([]);
+  const [transitionKeyEntities, setTransitionKeyEntities] = React.useState(keyEntities);
   const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
   // When motion end but data change, this will makes data back to previous one
   const dataRef = React.useRef(data);
+  const keyEntitiesRef = React.useRef(keyEntities);
   dataRef.current = data;
+  keyEntitiesRef.current = keyEntities;
 
   function onMotionEnd() {
     const latestData = dataRef.current;
+    const latestKeyEntities = keyEntitiesRef.current;
 
     setPrevData(latestData);
     setTransitionData(latestData);
+    setTransitionKeyEntities(latestKeyEntities);
     setTransitionRange([]);
     setMotionType(null);
 
@@ -242,6 +247,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
       // If whole data changed, we just refresh the list
       setPrevData(data);
       setTransitionData(data);
+      setTransitionKeyEntities(keyEntities);
     }
   }, [expandedKeys, data]);
 
@@ -263,7 +269,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     halfCheckedKeys,
     dragOverNodeKey,
     dropPosition,
-    keyEntities,
+    keyEntities: transitionKeyEntities,
   };
 
   return (

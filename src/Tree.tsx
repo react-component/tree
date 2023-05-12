@@ -1,55 +1,55 @@
 // TODO: https://www.w3.org/TR/2017/NOTE-wai-aria-practices-1.1-20171214/examples/treeview/treeview-2/treeview-2a.html
 // Fully accessibility support
 
-import * as React from 'react';
-import KeyCode from 'rc-util/lib/KeyCode';
-import warning from 'rc-util/lib/warning';
-import pickAttrs from 'rc-util/lib/pickAttrs';
 import classNames from 'classnames';
+import KeyCode from 'rc-util/lib/KeyCode';
+import pickAttrs from 'rc-util/lib/pickAttrs';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
 
 import {
-  TreeContext,
-  NodeMouseEventHandler,
   NodeDragEventHandler,
   NodeDragEventParams,
+  NodeMouseEventHandler,
   NodeMouseEventParams,
+  TreeContext,
 } from './contextTypes';
+import DropIndicator from './DropIndicator';
 import {
-  getDragChildrenKeys,
-  parseCheckedKeys,
-  conductExpandParent,
-  calcSelectedKeys,
-  calcDropPosition,
-  arrAdd,
-  arrDel,
-  posToArr,
-} from './util';
-import {
+  BasicDataNode,
+  DataEntity,
   DataNode,
+  Direction,
+  EventDataNode,
+  FieldNames,
+  FlattenNode,
   IconType,
   Key,
-  FlattenNode,
-  DataEntity,
-  EventDataNode,
   NodeInstance,
   ScrollTo,
-  Direction,
-  FieldNames,
-  BasicDataNode,
 } from './interface';
-import {
-  flattenTreeData,
-  convertTreeToData,
-  convertDataToEntities,
-  warningWithoutKey,
-  convertNodePropsToEventData,
-  getTreeNodeProps,
-  fillFieldNames,
-} from './utils/treeUtil';
-import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
+import NodeList, { MotionEntity, MOTION_KEY, NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
+import {
+  arrAdd,
+  arrDel,
+  calcDropPosition,
+  calcSelectedKeys,
+  conductExpandParent,
+  getDragChildrenKeys,
+  parseCheckedKeys,
+  posToArr,
+} from './util';
 import { conductCheck } from './utils/conductUtil';
-import DropIndicator from './DropIndicator';
+import {
+  convertDataToEntities,
+  convertNodePropsToEventData,
+  convertTreeToData,
+  fillFieldNames,
+  flattenTreeData,
+  getTreeNodeProps,
+  warningWithoutKey,
+} from './utils/treeUtil';
 
 const MAX_RETRY_TIMES = 10;
 
@@ -234,7 +234,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
 class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends React.Component<
   TreeProps<TreeDataType>,
   TreeState<TreeDataType>
-  > {
+> {
   static defaultProps = {
     prefixCls: 'rc-tree',
     showLine: false,
@@ -1351,6 +1351,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       dragOverNodeKey,
       indent,
     } = this.state;
+
     const {
       prefixCls,
       className,

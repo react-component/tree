@@ -1,20 +1,20 @@
-import * as React from 'react';
-import omit from 'rc-util/lib/omit';
 import toArray from 'rc-util/lib/Children/toArray';
+import omit from 'rc-util/lib/omit';
 import warning from 'rc-util/lib/warning';
+import * as React from 'react';
 import {
-  DataNode,
-  FlattenNode,
-  NodeElement,
-  DataEntity,
-  Key,
-  EventDataNode,
-  GetKey,
-  FieldNames,
   BasicDataNode,
+  DataEntity,
+  DataNode,
+  EventDataNode,
+  FieldNames,
+  FlattenNode,
+  GetKey,
+  Key,
+  NodeElement,
 } from '../interface';
-import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
+import { getPosition, isTreeNode } from '../util';
 
 export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
@@ -375,6 +375,7 @@ export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
 
   const treeNodeProps = {
     eventKey: key,
+    keyEntities,
     expanded: expandedKeys.indexOf(key) !== -1,
     selected: selectedKeys.indexOf(key) !== -1,
     loaded: loadedKeys.indexOf(key) !== -1,
