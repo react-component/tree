@@ -199,7 +199,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   }
 
   // Do animation if expanded keys changed
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     setPrevExpandedKeys(expandedKeys);
 
     const diffExpanded = findExpandedKeys(prevExpandedKeys, expandedKeys);
