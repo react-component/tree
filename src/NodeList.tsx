@@ -2,12 +2,13 @@
  * Handle virtual list of the TreeNodes.
  */
 
-import * as React from 'react';
+import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 import VirtualList, { ListRef } from 'rc-virtual-list';
-import { BasicDataNode, FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
+import * as React from 'react';
+import { BasicDataNode, DataEntity, DataNode, FlattenNode, Key, ScrollTo } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
-import { getTreeNodeProps, getKey } from './utils/treeUtil';
+import { getKey, getTreeNodeProps } from './utils/treeUtil';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -199,7 +200,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   }
 
   // Do animation if expanded keys changed
-  React.useEffect(() => {
+  // layoutEffect here to avoid blink of node removing
+  useLayoutEffect(() => {
     setPrevExpandedKeys(expandedKeys);
 
     const diffExpanded = findExpandedKeys(prevExpandedKeys, expandedKeys);
