@@ -1,20 +1,27 @@
-import * as React from 'react';
-import omit from 'rc-util/lib/omit';
 import toArray from 'rc-util/lib/Children/toArray';
+import omit from 'rc-util/lib/omit';
 import warning from 'rc-util/lib/warning';
+import * as React from 'react';
 import {
-  DataNode,
-  FlattenNode,
-  NodeElement,
-  DataEntity,
-  Key,
-  EventDataNode,
-  GetKey,
-  FieldNames,
   BasicDataNode,
+  DataEntity,
+  DataNode,
+  EventDataNode,
+  FieldNames,
+  FlattenNode,
+  GetKey,
+  Key,
+  NodeElement,
+  TreeNodeProps,
 } from '../interface';
-import { getPosition, isTreeNode } from '../util';
-import { TreeNodeProps } from '../TreeNode';
+
+export function getPosition(level: string | number, index: number) {
+  return `${level}-${index}`;
+}
+
+export function isTreeNode(node: NodeElement) {
+  return node && node.type && node.type.isTreeNode;
+}
 
 export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {

@@ -40,14 +40,6 @@ export function posToArr(pos: string) {
   return pos.split('-');
 }
 
-export function getPosition(level: string | number, index: number) {
-  return `${level}-${index}`;
-}
-
-export function isTreeNode(node: NodeElement) {
-  return node && node.type && node.type.isTreeNode;
-}
-
 export function getDragChildrenKeys<TreeDataType extends BasicDataNode = DataNode>(
   dragNodeKey: Key,
   keyEntities: Record<Key, DataEntity<TreeDataType>>,
