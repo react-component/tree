@@ -18,6 +18,8 @@ import {
 } from './interface';
 import { TreeProps, AllowDrop } from './Tree';
 
+export { getPosition, isTreeNode } from './utils/treeUtil';
+
 export function arrDel(list: Key[], value: Key) {
   if (!list) return [];
   const clone = list.slice();

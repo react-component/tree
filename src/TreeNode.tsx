@@ -12,6 +12,8 @@ const ICON_CLOSE = 'close';
 
 const defaultTitle = '---';
 
+export type { TreeNodeProps } from './interface';
+
 export interface InternalTreeNodeProps extends TreeNodeProps {
   context?: TreeContextProps;
 }
