@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
-import TreeNode, { TreeNodeProps } from './TreeNode';
-import { FlattenNode } from './interface';
+import TreeNode from './TreeNode';
+import { FlattenNode, TreeNodeProps } from './interface';
 import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
 import { TreeContext } from './contextTypes';
 

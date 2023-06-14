@@ -18,6 +18,8 @@ import {
 } from './interface';
 import { TreeProps, AllowDrop } from './Tree';
 
+export { getPosition, isTreeNode } from './utils/treeUtil';
+
 export function arrDel(list: Key[], value: Key) {
   if (!list) return [];
   const clone = list.slice();
@@ -38,14 +40,6 @@ export function arrAdd(list: Key[], value: Key) {
 
 export function posToArr(pos: string) {
   return pos.split('-');
-}
-
-export function getPosition(level: string | number, index: number) {
-  return `${level}-${index}`;
-}
-
-export function isTreeNode(node: NodeElement) {
-  return node && node.type && node.type.isTreeNode;
 }
 
 export function getDragChildrenKeys<TreeDataType extends BasicDataNode = DataNode>(
