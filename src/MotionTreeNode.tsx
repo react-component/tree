@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { useEffect } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
-import TreeNode from './TreeNode';
-import { FlattenNode, TreeNodeProps } from './interface';
-import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
+import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
+import * as React from 'react';
 import { TreeContext } from './contextTypes';
+import { FlattenNode, TreeNodeProps } from './interface';
+import TreeNode from './TreeNode';
+import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;
@@ -33,42 +33,21 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
   },
   ref,
 ) => {
-  const [visible, setVisible] = React.useState(true);
   const { prefixCls } = React.useContext(TreeContext);
+  const [visible, setVisible] = React.useState(true);
 
-  const motionedRef = React.useRef(false);
-
-  const onMotionEnd = () => {
-    if (!motionedRef.current) {
-      onOriginMotionEnd();
-    }
-    motionedRef.current = true;
-  };
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (motionNodes && motionType === 'hide' && visible) {
       setVisible(false);
     }
   }, [motionNodes]);
 
-  let reruningEffectFlag = null;
-
-  useEffect(() => {
-    // Trigger motion only when patched
-    if (motionNodes) {
-      if (reruningEffectFlag === null) {
-        onOriginMotionStart();
-      } else {
-        clearTimeout(reruningEffectFlag);
-      }
+  const onVisibleChanged = (nextVisible: boolean) => {
+    if (visible === nextVisible) {
+      console.log('onVisibleChanged', nextVisible);
+      onOriginMotionEnd();
     }
-
-    return () => {
-      if (motionNodes) {
-        reruningEffectFlag = setTimeout(onMotionEnd, 0);
-      }
-    };
-  }, []);
+  };
 
   if (motionNodes) {
     return (
@@ -77,8 +56,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
         visible={visible}
         {...motion}
         motionAppear={motionType === 'show'}
-        onAppearEnd={onMotionEnd}
-        onLeaveEnd={onMotionEnd}
+        onVisibleChanged={onVisibleChanged}
       >
         {({ className: motionClassName, style: motionStyle }, motionRef) => (
           <div

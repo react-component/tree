@@ -1,8 +1,9 @@
 /* eslint no-console:0, react/no-danger: 0 */
+import { Provider } from 'rc-motion';
+import Tree from 'rc-tree';
+import React from 'react';
 import '../../assets/index.less';
 import './animation.less';
-import React from 'react';
-import Tree from 'rc-tree';
 
 const STYLE = `
 .rc-tree-child-tree {
@@ -108,43 +109,56 @@ function getTreeData() {
 
 const Demo = () => {
   const treeRef = React.useRef();
+  const [motion, setMotion] = React.useState(true);
 
   setTimeout(() => {
     treeRef.current.scrollTo({ key: '0-9-2' });
   }, 100);
 
   return (
-    <div className="animation">
-      <h2>expanded</h2>
-      <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+    <React.StrictMode>
+      <button
+        onClick={() => {
+          setMotion(m => !m);
+        }}
+      >
+        Motion: {String(motion)}
+      </button>
 
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: '1 1 50%' }}>
-          <h3>With Virtual</h3>
-          <Tree
-            ref={treeRef}
-            // defaultExpandAll={false}
-            defaultExpandAll
-            defaultExpandedKeys={defaultExpandedKeys}
-            motion={motion}
-            height={200}
-            itemHeight={20}
-            style={{ border: '1px solid #000' }}
-            treeData={getTreeData()}
-          />
+      <Provider motion={motion}>
+        <div className="animation">
+          <h2>expanded</h2>
+          <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+
+          <div style={{ display: 'flex' }}>
+            <div style={{ flex: '1 1 50%' }}>
+              <h3>With Virtual</h3>
+              <Tree
+                ref={treeRef}
+                // defaultExpandAll={false}
+                defaultExpandAll
+                defaultExpandedKeys={defaultExpandedKeys}
+                motion={motion}
+                height={200}
+                itemHeight={20}
+                style={{ border: '1px solid #000' }}
+                treeData={getTreeData()}
+              />
+            </div>
+            <div style={{ flex: '1 1 50%' }}>
+              <h3>Without Virtual</h3>
+              <Tree
+                defaultExpandAll={false}
+                defaultExpandedKeys={defaultExpandedKeys}
+                motion={motion}
+                style={{ border: '1px solid #000' }}
+                treeData={getTreeData()}
+              />
+            </div>
+          </div>
         </div>
-        <div style={{ flex: '1 1 50%' }}>
-          <h3>Without Virtual</h3>
-          <Tree
-            defaultExpandAll={false}
-            defaultExpandedKeys={defaultExpandedKeys}
-            motion={motion}
-            style={{ border: '1px solid #000' }}
-            treeData={getTreeData()}
-          />
-        </div>
-      </div>
-    </div>
+      </Provider>
+    </React.StrictMode>
   );
 };
 
