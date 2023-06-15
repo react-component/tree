@@ -37,8 +37,12 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
   const { prefixCls } = React.useContext(TreeContext);
 
   useLayoutEffect(() => {
-    if (motionNodes && motionType === 'hide' && visible) {
-      setVisible(false);
+    if (motionNodes) {
+      onOriginMotionStart();
+
+      if (motionType === 'hide' && visible) {
+        setVisible(false);
+      }
     }
   }, [motionNodes]);
 
