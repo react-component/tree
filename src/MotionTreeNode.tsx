@@ -33,8 +33,8 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
   },
   ref,
 ) => {
-  const { prefixCls } = React.useContext(TreeContext);
   const [visible, setVisible] = React.useState(true);
+  const { prefixCls } = React.useContext(TreeContext);
 
   useLayoutEffect(() => {
     if (motionNodes && motionType === 'hide' && visible) {
@@ -44,7 +44,6 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
 
   const onVisibleChanged = (nextVisible: boolean) => {
     if (visible === nextVisible) {
-      console.log('onVisibleChanged', nextVisible);
       onOriginMotionEnd();
     }
   };

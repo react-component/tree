@@ -109,23 +109,23 @@ function getTreeData() {
 
 const Demo = () => {
   const treeRef = React.useRef();
-  const [motion, setMotion] = React.useState(true);
+  const [enableMotion, setEnableMotion] = React.useState(true);
 
   setTimeout(() => {
     treeRef.current.scrollTo({ key: '0-9-2' });
   }, 100);
 
   return (
-    <React.StrictMode>
+    <Provider motion={enableMotion}>
       <button
         onClick={() => {
-          setMotion(m => !m);
+          setEnableMotion(e => !e);
         }}
       >
-        Motion: {String(motion)}
+        Motion: {String(enableMotion)}
       </button>
 
-      <Provider motion={motion}>
+      <React.StrictMode>
         <div className="animation">
           <h2>expanded</h2>
           <style dangerouslySetInnerHTML={{ __html: STYLE }} />
@@ -157,8 +157,8 @@ const Demo = () => {
             </div>
           </div>
         </div>
-      </Provider>
-    </React.StrictMode>
+      </React.StrictMode>
+    </Provider>
   );
 };
 
