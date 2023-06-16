@@ -5,6 +5,7 @@ import * as React from 'react';
 import { TreeContext } from './contextTypes';
 import { FlattenNode, TreeNodeProps } from './interface';
 import TreeNode from './TreeNode';
+import useUnmount from './useUnmount';
 import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
@@ -36,19 +37,36 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
   const [visible, setVisible] = React.useState(true);
   const { prefixCls } = React.useContext(TreeContext);
 
+  // Calculate target visible here.
+  // And apply in effect to make `leave` motion work.
+  const targetVisible = motionNodes && motionType !== 'hide';
+
   useLayoutEffect(() => {
     if (motionNodes) {
       onOriginMotionStart();
 
-      if (motionType === 'hide' && visible) {
-        setVisible(false);
+      if (targetVisible !== visible) {
+        setVisible(targetVisible);
       }
     }
   }, [motionNodes]);
 
-  const onVisibleChanged = (nextVisible: boolean) => {
-    if (visible === nextVisible) {
+  // Should only trigger once
+  const triggerMotionEndRef = React.useRef(false);
+  const triggerMotionEnd = () => {
+    if (motionNodes && !triggerMotionEndRef.current) {
+      triggerMotionEndRef.current = true;
       onOriginMotionEnd();
+    }
+  };
+
+  // Effect if unmount
+  useUnmount(triggerMotionEnd);
+
+  // Motion end event
+  const onVisibleChanged = (nextVisible: boolean) => {
+    if (targetVisible === nextVisible) {
+      triggerMotionEnd();
     }
   };
 
