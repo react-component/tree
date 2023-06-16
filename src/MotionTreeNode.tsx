@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { useEffect } from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
-import TreeNode from './TreeNode';
-import { FlattenNode, TreeNodeProps } from './interface';
-import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
+import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
+import * as React from 'react';
 import { TreeContext } from './contextTypes';
+import { FlattenNode, TreeNodeProps } from './interface';
+import TreeNode from './TreeNode';
+import useUnmount from './useUnmount';
+import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;
@@ -36,39 +37,38 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
   const [visible, setVisible] = React.useState(true);
   const { prefixCls } = React.useContext(TreeContext);
 
-  const motionedRef = React.useRef(false);
+  // Calculate target visible here.
+  // And apply in effect to make `leave` motion work.
+  const targetVisible = motionNodes && motionType !== 'hide';
 
-  const onMotionEnd = () => {
-    if (!motionedRef.current) {
-      onOriginMotionEnd();
-    }
-    motionedRef.current = true;
-  };
+  useLayoutEffect(() => {
+    if (motionNodes) {
+      onOriginMotionStart();
 
-  useEffect(() => {
-    if (motionNodes && motionType === 'hide' && visible) {
-      setVisible(false);
+      if (targetVisible !== visible) {
+        setVisible(targetVisible);
+      }
     }
   }, [motionNodes]);
 
-  let reruningEffectFlag = null;
-
-  useEffect(() => {
-    // Trigger motion only when patched
-    if (motionNodes) {
-      if (reruningEffectFlag === null) {
-        onOriginMotionStart();
-      } else {
-        clearTimeout(reruningEffectFlag);
-      }
+  // Should only trigger once
+  const triggerMotionEndRef = React.useRef(false);
+  const triggerMotionEnd = () => {
+    if (motionNodes && !triggerMotionEndRef.current) {
+      triggerMotionEndRef.current = true;
+      onOriginMotionEnd();
     }
+  };
 
-    return () => {
-      if (motionNodes) {
-        reruningEffectFlag = setTimeout(onMotionEnd, 0);
-      }
-    };
-  }, []);
+  // Effect if unmount
+  useUnmount(triggerMotionEnd);
+
+  // Motion end event
+  const onVisibleChanged = (nextVisible: boolean) => {
+    if (targetVisible === nextVisible) {
+      triggerMotionEnd();
+    }
+  };
 
   if (motionNodes) {
     return (
@@ -77,8 +77,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
         visible={visible}
         {...motion}
         motionAppear={motionType === 'show'}
-        onAppearEnd={onMotionEnd}
-        onLeaveEnd={onMotionEnd}
+        onVisibleChanged={onVisibleChanged}
       >
         {({ className: motionClassName, style: motionStyle }, motionRef) => (
           <div

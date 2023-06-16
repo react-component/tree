@@ -1,8 +1,8 @@
+import { act, fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react';
-import Tree, { TreeNode, FieldDataNode } from '../src';
-import MotionTreeNode from '../src/MotionTreeNode';
+import Tree, { FieldDataNode, TreeNode } from '../src';
 import { TreeContext } from '../src/contextTypes';
+import MotionTreeNode from '../src/MotionTreeNode';
 import { getMinimumRangeTransitionRange } from '../src/NodeList';
 
 jest.mock('rc-motion/lib/util/motion', () => {
@@ -123,14 +123,20 @@ describe('Tree Motion', () => {
       const onMotionStart = jest.fn();
       const onMotionEnd = jest.fn();
       const { unmount } = render(
-        <TreeContext.Provider value={{ prefixCls: 'test' } as any}>
-          <MotionTreeNode
-            motionNodes={[]}
-            onMotionStart={onMotionStart}
-            onMotionEnd={onMotionEnd}
-            {...({} as any)} // Ignore TS warning
-          />
-        </TreeContext.Provider>,
+        <React.StrictMode>
+          <TreeContext.Provider value={{ prefixCls: 'test' } as any}>
+            <MotionTreeNode
+              motionNodes={[]}
+              onMotionStart={onMotionStart}
+              onMotionEnd={onMotionEnd}
+              motion={{
+                motionName: 'bamboo',
+              }}
+              motionType="hide"
+              {...({} as any)} // Ignore TS warning
+            />
+          </TreeContext.Provider>
+        </React.StrictMode>,
       );
 
       expect(onMotionStart).toHaveBeenCalled();
@@ -207,7 +213,7 @@ describe('Tree Motion', () => {
 
     const { container } = render(<Demo />);
     expect(container.querySelector('[title="B"]')).toBeTruthy();
-    // wrapper.find('.rc-tree-switcher').first().simulate('click');
+
     fireEvent.click(container.querySelector('.rc-tree-switcher'));
     act(() => {
       jest.runAllTimers();
