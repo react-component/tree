@@ -3,19 +3,24 @@ import * as React from 'react';
 /**
  * Trigger only when component unmount
  */
-export default function useUnmount(callback: VoidFunction) {
-  const [enabled, setEnabled] = React.useState(false);
-
-  React.useLayoutEffect(
-    () => () => {
-      if (enabled) {
-        callback();
-      }
-    },
-    [enabled],
-  );
+export default function useUnmount(triggerStart: VoidFunction, triggerEnd: VoidFunction) {
+  const [firstMount, setFirstMount] = React.useState(false);
 
   React.useLayoutEffect(() => {
-    setEnabled(true);
+    if (firstMount) {
+      triggerStart();
+
+      return () => {
+        triggerEnd();
+      };
+    }
+  }, [firstMount]);
+
+  React.useLayoutEffect(() => {
+    setFirstMount(true);
+
+    return () => {
+      setFirstMount(false);
+    };
   }, []);
 }
