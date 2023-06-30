@@ -43,13 +43,17 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
 
   useLayoutEffect(() => {
     if (motionNodes) {
-      onOriginMotionStart();
-
       if (targetVisible !== visible) {
         setVisible(targetVisible);
       }
     }
   }, [motionNodes]);
+
+  const triggerMotionStart = () => {
+    if (motionNodes) {
+      onOriginMotionStart();
+    }
+  };
 
   // Should only trigger once
   const triggerMotionEndRef = React.useRef(false);
@@ -61,7 +65,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
   };
 
   // Effect if unmount
-  useUnmount(triggerMotionEnd);
+  useUnmount(triggerMotionStart, triggerMotionEnd);
 
   // Motion end event
   const onVisibleChanged = (nextVisible: boolean) => {
