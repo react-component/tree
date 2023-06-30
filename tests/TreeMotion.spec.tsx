@@ -280,4 +280,46 @@ describe('Tree Motion', () => {
     expect(container.querySelectorAll('span.rc-tree-title')[0].textContent).toEqual('parent2');
     expect(container.querySelectorAll('span.rc-tree-title')[1].textContent).toEqual('child2');
   });
+
+  // https://github.com/ant-design/ant-design/issues/43282
+  it('dynamic modify data should stop motion', () => {
+    const motion = {
+      motionName: 'bamboo',
+    };
+
+    const getTreeData = () => [
+      {
+        title: 'parent',
+        key: 'parent',
+        children: [
+          {
+            title: 'child',
+            key: 'child',
+          },
+        ],
+      },
+    ];
+
+    const oriData = getTreeData();
+
+    const { container, rerender } = render(<Tree motion={motion} treeData={oriData} />);
+    rerender(<Tree motion={motion} treeData={oriData} expandedKeys={['parent']} />);
+
+    // Replace `treeData` before motion end
+    const onExpand = jest.fn();
+    rerender(
+      <Tree
+        onExpand={onExpand}
+        motion={motion}
+        treeData={getTreeData()}
+        expandedKeys={['parent']}
+      />,
+    );
+
+    console.log(container.innerHTML);
+
+    // Click should trigger event
+    fireEvent.click(container.querySelector('.rc-tree-switcher_open'));
+    expect(onExpand).toHaveBeenCalled();
+  });
 });
