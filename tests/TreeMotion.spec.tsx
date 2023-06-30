@@ -316,7 +316,10 @@ describe('Tree Motion', () => {
       />,
     );
 
-    console.log(container.innerHTML);
+    // Delay for clean up
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
 
     // Click should trigger event
     fireEvent.click(container.querySelector('.rc-tree-switcher_open'));
