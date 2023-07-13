@@ -1,10 +1,10 @@
-import * as React from 'react';
 import classNames from 'classnames';
 import pickAttrs from 'rc-util/lib/pickAttrs';
+import * as React from 'react';
 // @ts-ignore
 import { TreeContext, TreeContextProps } from './contextTypes';
-import { TreeNodeProps } from './interface';
 import Indent from './Indent';
+import { TreeNodeProps } from './interface';
 import { convertNodePropsToEventData } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
@@ -28,6 +28,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   public selectHandle: HTMLSpanElement;
+
+  cacheIndent: number;
 
   // Isomorphic needn't load data in server side
   componentDidMount() {
@@ -479,8 +481,22 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const rootDraggable = !!draggable;
     // allowDrop is calculated in Tree.tsx, there is no need for calc it here
     const showIndicator = !disabled && rootDraggable && dragOverNodeKey === eventKey;
+
+    // This is a hot fix which is already fixed in
+    // https://github.com/react-component/tree/pull/743/files
+    // But some case need break point so we hack on this
+    // ref https://github.com/ant-design/ant-design/issues/43493
+    const mergedIndent = indent ?? this.cacheIndent;
+    this.cacheIndent = indent;
+
     return showIndicator
-      ? dropIndicatorRender({ dropPosition, dropLevelOffset, indent, prefixCls, direction })
+      ? dropIndicatorRender({
+          dropPosition,
+          dropLevelOffset,
+          indent: mergedIndent,
+          prefixCls,
+          direction,
+        })
       : null;
   };
 
@@ -585,7 +601,5 @@ const ContextTreeNode: React.FC<TreeNodeProps> = props => (
 ContextTreeNode.displayName = 'TreeNode';
 
 (ContextTreeNode as any).isTreeNode = 1;
-
-export { InternalTreeNode };
 
 export default ContextTreeNode;
