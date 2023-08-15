@@ -1142,7 +1142,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             // [Legacy] Refresh logic
             const newFlattenTreeData = flattenTreeData<TreeDataType>(
               this.state.treeData,
-              expandedKeys,
+              // Use the latest expandedKeys value
+              this.state.expandedKeys,
               fieldNames,
             );
             this.setUncontrolledState({ flattenNodes: newFlattenTreeData });
