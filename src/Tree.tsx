@@ -53,7 +53,7 @@ import DropIndicator from './DropIndicator';
 
 const MAX_RETRY_TIMES = 10;
 
-interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
+export interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
   event: 'check';
   node: EventDataNode<TreeDataType>;
   checked: boolean;
