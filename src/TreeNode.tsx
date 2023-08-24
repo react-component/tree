@@ -80,7 +80,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 
     if (!this.isCheckable() || disableCheckbox) return;
 
-    e.preventDefault();
     const targetChecked = !checked;
     onNodeCheck(e, convertNodePropsToEventData(this.props), targetChecked);
   };

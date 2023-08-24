@@ -214,4 +214,29 @@ describe('TreeNode Props', () => {
     expect(onClick).toHaveBeenCalled();
     expect(onSelect).not.toHaveBeenCalled();
   });
+
+  it('elements within the title should be able to respond to clicks', () => {
+    const onClick = jest.fn();
+
+    const Demo: React.FC<{ filed: string; checkable: boolean }> = ({ filed, checkable }) => (
+      <Tree>
+        <TreeNode
+          checkable={checkable}
+          title={
+            <label className={filed}>
+              <input type="radio" onClick={onClick} />
+            </label>
+          }
+        />
+      </Tree>
+    );
+
+    render(<Demo filed="test-check" checkable={true} />);
+    render(<Demo filed="test-click" checkable={false} />);
+    
+    fireEvent.click(document.querySelector('.test-check'));
+    fireEvent.click(document.querySelector('.test-click'));
+
+    expect(onClick).toHaveBeenCalledTimes(2);
+  });
 });
