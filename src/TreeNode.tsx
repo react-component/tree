@@ -67,7 +67,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const {
       context: { onNodeSelect },
     } = this.props;
-    e.preventDefault();
     onNodeSelect(e, convertNodePropsToEventData(this.props));
   };
 
