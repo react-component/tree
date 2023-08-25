@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "5.7.9",
+  "version": "5.7.10",
   "description": "tree ui component for react",
   "engines": {
     "node": ">=10.x"
