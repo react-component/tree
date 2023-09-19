@@ -64,6 +64,8 @@ export type Key = React.Key;
 /**
  * Typescript not support `bigint` as index type yet.
  * We use this to mark the `bigint` type is for `Key` usage.
+ * It's safe to remove this when typescript fix:
+ * https://github.com/microsoft/TypeScript/issues/50217
  */
 export type SafeKey = Exclude<Key, bigint>;
 

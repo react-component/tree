@@ -15,6 +15,7 @@ import {
   KeyEntities,
   NodeElement,
   NodeInstance,
+  SafeKey,
 } from './interface';
 import { AllowDrop, TreeProps } from './Tree';
 import TreeNode from './TreeNode';
@@ -51,7 +52,7 @@ export function getDragChildrenKeys<TreeDataType extends BasicDataNode = DataNod
   // self for left or right drag
   const dragChildrenKeys = [];
 
-  const entity = keyEntities[dragNodeKey];
+  const entity = keyEntities[dragNodeKey as SafeKey];
   function dig(list: DataEntity<TreeDataType>[] = []) {
     list.forEach(({ key, children }) => {
       dragChildrenKeys.push(key);
@@ -113,7 +114,8 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
   // find abstract drop node by horizontal offset
-  let abstractDropNodeEntity: DataEntity<TreeDataType> = keyEntities[targetNode.props.eventKey];
+  let abstractDropNodeEntity: DataEntity<TreeDataType> =
+    keyEntities[targetNode.props.eventKey as SafeKey];
 
   if (clientY < top + height / 2) {
     // first half, set abstract drop node to previous node
@@ -122,7 +124,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     );
     const prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
     const prevNodeKey = flattenedNodes[prevNodeIndex].key;
-    abstractDropNodeEntity = keyEntities[prevNodeKey];
+    abstractDropNodeEntity = keyEntities[prevNodeKey as SafeKey];
   }
 
   const initialAbstractDropNodeKey = abstractDropNodeEntity.key;
@@ -327,13 +329,13 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
  * @param keyList
  * @param keyEntities
  */
-export function conductExpandParent(keyList: Key[], keyEntities: KeyEntities<DataEntity>): Key[] {
+export function conductExpandParent(keyList: Key[], keyEntities: KeyEntities): Key[] {
   const expandedKeys = new Set<Key>();
 
   function conductUp(key: Key) {
     if (expandedKeys.has(key)) return;
 
-    const entity = keyEntities[key];
+    const entity = keyEntities[key as SafeKey];
     if (!entity) return;
 
     expandedKeys.add(key);

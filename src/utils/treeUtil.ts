@@ -13,6 +13,7 @@ import {
   Key,
   KeyEntities,
   NodeElement,
+  SafeKey,
   TreeNodeProps,
 } from '../interface';
 
@@ -327,7 +328,7 @@ export function convertDataToEntities(
       const mergedKey = getKey(key, pos);
 
       posEntities[pos] = entity;
-      keyEntities[mergedKey] = entity;
+      keyEntities[mergedKey as SafeKey] = entity;
 
       // Fill children
       entity.parent = posEntities[parentPos];
@@ -359,7 +360,7 @@ export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = Data
   halfCheckedKeys: Key[];
   dragOverNodeKey: Key;
   dropPosition: number;
-  keyEntities: Record<Key, DataEntity<TreeDataType>>;
+  keyEntities: KeyEntities<TreeDataType>;
 }
 
 /**
@@ -379,7 +380,7 @@ export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
     keyEntities,
   }: TreeNodeRequiredProps<TreeDataType>,
 ) {
-  const entity = keyEntities[key];
+  const entity = keyEntities[key as SafeKey];
 
   const treeNodeProps = {
     eventKey: key,
