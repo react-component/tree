@@ -5,6 +5,7 @@ import * as React from 'react';
 import { TreeContext, TreeContextProps } from './contextTypes';
 import Indent from './Indent';
 import { TreeNodeProps } from './interface';
+import getEntity from './utils/keyUtil';
 import { convertNodePropsToEventData } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
@@ -209,7 +210,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const {
       context: { keyEntities },
     } = this.props;
-    const { children } = keyEntities[eventKey] || {};
+    const { children } = getEntity(keyEntities, eventKey) || {};
 
     return !!(children || []).length;
   };

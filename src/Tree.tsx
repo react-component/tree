@@ -41,6 +41,7 @@ import {
   posToArr,
 } from './util';
 import { conductCheck } from './utils/conductUtil';
+import getEntity from './utils/keyUtil';
 import {
   convertDataToEntities,
   convertNodePropsToEventData,
@@ -560,7 +561,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
         if (this.state.draggingNodeKey === null) return;
 
         let newExpandedKeys = [...expandedKeys];
-        const entity = keyEntities[node.props.eventKey];
+        const entity = getEntity(keyEntities, node.props.eventKey);
 
         if (entity && (entity.children || []).length) {
           newExpandedKeys = arrAdd(expandedKeys, node.props.eventKey);
@@ -736,7 +737,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     const abstractDropNodeProps = {
       ...getTreeNodeProps(dropTargetKey, this.getTreeNodeRequiredProps()),
       active: this.getActiveItem()?.key === dropTargetKey,
-      data: this.state.keyEntities[dropTargetKey].node,
+      data: getEntity(this.state.keyEntities, dropTargetKey).node,
     };
     const dropToChild = dragChildrenKeys.indexOf(dropTargetKey) !== -1;
 
@@ -850,7 +851,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     // [Legacy] Not found related usage in doc or upper libs
     const selectedNodes = selectedKeys
       .map(selectedKey => {
-        const entity = keyEntities[selectedKey];
+        const entity = getEntity(keyEntities, selectedKey);
         if (!entity) return null;
 
         return entity.node;
@@ -896,7 +897,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
 
       eventObj.checkedNodes = checkedKeys
-        .map(checkedKey => keyEntities[checkedKey])
+        .map(checkedKey => getEntity(keyEntities, checkedKey))
         .filter(entity => entity)
         .map(entity => entity.node);
 
@@ -928,7 +929,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       eventObj.halfCheckedKeys = halfCheckedKeys;
 
       checkedKeys.forEach(checkedKey => {
-        const entity = keyEntities[checkedKey];
+        const entity = getEntity(keyEntities, checkedKey);
         if (!entity) return;
 
         const { node, pos } = entity;
