@@ -205,7 +205,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   loadingKeys: Key[];
   expandedKeys: Key[];
 
-  draggingNodeKey: React.Key;
+  draggingNodeKey: Key;
   dragChildrenKeys: Key[];
 
   // for details see comment in Tree.state

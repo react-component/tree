@@ -432,7 +432,7 @@ describe('Tree Basic', () => {
     // https://github.com/ant-design/ant-design/issues/7353
     it('check children after changing from children[disableCheckbox] from true to false', () => {
       let checkedKeys = null;
-      const mockHandleCheck = (keys: React.Key[]) => (checkedKeys = keys);
+      const mockHandleCheck = (keys: string[]) => (checkedKeys = keys);
       function Test({ disableCheckbox }) {
         return (
           <Tree checkable onCheck={mockHandleCheck}>

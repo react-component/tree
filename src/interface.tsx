@@ -59,13 +59,15 @@ export type FieldDataNode<T, ChildFieldName extends string = 'children'> = Basic
   T &
   Partial<Record<ChildFieldName, FieldDataNode<T, ChildFieldName>[]>>;
 
+export type Key = string | number;
+
 export type DataNode = FieldDataNode<{
-  key: string | number;
+  key: Key;
   title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
 }>;
 
 export type EventDataNode<TreeDataType> = {
-  key: React.Key;
+  key: Key;
   expanded: boolean;
   selected: boolean;
   checked: boolean;
@@ -81,8 +83,6 @@ export type EventDataNode<TreeDataType> = {
   BasicDataNode;
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
-
-export type Key = string | number;
 
 export type NodeElement = React.ReactElement<TreeNodeProps> & {
   selectHandle?: HTMLSpanElement;
