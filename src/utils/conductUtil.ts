@@ -6,8 +6,8 @@ import {
   GetCheckDisabled,
   Key,
   KeyEntities,
-  SafeKey,
 } from '../interface';
+import getEntity from './keyUtil';
 
 interface ConductReturnType {
   checkedKeys: Key[];
@@ -208,7 +208,7 @@ export function conductCheck<TreeDataType extends BasicDataNode = DataNode>(
   // We only handle exist keys
   const keys = new Set<Key>(
     keyList.filter(key => {
-      const hasEntity = !!keyEntities[key as SafeKey];
+      const hasEntity = !!getEntity(keyEntities, key);
       if (!hasEntity) {
         warningMissKeys.push(key);
       }

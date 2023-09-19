@@ -16,6 +16,7 @@ import {
   SafeKey,
   TreeNodeProps,
 } from '../interface';
+import getEntity from './keyUtil';
 
 export function getPosition(level: string | number, index: number) {
   return `${level}-${index}`;
@@ -380,7 +381,7 @@ export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
     keyEntities,
   }: TreeNodeRequiredProps<TreeDataType>,
 ) {
-  const entity = keyEntities[key as SafeKey];
+  const entity = getEntity(keyEntities, key);
 
   const treeNodeProps = {
     eventKey: key,

@@ -15,10 +15,10 @@ import {
   KeyEntities,
   NodeElement,
   NodeInstance,
-  SafeKey,
 } from './interface';
 import { AllowDrop, TreeProps } from './Tree';
 import TreeNode from './TreeNode';
+import getEntity from './utils/keyUtil';
 
 export { getPosition, isTreeNode } from './utils/treeUtil';
 
@@ -52,7 +52,7 @@ export function getDragChildrenKeys<TreeDataType extends BasicDataNode = DataNod
   // self for left or right drag
   const dragChildrenKeys = [];
 
-  const entity = keyEntities[dragNodeKey as SafeKey];
+  const entity = getEntity(keyEntities, dragNodeKey);
   function dig(list: DataEntity<TreeDataType>[] = []) {
     list.forEach(({ key, children }) => {
       dragChildrenKeys.push(key);
@@ -114,8 +114,10 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
   // find abstract drop node by horizontal offset
-  let abstractDropNodeEntity: DataEntity<TreeDataType> =
-    keyEntities[targetNode.props.eventKey as SafeKey];
+  let abstractDropNodeEntity: DataEntity<TreeDataType> = getEntity(
+    keyEntities,
+    targetNode.props.eventKey,
+  );
 
   if (clientY < top + height / 2) {
     // first half, set abstract drop node to previous node
@@ -124,7 +126,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     );
     const prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
     const prevNodeKey = flattenedNodes[prevNodeIndex].key;
-    abstractDropNodeEntity = keyEntities[prevNodeKey as SafeKey];
+    abstractDropNodeEntity = getEntity(keyEntities, prevNodeKey);
   }
 
   const initialAbstractDropNodeKey = abstractDropNodeEntity.key;
@@ -335,7 +337,7 @@ export function conductExpandParent(keyList: Key[], keyEntities: KeyEntities): K
   function conductUp(key: Key) {
     if (expandedKeys.has(key)) return;
 
-    const entity = keyEntities[key as SafeKey];
+    const entity = getEntity(keyEntities, key);
     if (!entity) return;
 
     expandedKeys.add(key);
