@@ -11,9 +11,12 @@ import {
   FlattenNode,
   GetKey,
   Key,
+  KeyEntities,
   NodeElement,
+  SafeKey,
   TreeNodeProps,
 } from '../interface';
+import getEntity from './keyUtil';
 
 export function getPosition(level: string | number, index: number) {
   return `${level}-${index}`;
@@ -277,7 +280,7 @@ export function traverseDataNodes(
 
 interface Wrapper {
   posEntities: Record<string, DataEntity>;
-  keyEntities: Record<Key, DataEntity>;
+  keyEntities: KeyEntities;
 }
 
 /**
@@ -326,7 +329,7 @@ export function convertDataToEntities(
       const mergedKey = getKey(key, pos);
 
       posEntities[pos] = entity;
-      keyEntities[mergedKey] = entity;
+      keyEntities[mergedKey as SafeKey] = entity;
 
       // Fill children
       entity.parent = posEntities[parentPos];
@@ -358,7 +361,7 @@ export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = Data
   halfCheckedKeys: Key[];
   dragOverNodeKey: Key;
   dropPosition: number;
-  keyEntities: Record<Key, DataEntity<TreeDataType>>;
+  keyEntities: KeyEntities<TreeDataType>;
 }
 
 /**
@@ -378,7 +381,7 @@ export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
     keyEntities,
   }: TreeNodeRequiredProps<TreeDataType>,
 ) {
-  const entity = keyEntities[key];
+  const entity = getEntity(keyEntities, key);
 
   const treeNodeProps = {
     eventKey: key,

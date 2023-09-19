@@ -4,14 +4,14 @@
  */
 import * as React from 'react';
 import {
-  IconType,
-  Key,
-  DataEntity,
-  EventDataNode,
-  NodeInstance,
+  BasicDataNode,
   DataNode,
   Direction,
-  BasicDataNode,
+  EventDataNode,
+  IconType,
+  Key,
+  KeyEntities,
+  NodeInstance,
 } from './interface';
 import { DraggableConfig } from './Tree';
 
@@ -50,7 +50,7 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
-  keyEntities: Record<Key, DataEntity<any>>;
+  keyEntities: KeyEntities;
   // for details see comment in Tree.state (Tree.tsx)
   dropLevelOffset?: number;
   dropContainerKey: Key | null;

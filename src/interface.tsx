@@ -59,7 +59,17 @@ export type FieldDataNode<T, ChildFieldName extends string = 'children'> = Basic
   T &
   Partial<Record<ChildFieldName, FieldDataNode<T, ChildFieldName>[]>>;
 
-export type Key = string | number;
+export type Key = React.Key;
+
+/**
+ * Typescript not support `bigint` as index type yet.
+ * We use this to mark the `bigint` type is for `Key` usage.
+ * It's safe to remove this when typescript fix:
+ * https://github.com/microsoft/TypeScript/issues/50217
+ */
+export type SafeKey = Exclude<Key, bigint>;
+
+export type KeyEntities<DateType = any> = Record<SafeKey, DataEntity<DateType>>;
 
 export type DataNode = FieldDataNode<{
   key: Key;

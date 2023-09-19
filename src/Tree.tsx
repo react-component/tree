@@ -1,55 +1,57 @@
 // TODO: https://www.w3.org/TR/2017/NOTE-wai-aria-practices-1.1-20171214/examples/treeview/treeview-2/treeview-2a.html
 // Fully accessibility support
 
-import * as React from 'react';
-import KeyCode from 'rc-util/lib/KeyCode';
-import warning from 'rc-util/lib/warning';
-import pickAttrs from 'rc-util/lib/pickAttrs';
 import classNames from 'classnames';
+import KeyCode from 'rc-util/lib/KeyCode';
+import pickAttrs from 'rc-util/lib/pickAttrs';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
 
 import {
-  TreeContext,
-  NodeMouseEventHandler,
   NodeDragEventHandler,
   NodeDragEventParams,
+  NodeMouseEventHandler,
   NodeMouseEventParams,
+  TreeContext,
 } from './contextTypes';
+import DropIndicator from './DropIndicator';
 import {
-  getDragChildrenKeys,
-  parseCheckedKeys,
-  conductExpandParent,
-  calcSelectedKeys,
-  calcDropPosition,
-  arrAdd,
-  arrDel,
-  posToArr,
-} from './util';
-import {
+  BasicDataNode,
   DataNode,
+  Direction,
+  EventDataNode,
+  FieldNames,
+  FlattenNode,
   IconType,
   Key,
-  FlattenNode,
-  DataEntity,
-  EventDataNode,
+  KeyEntities,
   NodeInstance,
+  SafeKey,
   ScrollTo,
-  Direction,
-  FieldNames,
-  BasicDataNode,
 } from './interface';
-import {
-  flattenTreeData,
-  convertTreeToData,
-  convertDataToEntities,
-  warningWithoutKey,
-  convertNodePropsToEventData,
-  getTreeNodeProps,
-  fillFieldNames,
-} from './utils/treeUtil';
-import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
+import NodeList, { MotionEntity, MOTION_KEY, NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
+import {
+  arrAdd,
+  arrDel,
+  calcDropPosition,
+  calcSelectedKeys,
+  conductExpandParent,
+  getDragChildrenKeys,
+  parseCheckedKeys,
+  posToArr,
+} from './util';
 import { conductCheck } from './utils/conductUtil';
-import DropIndicator from './DropIndicator';
+import getEntity from './utils/keyUtil';
+import {
+  convertDataToEntities,
+  convertNodePropsToEventData,
+  convertTreeToData,
+  fillFieldNames,
+  flattenTreeData,
+  getTreeNodeProps,
+  warningWithoutKey,
+} from './utils/treeUtil';
 
 const MAX_RETRY_TIMES = 10;
 
@@ -194,7 +196,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
 }
 
 interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
-  keyEntities: Record<Key, DataEntity<TreeDataType>>;
+  keyEntities: KeyEntities<TreeDataType>;
 
   indent: number | null;
 
@@ -234,7 +236,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
 class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends React.Component<
   TreeProps<TreeDataType>,
   TreeState<TreeDataType>
-  > {
+> {
   static defaultProps = {
     prefixCls: 'rc-tree',
     showLine: false,
@@ -260,9 +262,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   destroyed: boolean = false;
 
-  delayedDragEnterLogic: Record<Key, number>;
+  delayedDragEnterLogic: Record<SafeKey, number>;
 
-  loadingRetryTimes: Record<Key, number> = {};
+  loadingRetryTimes: Record<SafeKey, number> = {};
 
   state: TreeState<TreeDataType> = {
     keyEntities: {},
@@ -560,7 +562,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
         if (this.state.draggingNodeKey === null) return;
 
         let newExpandedKeys = [...expandedKeys];
-        const entity = keyEntities[node.props.eventKey];
+        const entity = getEntity(keyEntities, node.props.eventKey);
 
         if (entity && (entity.children || []).length) {
           newExpandedKeys = arrAdd(expandedKeys, node.props.eventKey);
@@ -736,7 +738,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     const abstractDropNodeProps = {
       ...getTreeNodeProps(dropTargetKey, this.getTreeNodeRequiredProps()),
       active: this.getActiveItem()?.key === dropTargetKey,
-      data: this.state.keyEntities[dropTargetKey].node,
+      data: getEntity(this.state.keyEntities, dropTargetKey).node,
     };
     const dropToChild = dragChildrenKeys.indexOf(dropTargetKey) !== -1;
 
@@ -850,7 +852,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     // [Legacy] Not found related usage in doc or upper libs
     const selectedNodes = selectedKeys
       .map(selectedKey => {
-        const entity = keyEntities[selectedKey];
+        const entity = getEntity(keyEntities, selectedKey);
         if (!entity) return null;
 
         return entity.node;
@@ -896,7 +898,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
 
       eventObj.checkedNodes = checkedKeys
-        .map(checkedKey => keyEntities[checkedKey])
+        .map(checkedKey => getEntity(keyEntities, checkedKey))
         .filter(entity => entity)
         .map(entity => entity.node);
 
@@ -928,7 +930,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       eventObj.halfCheckedKeys = halfCheckedKeys;
 
       checkedKeys.forEach(checkedKey => {
-        const entity = keyEntities[checkedKey];
+        const entity = getEntity(keyEntities, checkedKey);
         if (!entity) return;
 
         const { node, pos } = entity;
@@ -992,8 +994,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             }));
 
             // If exceed max retry times, we give up retry
-            this.loadingRetryTimes[key] = (this.loadingRetryTimes[key] || 0) + 1;
-            if (this.loadingRetryTimes[key] >= MAX_RETRY_TIMES) {
+            this.loadingRetryTimes[key as SafeKey] =
+              (this.loadingRetryTimes[key as SafeKey] || 0) + 1;
+            if (this.loadingRetryTimes[key as SafeKey] >= MAX_RETRY_TIMES) {
               const { loadedKeys: currentLoadedKeys } = this.state;
 
               warning(false, 'Retry for `loadData` many times but still failed. No more retry.');
