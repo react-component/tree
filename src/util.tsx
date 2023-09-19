@@ -3,20 +3,21 @@
  * Legacy code. Should avoid to use if you are new to import these code.
  */
 
-import React from 'react';
 import warning from 'rc-util/lib/warning';
-import TreeNode from './TreeNode';
+import React from 'react';
 import {
-  NodeElement,
-  Key,
-  DataNode,
-  DataEntity,
-  NodeInstance,
-  FlattenNode,
-  Direction,
   BasicDataNode,
+  DataEntity,
+  DataNode,
+  Direction,
+  FlattenNode,
+  Key,
+  KeyEntities,
+  NodeElement,
+  NodeInstance,
 } from './interface';
-import { TreeProps, AllowDrop } from './Tree';
+import { AllowDrop, TreeProps } from './Tree';
+import TreeNode from './TreeNode';
 
 export { getPosition, isTreeNode } from './utils/treeUtil';
 
@@ -44,7 +45,7 @@ export function posToArr(pos: string) {
 
 export function getDragChildrenKeys<TreeDataType extends BasicDataNode = DataNode>(
   dragNodeKey: Key,
-  keyEntities: Record<Key, DataEntity<TreeDataType>>,
+  keyEntities: KeyEntities<TreeDataType>,
 ): Key[] {
   // not contains self
   // self for left or right drag
@@ -92,7 +93,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   },
   allowDrop: AllowDrop<TreeDataType>,
   flattenedNodes: FlattenNode<TreeDataType>[],
-  keyEntities: Record<Key, DataEntity<TreeDataType>>,
+  keyEntities: KeyEntities<TreeDataType>,
   expandKeys: Key[],
   direction: Direction,
 ): {
@@ -326,7 +327,7 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
  * @param keyList
  * @param keyEntities
  */
-export function conductExpandParent(keyList: Key[], keyEntities: Record<Key, DataEntity>): Key[] {
+export function conductExpandParent(keyList: Key[], keyEntities: KeyEntities<DataEntity>): Key[] {
   const expandedKeys = new Set<Key>();
 
   function conductUp(key: Key) {

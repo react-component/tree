@@ -11,6 +11,7 @@ import {
   FlattenNode,
   GetKey,
   Key,
+  KeyEntities,
   NodeElement,
   TreeNodeProps,
 } from '../interface';
@@ -277,7 +278,7 @@ export function traverseDataNodes(
 
 interface Wrapper {
   posEntities: Record<string, DataEntity>;
-  keyEntities: Record<Key, DataEntity>;
+  keyEntities: KeyEntities;
 }
 
 /**

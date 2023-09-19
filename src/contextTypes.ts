@@ -4,14 +4,13 @@
  */
 import * as React from 'react';
 import {
-  IconType,
-  Key,
-  DataEntity,
-  EventDataNode,
-  NodeInstance,
+  BasicDataNode,
   DataNode,
   Direction,
-  BasicDataNode,
+  EventDataNode,
+  IconType,
+  KeyEntities,
+  NodeInstance,
 } from './interface';
 import { DraggableConfig } from './Tree';
 
@@ -46,15 +45,15 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   icon: IconType;
   switcherIcon: IconType;
   draggable?: DraggableConfig;
-  draggingNodeKey?: Key;
+  draggingNodeKey?: React.Key;
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
-  keyEntities: Record<Key, DataEntity<any>>;
+  keyEntities: KeyEntities;
   // for details see comment in Tree.state (Tree.tsx)
   dropLevelOffset?: number;
-  dropContainerKey: Key | null;
-  dropTargetKey: Key | null;
+  dropContainerKey: React.Key | null;
+  dropTargetKey: React.Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number | null;
   dropIndicatorRender: (props: {
@@ -64,7 +63,7 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
     prefixCls;
     direction: Direction;
   }) => React.ReactNode;
-  dragOverNodeKey: Key | null;
+  dragOverNodeKey: React.Key | null;
   direction: Direction;
 
   loadData: (treeNode: EventDataNode<TreeDataType>) => Promise<void>;

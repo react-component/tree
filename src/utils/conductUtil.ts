@@ -1,5 +1,5 @@
 import warning from 'rc-util/lib/warning';
-import { Key, DataEntity, DataNode, GetCheckDisabled, BasicDataNode } from '../interface';
+import { Key, DataEntity, DataNode, GetCheckDisabled, BasicDataNode, KeyEntities } from '../interface';
 
 interface ConductReturnType {
   checkedKeys: Key[];
@@ -185,7 +185,7 @@ function cleanConductCheck<TreeDataType extends BasicDataNode = DataNode>(
 export function conductCheck<TreeDataType extends BasicDataNode = DataNode>(
   keyList: Key[],
   checked: true | { checked: false; halfCheckedKeys: Key[] },
-  keyEntities: Record<Key, DataEntity<TreeDataType>>,
+  keyEntities: KeyEntities<TreeDataType>,
   getCheckDisabled?: GetCheckDisabled<TreeDataType>,
 ): ConductReturnType {
   const warningMissKeys: Key[] = [];

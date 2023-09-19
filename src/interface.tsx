@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export { ScrollTo } from 'rc-virtual-list/lib/List';
 export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
-  eventKey?: Key; // Pass by parent `cloneElement`
+  eventKey?: React.Key; // Pass by parent `cloneElement`
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -59,15 +59,15 @@ export type FieldDataNode<T, ChildFieldName extends string = 'children'> = Basic
   T &
   Partial<Record<ChildFieldName, FieldDataNode<T, ChildFieldName>[]>>;
 
-export type Key = string | number;
+export type KeyEntities<DateType = any> = Record<string | number, DataEntity<DateType>>;
 
 export type DataNode = FieldDataNode<{
-  key: Key;
+  key: React.Key;
   title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
 }>;
 
 export type EventDataNode<TreeDataType> = {
-  key: Key;
+  key: React.Key;
   expanded: boolean;
   selected: boolean;
   checked: boolean;
@@ -100,7 +100,7 @@ export type NodeInstance<TreeDataType extends BasicDataNode = DataNode> = React.
 export interface Entity {
   node: NodeElement;
   index: number;
-  key: Key;
+  key: React.Key;
   pos: string;
   parent?: Entity;
   children?: Entity[];
@@ -121,12 +121,12 @@ export interface FlattenNode<TreeDataType extends BasicDataNode = DataNode> {
   pos: string;
   data: TreeDataType;
   title: React.ReactNode;
-  key: Key;
+  key: React.Key;
   isStart: boolean[];
   isEnd: boolean[];
 }
 
-export type GetKey<RecordType> = (record: RecordType, index?: number) => Key;
+export type GetKey<RecordType> = (record: RecordType, index?: number) => React.Key;
 
 export type GetCheckDisabled<RecordType> = (record: RecordType) => boolean;
 

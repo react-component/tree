@@ -5,7 +5,15 @@
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 import VirtualList, { ListRef } from 'rc-virtual-list';
 import * as React from 'react';
-import { BasicDataNode, DataEntity, DataNode, FlattenNode, Key, ScrollTo } from './interface';
+import {
+  BasicDataNode,
+  DataEntity,
+  DataNode,
+  FlattenNode,
+  Key,
+  KeyEntities,
+  ScrollTo,
+} from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps } from './utils/treeUtil';
@@ -74,7 +82,7 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   loadedKeys: Key[];
   loadingKeys: Key[];
   halfCheckedKeys: Key[];
-  keyEntities: Record<Key, DataEntity<any>>;
+  keyEntities: KeyEntities;
 
   dragging: boolean;
   dragOverNodeKey: Key;
