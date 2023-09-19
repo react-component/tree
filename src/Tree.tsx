@@ -26,6 +26,7 @@ import {
   Key,
   KeyEntities,
   NodeInstance,
+  SafeKey,
   ScrollTo,
 } from './interface';
 import NodeList, { MotionEntity, MOTION_KEY, NodeListRef } from './NodeList';
@@ -261,9 +262,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   destroyed: boolean = false;
 
-  delayedDragEnterLogic: Record<Key, number>;
+  delayedDragEnterLogic: Record<SafeKey, number>;
 
-  loadingRetryTimes: Record<Key, number> = {};
+  loadingRetryTimes: Record<SafeKey, number> = {};
 
   state: TreeState<TreeDataType> = {
     keyEntities: {},
@@ -993,8 +994,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             }));
 
             // If exceed max retry times, we give up retry
-            this.loadingRetryTimes[key] = (this.loadingRetryTimes[key] || 0) + 1;
-            if (this.loadingRetryTimes[key] >= MAX_RETRY_TIMES) {
+            this.loadingRetryTimes[key as SafeKey] =
+              (this.loadingRetryTimes[key as SafeKey] || 0) + 1;
+            if (this.loadingRetryTimes[key as SafeKey] >= MAX_RETRY_TIMES) {
               const { loadedKeys: currentLoadedKeys } = this.state;
 
               warning(false, 'Retry for `loadData` many times but still failed. No more retry.');
