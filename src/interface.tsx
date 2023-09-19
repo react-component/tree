@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export { ScrollTo } from 'rc-virtual-list/lib/List';
 export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
-  eventKey?: React.Key; // Pass by parent `cloneElement`
+  eventKey?: Key; // Pass by parent `cloneElement`
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -59,15 +59,23 @@ export type FieldDataNode<T, ChildFieldName extends string = 'children'> = Basic
   T &
   Partial<Record<ChildFieldName, FieldDataNode<T, ChildFieldName>[]>>;
 
-export type KeyEntities<DateType = any> = Record<string | number, DataEntity<DateType>>;
+export type Key = React.Key;
+
+/**
+ * Typescript not support `bigint` as index type yet.
+ * We use this to mark the `bigint` type is for `Key` usage.
+ */
+export type SafeKey = Exclude<Key, bigint>;
+
+export type KeyEntities<DateType = any> = Record<SafeKey, DataEntity<DateType>>;
 
 export type DataNode = FieldDataNode<{
-  key: React.Key;
+  key: Key;
   title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
 }>;
 
 export type EventDataNode<TreeDataType> = {
-  key: React.Key;
+  key: Key;
   expanded: boolean;
   selected: boolean;
   checked: boolean;
@@ -100,7 +108,7 @@ export type NodeInstance<TreeDataType extends BasicDataNode = DataNode> = React.
 export interface Entity {
   node: NodeElement;
   index: number;
-  key: React.Key;
+  key: Key;
   pos: string;
   parent?: Entity;
   children?: Entity[];
@@ -121,12 +129,12 @@ export interface FlattenNode<TreeDataType extends BasicDataNode = DataNode> {
   pos: string;
   data: TreeDataType;
   title: React.ReactNode;
-  key: React.Key;
+  key: Key;
   isStart: boolean[];
   isEnd: boolean[];
 }
 
-export type GetKey<RecordType> = (record: RecordType, index?: number) => React.Key;
+export type GetKey<RecordType> = (record: RecordType, index?: number) => Key;
 
 export type GetCheckDisabled<RecordType> = (record: RecordType) => boolean;
 
