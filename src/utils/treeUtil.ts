@@ -89,7 +89,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
         const { children, ...rest } = treeNode.props;
 
         const dataNode: DataNode = {
-          key,
+          key: key as Key,
           ...rest,
         };
 
