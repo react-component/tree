@@ -69,7 +69,7 @@ export type Key = React.Key;
  */
 export type SafeKey = Exclude<Key, bigint>;
 
-export type KeyEntities<DateType = any> = Record<SafeKey, DataEntity<DateType>>;
+export type KeyEntities<DateType extends BasicDataNode = any> = Record<SafeKey, DataEntity<DateType>>;
 
 export type DataNode = FieldDataNode<{
   key: Key;
