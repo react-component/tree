@@ -124,8 +124,8 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
-  onClick?: NodeMouseEventHandler;
-  onDoubleClick?: NodeMouseEventHandler;
+  onClick?: NodeMouseEventHandler<TreeDataType>;
+  onDoubleClick?: NodeMouseEventHandler<TreeDataType>;
   onScroll?: React.UIEventHandler<HTMLElement>;
   onExpand?: (
     expandedKeys: Key[],
