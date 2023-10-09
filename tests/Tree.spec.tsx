@@ -1,7 +1,7 @@
 /* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import {render, fireEvent, act} from '@testing-library/react';
 import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Tree, { TreeNode } from '../src';
@@ -1054,7 +1054,10 @@ describe('Tree Basic', () => {
       const treeRef = React.createRef<any>();
       render(<Tree ref={treeRef} />);
 
-      treeRef.current.scrollTo({ key: 'light', align: 'top' });
+      act(() => {
+        treeRef.current.scrollTo({key: 'light', align: 'top'});
+      });
+      
       jest.runAllTimers();
 
       expect(called).toBeTruthy();
