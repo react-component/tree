@@ -186,6 +186,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   // Virtual List
   height?: number;
   itemHeight?: number;
+  itemScrollOffset?: number;
   virtual?: boolean;
 
   // direction for drag logic
@@ -326,13 +327,13 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   }
 
   onUpdated() {
-    const { activeKey } = this.props;
+    const { activeKey, itemScrollOffset = 0 } = this.props;
 
     if (activeKey !== undefined && activeKey !== this.state.activeKey) {
       this.setState({ activeKey });
 
       if (activeKey !== null) {
-        this.scrollTo({ key: activeKey });
+        this.scrollTo({ key: activeKey, offset: itemScrollOffset });
       }
     }
   }
