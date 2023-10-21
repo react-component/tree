@@ -1065,6 +1065,49 @@ describe('Tree Basic', () => {
     });
   });
 
+  describe('offset should work', () => {
+    let domSpy: ReturnType<typeof spyElementPrototypes>;
+
+    beforeAll(() => {
+      domSpy = spyElementPrototypes(HTMLDivElement, {
+        clientHeight: {
+          get: () => 100,
+        },
+      });
+    });
+
+    afterAll(() => {
+      domSpy.mockRestore();
+    });
+
+    it('work', () => {
+      jest.useFakeTimers();
+
+      const data = [];
+      for (let i = 0; i < 10; i++) {
+        data.push({
+          key: i,
+          title: i,
+        });
+      }
+
+      const treeRef = React.createRef<any>();
+      
+      const { container } = render(
+        <Tree ref={treeRef} treeData={data} virtual itemHeight={20} height={100} />,
+      );
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 5, offset: 5 });
+        jest.runAllTimers();
+      });
+      
+      expect(container.querySelector('.rc-tree-list-holder').scrollTop).toEqual(25);
+
+      jest.useRealTimers();
+    });
+  });
+
   it('not crash if expandedKeys is null', () => {
     render(
       <Tree expandedKeys={null}>
