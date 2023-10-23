@@ -1177,7 +1177,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   // =========================== Keyboard ===========================
   onActiveChange = (newActiveKey: Key | null) => {
     const { activeKey } = this.state;
-    const { onActiveChange } = this.props;
+    const { onActiveChange, itemScrollOffset = 0 } = this.props;
 
     if (activeKey === newActiveKey) {
       return;
@@ -1185,7 +1185,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     this.setState({ activeKey: newActiveKey });
     if (newActiveKey !== null) {
-      this.scrollTo({ key: newActiveKey });
+      this.scrollTo({ key: newActiveKey, offset: itemScrollOffset });
     }
 
     onActiveChange?.(newActiveKey);
