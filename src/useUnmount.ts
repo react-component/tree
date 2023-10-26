@@ -1,4 +1,5 @@
 import * as React from 'react';
+import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 
 /**
  * Trigger only when component unmount
@@ -6,7 +7,7 @@ import * as React from 'react';
 export default function useUnmount(triggerStart: VoidFunction, triggerEnd: VoidFunction) {
   const [firstMount, setFirstMount] = React.useState(false);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (firstMount) {
       triggerStart();
 
@@ -16,7 +17,7 @@ export default function useUnmount(triggerStart: VoidFunction, triggerEnd: VoidF
     }
   }, [firstMount]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     setFirstMount(true);
 
     return () => {
