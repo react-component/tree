@@ -67,7 +67,7 @@
     "glob": "^7.1.6",
     "less": "^3.11.1",
     "np": "^9.0.0",
-    "rc-dialog": "^8.1.0",
+    "rc-dialog": "^9.3.4",
     "rc-tooltip": "5.x",
     "rc-trigger": "^5.0.7",
     "react": "^18.2.0",
