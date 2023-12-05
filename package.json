@@ -67,7 +67,7 @@
     "eslint-plugin-unicorn": "^49.0.0",
     "father": "^2.29.8",
     "glob": "^7.1.6",
-    "less": "^3.11.1",
+    "less": "^4.2.0",
     "np": "^9.0.0",
     "rc-dialog": "^8.1.0",
     "rc-tooltip": "5.x",
