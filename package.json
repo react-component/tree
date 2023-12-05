@@ -65,7 +65,7 @@
     "eslint": "^8.55.0",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-unicorn": "^49.0.0",
-    "father": "^2.29.8",
+    "father": "^4.3.7",
     "glob": "^7.1.6",
     "less": "^3.11.1",
     "np": "^9.0.0",
