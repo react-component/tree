@@ -57,7 +57,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.2.17",
     "@types/warning": "^3.0.0",
-    "@umijs/fabric": "^3.0.0",
+    "@umijs/fabric": "^4.0.1",
     "dumi": "^1.1.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
