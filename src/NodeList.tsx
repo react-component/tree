@@ -17,6 +17,7 @@ import {
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps } from './utils/treeUtil';
+import { InnerProps } from 'rc-virtual-list/lib/Filler';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -92,6 +93,7 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   height: number;
   itemHeight: number;
   virtual?: boolean;
+  innerProps?: InnerProps;
 
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
@@ -158,6 +160,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     height,
     itemHeight,
     virtual,
+    innerProps,
 
     focusable,
     activeItem,
@@ -326,6 +329,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
+        innerProps={innerProps}
         onVisibleChange={(originList, fullList) => {
           const originSet = new Set(originList);
           const restList = fullList.filter(item => !originSet.has(item));
