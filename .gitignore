@@ -37,3 +37,5 @@ es/
 .umi-production
 .umi-test
 .env.local
+
+.dumi/

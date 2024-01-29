@@ -1,4 +1,3 @@
-import { ReactWrapper } from 'enzyme';
 import { Component } from 'react';
 
 export function objectMatcher(item: object) {
@@ -6,12 +5,7 @@ export function objectMatcher(item: object) {
 
   Object.keys(item).forEach(key => {
     const value = item[key];
-    if (
-      value &&
-      typeof value === 'object' &&
-      !(value instanceof ReactWrapper) &&
-      !(value instanceof Component)
-    ) {
+    if (value && typeof value === 'object' && !(value instanceof Component)) {
       result[key] = objectMatcher(value);
     } else {
       result[key] = value;
