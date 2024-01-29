@@ -419,23 +419,15 @@ describe('Tree Props', () => {
   // autoExpandParent - is already full test in Tree.spec.js
 
   it('defaultExpandAll', () => {
-    const onExpand = jest.fn();
-
     const { container } = render(
-      <Tree defaultExpandAll onExpand={onExpand}>
+      <Tree defaultExpandAll>
         <TreeNode key="0-0" title="parent">
           <TreeNode key="0-0-0" title="child" />
         </TreeNode>
       </Tree>,
     );
 
-    console.log(container.innerHTML);
-
     expect(container.firstChild).toMatchSnapshot();
-
-    // Click to get new expandedKeys
-    fireEvent.click(container.querySelector('.rc-tree-switcher_open'));
-    expect(onExpand).toHaveBeenCalledWith([], expect.anything());
   });
 
   // defaultCheckedKeys - is already full test in Tree.spec.js

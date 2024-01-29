@@ -113,6 +113,9 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || 0) - clientX);
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
+  // Filter the expanded keys to exclude the node that not has children currently (like async nodes).
+  const filteredExpandKeys = expandKeys.filter((key: string) => keyEntities[key]?.children?.length);
+
   // find abstract drop node by horizontal offset
   let abstractDropNodeEntity: DataEntity<TreeDataType> = getEntity(
     keyEntities,
@@ -138,7 +141,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   let dropLevelOffset = 0;
 
   // Only allow cross level drop when dragging on a non-expanded node
-  if (!expandKeys.includes(initialAbstractDropNodeKey)) {
+  if (!filteredExpandKeys.includes(initialAbstractDropNodeKey)) {
     for (let i = 0; i < rawDropLevelOffset; i += 1) {
       if (isLastChild(abstractDropNodeEntity)) {
         abstractDropNodeEntity = abstractDropNodeEntity.parent;
@@ -167,7 +170,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     dropPosition = -1;
   } else if (
     (abstractDragOverEntity.children || []).length &&
-    expandKeys.includes(dragOverNodeKey)
+    filteredExpandKeys.includes(dragOverNodeKey)
   ) {
     // drop on expanded node
     // only allow drop inside
