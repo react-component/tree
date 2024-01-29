@@ -103,6 +103,16 @@ class Demo extends React.Component {
         <Tree
           ref={this.setTreeRef}
           className="myCls"
+          innerProps={
+            {
+              title: '内部List包裹 自定义props注入 Inner Inject Title',
+              style: {
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: 'white'
+              }
+            }
+          }
           showLine
           checkable
           defaultExpandAll

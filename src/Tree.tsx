@@ -52,6 +52,7 @@ import {
   getTreeNodeProps,
   warningWithoutKey,
 } from './utils/treeUtil';
+import { InnerProps } from 'rc-virtual-list/lib/Filler';
 
 const MAX_RETRY_TIMES = 10;
 
@@ -188,6 +189,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   itemHeight?: number;
   itemScrollOffset?: number;
   virtual?: boolean;
+  innerProps?: InnerProps;
 
   // direction for drag logic
   direction?: Direction;
@@ -1376,6 +1378,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       height,
       itemHeight,
       virtual,
+      innerProps,
       titleRender,
       dropIndicatorRender,
       onContextMenu,
@@ -1470,6 +1473,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             height={height}
             itemHeight={itemHeight}
             virtual={virtual}
+            innerProps={innerProps}
             focusable={focusable}
             focused={focused}
             tabIndex={tabIndex}
