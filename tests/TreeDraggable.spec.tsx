@@ -1,9 +1,8 @@
 /* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign */
-import React from 'react';
-import { render, fireEvent, act, createEvent } from '@testing-library/react';
+import { act, createEvent, fireEvent, render } from '@testing-library/react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import Tree, { TreeNode, FieldDataNode } from '../src';
+import Tree, { FieldDataNode, TreeNode, TreeProps } from '../src';
 import { spyConsole } from './util';
 
 const delay = timeout =>
@@ -14,7 +13,7 @@ const delay = timeout =>
 describe('Tree Draggable', () => {
   spyConsole();
 
-  function createTree(props?: any) {
+  function createTree(props?: Partial<TreeProps>) {
     return (
       <Tree draggable defaultExpandAll {...props}>
         <TreeNode title="parent 1" key="0-0">
@@ -1146,5 +1145,43 @@ describe('Tree Draggable', () => {
       </Tree>,
     );
     expect(container.querySelectorAll('.rc-tree-treenode-draggable').length).toBe(3);
+  });
+
+  it('not conflict with defaultExpandAll', () => {
+    const treeData = [
+      {
+        key: 1,
+        title: 'p1',
+        children: [
+          {
+            key: 2,
+            title: 'p2',
+            children: [],
+            className: 'dropTarget',
+          },
+        ],
+      },
+      {
+        key: 3,
+        title: 'p3',
+        children: [],
+      },
+      {
+        key: 4,
+        title: 'p4',
+        children: [],
+        className: 'dragTarget',
+      },
+    ];
+
+    const { container } = render(createTree({ defaultExpandAll: true, treeData }));
+    fireEvent.dragStart(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'));
+
+    // Drag over
+    const event = createEvent.dragOver(container.querySelector('.dropTarget'));
+    Object.defineProperty(event, 'clientX', { value: -9999999999 });
+    fireEvent(container.querySelector('.dropTarget'), event);
+
+    expect(container.querySelector('.drop-target').textContent).toEqual('p1');
   });
 });

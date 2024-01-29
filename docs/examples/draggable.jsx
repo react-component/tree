@@ -1,11 +1,35 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import React from 'react';
-import { generateData } from './utils/dataUtil';
-import './draggable.less';
 import '../../assets/index.less';
 import Tree from '../../src';
+import './draggable.less';
+import { generateData } from './utils/dataUtil';
 
 const gData = generateData(2, 2, 2);
+
+const defaultTreeNodes = [
+  {
+    key: 1,
+    title: 'p1',
+    children: [
+      {
+        key: 2,
+        title: 'p2',
+        children: [],
+      },
+    ],
+  },
+  {
+    key: 3,
+    title: 'p3',
+    children: [],
+  },
+  {
+    key: 4,
+    title: 'p4',
+    children: [],
+  },
+];
 
 class Demo extends React.Component {
   state = {
@@ -107,16 +131,19 @@ class Demo extends React.Component {
         <p>drag a node into another node</p>
         <div style={{ border: '1px solid red' }}>
           <Tree
-            expandedKeys={this.state.expandedKeys}
+            defaultExpandAll
+            // expandedKeys={[1]}
+            // expandedKeys={this.state.expandedKeys}
             onExpand={this.onExpand}
-            autoExpandParent={this.state.autoExpandParent}
+            // autoExpandParent={this.state.autoExpandParent}
             draggable={{
               icon: '↕️',
             }}
             onDragStart={this.onDragStart}
             onDragEnter={this.onDragEnter}
             onDrop={this.onDrop}
-            treeData={this.state.gData}
+            onDragOver={console.error}
+            treeData={defaultTreeNodes}
             // Virtual
             height={200}
             itemHeight={20}
