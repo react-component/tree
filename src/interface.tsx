@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export { ScrollTo } from 'rc-virtual-list/lib/List';
+export type { ScrollTo } from 'rc-virtual-list/lib/List';
 export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   eventKey?: Key; // Pass by parent `cloneElement`
   prefixCls?: string;
