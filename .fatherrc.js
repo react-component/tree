@@ -1,9 +1,5 @@
-export default {
-  cjs: 'babel',
-  esm: { type: 'babel', importLibToEs: true },
-  preCommit: {
-    eslint: true,
-    prettier: false,
-  },
-  runtimeHelpers: true,
-};
+import { defineConfig } from 'father';
+
+export default defineConfig({
+  plugins: ['@rc-component/father-plugin'],
+});
