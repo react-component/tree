@@ -1,8 +1,8 @@
 /* eslint-disable no-undef, react/no-multi-comp */
-import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { resetWarned } from 'rc-util/lib/warning';
-import Tree, { TreeNode, FieldDataNode } from '../src';
+import React from 'react';
+import Tree, { FieldDataNode, TreeNode } from '../src';
 import { objectMatcher, spyConsole, spyError } from './util';
 
 /**
@@ -418,12 +418,11 @@ describe('Tree Props', () => {
   // draggable - is already full test in Tree.spec.js
   // autoExpandParent - is already full test in Tree.spec.js
 
-  // defaultExpandAll
   it('defaultExpandAll', () => {
     const { container } = render(
       <Tree defaultExpandAll>
-        <TreeNode key="0-0">
-          <TreeNode key="0-0-0" />
+        <TreeNode key="0-0" title="parent">
+          <TreeNode key="0-0-0" title="child" />
         </TreeNode>
       </Tree>,
     );

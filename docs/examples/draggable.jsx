@@ -1,9 +1,9 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import React from 'react';
-import { generateData } from './utils/dataUtil';
-import './draggable.less';
 import '../../assets/index.less';
 import Tree from '../../src';
+import './draggable.less';
+import { generateData } from './utils/dataUtil';
 
 const gData = generateData(2, 2, 2);
 

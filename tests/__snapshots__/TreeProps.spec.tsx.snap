@@ -853,7 +853,7 @@ exports[`Tree Props defaultExpandAll 1`] = `
             />
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-open"
-              title="---"
+              title="parent"
             >
               <span
                 class="rc-tree-iconEle rc-tree-icon__open"
@@ -861,7 +861,7 @@ exports[`Tree Props defaultExpandAll 1`] = `
               <span
                 class="rc-tree-title"
               >
-                ---
+                parent
               </span>
             </span>
           </div>
@@ -883,7 +883,7 @@ exports[`Tree Props defaultExpandAll 1`] = `
             />
             <span
               class="rc-tree-node-content-wrapper rc-tree-node-content-wrapper-normal"
-              title="---"
+              title="child"
             >
               <span
                 class="rc-tree-iconEle rc-tree-icon__docu"
@@ -891,7 +891,7 @@ exports[`Tree Props defaultExpandAll 1`] = `
               <span
                 class="rc-tree-title"
               >
-                ---
+                child
               </span>
             </span>
           </div>

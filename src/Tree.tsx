@@ -637,7 +637,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     if (dragChildrenKeys.indexOf(dropTargetKey) !== -1 || !dropAllowed) {
       // don't allow drop inside its children
-      // don't allow drop when drop is not allowed caculated by calcDropPosition
+      // don't allow drop when drop is not allowed calculated by calcDropPosition
       return;
     }
 
