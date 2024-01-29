@@ -58,7 +58,7 @@
     "@types/react-dom": "^18.2.17",
     "@types/warning": "^3.0.0",
     "@umijs/fabric": "^4.0.1",
-    "dumi": "^1.1.4",
+    "dumi": "^2.1.0",
     "eslint": "^8.55.0",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-unicorn": "^49.0.0",

@@ -8,9 +8,21 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"],
-      "rc-tree": ["src/index.ts"]
+      "@/*": [
+        "src/*"
+      ],
+      "@@/*": [
+        "src/.umi/*"
+      ],
+      "rc-tree": [
+        "src/index.ts"
+      ]
     }
-  }
+  },
+  "include": [
+    ".dumirc.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./docs/**/*.tsx"
+  ]
 }
