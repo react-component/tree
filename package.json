@@ -12,11 +12,7 @@
     "tree"
   ],
   "files": [
-    "assets/*.css",
-    "assets/*.png",
-    "assets/*.gif",
-    "assets/*.less",
-    "dist",
+    "assets",
     "es",
     "lib"
   ],
