@@ -6,9 +6,14 @@ interface IndentProps {
   level: number;
   isStart: boolean[];
   isEnd: boolean[];
+  width?: number
 }
 
-const Indent = ({ prefixCls, level, isStart, isEnd }: IndentProps) => {
+const Indent = ({ prefixCls, level, isStart, isEnd, width=16 }: IndentProps) => {
+  const widthStyle : React.CSSProperties ={
+    width: width
+  } 
+  
   const baseClassName = `${prefixCls}-indent-unit`;
   const list: React.ReactElement[] = [];
   for (let i = 0; i < level; i += 1) {
@@ -19,6 +24,7 @@ const Indent = ({ prefixCls, level, isStart, isEnd }: IndentProps) => {
           [`${baseClassName}-start`]: isStart[i],
           [`${baseClassName}-end`]: isEnd[i],
         })}
+        style={{...widthStyle}}
       />,
     );
   }

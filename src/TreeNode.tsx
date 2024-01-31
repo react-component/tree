@@ -521,8 +521,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       data,
       onMouseMove,
       selectable,
+      indentWidth,
       ...otherProps
     } = this.props;
+    console.log(indentWidth,"---")
     const {
       context: {
         prefixCls,
@@ -581,7 +583,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         {...ariaSelected}
         {...dataOrAriaAttributeProps}
       >
-        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
+        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} width={indentWidth} />
         {this.renderDragHandler()}
         {this.renderSwitcher()}
         {this.renderCheckbox()}
