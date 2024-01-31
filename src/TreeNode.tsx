@@ -524,7 +524,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       indentWidth,
       ...otherProps
     } = this.props;
-    console.log(indentWidth,"---")
     const {
       context: {
         prefixCls,

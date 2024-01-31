@@ -1391,8 +1391,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       data: true,
     });
 
-    console.log(indentWidth)
-
     // It's better move to hooks but we just simply keep here
     let draggableConfig: DraggableConfig;
     if (draggable) {
