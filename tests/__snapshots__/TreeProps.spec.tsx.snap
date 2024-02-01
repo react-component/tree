@@ -78,6 +78,7 @@ exports[`Tree Props checkStrictly 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -185,6 +186,7 @@ exports[`Tree Props checkable default 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -292,6 +294,7 @@ exports[`Tree Props checkable without selectable 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -426,6 +429,7 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -456,6 +460,7 @@ exports[`Tree Props custom switcher icon switcher icon 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -617,6 +622,7 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             >
               <span
                 class="rc-tree-indent-unit"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -651,6 +657,7 @@ exports[`Tree Props custom switcher icon switcher leaf icon 1`] = `
             >
               <span
                 class="rc-tree-indent-unit"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -876,6 +883,7 @@ exports[`Tree Props defaultExpandAll 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -1125,6 +1133,7 @@ exports[`Tree Props icon 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -1233,6 +1242,7 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -1340,6 +1350,7 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -1441,6 +1452,7 @@ exports[`Tree Props loadData basic 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -1539,6 +1551,7 @@ exports[`Tree Props multiple 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -1728,6 +1741,7 @@ exports[`Tree Props selectable with selectable 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -1829,6 +1843,7 @@ exports[`Tree Props selectable without selectable 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2092,6 +2107,7 @@ exports[`Tree Props showIcon 3`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2122,6 +2138,7 @@ exports[`Tree Props showIcon 3`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2152,9 +2169,11 @@ exports[`Tree Props showIcon 3`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start"
+                style="width: 16px;"
               />
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2185,6 +2204,7 @@ exports[`Tree Props showIcon 3`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2382,6 +2402,7 @@ exports[`Tree Props treeData 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2412,6 +2433,7 @@ exports[`Tree Props treeData 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2442,9 +2464,11 @@ exports[`Tree Props treeData 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
               <span
                 class="rc-tree-indent-unit"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2475,9 +2499,11 @@ exports[`Tree Props treeData 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
               <span
                 class="rc-tree-indent-unit"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -2508,6 +2534,7 @@ exports[`Tree Props treeData 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span

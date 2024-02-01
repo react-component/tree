@@ -78,6 +78,7 @@ exports[`Tree Basic check basic render 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -111,6 +112,7 @@ exports[`Tree Basic check basic render 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -218,6 +220,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -519,6 +522,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -549,6 +553,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -653,6 +658,7 @@ exports[`Tree Basic renders correctly 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -686,9 +692,11 @@ exports[`Tree Basic renders correctly 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -722,9 +730,11 @@ exports[`Tree Basic renders correctly 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start"
+                style="width: 16px;"
               />
             </span>
             <span
@@ -758,6 +768,7 @@ exports[`Tree Basic renders correctly 1`] = `
             >
               <span
                 class="rc-tree-indent-unit rc-tree-indent-unit-start rc-tree-indent-unit-end"
+                style="width: 16px;"
               />
             </span>
             <span
