@@ -691,6 +691,18 @@ describe('Tree Props', () => {
     );
   });
 
+  it('indentWidth', () => {
+    const { container } = render(
+      <Tree defaultExpandAll indentWidth={200}>
+        <TreeNode key="0-0" title="parent">
+          <TreeNode key="0-0-0" title="child" />
+        </TreeNode>
+      </Tree>,
+    );
+
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
   it('onDoubleClick', () => {
     const onClick = jest.fn();
     const onDoubleClick = jest.fn();
