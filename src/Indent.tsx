@@ -10,7 +10,7 @@ interface IndentProps {
 }
 
 const Indent = ({ prefixCls, level, isStart, isEnd, width }: IndentProps) => {
-  const widthStyle: React.CSSProperties = width ? {
+  const widthStyle: React.CSSProperties = width >= 0 ? {
     width: width
   } : {}
 
