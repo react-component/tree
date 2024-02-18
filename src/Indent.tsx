@@ -9,10 +9,10 @@ interface IndentProps {
   width?: number
 }
 
-const Indent = ({ prefixCls, level, isStart, isEnd, width = 16 }: IndentProps) => {
-  const widthStyle: React.CSSProperties = {
+const Indent = ({ prefixCls, level, isStart, isEnd, width }: IndentProps) => {
+  const widthStyle: React.CSSProperties = width ? {
     width: width
-  }
+  } : {}
 
   const baseClassName = `${prefixCls}-indent-unit`;
   const list: React.ReactElement[] = [];
