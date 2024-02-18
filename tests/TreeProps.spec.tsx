@@ -700,7 +700,7 @@ describe('Tree Props', () => {
       </Tree>,
     );
 
-    expect(container.firstChild).toMatchSnapshot();
+    expect(container.querySelector(".rc-tree-indent-unit")).toHaveStyle({ width: 200 });
   });
 
   it('onDoubleClick', () => {
