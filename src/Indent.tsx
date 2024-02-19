@@ -9,7 +9,7 @@ interface IndentProps {
   width?: number
 }
 
-const Indent = ({ prefixCls, level, isStart, isEnd, width }: IndentProps) => {
+const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd, width }) => {
   const widthStyle: React.CSSProperties = width >= 0 ? {
     width: width
   } : {}
@@ -24,7 +24,7 @@ const Indent = ({ prefixCls, level, isStart, isEnd, width }: IndentProps) => {
           [`${baseClassName}-start`]: isStart[i],
           [`${baseClassName}-end`]: isEnd[i],
         })}
-        style={{ ...widthStyle }}
+        style={widthStyle}
       />,
     );
   }

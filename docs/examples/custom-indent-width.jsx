@@ -31,67 +31,40 @@ const treeData = [
   },
 ];
 
-class Demo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.treeRef = React.createRef();
-  }
-
-  onExpand = expandedKeys => {
-    console.log('onExpand', expandedKeys);
-  };
-
-  onSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info);
-  };
-
-  setTreeRef = tree => {
-    this.tree = tree;
-  };
-
-  render() {
+const Demo = ()=> {
     return (
       <div style={{ margin: '0 20px' }}>
         <h2>default width</h2>
         <Tree
-          ref={this.treeRef}
           className="myCls"
           defaultExpandAll
           treeData={treeData}
-          onSelect={this.onSelect}
         />
 
         <h2>indent width 8</h2>
         <Tree
-          ref={this.treeRef}
           className="myCls"
           defaultExpandAll
           treeData={treeData}
-          onSelect={this.onSelect}
           indentWidth={8}
         />
         <h2>indent width 20</h2>
         <Tree
-          ref={this.treeRef}
           className="myCls"
           defaultExpandAll
           treeData={treeData}
-          onSelect={this.onSelect}
           indentWidth={20}
         />
 
         <h2>indent width 40</h2>
         <Tree
-          ref={this.treeRef}
           className="myCls"
           defaultExpandAll
           treeData={treeData}
-          onSelect={this.onSelect}
           indentWidth={40}
         />
       </div>
     );
-  }
 }
 
 export default Demo;

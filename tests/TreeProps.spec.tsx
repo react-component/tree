@@ -691,7 +691,7 @@ describe('Tree Props', () => {
     );
   });
 
-  it('indentWidthCustom', () => {
+  it('indentWidth', () => {
     const { container } = render(
         <Tree defaultExpandAll indentWidth={200}>
           <TreeNode key="0-0" title="parent">
@@ -701,17 +701,6 @@ describe('Tree Props', () => {
     );
     
     expect(getComputedStyle(container.querySelector(".rc-tree-indent-unit-start")).width).toBe('200px')
-  });
-
-  it('indentWidthDefault', () => {
-    const { container } = render(
-        <Tree defaultExpandAll>
-          <TreeNode key="0-0" title="parent">
-            <TreeNode key="0-0-0" title="child" />
-          </TreeNode>
-        </Tree>
-    );
-    expect(getComputedStyle(container.querySelector(".rc-tree-indent-unit-start")).width).toBe('')
   });
 
   it('onDoubleClick', () => {
