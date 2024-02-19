@@ -691,6 +691,18 @@ describe('Tree Props', () => {
     );
   });
 
+  it('indentWidth', () => {
+    const { container } = render(
+        <Tree defaultExpandAll indentWidth={200}>
+          <TreeNode key="0-0" title="parent">
+            <TreeNode key="0-0-0" title="child" />
+          </TreeNode>
+        </Tree>
+    );
+    
+    expect(getComputedStyle(container.querySelector(".rc-tree-indent-unit-start")).width).toBe('200px')
+  });
+
   it('onDoubleClick', () => {
     const onClick = jest.fn();
     const onDoubleClick = jest.fn();
@@ -763,7 +775,7 @@ describe('Tree Props', () => {
           return new FakePromise(ret);
         };
 
-        catch = () => {};
+        catch = () => { };
       }
 
       // eslint-disable-next-line prefer-const

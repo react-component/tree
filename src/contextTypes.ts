@@ -57,6 +57,7 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   dropTargetKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number | null;
+  indentWidth?: number;
   dropIndicatorRender: (props: {
     dropPosition: -1 | 0 | 1;
     dropLevelOffset: number;
