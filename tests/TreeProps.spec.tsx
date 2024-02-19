@@ -691,16 +691,27 @@ describe('Tree Props', () => {
     );
   });
 
-  it('indentWidth', () => {
+  it('indentWidthCustom', () => {
     const { container } = render(
-      <Tree defaultExpandAll indentWidth={200}>
-        <TreeNode key="0-0" title="parent">
-          <TreeNode key="0-0-0" title="child" />
-        </TreeNode>
-      </Tree>,
+        <Tree defaultExpandAll indentWidth={200}>
+          <TreeNode key="0-0" title="parent">
+            <TreeNode key="0-0-0" title="child" />
+          </TreeNode>
+        </Tree>
     );
+    
+    expect(getComputedStyle(container.querySelector(".rc-tree-indent-unit-start")).width).toBe('200px')
+  });
 
-    expect(container.querySelector(".rc-tree-indent-unit")).toHaveStyle({ width: 200 });
+  it('indentWidthDefault', () => {
+    const { container } = render(
+        <Tree defaultExpandAll>
+          <TreeNode key="0-0" title="parent">
+            <TreeNode key="0-0-0" title="child" />
+          </TreeNode>
+        </Tree>
+    );
+    expect(getComputedStyle(container.querySelector(".rc-tree-indent-unit-start")).width).toBe('')
   });
 
   it('onDoubleClick', () => {
@@ -775,7 +786,7 @@ describe('Tree Props', () => {
           return new FakePromise(ret);
         };
 
-        catch = () => {};
+        catch = () => { };
       }
 
       // eslint-disable-next-line prefer-const
