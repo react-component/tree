@@ -311,7 +311,7 @@ export function convertDataToEntities(
 
   const posEntities = {};
   const keyEntities = {};
-  let wrapper : Wrapper = {
+  let wrapper: Wrapper = {
     posEntities,
     keyEntities,
   };
