@@ -60,7 +60,7 @@
     "eslint-plugin-unicorn": "^51.0.1",
     "father": "^4.4.0",
     "gh-pages": "^6.1.1",
-    "glob": "^7.1.6",
+    "glob": "^10.3.12",
     "less": "^3.11.1",
     "np": "^9.0.0",
     "rc-dialog": "^8.1.0",
