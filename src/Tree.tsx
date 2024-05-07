@@ -95,7 +95,6 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   showLine?: boolean;
   showIcon?: boolean;
   icon?: IconType;
-  indentWidth?: number;
   selectable?: boolean;
   expandAction?: ExpandAction;
   disabled?: boolean;
@@ -1373,7 +1372,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       selectable,
       showIcon,
       icon,
-      indentWidth,
       switcherIcon,
       draggable,
       checkable,
@@ -1432,7 +1430,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           dropPosition,
           dragOverNodeKey,
           indent,
-          indentWidth,
           direction,
           dropIndicatorRender,
 
@@ -1475,7 +1472,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             disabled={disabled}
             selectable={selectable}
             checkable={!!checkable}
-            indentWidth={indentWidth}
             motion={motion}
             dragging={draggingNodeKey !== null}
             height={height}
