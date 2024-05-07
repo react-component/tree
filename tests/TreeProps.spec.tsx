@@ -559,7 +559,7 @@ describe('Tree Props', () => {
         </Tree>,
       );
 
-      fireEvent.click(container.querySelector('.rc-tree-switcher'));
+      fireEvent.click(container.querySelector('.rc-tree-switcher')!);
 
       expect(onExpand).toHaveBeenCalled();
 
@@ -614,14 +614,14 @@ describe('Tree Props', () => {
       const { container } = render(<Test />);
 
       // Parent click
-      fireEvent.click(container.querySelector('.rc-tree-switcher'));
+      fireEvent.click(container.querySelector('.rc-tree-switcher')!);
 
       setTimeout(() => {
         // Child click
         fireEvent.click(container.querySelectorAll('.rc-tree-switcher')[1]);
 
         setTimeout(() => {
-          expect(count).toBe(2);
+          expect(count).toBe(1);
           done();
         }, 500);
       }, 500);
@@ -653,6 +653,37 @@ describe('Tree Props', () => {
       expect(errorSpy()).toHaveBeenCalledWith(
         'Warning: Retry for `loadData` many times but still failed. No more retry.',
       );
+    });
+
+    // https://github.com/ant-design/ant-design/issues/48796
+    it('skip load if has children', () => {
+      const loadData = jest.fn(async (info) => {
+        console.log('->', info.key);
+      });
+
+      const { container } = render(
+        <Tree
+          loadedKeys={[]}
+          loadData={loadData}
+          treeData={[
+            {
+              title: 'parent',
+              key: 'parent',
+              isLeaf: false,
+              children: [
+                {
+                  title: 'child',
+                  key: 'child',
+                  isLeaf: true,
+                },
+              ],
+            },
+          ]}
+        />,
+      );
+
+      fireEvent.click(container.querySelector('.rc-tree-switcher')!);
+      expect(loadData).not.toHaveBeenCalled();
     });
   });
 
@@ -693,14 +724,16 @@ describe('Tree Props', () => {
 
   it('indentWidth', () => {
     const { container } = render(
-        <Tree defaultExpandAll indentWidth={200}>
-          <TreeNode key="0-0" title="parent">
-            <TreeNode key="0-0-0" title="child" />
-          </TreeNode>
-        </Tree>
+      <Tree defaultExpandAll indentWidth={200}>
+        <TreeNode key="0-0" title="parent">
+          <TreeNode key="0-0-0" title="child" />
+        </TreeNode>
+      </Tree>,
     );
-    
-    expect(getComputedStyle(container.querySelector(".rc-tree-indent-unit-start")).width).toBe('200px')
+
+    expect(getComputedStyle(container.querySelector('.rc-tree-indent-unit-start')).width).toBe(
+      '200px',
+    );
   });
 
   it('onDoubleClick', () => {
@@ -775,7 +808,7 @@ describe('Tree Props', () => {
           return new FakePromise(ret);
         };
 
-        catch = () => { };
+        catch = () => {};
       }
 
       // eslint-disable-next-line prefer-const

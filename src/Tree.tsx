@@ -29,7 +29,7 @@ import {
   SafeKey,
   ScrollTo,
 } from './interface';
-import NodeList, { MotionEntity, MOTION_KEY, NodeListRef } from './NodeList';
+import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
 import {
   arrAdd,
@@ -957,6 +957,13 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   onNodeLoad = (treeNode: EventDataNode<TreeDataType>) => {
     const { key } = treeNode;
+    const { keyEntities } = this.state;
+
+    // Skip if has children already
+    const entity = getEntity(keyEntities, key);
+    if (entity?.children?.length) {
+      return;
+    }
 
     const loadPromise = new Promise<void>((resolve, reject) => {
       // We need to get the latest state of loading/loaded keys
