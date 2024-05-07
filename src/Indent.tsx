@@ -1,19 +1,14 @@
-import * as React from 'react';
 import classNames from 'classnames';
+import * as React from 'react';
 
 interface IndentProps {
   prefixCls: string;
   level: number;
   isStart: boolean[];
   isEnd: boolean[];
-  width?: number
 }
 
-const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd, width }) => {
-  const widthStyle: React.CSSProperties = width >= 0 ? {
-    width: width
-  } : {}
-
+const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd }) => {
   const baseClassName = `${prefixCls}-indent-unit`;
   const list: React.ReactElement[] = [];
   for (let i = 0; i < level; i += 1) {
@@ -24,7 +19,6 @@ const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd, width
           [`${baseClassName}-start`]: isStart[i],
           [`${baseClassName}-end`]: isEnd[i],
         })}
-        style={widthStyle}
       />,
     );
   }
