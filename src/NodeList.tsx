@@ -75,7 +75,6 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   checkable?: boolean;
   selectable?: boolean;
   disabled?: boolean;
-  indentWidth?: number;
 
   expandedKeys: Key[];
   selectedKeys: Key[];
@@ -150,7 +149,6 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     halfCheckedKeys,
     keyEntities,
     disabled,
-    indentWidth,
 
     dragging,
     dragOverNodeKey,
@@ -364,7 +362,6 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
               isStart={isStart}
               isEnd={isEnd}
               motion={motion}
-              indentWidth={indentWidth}
               motionNodes={key === MOTION_KEY ? transitionRange : null}
               motionType={motionType}
               onMotionStart={onListChangeStart}

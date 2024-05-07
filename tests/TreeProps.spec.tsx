@@ -657,7 +657,7 @@ describe('Tree Props', () => {
 
     // https://github.com/ant-design/ant-design/issues/48796
     it('skip load if has children', () => {
-      const loadData = jest.fn(async (info) => {
+      const loadData = jest.fn(async info => {
         console.log('->', info.key);
       });
 
@@ -719,20 +719,6 @@ describe('Tree Props', () => {
       expect.objectContaining({
         key: '0-0-0',
       }),
-    );
-  });
-
-  it('indentWidth', () => {
-    const { container } = render(
-      <Tree defaultExpandAll indentWidth={200}>
-        <TreeNode key="0-0" title="parent">
-          <TreeNode key="0-0-0" title="child" />
-        </TreeNode>
-      </Tree>,
-    );
-
-    expect(getComputedStyle(container.querySelector('.rc-tree-indent-unit-start')).width).toBe(
-      '200px',
     );
   });
 

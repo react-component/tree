@@ -27,7 +27,6 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   isEnd?: boolean[];
   active?: boolean;
   onMouseMove?: React.MouseEventHandler<HTMLDivElement>;
-  indentWidth?: number
 
   // By user
   isLeaf?: boolean;

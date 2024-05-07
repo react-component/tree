@@ -519,7 +519,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       data,
       onMouseMove,
       selectable,
-      indentWidth,
       ...otherProps
     } = this.props;
     const {
@@ -585,7 +584,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           level={level}
           isStart={isStart}
           isEnd={isEnd}
-          width={indentWidth}
         />
         {this.renderDragHandler()}
         {this.renderSwitcher()}
