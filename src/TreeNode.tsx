@@ -251,7 +251,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // Load data to avoid default expanded tree without data
-  syncLoadData = props => {
+  syncLoadData = (props: InternalTreeNodeProps) => {
     const { expanded, loading, loaded } = props;
     const {
       context: { loadData, onNodeLoad },
@@ -262,12 +262,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     }
 
     // read from state to avoid loadData at same time
-    if (loadData && expanded && !this.isLeaf()) {
+    if (loadData && expanded && !this.isLeaf() && !loaded) {
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
-      if (!this.hasChildren() && !loaded) {
-        onNodeLoad(convertNodePropsToEventData(this.props));
-      }
+      onNodeLoad(convertNodePropsToEventData(this.props));
     }
   };
 
@@ -582,7 +580,13 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         {...ariaSelected}
         {...dataOrAriaAttributeProps}
       >
-        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} width={indentWidth} />
+        <Indent
+          prefixCls={prefixCls}
+          level={level}
+          isStart={isStart}
+          isEnd={isEnd}
+          width={indentWidth}
+        />
         {this.renderDragHandler()}
         {this.renderSwitcher()}
         {this.renderCheckbox()}
