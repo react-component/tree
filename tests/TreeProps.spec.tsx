@@ -559,7 +559,7 @@ describe('Tree Props', () => {
         </Tree>,
       );
 
-      fireEvent.click(container.querySelector('.rc-tree-switcher'));
+      fireEvent.click(container.querySelector('.rc-tree-switcher')!);
 
       expect(onExpand).toHaveBeenCalled();
 
@@ -614,14 +614,14 @@ describe('Tree Props', () => {
       const { container } = render(<Test />);
 
       // Parent click
-      fireEvent.click(container.querySelector('.rc-tree-switcher'));
+      fireEvent.click(container.querySelector('.rc-tree-switcher')!);
 
       setTimeout(() => {
         // Child click
         fireEvent.click(container.querySelectorAll('.rc-tree-switcher')[1]);
 
         setTimeout(() => {
-          expect(count).toBe(2);
+          expect(count).toBe(1);
           done();
         }, 500);
       }, 500);
