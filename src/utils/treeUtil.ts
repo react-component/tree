@@ -148,18 +148,20 @@ export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
       }
 
       // Add FlattenDataNode into list
-      const flattenNode: FlattenNode<TreeDataType> = {
-        ...omit(treeNode, [...fieldTitles, fieldKey, fieldChildren] as any),
-        title: mergedTitle,
-        key: mergedKey,
-        parent,
-        pos,
-        children: null,
-        data: treeNode,
-        isStart: [...(parent ? parent.isStart : []), index === 0],
-        isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
-      };
-
+      // We use `Object.assign` here to save perf since babel's `objectSpread` has perf issue
+      const flattenNode: FlattenNode<TreeDataType> = Object.assign(
+        omit(treeNode, [...fieldTitles, fieldKey, fieldChildren] as any),
+        {
+          title: mergedTitle,
+          key: mergedKey,
+          parent,
+          pos,
+          children: null,
+          data: treeNode,
+          isStart: [...(parent ? parent.isStart : []), index === 0],
+          isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
+        },
+      );
       flattenList.push(flattenNode);
 
       // Loop treeNode children
