@@ -1,5 +1,4 @@
 import toArray from 'rc-util/lib/Children/toArray';
-import omit from 'rc-util/lib/omit';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 import {
@@ -148,8 +147,7 @@ export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
       }
 
       // Add FlattenDataNode into list
-      const flattenNode: FlattenNode<TreeDataType> = {
-        ...omit(treeNode, [...fieldTitles, fieldKey, fieldChildren] as any),
+      const flattenNode: FlattenNode<TreeDataType> = Object.assign({}, treeNode, {
         title: mergedTitle,
         key: mergedKey,
         parent,
@@ -158,7 +156,7 @@ export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
         data: treeNode,
         isStart: [...(parent ? parent.isStart : []), index === 0],
         isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
-      };
+      });
 
       flattenList.push(flattenNode);
 
