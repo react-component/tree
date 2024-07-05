@@ -1086,6 +1086,35 @@ describe('Tree Draggable', () => {
     expect(container.querySelectorAll('.handler')).toHaveLength(2);
   });
 
+  it('render handler icon render function', () => {
+    const { container } = render(
+      <Tree
+        draggable={{
+          icon: node => !node?.children && <span className="handler" />,
+        }}
+        defaultExpandAll
+        treeData={[
+          {
+            title: 'Parent',
+            key: 'parent',
+            children: [
+              {
+                title: 'Child',
+                key: 'child',
+              },
+              {
+                title: 'Child1',
+                key: 'child1',
+              },
+            ],
+          },
+        ]}
+      />,
+    );
+
+    expect(container.querySelectorAll('.handler')).toHaveLength(2);
+  });
+
   it('not break with fieldNames', () => {
     const onDrop = jest.fn();
 
