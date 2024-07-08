@@ -63,7 +63,7 @@
     "glob": "^7.1.6",
     "less": "^3.11.1",
     "np": "^10.0.5",
-    "rc-dialog": "^8.1.0",
+    "rc-dialog": "^9.5.2",
     "rc-test": "^7.0.15",
     "rc-tooltip": "5.x",
     "rc-trigger": "^5.0.7",
