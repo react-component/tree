@@ -76,7 +76,7 @@ export type AllowDrop<TreeDataType extends BasicDataNode = DataNode> = (
 
 export type DraggableFn = (node: DataNode) => boolean;
 export type DraggableConfig = {
-  icon?: React.ReactNode | false;
+  icon?: ((node: DataNode) => React.ReactNode) | React.ReactNode | false;
   nodeDraggable?: DraggableFn;
 };
 

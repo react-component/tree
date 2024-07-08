@@ -4,7 +4,7 @@ import * as React from 'react';
 // @ts-ignore
 import { TreeContext, TreeContextProps } from './contextTypes';
 import Indent from './Indent';
-import { TreeNodeProps } from './interface';
+import { DataNode, TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
 import { convertNodePropsToEventData } from './utils/treeUtil';
 
@@ -293,13 +293,15 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   // ==================== Render: Drag Handler ====================
-  renderDragHandler = () => {
+  renderDragHandler = (data: DataNode) => {
     const {
       context: { draggable, prefixCls },
     } = this.props;
 
     return draggable?.icon ? (
-      <span className={`${prefixCls}-draggable-icon`}>{draggable.icon}</span>
+      <span className={`${prefixCls}-draggable-icon`}>
+        {typeof draggable.icon === 'function' ? draggable.icon(data) : draggable.icon}
+      </span>
     ) : null;
   };
 
@@ -579,13 +581,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         {...ariaSelected}
         {...dataOrAriaAttributeProps}
       >
-        <Indent
-          prefixCls={prefixCls}
-          level={level}
-          isStart={isStart}
-          isEnd={isEnd}
-        />
-        {this.renderDragHandler()}
+        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
+        {this.renderDragHandler(data)}
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}
