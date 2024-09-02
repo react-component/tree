@@ -42,8 +42,8 @@
     "now-build": "npm run docs:build"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "devDependencies": {
     "@rc-component/father-plugin": "^1.0.2",
