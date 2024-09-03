@@ -397,7 +397,11 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     } else if (!prevProps && props.defaultExpandAll) {
       const cloneKeyEntities = { ...keyEntities };
       delete cloneKeyEntities[MOTION_KEY];
-      newState.expandedKeys = Object.keys(cloneKeyEntities).map(key => cloneKeyEntities[key].key);
+
+      newState.expandedKeys = Object.keys(cloneKeyEntities).map(key => {
+        const entity = cloneKeyEntities[key];
+        return entity.children && entity.children.length ? entity.key : null;
+      });
     } else if (!prevProps && props.defaultExpandedKeys) {
       newState.expandedKeys =
         props.autoExpandParent || props.defaultExpandParent
