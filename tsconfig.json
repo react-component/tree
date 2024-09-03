@@ -3,7 +3,7 @@
     "target": "esnext",
     "moduleResolution": "node",
     "baseUrl": "./",
-    "jsx": "preserve",
+    "jsx": "react",
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,6 +23,7 @@
     ".dumirc.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx",
-    "./docs/**/*.tsx"
+    "./docs/**/*.tsx",
+    "./tests/**/*.tsx",
   ]
 }

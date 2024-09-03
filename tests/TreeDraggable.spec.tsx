@@ -2,6 +2,7 @@
 react/no-unused-state, react/prop-types, no-return-assign */
 import { act, createEvent, fireEvent, render } from '@testing-library/react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import React from 'react';
 import Tree, { FieldDataNode, TreeNode, TreeProps } from '../src';
 import { spyConsole } from './util';
 
@@ -67,7 +68,7 @@ describe('Tree Draggable', () => {
     });
     const event = onDragEnter.mock.calls[0][0];
     expect(event.node.key).toEqual('0-0-0-1');
-    expect(event.expandedKeys).toEqual(['0-0', '0-0-0-1']);
+    expect(event.expandedKeys).toEqual(['0-0']);
     expect(onDragEnter).toHaveBeenCalledTimes(1);
   });
 

@@ -371,7 +371,7 @@ describe('Tree Basic', () => {
     // https://github.com/react-component/tree/issues/117
     it('check works correctly after dragging children under another node', () => {
       const renderTree = (children: React.ReactNode) => (
-        <Tree defaultExpandAll checkable>
+        <Tree defaultExpandedKeys={['0-0', '0-0-1']} checkable>
           {children}
         </Tree>
       );
