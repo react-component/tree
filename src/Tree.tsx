@@ -403,7 +403,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       Object.keys(cloneKeyEntities).forEach(key => {
         const entity = cloneKeyEntities[key];
         if (entity.children && entity.children.length) {
-          nextExpandedKeys.push(key);
+          nextExpandedKeys.push(entity.key);
         }
       });
 
