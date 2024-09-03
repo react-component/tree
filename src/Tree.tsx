@@ -398,10 +398,16 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       const cloneKeyEntities = { ...keyEntities };
       delete cloneKeyEntities[MOTION_KEY];
 
-      newState.expandedKeys = Object.keys(cloneKeyEntities).map(key => {
+      // Only take the key who has the children to enhance the performance
+      const nextExpandedKeys: React.Key[] = [];
+      Object.keys(cloneKeyEntities).forEach(key => {
         const entity = cloneKeyEntities[key];
-        return entity.children && entity.children.length ? entity.key : null;
+        if (entity.children && entity.children.length) {
+          nextExpandedKeys.push(key);
+        }
       });
+
+      newState.expandedKeys = nextExpandedKeys;
     } else if (!prevProps && props.defaultExpandedKeys) {
       newState.expandedKeys =
         props.autoExpandParent || props.defaultExpandParent
