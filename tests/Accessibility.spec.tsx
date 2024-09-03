@@ -1,7 +1,7 @@
 /* eslint-disable no-undef, react/no-multi-comp */
-import React from 'react';
+import { fireEvent, render } from '@testing-library/react';
 import KeyCode from 'rc-util/lib/KeyCode';
-import { render, fireEvent } from '@testing-library/react';
+import React from 'react';
 import Tree, { FieldDataNode } from '../src';
 import { spyConsole } from './util';
 
@@ -34,7 +34,7 @@ describe('Tree Accessibility', () => {
           onBlur={onBlur}
           onKeyDown={onKeyDown}
           onActiveChange={onActiveChange}
-          defaultExpandAll
+          defaultExpandedKeys={['parent', 'child 1', 'child 2']}
           treeData={[{ key: 'parent', children: [{ key: 'child 1' }, { key: 'child 2' }] }]}
         />,
       );

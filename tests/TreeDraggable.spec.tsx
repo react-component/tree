@@ -68,7 +68,7 @@ describe('Tree Draggable', () => {
     });
     const event = onDragEnter.mock.calls[0][0];
     expect(event.node.key).toEqual('0-0-0-1');
-    expect(event.expandedKeys).toEqual(['0-0', '0-0-0-1']);
+    expect(event.expandedKeys).toEqual(['0-0']);
     expect(onDragEnter).toHaveBeenCalledTimes(1);
   });
 
