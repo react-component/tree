@@ -4,18 +4,18 @@ import {
   DataEntity,
   DataNode,
   GetCheckDisabled,
-  Key,
+  SafeKey,
   KeyEntities,
 } from '../interface';
 import getEntity from './keyUtil';
 
 interface ConductReturnType {
-  checkedKeys: Key[];
-  halfCheckedKeys: Key[];
+  checkedKeys: SafeKey[];
+  halfCheckedKeys: SafeKey[];
 }
 
-function removeFromCheckedKeys(halfCheckedKeys: Set<Key>, checkedKeys: Set<Key>) {
-  const filteredKeys = new Set<Key>();
+function removeFromCheckedKeys(halfCheckedKeys: Set<SafeKey>, checkedKeys: Set<SafeKey>) {
+  const filteredKeys = new Set<SafeKey>();
   halfCheckedKeys.forEach(key => {
     if (!checkedKeys.has(key)) {
       filteredKeys.add(key);
@@ -31,13 +31,13 @@ export function isCheckDisabled<TreeDataType>(node: TreeDataType) {
 
 // Fill miss keys
 function fillConductCheck<TreeDataType extends BasicDataNode = DataNode>(
-  keys: Set<Key>,
+  keys: Set<SafeKey>,
   levelEntities: Map<number, Set<DataEntity<TreeDataType>>>,
   maxLevel: number,
   syntheticGetCheckDisabled: GetCheckDisabled<TreeDataType>,
 ): ConductReturnType {
-  const checkedKeys = new Set<Key>(keys);
-  const halfCheckedKeys = new Set<Key>();
+  const checkedKeys = new Set<SafeKey>(keys);
+  const halfCheckedKeys = new Set<SafeKey>();
 
   // Add checked keys top to bottom
   for (let level = 0; level <= maxLevel; level += 1) {
@@ -56,7 +56,7 @@ function fillConductCheck<TreeDataType extends BasicDataNode = DataNode>(
   }
 
   // Add checked keys from bottom to top
-  const visitedKeys = new Set<Key>();
+  const visitedKeys = new Set<SafeKey>();
   for (let level = maxLevel; level >= 0; level -= 1) {
     const entities = levelEntities.get(level) || new Set();
     entities.forEach(entity => {
@@ -107,14 +107,14 @@ function fillConductCheck<TreeDataType extends BasicDataNode = DataNode>(
 
 // Remove useless key
 function cleanConductCheck<TreeDataType extends BasicDataNode = DataNode>(
-  keys: Set<Key>,
-  halfKeys: Key[],
+  keys: Set<SafeKey>,
+  halfKeys: SafeKey[],
   levelEntities: Map<number, Set<DataEntity<TreeDataType>>>,
   maxLevel: number,
   syntheticGetCheckDisabled: GetCheckDisabled<TreeDataType>,
 ): ConductReturnType {
-  const checkedKeys = new Set<Key>(keys);
-  let halfCheckedKeys = new Set<Key>(halfKeys);
+  const checkedKeys = new Set<SafeKey>(keys);
+  let halfCheckedKeys = new Set<SafeKey>(halfKeys);
 
   // Remove checked keys from top to bottom
   for (let level = 0; level <= maxLevel; level += 1) {
@@ -133,8 +133,8 @@ function cleanConductCheck<TreeDataType extends BasicDataNode = DataNode>(
   }
 
   // Remove checked keys form bottom to top
-  halfCheckedKeys = new Set<Key>();
-  const visitedKeys = new Set<Key>();
+  halfCheckedKeys = new Set<SafeKey>();
+  const visitedKeys = new Set<SafeKey>();
   for (let level = maxLevel; level >= 0; level -= 1) {
     const entities = levelEntities.get(level) || new Set();
 
@@ -191,12 +191,12 @@ function cleanConductCheck<TreeDataType extends BasicDataNode = DataNode>(
  * @param mode `fill` to fill missing key, `clean` to remove useless key
  */
 export function conductCheck<TreeDataType extends BasicDataNode = DataNode>(
-  keyList: Key[],
-  checked: true | { checked: false; halfCheckedKeys: Key[] },
+  keyList: SafeKey[],
+  checked: true | { checked: false; halfCheckedKeys: SafeKey[] },
   keyEntities: KeyEntities<TreeDataType>,
   getCheckDisabled?: GetCheckDisabled<TreeDataType>,
 ): ConductReturnType {
-  const warningMissKeys: Key[] = [];
+  const warningMissKeys: SafeKey[] = [];
 
   let syntheticGetCheckDisabled: GetCheckDisabled<TreeDataType>;
   if (getCheckDisabled) {
@@ -206,7 +206,7 @@ export function conductCheck<TreeDataType extends BasicDataNode = DataNode>(
   }
 
   // We only handle exist keys
-  const keys = new Set<Key>(
+  const keys = new Set<SafeKey>(
     keyList.filter(key => {
       const hasEntity = !!getEntity(keyEntities, key);
       if (!hasEntity) {

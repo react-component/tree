@@ -3,7 +3,7 @@
  */
 
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
-import VirtualList, { ListRef } from 'rc-virtual-list';
+import VirtualList, { type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
 import MotionTreeNode from './MotionTreeNode';
 import {
@@ -11,9 +11,9 @@ import {
   DataEntity,
   DataNode,
   FlattenNode,
-  Key,
   KeyEntities,
   ScrollTo,
+  SafeKey,
 } from './interface';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps } from './utils/treeUtil';
@@ -76,16 +76,16 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   selectable?: boolean;
   disabled?: boolean;
 
-  expandedKeys: Key[];
-  selectedKeys: Key[];
-  checkedKeys: Key[];
-  loadedKeys: Key[];
-  loadingKeys: Key[];
-  halfCheckedKeys: Key[];
+  expandedKeys: SafeKey[];
+  selectedKeys: SafeKey[];
+  checkedKeys: SafeKey[];
+  loadedKeys: SafeKey[];
+  loadingKeys: SafeKey[];
+  halfCheckedKeys: SafeKey[];
   keyEntities: KeyEntities;
 
   dragging: boolean;
-  dragOverNodeKey: Key;
+  dragOverNodeKey: SafeKey;
   dropPosition: number;
 
   // Virtual list
@@ -96,7 +96,7 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
-  onActiveChange: (key: Key) => void;
+  onActiveChange: (key: SafeKey) => void;
 
   onListChangeStart: () => void;
   onListChangeEnd: () => void;
