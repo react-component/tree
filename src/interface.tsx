@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export type { ScrollTo } from 'rc-virtual-list/lib/List';
 export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
-  eventKey?: Key; // Pass by parent `cloneElement`
+  eventKey?: SafeKey; // Pass by parent `cloneElement`
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -27,6 +27,7 @@ export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   isEnd?: boolean[];
   active?: boolean;
   onMouseMove?: React.MouseEventHandler<HTMLDivElement>;
+  indentWidth?: number;
 
   // By user
   isLeaf?: boolean;
@@ -69,15 +70,18 @@ export type Key = React.Key;
  */
 export type SafeKey = Exclude<Key, bigint>;
 
-export type KeyEntities<DateType extends BasicDataNode = any> = Record<SafeKey, DataEntity<DateType>>;
+export type KeyEntities<DateType extends BasicDataNode = any> = Record<
+  SafeKey,
+  DataEntity<DateType>
+>;
 
 export type DataNode = FieldDataNode<{
-  key: Key;
+  key: SafeKey;
   title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
 }>;
 
 export type EventDataNode<TreeDataType> = {
-  key: Key;
+  key: SafeKey;
   expanded: boolean;
   selected: boolean;
   checked: boolean;
@@ -110,7 +114,7 @@ export type NodeInstance<TreeDataType extends BasicDataNode = DataNode> = React.
 export interface Entity {
   node: NodeElement;
   index: number;
-  key: Key;
+  key: SafeKey;
   pos: string;
   parent?: Entity;
   children?: Entity[];
@@ -131,12 +135,12 @@ export interface FlattenNode<TreeDataType extends BasicDataNode = DataNode> {
   pos: string;
   data: TreeDataType;
   title: React.ReactNode;
-  key: Key;
+  key: SafeKey;
   isStart: boolean[];
   isEnd: boolean[];
 }
 
-export type GetKey<RecordType> = (record: RecordType, index?: number) => Key;
+export type GetKey<RecordType> = (record: RecordType, index?: number) => SafeKey;
 
 export type GetCheckDisabled<RecordType> = (record: RecordType) => boolean;
 
