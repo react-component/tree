@@ -92,6 +92,7 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   height: number;
   itemHeight: number;
   virtual?: boolean;
+  scrollWidth?: number;
 
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
@@ -158,6 +159,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     height,
     itemHeight,
     virtual,
+    scrollWidth,
 
     focusable,
     activeItem,
@@ -324,6 +326,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         fullHeight={false}
         virtual={virtual}
         itemHeight={itemHeight}
+        scrollWidth={scrollWidth}
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
         onVisibleChange={originList => {
