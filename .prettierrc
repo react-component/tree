@@ -4,7 +4,6 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "all",
-  "proseWrap": "never",
   "printWidth": 100,
   "arrowParens": "avoid"
 }

@@ -1,6 +1,6 @@
-import { SafeKey, FlattenNode } from '../interface';
+import { Key, FlattenNode } from '../interface';
 
-export function findExpandedKeys(prev: SafeKey[] = [], next: SafeKey[] = []) {
+export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
   const prevLen = prev.length;
   const nextLen = next.length;
 
@@ -8,8 +8,8 @@ export function findExpandedKeys(prev: SafeKey[] = [], next: SafeKey[] = []) {
     return { add: false, key: null };
   }
 
-  function find(shorter: SafeKey[], longer: SafeKey[]) {
-    const cache: Map<SafeKey, boolean> = new Map();
+  function find(shorter: Key[], longer: Key[]) {
+    const cache: Map<Key, boolean> = new Map();
     shorter.forEach(key => {
       cache.set(key, true);
     });
@@ -32,7 +32,7 @@ export function findExpandedKeys(prev: SafeKey[] = [], next: SafeKey[] = []) {
   };
 }
 
-export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], key: SafeKey) {
+export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], key: Key) {
   const shorterStartIndex = shorter.findIndex(data => data.key === key);
   const shorterEndNode = shorter[shorterStartIndex + 1];
   const longerStartIndex = longer.findIndex(data => data.key === key);

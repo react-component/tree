@@ -26,7 +26,7 @@ export function isTreeNode(node: NodeElement) {
   return node && node.type && node.type.isTreeNode;
 }
 
-export function getKey(key: SafeKey, pos: string) {
+export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
     return key;
   }
@@ -92,7 +92,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
         const { children, ...rest } = treeNode.props;
 
         const dataNode: DataNode = {
-          key,
+          key: key as Key,
           ...rest,
         };
 
@@ -117,7 +117,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
  */
 export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
   treeNodeList: TreeDataType[],
-  expandedKeys: SafeKey[] | true,
+  expandedKeys: Key[] | true,
   fieldNames: FieldNames,
 ): FlattenNode<TreeDataType>[] {
   const {
@@ -198,7 +198,7 @@ export function traverseDataNodes(
     node: DataNode;
     index: number;
     pos: string;
-    key: SafeKey;
+    key: Key;
     parentPos: string | number;
     level: number;
     nodes: DataNode[];
@@ -222,7 +222,7 @@ export function traverseDataNodes(
   const mergeChildrenPropName = childrenPropName || fieldChildren;
 
   // Get keys
-  let syntheticGetKey: (node: DataNode, pos?: string) => SafeKey;
+  let syntheticGetKey: (node: DataNode, pos?: string) => Key;
   if (externalGetKey) {
     if (typeof externalGetKey === 'string') {
       syntheticGetKey = (node: DataNode) => (node as any)[externalGetKey as string];
@@ -331,7 +331,7 @@ export function convertDataToEntities(
       const mergedKey = getKey(key, pos);
 
       posEntities[pos] = entity;
-      keyEntities[mergedKey] = entity;
+      keyEntities[mergedKey as SafeKey] = entity;
 
       // Fill children
       entity.parent = posEntities[parentPos];
@@ -355,13 +355,13 @@ export function convertDataToEntities(
 }
 
 export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = DataNode> {
-  expandedKeys: SafeKey[];
-  selectedKeys: SafeKey[];
-  loadedKeys: SafeKey[];
-  loadingKeys: SafeKey[];
-  checkedKeys: SafeKey[];
-  halfCheckedKeys: SafeKey[];
-  dragOverNodeKey: SafeKey;
+  expandedKeys: Key[];
+  selectedKeys: Key[];
+  loadedKeys: Key[];
+  loadingKeys: Key[];
+  checkedKeys: Key[];
+  halfCheckedKeys: Key[];
+  dragOverNodeKey: Key;
   dropPosition: number;
   keyEntities: KeyEntities<TreeDataType>;
 }
@@ -370,7 +370,7 @@ export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = Data
  * Get TreeNode props with Tree props.
  */
 export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
-  key: SafeKey,
+  key: Key,
   {
     expandedKeys,
     selectedKeys,
