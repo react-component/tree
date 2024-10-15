@@ -1,4 +1,4 @@
-"use strict";(self.webpackChunkrc_tree=self.webpackChunkrc_tree||[]).push([[904],{79666:function(t,i,e){e.r(i);var o=e(82100),n=e.n(o),c=e(29186),N=e.n(c),h=e(13720),u=e.n(h),g=e(80619),k=e.n(g),b=e(47074),r=e.n(b),D=e(85573),p=e.n(D),f=e(21739),_=e(40677),s=e(27174),a=function(l){k()(m,l);var d=r()(m);function m(){var y;n()(this,m);for(var T=arguments.length,v=new Array(T),x=0;x<T;x++)v[x]=arguments[x];return y=d.call.apply(d,[this].concat(v)),p()(u()(y),"state",{nums:""}),p()(u()(y),"onGen",function(E){E.preventDefault();var I=y.getVals();y.props.onGen((0,_.generateData)(I.x,I.y,I.z)),y.setState({nums:(0,_.calcTotal)(I.x,I.y,I.z)})}),y}return N()(m,[{key:"componentDidMount",value:function(){var T=this.getVals();this.props.onGen((0,_.generateData)(T.x,T.y,T.z))}},{key:"getVals",value:function(){return{x:parseInt(this.refs.x.value,10),y:parseInt(this.refs.y.value,10),z:parseInt(this.refs.z.value,10)}}},{key:"render",value:function(){var T=this.props,v=T.x,x=T.y,E=T.z;return(0,s.jsxs)("div",{style:{padding:"0 20px"},children:[(0,s.jsx)("h2",{children:"big data generator"}),(0,s.jsxs)("form",{onSubmit:this.onGen,children:[(0,s.jsxs)("label",{style:{marginRight:10},children:["x:"," ",(0,s.jsx)("input",{ref:"x",defaultValue:v,type:"number",min:"1",required:!0,style:{width:50}})]}),(0,s.jsxs)("label",{style:{marginRight:10},children:["y:"," ",(0,s.jsx)("input",{ref:"y",defaultValue:x,type:"number",min:"0",required:!0,style:{width:50}})]}),(0,s.jsxs)("label",{style:{marginRight:10},children:["z:"," ",(0,s.jsx)("input",{ref:"z",defaultValue:E,type:"number",min:"0",required:!0,style:{width:50}})]}),(0,s.jsx)("button",{type:"submit",children:"Generate"}),(0,s.jsxs)("p",{children:["total nodes: ",this.state.nums||(0,_.calcTotal)(v,x,E)]})]}),(0,s.jsx)("p",{style:{fontSize:12},children:"x\uFF1A\u6BCF\u4E00\u7EA7\u4E0B\u7684\u8282\u70B9\u603B\u6570\u3002y\uFF1A\u6BCF\u7EA7\u8282\u70B9\u91CC\u6709y\u4E2A\u8282\u70B9\u3001\u5B58\u5728\u5B50\u8282\u70B9\u3002z\uFF1A\u6811\u7684level\u5C42\u7EA7\u6570\uFF080\u8868\u793A\u4E00\u7EA7\uFF09"})]})}}]),m}(f.Component);p()(a,"defaultProps",{onGen:function(){},x:20,y:18,z:1}),i.default=a},40677:function(t,i,e){e.r(i),e.d(i,{calcTotal:function(){return n},filterParentPosition:function(){return h},gData:function(){return c},generateData:function(){return o},getFilterExpandedKeys:function(){return b},getRadioSelectKeys:function(){return D}});function o(){var p=arguments.length>0&&arguments[0]!==void 0?arguments[0]:3,f=arguments.length>1&&arguments[1]!==void 0?arguments[1]:2,_=arguments.length>2&&arguments[2]!==void 0?arguments[2]:1,s=arguments.length>3&&arguments[3]!==void 0?arguments[3]:[];function a(l,d,m){for(var y=d||"0",T=m||s,v=[],x=0;x<p;x++){var E="".concat(y,"-").concat(x);T.push({title:"".concat(E,"-label"),key:"".concat(E,"-key")}),x<f&&v.push(E)}if(l<0)return T;var I=l-1;return v.forEach(function(K,C){return T[C].children=[],a(I,K,T[C].children)}),null}return a(_),s}function n(){var p=arguments.length>0&&arguments[0]!==void 0?arguments[0]:3,f=arguments.length>1&&arguments[1]!==void 0?arguments[1]:2,_=arguments.length>2&&arguments[2]!==void 0?arguments[2]:1,s=function a(l){return l>=0?p*Math.pow(f,l--)+a(l):0};return s(_+1)}console.log("\u603B\u8282\u70B9\u6570\uFF08\u5355\u4E2Atree\uFF09\uFF1A",n());var c=o();function N(p,f){return f.length<p.length||f.length>p.length&&f.charAt(p.length)!=="-"?!1:f.substr(0,p.length)===p}function h(p){var f={};p.forEach(function(d){var m=d.split("-").length;f[m]||(f[m]=[]),f[m].push(d)});for(var _=Object.keys(f).sort(),s=function(m){_[m+1]&&f[_[m]].forEach(function(y){for(var T=function(E){f[_[E]].forEach(function(I,K){N(y,I)&&(f[_[E]][K]=null)}),f[_[E]]=f[_[E]].filter(function(I){return I})},v=m+1;v<_.length;v+=1)T(v)})},a=0;a<_.length;a+=1)s(a);var l=[];return _.forEach(function(d){l=l.concat(f[d])}),l}function u(p,f){var _=function s(a){var l=arguments.length>1&&arguments[1]!==void 0?arguments[1]:0;a.forEach(function(d,m){var y="".concat(l,"-").concat(m);d.children&&s(d.children,y),f(d,m,y)})};_(p)}function g(p){return p.split("-")}function k(p){return p.split("-").length}function b(p,f){var _=[];u(p,function(a,l,d){f.indexOf(a.key)>-1&&_.push(d)});var s=[];return u(p,function(a,l,d){_.forEach(function(m){(k(d)<k(m)&&m.indexOf(d)===0||d===m)&&s.indexOf(a.key)===-1&&s.push(a.key)})}),s}function r(p,f){return p.pop(),f.pop(),p.join(",")===f.join(",")}function D(p,f,_){var s=[],a=[],l=[];u(p,function(y,T,v){f.indexOf(y.key)>-1&&a.push([v,y.key]),_&&_===y.key&&l.push(v,y.key)});var d={},m=function(T,v){var x=k(T);d[x]?d[x].forEach(function(E,I){r(g(E[0]),g(T))?d[x][I]=[T,v]:g(E[0])!==g(T)&&d[x].push([T,v])}):d[x]=[[T,v]]};return a.forEach(function(y){m(y[0],y[1])}),_&&m(l[0],l[1]),Object.keys(d).forEach(function(y){d[y].forEach(function(T){s.indexOf(T[1])===-1&&s.push(T[1])})}),s}},22544:function(t,i,e){e.r(i),e.d(i,{demos:function(){return c}});var o=e(21739),n=e(48609),c={}},79706:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return D}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(65723),k=e(71647),b=e(81813),r=e(40677),D={"docs-demo-animation-draggable-demo-animation-draggable":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,55927))})),asset:{type:"BLOCK",id:"docs-demo-animation-draggable-demo-animation-draggable",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(25586).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,"./utils/dataUtil.js":r,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":r},renderOpts:{compile:function(){var p=h()(c()().mark(function _(){var s,a=arguments;return c()().wrap(function(d){for(;;)switch(d.prev=d.next){case 0:return d.next=2,e.e(848).then(e.bind(e,3848));case 2:return d.abrupt("return",(s=d.sent).default.apply(s,a));case 3:case"end":return d.stop()}},_)}));function f(){return p.apply(this,arguments)}return f}()}}}},94035:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return p}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(30859),k=e(43167),b=e(71647),r=e(31224),D=e(81813),p={"docs-demo-animation-demo-animation":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,60973))})),asset:{type:"BLOCK",id:"docs-demo-animation-demo-animation",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(27197).Z},"rc-motion":{type:"NPM",value:"2.9.3"},"rc-tree":{type:"NPM",value:"5.10.0"},react:{type:"NPM",value:"18.3.1"},"./animation.less":{type:"FILE",value:e(23562).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./animation.less":r,"../../assets/index.less":D,"rc-motion":k,"rc-tree":b,react:o||(o=e.t(u,2)),"/Users/afc163/Projects/tree/docs/examples/animation.less":r,"/Users/afc163/Projects/tree/assets/index.less":D},renderOpts:{compile:function(){var f=h()(c()().mark(function s(){var a,l=arguments;return c()().wrap(function(m){for(;;)switch(m.prev=m.next){case 0:return m.next=2,e.e(848).then(e.bind(e,3848));case 2:return m.abrupt("return",(a=m.sent).default.apply(a,l));case 3:case"end":return m.stop()}},s)}));function _(){return f.apply(this,arguments)}return _}()}}}},99855:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return f}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(21818),k=e(18634),b=e(60667),r=e(71647),D=e(40677),p=e(81813),f={"docs-demo-basic-controlled-demo-basic-controlled":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,95135))})),asset:{type:"BLOCK",id:"docs-demo-basic-controlled-demo-basic-controlled",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(78703).Z},react:{type:"NPM",value:"18.3.1"},"rc-dialog":{type:"NPM",value:"8.9.0"},"rc-tree":{type:"NPM",value:"5.10.0"},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./utils/dataUtil.js":D,"../../assets/index.less":p,react:o||(o=e.t(u,2)),"rc-dialog/assets/index.css":k,"rc-dialog":b,"rc-tree":r,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":D,"/Users/afc163/Projects/tree/assets/index.less":p},renderOpts:{compile:function(){var _=h()(c()().mark(function a(){var l,d=arguments;return c()().wrap(function(y){for(;;)switch(y.prev=y.next){case 0:return y.next=2,e.e(848).then(e.bind(e,3848));case 2:return y.abrupt("return",(l=y.sent).default.apply(l,d));case 3:case"end":return y.stop()}},a)}));function s(){return _.apply(this,arguments)}return s}()}}}},2957:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return D}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(29833),k=e(71647),b=e(84824),r=e(81813),D={"docs-demo-basic-demo-basic":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,6672))})),asset:{type:"BLOCK",id:"docs-demo-basic-demo-basic",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(34062).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"./basic.less":{type:"FILE",value:e(55954).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./basic.less":b,"../../assets/index.less":r,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/docs/examples/basic.less":b,"/Users/afc163/Projects/tree/assets/index.less":r},renderOpts:{compile:function(){var p=h()(c()().mark(function _(){var s,a=arguments;return c()().wrap(function(d){for(;;)switch(d.prev=d.next){case 0:return d.next=2,e.e(848).then(e.bind(e,3848));case 2:return d.abrupt("return",(s=d.sent).default.apply(s,a));case 3:case"end":return d.stop()}},_)}));function f(){return p.apply(this,arguments)}return f}()}}}},76880:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return p}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(73683),k=e(71647),b=e(81813),r=e(79666),D=e(40677),p={"docs-demo-big-data-demo-big-data":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,88418))})),asset:{type:"BLOCK",id:"docs-demo-big-data-demo-big-data",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(11255).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./big-data-generator.js":{type:"FILE",value:e(10389).Z},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,"./big-data-generator.js":r,"./utils/dataUtil.js":D,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b,"/Users/afc163/Projects/tree/docs/examples/big-data-generator.js":r,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":D},renderOpts:{compile:function(){var f=h()(c()().mark(function s(){var a,l=arguments;return c()().wrap(function(m){for(;;)switch(m.prev=m.next){case 0:return m.next=2,e.e(848).then(e.bind(e,3848));case 2:return m.abrupt("return",(a=m.sent).default.apply(a,l));case 3:case"end":return m.stop()}},s)}));function _(){return f.apply(this,arguments)}return _}()}}}},91182:function(t,i,e){var o,n;e.r(i),e.d(i,{demos:function(){return _}});var c=e(7557),N=e.n(c),h=e(41498),u=e.n(h),g=e(21739),k=e(35616),b=e(67820),r=e(47135),D=e(71647),p=e(81813),f=e(54320),_={"docs-demo-contextmenu-demo-contextmenu":{component:g.memo(g.lazy(function(){return e.e(433).then(e.bind(e,70629))})),asset:{type:"BLOCK",id:"docs-demo-contextmenu-demo-contextmenu",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(82264).Z},react:{type:"NPM",value:"18.3.1"},"react-dom":{type:"NPM",value:"18.3.1"},"rc-tooltip":{type:"NPM",value:"5.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./contextmenu.less":{type:"FILE",value:e(2535).Z}},entry:"index.jsx"},context:{"../../assets/index.less":p,"./contextmenu.less":f,react:o||(o=e.t(g,2)),"react-dom":n||(n=e.t(b,2)),"rc-tooltip":r,"rc-tree":D,"/Users/afc163/Projects/tree/assets/index.less":p,"/Users/afc163/Projects/tree/docs/examples/contextmenu.less":f},renderOpts:{compile:function(){var s=u()(N()().mark(function l(){var d,m=arguments;return N()().wrap(function(T){for(;;)switch(T.prev=T.next){case 0:return T.next=2,e.e(848).then(e.bind(e,3848));case 2:return T.abrupt("return",(d=T.sent).default.apply(d,m));case 3:case"end":return T.stop()}},l)}));function a(){return s.apply(this,arguments)}return a}()}}}},77475:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return r}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(10615),k=e(71647),b=e(81813),r={"docs-demo-custom-switch-icon-demo-custom-switch-icon":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,34755))})),asset:{type:"BLOCK",id:"docs-demo-custom-switch-icon-demo-custom-switch-icon",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(58752).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b},renderOpts:{compile:function(){var D=h()(c()().mark(function f(){var _,s=arguments;return c()().wrap(function(l){for(;;)switch(l.prev=l.next){case 0:return l.next=2,e.e(848).then(e.bind(e,3848));case 2:return l.abrupt("return",(_=l.sent).default.apply(_,s));case 3:case"end":return l.stop()}},f)}));function p(){return D.apply(this,arguments)}return p}()}}}},83602:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return p}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(46339),k=e(71647),b=e(81813),r=e(40677),D=e(37360),p={"docs-demo-draggable-allow-drop-demo-draggable-allow-drop":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,76193))})),asset:{type:"BLOCK",id:"docs-demo-draggable-allow-drop-demo-draggable-allow-drop",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(20090).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z},"./draggable.less":{type:"FILE",value:e(26374).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,"./utils/dataUtil.js":r,"./draggable.less":D,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":r,"/Users/afc163/Projects/tree/docs/examples/draggable.less":D},renderOpts:{compile:function(){var f=h()(c()().mark(function s(){var a,l=arguments;return c()().wrap(function(m){for(;;)switch(m.prev=m.next){case 0:return m.next=2,e.e(848).then(e.bind(e,3848));case 2:return m.abrupt("return",(a=m.sent).default.apply(a,l));case 3:case"end":return m.stop()}},s)}));function _(){return f.apply(this,arguments)}return _}()}}}},38941:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return B}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(96613),k=e(40677),b=e(81813),r=e(71647),D=e(37360),p=e(61857),f=e(57720),_=e(92310),s=e.n(_),a=e(29334),l=e(79275),d=e(41865),m=e(27488),y=e(23687),T=e(91920),v=e(37804),x=e(98039),E=e(22477),I=e(15383),K=e(93089),C=e(28554),M=e(7318),R=e(40425),j=e(11051),O=e(97471),A=e(5197),U=e(43167),L=e(84785),B={"docs-demo-draggable-demo-draggable":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,2869))})),asset:{type:"BLOCK",id:"docs-demo-draggable-demo-draggable",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(48107).Z},react:{type:"NPM",value:"18.3.1"},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"../../src.ts":{type:"FILE",value:e(14559).Z},"./draggable.less":{type:"FILE",value:e(26374).Z},"./TreeNode.tsx":{type:"FILE",value:e(76423).Z},"./Tree.tsx":{type:"FILE",value:e(58471).Z},classnames:{type:"NPM",value:"2.5.1"},"rc-util":{type:"NPM",value:"5.43.0"},"./contextTypes.ts":{type:"FILE",value:e(86907).Z},"./utils/treeUtil.ts":{type:"FILE",value:e(936).Z},"./utils/keyUtil.ts":{type:"FILE",value:e(38423).Z},"./Indent.tsx":{type:"FILE",value:e(63961).Z},"./DropIndicator.tsx":{type:"FILE",value:e(55442).Z},"./utils/conductUtil.ts":{type:"FILE",value:e(24919).Z},"./util.tsx":{type:"FILE",value:e(17388).Z},"./NodeList.tsx":{type:"FILE",value:e(16974).Z},"rc-virtual-list":{type:"NPM",value:"3.14.8"},"./utils/diffUtil.ts":{type:"FILE",value:e(19102).Z},"./MotionTreeNode.tsx":{type:"FILE",value:e(92011).Z},"rc-motion":{type:"NPM",value:"2.9.3"},"./useUnmount.ts":{type:"FILE",value:e(32249).Z}},entry:"index.jsx"},context:{"./utils/dataUtil.js":k,"../../assets/index.less":b,"../../src.ts":r,"./draggable.less":D,"./TreeNode.tsx":p,"./Tree.tsx":f,"./contextTypes.ts":m,"./utils/treeUtil.ts":y,"./utils/keyUtil.ts":T,"./Indent.tsx":v,"./DropIndicator.tsx":I,"./utils/conductUtil.ts":K,"./util.tsx":C,"./NodeList.tsx":M,"./utils/diffUtil.ts":O,"./MotionTreeNode.tsx":A,"./useUnmount.ts":L,react:o||(o=e.t(u,2)),"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":k,"/Users/afc163/Projects/tree/assets/index.less":b,"/Users/afc163/Projects/tree/src/index.ts":r,"/Users/afc163/Projects/tree/docs/examples/draggable.less":D,"/Users/afc163/Projects/tree/src/TreeNode.tsx":p,"/Users/afc163/Projects/tree/src/Tree.tsx":f,classnames:_,"rc-util/lib/pickAttrs":a,"rc-util/lib/KeyCode":l,"rc-util/lib/warning":d,"/Users/afc163/Projects/tree/src/contextTypes.ts":m,"/Users/afc163/Projects/tree/src/utils/treeUtil.ts":y,"/Users/afc163/Projects/tree/src/utils/keyUtil.ts":T,"/Users/afc163/Projects/tree/src/Indent.tsx":v,"rc-util/lib/Children/toArray":x,"rc-util/lib/omit":E,"/Users/afc163/Projects/tree/src/DropIndicator.tsx":I,"/Users/afc163/Projects/tree/src/utils/conductUtil.ts":K,"/Users/afc163/Projects/tree/src/util.tsx":C,"/Users/afc163/Projects/tree/src/NodeList.tsx":M,"rc-util/lib/hooks/useLayoutEffect":R,"rc-virtual-list":j,"/Users/afc163/Projects/tree/src/utils/diffUtil.ts":O,"/Users/afc163/Projects/tree/src/MotionTreeNode.tsx":A,"rc-motion":U,"/Users/afc163/Projects/tree/src/useUnmount.ts":L},renderOpts:{compile:function(){var w=h()(c()().mark(function F(){var S,H=arguments;return c()().wrap(function(P){for(;;)switch(P.prev=P.next){case 0:return P.next=2,e.e(848).then(e.bind(e,3848));case 2:return P.abrupt("return",(S=P.sent).default.apply(S,H));case 3:case"end":return P.stop()}},F)}));function W(){return w.apply(this,arguments)}return W}()}}}},15172:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return f}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(67006),k=e(1502),b=e(71647),r=e(81813),D=e(40677),p=e(99742),f={"docs-demo-dropdown-demo-dropdown":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,70990))})),asset:{type:"BLOCK",id:"docs-demo-dropdown-demo-dropdown",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(82910).Z},react:{type:"NPM",value:"18.3.1"},"rc-trigger":{type:"NPM",value:"5.3.4"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z},"./dropdown.less":{type:"FILE",value:e(46416).Z}},entry:"index.jsx"},context:{"../../assets/index.less":r,"./utils/dataUtil.js":D,"./dropdown.less":p,react:o||(o=e.t(u,2)),"rc-trigger":k,"rc-tree":b,"/Users/afc163/Projects/tree/assets/index.less":r,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":D,"/Users/afc163/Projects/tree/docs/examples/dropdown.less":p},renderOpts:{compile:function(){var _=h()(c()().mark(function a(){var l,d=arguments;return c()().wrap(function(y){for(;;)switch(y.prev=y.next){case 0:return y.next=2,e.e(848).then(e.bind(e,3848));case 2:return y.abrupt("return",(l=y.sent).default.apply(l,d));case 3:case"end":return y.stop()}},a)}));function s(){return _.apply(this,arguments)}return s}()}}}},33023:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return r}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(48592),k=e(71647),b=e(81813),r={"docs-demo-dynamic-demo-dynamic":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,52819))})),asset:{type:"BLOCK",id:"docs-demo-dynamic-demo-dynamic",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(16666).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b},renderOpts:{compile:function(){var D=h()(c()().mark(function f(){var _,s=arguments;return c()().wrap(function(l){for(;;)switch(l.prev=l.next){case 0:return l.next=2,e.e(848).then(e.bind(e,3848));case 2:return l.abrupt("return",(_=l.sent).default.apply(_,s));case 3:case"end":return l.stop()}},f)}));function p(){return D.apply(this,arguments)}return p}()}}}},9745:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return r}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(32624),k=e(71647),b=e(81813),r={"docs-demo-expand-action-demo-expandaction":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,63053))})),asset:{type:"BLOCK",id:"docs-demo-expand-action-demo-expandaction",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(66309).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b},renderOpts:{compile:function(){var D=h()(c()().mark(function f(){var _,s=arguments;return c()().wrap(function(l){for(;;)switch(l.prev=l.next){case 0:return l.next=2,e.e(848).then(e.bind(e,3848));case 2:return l.abrupt("return",(_=l.sent).default.apply(_,s));case 3:case"end":return l.stop()}},f)}));function p(){return D.apply(this,arguments)}return p}()}}}},94572:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return D}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(88998),k=e(71647),b=e(84824),r=e(81813),D={"docs-demo-field-names-demo-fieldnames":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,33701))})),asset:{type:"BLOCK",id:"docs-demo-field-names-demo-fieldnames",refAtomIds:[],dependencies:{"index.tsx":{type:"FILE",value:e(57770).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"./basic.less":{type:"FILE",value:e(55954).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.tsx"},context:{"./basic.less":b,"../../assets/index.less":r,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/docs/examples/basic.less":b,"/Users/afc163/Projects/tree/assets/index.less":r},renderOpts:{compile:function(){var p=h()(c()().mark(function _(){var s,a=arguments;return c()().wrap(function(d){for(;;)switch(d.prev=d.next){case 0:return d.next=2,e.e(848).then(e.bind(e,3848));case 2:return d.abrupt("return",(s=d.sent).default.apply(s,a));case 3:case"end":return d.stop()}},_)}));function f(){return p.apply(this,arguments)}return f}()}}}},55500:function(t,i,e){var o,n;e.r(i),e.d(i,{demos:function(){return f}});var c=e(7557),N=e.n(c),h=e(41498),u=e.n(h),g=e(21739),k=e(36397),b=e(71647),r=e(59086),D=e(81813),p=e(31224),f={"docs-demo-funtion-title-demo-funtiontitle":{component:g.memo(g.lazy(function(){return e.e(433).then(e.bind(e,71842))})),asset:{type:"BLOCK",id:"docs-demo-funtion-title-demo-funtiontitle",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(95852).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"./longData.json":{type:"FILE",value:e(17077).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./animation.less":{type:"FILE",value:e(23562).Z}},entry:"index.jsx"},context:{"./longData.json":o||(o=e.t(r,2)),"../../assets/index.less":D,"./animation.less":p,react:n||(n=e.t(g,2)),"rc-tree":b,"/Users/afc163/Projects/tree/docs/examples/longData.json":o||(o=e.t(r,2)),"/Users/afc163/Projects/tree/assets/index.less":D,"/Users/afc163/Projects/tree/docs/examples/animation.less":p},renderOpts:{compile:function(){var _=u()(N()().mark(function a(){var l,d=arguments;return N()().wrap(function(y){for(;;)switch(y.prev=y.next){case 0:return y.next=2,e.e(848).then(e.bind(e,3848));case 2:return y.abrupt("return",(l=y.sent).default.apply(l,d));case 3:case"end":return y.stop()}},a)}));function s(){return _.apply(this,arguments)}return s}()}}}},75195:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return f}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(1538),k=e(92310),b=e.n(k),r=e(71647),D=e(92863),p=e(81813),f={"docs-demo-icon-demo-icon":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,16204))})),asset:{type:"BLOCK",id:"docs-demo-icon-demo-icon",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(66228).Z},react:{type:"NPM",value:"18.3.1"},classnames:{type:"NPM",value:"2.5.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"./icon.less":{type:"FILE",value:e(46574).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./icon.less":D,"../../assets/index.less":p,react:o||(o=e.t(u,2)),classnames:k,"rc-tree":r,"/Users/afc163/Projects/tree/docs/examples/icon.less":D,"/Users/afc163/Projects/tree/assets/index.less":p},renderOpts:{compile:function(){var _=h()(c()().mark(function a(){var l,d=arguments;return c()().wrap(function(y){for(;;)switch(y.prev=y.next){case 0:return y.next=2,e.e(848).then(e.bind(e,3848));case 2:return y.abrupt("return",(l=y.sent).default.apply(l,d));case 3:case"end":return y.stop()}},a)}));function s(){return _.apply(this,arguments)}return s}()}}}},80192:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return D}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(58845),k=e(71647),b=e(81813),r=e(5018),D={"docs-demo-selectable-demo-selectable":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,28850))})),asset:{type:"BLOCK",id:"docs-demo-selectable-demo-selectable",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(46551).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.0"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./selectable.less":{type:"FILE",value:e(79929).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,"./selectable.less":r,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b,"/Users/afc163/Projects/tree/docs/examples/selectable.less":r},renderOpts:{compile:function(){var p=h()(c()().mark(function _(){var s,a=arguments;return c()().wrap(function(d){for(;;)switch(d.prev=d.next){case 0:return d.next=2,e.e(848).then(e.bind(e,3848));case 2:return d.abrupt("return",(s=d.sent).default.apply(s,a));case 3:case"end":return d.stop()}},_)}));function f(){return p.apply(this,arguments)}return f}()}}}},34301:function(t,i,e){e.r(i),e.d(i,{demos:function(){return c}});var o=e(21739),n=e(96904),c={}},81813:function(t,i,e){e.r(i)},31224:function(t,i,e){e.r(i)},84824:function(t,i,e){e.r(i)},54320:function(t,i,e){e.r(i)},37360:function(t,i,e){e.r(i)},99742:function(t,i,e){e.r(i)},92863:function(t,i,e){e.r(i)},5018:function(t,i,e){e.r(i)},58657:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(48609);const n=[{value:"https://github.com/react-component/tree/releases",paraId:0,tocIndex:0},{value:"2020-05-08",paraId:1},{value:"Upgrade ",paraId:2,tocIndex:1},{value:"rc-animate",paraId:2,tocIndex:1},{value:".",paraId:2,tocIndex:1},{value:"Remove ",paraId:2,tocIndex:1},{value:"react-lifecycles-compat",paraId:2,tocIndex:1},{value:" and ",paraId:2,tocIndex:1},{value:"prop-types",paraId:2,tocIndex:1},{value:".",paraId:2,tocIndex:1},{value:"TreeNode support ",paraId:3,tocIndex:2},{value:"checkable",paraId:3,tocIndex:2},{value:".",paraId:3,tocIndex:2},{value:"Remove old animation api and use ",paraId:4,tocIndex:3},{value:"motion",paraId:4,tocIndex:3},{value:" instead.",paraId:4,tocIndex:3},{value:"add ",paraId:5,tocIndex:4},{value:"onClick",paraId:5,tocIndex:4},{value:" & ",paraId:5,tocIndex:4},{value:"onDoubleClick",paraId:5,tocIndex:4},{value:" for node click event",paraId:5,tocIndex:4},{value:"add related className in treeNode",paraId:5,tocIndex:4},{value:"fix drag into another tree will throw exception",paraId:5,tocIndex:4},{value:"onCheck",paraId:6,tocIndex:5},{value:" arguments provide nativeEvent",paraId:6,tocIndex:5},{value:"onSelect",paraId:6,tocIndex:5},{value:" arguments provide nativeEvent",paraId:6,tocIndex:5},{value:"onExpand",paraId:6,tocIndex:5},{value:" arguments provide nativeEvent",paraId:6,tocIndex:5},{value:"adjust ",paraId:7,tocIndex:6},{value:"dragable",paraId:7,tocIndex:6},{value:" logic to make drag more smooth",paraId:7,tocIndex:6},{value:"fix ",paraId:7,tocIndex:6},{value:"loadData",paraId:7,tocIndex:6},{value:" trigger twice when expand node",paraId:7,tocIndex:6},{value:"add ",paraId:7,tocIndex:6},{value:"icon",paraId:7,tocIndex:6},{value:" prop on ",paraId:7,tocIndex:6},{value:"Tree",paraId:7,tocIndex:6},{value:"fix check by prop not work on ",paraId:7,tocIndex:6},{value:"disabled",paraId:7,tocIndex:6},{value:" node",paraId:7,tocIndex:6},{value:"code refactor and optimize logic",paraId:8,tocIndex:7},{value:"add ",paraId:8,tocIndex:7},{value:"disabled",paraId:8,tocIndex:7},{value:" API",paraId:8,tocIndex:7},{value:"add ",paraId:8,tocIndex:7},{value:"icon",paraId:8,tocIndex:7},{value:" API",paraId:8,tocIndex:7},{value:"add ",paraId:9,tocIndex:8},{value:"onDragEnd",paraId:9,tocIndex:8},{value:" API and fix related issues.",paraId:9,tocIndex:8},{value:"make ",paraId:10,tocIndex:9},{value:"autoExpandParent",paraId:10,tocIndex:9},{value:" also work in controlled mode.(Before just work in uncontrolled mode)",paraId:10,tocIndex:9},{value:"change ",paraId:10,tocIndex:9},{value:"onExpand",paraId:10,tocIndex:9},{value:` params
+"use strict";(self.webpackChunkrc_tree=self.webpackChunkrc_tree||[]).push([[904],{79666:function(t,i,e){e.r(i);var o=e(82100),n=e.n(o),c=e(29186),N=e.n(c),h=e(13720),u=e.n(h),g=e(80619),k=e.n(g),b=e(47074),r=e.n(b),D=e(85573),p=e.n(D),f=e(21739),_=e(40677),s=e(27174),a=function(l){k()(m,l);var d=r()(m);function m(){var y;n()(this,m);for(var T=arguments.length,v=new Array(T),x=0;x<T;x++)v[x]=arguments[x];return y=d.call.apply(d,[this].concat(v)),p()(u()(y),"state",{nums:""}),p()(u()(y),"onGen",function(E){E.preventDefault();var I=y.getVals();y.props.onGen((0,_.generateData)(I.x,I.y,I.z)),y.setState({nums:(0,_.calcTotal)(I.x,I.y,I.z)})}),y}return N()(m,[{key:"componentDidMount",value:function(){var T=this.getVals();this.props.onGen((0,_.generateData)(T.x,T.y,T.z))}},{key:"getVals",value:function(){return{x:parseInt(this.refs.x.value,10),y:parseInt(this.refs.y.value,10),z:parseInt(this.refs.z.value,10)}}},{key:"render",value:function(){var T=this.props,v=T.x,x=T.y,E=T.z;return(0,s.jsxs)("div",{style:{padding:"0 20px"},children:[(0,s.jsx)("h2",{children:"big data generator"}),(0,s.jsxs)("form",{onSubmit:this.onGen,children:[(0,s.jsxs)("label",{style:{marginRight:10},children:["x:"," ",(0,s.jsx)("input",{ref:"x",defaultValue:v,type:"number",min:"1",required:!0,style:{width:50}})]}),(0,s.jsxs)("label",{style:{marginRight:10},children:["y:"," ",(0,s.jsx)("input",{ref:"y",defaultValue:x,type:"number",min:"0",required:!0,style:{width:50}})]}),(0,s.jsxs)("label",{style:{marginRight:10},children:["z:"," ",(0,s.jsx)("input",{ref:"z",defaultValue:E,type:"number",min:"0",required:!0,style:{width:50}})]}),(0,s.jsx)("button",{type:"submit",children:"Generate"}),(0,s.jsxs)("p",{children:["total nodes: ",this.state.nums||(0,_.calcTotal)(v,x,E)]})]}),(0,s.jsx)("p",{style:{fontSize:12},children:"x\uFF1A\u6BCF\u4E00\u7EA7\u4E0B\u7684\u8282\u70B9\u603B\u6570\u3002y\uFF1A\u6BCF\u7EA7\u8282\u70B9\u91CC\u6709y\u4E2A\u8282\u70B9\u3001\u5B58\u5728\u5B50\u8282\u70B9\u3002z\uFF1A\u6811\u7684level\u5C42\u7EA7\u6570\uFF080\u8868\u793A\u4E00\u7EA7\uFF09"})]})}}]),m}(f.Component);p()(a,"defaultProps",{onGen:function(){},x:20,y:18,z:1}),i.default=a},40677:function(t,i,e){e.r(i),e.d(i,{calcTotal:function(){return n},filterParentPosition:function(){return h},gData:function(){return c},generateData:function(){return o},getFilterExpandedKeys:function(){return b},getRadioSelectKeys:function(){return D}});function o(){var p=arguments.length>0&&arguments[0]!==void 0?arguments[0]:3,f=arguments.length>1&&arguments[1]!==void 0?arguments[1]:2,_=arguments.length>2&&arguments[2]!==void 0?arguments[2]:1,s=arguments.length>3&&arguments[3]!==void 0?arguments[3]:[];function a(l,d,m){for(var y=d||"0",T=m||s,v=[],x=0;x<p;x++){var E="".concat(y,"-").concat(x);T.push({title:"".concat(E,"-label"),key:"".concat(E,"-key")}),x<f&&v.push(E)}if(l<0)return T;var I=l-1;return v.forEach(function(K,C){return T[C].children=[],a(I,K,T[C].children)}),null}return a(_),s}function n(){var p=arguments.length>0&&arguments[0]!==void 0?arguments[0]:3,f=arguments.length>1&&arguments[1]!==void 0?arguments[1]:2,_=arguments.length>2&&arguments[2]!==void 0?arguments[2]:1,s=function a(l){return l>=0?p*Math.pow(f,l--)+a(l):0};return s(_+1)}console.log("\u603B\u8282\u70B9\u6570\uFF08\u5355\u4E2Atree\uFF09\uFF1A",n());var c=o();function N(p,f){return f.length<p.length||f.length>p.length&&f.charAt(p.length)!=="-"?!1:f.substr(0,p.length)===p}function h(p){var f={};p.forEach(function(d){var m=d.split("-").length;f[m]||(f[m]=[]),f[m].push(d)});for(var _=Object.keys(f).sort(),s=function(m){_[m+1]&&f[_[m]].forEach(function(y){for(var T=function(E){f[_[E]].forEach(function(I,K){N(y,I)&&(f[_[E]][K]=null)}),f[_[E]]=f[_[E]].filter(function(I){return I})},v=m+1;v<_.length;v+=1)T(v)})},a=0;a<_.length;a+=1)s(a);var l=[];return _.forEach(function(d){l=l.concat(f[d])}),l}function u(p,f){var _=function s(a){var l=arguments.length>1&&arguments[1]!==void 0?arguments[1]:0;a.forEach(function(d,m){var y="".concat(l,"-").concat(m);d.children&&s(d.children,y),f(d,m,y)})};_(p)}function g(p){return p.split("-")}function k(p){return p.split("-").length}function b(p,f){var _=[];u(p,function(a,l,d){f.indexOf(a.key)>-1&&_.push(d)});var s=[];return u(p,function(a,l,d){_.forEach(function(m){(k(d)<k(m)&&m.indexOf(d)===0||d===m)&&s.indexOf(a.key)===-1&&s.push(a.key)})}),s}function r(p,f){return p.pop(),f.pop(),p.join(",")===f.join(",")}function D(p,f,_){var s=[],a=[],l=[];u(p,function(y,T,v){f.indexOf(y.key)>-1&&a.push([v,y.key]),_&&_===y.key&&l.push(v,y.key)});var d={},m=function(T,v){var x=k(T);d[x]?d[x].forEach(function(E,I){r(g(E[0]),g(T))?d[x][I]=[T,v]:g(E[0])!==g(T)&&d[x].push([T,v])}):d[x]=[[T,v]]};return a.forEach(function(y){m(y[0],y[1])}),_&&m(l[0],l[1]),Object.keys(d).forEach(function(y){d[y].forEach(function(T){s.indexOf(T[1])===-1&&s.push(T[1])})}),s}},22544:function(t,i,e){e.r(i),e.d(i,{demos:function(){return c}});var o=e(21739),n=e(48609),c={}},79706:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return D}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(65723),k=e(71647),b=e(40677),r=e(81813),D={"docs-demo-animation-draggable-demo-animation-draggable":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,55927))})),asset:{type:"BLOCK",id:"docs-demo-animation-draggable-demo-animation-draggable",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(25586).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./utils/dataUtil.js":b,"../../assets/index.less":r,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":b,"/Users/afc163/Projects/tree/assets/index.less":r},renderOpts:{compile:function(){var p=h()(c()().mark(function _(){var s,a=arguments;return c()().wrap(function(d){for(;;)switch(d.prev=d.next){case 0:return d.next=2,e.e(848).then(e.bind(e,3848));case 2:return d.abrupt("return",(s=d.sent).default.apply(s,a));case 3:case"end":return d.stop()}},_)}));function f(){return p.apply(this,arguments)}return f}()}}}},94035:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return p}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(30859),k=e(43167),b=e(71647),r=e(81813),D=e(31224),p={"docs-demo-animation-demo-animation":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,60973))})),asset:{type:"BLOCK",id:"docs-demo-animation-demo-animation",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(27197).Z},"rc-motion":{type:"NPM",value:"2.9.3"},"rc-tree":{type:"NPM",value:"5.10.1"},react:{type:"NPM",value:"18.3.1"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./animation.less":{type:"FILE",value:e(23562).Z}},entry:"index.jsx"},context:{"../../assets/index.less":r,"./animation.less":D,"rc-motion":k,"rc-tree":b,react:o||(o=e.t(u,2)),"/Users/afc163/Projects/tree/assets/index.less":r,"/Users/afc163/Projects/tree/docs/examples/animation.less":D},renderOpts:{compile:function(){var f=h()(c()().mark(function s(){var a,l=arguments;return c()().wrap(function(m){for(;;)switch(m.prev=m.next){case 0:return m.next=2,e.e(848).then(e.bind(e,3848));case 2:return m.abrupt("return",(a=m.sent).default.apply(a,l));case 3:case"end":return m.stop()}},s)}));function _(){return f.apply(this,arguments)}return _}()}}}},99855:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return f}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(21818),k=e(18634),b=e(60667),r=e(71647),D=e(40677),p=e(81813),f={"docs-demo-basic-controlled-demo-basic-controlled":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,95135))})),asset:{type:"BLOCK",id:"docs-demo-basic-controlled-demo-basic-controlled",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(78703).Z},react:{type:"NPM",value:"18.3.1"},"rc-dialog":{type:"NPM",value:"8.9.0"},"rc-tree":{type:"NPM",value:"5.10.1"},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./utils/dataUtil.js":D,"../../assets/index.less":p,react:o||(o=e.t(u,2)),"rc-dialog/assets/index.css":k,"rc-dialog":b,"rc-tree":r,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":D,"/Users/afc163/Projects/tree/assets/index.less":p},renderOpts:{compile:function(){var _=h()(c()().mark(function a(){var l,d=arguments;return c()().wrap(function(y){for(;;)switch(y.prev=y.next){case 0:return y.next=2,e.e(848).then(e.bind(e,3848));case 2:return y.abrupt("return",(l=y.sent).default.apply(l,d));case 3:case"end":return y.stop()}},a)}));function s(){return _.apply(this,arguments)}return s}()}}}},2957:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return D}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(29833),k=e(71647),b=e(84824),r=e(81813),D={"docs-demo-basic-demo-basic":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,6672))})),asset:{type:"BLOCK",id:"docs-demo-basic-demo-basic",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(34062).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"./basic.less":{type:"FILE",value:e(55954).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./basic.less":b,"../../assets/index.less":r,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/docs/examples/basic.less":b,"/Users/afc163/Projects/tree/assets/index.less":r},renderOpts:{compile:function(){var p=h()(c()().mark(function _(){var s,a=arguments;return c()().wrap(function(d){for(;;)switch(d.prev=d.next){case 0:return d.next=2,e.e(848).then(e.bind(e,3848));case 2:return d.abrupt("return",(s=d.sent).default.apply(s,a));case 3:case"end":return d.stop()}},_)}));function f(){return p.apply(this,arguments)}return f}()}}}},76880:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return p}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(73683),k=e(71647),b=e(81813),r=e(79666),D=e(40677),p={"docs-demo-big-data-demo-big-data":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,88418))})),asset:{type:"BLOCK",id:"docs-demo-big-data-demo-big-data",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(11255).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./big-data-generator.js":{type:"FILE",value:e(10389).Z},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,"./big-data-generator.js":r,"./utils/dataUtil.js":D,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b,"/Users/afc163/Projects/tree/docs/examples/big-data-generator.js":r,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":D},renderOpts:{compile:function(){var f=h()(c()().mark(function s(){var a,l=arguments;return c()().wrap(function(m){for(;;)switch(m.prev=m.next){case 0:return m.next=2,e.e(848).then(e.bind(e,3848));case 2:return m.abrupt("return",(a=m.sent).default.apply(a,l));case 3:case"end":return m.stop()}},s)}));function _(){return f.apply(this,arguments)}return _}()}}}},91182:function(t,i,e){var o,n;e.r(i),e.d(i,{demos:function(){return _}});var c=e(7557),N=e.n(c),h=e(41498),u=e.n(h),g=e(21739),k=e(35616),b=e(67820),r=e(47135),D=e(71647),p=e(54320),f=e(81813),_={"docs-demo-contextmenu-demo-contextmenu":{component:g.memo(g.lazy(function(){return e.e(433).then(e.bind(e,70629))})),asset:{type:"BLOCK",id:"docs-demo-contextmenu-demo-contextmenu",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(82264).Z},react:{type:"NPM",value:"18.3.1"},"react-dom":{type:"NPM",value:"18.3.1"},"rc-tooltip":{type:"NPM",value:"5.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"./contextmenu.less":{type:"FILE",value:e(2535).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./contextmenu.less":p,"../../assets/index.less":f,react:o||(o=e.t(g,2)),"react-dom":n||(n=e.t(b,2)),"rc-tooltip":r,"rc-tree":D,"/Users/afc163/Projects/tree/docs/examples/contextmenu.less":p,"/Users/afc163/Projects/tree/assets/index.less":f},renderOpts:{compile:function(){var s=u()(N()().mark(function l(){var d,m=arguments;return N()().wrap(function(T){for(;;)switch(T.prev=T.next){case 0:return T.next=2,e.e(848).then(e.bind(e,3848));case 2:return T.abrupt("return",(d=T.sent).default.apply(d,m));case 3:case"end":return T.stop()}},l)}));function a(){return s.apply(this,arguments)}return a}()}}}},77475:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return r}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(10615),k=e(71647),b=e(81813),r={"docs-demo-custom-switch-icon-demo-custom-switch-icon":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,34755))})),asset:{type:"BLOCK",id:"docs-demo-custom-switch-icon-demo-custom-switch-icon",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(58752).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b},renderOpts:{compile:function(){var D=h()(c()().mark(function f(){var _,s=arguments;return c()().wrap(function(l){for(;;)switch(l.prev=l.next){case 0:return l.next=2,e.e(848).then(e.bind(e,3848));case 2:return l.abrupt("return",(_=l.sent).default.apply(_,s));case 3:case"end":return l.stop()}},f)}));function p(){return D.apply(this,arguments)}return p}()}}}},83602:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return p}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(46339),k=e(71647),b=e(40677),r=e(37360),D=e(81813),p={"docs-demo-draggable-allow-drop-demo-draggable-allow-drop":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,76193))})),asset:{type:"BLOCK",id:"docs-demo-draggable-allow-drop-demo-draggable-allow-drop",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(20090).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z},"./draggable.less":{type:"FILE",value:e(26374).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./utils/dataUtil.js":b,"./draggable.less":r,"../../assets/index.less":D,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":b,"/Users/afc163/Projects/tree/docs/examples/draggable.less":r,"/Users/afc163/Projects/tree/assets/index.less":D},renderOpts:{compile:function(){var f=h()(c()().mark(function s(){var a,l=arguments;return c()().wrap(function(m){for(;;)switch(m.prev=m.next){case 0:return m.next=2,e.e(848).then(e.bind(e,3848));case 2:return m.abrupt("return",(a=m.sent).default.apply(a,l));case 3:case"end":return m.stop()}},s)}));function _(){return f.apply(this,arguments)}return _}()}}}},38941:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return B}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(96613),k=e(40677),b=e(81813),r=e(71647),D=e(37360),p=e(61857),f=e(57720),_=e(92310),s=e.n(_),a=e(29334),l=e(79275),d=e(41865),m=e(23687),y=e(27488),T=e(37804),v=e(91920),x=e(98039),E=e(22477),I=e(7318),K=e(15383),C=e(28554),M=e(93089),S=e(40425),j=e(11051),O=e(97471),A=e(5197),U=e(43167),L=e(84785),B={"docs-demo-draggable-demo-draggable":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,2869))})),asset:{type:"BLOCK",id:"docs-demo-draggable-demo-draggable",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(48107).Z},react:{type:"NPM",value:"18.3.1"},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"../../src.ts":{type:"FILE",value:e(14559).Z},"./draggable.less":{type:"FILE",value:e(26374).Z},"./TreeNode.tsx":{type:"FILE",value:e(76423).Z},"./Tree.tsx":{type:"FILE",value:e(58471).Z},classnames:{type:"NPM",value:"2.5.1"},"rc-util":{type:"NPM",value:"5.43.0"},"./utils/treeUtil.ts":{type:"FILE",value:e(936).Z},"./contextTypes.ts":{type:"FILE",value:e(86907).Z},"./Indent.tsx":{type:"FILE",value:e(63961).Z},"./utils/keyUtil.ts":{type:"FILE",value:e(38423).Z},"./NodeList.tsx":{type:"FILE",value:e(16974).Z},"./DropIndicator.tsx":{type:"FILE",value:e(55442).Z},"./util.tsx":{type:"FILE",value:e(17388).Z},"./utils/conductUtil.ts":{type:"FILE",value:e(24919).Z},"rc-virtual-list":{type:"NPM",value:"3.14.8"},"./utils/diffUtil.ts":{type:"FILE",value:e(19102).Z},"./MotionTreeNode.tsx":{type:"FILE",value:e(92011).Z},"rc-motion":{type:"NPM",value:"2.9.3"},"./useUnmount.ts":{type:"FILE",value:e(32249).Z}},entry:"index.jsx"},context:{"./utils/dataUtil.js":k,"../../assets/index.less":b,"../../src.ts":r,"./draggable.less":D,"./TreeNode.tsx":p,"./Tree.tsx":f,"./utils/treeUtil.ts":m,"./contextTypes.ts":y,"./Indent.tsx":T,"./utils/keyUtil.ts":v,"./NodeList.tsx":I,"./DropIndicator.tsx":K,"./util.tsx":C,"./utils/conductUtil.ts":M,"./utils/diffUtil.ts":O,"./MotionTreeNode.tsx":A,"./useUnmount.ts":L,react:o||(o=e.t(u,2)),"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":k,"/Users/afc163/Projects/tree/assets/index.less":b,"/Users/afc163/Projects/tree/src/index.ts":r,"/Users/afc163/Projects/tree/docs/examples/draggable.less":D,"/Users/afc163/Projects/tree/src/TreeNode.tsx":p,"/Users/afc163/Projects/tree/src/Tree.tsx":f,classnames:_,"rc-util/lib/pickAttrs":a,"rc-util/lib/KeyCode":l,"rc-util/lib/warning":d,"/Users/afc163/Projects/tree/src/utils/treeUtil.ts":m,"/Users/afc163/Projects/tree/src/contextTypes.ts":y,"/Users/afc163/Projects/tree/src/Indent.tsx":T,"/Users/afc163/Projects/tree/src/utils/keyUtil.ts":v,"rc-util/lib/Children/toArray":x,"rc-util/lib/omit":E,"/Users/afc163/Projects/tree/src/NodeList.tsx":I,"/Users/afc163/Projects/tree/src/DropIndicator.tsx":K,"/Users/afc163/Projects/tree/src/util.tsx":C,"/Users/afc163/Projects/tree/src/utils/conductUtil.ts":M,"rc-util/lib/hooks/useLayoutEffect":S,"rc-virtual-list":j,"/Users/afc163/Projects/tree/src/utils/diffUtil.ts":O,"/Users/afc163/Projects/tree/src/MotionTreeNode.tsx":A,"rc-motion":U,"/Users/afc163/Projects/tree/src/useUnmount.ts":L},renderOpts:{compile:function(){var w=h()(c()().mark(function F(){var R,H=arguments;return c()().wrap(function(P){for(;;)switch(P.prev=P.next){case 0:return P.next=2,e.e(848).then(e.bind(e,3848));case 2:return P.abrupt("return",(R=P.sent).default.apply(R,H));case 3:case"end":return P.stop()}},F)}));function W(){return w.apply(this,arguments)}return W}()}}}},15172:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return f}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(67006),k=e(1502),b=e(71647),r=e(81813),D=e(99742),p=e(40677),f={"docs-demo-dropdown-demo-dropdown":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,70990))})),asset:{type:"BLOCK",id:"docs-demo-dropdown-demo-dropdown",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(82910).Z},react:{type:"NPM",value:"18.3.1"},"rc-trigger":{type:"NPM",value:"5.3.4"},"rc-tree":{type:"NPM",value:"5.10.1"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./dropdown.less":{type:"FILE",value:e(46416).Z},"./utils/dataUtil.js":{type:"FILE",value:e(44189).Z}},entry:"index.jsx"},context:{"../../assets/index.less":r,"./dropdown.less":D,"./utils/dataUtil.js":p,react:o||(o=e.t(u,2)),"rc-trigger":k,"rc-tree":b,"/Users/afc163/Projects/tree/assets/index.less":r,"/Users/afc163/Projects/tree/docs/examples/dropdown.less":D,"/Users/afc163/Projects/tree/docs/examples/utils/dataUtil.js":p},renderOpts:{compile:function(){var _=h()(c()().mark(function a(){var l,d=arguments;return c()().wrap(function(y){for(;;)switch(y.prev=y.next){case 0:return y.next=2,e.e(848).then(e.bind(e,3848));case 2:return y.abrupt("return",(l=y.sent).default.apply(l,d));case 3:case"end":return y.stop()}},a)}));function s(){return _.apply(this,arguments)}return s}()}}}},33023:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return r}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(48592),k=e(71647),b=e(81813),r={"docs-demo-dynamic-demo-dynamic":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,52819))})),asset:{type:"BLOCK",id:"docs-demo-dynamic-demo-dynamic",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(16666).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b},renderOpts:{compile:function(){var D=h()(c()().mark(function f(){var _,s=arguments;return c()().wrap(function(l){for(;;)switch(l.prev=l.next){case 0:return l.next=2,e.e(848).then(e.bind(e,3848));case 2:return l.abrupt("return",(_=l.sent).default.apply(_,s));case 3:case"end":return l.stop()}},f)}));function p(){return D.apply(this,arguments)}return p}()}}}},9745:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return r}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(32624),k=e(71647),b=e(81813),r={"docs-demo-expand-action-demo-expandaction":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,63053))})),asset:{type:"BLOCK",id:"docs-demo-expand-action-demo-expandaction",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(66309).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b},renderOpts:{compile:function(){var D=h()(c()().mark(function f(){var _,s=arguments;return c()().wrap(function(l){for(;;)switch(l.prev=l.next){case 0:return l.next=2,e.e(848).then(e.bind(e,3848));case 2:return l.abrupt("return",(_=l.sent).default.apply(_,s));case 3:case"end":return l.stop()}},f)}));function p(){return D.apply(this,arguments)}return p}()}}}},94572:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return D}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(88998),k=e(71647),b=e(84824),r=e(81813),D={"docs-demo-field-names-demo-fieldnames":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,33701))})),asset:{type:"BLOCK",id:"docs-demo-field-names-demo-fieldnames",refAtomIds:[],dependencies:{"index.tsx":{type:"FILE",value:e(57770).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"./basic.less":{type:"FILE",value:e(55954).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.tsx"},context:{"./basic.less":b,"../../assets/index.less":r,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/docs/examples/basic.less":b,"/Users/afc163/Projects/tree/assets/index.less":r},renderOpts:{compile:function(){var p=h()(c()().mark(function _(){var s,a=arguments;return c()().wrap(function(d){for(;;)switch(d.prev=d.next){case 0:return d.next=2,e.e(848).then(e.bind(e,3848));case 2:return d.abrupt("return",(s=d.sent).default.apply(s,a));case 3:case"end":return d.stop()}},_)}));function f(){return p.apply(this,arguments)}return f}()}}}},55500:function(t,i,e){var o,n;e.r(i),e.d(i,{demos:function(){return f}});var c=e(7557),N=e.n(c),h=e(41498),u=e.n(h),g=e(21739),k=e(36397),b=e(71647),r=e(59086),D=e(31224),p=e(81813),f={"docs-demo-funtion-title-demo-funtiontitle":{component:g.memo(g.lazy(function(){return e.e(433).then(e.bind(e,71842))})),asset:{type:"BLOCK",id:"docs-demo-funtion-title-demo-funtiontitle",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(95852).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"./longData.json":{type:"FILE",value:e(17077).Z},"./animation.less":{type:"FILE",value:e(23562).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./longData.json":o||(o=e.t(r,2)),"./animation.less":D,"../../assets/index.less":p,react:n||(n=e.t(g,2)),"rc-tree":b,"/Users/afc163/Projects/tree/docs/examples/longData.json":o||(o=e.t(r,2)),"/Users/afc163/Projects/tree/docs/examples/animation.less":D,"/Users/afc163/Projects/tree/assets/index.less":p},renderOpts:{compile:function(){var _=u()(N()().mark(function a(){var l,d=arguments;return N()().wrap(function(y){for(;;)switch(y.prev=y.next){case 0:return y.next=2,e.e(848).then(e.bind(e,3848));case 2:return y.abrupt("return",(l=y.sent).default.apply(l,d));case 3:case"end":return y.stop()}},a)}));function s(){return _.apply(this,arguments)}return s}()}}}},75195:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return f}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(1538),k=e(92310),b=e.n(k),r=e(71647),D=e(92863),p=e(81813),f={"docs-demo-icon-demo-icon":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,16204))})),asset:{type:"BLOCK",id:"docs-demo-icon-demo-icon",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(66228).Z},react:{type:"NPM",value:"18.3.1"},classnames:{type:"NPM",value:"2.5.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"./icon.less":{type:"FILE",value:e(46574).Z},"../../assets/index.less":{type:"FILE",value:e(35906).Z}},entry:"index.jsx"},context:{"./icon.less":D,"../../assets/index.less":p,react:o||(o=e.t(u,2)),classnames:k,"rc-tree":r,"/Users/afc163/Projects/tree/docs/examples/icon.less":D,"/Users/afc163/Projects/tree/assets/index.less":p},renderOpts:{compile:function(){var _=h()(c()().mark(function a(){var l,d=arguments;return c()().wrap(function(y){for(;;)switch(y.prev=y.next){case 0:return y.next=2,e.e(848).then(e.bind(e,3848));case 2:return y.abrupt("return",(l=y.sent).default.apply(l,d));case 3:case"end":return y.stop()}},a)}));function s(){return _.apply(this,arguments)}return s}()}}}},80192:function(t,i,e){var o;e.r(i),e.d(i,{demos:function(){return D}});var n=e(7557),c=e.n(n),N=e(41498),h=e.n(N),u=e(21739),g=e(58845),k=e(71647),b=e(81813),r=e(5018),D={"docs-demo-selectable-demo-selectable":{component:u.memo(u.lazy(function(){return e.e(433).then(e.bind(e,28850))})),asset:{type:"BLOCK",id:"docs-demo-selectable-demo-selectable",refAtomIds:[],dependencies:{"index.jsx":{type:"FILE",value:e(46551).Z},react:{type:"NPM",value:"18.3.1"},"rc-tree":{type:"NPM",value:"5.10.1"},"../../assets/index.less":{type:"FILE",value:e(35906).Z},"./selectable.less":{type:"FILE",value:e(79929).Z}},entry:"index.jsx"},context:{"../../assets/index.less":b,"./selectable.less":r,react:o||(o=e.t(u,2)),"rc-tree":k,"/Users/afc163/Projects/tree/assets/index.less":b,"/Users/afc163/Projects/tree/docs/examples/selectable.less":r},renderOpts:{compile:function(){var p=h()(c()().mark(function _(){var s,a=arguments;return c()().wrap(function(d){for(;;)switch(d.prev=d.next){case 0:return d.next=2,e.e(848).then(e.bind(e,3848));case 2:return d.abrupt("return",(s=d.sent).default.apply(s,a));case 3:case"end":return d.stop()}},_)}));function f(){return p.apply(this,arguments)}return f}()}}}},34301:function(t,i,e){e.r(i),e.d(i,{demos:function(){return c}});var o=e(21739),n=e(96904),c={}},81813:function(t,i,e){e.r(i)},31224:function(t,i,e){e.r(i)},84824:function(t,i,e){e.r(i)},54320:function(t,i,e){e.r(i)},37360:function(t,i,e){e.r(i)},99742:function(t,i,e){e.r(i)},92863:function(t,i,e){e.r(i)},5018:function(t,i,e){e.r(i)},58657:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(48609);const n=[{value:"https://github.com/react-component/tree/releases",paraId:0,tocIndex:0},{value:"2020-05-08",paraId:1},{value:"Upgrade ",paraId:2,tocIndex:1},{value:"rc-animate",paraId:2,tocIndex:1},{value:".",paraId:2,tocIndex:1},{value:"Remove ",paraId:2,tocIndex:1},{value:"react-lifecycles-compat",paraId:2,tocIndex:1},{value:" and ",paraId:2,tocIndex:1},{value:"prop-types",paraId:2,tocIndex:1},{value:".",paraId:2,tocIndex:1},{value:"TreeNode support ",paraId:3,tocIndex:2},{value:"checkable",paraId:3,tocIndex:2},{value:".",paraId:3,tocIndex:2},{value:"Remove old animation api and use ",paraId:4,tocIndex:3},{value:"motion",paraId:4,tocIndex:3},{value:" instead.",paraId:4,tocIndex:3},{value:"add ",paraId:5,tocIndex:4},{value:"onClick",paraId:5,tocIndex:4},{value:" & ",paraId:5,tocIndex:4},{value:"onDoubleClick",paraId:5,tocIndex:4},{value:" for node click event",paraId:5,tocIndex:4},{value:"add related className in treeNode",paraId:5,tocIndex:4},{value:"fix drag into another tree will throw exception",paraId:5,tocIndex:4},{value:"onCheck",paraId:6,tocIndex:5},{value:" arguments provide nativeEvent",paraId:6,tocIndex:5},{value:"onSelect",paraId:6,tocIndex:5},{value:" arguments provide nativeEvent",paraId:6,tocIndex:5},{value:"onExpand",paraId:6,tocIndex:5},{value:" arguments provide nativeEvent",paraId:6,tocIndex:5},{value:"adjust ",paraId:7,tocIndex:6},{value:"dragable",paraId:7,tocIndex:6},{value:" logic to make drag more smooth",paraId:7,tocIndex:6},{value:"fix ",paraId:7,tocIndex:6},{value:"loadData",paraId:7,tocIndex:6},{value:" trigger twice when expand node",paraId:7,tocIndex:6},{value:"add ",paraId:7,tocIndex:6},{value:"icon",paraId:7,tocIndex:6},{value:" prop on ",paraId:7,tocIndex:6},{value:"Tree",paraId:7,tocIndex:6},{value:"fix check by prop not work on ",paraId:7,tocIndex:6},{value:"disabled",paraId:7,tocIndex:6},{value:" node",paraId:7,tocIndex:6},{value:"code refactor and optimize logic",paraId:8,tocIndex:7},{value:"add ",paraId:8,tocIndex:7},{value:"disabled",paraId:8,tocIndex:7},{value:" API",paraId:8,tocIndex:7},{value:"add ",paraId:8,tocIndex:7},{value:"icon",paraId:8,tocIndex:7},{value:" API",paraId:8,tocIndex:7},{value:"add ",paraId:9,tocIndex:8},{value:"onDragEnd",paraId:9,tocIndex:8},{value:" API and fix related issues.",paraId:9,tocIndex:8},{value:"make ",paraId:10,tocIndex:9},{value:"autoExpandParent",paraId:10,tocIndex:9},{value:" also work in controlled mode.(Before just work in uncontrolled mode)",paraId:10,tocIndex:9},{value:"change ",paraId:10,tocIndex:9},{value:"onExpand",paraId:10,tocIndex:9},{value:` params
 `,paraId:10,tocIndex:9},{value:"old: function(node, expanded, expandedKeys)",paraId:11,tocIndex:9},{value:"new: function(expandedKeys, {expanded: bool, node})",paraId:11,tocIndex:9},{value:"remove ",paraId:12,tocIndex:10},{value:"halfCheckedKeys",paraId:12,tocIndex:10},{value:" api, and change ",paraId:12,tocIndex:10},{value:"checkedKeys",paraId:12,tocIndex:10},{value:" to an object on setting ",paraId:12,tocIndex:10},{value:"checkStrictly",paraId:12,tocIndex:10},{value:".",paraId:12,tocIndex:10},{value:"improve performance.",paraId:13,tocIndex:11},{value:"add ",paraId:13,tocIndex:11},{value:"checkStrictly",paraId:13,tocIndex:11},{value:"/",paraId:13,tocIndex:11},{value:"halfCheckedKeys",paraId:13,tocIndex:11},{value:" api.",paraId:13,tocIndex:11},{value:"change ",paraId:14,tocIndex:12},{value:"onDrop",paraId:14,tocIndex:12},{value:" params (from ",paraId:14,tocIndex:12},{value:"originExpandedKeys",paraId:14,tocIndex:12},{value:" to ",paraId:14,tocIndex:12},{value:"rawExpandedKeys",paraId:14,tocIndex:12},{value:")",paraId:14,tocIndex:12},{value:"change ",paraId:15,tocIndex:13},{value:"onSelect",paraId:15,tocIndex:13},{value:"/",paraId:15,tocIndex:13},{value:"onCheck",paraId:15,tocIndex:13},{value:" params",paraId:15,tocIndex:13},{value:"change drag api (from ",paraId:16,tocIndex:14},{value:"onTreeXX",paraId:16,tocIndex:14},{value:" to ",paraId:16,tocIndex:14},{value:"onXX",paraId:16,tocIndex:14},{value:")",paraId:16,tocIndex:14},{value:"change ",paraId:17,tocIndex:15},{value:"onDataLoaded",paraId:17,tocIndex:15},{value:" api to ",paraId:17,tocIndex:15},{value:"loadData",paraId:17,tocIndex:15},{value:"add ",paraId:18,tocIndex:16},{value:"expandedKeys",paraId:18,tocIndex:16},{value:"/",paraId:18,tocIndex:16},{value:"onExpand",paraId:18,tocIndex:16},{value:"/",paraId:18,tocIndex:16},{value:"filterTreeNode",paraId:18,tocIndex:16},{value:" api",paraId:18,tocIndex:16},{value:"add ",paraId:19,tocIndex:17},{value:"onMouseEnter",paraId:19,tocIndex:17},{value:"/",paraId:19,tocIndex:17},{value:"onMouseLeave",paraId:19,tocIndex:17},{value:" api",paraId:19,tocIndex:17},{value:"add draggable feature #5",paraId:20,tocIndex:18},{value:"add contextmenu feature #5",paraId:21,tocIndex:19},{value:"add dynamic feature #4",paraId:22,tocIndex:20},{value:"support checkbox",paraId:23,tocIndex:21}]},45275:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(65723);const n=[]},30954:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(30859);const n=[]},74057:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(21818);const n=[]},69194:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(29833);const n=[]},69098:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(73683);const n=[]},1558:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(35616);const n=[]},32509:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(10615);const n=[]},57583:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(46339);const n=[]},52306:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(96613);const n=[]},75545:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(67006);const n=[]},5284:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(48592);const n=[]},4575:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(32624);const n=[]},76349:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(88998);const n=[]},64948:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(36397);const n=[]},22313:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(1538);const n=[]},32791:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(58845);const n=[]},94225:function(t,i,e){e.r(i),e.d(i,{texts:function(){return n}});var o=e(96904);const n=[{value:"Tree component.",paraId:0,tocIndex:0},{value:"Support all popular browsers, including Internet Explorer 9 and above.",paraId:1,tocIndex:2},{value:"http://localhost:9001/",paraId:2,tocIndex:3},{value:"online example: ",paraId:3,tocIndex:3},{value:"https://tree.react-component.now.sh/",paraId:3,tocIndex:3},{value:"Note: ",paraId:4,tocIndex:5},{value:'import "rc-tree/assets/index.css"',paraId:4,tocIndex:5},{value:"see examples",paraId:5,tocIndex:5},{value:"name",paraId:6,tocIndex:7},{value:"description",paraId:6,tocIndex:7},{value:"type",paraId:6,tocIndex:7},{value:"default",paraId:6,tocIndex:7},{value:"autoExpandParent",paraId:6,tocIndex:7},{value:"whether auto expand parent treeNodes",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"checkable",paraId:6,tocIndex:7},{value:"whether support checked",paraId:6,tocIndex:7},{value:"bool/React Node",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"checkedKeys",paraId:6,tocIndex:7},{value:"Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array.",paraId:6,tocIndex:7},{value:"String[]/{checked:Array",paraId:6,tocIndex:7},{value:",halfChecked:Array",paraId:7,tocIndex:7},{value:"}",paraId:8,tocIndex:7},{value:"[]",paraId:6,tocIndex:7},{value:"checkStrictly",paraId:6,tocIndex:7},{value:"check node precisely, parent and children nodes are not associated",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"className",paraId:6,tocIndex:7},{value:"additional css class of root dom node",paraId:6,tocIndex:7},{value:"String",paraId:6,tocIndex:7},{value:"''",paraId:6,tocIndex:7},{value:"defaultCheckedKeys",paraId:6,tocIndex:7},{value:"default checked treeNodes",paraId:6,tocIndex:7},{value:"String[]",paraId:6,tocIndex:7},{value:"[]",paraId:6,tocIndex:7},{value:"defaultExpandedKeys",paraId:6,tocIndex:7},{value:"expand specific treeNodes",paraId:6,tocIndex:7},{value:"String[]",paraId:6,tocIndex:7},{value:"[]",paraId:6,tocIndex:7},{value:"defaultExpandAll",paraId:6,tocIndex:7},{value:"expand all treeNodes",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"defaultExpandParent",paraId:6,tocIndex:7},{value:"auto expand parent treeNodes when init",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"true",paraId:6,tocIndex:7},{value:"defaultSelectedKeys",paraId:6,tocIndex:7},{value:"default selected treeNodes",paraId:6,tocIndex:7},{value:"String[]",paraId:6,tocIndex:7},{value:"[]",paraId:6,tocIndex:7},{value:"disabled",paraId:6,tocIndex:7},{value:"whether disabled the tree",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"draggable",paraId:6,tocIndex:7},{value:"whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.)",paraId:6,tocIndex:7},{value:"bool | ({ node }) => boolean",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"expandedKeys",paraId:6,tocIndex:7},{value:"Controlled expand specific treeNodes",paraId:6,tocIndex:7},{value:"String[]",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"filterTreeNode",paraId:6,tocIndex:7},{value:"filter some treeNodes as you need. it should return true",paraId:6,tocIndex:7},{value:"function(node)",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"icon",paraId:6,tocIndex:7},{value:"customize icon. When you pass component, whose render will receive full TreeNode props as component props",paraId:6,tocIndex:7},{value:"element/Function(props)",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"loadedKeys",paraId:6,tocIndex:7},{value:"Mark node is loaded when ",paraId:6,tocIndex:7},{value:"loadData",paraId:6,tocIndex:7},{value:" is true",paraId:6,tocIndex:7},{value:"String[]",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"loadData",paraId:6,tocIndex:7},{value:"load data asynchronously and the return value should be a promise",paraId:6,tocIndex:7},{value:"function(node)",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"multiple",paraId:6,tocIndex:7},{value:"whether multiple select",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"prefixCls",paraId:6,tocIndex:7},{value:"prefix class",paraId:6,tocIndex:7},{value:"String",paraId:6,tocIndex:7},{value:"'rc-tree'",paraId:6,tocIndex:7},{value:"selectable",paraId:6,tocIndex:7},{value:"whether can be selected",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"true",paraId:6,tocIndex:7},{value:"selectedKeys",paraId:6,tocIndex:7},{value:"Controlled selected treeNodes(After setting, defaultSelectedKeys will not work)",paraId:6,tocIndex:7},{value:"String[]",paraId:6,tocIndex:7},{value:"[]",paraId:6,tocIndex:7},{value:"showIcon",paraId:6,tocIndex:7},{value:"whether show icon",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"true",paraId:6,tocIndex:7},{value:"showLine",paraId:6,tocIndex:7},{value:"whether show line",paraId:6,tocIndex:7},{value:"bool",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"treeData",paraId:6,tocIndex:7},{value:"treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array)",paraId:6,tocIndex:7},{value:"array<{key,title,children, [disabled, selectable]}>",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onCheck",paraId:6,tocIndex:7},{value:"click the treeNode/checkbox to fire",paraId:6,tocIndex:7},{value:"function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onExpand",paraId:6,tocIndex:7},{value:"fire on treeNode expand or not",paraId:6,tocIndex:7},{value:"function(expandedKeys, {expanded: bool, node, nativeEvent})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onDragEnd",paraId:6,tocIndex:7},{value:"it execs when fire the tree's dragend event",paraId:6,tocIndex:7},{value:"function({event,node})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onDragEnter",paraId:6,tocIndex:7},{value:"it execs when fire the tree's dragenter event",paraId:6,tocIndex:7},{value:"function({event,node,expandedKeys})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onDragLeave",paraId:6,tocIndex:7},{value:"it execs when fire the tree's dragleave event",paraId:6,tocIndex:7},{value:"function({event,node})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onDragOver",paraId:6,tocIndex:7},{value:"it execs when fire the tree's dragover event",paraId:6,tocIndex:7},{value:"function({event,node})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onDragStart",paraId:6,tocIndex:7},{value:"it execs when fire the tree's dragstart event",paraId:6,tocIndex:7},{value:"function({event,node})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onDrop",paraId:6,tocIndex:7},{value:"it execs when fire the tree's drop event",paraId:6,tocIndex:7},{value:"function({event, node, dragNode, dragNodesKeys})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onLoad",paraId:6,tocIndex:7},{value:"Trigger when a node is loaded. If you set the ",paraId:6,tocIndex:7},{value:"loadedKeys",paraId:6,tocIndex:7},{value:", you must handle ",paraId:6,tocIndex:7},{value:"onLoad",paraId:6,tocIndex:7},{value:" to avoid infinity loop",paraId:6,tocIndex:7},{value:"function(loadedKeys, {event, node})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onMouseEnter",paraId:6,tocIndex:7},{value:"call when mouse enter a treeNode",paraId:6,tocIndex:7},{value:"function({event,node})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onMouseLeave",paraId:6,tocIndex:7},{value:"call when mouse leave a treeNode",paraId:6,tocIndex:7},{value:"function({event,node})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onRightClick",paraId:6,tocIndex:7},{value:"select current treeNode and show customized contextmenu",paraId:6,tocIndex:7},{value:"function({event,node})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"onSelect",paraId:6,tocIndex:7},{value:"click the treeNode to fire",paraId:6,tocIndex:7},{value:"function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent})",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"switcherIcon",paraId:6,tocIndex:7},{value:"specific the switcher icon.",paraId:6,tocIndex:7},{value:"ReactNode / (props: TreeNodeAttribute) => ReactNode",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"virtual",paraId:6,tocIndex:7},{value:"Disable virtual scroll when ",paraId:6,tocIndex:7},{value:"false",paraId:6,tocIndex:7},{value:"boolean",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"allowDrop",paraId:6,tocIndex:7},{value:"Whether to allow drop on node",paraId:6,tocIndex:7},{value:"({ dragNode, dropNode, dropPosition }) => boolean",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"dropIndicatorRender",paraId:6,tocIndex:7},{value:"The indicator to render when dragging",paraId:6,tocIndex:7},{value:"({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"direction",paraId:6,tocIndex:7},{value:"Display direction of the tree, it may affect dragging behavior",paraId:6,tocIndex:7},{value:"ltr",paraId:6,tocIndex:7},{value:" | ",paraId:6,tocIndex:7},{value:"rtl",paraId:6,tocIndex:7},{value:"-",paraId:6,tocIndex:7},{value:"expandAction",paraId:6,tocIndex:7},{value:"Tree open logic, optional: false | ",paraId:6,tocIndex:7},{value:"click",paraId:6,tocIndex:7},{value:" | ",paraId:6,tocIndex:7},{value:"doubleClick",paraId:6,tocIndex:7},{value:"string | boolean",paraId:6,tocIndex:7},{value:"click",paraId:6,tocIndex:7},{value:"note: if you have a lot of TreeNode, like more than 1000,",paraId:9,tocIndex:8},{value:`
 make the parent node is collapsed by default, will obvious effect, very fast.`,paraId:9,tocIndex:8},{value:`
 Because the children hide TreeNode will not insert into dom.`,paraId:9,tocIndex:8},{value:"name",paraId:10,tocIndex:8},{value:"description",paraId:10,tocIndex:8},{value:"type",paraId:10,tocIndex:8},{value:"default",paraId:10,tocIndex:8},{value:"className",paraId:10,tocIndex:8},{value:"additional class to treeNode",paraId:10,tocIndex:8},{value:"String",paraId:10,tocIndex:8},{value:"''",paraId:10,tocIndex:8},{value:"checkable",paraId:10,tocIndex:8},{value:"control node checkable if Tree is checkable",paraId:10,tocIndex:8},{value:"bool",paraId:10,tocIndex:8},{value:"false",paraId:10,tocIndex:8},{value:"style",paraId:10,tocIndex:8},{value:"set style to treeNode",paraId:10,tocIndex:8},{value:"Object",paraId:10,tocIndex:8},{value:"''",paraId:10,tocIndex:8},{value:"disabled",paraId:10,tocIndex:8},{value:"whether disabled the treeNode",paraId:10,tocIndex:8},{value:"bool",paraId:10,tocIndex:8},{value:"false",paraId:10,tocIndex:8},{value:"disableCheckbox",paraId:10,tocIndex:8},{value:"whether disable the treeNode' checkbox",paraId:10,tocIndex:8},{value:"bool",paraId:10,tocIndex:8},{value:"false",paraId:10,tocIndex:8},{value:"title",paraId:10,tocIndex:8},{value:"tree/subTree's title",paraId:10,tocIndex:8},{value:"String/element/((data: DataNode) => React.ReactNode)",paraId:10,tocIndex:8},{value:"'---'",paraId:10,tocIndex:8},{value:"key",paraId:10,tocIndex:8},{value:"it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes",paraId:10,tocIndex:8},{value:"String",paraId:10,tocIndex:8},{value:"treeNode's position",paraId:10,tocIndex:8},{value:"isLeaf",paraId:10,tocIndex:8},{value:"whether it's leaf node",paraId:10,tocIndex:8},{value:"bool",paraId:10,tocIndex:8},{value:"false",paraId:10,tocIndex:8},{value:"icon",paraId:10,tocIndex:8},{value:"customize icon. When you pass component, whose render will receive full TreeNode props as component props",paraId:10,tocIndex:8},{value:"element/Function(props)",paraId:10,tocIndex:8},{value:"-",paraId:10,tocIndex:8},{value:"switcherIcon",paraId:10,tocIndex:8},{value:"specific the switcher icon.",paraId:10,tocIndex:8},{value:"ReactNode / (props: TreeNodeAttribute) => ReactNode",paraId:10,tocIndex:8},{value:"-",paraId:10,tocIndex:8},{value:"The number of treeNodes can be very large, but when enable ",paraId:11,tocIndex:9},{value:"checkable",paraId:11,tocIndex:9},{value:", it will spend more computing time, so we cached some calculations(e.g. ",paraId:11,tocIndex:9},{value:"this.treeNodesStates",paraId:11,tocIndex:9},{value:"), to avoid double computing. But, this bring some restrictions, ",paraId:11,tocIndex:9},{value:"when you async load treeNodes, you should render tree like this",paraId:11,tocIndex:9},{value:" ",paraId:11,tocIndex:9},{value:"{this.state.treeData.length ? <Tree ...>{this.state.treeData.map(t => <TreeNode ... />)}</Tree> : 'loading tree'}",paraId:11,tocIndex:9},{value:`npm install
@@ -2797,10 +2797,10 @@ import CSSMotion from 'rc-motion';
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 import * as React from 'react';
 import { TreeContext } from './contextTypes';
-import { FlattenNode, TreeNodeProps } from './interface';
+import type { FlattenNode, TreeNodeProps } from './interface';
 import TreeNode from './TreeNode';
 import useUnmount from './useUnmount';
-import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
+import { getTreeNodeProps, type TreeNodeRequiredProps } from './utils/treeUtil';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;
@@ -2925,14 +2925,14 @@ export default RefMotionTreeNode;
 import VirtualList, { type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
 import MotionTreeNode from './MotionTreeNode';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,
   FlattenNode,
+  Key,
   KeyEntities,
   ScrollTo,
-  SafeKey,
 } from './interface';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps } from './utils/treeUtil';
@@ -2995,16 +2995,16 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   selectable?: boolean;
   disabled?: boolean;
 
-  expandedKeys: SafeKey[];
-  selectedKeys: SafeKey[];
-  checkedKeys: SafeKey[];
-  loadedKeys: SafeKey[];
-  loadingKeys: SafeKey[];
-  halfCheckedKeys: SafeKey[];
+  expandedKeys: Key[];
+  selectedKeys: Key[];
+  checkedKeys: Key[];
+  loadedKeys: Key[];
+  loadingKeys: Key[];
+  halfCheckedKeys: Key[];
   keyEntities: KeyEntities;
 
   dragging: boolean;
-  dragOverNodeKey: SafeKey;
+  dragOverNodeKey: Key;
   dropPosition: number;
 
   // Virtual list
@@ -3015,7 +3015,7 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
-  onActiveChange: (key: SafeKey) => void;
+  onActiveChange: (key: Key) => void;
 
   onListChangeStart: () => void;
   onListChangeEnd: () => void;
@@ -3325,13 +3325,13 @@ import type {
   FieldNames,
   FlattenNode,
   IconType,
+  Key,
   KeyEntities,
   NodeInstance,
   SafeKey,
   ScrollTo,
 } from './interface';
-import type { NodeListRef } from './NodeList';
-import NodeList, { MotionEntity, MOTION_KEY } from './NodeList';
+import NodeList, { MOTION_KEY, MotionEntity, type NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
 import {
   arrAdd,
@@ -3364,7 +3364,7 @@ export interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
   nativeEvent: MouseEvent;
   checkedNodes: TreeDataType[];
   checkedNodesPositions?: { node: TreeDataType; pos: string }[];
-  halfCheckedKeys?: SafeKey[];
+  halfCheckedKeys?: Key[];
 }
 
 export interface AllowDropOptions<TreeDataType extends BasicDataNode = DataNode> {
@@ -3389,7 +3389,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   className?: string;
   style?: React.CSSProperties;
   focusable?: boolean;
-  activeKey?: SafeKey | null;
+  activeKey?: Key | null;
   tabIndex?: number;
   children?: React.ReactNode;
   treeData?: TreeDataType[]; // Generate treeNode by children
@@ -3407,12 +3407,12 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   defaultExpandParent?: boolean;
   autoExpandParent?: boolean;
   defaultExpandAll?: boolean;
-  defaultExpandedKeys?: SafeKey[];
-  expandedKeys?: SafeKey[];
-  defaultCheckedKeys?: SafeKey[];
-  checkedKeys?: SafeKey[] | { checked: SafeKey[]; halfChecked: SafeKey[] };
-  defaultSelectedKeys?: SafeKey[];
-  selectedKeys?: SafeKey[];
+  defaultExpandedKeys?: Key[];
+  expandedKeys?: Key[];
+  defaultCheckedKeys?: Key[];
+  checkedKeys?: Key[] | { checked: Key[]; halfChecked: Key[] };
+  defaultSelectedKeys?: Key[];
+  selectedKeys?: Key[];
   allowDrop?: AllowDrop<TreeDataType>;
   titleRender?: (node: TreeDataType) => React.ReactNode;
   dropIndicatorRender?: (props: {
@@ -3430,7 +3430,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   onDoubleClick?: NodeMouseEventHandler<TreeDataType>;
   onScroll?: React.UIEventHandler<HTMLElement>;
   onExpand?: (
-    expandedKeys: SafeKey[],
+    expandedKeys: Key[],
     info: {
       node: EventDataNode<TreeDataType>;
       expanded: boolean;
@@ -3438,11 +3438,11 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
     },
   ) => void;
   onCheck?: (
-    checked: { checked: SafeKey[]; halfChecked: SafeKey[] } | SafeKey[],
+    checked: { checked: Key[]; halfChecked: Key[] } | Key[],
     info: CheckInfo<TreeDataType>,
   ) => void;
   onSelect?: (
-    selectedKeys: SafeKey[],
+    selectedKeys: Key[],
     info: {
       event: 'select';
       selected: boolean;
@@ -3452,26 +3452,26 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
     },
   ) => void;
   onLoad?: (
-    loadedKeys: SafeKey[],
+    loadedKeys: Key[],
     info: {
       event: 'load';
       node: EventDataNode<TreeDataType>;
     },
   ) => void;
   loadData?: (treeNode: EventDataNode<TreeDataType>) => Promise<any>;
-  loadedKeys?: SafeKey[];
+  loadedKeys?: Key[];
   onMouseEnter?: (info: NodeMouseEventParams<TreeDataType>) => void;
   onMouseLeave?: (info: NodeMouseEventParams<TreeDataType>) => void;
   onRightClick?: (info: { event: React.MouseEvent; node: EventDataNode<TreeDataType> }) => void;
   onDragStart?: (info: NodeDragEventParams<TreeDataType>) => void;
-  onDragEnter?: (info: NodeDragEventParams<TreeDataType> & { expandedKeys: SafeKey[] }) => void;
+  onDragEnter?: (info: NodeDragEventParams<TreeDataType> & { expandedKeys: Key[] }) => void;
   onDragOver?: (info: NodeDragEventParams<TreeDataType>) => void;
   onDragLeave?: (info: NodeDragEventParams<TreeDataType>) => void;
   onDragEnd?: (info: NodeDragEventParams<TreeDataType>) => void;
   onDrop?: (
     info: NodeDragEventParams<TreeDataType> & {
       dragNode: EventDataNode<TreeDataType>;
-      dragNodesKeys: SafeKey[];
+      dragNodesKeys: Key[];
       dropPosition: number;
       dropToGap: boolean;
     },
@@ -3480,7 +3480,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
    * Used for \`rc-tree-select\` only.
    * Do not use in your production code directly since this will be refactor.
    */
-  onActiveChange?: (key: SafeKey) => void;
+  onActiveChange?: (key: Key) => void;
   filterTreeNode?: (treeNode: EventDataNode<TreeDataType>) => boolean;
   motion?: any;
   switcherIcon?: IconType;
@@ -3503,30 +3503,30 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
 
   indent: number | null;
 
-  selectedKeys: SafeKey[];
-  checkedKeys: SafeKey[];
-  halfCheckedKeys: SafeKey[];
-  loadedKeys: SafeKey[];
-  loadingKeys: SafeKey[];
-  expandedKeys: SafeKey[];
+  selectedKeys: Key[];
+  checkedKeys: Key[];
+  halfCheckedKeys: Key[];
+  loadedKeys: Key[];
+  loadingKeys: Key[];
+  expandedKeys: Key[];
 
-  draggingNodeKey: SafeKey;
-  dragChildrenKeys: SafeKey[];
+  draggingNodeKey: Key;
+  dragChildrenKeys: Key[];
 
   // for details see comment in Tree.state
   dropPosition: -1 | 0 | 1 | null;
   dropLevelOffset: number | null;
-  dropContainerKey: SafeKey | null;
-  dropTargetKey: SafeKey | null;
+  dropContainerKey: Key | null;
+  dropTargetKey: Key | null;
   dropTargetPos: string | null;
   dropAllowed: boolean;
-  dragOverNodeKey: SafeKey | null;
+  dragOverNodeKey: Key | null;
 
   treeData: TreeDataType[];
   flattenNodes: FlattenNode<TreeDataType>[];
 
   focused: boolean;
-  activeKey: SafeKey | null;
+  activeKey: Key | null;
 
   // Record if list is changing
   listChanging: boolean;
@@ -3703,7 +3703,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       delete cloneKeyEntities[MOTION_KEY];
 
       // Only take the key who has the children to enhance the performance
-      const nextExpandedKeys: SafeKey[] = [];
+      const nextExpandedKeys: React.Key[] = [];
       Object.keys(cloneKeyEntities).forEach(key => {
         const entity = cloneKeyEntities[key];
         if (entity.children && entity.children.length) {
@@ -4316,8 +4316,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             }));
 
             // If exceed max retry times, we give up retry
-            this.loadingRetryTimes[key] = (this.loadingRetryTimes[key] || 0) + 1;
-            if (this.loadingRetryTimes[key] >= MAX_RETRY_TIMES) {
+            this.loadingRetryTimes[key as SafeKey] =
+              (this.loadingRetryTimes[key as SafeKey] || 0) + 1;
+            if (this.loadingRetryTimes[key as SafeKey] >= MAX_RETRY_TIMES) {
               const { loadedKeys: currentLoadedKeys } = this.state;
 
               warning(false, 'Retry for \`loadData\` many times but still failed. No more retry.');
@@ -4405,7 +4406,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   // =========================== Expanded ===========================
   /** Set uncontrolled \`expandedKeys\`. This will also auto update \`flattenNodes\`. */
-  setExpandedKeys = (expandedKeys: SafeKey[]) => {
+  setExpandedKeys = (expandedKeys: Key[]) => {
     const { treeData, fieldNames } = this.state;
 
     const flattenNodes: FlattenNode<TreeDataType>[] = flattenTreeData<TreeDataType>(
@@ -4495,7 +4496,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   // =========================== Keyboard ===========================
-  onActiveChange = (newActiveKey: SafeKey | null) => {
+  onActiveChange = (newActiveKey: Key | null) => {
     const { activeKey } = this.state;
     const { onActiveChange, itemScrollOffset = 0 } = this.props;
 
@@ -4816,9 +4817,9 @@ export default Tree;
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import * as React from 'react';
 // @ts-ignore
-import { TreeContext, TreeContextProps } from './contextTypes';
+import { TreeContext, type TreeContextProps } from './contextTypes';
 import Indent from './Indent';
-import { TreeNodeProps } from './interface';
+import type { TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
 import { convertNodePropsToEventData } from './utils/treeUtil';
 
@@ -5393,12 +5394,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         {...ariaSelected}
         {...dataOrAriaAttributeProps}
       >
-        <Indent
-          prefixCls={prefixCls}
-          level={level}
-          isStart={isStart}
-          isEnd={isEnd}
-        />
+        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
         {this.renderDragHandler()}
         {this.renderSwitcher()}
         {this.renderCheckbox()}
@@ -5420,17 +5416,17 @@ ContextTreeNode.displayName = 'TreeNode';
 
 export default ContextTreeNode;
 `},86907:function(t,i){i.Z=`import * as React from 'react';
-import {
+import type {
   BasicDataNode,
   DataNode,
   Direction,
   EventDataNode,
   IconType,
-  SafeKey,
+  Key,
   KeyEntities,
   NodeInstance,
 } from './interface';
-import { DraggableConfig } from './Tree';
+import type { DraggableConfig } from './Tree';
 
 export type NodeMouseEventParams<
   TreeDataType extends BasicDataNode = DataNode,
@@ -5463,15 +5459,15 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   icon: IconType;
   switcherIcon: IconType;
   draggable?: DraggableConfig;
-  draggingNodeKey?: SafeKey;
+  draggingNodeKey?: Key;
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
   keyEntities: KeyEntities;
   // for details see comment in Tree.state (Tree.tsx)
   dropLevelOffset?: number;
-  dropContainerKey: SafeKey | null;
-  dropTargetKey: SafeKey | null;
+  dropContainerKey: Key | null;
+  dropTargetKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number | null;
   dropIndicatorRender: (props: {
@@ -5481,7 +5477,7 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
     prefixCls;
     direction: Direction;
   }) => React.ReactNode;
-  dragOverNodeKey: SafeKey | null;
+  dragOverNodeKey: Key | null;
   direction: Direction;
 
   loadData: (treeNode: EventDataNode<TreeDataType>) => Promise<void>;
@@ -5552,24 +5548,24 @@ export default function useUnmount(triggerStart: VoidFunction, triggerEnd: VoidF
 
 import warning from 'rc-util/lib/warning';
 import React from 'react';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,
   Direction,
   FlattenNode,
+  Key,
   KeyEntities,
   NodeElement,
   NodeInstance,
-  SafeKey,
 } from './interface';
-import { AllowDrop, TreeProps } from './Tree';
+import type { AllowDrop, TreeProps } from './Tree';
 import TreeNode from './TreeNode';
 import getEntity from './utils/keyUtil';
 
 export { getPosition, isTreeNode } from './utils/treeUtil';
 
-export function arrDel(list: SafeKey[], value: SafeKey) {
+export function arrDel(list: Key[], value: Key) {
   if (!list) return [];
   const clone = list.slice();
   const index = clone.indexOf(value);
@@ -5579,7 +5575,7 @@ export function arrDel(list: SafeKey[], value: SafeKey) {
   return clone;
 }
 
-export function arrAdd(list: SafeKey[], value: SafeKey) {
+export function arrAdd(list: Key[], value: Key) {
   const clone = (list || []).slice();
   if (clone.indexOf(value) === -1) {
     clone.push(value);
@@ -5592,9 +5588,9 @@ export function posToArr(pos: string) {
 }
 
 export function getDragChildrenKeys<TreeDataType extends BasicDataNode = DataNode>(
-  dragNodeKey: SafeKey,
+  dragNodeKey: Key,
   keyEntities: KeyEntities<TreeDataType>,
-): SafeKey[] {
+): Key[] {
   // not contains self
   // self for left or right drag
   const dragChildrenKeys = [];
@@ -5642,15 +5638,15 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   allowDrop: AllowDrop<TreeDataType>,
   flattenedNodes: FlattenNode<TreeDataType>[],
   keyEntities: KeyEntities<TreeDataType>,
-  expandKeys: SafeKey[],
+  expandKeys: Key[],
   direction: Direction,
 ): {
   dropPosition: -1 | 0 | 1;
   dropLevelOffset: number;
-  dropTargetKey: SafeKey;
+  dropTargetKey: Key;
   dropTargetPos: string;
-  dropContainerKey: SafeKey;
-  dragOverNodeKey: SafeKey;
+  dropContainerKey: Key;
+  dragOverNodeKey: Key;
   dropAllowed: boolean;
 } {
   const { clientX, clientY } = event;
@@ -5813,7 +5809,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
  * @param props
  * @returns [string]
  */
-export function calcSelectedKeys(selectedKeys: SafeKey[], props: TreeProps) {
+export function calcSelectedKeys(selectedKeys: Key[], props: TreeProps) {
   if (!selectedKeys) return undefined;
 
   const { multiple } = props;
@@ -5850,7 +5846,7 @@ export function convertDataToTree(
 /**
  * Parse \`checkedKeys\` to { checkedKeys, halfCheckedKeys } style
  */
-export function parseCheckedKeys(keys: SafeKey[] | { checked: SafeKey[]; halfChecked: SafeKey[] }) {
+export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Key[] }) {
   if (!keys) {
     return null;
   }
@@ -5881,10 +5877,10 @@ export function parseCheckedKeys(keys: SafeKey[] | { checked: SafeKey[]; halfChe
  * @param keyList
  * @param keyEntities
  */
-export function conductExpandParent(keyList: SafeKey[], keyEntities: KeyEntities): SafeKey[] {
-  const expandedKeys = new Set<SafeKey>();
+export function conductExpandParent(keyList: Key[], keyEntities: KeyEntities): Key[] {
+  const expandedKeys = new Set<Key>();
 
-  function conductUp(key: SafeKey) {
+  function conductUp(key: Key) {
     if (expandedKeys.has(key)) return;
 
     const entity = getEntity(keyEntities, key);
@@ -5908,23 +5904,23 @@ export function conductExpandParent(keyList: SafeKey[], keyEntities: KeyEntities
   return [...expandedKeys];
 }
 `},24919:function(t,i){i.Z=`import warning from 'rc-util/lib/warning';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,
   GetCheckDisabled,
-  SafeKey,
+  Key,
   KeyEntities,
 } from '../interface';
 import getEntity from './keyUtil';
 
 interface ConductReturnType {
-  checkedKeys: SafeKey[];
-  halfCheckedKeys: SafeKey[];
+  checkedKeys: Key[];
+  halfCheckedKeys: Key[];
 }
 
-function removeFromCheckedKeys(halfCheckedKeys: Set<SafeKey>, checkedKeys: Set<SafeKey>) {
-  const filteredKeys = new Set<SafeKey>();
+function removeFromCheckedKeys(halfCheckedKeys: Set<Key>, checkedKeys: Set<Key>) {
+  const filteredKeys = new Set<Key>();
   halfCheckedKeys.forEach(key => {
     if (!checkedKeys.has(key)) {
       filteredKeys.add(key);
@@ -5940,13 +5936,13 @@ export function isCheckDisabled<TreeDataType>(node: TreeDataType) {
 
 // Fill miss keys
 function fillConductCheck<TreeDataType extends BasicDataNode = DataNode>(
-  keys: Set<SafeKey>,
+  keys: Set<Key>,
   levelEntities: Map<number, Set<DataEntity<TreeDataType>>>,
   maxLevel: number,
   syntheticGetCheckDisabled: GetCheckDisabled<TreeDataType>,
 ): ConductReturnType {
-  const checkedKeys = new Set<SafeKey>(keys);
-  const halfCheckedKeys = new Set<SafeKey>();
+  const checkedKeys = new Set<Key>(keys);
+  const halfCheckedKeys = new Set<Key>();
 
   // Add checked keys top to bottom
   for (let level = 0; level <= maxLevel; level += 1) {
@@ -5965,7 +5961,7 @@ function fillConductCheck<TreeDataType extends BasicDataNode = DataNode>(
   }
 
   // Add checked keys from bottom to top
-  const visitedKeys = new Set<SafeKey>();
+  const visitedKeys = new Set<Key>();
   for (let level = maxLevel; level >= 0; level -= 1) {
     const entities = levelEntities.get(level) || new Set();
     entities.forEach(entity => {
@@ -6016,14 +6012,14 @@ function fillConductCheck<TreeDataType extends BasicDataNode = DataNode>(
 
 // Remove useless key
 function cleanConductCheck<TreeDataType extends BasicDataNode = DataNode>(
-  keys: Set<SafeKey>,
-  halfKeys: SafeKey[],
+  keys: Set<Key>,
+  halfKeys: Key[],
   levelEntities: Map<number, Set<DataEntity<TreeDataType>>>,
   maxLevel: number,
   syntheticGetCheckDisabled: GetCheckDisabled<TreeDataType>,
 ): ConductReturnType {
-  const checkedKeys = new Set<SafeKey>(keys);
-  let halfCheckedKeys = new Set<SafeKey>(halfKeys);
+  const checkedKeys = new Set<Key>(keys);
+  let halfCheckedKeys = new Set<Key>(halfKeys);
 
   // Remove checked keys from top to bottom
   for (let level = 0; level <= maxLevel; level += 1) {
@@ -6042,8 +6038,8 @@ function cleanConductCheck<TreeDataType extends BasicDataNode = DataNode>(
   }
 
   // Remove checked keys form bottom to top
-  halfCheckedKeys = new Set<SafeKey>();
-  const visitedKeys = new Set<SafeKey>();
+  halfCheckedKeys = new Set<Key>();
+  const visitedKeys = new Set<Key>();
   for (let level = maxLevel; level >= 0; level -= 1) {
     const entities = levelEntities.get(level) || new Set();
 
@@ -6100,12 +6096,12 @@ function cleanConductCheck<TreeDataType extends BasicDataNode = DataNode>(
  * @param mode \`fill\` to fill missing key, \`clean\` to remove useless key
  */
 export function conductCheck<TreeDataType extends BasicDataNode = DataNode>(
-  keyList: SafeKey[],
-  checked: true | { checked: false; halfCheckedKeys: SafeKey[] },
+  keyList: Key[],
+  checked: true | { checked: false; halfCheckedKeys: Key[] },
   keyEntities: KeyEntities<TreeDataType>,
   getCheckDisabled?: GetCheckDisabled<TreeDataType>,
 ): ConductReturnType {
-  const warningMissKeys: SafeKey[] = [];
+  const warningMissKeys: Key[] = [];
 
   let syntheticGetCheckDisabled: GetCheckDisabled<TreeDataType>;
   if (getCheckDisabled) {
@@ -6115,7 +6111,7 @@ export function conductCheck<TreeDataType extends BasicDataNode = DataNode>(
   }
 
   // We only handle exist keys
-  const keys = new Set<SafeKey>(
+  const keys = new Set<Key>(
     keyList.filter(key => {
       const hasEntity = !!getEntity(keyEntities, key);
       if (!hasEntity) {
@@ -6172,9 +6168,9 @@ export function conductCheck<TreeDataType extends BasicDataNode = DataNode>(
 
   return result;
 }
-`},19102:function(t,i){i.Z=`import { SafeKey, FlattenNode } from '../interface';
+`},19102:function(t,i){i.Z=`import type { Key, FlattenNode } from '../interface';
 
-export function findExpandedKeys(prev: SafeKey[] = [], next: SafeKey[] = []) {
+export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
   const prevLen = prev.length;
   const nextLen = next.length;
 
@@ -6182,8 +6178,8 @@ export function findExpandedKeys(prev: SafeKey[] = [], next: SafeKey[] = []) {
     return { add: false, key: null };
   }
 
-  function find(shorter: SafeKey[], longer: SafeKey[]) {
-    const cache: Map<SafeKey, boolean> = new Map();
+  function find(shorter: Key[], longer: Key[]) {
+    const cache: Map<Key, boolean> = new Map();
     shorter.forEach(key => {
       cache.set(key, true);
     });
@@ -6206,7 +6202,7 @@ export function findExpandedKeys(prev: SafeKey[] = [], next: SafeKey[] = []) {
   };
 }
 
-export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], key: SafeKey) {
+export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], key: Key) {
   const shorterStartIndex = shorter.findIndex(data => data.key === key);
   const shorterEndNode = shorter[shorterStartIndex + 1];
   const longerStartIndex = longer.findIndex(data => data.key === key);
@@ -6217,16 +6213,16 @@ export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], ke
   }
   return longer.slice(longerStartIndex + 1);
 }
-`},38423:function(t,i){i.Z=`import type { KeyEntities, SafeKey } from '../interface';
+`},38423:function(t,i){i.Z=`import type { Key, KeyEntities, SafeKey } from '../interface';
 
-export default function getEntity<T = any>(keyEntities: KeyEntities<T>, key: SafeKey) {
-  return keyEntities[key];
+export default function getEntity<T = any>(keyEntities: KeyEntities<T>, key: Key) {
+  return keyEntities[key as SafeKey];
 }
 `},936:function(t,i){i.Z=`import toArray from 'rc-util/lib/Children/toArray';
 import omit from 'rc-util/lib/omit';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,
@@ -6250,7 +6246,7 @@ export function isTreeNode(node: NodeElement) {
   return node && node.type && node.type.isTreeNode;
 }
 
-export function getKey(key: SafeKey, pos: string) {
+export function getKey(key: Key, pos: string) {
   if (key !== null && key !== undefined) {
     return key;
   }
@@ -6316,7 +6312,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
         const { children, ...rest } = treeNode.props;
 
         const dataNode: DataNode = {
-          key,
+          key: key as Key,
           ...rest,
         };
 
@@ -6341,7 +6337,7 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
  */
 export function flattenTreeData<TreeDataType extends BasicDataNode = DataNode>(
   treeNodeList: TreeDataType[],
-  expandedKeys: SafeKey[] | true,
+  expandedKeys: Key[] | true,
   fieldNames: FieldNames,
 ): FlattenNode<TreeDataType>[] {
   const {
@@ -6422,7 +6418,7 @@ export function traverseDataNodes(
     node: DataNode;
     index: number;
     pos: string;
-    key: SafeKey;
+    key: Key;
     parentPos: string | number;
     level: number;
     nodes: DataNode[];
@@ -6446,7 +6442,7 @@ export function traverseDataNodes(
   const mergeChildrenPropName = childrenPropName || fieldChildren;
 
   // Get keys
-  let syntheticGetKey: (node: DataNode, pos?: string) => SafeKey;
+  let syntheticGetKey: (node: DataNode, pos?: string) => Key;
   if (externalGetKey) {
     if (typeof externalGetKey === 'string') {
       syntheticGetKey = (node: DataNode) => (node as any)[externalGetKey as string];
@@ -6555,7 +6551,7 @@ export function convertDataToEntities(
       const mergedKey = getKey(key, pos);
 
       posEntities[pos] = entity;
-      keyEntities[mergedKey] = entity;
+      keyEntities[mergedKey as SafeKey] = entity;
 
       // Fill children
       entity.parent = posEntities[parentPos];
@@ -6579,13 +6575,13 @@ export function convertDataToEntities(
 }
 
 export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = DataNode> {
-  expandedKeys: SafeKey[];
-  selectedKeys: SafeKey[];
-  loadedKeys: SafeKey[];
-  loadingKeys: SafeKey[];
-  checkedKeys: SafeKey[];
-  halfCheckedKeys: SafeKey[];
-  dragOverNodeKey: SafeKey;
+  expandedKeys: Key[];
+  selectedKeys: Key[];
+  loadedKeys: Key[];
+  loadingKeys: Key[];
+  checkedKeys: Key[];
+  halfCheckedKeys: Key[];
+  dragOverNodeKey: Key;
   dropPosition: number;
   keyEntities: KeyEntities<TreeDataType>;
 }
@@ -6594,7 +6590,7 @@ export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = Data
  * Get TreeNode props with Tree props.
  */
 export function getTreeNodeProps<TreeDataType extends BasicDataNode = DataNode>(
-  key: SafeKey,
+  key: Key,
   {
     expandedKeys,
     selectedKeys,
