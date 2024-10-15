@@ -1,4 +1,4 @@
-import { SafeKey, FlattenNode } from '../interface';
+import type { SafeKey, FlattenNode } from '../interface';
 
 export function findExpandedKeys(prev: SafeKey[] = [], next: SafeKey[] = []) {
   const prevLen = prev.length;
