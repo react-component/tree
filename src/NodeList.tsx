@@ -178,6 +178,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   // =============================== Ref ================================
   const listRef = React.useRef<ListRef>(null);
   const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   React.useImperativeHandle(ref, () => ({
     scrollTo: scroll => {
       listRef.current.scrollTo(scroll);
@@ -262,6 +263,12 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     }
   }, [dragging]);
 
+  React.useEffect(() => {
+    if (focused && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [focused]);
+
   const mergedData = motion ? transitionData : data;
 
   const treeNodeRequiredProps = {
@@ -291,6 +298,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
           tabIndex={focusable !== false ? tabIndex : null}
           onKeyDown={onKeyDown}
           onFocus={onFocus}
+          ref={inputRef}
           onBlur={onBlur}
           value=""
           onChange={noop}
@@ -367,9 +375,6 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
               onMotionStart={onListChangeStart}
               onMotionEnd={onMotionEnd}
               treeNodeRequiredProps={treeNodeRequiredProps}
-              onMouseMove={() => {
-                onActiveChange(null);
-              }}
             />
           );
         }}
