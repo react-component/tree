@@ -5,7 +5,7 @@
 
 import warning from 'rc-util/lib/warning';
 import React from 'react';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,
@@ -16,7 +16,7 @@ import {
   NodeElement,
   NodeInstance,
 } from './interface';
-import { AllowDrop, TreeProps } from './Tree';
+import type { AllowDrop, TreeProps } from './Tree';
 import TreeNode from './TreeNode';
 import getEntity from './utils/keyUtil';
 
