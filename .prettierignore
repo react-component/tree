@@ -1,7 +1,3 @@
-.doc
-.storybook
-es
-lib
 **/*.svg
 **/*.ejs
 **/*.html

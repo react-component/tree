@@ -33,7 +33,6 @@
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
-    "prepare": "husky",
     "prepublishOnly": "npm run compile && np --yolo --no-publish",
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ --ext .tsx,.ts,.jsx,.js",
@@ -41,9 +40,6 @@
     "coverage": "rc-test --coverage",
     "gh-pages": "npm run docs:build && npm run docs:deploy",
     "now-build": "npm run docs:build"
-  },
-  "lint-staged": {
-    "*": "prettier --write --ignore-unknown"
   },
   "peerDependencies": {
     "react": "*",
@@ -66,11 +62,8 @@
     "father": "^4.4.0",
     "gh-pages": "^6.1.1",
     "glob": "^7.1.6",
-    "husky": "^9.1.6",
     "less": "^3.11.1",
-    "lint-staged": "^15.2.10",
     "np": "^10.0.5",
-    "prettier": "^3.3.3",
     "rc-dialog": "^8.1.0",
     "rc-test": "^7.0.15",
     "rc-tooltip": "6.x",

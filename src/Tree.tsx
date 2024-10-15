@@ -7,15 +7,15 @@ import pickAttrs from 'rc-util/lib/pickAttrs';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 
-import type {
+import {
   NodeDragEventHandler,
   NodeDragEventParams,
   NodeMouseEventHandler,
   NodeMouseEventParams,
+  TreeContext,
 } from './contextTypes';
-import { TreeContext } from './contextTypes';
 import DropIndicator from './DropIndicator';
-import type {
+import {
   BasicDataNode,
   DataNode,
   Direction,
@@ -23,13 +23,13 @@ import type {
   FieldNames,
   FlattenNode,
   IconType,
+  Key,
   KeyEntities,
   NodeInstance,
   SafeKey,
   ScrollTo,
 } from './interface';
-import type { NodeListRef } from './NodeList';
-import NodeList, { MotionEntity, MOTION_KEY } from './NodeList';
+import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
 import {
   arrAdd,
@@ -62,7 +62,7 @@ export interface CheckInfo<TreeDataType extends BasicDataNode = DataNode> {
   nativeEvent: MouseEvent;
   checkedNodes: TreeDataType[];
   checkedNodesPositions?: { node: TreeDataType; pos: string }[];
-  halfCheckedKeys?: SafeKey[];
+  halfCheckedKeys?: Key[];
 }
 
 export interface AllowDropOptions<TreeDataType extends BasicDataNode = DataNode> {
@@ -87,7 +87,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   className?: string;
   style?: React.CSSProperties;
   focusable?: boolean;
-  activeKey?: SafeKey | null;
+  activeKey?: Key | null;
   tabIndex?: number;
   children?: React.ReactNode;
   treeData?: TreeDataType[]; // Generate treeNode by children
@@ -105,12 +105,12 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   defaultExpandParent?: boolean;
   autoExpandParent?: boolean;
   defaultExpandAll?: boolean;
-  defaultExpandedKeys?: SafeKey[];
-  expandedKeys?: SafeKey[];
-  defaultCheckedKeys?: SafeKey[];
-  checkedKeys?: SafeKey[] | { checked: SafeKey[]; halfChecked: SafeKey[] };
-  defaultSelectedKeys?: SafeKey[];
-  selectedKeys?: SafeKey[];
+  defaultExpandedKeys?: Key[];
+  expandedKeys?: Key[];
+  defaultCheckedKeys?: Key[];
+  checkedKeys?: Key[] | { checked: Key[]; halfChecked: Key[] };
+  defaultSelectedKeys?: Key[];
+  selectedKeys?: Key[];
   allowDrop?: AllowDrop<TreeDataType>;
   titleRender?: (node: TreeDataType) => React.ReactNode;
   dropIndicatorRender?: (props: {
@@ -128,7 +128,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   onDoubleClick?: NodeMouseEventHandler<TreeDataType>;
   onScroll?: React.UIEventHandler<HTMLElement>;
   onExpand?: (
-    expandedKeys: SafeKey[],
+    expandedKeys: Key[],
     info: {
       node: EventDataNode<TreeDataType>;
       expanded: boolean;
@@ -136,11 +136,11 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
     },
   ) => void;
   onCheck?: (
-    checked: { checked: SafeKey[]; halfChecked: SafeKey[] } | SafeKey[],
+    checked: { checked: Key[]; halfChecked: Key[] } | Key[],
     info: CheckInfo<TreeDataType>,
   ) => void;
   onSelect?: (
-    selectedKeys: SafeKey[],
+    selectedKeys: Key[],
     info: {
       event: 'select';
       selected: boolean;
@@ -150,26 +150,26 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
     },
   ) => void;
   onLoad?: (
-    loadedKeys: SafeKey[],
+    loadedKeys: Key[],
     info: {
       event: 'load';
       node: EventDataNode<TreeDataType>;
     },
   ) => void;
   loadData?: (treeNode: EventDataNode<TreeDataType>) => Promise<any>;
-  loadedKeys?: SafeKey[];
+  loadedKeys?: Key[];
   onMouseEnter?: (info: NodeMouseEventParams<TreeDataType>) => void;
   onMouseLeave?: (info: NodeMouseEventParams<TreeDataType>) => void;
   onRightClick?: (info: { event: React.MouseEvent; node: EventDataNode<TreeDataType> }) => void;
   onDragStart?: (info: NodeDragEventParams<TreeDataType>) => void;
-  onDragEnter?: (info: NodeDragEventParams<TreeDataType> & { expandedKeys: SafeKey[] }) => void;
+  onDragEnter?: (info: NodeDragEventParams<TreeDataType> & { expandedKeys: Key[] }) => void;
   onDragOver?: (info: NodeDragEventParams<TreeDataType>) => void;
   onDragLeave?: (info: NodeDragEventParams<TreeDataType>) => void;
   onDragEnd?: (info: NodeDragEventParams<TreeDataType>) => void;
   onDrop?: (
     info: NodeDragEventParams<TreeDataType> & {
       dragNode: EventDataNode<TreeDataType>;
-      dragNodesKeys: SafeKey[];
+      dragNodesKeys: Key[];
       dropPosition: number;
       dropToGap: boolean;
     },
@@ -178,7 +178,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
    * Used for `rc-tree-select` only.
    * Do not use in your production code directly since this will be refactor.
    */
-  onActiveChange?: (key: SafeKey) => void;
+  onActiveChange?: (key: Key) => void;
   filterTreeNode?: (treeNode: EventDataNode<TreeDataType>) => boolean;
   motion?: any;
   switcherIcon?: IconType;
@@ -201,30 +201,30 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
 
   indent: number | null;
 
-  selectedKeys: SafeKey[];
-  checkedKeys: SafeKey[];
-  halfCheckedKeys: SafeKey[];
-  loadedKeys: SafeKey[];
-  loadingKeys: SafeKey[];
-  expandedKeys: SafeKey[];
+  selectedKeys: Key[];
+  checkedKeys: Key[];
+  halfCheckedKeys: Key[];
+  loadedKeys: Key[];
+  loadingKeys: Key[];
+  expandedKeys: Key[];
 
-  draggingNodeKey: SafeKey;
-  dragChildrenKeys: SafeKey[];
+  draggingNodeKey: Key;
+  dragChildrenKeys: Key[];
 
   // for details see comment in Tree.state
   dropPosition: -1 | 0 | 1 | null;
   dropLevelOffset: number | null;
-  dropContainerKey: SafeKey | null;
-  dropTargetKey: SafeKey | null;
+  dropContainerKey: Key | null;
+  dropTargetKey: Key | null;
   dropTargetPos: string | null;
   dropAllowed: boolean;
-  dragOverNodeKey: SafeKey | null;
+  dragOverNodeKey: Key | null;
 
   treeData: TreeDataType[];
   flattenNodes: FlattenNode<TreeDataType>[];
 
   focused: boolean;
-  activeKey: SafeKey | null;
+  activeKey: Key | null;
 
   // Record if list is changing
   listChanging: boolean;
@@ -401,7 +401,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       delete cloneKeyEntities[MOTION_KEY];
 
       // Only take the key who has the children to enhance the performance
-      const nextExpandedKeys: SafeKey[] = [];
+      const nextExpandedKeys: React.Key[] = [];
       Object.keys(cloneKeyEntities).forEach(key => {
         const entity = cloneKeyEntities[key];
         if (entity.children && entity.children.length) {
@@ -1014,8 +1014,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             }));
 
             // If exceed max retry times, we give up retry
-            this.loadingRetryTimes[key] = (this.loadingRetryTimes[key] || 0) + 1;
-            if (this.loadingRetryTimes[key] >= MAX_RETRY_TIMES) {
+            this.loadingRetryTimes[key as SafeKey] =
+              (this.loadingRetryTimes[key as SafeKey] || 0) + 1;
+            if (this.loadingRetryTimes[key as SafeKey] >= MAX_RETRY_TIMES) {
               const { loadedKeys: currentLoadedKeys } = this.state;
 
               warning(false, 'Retry for `loadData` many times but still failed. No more retry.');
@@ -1103,7 +1104,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   // =========================== Expanded ===========================
   /** Set uncontrolled `expandedKeys`. This will also auto update `flattenNodes`. */
-  setExpandedKeys = (expandedKeys: SafeKey[]) => {
+  setExpandedKeys = (expandedKeys: Key[]) => {
     const { treeData, fieldNames } = this.state;
 
     const flattenNodes: FlattenNode<TreeDataType>[] = flattenTreeData<TreeDataType>(
@@ -1193,7 +1194,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   // =========================== Keyboard ===========================
-  onActiveChange = (newActiveKey: SafeKey | null) => {
+  onActiveChange = (newActiveKey: Key | null) => {
     const { activeKey } = this.state;
     const { onActiveChange, itemScrollOffset = 0 } = this.props;
 

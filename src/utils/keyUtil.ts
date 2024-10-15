@@ -1,5 +1,5 @@
-import type { KeyEntities, SafeKey } from '../interface';
+import type { Key, KeyEntities, SafeKey } from '../interface';
 
-export default function getEntity<T = any>(keyEntities: KeyEntities<T>, key: SafeKey) {
-  return keyEntities[key];
+export default function getEntity<T = any>(keyEntities: KeyEntities<T>, key: Key) {
+  return keyEntities[key as SafeKey];
 }
