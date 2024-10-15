@@ -3,10 +3,10 @@ import CSSMotion from 'rc-motion';
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 import * as React from 'react';
 import { TreeContext } from './contextTypes';
-import { FlattenNode, TreeNodeProps } from './interface';
+import type { FlattenNode, TreeNodeProps } from './interface';
 import TreeNode from './TreeNode';
 import useUnmount from './useUnmount';
-import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
+import { getTreeNodeProps, type TreeNodeRequiredProps } from './utils/treeUtil';
 
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;

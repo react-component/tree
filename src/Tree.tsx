@@ -7,15 +7,15 @@ import pickAttrs from 'rc-util/lib/pickAttrs';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 
-import {
+import type {
   NodeDragEventHandler,
   NodeDragEventParams,
   NodeMouseEventHandler,
   NodeMouseEventParams,
-  TreeContext,
 } from './contextTypes';
+import { TreeContext } from './contextTypes';
 import DropIndicator from './DropIndicator';
-import {
+import type {
   BasicDataNode,
   DataNode,
   Direction,
@@ -29,7 +29,7 @@ import {
   SafeKey,
   ScrollTo,
 } from './interface';
-import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
+import NodeList, { MOTION_KEY, MotionEntity, type NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
 import {
   arrAdd,

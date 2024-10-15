@@ -3,7 +3,7 @@
  * When util.js imports the TreeNode for tree generate will cause treeContextTypes be empty.
  */
 import * as React from 'react';
-import {
+import type {
   BasicDataNode,
   DataNode,
   Direction,
@@ -13,7 +13,7 @@ import {
   KeyEntities,
   NodeInstance,
 } from './interface';
-import { DraggableConfig } from './Tree';
+import type { DraggableConfig } from './Tree';
 
 export type NodeMouseEventParams<
   TreeDataType extends BasicDataNode = DataNode,
