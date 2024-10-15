@@ -9,7 +9,7 @@ import {
   Direction,
   EventDataNode,
   IconType,
-  SafeKey,
+  Key,
   KeyEntities,
   NodeInstance,
 } from './interface';
@@ -46,15 +46,15 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   icon: IconType;
   switcherIcon: IconType;
   draggable?: DraggableConfig;
-  draggingNodeKey?: SafeKey;
+  draggingNodeKey?: Key;
   checkable: boolean | React.ReactNode;
   checkStrictly: boolean;
   disabled: boolean;
   keyEntities: KeyEntities;
   // for details see comment in Tree.state (Tree.tsx)
   dropLevelOffset?: number;
-  dropContainerKey: SafeKey | null;
-  dropTargetKey: SafeKey | null;
+  dropContainerKey: Key | null;
+  dropTargetKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number | null;
   dropIndicatorRender: (props: {
@@ -64,7 +64,7 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
     prefixCls;
     direction: Direction;
   }) => React.ReactNode;
-  dragOverNodeKey: SafeKey | null;
+  dragOverNodeKey: Key | null;
   direction: Direction;
 
   loadData: (treeNode: EventDataNode<TreeDataType>) => Promise<void>;

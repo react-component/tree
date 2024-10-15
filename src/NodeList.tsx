@@ -13,7 +13,7 @@ import {
   FlattenNode,
   KeyEntities,
   ScrollTo,
-  SafeKey,
+  Key,
 } from './interface';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps } from './utils/treeUtil';
@@ -76,16 +76,16 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   selectable?: boolean;
   disabled?: boolean;
 
-  expandedKeys: SafeKey[];
-  selectedKeys: SafeKey[];
-  checkedKeys: SafeKey[];
-  loadedKeys: SafeKey[];
-  loadingKeys: SafeKey[];
-  halfCheckedKeys: SafeKey[];
+  expandedKeys: Key[];
+  selectedKeys: Key[];
+  checkedKeys: Key[];
+  loadedKeys: Key[];
+  loadingKeys: Key[];
+  halfCheckedKeys: Key[];
   keyEntities: KeyEntities;
 
   dragging: boolean;
-  dragOverNodeKey: SafeKey;
+  dragOverNodeKey: Key;
   dropPosition: number;
 
   // Virtual list
@@ -96,7 +96,7 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
-  onActiveChange: (key: SafeKey) => void;
+  onActiveChange: (key: Key) => void;
 
   onListChangeStart: () => void;
   onListChangeEnd: () => void;

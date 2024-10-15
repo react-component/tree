@@ -14,7 +14,7 @@ import {
   KeyEntities,
   NodeElement,
   NodeInstance,
-  SafeKey,
+  Key,
 } from './interface';
 import { AllowDrop, TreeProps } from './Tree';
 import TreeNode from './TreeNode';
@@ -22,7 +22,7 @@ import getEntity from './utils/keyUtil';
 
 export { getPosition, isTreeNode } from './utils/treeUtil';
 
-export function arrDel(list: SafeKey[], value: SafeKey) {
+export function arrDel(list: Key[], value: Key) {
   if (!list) return [];
   const clone = list.slice();
   const index = clone.indexOf(value);
@@ -32,7 +32,7 @@ export function arrDel(list: SafeKey[], value: SafeKey) {
   return clone;
 }
 
-export function arrAdd(list: SafeKey[], value: SafeKey) {
+export function arrAdd(list: Key[], value: Key) {
   const clone = (list || []).slice();
   if (clone.indexOf(value) === -1) {
     clone.push(value);
@@ -45,9 +45,9 @@ export function posToArr(pos: string) {
 }
 
 export function getDragChildrenKeys<TreeDataType extends BasicDataNode = DataNode>(
-  dragNodeKey: SafeKey,
+  dragNodeKey: Key,
   keyEntities: KeyEntities<TreeDataType>,
-): SafeKey[] {
+): Key[] {
   // not contains self
   // self for left or right drag
   const dragChildrenKeys = [];
@@ -95,15 +95,15 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   allowDrop: AllowDrop<TreeDataType>,
   flattenedNodes: FlattenNode<TreeDataType>[],
   keyEntities: KeyEntities<TreeDataType>,
-  expandKeys: SafeKey[],
+  expandKeys: Key[],
   direction: Direction,
 ): {
   dropPosition: -1 | 0 | 1;
   dropLevelOffset: number;
-  dropTargetKey: SafeKey;
+  dropTargetKey: Key;
   dropTargetPos: string;
-  dropContainerKey: SafeKey;
-  dragOverNodeKey: SafeKey;
+  dropContainerKey: Key;
+  dragOverNodeKey: Key;
   dropAllowed: boolean;
 } {
   const { clientX, clientY } = event;
@@ -266,7 +266,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
  * @param props
  * @returns [string]
  */
-export function calcSelectedKeys(selectedKeys: SafeKey[], props: TreeProps) {
+export function calcSelectedKeys(selectedKeys: Key[], props: TreeProps) {
   if (!selectedKeys) return undefined;
 
   const { multiple } = props;
@@ -303,7 +303,7 @@ export function convertDataToTree(
 /**
  * Parse `checkedKeys` to { checkedKeys, halfCheckedKeys } style
  */
-export function parseCheckedKeys(keys: SafeKey[] | { checked: SafeKey[]; halfChecked: SafeKey[] }) {
+export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Key[] }) {
   if (!keys) {
     return null;
   }
@@ -334,10 +334,10 @@ export function parseCheckedKeys(keys: SafeKey[] | { checked: SafeKey[]; halfChe
  * @param keyList
  * @param keyEntities
  */
-export function conductExpandParent(keyList: SafeKey[], keyEntities: KeyEntities): SafeKey[] {
-  const expandedKeys = new Set<SafeKey>();
+export function conductExpandParent(keyList: Key[], keyEntities: KeyEntities): Key[] {
+  const expandedKeys = new Set<Key>();
 
-  function conductUp(key: SafeKey) {
+  function conductUp(key: Key) {
     if (expandedKeys.has(key)) return;
 
     const entity = getEntity(keyEntities, key);
