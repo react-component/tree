@@ -187,6 +187,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   height?: number;
   itemHeight?: number;
   itemScrollOffset?: number;
+  scrollWidth?: number;
   virtual?: boolean;
 
   // direction for drag logic
@@ -1394,6 +1395,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       filterTreeNode,
       height,
       itemHeight,
+      scrollWidth,
       virtual,
       titleRender,
       dropIndicatorRender,
@@ -1501,6 +1503,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             onListChangeEnd={this.onListChangeEnd}
             onContextMenu={onContextMenu}
             onScroll={onScroll}
+            scrollWidth={scrollWidth}
             {...this.getTreeNodeRequiredProps()}
             {...domProps}
           />
