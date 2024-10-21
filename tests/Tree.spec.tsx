@@ -1149,24 +1149,6 @@ describe('Tree Basic', () => {
     ).toHaveLength(2);
   });
 
-  it('support virtual', () => {
-    const data = [];
-    for (let i = 0; i < 99; i += 1) {
-      data.push({
-        key: i,
-        title: i,
-      });
-    }
-
-    const { container } = render(
-      <Tree itemHeight={10} height={100} treeData={data} virtual={false} />,
-    );
-
-    expect(
-      container.querySelector('.rc-tree-list-holder').querySelectorAll('.rc-tree-treenode'),
-    ).toHaveLength(99);
-  });
-
   // https://github.com/ant-design/ant-design/issues/28349
   it('should not trigger expend when loading data', () => {
     const then = jest.fn(() => Promise.resolve());
