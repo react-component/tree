@@ -186,8 +186,8 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   // Virtual List
   height?: number;
   itemHeight?: number;
-  itemScrollOffset?: number;
   scrollWidth?: number;
+  itemScrollOffset?: number;
   virtual?: boolean;
 
   // direction for drag logic

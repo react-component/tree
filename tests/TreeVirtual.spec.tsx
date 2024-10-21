@@ -5,7 +5,7 @@ import Tree from '../src';
 jest.mock('rc-virtual-list', () => jest.requireActual('rc-virtual-list'));
 
 describe('Tree Virtual', () => {
-  it('support virtual', () => {
+  it('should display all nodes when for nonvirtual tree', () => {
     const data = [];
     for (let i = 0; i < 99; i += 1) {
       data.push({
