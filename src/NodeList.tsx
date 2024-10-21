@@ -3,10 +3,10 @@
  */
 
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
-import VirtualList, { ListRef } from 'rc-virtual-list';
+import VirtualList, { type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
 import MotionTreeNode from './MotionTreeNode';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,

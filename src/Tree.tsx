@@ -7,15 +7,15 @@ import pickAttrs from 'rc-util/lib/pickAttrs';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 
-import {
+import type {
   NodeDragEventHandler,
   NodeDragEventParams,
   NodeMouseEventHandler,
   NodeMouseEventParams,
-  TreeContext,
 } from './contextTypes';
+import { TreeContext } from './contextTypes';
 import DropIndicator from './DropIndicator';
-import {
+import type {
   BasicDataNode,
   DataNode,
   Direction,
@@ -29,7 +29,7 @@ import {
   SafeKey,
   ScrollTo,
 } from './interface';
-import NodeList, { MOTION_KEY, MotionEntity, NodeListRef } from './NodeList';
+import NodeList, { MOTION_KEY, MotionEntity, type NodeListRef } from './NodeList';
 import TreeNode from './TreeNode';
 import {
   arrAdd,
@@ -351,7 +351,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     };
 
     function needSync(name: string) {
-      return (!prevProps && name in props) || (prevProps && prevProps[name] !== props[name]);
+      return (
+        (!prevProps && props.hasOwnProperty(name)) || (prevProps && prevProps[name] !== props[name])
+      );
     }
 
     // ================== Tree Node ==================
@@ -580,7 +582,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           newExpandedKeys = arrAdd(expandedKeys, node.props.eventKey);
         }
 
-        if (!('expandedKeys' in this.props)) {
+        if (!this.props.hasOwnProperty('expandedKeys')) {
           this.setExpandedKeys(newExpandedKeys);
         }
 
@@ -1337,7 +1339,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       const newState = {};
 
       Object.keys(state).forEach(name => {
-        if (name in this.props) {
+        if (this.props.hasOwnProperty(name)) {
           allPassed = false;
           return;
         }

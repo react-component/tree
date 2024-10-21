@@ -2,7 +2,7 @@ import toArray from 'rc-util/lib/Children/toArray';
 import omit from 'rc-util/lib/omit';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,
