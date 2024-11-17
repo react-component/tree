@@ -43,7 +43,7 @@ exports[`Tree Basic check basic render 1`] = `
           <div
             aria-expanded="true"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
@@ -78,7 +78,7 @@ exports[`Tree Basic check basic render 1`] = `
           <div
             aria-expanded="false"
             aria-level="1"
-            aria-posinset="0"
+            aria-posinset="1"
             aria-setsize="2"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-close"
             draggable="false"
@@ -118,7 +118,7 @@ exports[`Tree Basic check basic render 1`] = `
           <div
             aria-expanded="false"
             aria-level="1"
-            aria-posinset="1"
+            aria-posinset="2"
             aria-setsize="2"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
@@ -204,7 +204,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
           <div
             aria-expanded="true"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
             draggable="false"
@@ -239,7 +239,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
           <div
             aria-expanded="false"
             aria-level="1"
-            aria-posinset="0"
+            aria-posinset="1"
             aria-setsize="1"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
             draggable="false"
@@ -325,7 +325,7 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
             draggable="false"
@@ -407,7 +407,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -437,7 +437,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
@@ -514,7 +514,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -544,7 +544,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           <div
             aria-expanded="true"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
@@ -574,7 +574,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           <div
             aria-expanded="false"
             aria-level="1"
-            aria-posinset="0"
+            aria-posinset="1"
             aria-setsize="2"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -608,7 +608,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           <div
             aria-expanded="false"
             aria-level="1"
-            aria-posinset="1"
+            aria-posinset="2"
             aria-setsize="2"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
@@ -689,7 +689,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-expanded="true"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="spe rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
@@ -724,7 +724,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-expanded="true"
             aria-level="1"
-            aria-posinset="0"
+            aria-posinset="1"
             aria-setsize="2"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
             draggable="false"
@@ -764,7 +764,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-expanded="false"
             aria-level="2"
-            aria-posinset="0"
+            aria-posinset="1"
             aria-setsize="2"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -806,7 +806,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-expanded="false"
             aria-level="2"
-            aria-posinset="1"
+            aria-posinset="2"
             aria-setsize="2"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
@@ -848,7 +848,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-expanded="false"
             aria-level="1"
-            aria-posinset="1"
+            aria-posinset="2"
             aria-setsize="2"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
@@ -935,7 +935,7 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
@@ -1013,7 +1013,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -1043,7 +1043,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -1073,7 +1073,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -1103,7 +1103,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -1133,7 +1133,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -1163,7 +1163,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -1193,7 +1193,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -1223,7 +1223,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close"
             draggable="false"
@@ -1253,7 +1253,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           <div
             aria-expanded="false"
             aria-level="0"
-            aria-posinset="-1"
+            aria-posinset="0"
             aria-setsize="0"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
