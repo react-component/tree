@@ -284,7 +284,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         </span>
       )}
 
-      <div>
+      <div aria-hidden>
         <input
           style={HIDDEN_STYLE}
           disabled={focusable === false || disabled}
@@ -293,8 +293,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
           onFocus={onFocus}
           onBlur={onBlur}
           value=""
+          role="presentation"
           onChange={noop}
-          aria-label="for screen reader"
         />
       </div>
 

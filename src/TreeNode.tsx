@@ -374,6 +374,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           (disabled || disableCheckbox) && `${prefixCls}-checkbox-disabled`,
         )}
         onClick={this.onCheck}
+        role="checkbox"
+        aria-checked={halfChecked ? 'mixed' : checked}
+        aria-disabled={disabled || disableCheckbox}
       >
         {$custom}
       </span>
@@ -545,6 +548,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     return (
       <div
         ref={domRef}
+        role="treeitem"
         className={classNames(className, `${prefixCls}-treenode`, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
@@ -567,7 +571,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         style={style}
         // Draggable config
         draggable={draggableWithoutDisabled}
-        aria-grabbed={dragging}
         onDragStart={draggableWithoutDisabled ? this.onDragStart : undefined}
         // Drop config
         onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
