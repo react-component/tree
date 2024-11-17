@@ -538,7 +538,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const dataOrAriaAttributeProps = pickAttrs(otherProps, { aria: true, data: true });
     const { level, parent } = getEntity(keyEntities, eventKey) || {};
     const siblings = parent?.children || [];
-    const posInSet = siblings.findIndex(node => node.key === eventKey);
+    const posInSet = siblings.findIndex(node => node.key === eventKey) + 1;
     const isEndNode = isEnd[isEnd.length - 1];
 
     const mergedDraggable = this.isDraggable();
