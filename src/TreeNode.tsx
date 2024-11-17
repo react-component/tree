@@ -536,7 +536,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     } = this.props;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = pickAttrs(otherProps, { aria: true, data: true });
-    const { level } = getEntity(keyEntities, eventKey) || {};
+    const { level, parent } = getEntity(keyEntities, eventKey) || {};
+    const siblings = parent?.children || [];
+    const posInSet = siblings.findIndex(node => node.key === eventKey);
     const isEndNode = isEnd[isEnd.length - 1];
 
     const mergedDraggable = this.isDraggable();
@@ -549,6 +551,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       <div
         ref={domRef}
         role="treeitem"
+        aria-expanded={isLeaf ? undefined : expanded}
+        aria-level={level}
+        aria-setsize={siblings.length}
+        aria-posinset={posInSet}
         className={classNames(className, `${prefixCls}-treenode`, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
