@@ -550,7 +550,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         ref={domRef}
         role="treeitem"
         aria-expanded={isLeaf ? undefined : expanded}
-        aria-selected={selected ? 'true' : undefined}
         className={classNames(className, `${prefixCls}-treenode`, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
