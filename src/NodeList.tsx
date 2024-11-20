@@ -284,7 +284,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         </span>
       )}
 
-      <div aria-hidden>
+      <div>
         <input
           style={HIDDEN_STYLE}
           disabled={focusable === false || disabled}
@@ -293,8 +293,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
           onFocus={onFocus}
           onBlur={onBlur}
           value=""
-          role="presentation"
           onChange={noop}
+          aria-label="for screen reader"
         />
       </div>
 
@@ -326,6 +326,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
+        role="tree"
         onVisibleChange={originList => {
           // The best match is using `fullList` - `originList` = `restList`
           // and check the `restList` to see if has the MOTION_KEY node
