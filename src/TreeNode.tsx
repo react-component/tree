@@ -353,7 +353,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // ====================== Render: Checkbox ======================
   // Checkbox
   renderCheckbox = () => {
-    const { checked, halfChecked, disableCheckbox } = this.props;
+    const { checked, halfChecked, disableCheckbox, title } = this.props;
     const {
       context: { prefixCls },
     } = this.props;
@@ -377,6 +377,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         role="checkbox"
         aria-checked={halfChecked ? 'mixed' : checked}
         aria-disabled={disabled || disableCheckbox}
+        aria-label={`Select ${typeof title === 'string' ? title : 'tree node'}`}
       >
         {$custom}
       </span>
