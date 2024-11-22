@@ -231,12 +231,13 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   isDisabled = () => {
-    const { disabled } = this.props;
+    const { disabled, data } = this.props;
+    console.log('treenode', data);
     const {
-      context: { disabled: treeDisabled },
+      context: { disabled: treeDisabled, disabledStrategy },
     } = this.props;
 
-    return !!(treeDisabled || disabled);
+    return !!(treeDisabled || disabled || (disabledStrategy && disabledStrategy(data)));
   };
 
   isCheckable = () => {
@@ -288,6 +289,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       data,
       context: { draggable },
     } = this.props;
+
+    // 如果节点被禁用,则不可拖拽
+    if (this.isDisabled()) return false;
 
     return !!(draggable && (!draggable.nodeDraggable || draggable.nodeDraggable(data)));
   };

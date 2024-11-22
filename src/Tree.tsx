@@ -180,6 +180,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
    */
   onActiveChange?: (key: Key) => void;
   filterTreeNode?: (treeNode: EventDataNode<TreeDataType>) => boolean;
+  disabledStrategy?: (node: DataNode) => boolean;
   motion?: any;
   switcherIcon?: IconType;
 
@@ -1402,6 +1403,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       direction,
       rootClassName,
       rootStyle,
+      disabledStrategy,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = pickAttrs(this.props, {
       aria: true,
@@ -1449,6 +1451,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           filterTreeNode,
 
           titleRender,
+          disabledStrategy,
 
           onNodeClick: this.onNodeClick,
           onNodeDoubleClick: this.onNodeDoubleClick,
