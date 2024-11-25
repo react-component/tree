@@ -326,6 +326,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
+        role="tree"
         onVisibleChange={originList => {
           // The best match is using `fullList` - `originList` = `restList`
           // and check the `restList` to see if has the MOTION_KEY node
