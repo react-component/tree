@@ -93,3 +93,8 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
 }
 
 export const TreeContext: React.Context<TreeContextProps<any> | null> = React.createContext(null);
+
+/** Internal usage, safe to remove. Do not use in prod */
+export const UnstableContext = React.createContext<{
+  nodeDisabled?: (node: DataNode) => boolean;
+}>({});

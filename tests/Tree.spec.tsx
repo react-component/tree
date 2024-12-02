@@ -1,11 +1,12 @@
 /* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
-import {render, fireEvent, act} from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Tree, { TreeNode } from '../src';
 import { objectMatcher, spyConsole, spyError } from './util';
+import { UnstableContext } from '../src';
 
 const OPEN_CLASSNAME = 'rc-tree-switcher_open';
 const CHECKED_CLASSNAME = 'rc-tree-checkbox-checked';
@@ -1055,9 +1056,9 @@ describe('Tree Basic', () => {
       render(<Tree ref={treeRef} />);
 
       act(() => {
-        treeRef.current.scrollTo({key: 'light', align: 'top'});
+        treeRef.current.scrollTo({ key: 'light', align: 'top' });
       });
-      
+
       jest.runAllTimers();
 
       expect(called).toBeTruthy();
@@ -1092,7 +1093,7 @@ describe('Tree Basic', () => {
       }
 
       const treeRef = React.createRef<any>();
-      
+
       const { container } = render(
         <Tree ref={treeRef} treeData={data} virtual itemHeight={20} height={100} />,
       );
@@ -1101,7 +1102,7 @@ describe('Tree Basic', () => {
         treeRef.current.scrollTo({ key: 5, offset: 5 });
         jest.runAllTimers();
       });
-      
+
       expect(container.querySelector('.rc-tree-list-holder').scrollTop).toEqual(25);
 
       jest.useRealTimers();
@@ -1236,5 +1237,97 @@ describe('Tree Basic', () => {
     expect(container.firstChild).toMatchSnapshot();
     expect(container.firstChild).toHaveClass('root-tree');
     expect(container.firstChild).toHaveStyle({ backgroundColor: 'cyan' });
+  });
+
+  describe('nodeDisabled', () => {
+    it('should disable node by nodeDisabled function', () => {
+      const { getByRole } = render(
+        <UnstableContext.Provider
+          value={{
+            nodeDisabled: node => node.key === '0-0-0',
+          }}
+        >
+          <Tree defaultExpandAll>
+            <TreeNode title="parent 1" key="0-0">
+              <TreeNode title="leaf 1" key="0-0-0" />
+              <TreeNode title="leaf 2" key="0-0-1" />
+            </TreeNode>
+          </Tree>
+        </UnstableContext.Provider>,
+      );
+
+      expect(getByRole('treeitem', { name: 'leaf 1' })).toHaveClass('rc-tree-treenode-disabled');
+      expect(getByRole('treeitem', { name: 'leaf 2' })).not.toHaveClass(
+        'rc-tree-treenode-disabled',
+      );
+    });
+
+    it('should work with checkable tree', () => {
+      const onCheck = jest.fn();
+      const { container } = render(
+        <UnstableContext.Provider
+          value={{
+            nodeDisabled: node => node.key === '0-0-0',
+          }}
+        >
+          <Tree checkable defaultExpandAll onCheck={onCheck}>
+            <TreeNode title="parent 1" key="0-0">
+              <TreeNode title="leaf 1" key="0-0-0" />
+              <TreeNode title="leaf 2" key="0-0-1" />
+            </TreeNode>
+          </Tree>
+        </UnstableContext.Provider>,
+      );
+
+      fireEvent.click(container.querySelectorAll('.rc-tree-checkbox')[1]);
+      expect(onCheck).not.toHaveBeenCalled();
+
+      fireEvent.click(container.querySelectorAll('.rc-tree-checkbox')[2]);
+      expect(onCheck).toHaveBeenCalled();
+    });
+
+    it('should work with selectable tree', () => {
+      const onSelect = jest.fn();
+      const { container } = render(
+        <UnstableContext.Provider
+          value={{
+            nodeDisabled: node => node.key === '0-0-0',
+          }}
+        >
+          <Tree selectable defaultExpandAll onSelect={onSelect}>
+            <TreeNode title="parent 1" key="0-0">
+              <TreeNode title="leaf 1" key="0-0-0" />
+              <TreeNode title="leaf 2" key="0-0-1" />
+            </TreeNode>
+          </Tree>
+        </UnstableContext.Provider>,
+      );
+
+      fireEvent.click(container.querySelectorAll('.rc-tree-node-content-wrapper')[1]);
+      expect(onSelect).not.toHaveBeenCalled();
+
+      fireEvent.click(container.querySelectorAll('.rc-tree-node-content-wrapper')[2]);
+      expect(onSelect).toHaveBeenCalled();
+    });
+
+    it('should override disabled prop', () => {
+      const { getByRole } = render(
+        <UnstableContext.Provider
+          value={{
+            nodeDisabled: node => node.key === '0-0-0',
+          }}
+        >
+          <Tree defaultExpandAll>
+            <TreeNode title="parent 1" key="0-0">
+              <TreeNode title="leaf 1" key="0-0-0" disabled={false} />
+              <TreeNode title="leaf 2" key="0-0-1" disabled />
+            </TreeNode>
+          </Tree>
+        </UnstableContext.Provider>,
+      );
+
+      expect(getByRole('treeitem', { name: 'leaf 1' })).toHaveClass('rc-tree-treenode-disabled');
+      expect(getByRole('treeitem', { name: 'leaf 2' })).toHaveClass('rc-tree-treenode-disabled');
+    });
   });
 });
