@@ -6,7 +6,7 @@ import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Tree, { TreeNode } from '../src';
 import { objectMatcher, spyConsole, spyError } from './util';
-import { InternalContext } from '../src';
+import { UnstableContext } from '../src';
 
 const OPEN_CLASSNAME = 'rc-tree-switcher_open';
 const CHECKED_CLASSNAME = 'rc-tree-checkbox-checked';
@@ -1242,7 +1242,7 @@ describe('Tree Basic', () => {
   describe('nodeDisabled', () => {
     it('should disable node by nodeDisabled function', () => {
       const { getByRole } = render(
-        <InternalContext.Provider
+        <UnstableContext.Provider
           value={{
             nodeDisabled: node => node.key === '0-0-0',
           }}
@@ -1253,7 +1253,7 @@ describe('Tree Basic', () => {
               <TreeNode title="leaf 2" key="0-0-1" />
             </TreeNode>
           </Tree>
-        </InternalContext.Provider>,
+        </UnstableContext.Provider>,
       );
 
       expect(getByRole('treeitem', { name: 'leaf 1' })).toHaveClass('rc-tree-treenode-disabled');
@@ -1265,7 +1265,7 @@ describe('Tree Basic', () => {
     it('should work with checkable tree', () => {
       const onCheck = jest.fn();
       const { container } = render(
-        <InternalContext.Provider
+        <UnstableContext.Provider
           value={{
             nodeDisabled: node => node.key === '0-0-0',
           }}
@@ -1276,7 +1276,7 @@ describe('Tree Basic', () => {
               <TreeNode title="leaf 2" key="0-0-1" />
             </TreeNode>
           </Tree>
-        </InternalContext.Provider>,
+        </UnstableContext.Provider>,
       );
 
       fireEvent.click(container.querySelectorAll('.rc-tree-checkbox')[1]);
@@ -1289,7 +1289,7 @@ describe('Tree Basic', () => {
     it('should work with selectable tree', () => {
       const onSelect = jest.fn();
       const { container } = render(
-        <InternalContext.Provider
+        <UnstableContext.Provider
           value={{
             nodeDisabled: node => node.key === '0-0-0',
           }}
@@ -1300,7 +1300,7 @@ describe('Tree Basic', () => {
               <TreeNode title="leaf 2" key="0-0-1" />
             </TreeNode>
           </Tree>
-        </InternalContext.Provider>,
+        </UnstableContext.Provider>,
       );
 
       fireEvent.click(container.querySelectorAll('.rc-tree-node-content-wrapper')[1]);
@@ -1312,7 +1312,7 @@ describe('Tree Basic', () => {
 
     it('should override disabled prop', () => {
       const { getByRole } = render(
-        <InternalContext.Provider
+        <UnstableContext.Provider
           value={{
             nodeDisabled: node => node.key === '0-0-0',
           }}
@@ -1323,7 +1323,7 @@ describe('Tree Basic', () => {
               <TreeNode title="leaf 2" key="0-0-1" disabled />
             </TreeNode>
           </Tree>
-        </InternalContext.Provider>,
+        </UnstableContext.Provider>,
       );
 
       expect(getByRole('treeitem', { name: 'leaf 1' })).toHaveClass('rc-tree-treenode-disabled');

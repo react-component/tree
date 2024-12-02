@@ -70,7 +70,6 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   loadData: (treeNode: EventDataNode<TreeDataType>) => Promise<void>;
   filterTreeNode: (treeNode: EventDataNode<TreeDataType>) => boolean;
   titleRender?: (node: any) => React.ReactNode;
-  disabledStrategy?: (node: DataNode) => boolean;
 
   onNodeClick: NodeMouseEventHandler<TreeDataType>;
   onNodeDoubleClick: NodeMouseEventHandler<TreeDataType>;
@@ -96,8 +95,6 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
 export const TreeContext: React.Context<TreeContextProps<any> | null> = React.createContext(null);
 
 /** Internal usage, safe to remove. Do not use in prod */
-export const InternalContext = React.createContext<{
+export const UnstableContext = React.createContext<{
   nodeDisabled?: (node: DataNode) => boolean;
-}>({
-  nodeDisabled: undefined,
-});
+}>({});

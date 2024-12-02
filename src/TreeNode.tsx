@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import * as React from 'react';
 // @ts-ignore
-import { TreeContext, InternalContext, type TreeContextProps } from './contextTypes';
+import { TreeContext, UnstableContext, type TreeContextProps } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
@@ -17,7 +17,7 @@ export type { TreeNodeProps } from './interface';
 
 export interface InternalTreeNodeProps extends TreeNodeProps {
   context?: TreeContextProps;
-  internalContext?: React.ContextType<typeof InternalContext>;
+  unstableContext?: React.ContextType<typeof UnstableContext>;
 }
 
 export interface TreeNodeState {
@@ -235,7 +235,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const { disabled, data } = this.props;
     const {
       context: { disabled: treeDisabled },
-      internalContext: { nodeDisabled },
+      unstableContext: { nodeDisabled },
     } = this.props;
 
     return !!(treeDisabled || disabled || (nodeDisabled && nodeDisabled(data)));
@@ -599,11 +599,11 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 const ContextTreeNode: React.FC<TreeNodeProps> = props => (
   <TreeContext.Consumer>
     {context => (
-      <InternalContext.Consumer>
-        {internalContext => (
-          <InternalTreeNode {...props} context={context} internalContext={internalContext} />
+      <UnstableContext.Consumer>
+        {unstableContext => (
+          <InternalTreeNode {...props} context={context} unstableContext={unstableContext} />
         )}
-      </InternalContext.Consumer>
+      </UnstableContext.Consumer>
     )}
   </TreeContext.Consumer>
 );
