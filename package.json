@@ -52,7 +52,7 @@
   "devDependencies": {
     "@rc-component/father-plugin": "^1.0.2",
     "@testing-library/jest-dom": "^6.1.5",
-    "@testing-library/react": "^15.0.7",
+    "@testing-library/react": "^16.1.0",
     "@types/jest": "^29.5.10",
     "@types/node": "^22.7.3",
     "@types/react": "^19.0.1",
