@@ -382,6 +382,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   );
 });
 
-NodeList.displayName = 'NodeList';
+if (process.env.NODE_ENV !== 'production') {
+  NodeList.displayName = 'NodeList';
+}
 
 export default NodeList;

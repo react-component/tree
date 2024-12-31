@@ -1,14 +1,13 @@
-import * as React from 'react'
+import React from 'react';
 
-export default function DropIndicator ({
-  dropPosition,
-  dropLevelOffset,
-  indent,
-}: {
-  dropPosition: -1 | 0 | 1,
-  dropLevelOffset: number,
-  indent: number,
-}) {
+export interface DropIndicatorProps {
+  dropPosition: -1 | 0 | 1;
+  dropLevelOffset: number;
+  indent: number;
+}
+
+const DropIndicator: React.FC<Readonly<DropIndicatorProps>> = props => {
+  const { dropPosition, dropLevelOffset, indent } = props;
   const style: React.CSSProperties = {
     pointerEvents: 'none',
     position: 'absolute',
@@ -31,4 +30,10 @@ export default function DropIndicator ({
       break;
   }
   return <div style={style} />;
+};
+
+if (process.env.NODE_ENV !== 'production') {
+  DropIndicator.displayName = 'DropIndicator';
 }
+
+export default DropIndicator;

@@ -15,6 +15,7 @@ import type {
 } from './contextTypes';
 import { TreeContext } from './contextTypes';
 import DropIndicator from './DropIndicator';
+import type { DropIndicatorProps } from './DropIndicator';
 import type {
   BasicDataNode,
   DataNode,
@@ -113,13 +114,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   selectedKeys?: Key[];
   allowDrop?: AllowDrop<TreeDataType>;
   titleRender?: (node: TreeDataType) => React.ReactNode;
-  dropIndicatorRender?: (props: {
-    dropPosition: -1 | 0 | 1;
-    dropLevelOffset: number;
-    indent: number;
-    prefixCls: string;
-    direction: Direction;
-  }) => React.ReactNode;
+  dropIndicatorRender?: (props: DropIndicatorProps) => React.ReactNode;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
