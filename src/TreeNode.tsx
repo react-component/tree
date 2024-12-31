@@ -608,7 +608,9 @@ const ContextTreeNode: React.FC<TreeNodeProps> = props => (
   </TreeContext.Consumer>
 );
 
-ContextTreeNode.displayName = 'TreeNode';
+if (process.env.NODE_ENV !== 'production') {
+  ContextTreeNode.displayName = 'TreeNode';
+}
 
 (ContextTreeNode as any).isTreeNode = 1;
 

@@ -4,7 +4,7 @@ import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 /**
  * Trigger only when component unmount
  */
-export default function useUnmount(triggerStart: VoidFunction, triggerEnd: VoidFunction) {
+function useUnmount(triggerStart: VoidFunction, triggerEnd: VoidFunction) {
   const [firstMount, setFirstMount] = React.useState(false);
 
   useLayoutEffect(() => {
@@ -25,3 +25,5 @@ export default function useUnmount(triggerStart: VoidFunction, triggerEnd: VoidF
     };
   }, []);
 }
+
+export default useUnmount;

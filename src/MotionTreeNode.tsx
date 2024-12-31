@@ -19,8 +19,8 @@ interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   treeNodeRequiredProps: TreeNodeRequiredProps;
 }
 
-const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeNodeProps> = (
-  {
+const MotionTreeNode = React.forwardRef<HTMLDivElement, MotionTreeNodeProps>((oriProps, ref) => {
+  const {
     className,
     style,
     motion,
@@ -31,9 +31,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     active,
     treeNodeRequiredProps,
     ...props
-  },
-  ref,
-) => {
+  } = oriProps;
   const [visible, setVisible] = React.useState(true);
   const { prefixCls } = React.useContext(TreeContext);
 
@@ -89,7 +87,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
             className={classNames(`${prefixCls}-treenode-motion`, motionClassName)}
             style={motionStyle}
           >
-            {motionNodes.map((treeNode: FlattenNode) => {
+            {motionNodes.map(treeNode => {
               const {
                 data: { ...restProps },
                 title,
@@ -120,10 +118,10 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     );
   }
   return <TreeNode domRef={ref} className={className} style={style} {...props} active={active} />;
-};
+});
 
-MotionTreeNode.displayName = 'MotionTreeNode';
+if (process.env.NODE_ENV !== 'production') {
+  MotionTreeNode.displayName = 'MotionTreeNode';
+}
 
-const RefMotionTreeNode = React.forwardRef(MotionTreeNode);
-
-export default RefMotionTreeNode;
+export default MotionTreeNode;
