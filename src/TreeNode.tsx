@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import * as React from 'react';
-// @ts-ignore
 import { TreeContext, UnstableContext, type TreeContextProps } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
@@ -64,7 +63,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   onSelect = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    if (this.isDisabled()) return;
+    if (this.isDisabled()) {
+      return;
+    }
 
     const {
       context: { onNodeSelect },
@@ -73,14 +74,18 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   onCheck = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    if (this.isDisabled()) return;
+    if (this.isDisabled()) {
+      return;
+    }
 
     const { disableCheckbox, checked } = this.props;
     const {
       context: { onNodeCheck },
     } = this.props;
 
-    if (!this.isCheckable() || disableCheckbox) return;
+    if (!this.isCheckable() || disableCheckbox) {
+      return;
+    }
 
     const targetChecked = !checked;
     onNodeCheck(e, convertNodePropsToEventData(this.props), targetChecked);
@@ -187,7 +192,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       loading,
       context: { onNodeExpand },
     } = this.props;
-    if (loading) return;
+    if (loading) {
+      return;
+    }
     onNodeExpand(e, convertNodePropsToEventData(this.props));
   };
 
@@ -248,7 +255,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     } = this.props;
 
     // Return false if tree or treeNode is not checkable
-    if (!treeCheckable || checkable === false) return false;
+    if (!treeCheckable || checkable === false) {
+      return false;
+    }
     return treeCheckable;
   };
 
@@ -362,7 +371,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const disabled = this.isDisabled();
     const checkable = this.isCheckable();
 
-    if (!checkable) return null;
+    if (!checkable) {
+      return null;
+    }
 
     // [Legacy] Custom element should be separate with `checkable` in future
     const $custom = typeof checkable !== 'boolean' ? checkable : null;

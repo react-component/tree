@@ -568,7 +568,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       //   => if you dragenter from top, you mouse will still be consider as in the top node
       event.persist();
       this.delayedDragEnterLogic[pos] = window.setTimeout(() => {
-        if (this.state.draggingNodeKey === null) return;
+        if (this.state.draggingNodeKey === null) {
+          return;
+        }
 
         let newExpandedKeys = [...expandedKeys];
         const entity = getEntity(keyEntities, node.props.eventKey);
@@ -733,7 +735,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     const { dragChildrenKeys, dropPosition, dropTargetKey, dropTargetPos, dropAllowed } =
       this.state;
 
-    if (!dropAllowed) return;
+    if (!dropAllowed) {
+      return;
+    }
 
     const { onDrop } = this.props;
 
@@ -742,7 +746,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     });
     this.cleanDragState();
 
-    if (dropTargetKey === null) return;
+    if (dropTargetKey === null) {
+      return;
+    }
 
     const abstractDropNodeProps = {
       ...getTreeNodeProps(dropTargetKey, this.getTreeNodeRequiredProps()),
@@ -862,7 +868,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     const selectedNodes = selectedKeys
       .map(selectedKey => {
         const entity = getEntity(keyEntities, selectedKey);
-        if (!entity) return null;
+        if (!entity) {
+          return null;
+        }
 
         return entity.node;
       })
@@ -940,7 +948,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
       checkedKeys.forEach(checkedKey => {
         const entity = getEntity(keyEntities, checkedKey);
-        if (!entity) return;
+        if (!entity) {
+          return;
+        }
 
         const { node, pos } = entity;
 

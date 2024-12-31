@@ -92,7 +92,7 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   onNodeDrop: NodeDragEventHandler<any, any>;
 }
 
-export const TreeContext: React.Context<TreeContextProps<any> | null> = React.createContext(null);
+export const TreeContext = React.createContext<TreeContextProps<any> | null>(null);
 
 /** Internal usage, safe to remove. Do not use in prod */
 export const UnstableContext = React.createContext<{
