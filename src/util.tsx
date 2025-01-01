@@ -309,7 +309,7 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
   }
 
   // Convert keys to object format
-  let keyProps;
+  let keyProps: { checkedKeys?: Key[]; halfCheckedKeys?: Key[] };
   if (Array.isArray(keys)) {
     // [Legacy] Follow the api doc
     keyProps = {
