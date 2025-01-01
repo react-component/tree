@@ -775,9 +775,7 @@ class Tree<
     const dropResult = {
       event,
       node: convertNodePropsToEventData<TreeDataType>(abstractDropNodeProps),
-      dragNode: this.dragNodeProps
-        ? convertNodePropsToEventData<TreeDataType>(this.dragNodeProps)
-        : null,
+      dragNode: this.dragNodeProps ? convertNodePropsToEventData(this.dragNodeProps) : null,
       dragNodesKeys: [this.dragNodeProps.eventKey].concat(dragChildrenKeys),
       dropToGap: dropPosition !== 0,
       dropPosition: dropPosition + Number(posArr[posArr.length - 1]),
@@ -878,11 +876,7 @@ class Tree<
     const selectedNodes = selectedKeys
       .map(selectedKey => {
         const entity = getEntity(keyEntities, selectedKey);
-        if (!entity) {
-          return null;
-        }
-
-        return entity.node;
+        return entity ? entity.node : null;
       })
       .filter(Boolean);
 
