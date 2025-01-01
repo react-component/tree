@@ -60,8 +60,8 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   dropIndicatorRender: (props: {
     dropPosition: -1 | 0 | 1;
     dropLevelOffset: number;
-    indent;
-    prefixCls;
+    indent: number;
+    prefixCls: string;
     direction: Direction;
   }) => React.ReactNode;
   dragOverNodeKey: Key | null;
@@ -92,9 +92,7 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   onNodeDrop: NodeDragEventHandler<any, any>;
 }
 
-export const TreeContext = React.createContext<TreeContextProps<any> | null>(null);
+export const TreeContext = React.createContext<TreeContextProps<any>>(null);
 
 /** Internal usage, safe to remove. Do not use in prod */
-export const UnstableContext = React.createContext<{
-  nodeDisabled?: (node: DataNode) => boolean;
-}>({});
+export const UnstableContext = React.createContext<{ nodeDisabled?: (n: DataNode) => boolean }>({});

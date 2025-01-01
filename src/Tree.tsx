@@ -959,15 +959,7 @@ class Tree<
         eventObj.checkedNodesPositions.push({ node, pos });
       });
 
-      this.setUncontrolledState(
-        {
-          checkedKeys,
-        },
-        false,
-        {
-          halfCheckedKeys,
-        },
-      );
+      this.setUncontrolledState({ checkedKeys }, false, { halfCheckedKeys });
     }
 
     onCheck?.(checkedObj, eventObj as CheckInfo<TreeDataType>);
@@ -1136,11 +1128,7 @@ class Tree<
       'Expand state not sync with index check',
     );
 
-    if (targetExpanded) {
-      expandedKeys = arrAdd(expandedKeys, key);
-    } else {
-      expandedKeys = arrDel(expandedKeys, key);
-    }
+    expandedKeys = targetExpanded ? arrAdd(expandedKeys, key) : arrDel(expandedKeys, key);
 
     this.setExpandedKeys(expandedKeys);
 
@@ -1418,51 +1406,48 @@ class Tree<
       }
     }
 
+    const contextValue = {
+      prefixCls,
+      selectable,
+      showIcon,
+      icon,
+      switcherIcon,
+      draggable: draggableConfig,
+      draggingNodeKey,
+      checkable,
+      checkStrictly,
+      disabled,
+      keyEntities,
+      dropLevelOffset,
+      dropContainerKey,
+      dropTargetKey,
+      dropPosition,
+      dragOverNodeKey,
+      indent,
+      direction,
+      dropIndicatorRender,
+      loadData,
+      filterTreeNode,
+      titleRender,
+      onNodeClick: this.onNodeClick,
+      onNodeDoubleClick: this.onNodeDoubleClick,
+      onNodeExpand: this.onNodeExpand,
+      onNodeSelect: this.onNodeSelect,
+      onNodeCheck: this.onNodeCheck,
+      onNodeLoad: this.onNodeLoad,
+      onNodeMouseEnter: this.onNodeMouseEnter,
+      onNodeMouseLeave: this.onNodeMouseLeave,
+      onNodeContextMenu: this.onNodeContextMenu,
+      onNodeDragStart: this.onNodeDragStart,
+      onNodeDragEnter: this.onNodeDragEnter,
+      onNodeDragOver: this.onNodeDragOver,
+      onNodeDragLeave: this.onNodeDragLeave,
+      onNodeDragEnd: this.onNodeDragEnd,
+      onNodeDrop: this.onNodeDrop,
+    };
+
     return (
-      <TreeContext.Provider
-        value={{
-          prefixCls,
-          selectable,
-          showIcon,
-          icon,
-          switcherIcon,
-          draggable: draggableConfig,
-          draggingNodeKey,
-          checkable,
-          checkStrictly,
-          disabled,
-          keyEntities,
-          dropLevelOffset,
-          dropContainerKey,
-          dropTargetKey,
-          dropPosition,
-          dragOverNodeKey,
-          indent,
-          direction,
-          dropIndicatorRender,
-
-          loadData,
-          filterTreeNode,
-
-          titleRender,
-
-          onNodeClick: this.onNodeClick,
-          onNodeDoubleClick: this.onNodeDoubleClick,
-          onNodeExpand: this.onNodeExpand,
-          onNodeSelect: this.onNodeSelect,
-          onNodeCheck: this.onNodeCheck,
-          onNodeLoad: this.onNodeLoad,
-          onNodeMouseEnter: this.onNodeMouseEnter,
-          onNodeMouseLeave: this.onNodeMouseLeave,
-          onNodeContextMenu: this.onNodeContextMenu,
-          onNodeDragStart: this.onNodeDragStart,
-          onNodeDragEnter: this.onNodeDragEnter,
-          onNodeDragOver: this.onNodeDragOver,
-          onNodeDragLeave: this.onNodeDragLeave,
-          onNodeDragEnd: this.onNodeDragEnd,
-          onNodeDrop: this.onNodeDrop,
-        }}
-      >
+      <TreeContext.Provider value={contextValue}>
         <div
           className={classNames(prefixCls, className, rootClassName, {
             [`${prefixCls}-show-line`]: showLine,
