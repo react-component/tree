@@ -753,9 +753,7 @@ class Tree<
     });
     this.cleanDragState();
 
-    if (dropTargetKey === null) {
-      return;
-    }
+    if (dropTargetKey === null) return;
 
     const abstractDropNodeProps = {
       ...getTreeNodeProps(dropTargetKey, this.getTreeNodeRequiredProps()),
@@ -953,9 +951,7 @@ class Tree<
 
       checkedKeys.forEach(checkedKey => {
         const entity = getEntity(keyEntities, checkedKey);
-        if (!entity) {
-          return;
-        }
+        if (!entity) return;
 
         const { node, pos } = entity;
 
@@ -992,9 +988,7 @@ class Tree<
       this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
         const { loadData, onLoad } = this.props;
 
-        if (!loadData || loadedKeys.includes(key) || loadingKeys.includes(key)) {
-          return null;
-        }
+        if (!loadData || loadedKeys.includes(key) || loadingKeys.includes(key)) return null;
 
         // Process load data
         const promise = loadData(treeNode);
