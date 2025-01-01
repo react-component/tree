@@ -1,5 +1,5 @@
 import warning from 'rc-util/lib/warning';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,

@@ -3,9 +3,10 @@
  */
 
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
-import VirtualList, { ListRef } from 'rc-virtual-list';
+import VirtualList, { type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
-import {
+import MotionTreeNode from './MotionTreeNode';
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,
@@ -14,7 +15,6 @@ import {
   KeyEntities,
   ScrollTo,
 } from './interface';
-import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps } from './utils/treeUtil';
 
@@ -92,6 +92,7 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   height: number;
   itemHeight: number;
   virtual?: boolean;
+  scrollWidth?: number;
 
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
@@ -158,6 +159,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     height,
     itemHeight,
     virtual,
+    scrollWidth,
 
     focusable,
     activeItem,
@@ -324,14 +326,16 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         fullHeight={false}
         virtual={virtual}
         itemHeight={itemHeight}
+        scrollWidth={scrollWidth}
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
-        onVisibleChange={(originList, fullList) => {
-          const originSet = new Set(originList);
-          const restList = fullList.filter(item => !originSet.has(item));
-
-          // Motion node is not render. Skip motion
-          if (restList.some(item => itemKey(item) === MOTION_KEY)) {
+        role="tree"
+        onVisibleChange={originList => {
+          // The best match is using `fullList` - `originList` = `restList`
+          // and check the `restList` to see if has the MOTION_KEY node
+          // but this will cause performance issue for long list compare
+          // we just check `originList` and repeat trigger `onMotionEnd`
+          if (originList.every(item => itemKey(item) !== MOTION_KEY)) {
             onMotionEnd();
           }
         }}
@@ -378,6 +382,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   );
 });
 
-NodeList.displayName = 'NodeList';
+if (process.env.NODE_ENV !== 'production') {
+  NodeList.displayName = 'NodeList';
+}
 
 export default NodeList;

@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import * as React from 'react';
 // @ts-ignore
-import { TreeContext, TreeContextProps } from './contextTypes';
+import { TreeContext, UnstableContext, type TreeContextProps } from './contextTypes';
 import Indent from './Indent';
-import { TreeNodeProps } from './interface';
+import type { TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
 import { convertNodePropsToEventData } from './utils/treeUtil';
 
@@ -17,6 +17,7 @@ export type { TreeNodeProps } from './interface';
 
 export interface InternalTreeNodeProps extends TreeNodeProps {
   context?: TreeContextProps;
+  unstableContext?: React.ContextType<typeof UnstableContext>;
 }
 
 export interface TreeNodeState {
@@ -231,12 +232,13 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   isDisabled = () => {
-    const { disabled } = this.props;
+    const { disabled, data } = this.props;
     const {
       context: { disabled: treeDisabled },
+      unstableContext: { nodeDisabled },
     } = this.props;
 
-    return !!(treeDisabled || disabled);
+    return !!(treeDisabled || disabled || (nodeDisabled && nodeDisabled(data)));
   };
 
   isCheckable = () => {
@@ -353,7 +355,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   // ====================== Render: Checkbox ======================
   // Checkbox
   renderCheckbox = () => {
-    const { checked, halfChecked, disableCheckbox } = this.props;
+    const { checked, halfChecked, disableCheckbox, title } = this.props;
     const {
       context: { prefixCls },
     } = this.props;
@@ -374,6 +376,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           (disabled || disableCheckbox) && `${prefixCls}-checkbox-disabled`,
         )}
         onClick={this.onCheck}
+        role="checkbox"
+        aria-checked={halfChecked ? 'mixed' : checked}
+        aria-disabled={disabled || disableCheckbox}
+        aria-label={`Select ${typeof title === 'string' ? title : 'tree node'}`}
       >
         {$custom}
       </span>
@@ -545,6 +551,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     return (
       <div
         ref={domRef}
+        role="treeitem"
+        aria-expanded={isLeaf ? undefined : expanded}
         className={classNames(className, `${prefixCls}-treenode`, {
           [`${prefixCls}-treenode-disabled`]: disabled,
           [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
@@ -567,7 +575,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         style={style}
         // Draggable config
         draggable={draggableWithoutDisabled}
-        aria-grabbed={dragging}
         onDragStart={draggableWithoutDisabled ? this.onDragStart : undefined}
         // Drop config
         onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
@@ -579,12 +586,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         {...ariaSelected}
         {...dataOrAriaAttributeProps}
       >
-        <Indent
-          prefixCls={prefixCls}
-          level={level}
-          isStart={isStart}
-          isEnd={isEnd}
-        />
+        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
         {this.renderDragHandler()}
         {this.renderSwitcher()}
         {this.renderCheckbox()}
@@ -596,11 +598,19 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
 
 const ContextTreeNode: React.FC<TreeNodeProps> = props => (
   <TreeContext.Consumer>
-    {context => <InternalTreeNode {...props} context={context} />}
+    {context => (
+      <UnstableContext.Consumer>
+        {unstableContext => (
+          <InternalTreeNode {...props} context={context} unstableContext={unstableContext} />
+        )}
+      </UnstableContext.Consumer>
+    )}
   </TreeContext.Consumer>
 );
 
-ContextTreeNode.displayName = 'TreeNode';
+if (process.env.NODE_ENV !== 'production') {
+  ContextTreeNode.displayName = 'TreeNode';
+}
 
 (ContextTreeNode as any).isTreeNode = 1;
 

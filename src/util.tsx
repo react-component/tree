@@ -5,7 +5,7 @@
 
 import warning from 'rc-util/lib/warning';
 import React from 'react';
-import {
+import type {
   BasicDataNode,
   DataEntity,
   DataNode,
@@ -16,7 +16,7 @@ import {
   NodeElement,
   NodeInstance,
 } from './interface';
-import { AllowDrop, TreeProps } from './Tree';
+import type { AllowDrop, TreeProps } from './Tree';
 import TreeNode from './TreeNode';
 import getEntity from './utils/keyUtil';
 
@@ -309,7 +309,7 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
   }
 
   // Convert keys to object format
-  let keyProps;
+  let keyProps: { checkedKeys?: Key[]; halfCheckedKeys?: Key[] };
   if (Array.isArray(keys)) {
     // [Legacy] Follow the api doc
     keyProps = {

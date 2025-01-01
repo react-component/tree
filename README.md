@@ -2,14 +2,19 @@
 
 Tree component.
 
-[![NPM version][npm-image]][npm-url] [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi) [![build status][github-actions-image]][github-actions-url] [![Test coverage][codecov-image]][codecov-url] [![Dependencies][david-image]][david-url] [![DevDependencies][david-dev-image]][david-dev-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
+[![NPM version][npm-image]][npm-url]
+[![npm download][download-image]][download-url]
+[![build status][github-actions-image]][github-actions-url]
+[![Codecov][codecov-image]][codecov-url]
+[![bundle size][bundlephobia-image]][bundlephobia-url]
+[![dumi][dumi-image]][dumi-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree
-[github-actions-image]: https://github.com/react-component/tree/workflows/CI/badge.svg
-[github-actions-url]: https://github.com/react-component/tree/actions
+[github-actions-image]: https://github.com/react-component/tree/actions/workflows/main.yml/badge.svg
+[github-actions-url]: https://github.com/react-component/tree/actions/workflows/main.yml
 [codecov-image]: https://img.shields.io/codecov/c/github/react-component/tree/master.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/react-component/tree/branch/master
+[codecov-url]: https://codecov.io/gh/react-component/tree/
 [david-url]: https://david-dm.org/react-component/tree
 [david-image]: https://david-dm.org/react-component/tree/status.svg?style=flat-square
 [david-dev-url]: https://david-dm.org/react-component/tree?type=dev
@@ -18,6 +23,8 @@ Tree component.
 [download-url]: https://npmjs.org/package/rc-tree
 [bundlephobia-url]: https://bundlephobia.com/result?p=rc-tree
 [bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-tree
+[dumi-url]: https://github.com/umijs/dumi
+[dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
 
 ## Screenshots
 

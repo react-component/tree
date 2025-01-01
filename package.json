@@ -1,6 +1,6 @@
 {
   "name": "rc-tree",
-  "version": "5.8.8",
+  "version": "5.12.1",
   "description": "tree ui component for react",
   "engines": {
     "node": ">=10.x"
@@ -33,6 +33,7 @@
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
+    "prepare": "husky",
     "prepublishOnly": "npm run compile && np --yolo --no-publish",
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ --ext .tsx,.ts,.jsx,.js",
@@ -41,6 +42,9 @@
     "gh-pages": "npm run docs:build && npm run docs:deploy",
     "now-build": "npm run docs:build"
   },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
+  },
   "peerDependencies": {
     "react": "*",
     "react-dom": "*"
@@ -48,24 +52,28 @@
   "devDependencies": {
     "@rc-component/father-plugin": "^1.0.2",
     "@testing-library/jest-dom": "^6.1.5",
-    "@testing-library/react": "^15.0.7",
+    "@testing-library/react": "^16.1.0",
     "@types/jest": "^29.5.10",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.2.17",
+    "@types/node": "^22.7.3",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.1",
     "@types/warning": "^3.0.0",
     "@umijs/fabric": "^4.0.1",
     "dumi": "^2.1.0",
     "eslint": "^8.55.0",
-    "eslint-plugin-jest": "^27.6.0",
-    "eslint-plugin-unicorn": "^53.0.0",
+    "eslint-plugin-jest": "^28.8.3",
+    "eslint-plugin-unicorn": "^56.0.1",
     "father": "^4.4.0",
     "gh-pages": "^6.1.1",
     "glob": "^7.1.6",
+    "husky": "^9.1.6",
     "less": "^3.11.1",
+    "lint-staged": "^15.2.10",
     "np": "^10.0.5",
-    "rc-dialog": "^9.6.0",
+    "prettier": "^3.3.3",
+    "rc-dialog": "^9.0.0",
     "rc-test": "^7.0.15",
-    "rc-tooltip": "5.x",
+    "rc-tooltip": "^6.3.2",
     "rc-trigger": "^5.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

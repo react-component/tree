@@ -3,7 +3,7 @@
  * When util.js imports the TreeNode for tree generate will cause treeContextTypes be empty.
  */
 import * as React from 'react';
-import {
+import type {
   BasicDataNode,
   DataNode,
   Direction,
@@ -13,7 +13,7 @@ import {
   KeyEntities,
   NodeInstance,
 } from './interface';
-import { DraggableConfig } from './Tree';
+import type { DraggableConfig } from './Tree';
 
 export type NodeMouseEventParams<
   TreeDataType extends BasicDataNode = DataNode,
@@ -60,8 +60,8 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   dropIndicatorRender: (props: {
     dropPosition: -1 | 0 | 1;
     dropLevelOffset: number;
-    indent;
-    prefixCls;
+    indent: number;
+    prefixCls: string;
     direction: Direction;
   }) => React.ReactNode;
   dragOverNodeKey: Key | null;
@@ -92,4 +92,7 @@ export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode>
   onNodeDrop: NodeDragEventHandler<any, any>;
 }
 
-export const TreeContext: React.Context<TreeContextProps<any> | null> = React.createContext(null);
+export const TreeContext = React.createContext<TreeContextProps<any>>(null);
+
+/** Internal usage, safe to remove. Do not use in prod */
+export const UnstableContext = React.createContext<{ nodeDisabled?: (n: DataNode) => boolean }>({});

@@ -1,4 +1,4 @@
-import { Key, FlattenNode } from '../interface';
+import type { Key, FlattenNode } from '../interface';
 
 export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
   const prevLen = prev.length;
