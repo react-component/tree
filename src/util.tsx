@@ -14,7 +14,7 @@ import type {
   Key,
   KeyEntities,
   NodeElement,
-  NodeInstance,
+  TreeNodeProps,
 } from './interface';
 import type { AllowDrop, TreeProps } from './Tree';
 import TreeNode from './TreeNode';
@@ -85,8 +85,8 @@ export function isFirstChild<TreeDataType extends BasicDataNode = DataNode>(
 // Only used when drag, not affect SSR.
 export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   event: React.MouseEvent,
-  dragNode: NodeInstance<TreeDataType>,
-  targetNode: NodeInstance<TreeDataType>,
+  dragNodeProps: TreeNodeProps<TreeDataType>,
+  targetNodeProps: TreeNodeProps<TreeDataType>,
   indent: number,
   startMousePosition: {
     x: number;
@@ -119,7 +119,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   // find abstract drop node by horizontal offset
   let abstractDropNodeEntity: DataEntity<TreeDataType> = getEntity(
     keyEntities,
-    targetNode.props.eventKey,
+    targetNodeProps.eventKey,
   );
 
   if (clientY < top + height / 2) {
@@ -152,7 +152,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     }
   }
 
-  const abstractDragDataNode = dragNode.props.data;
+  const abstractDragDataNode = dragNodeProps.data;
   const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (
@@ -164,7 +164,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
       dropNode: abstractDropDataNode,
       dropPosition: -1,
     }) &&
-    abstractDropNodeEntity.key === targetNode.props.eventKey
+    abstractDropNodeEntity.key === targetNodeProps.eventKey
   ) {
     // first half of first node in first level
     dropPosition = -1;
@@ -309,7 +309,7 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
   }
 
   // Convert keys to object format
-  let keyProps;
+  let keyProps: { checkedKeys?: Key[]; halfCheckedKeys?: Key[] };
   if (Array.isArray(keys)) {
     // [Legacy] Follow the api doc
     keyProps = {
