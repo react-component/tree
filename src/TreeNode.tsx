@@ -162,7 +162,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   const hasChildren = React.useMemo<boolean>(() => {
     const { children } = getEntity(context.keyEntities, eventKey) || {};
-    return !!(children || []).length;
+    return Boolean((children || []).length);
   }, [context.keyEntities, eventKey]);
 
   const memoizedIsLeaf = React.useMemo<boolean>(() => {
@@ -176,7 +176,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     );
   }, [isLeaf, context.loadData, hasChildren, props.loaded]);
 
-  const nodeState = React.useMemo(() => {
+  const nodeState = React.useMemo<typeof ICON_OPEN | typeof ICON_CLOSE>(() => {
     if (memoizedIsLeaf) {
       return null;
     }
@@ -297,7 +297,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   // =================== Drop Indicator ===================
   const dropIndicatorNode = React.useMemo<React.ReactNode>(() => {
-    const rootDraggable = !!context.draggable;
+    const rootDraggable = Boolean(context.draggable);
     // allowDrop is calculated in Tree.tsx, there is no need for calc it here
     const showIndicator = !props.disabled && rootDraggable && context.dragOverNodeKey === eventKey;
     if (!showIndicator) {
