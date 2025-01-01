@@ -71,7 +71,7 @@
     "lint-staged": "^15.2.10",
     "np": "^10.0.5",
     "prettier": "^3.3.3",
-    "rc-dialog": "^8.1.0",
+    "rc-dialog": "^9.0.0",
     "rc-test": "^7.0.15",
     "rc-tooltip": "^6.3.2",
     "rc-trigger": "^5.0.7",
