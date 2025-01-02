@@ -46,6 +46,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   const [dragNodeHighlight, setDragNodeHighlight] = React.useState<boolean>(false);
 
+  // ======= State: Selectable Check =======
   const memoizedIsSelectable = React.useMemo<boolean>(() => {
     // Ignore when selectable is undefined or null
     if (typeof selectable === 'boolean') {
@@ -54,6 +55,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     return context.selectable;
   }, [selectable, context.selectable]);
 
+  // ======= State: Disabled State =======
   const isDisabled = React.useMemo<boolean>(() => {
     return !!(context.disabled || props.disabled || unstableContext.nodeDisabled?.(data));
   }, [context.disabled, props.disabled, unstableContext.nodeDisabled, data]);
@@ -66,6 +68,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     return context.checkable;
   }, [context.checkable, props.checkable]);
 
+  // ======= Event Handlers: Selection and Check =======
   const onSelect = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     if (isDisabled) {
       return;
@@ -109,6 +112,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     context.onNodeContextMenu(e, convertNodePropsToEventData(props));
   };
 
+  // ======= Drag: Drag Event Handlers =======
   const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setDragNodeHighlight(true);
@@ -152,7 +156,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     context.onNodeDrop(e, props);
   };
 
-  // Disabled item still can be switch
+  // ======= Expand: Node Expansion =======
   const onExpand: React.MouseEventHandler<HTMLDivElement> = e => {
     if (loading) {
       return;
@@ -160,11 +164,13 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     context.onNodeExpand(e, convertNodePropsToEventData(props));
   };
 
+  // ======= State: Has Children =======
   const hasChildren = React.useMemo<boolean>(() => {
     const { children } = getEntity(context.keyEntities, eventKey) || {};
     return Boolean((children || []).length);
   }, [context.keyEntities, eventKey]);
 
+  // ======= State: Leaf Check =======
   const memoizedIsLeaf = React.useMemo<boolean>(() => {
     if (isLeaf === false) {
       return false;
@@ -176,6 +182,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     );
   }, [isLeaf, context.loadData, hasChildren, props.loaded]);
 
+  // ============== State: Node State (Open/Close) ==============
   const nodeState = React.useMemo<typeof ICON_OPEN | typeof ICON_CLOSE>(() => {
     if (memoizedIsLeaf) {
       return null;
@@ -184,6 +191,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   }, [memoizedIsLeaf, expanded]);
 
   // Load data to avoid default expanded tree without data
+  // ============== Effect: Sync Load Data ==============
   const syncLoadData = () => {
     if (loading) {
       return;
