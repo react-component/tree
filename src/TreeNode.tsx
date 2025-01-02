@@ -46,15 +46,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   const [dragNodeHighlight, setDragNodeHighlight] = React.useState<boolean>(false);
 
-  // ======= State: Selectable Check =======
-  const memoizedIsSelectable = React.useMemo<boolean>(() => {
-    // Ignore when selectable is undefined or null
-    if (typeof selectable === 'boolean') {
-      return selectable;
-    }
-    return context.selectable;
-  }, [selectable, context.selectable]);
-
   // ======= State: Disabled State =======
   const isDisabled = React.useMemo<boolean>(() => {
     return !!(context.disabled || props.disabled || unstableContext.nodeDisabled?.(data));
@@ -86,10 +77,19 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     context.onNodeCheck(e, convertNodePropsToEventData(props), !checked);
   };
 
+  // ======= State: Selectable Check =======
+  const isSelectable = React.useMemo<boolean>(() => {
+    // Ignore when selectable is undefined or null
+    if (typeof selectable === 'boolean') {
+      return selectable;
+    }
+    return context.selectable;
+  }, [selectable, context.selectable]);
+
   const onSelectorClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     // Click trigger before select/check operation
     context.onNodeClick(e, convertNodePropsToEventData(props));
-    if (memoizedIsSelectable) {
+    if (isSelectable) {
       onSelect(e);
     } else {
       onCheck(e);
@@ -111,6 +111,14 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const onContextMenu = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     context.onNodeContextMenu(e, convertNodePropsToEventData(props));
   };
+
+  // ======= Drag: Drag Enabled =======
+  const isDraggable = React.useMemo<boolean>(() => {
+    return !!(
+      context.draggable &&
+      (!context.draggable.nodeDraggable || context.draggable.nodeDraggable(data))
+    );
+  }, [context.draggable, data]);
 
   // ======= Drag: Drag Event Handlers =======
   const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
@@ -182,14 +190,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     );
   }, [isLeaf, context.loadData, hasChildren, props.loaded]);
 
-  // ============== State: Node State (Open/Close) ==============
-  const nodeState = React.useMemo<typeof ICON_OPEN | typeof ICON_CLOSE>(() => {
-    if (memoizedIsLeaf) {
-      return null;
-    }
-    return expanded ? ICON_OPEN : ICON_CLOSE;
-  }, [memoizedIsLeaf, expanded]);
-
   // Load data to avoid default expanded tree without data
   // ============== Effect: Sync Load Data ==============
   const syncLoadData = () => {
@@ -204,16 +204,10 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     }
   };
 
+  // ============== Effect ==============
   React.useEffect(() => {
     syncLoadData();
   }, [loading, context.loadData, context.onNodeLoad, expanded, memoizedIsLeaf, props]);
-
-  const isDraggable = React.useMemo<boolean>(() => {
-    return !!(
-      context.draggable &&
-      (!context.draggable.nodeDraggable || context.draggable.nodeDraggable(data))
-    );
-  }, [context.draggable, data]);
 
   // ==================== Render: Drag Handler ====================
   const dragHandlerNode = React.useMemo<React.ReactNode>(() => {
@@ -289,6 +283,14 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       </span>
     );
   }, [isCheckable, checked, halfChecked, isDisabled, props.disableCheckbox, props.title]);
+
+  // ============== State: Node State (Open/Close) ==============
+  const nodeState = React.useMemo<typeof ICON_OPEN | typeof ICON_CLOSE>(() => {
+    if (memoizedIsLeaf) {
+      return null;
+    }
+    return expanded ? ICON_OPEN : ICON_CLOSE;
+  }, [memoizedIsLeaf, expanded]);
 
   // ==================== Render: Title + Icon ====================
   const iconNode = React.useMemo<React.ReactNode>(() => {
