@@ -577,11 +577,11 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         draggable={draggableWithoutDisabled}
         onDragStart={draggableWithoutDisabled ? this.onDragStart : undefined}
         // Drop config
-        onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
-        onDragOver={mergedDraggable ? this.onDragOver : undefined}
-        onDragLeave={mergedDraggable ? this.onDragLeave : undefined}
-        onDrop={mergedDraggable ? this.onDrop : undefined}
-        onDragEnd={mergedDraggable ? this.onDragEnd : undefined}
+        onDragEnter={this.onDragEnter}
+        onDragOver={this.onDragOver}
+        onDragLeave={this.onDragLeave}
+        onDrop={this.onDrop}
+        onDragEnd={this.onDragEnd}
         onMouseMove={onMouseMove}
         {...ariaSelected}
         {...dataOrAriaAttributeProps}
