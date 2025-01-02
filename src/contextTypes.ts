@@ -11,7 +11,7 @@ import type {
   IconType,
   Key,
   KeyEntities,
-  NodeInstance,
+  TreeNodeProps,
 } from './interface';
 import type { DraggableConfig } from './Tree';
 
@@ -37,7 +37,7 @@ export type NodeMouseEventHandler<
 export type NodeDragEventHandler<
   TreeDataType extends BasicDataNode = DataNode,
   T = HTMLDivElement,
-> = (e: React.DragEvent<T>, node: NodeInstance<TreeDataType>, outsideTree?: boolean) => void;
+> = (e: React.DragEvent<T>, nodeProps: TreeNodeProps<TreeDataType>, outsideTree?: boolean) => void;
 
 export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls: string;
