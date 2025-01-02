@@ -977,10 +977,12 @@ class Tree<
 
     const loadPromise = new Promise<void>((resolve, reject) => {
       // We need to get the latest state of loading/loaded keys
-      this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
+      this.setState(({ loadedKeys = [], loadingKeys = [] }) => {
         const { loadData, onLoad } = this.props;
 
-        if (!loadData || loadedKeys.includes(key) || loadingKeys.includes(key)) return null;
+        if (!loadData || loadedKeys.includes(key) || loadingKeys.includes(key)) {
+          return null;
+        }
 
         // Process load data
         const promise = loadData(treeNode);
