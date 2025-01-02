@@ -230,9 +230,10 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   fieldNames: FieldNames;
 }
 
-class Tree<
-  TreeDataType extends DataNode | BasicDataNode = DataNode | BasicDataNode,
-> extends React.Component<TreeProps<TreeDataType>, TreeState<TreeDataType>> {
+class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends React.Component<
+  TreeProps<TreeDataType>,
+  TreeState<TreeDataType>
+> {
   static defaultProps = {
     prefixCls: 'rc-tree',
     showLine: false,
