@@ -1,6 +1,6 @@
+import React from 'react';
 import classNames from 'classnames';
 import pickAttrs from 'rc-util/lib/pickAttrs';
-import React from 'react';
 import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
@@ -190,23 +190,18 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     );
   }, [isLeaf, context.loadData, hasChildren, props.loaded]);
 
-  // Load data to avoid default expanded tree without data
-  // ============== Effect: Sync Load Data ==============
-  const syncLoadData = () => {
+  // ============== Effect ==============
+  React.useEffect(() => {
+    // Load data to avoid default expanded tree without data
     if (loading) {
       return;
     }
     // read from state to avoid loadData at same time
-    if (context.loadData && expanded && !memoizedIsLeaf && !props.loaded) {
+    if (typeof context.loadData === 'function' && expanded && !memoizedIsLeaf && !props.loaded) {
       // We needn't reload data when has children in sync logic
       // It's only needed in node expanded
       context.onNodeLoad(convertNodePropsToEventData(props));
     }
-  };
-
-  // ============== Effect ==============
-  React.useEffect(() => {
-    syncLoadData();
   }, [loading, context.loadData, context.onNodeLoad, expanded, memoizedIsLeaf, props]);
 
   // ==================== Render: Drag Handler ====================
@@ -228,7 +223,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   };
 
   // Switcher
-  const switcherNode = React.useMemo<React.ReactNode>(() => {
+  const renderSwitcher = () => {
     if (memoizedIsLeaf) {
       // if switcherIconDom is null, no render switcher span
       const switcherIconDom = renderSwitcherIconDom(true);
@@ -255,7 +250,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         {switcherIconDom}
       </span>
     ) : null;
-  }, [context.prefixCls, expanded, memoizedIsLeaf, props.switcherIcon, context.switcherIcon]);
+  };
 
   // ====================== Checkbox ======================
   const checkboxNode = React.useMemo<React.ReactNode>(() => {
@@ -452,7 +447,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     >
       <Indent prefixCls={context.prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
       {dragHandlerNode}
-      {switcherNode}
+      {renderSwitcher()}
       {checkboxNode}
       {selectorNode}
     </div>
