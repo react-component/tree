@@ -10,25 +10,14 @@ jobs:
         uses: actions/checkout@v4
 
       - run: corepack enable
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
 
       - name: Build
-        run: bun run build
+        run: npm run build
 
-      # ========== Prepare examples ==========
-      - name: Clear examples
-        run: rm -rf examples
-
-      - name: Clone examples
-        uses: actions/checkout@v4
-        with:
-          repository: ant-design/ant-design-examples
-          path: examples
-
-      - name: Modify examples
-        run: bunx tsx scripts/prepare-examples.ts
-
-      - run: bunx pkg-pr-new publish --template './examples/examples/*'
+      - run: npx pkg-pr-new publish
