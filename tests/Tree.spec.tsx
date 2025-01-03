@@ -1331,11 +1331,10 @@ describe('Tree Basic', () => {
       },
       { title: '0-1', key: '0-1' },
     ];
-    let result = [];
+    const result = [];
     const recurse = currentArray => {
       currentArray.forEach(item => {
         result.push(item);
-        // 如果当前项有子项，则继续递归处理子项
         if (item.children && item.children.length > 0) {
           recurse(item.children);
         }
