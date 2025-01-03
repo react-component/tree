@@ -413,25 +413,29 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       ref={domRef}
       role="treeitem"
       aria-expanded={isLeaf ? undefined : expanded}
-      className={classNames(className, `${context.prefixCls}-treenode`, {
-        [`${context.prefixCls}-treenode-disabled`]: isDisabled,
-        [`${context.prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
-        [`${context.prefixCls}-treenode-checkbox-checked`]: checked,
-        [`${context.prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
-        [`${context.prefixCls}-treenode-selected`]: selected,
-        [`${context.prefixCls}-treenode-loading`]: loading,
-        [`${context.prefixCls}-treenode-active`]: active,
-        [`${context.prefixCls}-treenode-leaf-last`]: isEndNode,
-        [`${context.prefixCls}-treenode-draggable`]: isDraggable,
-        [`${context.prefixCls}-leaf`]: !data?.children,
-        dragging,
-        'drop-target': context.dropTargetKey === eventKey,
-        'drop-container': context.dropContainerKey === eventKey,
-        'drag-over': !isDisabled && dragOver,
-        'drag-over-gap-top': !isDisabled && dragOverGapTop,
-        'drag-over-gap-bottom': !isDisabled && dragOverGapBottom,
-        'filter-node': context.filterTreeNode?.(convertNodePropsToEventData(props)),
-      })}
+      className={classNames(
+        className,
+        `${context.prefixCls}-treenode`,
+        `${context.prefixCls}-${data?.children ? 'parent' : 'leaf'}`,
+        {
+          [`${context.prefixCls}-treenode-disabled`]: isDisabled,
+          [`${context.prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
+          [`${context.prefixCls}-treenode-checkbox-checked`]: checked,
+          [`${context.prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
+          [`${context.prefixCls}-treenode-selected`]: selected,
+          [`${context.prefixCls}-treenode-loading`]: loading,
+          [`${context.prefixCls}-treenode-active`]: active,
+          [`${context.prefixCls}-treenode-leaf-last`]: isEndNode,
+          [`${context.prefixCls}-treenode-draggable`]: isDraggable,
+          dragging,
+          'drop-target': context.dropTargetKey === eventKey,
+          'drop-container': context.dropContainerKey === eventKey,
+          'drag-over': !isDisabled && dragOver,
+          'drag-over-gap-top': !isDisabled && dragOverGapTop,
+          'drag-over-gap-bottom': !isDisabled && dragOverGapBottom,
+          'filter-node': context.filterTreeNode?.(convertNodePropsToEventData(props)),
+        },
+      )}
       style={style}
       // Draggable config
       draggable={draggableWithoutDisabled}
