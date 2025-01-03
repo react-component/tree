@@ -423,6 +423,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         [`${context.prefixCls}-treenode-active`]: active,
         [`${context.prefixCls}-treenode-leaf-last`]: isEndNode,
         [`${context.prefixCls}-treenode-draggable`]: isDraggable,
+        [`${context.prefixCls}-leaf`]: !data?.children,
         dragging,
         'drop-target': context.dropTargetKey === eventKey,
         'drop-container': context.dropContainerKey === eventKey,
