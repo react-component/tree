@@ -1312,4 +1312,44 @@ describe('Tree Basic', () => {
       expect(getByRole('treeitem', { name: 'leaf 2' })).toHaveClass('rc-tree-treenode-disabled');
     });
   });
+  it('leaf className', () => {
+    const data = [
+      {
+        title: '0-0',
+        key: '0-0',
+        children: [
+          { title: '0-0-0', key: '0-0-0' },
+          {
+            title: '0-0-1',
+            key: '0-0-1',
+            children: [
+              { title: '0-0-1-0', key: '0-0-1-0' },
+              { title: '0-0-1-1', key: '0-0-1-1' },
+            ],
+          },
+        ],
+      },
+      { title: '0-1', key: '0-1' },
+    ];
+    let result = [];
+    const recurse = currentArray => {
+      currentArray.forEach(item => {
+        result.push(item);
+        // 如果当前项有子项，则继续递归处理子项
+        if (item.children && item.children.length > 0) {
+          recurse(item.children);
+        }
+      });
+    };
+    recurse(data);
+    const { container } = render(<Tree treeData={data} expandedKeys={['0-0', '0-0-1']} />);
+    const treeNodes = container.querySelectorAll('[role="treeitem"]');
+    treeNodes.forEach((item, index) => {
+      if (result[index]?.children) {
+        expect(item).not.toHaveClass('rc-tree-leaf');
+      } else {
+        expect(item).toHaveClass('rc-tree-leaf');
+      }
+    });
+  });
 });

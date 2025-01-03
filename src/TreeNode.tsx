@@ -430,7 +430,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         'drag-over-gap-top': !isDisabled && dragOverGapTop,
         'drag-over-gap-bottom': !isDisabled && dragOverGapBottom,
         'filter-node': context.filterTreeNode?.(convertNodePropsToEventData(props)),
-        [`${context.prefixCls}-leaf`]: data?.children,
+        [`${context.prefixCls}-leaf`]: !data?.children,
       })}
       style={style}
       // Draggable config
