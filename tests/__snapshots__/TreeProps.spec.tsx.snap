@@ -1489,7 +1489,7 @@ exports[`Tree Props loadData basic 1`] = `
           </div>
           <div
             aria-expanded="false"
-            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-leaf"
+            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
             role="treeitem"
           >
