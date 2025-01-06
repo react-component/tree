@@ -1345,9 +1345,9 @@ describe('Tree Basic', () => {
     const treeNodes = container.querySelectorAll('[role="treeitem"]');
     treeNodes.forEach((item, index) => {
       if (result[index]?.children) {
-        expect(item).not.toHaveClass('rc-tree-leaf');
+        expect(item).not.toHaveClass('rc-tree-treenode-leaf');
       } else {
-        expect(item).toHaveClass('rc-tree-leaf');
+        expect(item).toHaveClass('rc-tree-treenode-leaf');
       }
     });
   });
