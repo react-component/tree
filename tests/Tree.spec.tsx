@@ -1332,10 +1332,7 @@ describe('Tree Basic', () => {
       { title: '0-1', key: '0-1' },
     ];
     const { container } = render(<Tree treeData={data} expandedKeys={['0-0', '0-0-1']} />);
-    const treeNodes = container.querySelectorAll('[role="treeitem"]');
-    const leafNodesCount = Array.from(treeNodes).filter(node =>
-      node.classList.contains('rc-tree-treenode-leaf'),
-    ).length;
-    expect(leafNodesCount).toBe(4);
+    const treeNodes = container.querySelectorAll('.rc-tree-treenode-leaf');
+    expect(treeNodes.length).toBe(4);
   });
 });
