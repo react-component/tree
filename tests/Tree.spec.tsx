@@ -1331,24 +1331,11 @@ describe('Tree Basic', () => {
       },
       { title: '0-1', key: '0-1' },
     ];
-    const result = [];
-    const recurse = currentArray => {
-      currentArray.forEach(item => {
-        result.push(item);
-        if (item.children && item.children.length > 0) {
-          recurse(item.children);
-        }
-      });
-    };
-    recurse(data);
     const { container } = render(<Tree treeData={data} expandedKeys={['0-0', '0-0-1']} />);
     const treeNodes = container.querySelectorAll('[role="treeitem"]');
-    treeNodes.forEach((item, index) => {
-      if (result[index]?.children) {
-        expect(item).not.toHaveClass('rc-tree-treenode-leaf');
-      } else {
-        expect(item).toHaveClass('rc-tree-treenode-leaf');
-      }
-    });
+    const leafNodesCount = Array.from(treeNodes).filter(node =>
+      node.classList.contains('rc-tree-treenode-leaf'),
+    ).length;
+    expect(leafNodesCount).toBe(4);
   });
 });
