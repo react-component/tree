@@ -1312,4 +1312,27 @@ describe('Tree Basic', () => {
       expect(getByRole('treeitem', { name: 'leaf 2' })).toHaveClass('rc-tree-treenode-disabled');
     });
   });
+  it('leaf className', () => {
+    const data = [
+      {
+        title: '0-0',
+        key: '0-0',
+        children: [
+          { title: '0-0-0', key: '0-0-0' },
+          {
+            title: '0-0-1',
+            key: '0-0-1',
+            children: [
+              { title: '0-0-1-0', key: '0-0-1-0' },
+              { title: '0-0-1-1', key: '0-0-1-1' },
+            ],
+          },
+        ],
+      },
+      { title: '0-1', key: '0-1' },
+    ];
+    const { container } = render(<Tree treeData={data} expandedKeys={['0-0', '0-0-1']} />);
+    const treeNodes = container.querySelectorAll('.rc-tree-treenode-leaf');
+    expect(treeNodes.length).toBe(4);
+  });
 });
