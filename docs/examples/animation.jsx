@@ -1,5 +1,5 @@
 /* eslint no-console:0, react/no-danger: 0 */
-import { Provider } from 'rc-motion';
+import { Provider } from '@rc-component/motion';
 import Tree from 'rc-tree';
 import React from 'react';
 import '../../assets/index.less';
