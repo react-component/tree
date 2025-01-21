@@ -51,9 +51,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
+    "@rc-component/motion": "^1.0.0",
     "@rc-component/util": "^1.2.0",
     "classnames": "2.x",
-    "rc-motion": "^2.0.1",
     "rc-virtual-list": "^3.5.1"
   },
   "devDependencies": {

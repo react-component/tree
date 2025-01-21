@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import CSSMotion from 'rc-motion';
+import CSSMotion from '@rc-component/motion';
 import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
 import * as React from 'react';
 import { TreeContext } from './contextTypes';
