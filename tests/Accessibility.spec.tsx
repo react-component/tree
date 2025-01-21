@@ -1,6 +1,6 @@
 /* eslint-disable no-undef, react/no-multi-comp */
 import { fireEvent, render } from '@testing-library/react';
-import KeyCode from 'rc-util/lib/KeyCode';
+import KeyCode from '@rc-component/util/lib/KeyCode';
 import React from 'react';
 import Tree, { FieldDataNode } from '../src';
 import { spyConsole } from './util';

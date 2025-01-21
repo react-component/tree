@@ -3,7 +3,7 @@
  * Legacy code. Should avoid to use if you are new to import these code.
  */
 
-import warning from 'rc-util/lib/warning';
+import warning from '@rc-component/util/lib/warning';
 import React from 'react';
 import type {
   BasicDataNode,

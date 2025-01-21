@@ -22,6 +22,7 @@ coverage/
 *.pyc
 *.pyo
 package-lock.json
+pnpm-lock.yaml
 .build
 node_modules
 .cache
@@ -32,6 +33,7 @@ lib
 /coverage
 yarn.lock
 es/
+!tests/__mocks__/@rc-component/util/lib
 !tests/__mocks__/rc-util/lib
 # umi
 .umi
