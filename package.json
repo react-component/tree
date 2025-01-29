@@ -60,7 +60,7 @@
     "@types/warning": "^3.0.0",
     "@umijs/fabric": "^4.0.1",
     "dumi": "^2.1.0",
-    "eslint": "^8.55.0",
+    "eslint": "^9.19.0",
     "eslint-plugin-jest": "^28.8.3",
     "eslint-plugin-unicorn": "^56.0.1",
     "father": "^4.4.0",
