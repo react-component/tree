@@ -1227,7 +1227,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
     const { activeKey, expandedKeys, checkedKeys, fieldNames } = this.state;
-    const { onKeyDown, checkable, selectable } = this.props;
+    const { onKeyDown, checkable, selectable, loadData } = this.props;
 
     // >>>>>>>>>> Direction
     switch (event.which) {
@@ -1249,7 +1249,10 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       const treeNodeRequiredProps = this.getTreeNodeRequiredProps();
 
       const expandable =
-        activeItem.data.isLeaf === false || !!(activeItem.data[fieldNames.children] || []).length;
+        activeItem.data.isLeaf !== true &&
+        ((!!loadData && !activeItem.data[fieldNames.children]) || // load data on expand
+          !!(activeItem.data[fieldNames.children] || []).length);
+
       const eventNode = convertNodePropsToEventData<TreeDataType>({
         ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
         data: activeItem.data,
