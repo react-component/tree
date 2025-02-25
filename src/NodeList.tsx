@@ -2,7 +2,7 @@
  * Handle virtual list of the TreeNodes.
  */
 
-import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
+import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
 import VirtualList, { type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
 import MotionTreeNode from './MotionTreeNode';

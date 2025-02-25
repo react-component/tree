@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import pickAttrs from 'rc-util/lib/pickAttrs';
+import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
