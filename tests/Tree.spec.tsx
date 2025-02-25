@@ -1311,6 +1311,35 @@ describe('Tree Basic', () => {
       expect(getByRole('treeitem', { name: 'leaf 1' })).toHaveClass('rc-tree-treenode-disabled');
       expect(getByRole('treeitem', { name: 'leaf 2' })).toHaveClass('rc-tree-treenode-disabled');
     });
+
+    it('correct handle closure', () => {
+      let disabled = false;
+      const nodeDisabled = () => disabled;
+
+      const singleTreeData = [
+        {
+          title: '0',
+          key: '0',
+        },
+      ];
+
+      const renderDemo = () => (
+        <UnstableContext.Provider
+          value={{
+            nodeDisabled,
+          }}
+        >
+          <Tree defaultExpandAll treeData={singleTreeData} />
+        </UnstableContext.Provider>
+      );
+
+      const { container, rerender } = render(renderDemo());
+      expect(container.querySelector('.rc-tree-treenode-disabled')).toBeFalsy();
+
+      disabled = true;
+      rerender(renderDemo());
+      expect(container.querySelector('.rc-tree-treenode-disabled')).toBeTruthy();
+    });
   });
   it('leaf className', () => {
     const data = [

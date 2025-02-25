@@ -47,9 +47,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const [dragNodeHighlight, setDragNodeHighlight] = React.useState<boolean>(false);
 
   // ======= State: Disabled State =======
-  const isDisabled = React.useMemo<boolean>(() => {
-    return !!(context.disabled || props.disabled || unstableContext.nodeDisabled?.(data));
-  }, [context.disabled, props.disabled, unstableContext.nodeDisabled, data]);
+  const isDisabled = !!(context.disabled || props.disabled || unstableContext.nodeDisabled?.(data));
 
   const isCheckable = React.useMemo<React.ReactNode>(() => {
     // Return false if tree or treeNode is not checkable
