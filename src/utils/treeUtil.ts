@@ -1,6 +1,6 @@
-import toArray from 'rc-util/lib/Children/toArray';
-import omit from 'rc-util/lib/omit';
-import warning from 'rc-util/lib/warning';
+import toArray from '@rc-component/util/lib/Children/toArray';
+import omit from '@rc-component/util/lib/omit';
+import warning from '@rc-component/util/lib/warning';
 import * as React from 'react';
 import type {
   BasicDataNode,

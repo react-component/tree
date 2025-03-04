@@ -2,8 +2,8 @@
 react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import { resetWarned } from 'rc-util/lib/warning';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import { resetWarned } from '@rc-component/util/lib/warning';
+import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import Tree, { TreeNode } from '../src';
 import { objectMatcher, spyConsole, spyError } from './util';
 import { UnstableContext } from '../src';

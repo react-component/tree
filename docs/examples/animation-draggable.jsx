@@ -3,7 +3,7 @@ react/no-danger, no-param-reassign */
 import React from 'react';
 import { gData } from './utils/dataUtil';
 import '../../assets/index.less';
-import Tree from 'rc-tree';
+import Tree from '@rc-component/tree';
 
 const STYLE = `
 .rc-tree-child-tree {
