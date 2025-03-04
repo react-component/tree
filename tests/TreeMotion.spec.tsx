@@ -5,8 +5,8 @@ import { TreeContext } from '../src/contextTypes';
 import MotionTreeNode from '../src/MotionTreeNode';
 import { getMinimumRangeTransitionRange } from '../src/NodeList';
 
-jest.mock('rc-motion/lib/util/motion', () => {
-  const origin = jest.requireActual('rc-motion/lib/util/motion');
+jest.mock('@rc-component/motion/lib/util/motion', () => {
+  const origin = jest.requireActual('@rc-component/motion/lib/util/motion');
 
   return {
     ...origin,

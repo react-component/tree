@@ -1,6 +1,6 @@
 {
-  "name": "rc-tree",
-  "version": "5.13.1",
+  "name": "@rc-component/tree",
+  "version": "1.0.0",
   "description": "tree ui component for react",
   "engines": {
     "node": ">=10.x"
@@ -34,7 +34,7 @@
     "docs:deploy": "gh-pages -d dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
     "prepare": "husky",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
+    "prepublishOnly": "npm run compile && rc-np",
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ --ext .tsx,.ts,.jsx,.js",
     "test": "rc-test",
@@ -50,7 +50,7 @@
     "react-dom": "*"
   },
   "devDependencies": {
-    "@rc-component/father-plugin": "^1.0.2",
+    "@rc-component/father-plugin": "^2.0.3",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^16.1.0",
     "@types/jest": "^29.5.10",
@@ -69,21 +69,20 @@
     "husky": "^9.1.6",
     "less": "^4.2.1",
     "lint-staged": "^15.2.10",
-    "np": "^10.0.5",
+    "@rc-component/np": "^1.0.0",
     "prettier": "^3.3.3",
-    "rc-dialog": "^9.0.0",
+    "@rc-component/dialog": "^1.0.0",
     "rc-test": "^7.0.15",
-    "rc-tooltip": "^6.3.2",
-    "rc-trigger": "^5.0.7",
+    "@rc-component/tooltip": "^1.0.0",
+    "@rc-component/trigger": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
     "classnames": "2.x",
-    "rc-motion": "^2.0.1",
-    "rc-util": "^5.16.1",
+    "@rc-component/motion": "^1.0.0",
+    "@rc-component/util": "^1.2.1",
     "rc-virtual-list": "^3.5.1"
   }
 }

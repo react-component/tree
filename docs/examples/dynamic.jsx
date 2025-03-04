@@ -1,7 +1,7 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import '../../assets/index.less';
 import React from 'react';
-import Tree from 'rc-tree';
+import Tree from '@rc-component/tree';
 
 function generateTreeNodes(treeNode) {
   const arr = [];

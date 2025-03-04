@@ -2,7 +2,7 @@
 /* eslint no-alert:0 */
 import React from 'react';
 import classNames from 'classnames';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '@rc-component/tree';
 import '../../assets/index.less';
 import './icon.less';
 

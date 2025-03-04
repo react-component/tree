@@ -2,11 +2,11 @@
 /* eslint no-console:0 */
 /* eslint react/no-string-refs:0 */
 import React from 'react';
-import Trigger from 'rc-trigger';
+import Trigger from '@rc-component/trigger';
 import { gData } from './utils/dataUtil';
 import './dropdown.less';
 import '../../assets/index.less';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '@rc-component/tree';
 
 const placements = {
   topLeft: {

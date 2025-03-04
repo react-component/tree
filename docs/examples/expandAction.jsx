@@ -1,7 +1,7 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import React from 'react';
 import '../../assets/index.less';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '@rc-component/tree';
 
 const Demo = () => (
   <div className="expandAction-demo">

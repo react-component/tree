@@ -2,7 +2,7 @@
 import React from 'react';
 import '../../assets/index.less';
 import './basic.less';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '@rc-component/tree';
 
 const treeData = [
   {

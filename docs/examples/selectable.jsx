@@ -2,10 +2,9 @@
 import React from 'react';
 import './selectable.less';
 import '../../assets/index.less';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '@rc-component/tree';
 
 class Demo extends React.Component {
-
   render() {
     return (
       <div className="selectable-demo">
