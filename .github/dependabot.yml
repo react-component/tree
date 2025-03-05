@@ -18,7 +18,7 @@ updates:
           - 17.0.0
           - 17.0.1
           - 17.0.2
-      - dependency-name: '@rc-component/np'
+      dependency-name: '@rc-component/np'
         versions:
           - 1.0.0
       - dependency-name: '@rc-component/tooltip'
