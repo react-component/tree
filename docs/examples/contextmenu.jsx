@@ -1,10 +1,10 @@
 /* eslint-disable no-console, react/no-find-dom-node */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tooltip from 'rc-tooltip';
+import Tooltip from '@rc-component/tooltip';
 import './contextmenu.less';
 import '../../assets/index.less';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '@rc-component/tree';
 
 function contains(root, n) {
   let node = n;

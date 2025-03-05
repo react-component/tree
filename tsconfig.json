@@ -7,23 +7,13 @@
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@@/*": [
-        "src/.umi/*"
-      ],
-      "rc-tree": [
-        "src/index.ts"
-      ]
-    }
+    "paths": { "@/*": ["src/*"], "@@/*": ["src/.umi/*"], "@rc-component/tree": ["src/index.ts"] }
   },
   "include": [
     ".dumirc.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx",
     "./docs/**/*.tsx",
-    "./tests/**/*.tsx",
+    "./tests/**/*.tsx"
   ]
 }

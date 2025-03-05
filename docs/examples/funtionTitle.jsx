@@ -2,7 +2,7 @@
 import '../../assets/index.less';
 import './animation.less';
 import React, { useState } from 'react';
-import Tree from 'rc-tree';
+import Tree from '@rc-component/tree';
 import data from './longData.json';
 
 const STYLE = `
