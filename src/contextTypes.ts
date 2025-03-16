@@ -13,7 +13,7 @@ import type {
   KeyEntities,
   TreeNodeProps,
 } from './interface';
-import type { DraggableConfig } from './Tree';
+import type { DraggableConfig, SemanticName } from './Tree';
 
 export type NodeMouseEventParams<
   TreeDataType extends BasicDataNode = DataNode,
@@ -40,6 +40,8 @@ export type NodeDragEventHandler<
 > = (e: React.DragEvent<T>, nodeProps: TreeNodeProps<TreeDataType>, outsideTree?: boolean) => void;
 
 export interface TreeContextProps<TreeDataType extends BasicDataNode = DataNode> {
+  styles?: Partial<Record<SemanticName, React.CSSProperties>>;
+  classNames?: Partial<Record<SemanticName, string>>;
   prefixCls: string;
   selectable: boolean;
   showIcon: boolean;

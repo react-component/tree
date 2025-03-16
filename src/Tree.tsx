@@ -83,10 +83,13 @@ export type DraggableConfig = {
 
 export type ExpandAction = false | 'click' | 'doubleClick';
 
+export type SemanticName = 'icon' | 'item' | 'title';
 export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls: string;
   className?: string;
   style?: React.CSSProperties;
+  styles?: Partial<Record<SemanticName, React.CSSProperties>>;
+  classNames?: Partial<Record<SemanticName, string>>;
   focusable?: boolean;
   activeKey?: Key | null;
   tabIndex?: number;
@@ -1363,6 +1366,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       prefixCls,
       className,
       style,
+      styles,
+      classNames: treeClassNames,
       showLine,
       focusable,
       tabIndex = 0,
@@ -1410,6 +1415,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     }
 
     const contextValue = {
+      styles,
+      classNames: treeClassNames,
       prefixCls,
       selectable,
       showIcon,

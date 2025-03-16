@@ -39,6 +39,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   } = props;
 
   const context = React.useContext(TreeContext);
+  const { classNames: treeClassNames, styles } = context || {};
 
   const unstableContext = React.useContext(UnstableContext);
 
@@ -290,10 +291,12 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     return (
       <span
         className={classNames(
+          treeClassNames?.icon,
           `${context.prefixCls}-iconEle`,
           `${context.prefixCls}-icon__${nodeState || 'docu'}`,
           { [`${context.prefixCls}-icon_loading`]: loading },
         )}
+        style={styles?.icon}
       />
     );
   }, [context.prefixCls, nodeState, loading]);
@@ -376,7 +379,12 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         onDoubleClick={onSelectorDoubleClick}
       >
         {$icon}
-        <span className={`${context.prefixCls}-title`}>{titleNode}</span>
+        <span
+          className={classNames(`${context.prefixCls}-title`, treeClassNames?.title)}
+          style={styles?.title}
+        >
+          {titleNode}
+        </span>
         {dropIndicatorNode}
       </span>
     );
@@ -411,7 +419,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       ref={domRef}
       role="treeitem"
       aria-expanded={isLeaf ? undefined : expanded}
-      className={classNames(className, `${context.prefixCls}-treenode`, {
+      className={classNames(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
         [`${context.prefixCls}-treenode-disabled`]: isDisabled,
         [`${context.prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
         [`${context.prefixCls}-treenode-checkbox-checked`]: checked,
@@ -430,7 +438,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         'filter-node': context.filterTreeNode?.(convertNodePropsToEventData(props)),
         [`${context.prefixCls}-treenode-leaf`]: memoizedIsLeaf,
       })}
-      style={style}
+      style={{ ...style, ...styles?.item }}
       // Draggable config
       draggable={draggableWithoutDisabled}
       onDragStart={draggableWithoutDisabled ? onDragStart : undefined}
