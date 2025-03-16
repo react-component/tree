@@ -342,9 +342,11 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       $icon = currentIcon ? (
         <span
           className={classNames(
+            treeClassNames?.icon,
             `${context.prefixCls}-iconEle`,
             `${context.prefixCls}-icon__customize`,
           )}
+          style={styles?.icon}
         >
           {typeof currentIcon === 'function' ? currentIcon(props) : currentIcon}
         </span>
