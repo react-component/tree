@@ -291,12 +291,12 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     return (
       <span
         className={classNames(
-          treeClassNames?.icon,
+          treeClassNames?.itemIcon,
           `${context.prefixCls}-iconEle`,
           `${context.prefixCls}-icon__${nodeState || 'docu'}`,
           { [`${context.prefixCls}-icon_loading`]: loading },
         )}
-        style={styles?.icon}
+        style={styles?.itemIcon}
       />
     );
   }, [context.prefixCls, nodeState, loading]);
@@ -342,11 +342,11 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       $icon = currentIcon ? (
         <span
           className={classNames(
-            treeClassNames?.icon,
+            treeClassNames?.itemIcon,
             `${context.prefixCls}-iconEle`,
             `${context.prefixCls}-icon__customize`,
           )}
-          style={styles?.icon}
+          style={styles?.itemIcon}
         >
           {typeof currentIcon === 'function' ? currentIcon(props) : currentIcon}
         </span>
@@ -382,8 +382,8 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       >
         {$icon}
         <span
-          className={classNames(`${context.prefixCls}-title`, treeClassNames?.title)}
-          style={styles?.title}
+          className={classNames(`${context.prefixCls}-title`, treeClassNames?.itemTitle)}
+          style={styles?.itemTitle}
         >
           {titleNode}
         </span>
