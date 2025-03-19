@@ -1364,4 +1364,51 @@ describe('Tree Basic', () => {
     const treeNodes = container.querySelectorAll('.rc-tree-treenode-leaf');
     expect(treeNodes.length).toBe(4);
   });
+  it('support classNames and styles', () => {
+    const data = [
+      {
+        title: '0-0',
+        key: '0-0',
+        children: [
+          { title: '0-0-0', key: '0-0-0' },
+          {
+            title: '0-0-1',
+            key: '0-0-1',
+            children: [
+              { title: '0-0-1-0', key: '0-0-1-0' },
+              { title: '0-0-1-1', key: '0-0-1-1' },
+            ],
+          },
+        ],
+      },
+      { title: '0-1', key: '0-1' },
+    ];
+    const testClassNames = {
+      item: 'test-item',
+      itemIcon: 'test-icon',
+      itemTitle: 'test-title',
+    };
+    const testStyles = {
+      item: { background: 'red' },
+      itemIcon: { color: 'blue' },
+      itemTitle: { color: 'yellow' },
+    };
+    const { container } = render(
+      <Tree
+        treeData={data}
+        expandedKeys={['0-0', '0-0-1']}
+        styles={testStyles}
+        classNames={testClassNames}
+      />,
+    );
+    const item = container.querySelector(`.${testClassNames.item}`);
+    const icon = container.querySelector('.rc-tree-iconEle');
+    const title = container.querySelector('.rc-tree-title');
+
+    expect(icon).toHaveStyle(testStyles.itemIcon);
+    expect(icon).toHaveClass(testClassNames.itemIcon);
+    expect(title).toHaveStyle(testStyles.itemTitle);
+    expect(title).toHaveClass(testClassNames.itemTitle);
+    expect(item).toHaveStyle(testStyles.item);
+  });
 });
