@@ -68,7 +68,7 @@
     "glob": "^11.0.0",
     "husky": "^9.1.6",
     "less": "^4.2.1",
-    "lint-staged": "^15.2.10",
+    "lint-staged": "^16.0.0",
     "@rc-component/np": "^1.0.0",
     "prettier": "^3.3.3",
     "@rc-component/dialog": "^1.0.0",
