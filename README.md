@@ -2,12 +2,7 @@
 
 Tree component.
 
-[![NPM version][npm-image]][npm-url]
-[![npm download][download-image]][download-url]
-[![build status][github-actions-image]][github-actions-url]
-[![Codecov][codecov-image]][codecov-url]
-[![bundle size][bundlephobia-image]][bundlephobia-url]
-[![dumi][dumi-image]][dumi-url]
+[![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree
@@ -45,6 +40,7 @@ online example: https://tree.react-component.now.sh/
 [![rc-tree](https://nodei.co/npm/rc-tree.png)](https://npmjs.org/package/rc-tree)
 
 ## Usage
+
 > Note: `import "rc-tree/assets/index.css"`
 
 see examples
@@ -78,7 +74,7 @@ see examples
 | selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 | showIcon | whether show icon | bool | true |
 | showLine | whether show line | bool | false |
-| treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array) | array<{key,title,children, [disabled, selectable]}> | - |
+| treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array) | array<{key,title,name,children, [disabled, selectable]}> | - |
 | onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent}) | - |
 | onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node, nativeEvent}) | - |
 | onDragEnd | it execs when fire the tree's dragend event | function({event,node}) | - |
@@ -95,7 +91,7 @@ see examples
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 | virtual | Disable virtual scroll when `false` | boolean | - |
 | allowDrop | Whether to allow drop on node | ({ dragNode, dropNode, dropPosition }) => boolean | - |
-| dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode| - |
+| dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode | - |
 | direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | - |
 | expandAction | Tree open logic, optional: false \| `click` \| `doubleClick` | string \| boolean | `click` |
 
@@ -113,6 +109,7 @@ see examples
 | disabled | whether disabled the treeNode | bool | false |
 | disableCheckbox | whether disable the treeNode' checkbox | bool | false |
 | title | tree/subTree's title | String/element/((data: DataNode) => React.ReactNode) | '---' |
+| name | tree/subTree's name | String/element/((data: DataNode) => React.ReactNode) | '---' |
 | key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
 | isLeaf | whether it's leaf node | bool | false |
 | icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
