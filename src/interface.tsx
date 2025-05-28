@@ -77,6 +77,7 @@ export type KeyEntities<DateType extends BasicDataNode = any> = Record<
 export type DataNode = FieldDataNode<{
   key: Key;
   title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
+  name?: React.ReactNode | ((data: DataNode) => React.ReactNode);
 }>;
 
 export type EventDataNode<TreeDataType> = {
