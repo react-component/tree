@@ -74,7 +74,7 @@ export type KeyEntities<DateType extends BasicDataNode = any> = Record<
   DataEntity<DateType>
 >;
 
-export type DataNode<T = {}> = FieldDataNode<
+export type DataNode<T = Record<string, unknown>> = FieldDataNode<
   {
     key: Key;
     title?: React.ReactNode | ((data: DataNode<T>) => React.ReactNode);
