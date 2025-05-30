@@ -74,7 +74,7 @@ see examples
 | selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 | showIcon | whether show icon | bool | true |
 | showLine | whether show line | bool | false |
-| treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array) | array<{key,title,name,children, [disabled, selectable]}> | - |
+| treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array) | array<{key,title,children, [disabled, selectable]}> | - |
 | onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent}) | - |
 | onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node, nativeEvent}) | - |
 | onDragEnd | it execs when fire the tree's dragend event | function({event,node}) | - |
@@ -109,7 +109,6 @@ see examples
 | disabled | whether disabled the treeNode | bool | false |
 | disableCheckbox | whether disable the treeNode' checkbox | bool | false |
 | title | tree/subTree's title | String/element/((data: DataNode) => React.ReactNode) | '---' |
-| name | tree/subTree's name | String/element/((data: DataNode) => React.ReactNode) | '---' |
 | key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
 | isLeaf | whether it's leaf node | bool | false |
 | icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
