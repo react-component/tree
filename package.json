@@ -34,7 +34,7 @@
     "docs:deploy": "gh-pages -d dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
     "prepare": "husky",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
+    "prepublishOnly": "npm run compile && np --yolo --no-publish --branch antd-5.x",
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ --ext .tsx,.ts,.jsx,.js",
     "test": "rc-test",
