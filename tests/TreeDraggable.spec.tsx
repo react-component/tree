@@ -1,7 +1,7 @@
 /* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign */
 import { act, createEvent, fireEvent, render } from '@testing-library/react';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
 import Tree, { FieldDataNode, TreeNode, TreeProps } from '../src';
 import { spyConsole } from './util';

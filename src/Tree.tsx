@@ -2,9 +2,9 @@
 // Fully accessibility support
 
 import classNames from 'classnames';
-import KeyCode from 'rc-util/lib/KeyCode';
-import pickAttrs from 'rc-util/lib/pickAttrs';
-import warning from 'rc-util/lib/warning';
+import KeyCode from '@rc-component/util/lib/KeyCode';
+import pickAttrs from '@rc-component/util/lib/pickAttrs';
+import warning from '@rc-component/util/lib/warning';
 import * as React from 'react';
 
 import type {
@@ -83,10 +83,13 @@ export type DraggableConfig = {
 
 export type ExpandAction = false | 'click' | 'doubleClick';
 
+export type SemanticName = 'itemIcon' | 'item' | 'itemTitle';
 export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls: string;
   className?: string;
   style?: React.CSSProperties;
+  styles?: Partial<Record<SemanticName, React.CSSProperties>>;
+  classNames?: Partial<Record<SemanticName, string>>;
   focusable?: boolean;
   activeKey?: Key | null;
   tabIndex?: number;
@@ -1363,6 +1366,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       prefixCls,
       className,
       style,
+      styles,
+      classNames: treeClassNames,
       showLine,
       focusable,
       tabIndex = 0,
@@ -1410,6 +1415,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     }
 
     const contextValue = {
+      styles,
+      classNames: treeClassNames,
       prefixCls,
       selectable,
       showIcon,

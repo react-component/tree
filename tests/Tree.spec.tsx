@@ -2,8 +2,8 @@
 react/no-unused-state, react/prop-types, no-return-assign */
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import { resetWarned } from 'rc-util/lib/warning';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import { resetWarned } from '@rc-component/util/lib/warning';
+import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import Tree, { TreeNode } from '../src';
 import { objectMatcher, spyConsole, spyError } from './util';
 import { UnstableContext } from '../src';
@@ -1311,6 +1311,35 @@ describe('Tree Basic', () => {
       expect(getByRole('treeitem', { name: 'leaf 1' })).toHaveClass('rc-tree-treenode-disabled');
       expect(getByRole('treeitem', { name: 'leaf 2' })).toHaveClass('rc-tree-treenode-disabled');
     });
+
+    it('correct handle closure', () => {
+      let disabled = false;
+      const nodeDisabled = () => disabled;
+
+      const singleTreeData = [
+        {
+          title: '0',
+          key: '0',
+        },
+      ];
+
+      const renderDemo = () => (
+        <UnstableContext.Provider
+          value={{
+            nodeDisabled,
+          }}
+        >
+          <Tree defaultExpandAll treeData={singleTreeData} />
+        </UnstableContext.Provider>
+      );
+
+      const { container, rerender } = render(renderDemo());
+      expect(container.querySelector('.rc-tree-treenode-disabled')).toBeFalsy();
+
+      disabled = true;
+      rerender(renderDemo());
+      expect(container.querySelector('.rc-tree-treenode-disabled')).toBeTruthy();
+    });
   });
   it('leaf className', () => {
     const data = [
@@ -1334,5 +1363,52 @@ describe('Tree Basic', () => {
     const { container } = render(<Tree treeData={data} expandedKeys={['0-0', '0-0-1']} />);
     const treeNodes = container.querySelectorAll('.rc-tree-treenode-leaf');
     expect(treeNodes.length).toBe(4);
+  });
+  it('support classNames and styles', () => {
+    const data = [
+      {
+        title: '0-0',
+        key: '0-0',
+        children: [
+          { title: '0-0-0', key: '0-0-0' },
+          {
+            title: '0-0-1',
+            key: '0-0-1',
+            children: [
+              { title: '0-0-1-0', key: '0-0-1-0' },
+              { title: '0-0-1-1', key: '0-0-1-1' },
+            ],
+          },
+        ],
+      },
+      { title: '0-1', key: '0-1' },
+    ];
+    const testClassNames = {
+      item: 'test-item',
+      itemIcon: 'test-icon',
+      itemTitle: 'test-title',
+    };
+    const testStyles = {
+      item: { background: 'red' },
+      itemIcon: { color: 'blue' },
+      itemTitle: { color: 'yellow' },
+    };
+    const { container } = render(
+      <Tree
+        treeData={data}
+        expandedKeys={['0-0', '0-0-1']}
+        styles={testStyles}
+        classNames={testClassNames}
+      />,
+    );
+    const item = container.querySelector(`.${testClassNames.item}`);
+    const icon = container.querySelector('.rc-tree-iconEle');
+    const title = container.querySelector('.rc-tree-title');
+
+    expect(icon).toHaveStyle(testStyles.itemIcon);
+    expect(icon).toHaveClass(testClassNames.itemIcon);
+    expect(title).toHaveStyle(testStyles.itemTitle);
+    expect(title).toHaveClass(testClassNames.itemTitle);
+    expect(item).toHaveStyle(testStyles.item);
   });
 });
