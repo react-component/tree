@@ -46,8 +46,8 @@
     "*": "prettier --write --ignore-unknown"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "devDependencies": {
     "@rc-component/father-plugin": "^2.0.3",
