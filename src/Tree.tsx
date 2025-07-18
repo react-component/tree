@@ -1372,6 +1372,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       focusable,
       tabIndex = 0,
       selectable,
+      multiple,
       showIcon,
       icon,
       switcherIcon,
@@ -1473,6 +1474,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             data={flattenNodes}
             disabled={disabled}
             selectable={selectable}
+            multiselectable={multiple}
             checkable={!!checkable}
             motion={motion}
             dragging={draggingNodeKey !== null}
