@@ -650,6 +650,7 @@ exports[`Tree Basic renders correctly 1`] = `
     </div>
   </div>
   <div
+    aria-multiselectable="true"
     class="rc-tree-list"
     role="tree"
     style="position: relative;"

@@ -74,6 +74,7 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   tabIndex: number;
   checkable?: boolean;
   selectable?: boolean;
+  multiselectable?: boolean;
   disabled?: boolean;
 
   expandedKeys: Key[];
@@ -141,6 +142,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     prefixCls,
     data,
     selectable,
+    multiselectable,
     checkable,
     expandedKeys,
     selectedKeys,
@@ -330,6 +332,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
         role="tree"
+        aria-multiselectable={!multiselectable ? undefined : true}
         onVisibleChange={originList => {
           // The best match is using `fullList` - `originList` = `restList`
           // and check the `restList` to see if has the MOTION_KEY node
