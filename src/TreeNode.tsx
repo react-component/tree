@@ -47,6 +47,8 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   const [dragNodeHighlight, setDragNodeHighlight] = React.useState<boolean>(false);
 
+  const ariaId = React.useId();
+
   // ======= State: Disabled State =======
   const isDisabled = !!(context.disabled || props.disabled || unstableContext.nodeDisabled?.(data));
 
@@ -382,6 +384,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       >
         {$icon}
         <span
+          id={`${context.prefixCls}-title-${ariaId}`}
           className={classNames(`${context.prefixCls}-title`, treeClassNames?.itemTitle)}
           style={styles?.itemTitle}
         >
@@ -423,6 +426,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       ref={domRef}
       role="treeitem"
       aria-expanded={isLeaf ? undefined : expanded}
+      aria-labelledby={`${context.prefixCls}-title-${ariaId}`}
       className={classNames(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
         [`${context.prefixCls}-treenode-disabled`]: isDisabled,
         [`${context.prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,

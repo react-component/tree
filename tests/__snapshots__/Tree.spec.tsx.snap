@@ -41,6 +41,7 @@ exports[`Tree Basic check basic render 1`] = `
           <div
             aria-checked="false"
             aria-expanded="true"
+            aria-labelledby="rc-tree-title-:rs:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
@@ -68,6 +69,7 @@ exports[`Tree Basic check basic render 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:rs:"
               >
                 ---
               </span>
@@ -76,6 +78,7 @@ exports[`Tree Basic check basic render 1`] = `
           <div
             aria-checked="false"
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:rt:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -108,6 +111,7 @@ exports[`Tree Basic check basic render 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:rt:"
               >
                 ---
               </span>
@@ -116,6 +120,7 @@ exports[`Tree Basic check basic render 1`] = `
           <div
             aria-checked="false"
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:ru:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -147,6 +152,7 @@ exports[`Tree Basic check basic render 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:ru:"
               >
                 ---
               </span>
@@ -200,6 +206,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
           <div
             aria-checked="true"
             aria-expanded="true"
+            aria-labelledby="rc-tree-title-:r1p:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last"
             draggable="false"
@@ -227,6 +234,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r1p:"
               >
                 Light
               </span>
@@ -235,6 +243,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
           <div
             aria-checked="true"
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r1q:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -266,6 +275,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r1q:"
               >
                 Bamboo
               </span>
@@ -319,6 +329,7 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
           <div
             aria-checked="true"
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r1o:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-checkbox-checked rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -346,6 +357,7 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r1o:"
               >
                 parent 1
               </span>
@@ -398,6 +410,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
         >
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r34:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -419,6 +432,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r34:"
               >
                 00
               </span>
@@ -426,6 +440,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r35:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -447,6 +462,7 @@ exports[`Tree Basic ignore illegal node as Tree children Direct TreeNode 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r35:"
               >
                 02
               </span>
@@ -499,6 +515,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
         >
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r36:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -520,6 +537,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r36:"
               >
                 00
               </span>
@@ -527,6 +545,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           </div>
           <div
             aria-expanded="true"
+            aria-labelledby="rc-tree-title-:r37:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
@@ -548,6 +567,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r37:"
               >
                 01
               </span>
@@ -555,6 +575,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r38:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -580,6 +601,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r38:"
               >
                 010
               </span>
@@ -587,6 +609,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r39:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -612,6 +635,7 @@ exports[`Tree Basic ignore illegal node as Tree children Sub TreeNode 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r39:"
               >
                 012
               </span>
@@ -666,6 +690,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-checked="false"
             aria-expanded="true"
+            aria-labelledby="rc-tree-title-:r0:"
             aria-selected="false"
             class="spe rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
@@ -693,6 +718,7 @@ exports[`Tree Basic renders correctly 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r0:"
               >
                 parent 1
               </span>
@@ -701,6 +727,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-checked="false"
             aria-expanded="true"
+            aria-labelledby="rc-tree-title-:r1:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
             draggable="false"
@@ -733,6 +760,7 @@ exports[`Tree Basic renders correctly 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r1:"
               >
                 leaf 1
               </span>
@@ -741,6 +769,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-checked="false"
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r2:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -775,6 +804,7 @@ exports[`Tree Basic renders correctly 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r2:"
               >
                 leaf
               </span>
@@ -783,6 +813,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-checked="false"
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r3:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -817,6 +848,7 @@ exports[`Tree Basic renders correctly 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r3:"
               >
                 leaf
               </span>
@@ -825,6 +857,7 @@ exports[`Tree Basic renders correctly 1`] = `
           <div
             aria-checked="false"
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r4:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -857,6 +890,7 @@ exports[`Tree Basic renders correctly 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r4:"
               >
                 leaf 2
               </span>
@@ -909,6 +943,7 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
         >
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r33:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
             draggable="false"
@@ -930,6 +965,7 @@ exports[`Tree Basic renders opaque children correctly 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r33:"
               >
                 0
               </span>
@@ -983,6 +1019,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
         >
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r70:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -1004,6 +1041,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r70:"
               >
                 0
               </span>
@@ -1011,6 +1049,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r71:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -1032,6 +1071,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r71:"
               >
                 1
               </span>
@@ -1039,6 +1079,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r72:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -1060,6 +1101,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r72:"
               >
                 2
               </span>
@@ -1067,6 +1109,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r73:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -1088,6 +1131,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r73:"
               >
                 3
               </span>
@@ -1095,6 +1139,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r74:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -1116,6 +1161,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r74:"
               >
                 4
               </span>
@@ -1123,6 +1169,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r75:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -1144,6 +1191,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r75:"
               >
                 5
               </span>
@@ -1151,6 +1199,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r76:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -1172,6 +1221,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r76:"
               >
                 6
               </span>
@@ -1179,6 +1229,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r77:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
@@ -1200,6 +1251,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r77:"
               >
                 7
               </span>
@@ -1207,6 +1259,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
           </div>
           <div
             aria-expanded="false"
+            aria-labelledby="rc-tree-title-:r78:"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -1228,6 +1281,7 @@ exports[`Tree Basic should support rootStyle and rootClassName 1`] = `
               />
               <span
                 class="rc-tree-title"
+                id="rc-tree-title-:r78:"
               >
                 8
               </span>
