@@ -45,12 +45,18 @@
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
   },
-  "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+  "dependencies": {
+    "@rc-component/motion": "^1.0.0",
+    "@rc-component/util": "^1.2.1",
+    "clsx": "^2.1.1",
+    "rc-virtual-list": "^3.5.1"
   },
   "devDependencies": {
+    "@rc-component/dialog": "^1.0.0",
     "@rc-component/father-plugin": "^2.0.3",
+    "@rc-component/np": "^1.0.0",
+    "@rc-component/tooltip": "^1.0.0",
+    "@rc-component/trigger": "^3.0.0",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^16.1.0",
     "@types/jest": "^30.0.0",
@@ -69,20 +75,14 @@
     "husky": "^9.1.6",
     "less": "^4.2.1",
     "lint-staged": "^16.1.2",
-    "@rc-component/np": "^1.0.0",
     "prettier": "^3.3.3",
-    "@rc-component/dialog": "^1.0.0",
     "rc-test": "^7.0.15",
-    "@rc-component/tooltip": "^1.0.0",
-    "@rc-component/trigger": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.3.3"
   },
-  "dependencies": {
-    "classnames": "2.x",
-    "@rc-component/motion": "^1.0.0",
-    "@rc-component/util": "^1.2.1",
-    "rc-virtual-list": "^3.5.1"
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
   }
 }

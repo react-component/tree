@@ -1,7 +1,7 @@
 // TODO: https://www.w3.org/TR/2017/NOTE-wai-aria-practices-1.1-20171214/examples/treeview/treeview-2/treeview-2a.html
 // Fully accessibility support
 
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import warning from '@rc-component/util/lib/warning';
@@ -1459,7 +1459,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     return (
       <TreeContext.Provider value={contextValue}>
         <div
-          className={classNames(prefixCls, className, rootClassName, {
+          className={clsx(prefixCls, className, rootClassName, {
             [`${prefixCls}-show-line`]: showLine,
             [`${prefixCls}-focused`]: focused,
             [`${prefixCls}-active-focused`]: activeKey !== null,
