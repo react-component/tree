@@ -1,13 +1,13 @@
 /* eslint no-console:0 */
 /* eslint no-alert:0 */
 import React from 'react';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import Tree, { TreeNode } from '@rc-component/tree';
 import '../../assets/index.less';
 import './icon.less';
 
 const Icon = ({ selected }) => (
-  <span className={classNames('customize-icon', selected && 'selected-icon')} />
+  <span className={clsx('customize-icon', selected && 'selected-icon')} />
 );
 
 const Demo = () => (

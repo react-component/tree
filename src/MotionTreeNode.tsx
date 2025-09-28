@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
 import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
 import * as React from 'react';
@@ -84,7 +84,7 @@ const MotionTreeNode = React.forwardRef<HTMLDivElement, MotionTreeNodeProps>((or
         {({ className: motionClassName, style: motionStyle }, motionRef) => (
           <div
             ref={motionRef}
-            className={classNames(`${prefixCls}-treenode-motion`, motionClassName)}
+            className={clsx(`${prefixCls}-treenode-motion`, motionClassName)}
             style={motionStyle}
           >
             {motionNodes.map(treeNode => {

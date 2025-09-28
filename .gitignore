@@ -22,6 +22,7 @@ coverage/
 *.pyc
 *.pyo
 package-lock.json
+pnpm-lock.yaml
 .build
 node_modules
 .cache

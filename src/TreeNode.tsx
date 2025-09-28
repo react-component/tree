@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
@@ -228,10 +228,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       const switcherIconDom = renderSwitcherIconDom(true);
       return switcherIconDom !== false ? (
         <span
-          className={classNames(
-            `${context.prefixCls}-switcher`,
-            `${context.prefixCls}-switcher-noop`,
-          )}
+          className={clsx(`${context.prefixCls}-switcher`, `${context.prefixCls}-switcher-noop`)}
         >
           {switcherIconDom}
         </span>
@@ -241,7 +238,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     return switcherIconDom !== false ? (
       <span
         onClick={onExpand}
-        className={classNames(
+        className={clsx(
           `${context.prefixCls}-switcher`,
           `${context.prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
         )}
@@ -262,7 +259,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
     return (
       <span
-        className={classNames(`${context.prefixCls}-checkbox`, {
+        className={clsx(`${context.prefixCls}-checkbox`, {
           [`${context.prefixCls}-checkbox-checked`]: checked,
           [`${context.prefixCls}-checkbox-indeterminate`]: !checked && halfChecked,
           [`${context.prefixCls}-checkbox-disabled`]: isDisabled || props.disableCheckbox,
@@ -290,7 +287,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const iconNode = React.useMemo<React.ReactNode>(() => {
     return (
       <span
-        className={classNames(
+        className={clsx(
           treeClassNames?.itemIcon,
           `${context.prefixCls}-iconEle`,
           `${context.prefixCls}-icon__${nodeState || 'docu'}`,
@@ -341,7 +338,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
       $icon = currentIcon ? (
         <span
-          className={classNames(
+          className={clsx(
             treeClassNames?.itemIcon,
             `${context.prefixCls}-iconEle`,
             `${context.prefixCls}-icon__customize`,
@@ -371,7 +368,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       <span
         ref={selectHandleRef}
         title={typeof title === 'string' ? title : ''}
-        className={classNames(wrapClass, `${wrapClass}-${nodeState || 'normal'}`, {
+        className={clsx(wrapClass, `${wrapClass}-${nodeState || 'normal'}`, {
           [`${context.prefixCls}-node-selected`]: !isDisabled && (selected || dragNodeHighlight),
         })}
         onMouseEnter={onMouseEnter}
@@ -382,7 +379,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       >
         {$icon}
         <span
-          className={classNames(`${context.prefixCls}-title`, treeClassNames?.itemTitle)}
+          className={clsx(`${context.prefixCls}-title`, treeClassNames?.itemTitle)}
           style={styles?.itemTitle}
         >
           {titleNode}
@@ -421,7 +418,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       ref={domRef}
       role="treeitem"
       aria-expanded={isLeaf ? undefined : expanded}
-      className={classNames(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
+      className={clsx(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
         [`${context.prefixCls}-treenode-disabled`]: isDisabled,
         [`${context.prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
         [`${context.prefixCls}-treenode-checkbox-checked`]: checked,

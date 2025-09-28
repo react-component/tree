@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import * as React from 'react';
 
 interface IndentProps {
@@ -15,7 +15,7 @@ const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd }) => 
     list.push(
       <span
         key={i}
-        className={classNames(baseClassName, {
+        className={clsx(baseClassName, {
           [`${baseClassName}-start`]: isStart[i],
           [`${baseClassName}-end`]: isEnd[i],
         })}
