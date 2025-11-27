@@ -74,10 +74,12 @@ export type KeyEntities<DateType extends BasicDataNode = any> = Record<
   DataEntity<DateType>
 >;
 
-export type DataNode = FieldDataNode<{
-  key: Key;
-  title?: React.ReactNode | ((data: DataNode) => React.ReactNode);
-}>;
+export type DataNode<T = Record<string, unknown>> = FieldDataNode<
+  {
+    key: Key;
+    title?: React.ReactNode | ((data: DataNode<T>) => React.ReactNode);
+  } & T
+>;
 
 export type EventDataNode<TreeDataType> = {
   key: Key;
@@ -151,4 +153,5 @@ export interface FieldNames {
   _title?: string[];
   key?: string;
   children?: string;
+  [key: string]: string | string[] | undefined;
 }
