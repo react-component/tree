@@ -3,7 +3,7 @@
  */
 
 import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
-import VirtualList, { type ListRef } from 'rc-virtual-list';
+import VirtualList, { type ListRef } from '@rc-component/virtual-list';
 import * as React from 'react';
 import MotionTreeNode from './MotionTreeNode';
 import type {

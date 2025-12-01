@@ -2,7 +2,7 @@ import React from 'react';
 import {render} from '@testing-library/react';
 import Tree from '../src';
 
-jest.mock('rc-virtual-list', () => jest.requireActual('rc-virtual-list'));
+jest.mock('@rc-component/virtual-list', () => jest.requireActual('@rc-component/virtual-list'));
 
 describe('Tree Virtual', () => {
   it('should display all nodes when for nonvirtual tree', () => {
