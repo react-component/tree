@@ -75,7 +75,7 @@
     "lint-staged": "^16.1.2",
     "prettier": "^3.3.3",
     "rc-test": "^7.0.15",
-    "react": "^18.2.0",
+    "react": "^19.2.2",
     "react-dom": "^18.2.0",
     "typescript": "^5.3.3"
   },
