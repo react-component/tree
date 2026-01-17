@@ -186,7 +186,9 @@
       cursor: not-allowed;
     }
   }
-  &-treenode-active {
+
+  // only keyboard focus ring
+  &-list:focus-visible &-treenode-active {
     background: rgba(0, 0, 0, 0.1);
     outline: 1px solid cyan !important;
   }
