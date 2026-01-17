@@ -1358,7 +1358,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       flattenNodes,
       keyEntities,
       draggingNodeKey,
-      activeKey,
       dropLevelOffset,
       dropContainerKey,
       dropTargetKey,

@@ -110,18 +110,6 @@ function itemKey(item: FlattenNode) {
   return getKey(key, pos);
 }
 
-function getAccessibilityPath(item: FlattenNode): string {
-  let path = String(item.data.key);
-  let current = item;
-
-  while (current.parent) {
-    current = current.parent;
-    path = `${current.data.key} > ${path}`;
-  }
-
-  return path;
-}
-
 const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) => {
   const {
     prefixCls,
