@@ -268,7 +268,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         role="checkbox"
         aria-checked={halfChecked ? 'mixed' : checked}
         aria-disabled={isDisabled || props.disableCheckbox}
-        aria-label={`Select ${typeof props.title === 'string' ? props.title : 'tree node'}`}
       >
         {$custom}
       </span>
