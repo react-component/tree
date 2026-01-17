@@ -7,6 +7,7 @@
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "types": ["@testing-library/jest-dom", "node", "jest"],
     "paths": { "@/*": ["src/*"], "@@/*": ["src/.umi/*"], "@rc-component/tree": ["src/index.ts"] }
   },
   "include": [

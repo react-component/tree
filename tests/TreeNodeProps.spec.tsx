@@ -209,7 +209,7 @@ describe('TreeNode Props', () => {
     fireEvent.click(container.querySelector('.test-button'));
     onClick.mockRestore();
     onSelect.mockRestore();
-    expect(container.querySelectorAll('[aria-selected=false]')).toHaveLength(1);
+    expect(container.querySelectorAll('[aria-selected=false]')).toHaveLength(2);
     fireEvent.click(container.querySelectorAll('.rc-tree-node-content-wrapper')[1]);
     expect(onClick).toHaveBeenCalled();
     expect(onSelect).not.toHaveBeenCalled();
@@ -233,7 +233,7 @@ describe('TreeNode Props', () => {
 
     render(<Demo filed="test-check" checkable={true} />);
     render(<Demo filed="test-click" checkable={false} />);
-    
+
     fireEvent.click(document.querySelector('.test-check'));
     fireEvent.click(document.querySelector('.test-click'));
 

@@ -26,7 +26,7 @@ describe('Tree Accessibility', () => {
         onActiveChange.mockReset();
       }
 
-      const { container } = render(
+      const { container, getByRole } = render(
         <Tree
           {...props}
           onExpand={onExpand}
@@ -40,7 +40,7 @@ describe('Tree Accessibility', () => {
       );
 
       function keyDown(keyCode: number) {
-        fireEvent.keyDown(container.querySelector('input'), {
+        fireEvent.keyDown(getByRole('tree'), {
           keyCode,
         });
       }
@@ -54,7 +54,7 @@ describe('Tree Accessibility', () => {
       }
 
       // Focus
-      fireEvent.focus(container.querySelector('input'));
+      fireEvent.focus(getByRole('tree'));
       expect(onFocus).toHaveBeenCalled();
 
       // Arrow up: last one
@@ -112,7 +112,7 @@ describe('Tree Accessibility', () => {
       checkKeyDownTrigger();
 
       // Blur
-      fireEvent.blur(container.querySelector('input'));
+      fireEvent.blur(getByRole('tree'));
       expect(onBlur).toHaveBeenCalled();
 
       // null activeKey
@@ -154,23 +154,25 @@ describe('Tree Accessibility', () => {
     });
 
     it('not crash if not exist', () => {
-      const { container } = render(<Tree defaultExpandAll treeData={[]} />);
+      const { container, getByRole } = render(<Tree defaultExpandAll treeData={[]} />);
 
-      fireEvent.focus(container.querySelector('input'));
+      fireEvent.focus(getByRole('tree'));
 
       // Arrow should not work
-      fireEvent.keyDown(container.querySelector('input'), {
+      fireEvent.keyDown(getByRole('tree'), {
         keyCode: KeyCode.UP,
       });
       expect(container.querySelector('.rc-tree-treenode-active')).toBeFalsy();
     });
 
     it('remove active if mouse hover', () => {
-      const { container } = render(<Tree defaultExpandAll treeData={[{ key: 'parent' }]} />);
+      const { container, getByRole } = render(
+        <Tree defaultExpandAll treeData={[{ key: 'parent' }]} />,
+      );
 
-      fireEvent.focus(container.querySelector('input'));
+      fireEvent.focus(getByRole('tree'));
 
-      fireEvent.keyDown(container.querySelector('input'), {
+      fireEvent.keyDown(getByRole('tree'), {
         keyCode: KeyCode.UP,
       });
       expect(container.querySelector('.rc-tree-treenode-active')).toBeTruthy();
@@ -184,7 +186,7 @@ describe('Tree Accessibility', () => {
       const onActiveChange = jest.fn();
       const onSelect = jest.fn();
 
-      const { container } = render(
+      const { container, getByRole } = render(
         <Tree<FieldDataNode<{ value: string }>>
           defaultExpandAll
           treeData={[{ value: 'first' }, { value: 'second' }]}
@@ -194,19 +196,19 @@ describe('Tree Accessibility', () => {
         />,
       );
 
-      fireEvent.focus(container.querySelector('input'));
+      fireEvent.focus(getByRole('tree'));
 
-      fireEvent.keyDown(container.querySelector('input'), {
+      fireEvent.keyDown(getByRole('tree'), {
         keyCode: KeyCode.DOWN,
       });
       expect(onActiveChange).toHaveBeenCalledWith('first');
 
-      fireEvent.keyDown(container.querySelector('input'), {
+      fireEvent.keyDown(getByRole('tree'), {
         keyCode: KeyCode.DOWN,
       });
       expect(onActiveChange).toHaveBeenCalledWith('second');
 
-      fireEvent.keyDown(container.querySelector('input'), {
+      fireEvent.keyDown(getByRole('tree'), {
         keyCode: KeyCode.ENTER,
       });
       expect(onSelect).toHaveBeenCalledWith(['second'], expect.anything());
@@ -214,8 +216,43 @@ describe('Tree Accessibility', () => {
   });
 
   it('disabled should prevent keyboard', () => {
-    const { container } = render(<Tree disabled />);
-    expect(container.querySelector('input')).toHaveAttribute('disabled');
+    const onActiveChange = jest.fn();
+    const onExpand = jest.fn();
+    const onSelect = jest.fn();
+    const onCheck = jest.fn();
+
+    const { container, getByRole } = render(
+      <Tree
+        disabled
+        checkable
+        defaultExpandAll
+        treeData={[
+          {
+            key: 'parent',
+            children: [{ key: 'child 1' }, { key: 'child 2' }],
+          },
+        ]}
+        onActiveChange={onActiveChange}
+        onExpand={onExpand}
+        onSelect={onSelect}
+        onCheck={onCheck}
+      />,
+    );
+
+    const tree = getByRole('tree');
+    expect(tree).not.toHaveAttribute('tabindex');
+
+    fireEvent.keyDown(tree, { key: 'ArrowDown' });
+    expect(container.querySelector('.rc-tree-treenode-active')).toBeFalsy();
+    expect(tree).not.toHaveAttribute('aria-activedescendant');
+    expect(onActiveChange).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(tree, { key: 'ArrowRight' });
+    expect(onExpand).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(tree, { key: 'Enter' });
+    expect(onCheck).not.toHaveBeenCalled();
+    expect(onSelect).not.toHaveBeenCalled();
   });
 
   describe('activeKey in control', () => {
