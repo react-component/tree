@@ -185,7 +185,7 @@ describe('Tree Accessibility', () => {
       const onActiveChange = jest.fn();
       const onSelect = jest.fn();
 
-      const { container, getByRole } = render(
+      const { getByRole } = render(
         <Tree<FieldDataNode<{ value: string }>>
           defaultExpandAll
           treeData={[{ value: 'first' }, { value: 'second' }]}
@@ -271,6 +271,46 @@ describe('Tree Accessibility', () => {
     fireEvent.keyDown(tree, { key: 'Enter' });
     expect(onCheck).not.toHaveBeenCalled();
     expect(onSelect).not.toHaveBeenCalled();
+  });
+
+  describe('disabled node aria attributes', () => {
+    it('disabled node should not have aria-selected', () => {
+      const { getByRole } = render(
+        <Tree
+          defaultSelectedKeys={['normal', 'disabled']}
+          treeData={[
+            { key: 'normal', title: 'Normal Node' },
+            { key: 'disabled', title: 'Disabled Node', disabled: true },
+          ]}
+        />,
+      );
+
+      const normalNode = getByRole('treeitem', { name: 'Normal Node' });
+      const disabledNode = getByRole('treeitem', { name: 'Disabled Node' });
+
+      expect(normalNode).toHaveAttribute('aria-selected', 'true');
+      expect(disabledNode).not.toHaveAttribute('aria-selected');
+    });
+
+    it('disabled node should not have aria-checked', () => {
+      const { getByRole } = render(
+        <Tree
+          checkable
+          selectable={false}
+          defaultCheckedKeys={['normal', 'disabled']}
+          treeData={[
+            { key: 'normal', title: 'Normal Node' },
+            { key: 'disabled', title: 'Disabled Node', disabled: true },
+          ]}
+        />,
+      );
+
+      const normalNode = getByRole('treeitem', { name: 'Normal Node' });
+      const disabledNode = getByRole('treeitem', { name: 'Disabled Node' });
+
+      expect(normalNode).toHaveAttribute('aria-checked', 'true');
+      expect(disabledNode).not.toHaveAttribute('aria-checked');
+    });
   });
 
   describe('activeKey in control', () => {
