@@ -1243,7 +1243,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
-    const { activeKey, expandedKeys, checkedKeys, fieldNames } = this.state;
+    const { activeKey, expandedKeys, checkedKeys, fieldNames, flattenNodes } = this.state;
     const { onKeyDown, checkable, selectable, disabled } = this.props;
 
     if (disabled) {
@@ -1259,6 +1259,16 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       }
       case 'ArrowDown': {
         this.offsetActiveKey(1);
+        event.preventDefault();
+        break;
+      }
+      case 'Home': {
+        this.onActiveChange(flattenNodes[0].key);
+        event.preventDefault();
+        break;
+      }
+      case 'End': {
+        this.onActiveChange(flattenNodes[flattenNodes.length - 1].key);
         event.preventDefault();
         break;
       }

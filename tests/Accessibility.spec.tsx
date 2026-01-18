@@ -273,6 +273,36 @@ describe('Tree Accessibility', () => {
     expect(onSelect).not.toHaveBeenCalled();
   });
 
+  it('Home/End key navigation', () => {
+    const onActiveChange = jest.fn();
+
+    const { getByRole } = render(
+      <Tree
+        onActiveChange={onActiveChange}
+        defaultExpandedKeys={['parent']}
+        treeData={[
+          {
+            key: 'parent',
+            children: [{ key: 'child 1' }, { key: 'child 2' }, { key: 'child 3' }],
+          },
+        ]}
+      />,
+    );
+
+    const tree = getByRole('tree');
+    fireEvent.focus(tree);
+    onActiveChange.mockReset();
+
+    fireEvent.keyDown(tree, { key: 'End' });
+    expect(tree).toHaveAttribute('aria-activedescendant', 'child 3');
+    expect(onActiveChange).toHaveBeenCalledWith('child 3');
+
+    onActiveChange.mockReset();
+    fireEvent.keyDown(tree, { key: 'Home' });
+    expect(tree).toHaveAttribute('aria-activedescendant', 'parent');
+    expect(onActiveChange).toHaveBeenCalledWith('parent');
+  });
+
   describe('disabled node aria attributes', () => {
     it('disabled node should not have aria-selected', () => {
       const { getByRole } = render(
