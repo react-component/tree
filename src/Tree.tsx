@@ -1067,10 +1067,20 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     const { activeKey, selectedKeys, flattenNodes } = this.state;
 
     if (!disabled && activeKey === null) {
-      if (selectedKeys.length) {
-        this.onActiveChange(selectedKeys[0]);
-      } else if (flattenNodes.length) {
-        this.onActiveChange(flattenNodes[0].key);
+      const isNodeDisabled = (item: FlattenNode<TreeDataType>) => !!item.data.disabled;
+
+      const activeSelectedKey = selectedKeys.find(key => {
+        const selectedItem = flattenNodes.find(nodeItem => nodeItem.key === key);
+        return selectedItem && !isNodeDisabled(selectedItem);
+      });
+
+      if (activeSelectedKey !== undefined) {
+        this.onActiveChange(activeSelectedKey);
+      } else {
+        const firstEnabledItem = flattenNodes.find(nodeItem => !isNodeDisabled(nodeItem));
+        if (firstEnabledItem) {
+          this.onActiveChange(firstEnabledItem.key);
+        }
       }
     }
 
