@@ -1257,12 +1257,12 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
         break;
       }
       case 'Home': {
-        this.onActiveChange(flattenNodes[0].key);
+        this.onActiveChange(flattenNodes?.[0]?.key);
         event.preventDefault();
         break;
       }
       case 'End': {
-        this.onActiveChange(flattenNodes[flattenNodes.length - 1].key);
+        this.onActiveChange(flattenNodes?.[flattenNodes.length - 1]?.key);
         event.preventDefault();
         break;
       }
