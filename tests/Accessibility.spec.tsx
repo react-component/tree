@@ -222,6 +222,18 @@ describe('Tree Accessibility', () => {
       expect(tree).toHaveAttribute('aria-activedescendant', 'b');
     });
 
+    it('should active selected node when key is 0', () => {
+      const { getByRole } = render(
+        <Tree defaultSelectedKeys={[0]} treeData={[{ key: 0 }, { key: 1 }]} />,
+      );
+
+      const tree = getByRole('tree');
+      expect(tree).not.toHaveAttribute('aria-activedescendant');
+
+      fireEvent.focus(tree);
+      expect(tree).toHaveAttribute('aria-activedescendant', '0');
+    });
+
     it('should active first node when focused without selection', () => {
       const { getByRole } = render(<Tree treeData={[{ key: 'a' }, { key: 'b' }]} />);
 
