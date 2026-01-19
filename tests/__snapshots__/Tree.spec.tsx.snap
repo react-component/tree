@@ -67,6 +67,7 @@ exports[`Tree Basic check basic render 1`] = `
             </span>
           </div>
           <div
+            aria-disabled="true"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-close rc-tree-treenode-leaf"
             draggable="false"
             id="0-0-0"
@@ -651,6 +652,7 @@ exports[`Tree Basic renders correctly 1`] = `
             </span>
           </div>
           <div
+            aria-disabled="true"
             aria-expanded="true"
             class="rc-tree-treenode rc-tree-treenode-disabled rc-tree-treenode-switcher-open"
             draggable="false"
