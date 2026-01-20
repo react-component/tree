@@ -205,11 +205,11 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   }, [context.draggable]);
 
   // ====================== Render: Switcher ======================
-  const renderSwitcherIconDom = (isInternalLeaf: boolean) => {
+  const renderSwitcherIconDom = (isLeafNode: boolean) => {
     const switcherIcon = props.switcherIcon || context.switcherIcon;
     // if switcherIconDom is null, no render switcher span
     if (typeof switcherIcon === 'function') {
-      return switcherIcon({ ...props, isLeaf: isInternalLeaf });
+      return switcherIcon({ ...props, isLeaf: isLeafNode });
     }
     return switcherIcon;
   };
