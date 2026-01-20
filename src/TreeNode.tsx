@@ -5,7 +5,7 @@ import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
-import { convertNodePropsToEventData } from './utils/treeUtil';
+import { convertNodePropsToEventData, isInternalLeaf } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -179,14 +179,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   // ======= State: Leaf Check =======
   const memoizedIsLeaf = React.useMemo<boolean>(() => {
-    if (isLeaf === false) {
-      return false;
-    }
-    return (
-      isLeaf ||
-      (!context.loadData && !hasChildren) ||
-      (context.loadData && props.loaded && !hasChildren)
-    );
+    return isInternalLeaf(isLeaf, context.loadData, hasChildren, props.loaded);
   }, [isLeaf, context.loadData, hasChildren, props.loaded]);
 
   // ============== Effect ==============

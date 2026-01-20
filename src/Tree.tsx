@@ -50,6 +50,7 @@ import {
   fillFieldNames,
   flattenTreeData,
   getTreeNodeProps,
+  isInternalLeaf,
   warningWithoutKey,
 } from './utils/treeUtil';
 
@@ -1237,8 +1238,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
-    const { activeKey, expandedKeys, checkedKeys, fieldNames, flattenNodes } = this.state;
-    const { onKeyDown, checkable, selectable, disabled } = this.props;
+    const { activeKey, expandedKeys, checkedKeys, flattenNodes, keyEntities } = this.state;
+    const { onKeyDown, checkable, selectable, disabled, loadData } = this.props;
 
     if (disabled) {
       return;
@@ -1272,14 +1273,19 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     const activeItem = this.getActiveItem();
     if (activeItem && activeItem.data) {
       const treeNodeRequiredProps = this.getTreeNodeRequiredProps();
-
-      const expandable =
-        activeItem.data.isLeaf === false || !!(activeItem.data[fieldNames.children] || []).length;
       const eventNode = convertNodePropsToEventData<TreeDataType>({
         ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
         data: activeItem.data,
         active: true,
       });
+      const entity = getEntity(keyEntities, activeKey);
+      const hasChildren = !!entity?.children?.length;
+      const expandable = !isInternalLeaf(
+        activeItem.data.isLeaf,
+        loadData,
+        hasChildren,
+        eventNode.loaded,
+      );
 
       const canCheck =
         checkable &&

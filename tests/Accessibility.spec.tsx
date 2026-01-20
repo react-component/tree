@@ -177,6 +177,21 @@ describe('Tree Accessibility', () => {
       expect(onExpand).not.toHaveBeenCalled();
     });
 
+    it('should expand when dynamically loading data', () => {
+      const onExpand = jest.fn();
+      const loadData = jest.fn(() => Promise.resolve());
+
+      const { getByRole } = render(
+        <Tree onExpand={onExpand} loadData={loadData} treeData={[{ key: 'parent' }]} />,
+      );
+
+      const tree = getByRole('tree');
+      fireEvent.focus(tree);
+
+      fireEvent.keyDown(tree, { key: 'ArrowRight' });
+      expect(onExpand).toHaveBeenCalledWith(['parent'], expect.anything());
+    });
+
     it('Enter checks when unchecked and does not uncheck when already checked', () => {
       const onCheck = jest.fn();
 
