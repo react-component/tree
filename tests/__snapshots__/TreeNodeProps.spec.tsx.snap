@@ -32,6 +32,7 @@ exports[`TreeNode Props className 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-expanded="true"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
@@ -61,6 +62,7 @@ exports[`TreeNode Props className 1`] = `
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-expanded="true"
             aria-selected="false"
             class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
@@ -94,6 +96,7 @@ exports[`TreeNode Props className 1`] = `
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -129,6 +132,7 @@ exports[`TreeNode Props className 1`] = `
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -161,6 +165,7 @@ exports[`TreeNode Props className 1`] = `
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -227,6 +232,7 @@ exports[`TreeNode Props customize icon component 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -297,6 +303,7 @@ exports[`TreeNode Props customize icon element 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -367,6 +374,7 @@ exports[`TreeNode Props customize icon hide icon 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -430,6 +438,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-expanded="true"
             aria-label="0-0"
             aria-selected="false"
@@ -460,6 +469,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-expanded="true"
             aria-label="0-0-0"
             aria-selected="false"
@@ -494,6 +504,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-label="0-0-0-0"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
@@ -530,6 +541,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-label="0-0-1"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
@@ -563,6 +575,7 @@ exports[`TreeNode Props data and aria props renders aria attributes on li 1`] = 
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-label="0-1"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
@@ -630,6 +643,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-expanded="true"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open"
@@ -660,6 +674,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-expanded="true"
             aria-selected="false"
             class="tree-node-cls rc-tree-treenode rc-tree-treenode-switcher-open"
@@ -694,6 +709,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             data-test="0-0-0-0"
@@ -730,6 +746,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             data-test="0-0-1"
@@ -763,6 +780,7 @@ exports[`TreeNode Props data and aria props renders data attributes on li 1`] = 
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             data-test="0-1"
@@ -830,6 +848,7 @@ exports[`TreeNode Props isLeaf 1`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -855,6 +874,7 @@ exports[`TreeNode Props isLeaf 1`] = `
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -922,6 +942,7 @@ exports[`TreeNode Props isLeaf 2`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -950,6 +971,7 @@ exports[`TreeNode Props isLeaf 2`] = `
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
@@ -1020,6 +1042,7 @@ exports[`TreeNode Props isLeaf 3`] = `
           style="display: flex; flex-direction: column;"
         >
           <div
+            aria-disabled="false"
             aria-expanded="true"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
@@ -1049,6 +1072,7 @@ exports[`TreeNode Props isLeaf 3`] = `
             </span>
           </div>
           <div
+            aria-disabled="false"
             aria-expanded="false"
             aria-selected="false"
             class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last"
