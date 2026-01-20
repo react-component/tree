@@ -419,8 +419,8 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       id={eventKey as string}
       aria-expanded={memoizedIsLeaf ? undefined : expanded}
       aria-selected={isSelectable && !isDisabled ? selected : undefined}
-      aria-checked={isCheckable && !isDisabled ? checked : undefined}
-      aria-disabled={data?.disabled}
+      aria-checked={isCheckable && !isDisabled ? (halfChecked ? 'mixed' : checked) : undefined}
+      aria-disabled={isDisabled}
       className={clsx(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
         [`${context.prefixCls}-treenode-disabled`]: isDisabled,
         [`${context.prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
