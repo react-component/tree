@@ -1281,6 +1281,14 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
         active: true,
       });
 
+      const canCheck =
+        checkable &&
+        !eventNode.disabled &&
+        eventNode.checkable !== false &&
+        !eventNode.disableCheckbox;
+      const canSelect =
+        !checkable && selectable && !eventNode.disabled && eventNode.selectable !== false;
+
       switch (event.key) {
         // >>> Expand
         case 'ArrowLeft': {
@@ -1304,27 +1312,31 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           break;
         }
 
-        // Selection
-        case 'Enter':
+        case 'Enter': {
+          if (expandable) {
+            event.preventDefault();
+            this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          } else if (canCheck) {
+            if (!checkedKeys.includes(activeKey)) {
+              event.preventDefault();
+              this.onNodeCheck({} as React.MouseEvent<HTMLDivElement>, eventNode, true);
+            }
+          } else if (canSelect && !eventNode.selected) {
+            event.preventDefault();
+            this.onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          }
+          break;
+        }
+
         case ' ': {
-          if (
-            checkable &&
-            !eventNode.disabled &&
-            eventNode.checkable !== false &&
-            !eventNode.disableCheckbox
-          ) {
+          if (canCheck) {
             event.preventDefault();
             this.onNodeCheck(
               {} as React.MouseEvent<HTMLDivElement>,
               eventNode,
               !checkedKeys.includes(activeKey),
             );
-          } else if (
-            !checkable &&
-            selectable &&
-            !eventNode.disabled &&
-            eventNode.selectable !== false
-          ) {
+          } else if (canSelect) {
             event.preventDefault();
             this.onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
           }

@@ -133,7 +133,7 @@ describe('Tree Accessibility', () => {
           onSelect.mockReset();
         },
         () => {
-          expect(onSelect).toHaveBeenCalledWith([], expect.anything());
+          expect(onSelect).not.toHaveBeenCalled();
         },
       );
     });
@@ -147,9 +147,52 @@ describe('Tree Accessibility', () => {
           onCheck.mockReset();
         },
         () => {
-          expect(onCheck).toHaveBeenCalledWith([], expect.anything());
+          expect(onCheck).not.toHaveBeenCalled();
         },
       );
+    });
+
+    it('Enter expands parent and Space selects without expanding', () => {
+      const onExpand = jest.fn();
+      const onSelect = jest.fn();
+
+      const { getByRole } = render(
+        <Tree
+          onExpand={onExpand}
+          onSelect={onSelect}
+          treeData={[{ key: 'parent', children: [{ key: 'child' }] }, { key: 'single' }]}
+        />,
+      );
+
+      const tree = getByRole('tree');
+      fireEvent.focus(tree);
+
+      fireEvent.keyDown(tree, { key: 'Enter' });
+      expect(onExpand).toHaveBeenCalledWith(['parent'], expect.anything());
+      expect(onSelect).not.toHaveBeenCalled();
+
+      onExpand.mockReset();
+      fireEvent.keyDown(tree, { key: ' ' });
+      expect(onSelect).toHaveBeenCalledWith(['parent'], expect.anything());
+      expect(onExpand).not.toHaveBeenCalled();
+    });
+
+    it('Enter checks when unchecked and does not uncheck when already checked', () => {
+      const onCheck = jest.fn();
+
+      const { getByRole } = render(
+        <Tree checkable selectable={false} onCheck={onCheck} treeData={[{ key: 'leaf' }]} />,
+      );
+
+      const tree = getByRole('tree');
+      fireEvent.focus(tree);
+
+      fireEvent.keyDown(tree, { key: 'Enter' });
+      expect(onCheck).toHaveBeenCalledWith(['leaf'], expect.anything());
+      onCheck.mockReset();
+
+      fireEvent.keyDown(tree, { key: 'Enter' });
+      expect(onCheck).not.toHaveBeenCalled();
     });
 
     it('not crash if not exist', () => {
