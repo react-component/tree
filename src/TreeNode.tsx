@@ -404,7 +404,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const draggableWithoutDisabled = !isDisabled && isDraggable;
 
   const dragging = context.draggingNodeKey === eventKey;
-  const ariaSelected = selectable !== undefined ? { 'aria-selected': !!selectable } : undefined;
   return (
     <div
       ref={domRef}
@@ -444,7 +443,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       onDrop={isDraggable ? onDrop : undefined}
       onDragEnd={isDraggable ? onDragEnd : undefined}
       onMouseMove={onMouseMove}
-      {...ariaSelected}
       {...dataOrAriaAttributeProps}
     >
       <Indent prefixCls={context.prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
