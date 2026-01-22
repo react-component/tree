@@ -50,7 +50,7 @@ import {
   fillFieldNames,
   flattenTreeData,
   getTreeNodeProps,
-  isInternalLeaf,
+  isLeafNode,
   warningWithoutKey,
 } from './utils/treeUtil';
 
@@ -1280,7 +1280,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       });
       const entity = getEntity(keyEntities, activeKey);
       const hasChildren = !!entity?.children?.length;
-      const expandable = !isInternalLeaf(
+      const expandable = !isLeafNode(
         activeItem.data.isLeaf,
         loadData,
         hasChildren,

@@ -5,7 +5,7 @@ import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
-import { convertNodePropsToEventData, isInternalLeaf } from './utils/treeUtil';
+import { convertNodePropsToEventData, isLeafNode } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -179,7 +179,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   // ======= State: Leaf Check =======
   const memoizedIsLeaf = React.useMemo<boolean>(() => {
-    return isInternalLeaf(isLeaf, context.loadData, hasChildren, props.loaded);
+    return isLeafNode(isLeaf, context.loadData, hasChildren, props.loaded);
   }, [isLeaf, context.loadData, hasChildren, props.loaded]);
 
   // ============== Effect ==============
@@ -205,11 +205,11 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   }, [context.draggable]);
 
   // ====================== Render: Switcher ======================
-  const renderSwitcherIconDom = (isLeafNode: boolean) => {
+  const renderSwitcherIconDom = (isInternalLeaf: boolean) => {
     const switcherIcon = props.switcherIcon || context.switcherIcon;
     // if switcherIconDom is null, no render switcher span
     if (typeof switcherIcon === 'function') {
-      return switcherIcon({ ...props, isLeaf: isLeafNode });
+      return switcherIcon({ ...props, isLeaf: isInternalLeaf });
     }
     return switcherIcon;
   };

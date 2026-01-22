@@ -366,7 +366,7 @@ export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = Data
   keyEntities: KeyEntities<TreeDataType>;
 }
 
-export function isInternalLeaf<TreeDataType extends BasicDataNode = DataNode>(
+export function isLeafNode<TreeDataType extends BasicDataNode = DataNode>(
   isLeaf: boolean | undefined,
   loadData: ((node: EventDataNode<TreeDataType>) => Promise<any>) | undefined,
   hasChildren: boolean,
