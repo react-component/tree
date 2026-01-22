@@ -1,8 +1,7 @@
-// TODO: https://www.w3.org/TR/2017/NOTE-wai-aria-practices-1.1-20171214/examples/treeview/treeview-2/treeview-2a.html
-// Fully accessibility support
+// TODO: Fully accessibility support
+// Reference: https://www.w3.org/WAI/ARIA/apg/patterns/treeview
 
 import { clsx } from 'clsx';
-import KeyCode from '@rc-component/util/lib/KeyCode';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import warning from '@rc-component/util/lib/warning';
 import * as React from 'react';
@@ -51,6 +50,7 @@ import {
   fillFieldNames,
   flattenTreeData,
   getTreeNodeProps,
+  isLeafNode,
   warningWithoutKey,
 } from './utils/treeUtil';
 
@@ -222,7 +222,6 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   treeData: TreeDataType[];
   flattenNodes: FlattenNode<TreeDataType>[];
 
-  focused: boolean;
   activeKey: Key | null;
 
   // Record if list is changing
@@ -298,7 +297,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     treeData: [],
     flattenNodes: [],
 
-    focused: false,
     activeKey: null,
 
     listChanging: false,
@@ -1066,15 +1064,26 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
-    const { onFocus } = this.props;
-    this.setState({ focused: true });
+    const { onFocus, disabled } = this.props;
+    const { activeKey, selectedKeys, flattenNodes } = this.state;
+
+    if (!disabled && activeKey === null) {
+      const visibleSelectedKey = selectedKeys.find(key => {
+        return flattenNodes.some(nodeItem => nodeItem.key === key);
+      });
+
+      if (visibleSelectedKey !== undefined) {
+        this.onActiveChange(visibleSelectedKey);
+      } else {
+        this.onActiveChange(flattenNodes?.[0]?.key || null);
+      }
+    }
 
     onFocus?.(...args);
   };
 
   onBlur: React.FocusEventHandler<HTMLDivElement> = (...args) => {
     const { onBlur } = this.props;
-    this.setState({ focused: false });
     this.onActiveChange(null);
 
     onBlur?.(...args);
@@ -1229,18 +1238,32 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
-    const { activeKey, expandedKeys, checkedKeys, fieldNames } = this.state;
-    const { onKeyDown, checkable, selectable } = this.props;
+    const { activeKey, expandedKeys, checkedKeys, flattenNodes, keyEntities } = this.state;
+    const { onKeyDown, checkable, selectable, disabled, loadData } = this.props;
+
+    if (disabled) {
+      return;
+    }
 
     // >>>>>>>>>> Direction
-    switch (event.which) {
-      case KeyCode.UP: {
+    switch (event.key) {
+      case 'ArrowUp': {
         this.offsetActiveKey(-1);
         event.preventDefault();
         break;
       }
-      case KeyCode.DOWN: {
+      case 'ArrowDown': {
         this.offsetActiveKey(1);
+        event.preventDefault();
+        break;
+      }
+      case 'Home': {
+        this.onActiveChange(flattenNodes?.[0]?.key);
+        event.preventDefault();
+        break;
+      }
+      case 'End': {
+        this.onActiveChange(flattenNodes?.[flattenNodes.length - 1]?.key);
         event.preventDefault();
         break;
       }
@@ -1250,18 +1273,31 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     const activeItem = this.getActiveItem();
     if (activeItem && activeItem.data) {
       const treeNodeRequiredProps = this.getTreeNodeRequiredProps();
-
-      const expandable =
-        activeItem.data.isLeaf === false || !!(activeItem.data[fieldNames.children] || []).length;
       const eventNode = convertNodePropsToEventData<TreeDataType>({
         ...getTreeNodeProps(activeKey, treeNodeRequiredProps),
         data: activeItem.data,
         active: true,
       });
+      const entity = getEntity(keyEntities, activeKey);
+      const hasChildren = !!entity?.children?.length;
+      const expandable = !isLeafNode(
+        activeItem.data.isLeaf,
+        loadData,
+        hasChildren,
+        eventNode.loaded,
+      );
 
-      switch (event.which) {
+      const canCheck =
+        checkable &&
+        !eventNode.disabled &&
+        eventNode.checkable !== false &&
+        !eventNode.disableCheckbox;
+      const canSelect =
+        !checkable && selectable && !eventNode.disabled && eventNode.selectable !== false;
+
+      switch (event.key) {
         // >>> Expand
-        case KeyCode.LEFT: {
+        case 'ArrowLeft': {
           // Collapse if possible
           if (expandable && expandedKeys.includes(activeKey)) {
             this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
@@ -1271,7 +1307,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           event.preventDefault();
           break;
         }
-        case KeyCode.RIGHT: {
+        case 'ArrowRight': {
           // Expand if possible
           if (expandable && !expandedKeys.includes(activeKey)) {
             this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
@@ -1282,26 +1318,32 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           break;
         }
 
-        // Selection
-        case KeyCode.ENTER:
-        case KeyCode.SPACE: {
-          if (
-            checkable &&
-            !eventNode.disabled &&
-            eventNode.checkable !== false &&
-            !eventNode.disableCheckbox
-          ) {
+        case 'Enter': {
+          if (expandable) {
+            event.preventDefault();
+            this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          } else if (canCheck) {
+            if (!checkedKeys.includes(activeKey)) {
+              event.preventDefault();
+              this.onNodeCheck({} as React.MouseEvent<HTMLDivElement>, eventNode, true);
+            }
+          } else if (canSelect && !eventNode.selected) {
+            event.preventDefault();
+            this.onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          }
+          break;
+        }
+
+        case ' ': {
+          if (canCheck) {
+            event.preventDefault();
             this.onNodeCheck(
               {} as React.MouseEvent<HTMLDivElement>,
               eventNode,
               !checkedKeys.includes(activeKey),
             );
-          } else if (
-            !checkable &&
-            selectable &&
-            !eventNode.disabled &&
-            eventNode.selectable !== false
-          ) {
+          } else if (canSelect) {
+            event.preventDefault();
             this.onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
           }
           break;
@@ -1350,11 +1392,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   render() {
     const {
-      focused,
       flattenNodes,
       keyEntities,
       draggingNodeKey,
-      activeKey,
       dropLevelOffset,
       dropContainerKey,
       dropTargetKey,
@@ -1461,8 +1501,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
         <div
           className={clsx(prefixCls, className, rootClassName, {
             [`${prefixCls}-show-line`]: showLine,
-            [`${prefixCls}-focused`]: focused,
-            [`${prefixCls}-active-focused`]: activeKey !== null,
           })}
           style={rootStyle}
         >
@@ -1480,7 +1518,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             itemHeight={itemHeight}
             virtual={virtual}
             focusable={focusable}
-            focused={focused}
             tabIndex={tabIndex}
             activeItem={this.getActiveItem()}
             onFocus={this.onFocus}

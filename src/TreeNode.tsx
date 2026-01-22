@@ -5,7 +5,7 @@ import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
-import { convertNodePropsToEventData } from './utils/treeUtil';
+import { convertNodePropsToEventData, isLeafNode } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -179,14 +179,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   // ======= State: Leaf Check =======
   const memoizedIsLeaf = React.useMemo<boolean>(() => {
-    if (isLeaf === false) {
-      return false;
-    }
-    return (
-      isLeaf ||
-      (!context.loadData && !hasChildren) ||
-      (context.loadData && props.loaded && !hasChildren)
-    );
+    return isLeafNode(isLeaf, context.loadData, hasChildren, props.loaded);
   }, [isLeaf, context.loadData, hasChildren, props.loaded]);
 
   // ============== Effect ==============
@@ -268,7 +261,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         role="checkbox"
         aria-checked={halfChecked ? 'mixed' : checked}
         aria-disabled={isDisabled || props.disableCheckbox}
-        aria-label={`Select ${typeof props.title === 'string' ? props.title : 'tree node'}`}
       >
         {$custom}
       </span>
@@ -412,12 +404,15 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const draggableWithoutDisabled = !isDisabled && isDraggable;
 
   const dragging = context.draggingNodeKey === eventKey;
-  const ariaSelected = selectable !== undefined ? { 'aria-selected': !!selectable } : undefined;
   return (
     <div
       ref={domRef}
       role="treeitem"
-      aria-expanded={isLeaf ? undefined : expanded}
+      id={eventKey as string}
+      aria-expanded={memoizedIsLeaf ? undefined : expanded}
+      aria-selected={isSelectable && !isDisabled ? selected : undefined}
+      aria-checked={isCheckable && !isDisabled ? (halfChecked ? 'mixed' : checked) : undefined}
+      aria-disabled={isDisabled}
       className={clsx(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
         [`${context.prefixCls}-treenode-disabled`]: isDisabled,
         [`${context.prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
@@ -448,7 +443,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       onDrop={isDraggable ? onDrop : undefined}
       onDragEnd={isDraggable ? onDragEnd : undefined}
       onMouseMove={onMouseMove}
-      {...ariaSelected}
       {...dataOrAriaAttributeProps}
     >
       <Indent prefixCls={context.prefixCls} level={level} isStart={isStart} isEnd={isEnd} />

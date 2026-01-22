@@ -5,8 +5,8 @@
   margin: 0;
   border: 1px solid transparent;
 
-  &-focused:not(&-active-focused) {
-    border-color: cyan;
+  &-list:focus-visible {
+    outline: none;
   }
 
   // padding: 5px;
@@ -186,12 +186,11 @@
       cursor: not-allowed;
     }
   }
-  &-treenode-active {
-    background: rgba(0, 0, 0, 0.1);
 
-    // .@{treePrefixCls}-node-content-wrapper {
-    //   background: rgba(0, 0, 0, 0.1);
-    // }
+  // only keyboard focus ring
+  &-list:focus-visible &-treenode-active {
+    background: rgba(0, 0, 0, 0.1);
+    outline: 1px solid black;
   }
   &-node-selected {
     background-color: #ffe6b0;

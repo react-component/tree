@@ -198,8 +198,8 @@ describe('TreeNode Props', () => {
     }
 
     const { container } = render(<Demo />);
-    // tree selectable is false ,then children should be selectable = false if not set selectable alone.
-    expect(container.querySelectorAll('[aria-selected=false]')).toHaveLength(1);
+    // tree selectable is false ,tree node should not have aria-selected attr
+    expect(container.querySelectorAll('[aria-selected=false]')).toHaveLength(0);
 
     fireEvent.click(container.querySelector('.rc-tree-node-content-wrapper'));
     expect(onClick).toHaveBeenCalled();
@@ -233,7 +233,7 @@ describe('TreeNode Props', () => {
 
     render(<Demo filed="test-check" checkable={true} />);
     render(<Demo filed="test-click" checkable={false} />);
-    
+
     fireEvent.click(document.querySelector('.test-check'));
     fireEvent.click(document.querySelector('.test-click'));
 

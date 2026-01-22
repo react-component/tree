@@ -18,19 +18,6 @@ import type {
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps } from './utils/treeUtil';
 
-const HIDDEN_STYLE = {
-  width: 0,
-  height: 0,
-  display: 'flex',
-  overflow: 'hidden',
-  opacity: 0,
-  border: 0,
-  padding: 0,
-  margin: 0,
-};
-
-const noop = () => {};
-
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
 const MotionNode: DataNode = {
@@ -70,7 +57,6 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   motion: any;
   focusable?: boolean;
   activeItem: FlattenNode<TreeDataType>;
-  focused?: boolean;
   tabIndex: number;
   checkable?: boolean;
   selectable?: boolean;
@@ -124,18 +110,6 @@ function itemKey(item: FlattenNode) {
   return getKey(key, pos);
 }
 
-function getAccessibilityPath(item: FlattenNode): string {
-  let path = String(item.data.key);
-  let current = item;
-
-  while (current.parent) {
-    current = current.parent;
-    path = `${current.data.key} > ${path}`;
-  }
-
-  return path;
-}
-
 const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) => {
   const {
     prefixCls,
@@ -163,7 +137,6 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
 
     focusable,
     activeItem,
-    focused,
     tabIndex,
 
     onKeyDown,
@@ -280,26 +253,6 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
 
   return (
     <>
-      {focused && activeItem && (
-        <span style={HIDDEN_STYLE} aria-live="assertive">
-          {getAccessibilityPath(activeItem)}
-        </span>
-      )}
-
-      <div>
-        <input
-          style={HIDDEN_STYLE}
-          disabled={focusable === false || disabled}
-          tabIndex={focusable !== false ? tabIndex : null}
-          onKeyDown={onKeyDown}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          value=""
-          onChange={noop}
-          aria-label="for screen reader"
-        />
-      </div>
-
       <div
         className={`${prefixCls}-treenode`}
         aria-hidden
@@ -330,6 +283,11 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         prefixCls={`${prefixCls}-list`}
         ref={listRef}
         role="tree"
+        tabIndex={focusable !== false && !disabled ? tabIndex : undefined}
+        aria-activedescendant={activeItem ? (activeItem.key as string) : undefined}
+        onKeyDown={onKeyDown}
+        onFocus={onFocus}
+        onBlur={onBlur}
         onVisibleChange={originList => {
           // The best match is using `fullList` - `originList` = `restList`
           // and check the `restList` to see if has the MOTION_KEY node

@@ -366,6 +366,18 @@ export interface TreeNodeRequiredProps<TreeDataType extends BasicDataNode = Data
   keyEntities: KeyEntities<TreeDataType>;
 }
 
+export function isLeafNode<TreeDataType extends BasicDataNode = DataNode>(
+  isLeaf: boolean | undefined,
+  loadData: ((node: EventDataNode<TreeDataType>) => Promise<any>) | undefined,
+  hasChildren: boolean,
+  loaded: boolean,
+): boolean {
+  if (isLeaf === false) {
+    return false;
+  }
+  return isLeaf || (!loadData && !hasChildren) || (loadData && loaded && !hasChildren);
+}
+
 /**
  * Get TreeNode props with Tree props.
  */
