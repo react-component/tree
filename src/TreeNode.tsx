@@ -4,9 +4,8 @@ import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
-import { getTreeNodeId } from './NodeList';
 import getEntity from './utils/keyUtil';
-import { convertNodePropsToEventData, isLeafNode } from './utils/treeUtil';
+import { convertNodePropsToEventData, isLeafNode, getTreeNodeId } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';

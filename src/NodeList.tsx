@@ -16,12 +16,8 @@ import type {
   ScrollTo,
 } from './interface';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
-import { getKey, getTreeNodeProps } from './utils/treeUtil';
+import { getKey, getTreeNodeProps, getTreeNodeId } from './utils/treeUtil';
 import useId from '@rc-component/util/lib/hooks/useId';
-
-export function getTreeNodeId(treeId: string, key: React.Key): string {
-  return `${treeId}-${key}`;
-}
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
