@@ -4,6 +4,7 @@ import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
+import { getTreeNodeId } from './NodeList';
 import getEntity from './utils/keyUtil';
 import { convertNodePropsToEventData, isLeafNode } from './utils/treeUtil';
 
@@ -35,6 +36,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     data,
     onMouseMove,
     selectable,
+    treeId,
     ...otherProps
   } = props;
 
@@ -404,11 +406,13 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const draggableWithoutDisabled = !isDisabled && isDraggable;
 
   const dragging = context.draggingNodeKey === eventKey;
+  const nodeId = getTreeNodeId(treeId, eventKey);
+
   return (
     <div
       ref={domRef}
       role="treeitem"
-      id={eventKey as string}
+      id={nodeId}
       aria-expanded={memoizedIsLeaf ? undefined : expanded}
       aria-selected={isSelectable && !isDisabled ? selected : undefined}
       aria-checked={isCheckable && !isDisabled ? (halfChecked ? 'mixed' : checked) : undefined}
