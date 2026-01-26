@@ -39,6 +39,8 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     ...otherProps
   } = props;
 
+  const nodeId = getTreeNodeId(treeId, eventKey);
+
   const context = React.useContext(TreeContext);
   const { classNames: treeClassNames, styles } = context || {};
 
@@ -262,11 +264,12 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         role="checkbox"
         aria-checked={halfChecked ? 'mixed' : checked}
         aria-disabled={isDisabled || props.disableCheckbox}
+        aria-labelledby={nodeId}
       >
         {$custom}
       </span>
     );
-  }, [isCheckable, checked, halfChecked, isDisabled, props.disableCheckbox, props.title]);
+  }, [isCheckable, checked, halfChecked, isDisabled, props.disableCheckbox, nodeId]);
 
   // ============== State: Node State (Open/Close) ==============
   const nodeState = React.useMemo<typeof ICON_OPEN | typeof ICON_CLOSE>(() => {
@@ -405,7 +408,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const draggableWithoutDisabled = !isDisabled && isDraggable;
 
   const dragging = context.draggingNodeKey === eventKey;
-  const nodeId = getTreeNodeId(treeId, eventKey);
 
   return (
     <div

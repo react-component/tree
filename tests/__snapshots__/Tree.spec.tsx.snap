@@ -50,6 +50,7 @@ exports[`Tree Basic check basic render 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -88,6 +89,7 @@ exports[`Tree Basic check basic render 1`] = `
             <span
               aria-checked="false"
               aria-disabled="true"
+              aria-labelledby="test-id-0-0-0"
               class="rc-tree-checkbox rc-tree-checkbox-disabled"
               role="checkbox"
             />
@@ -127,6 +129,7 @@ exports[`Tree Basic check basic render 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0-1"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -201,6 +204,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
             />
             <span
               aria-checked="true"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox rc-tree-checkbox-checked"
               role="checkbox"
             />
@@ -240,6 +244,7 @@ exports[`Tree Basic check check after data ready works 1`] = `
             />
             <span
               aria-checked="true"
+              aria-labelledby="test-id-0-0-0"
               class="rc-tree-checkbox rc-tree-checkbox-checked"
               role="checkbox"
             />
@@ -313,6 +318,7 @@ exports[`Tree Basic check check update when Tree trigger componentWillReceivePro
             />
             <span
               aria-checked="true"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox rc-tree-checkbox-checked"
               role="checkbox"
             />
@@ -646,6 +652,7 @@ exports[`Tree Basic renders correctly 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -685,6 +692,7 @@ exports[`Tree Basic renders correctly 1`] = `
             <span
               aria-checked="false"
               aria-disabled="true"
+              aria-labelledby="test-id-0-0-0"
               class="rc-tree-checkbox rc-tree-checkbox-disabled"
               role="checkbox"
             />
@@ -727,6 +735,7 @@ exports[`Tree Basic renders correctly 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-random"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -769,6 +778,7 @@ exports[`Tree Basic renders correctly 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0-0-1"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -809,6 +819,7 @@ exports[`Tree Basic renders correctly 1`] = `
             <span
               aria-checked="false"
               aria-disabled="true"
+              aria-labelledby="test-id-0-0-1"
               class="rc-tree-checkbox rc-tree-checkbox-disabled"
               role="checkbox"
             />

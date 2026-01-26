@@ -50,6 +50,7 @@ exports[`Tree Props checkStrictly 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -89,6 +90,7 @@ exports[`Tree Props checkStrictly 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -163,6 +165,7 @@ exports[`Tree Props checkable default 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -202,6 +205,7 @@ exports[`Tree Props checkable default 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -275,6 +279,7 @@ exports[`Tree Props checkable without selectable 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -313,6 +318,7 @@ exports[`Tree Props checkable without selectable 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -1211,6 +1217,7 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -1250,6 +1257,7 @@ exports[`Tree Props invalidate checkedKeys null 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -1324,6 +1332,7 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
@@ -1363,6 +1372,7 @@ exports[`Tree Props invalidate checkedKeys number 1`] = `
             />
             <span
               aria-checked="false"
+              aria-labelledby="test-id-0-0-0"
               class="rc-tree-checkbox"
               role="checkbox"
             />
