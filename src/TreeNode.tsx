@@ -5,7 +5,7 @@ import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
-import { convertNodePropsToEventData, isLeafNode } from './utils/treeUtil';
+import { convertNodePropsToEventData, isLeafNode, getTreeNodeId } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -35,6 +35,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     data,
     onMouseMove,
     selectable,
+    treeId,
     ...otherProps
   } = props;
 
@@ -404,11 +405,13 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const draggableWithoutDisabled = !isDisabled && isDraggable;
 
   const dragging = context.draggingNodeKey === eventKey;
+  const nodeId = getTreeNodeId(treeId, eventKey);
+
   return (
     <div
       ref={domRef}
       role="treeitem"
-      id={eventKey as string}
+      id={nodeId}
       aria-expanded={memoizedIsLeaf ? undefined : expanded}
       aria-selected={isSelectable && !isDisabled ? selected : undefined}
       aria-checked={isCheckable && !isDisabled ? (halfChecked ? 'mixed' : checked) : undefined}

@@ -16,7 +16,8 @@ import type {
   ScrollTo,
 } from './interface';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
-import { getKey, getTreeNodeProps } from './utils/treeUtil';
+import { getKey, getTreeNodeProps, getTreeNodeId } from './utils/treeUtil';
+import useId from '@rc-component/util/lib/hooks/useId';
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
@@ -149,6 +150,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
 
     ...domProps
   } = props;
+
+  const treeId = useId();
 
   // =============================== Ref ================================
   const listRef = React.useRef<ListRef>(null);
@@ -284,7 +287,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         ref={listRef}
         role="tree"
         tabIndex={focusable !== false && !disabled ? tabIndex : undefined}
-        aria-activedescendant={activeItem ? (activeItem.key as string) : undefined}
+        aria-activedescendant={activeItem ? getTreeNodeId(treeId, activeItem.key) : undefined}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -329,6 +332,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
               onMotionStart={onListChangeStart}
               onMotionEnd={onMotionEnd}
               treeNodeRequiredProps={treeNodeRequiredProps}
+              treeId={treeId}
               onMouseMove={() => {
                 onActiveChange(null);
               }}

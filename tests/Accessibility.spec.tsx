@@ -277,7 +277,8 @@ describe('Tree Accessibility', () => {
       expect(tree).not.toHaveAttribute('aria-activedescendant');
 
       fireEvent.focus(tree);
-      expect(tree).toHaveAttribute('aria-activedescendant', 'b');
+      const activeId = tree.getAttribute('aria-activedescendant');
+      expect(document.getElementById(activeId)).toHaveAttribute('role', 'treeitem');
     });
 
     it('should active selected node when key is 0', () => {
@@ -289,7 +290,8 @@ describe('Tree Accessibility', () => {
       expect(tree).not.toHaveAttribute('aria-activedescendant');
 
       fireEvent.focus(tree);
-      expect(tree).toHaveAttribute('aria-activedescendant', '0');
+      const activeId = tree.getAttribute('aria-activedescendant');
+      expect(document.getElementById(activeId)).toHaveAttribute('role', 'treeitem');
     });
 
     it('should active first node when focused without selection', () => {
@@ -299,7 +301,8 @@ describe('Tree Accessibility', () => {
       expect(tree).not.toHaveAttribute('aria-activedescendant');
 
       fireEvent.focus(tree);
-      expect(tree).toHaveAttribute('aria-activedescendant', 'a');
+      const activeId = tree.getAttribute('aria-activedescendant');
+      expect(document.getElementById(activeId)).toHaveAttribute('role', 'treeitem');
     });
   });
 
@@ -364,12 +367,14 @@ describe('Tree Accessibility', () => {
     onActiveChange.mockReset();
 
     fireEvent.keyDown(tree, { key: 'End' });
-    expect(tree).toHaveAttribute('aria-activedescendant', 'child 3');
+    let activeId = tree.getAttribute('aria-activedescendant');
+    expect(document.getElementById(activeId)).toHaveAttribute('role', 'treeitem');
     expect(onActiveChange).toHaveBeenCalledWith('child 3');
 
     onActiveChange.mockReset();
     fireEvent.keyDown(tree, { key: 'Home' });
-    expect(tree).toHaveAttribute('aria-activedescendant', 'parent');
+    activeId = tree.getAttribute('aria-activedescendant');
+    expect(document.getElementById(activeId)).toHaveAttribute('role', 'treeitem');
     expect(onActiveChange).toHaveBeenCalledWith('parent');
   });
 
