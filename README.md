@@ -2,12 +2,7 @@
 
 Tree component.
 
-[![NPM version][npm-image]][npm-url]
-[![npm download][download-image]][download-url]
-[![build status][github-actions-image]][github-actions-url]
-[![Codecov][codecov-image]][codecov-url]
-[![bundle size][bundlephobia-image]][bundlephobia-url]
-[![dumi][dumi-image]][dumi-url]
+[![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-tree
@@ -45,6 +40,7 @@ online example: https://tree.react-component.now.sh/
 [![rc-tree](https://nodei.co/npm/rc-tree.png)](https://npmjs.org/package/rc-tree)
 
 ## Usage
+
 > Note: `import "rc-tree/assets/index.css"`
 
 see examples
@@ -95,7 +91,7 @@ see examples
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 | virtual | Disable virtual scroll when `false` | boolean | - |
 | allowDrop | Whether to allow drop on node | ({ dragNode, dropNode, dropPosition }) => boolean | - |
-| dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode| - |
+| dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode | - |
 | direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | - |
 | expandAction | Tree open logic, optional: false \| `click` \| `doubleClick` | string \| boolean | `click` |
 
