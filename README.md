@@ -1,4 +1,4 @@
-# rc-tree
+# @rc-component/tree
 
 Tree component.
 
@@ -9,8 +9,8 @@ Tree component.
 [![bundle size][bundlephobia-image]][bundlephobia-url]
 [![dumi][dumi-image]][dumi-url]
 
-[npm-image]: http://img.shields.io/npm/v/rc-tree.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/rc-tree
+[npm-image]: http://img.shields.io/npm/v/@rc-component/tree.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/@rc-component/tree
 [github-actions-image]: https://github.com/react-component/tree/actions/workflows/main.yml/badge.svg
 [github-actions-url]: https://github.com/react-component/tree/actions/workflows/main.yml
 [codecov-image]: https://img.shields.io/codecov/c/github/react-component/tree/master.svg?style=flat-square
@@ -19,10 +19,10 @@ Tree component.
 [david-image]: https://david-dm.org/react-component/tree/status.svg?style=flat-square
 [david-dev-url]: https://david-dm.org/react-component/tree?type=dev
 [david-dev-image]: https://david-dm.org/react-component/tree/dev-status.svg?style=flat-square
-[download-image]: https://img.shields.io/npm/dm/rc-tree.svg?style=flat-square
-[download-url]: https://npmjs.org/package/rc-tree
-[bundlephobia-url]: https://bundlephobia.com/result?p=rc-tree
-[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-tree
+[download-image]: https://img.shields.io/npm/dm/@rc-component/tree.svg?style=flat-square
+[download-url]: https://npmjs.org/package/@rc-component/tree
+[bundlephobia-url]: https://bundlephobia.com/result?p=@rc-component/tree
+[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/@rc-component/tree
 [dumi-url]: https://github.com/umijs/dumi
 [dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
 
@@ -42,10 +42,10 @@ online example: https://tree.react-component.now.sh/
 
 ## Install
 
-[![rc-tree](https://nodei.co/npm/rc-tree.png)](https://npmjs.org/package/rc-tree)
+[![@rc-component/tree](https://nodei.co/npm/@rc-component/tree.png)](https://npmjs.org/package/@rc-component/tree)
 
 ## Usage
-> Note: `import "rc-tree/assets/index.css"`
+> Note: `import "@rc-component/tree/assets/index.css"`
 
 see examples
 
@@ -139,7 +139,7 @@ http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front
 
 ## License
 
-rc-tree is released under the MIT license.
+@rc-component/tree is released under the MIT license.
 
 ## Other tree views
 
