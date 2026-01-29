@@ -33,7 +33,7 @@ const treeData = [
 
 class Demo extends React.Component {
   static defaultProps = {
-    keys: ['0-0-0-0'],
+    keys: ['0-0-0-0', '0-0-1-0'],
   };
 
   constructor(props) {
@@ -117,7 +117,7 @@ class Demo extends React.Component {
           <TreeNode title="parent 1" key="0-0">
             <TreeNode title={customLabel} key="0-0-0">
               <TreeNode title="leaf" key="0-0-0-0" style={{ background: 'rgba(255, 0, 0, 0.1)' }} />
-              <TreeNode title="leaf" key="0-0-0-1" />
+              <TreeNode title="leaf" key="0-0-0-1" disabled />
             </TreeNode>
             <TreeNode title="parent 1-1" key="0-0-1">
               <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
