@@ -288,7 +288,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         ref={listRef}
         role="tree"
         tabIndex={focusable !== false && !disabled ? tabIndex : undefined}
-        aria-activedescendant={activeItem ? getId(treeId, String(activeItem.key)) : undefined}
+        aria-activedescendant={activeItem ? getId(treeId, activeItem.key) : undefined}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}
