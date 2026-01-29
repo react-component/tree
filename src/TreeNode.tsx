@@ -1,11 +1,12 @@
 import React from 'react';
 import { clsx } from 'clsx';
+import { getId } from '@rc-component/util/lib/hooks/useId';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
 import getEntity from './utils/keyUtil';
-import { convertNodePropsToEventData, isLeafNode, getTreeNodeId } from './utils/treeUtil';
+import { convertNodePropsToEventData, isLeafNode } from './utils/treeUtil';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -39,7 +40,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     ...otherProps
   } = props;
 
-  const nodeId = getTreeNodeId(treeId, eventKey);
+  const nodeId = getId(treeId, eventKey);
 
   const context = React.useContext(TreeContext);
   const { classNames: treeClassNames, styles } = context || {};
