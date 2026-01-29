@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@rc-component/motion": "^1.0.0",
-    "@rc-component/util": "^1.2.1",
+    "@rc-component/util": "^1.8.1",
     "@rc-component/virtual-list": "^1.0.1",
     "clsx": "^2.1.1"
   },

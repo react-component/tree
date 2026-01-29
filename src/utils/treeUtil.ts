@@ -467,7 +467,3 @@ export function convertNodePropsToEventData<TreeDataType extends BasicDataNode =
 
   return eventData;
 }
-
-export function getTreeNodeId(treeId: string, key: React.Key): string {
-  return `${treeId}-${key}`;
-}
