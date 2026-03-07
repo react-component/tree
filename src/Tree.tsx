@@ -315,7 +315,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   currentMouseOverDroppableNodeKey = null;
 
   focusedByMouse = false;
-  pointerTimer: number | null = null;
+  mouseTimer: number | null = null;
 
   listRef = React.createRef<NodeListRef>();
 
@@ -342,7 +342,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   componentWillUnmount() {
     window.removeEventListener('dragend', this.onWindowDragEnd);
-    raf.cancel(this.pointerTimer);
+    raf.cancel(this.mouseTimer);
     this.destroyed = true;
   }
 
@@ -1072,8 +1072,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
     const { onMouseDown } = this.props;
     this.focusedByMouse = true;
-    raf.cancel(this.pointerTimer);
-    this.pointerTimer = raf(() => {
+    raf.cancel(this.mouseTimer);
+    this.mouseTimer = raf(() => {
       this.focusedByMouse = false;
     });
     onMouseDown?.(event);
