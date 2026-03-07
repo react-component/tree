@@ -1164,7 +1164,7 @@ describe('Tree Basic', () => {
     // trigger click to expand node
     fireEvent.click(container.querySelector('.rc-tree-switcher'));
     expect(container.querySelector('.rc-tree-switcher')).toHaveClass(OPEN_CLASSNAME);
-    expect(onExpand).toBeCalled();
+    expect(onExpand).toHaveBeenCalled();
 
     // click again
     onExpand.mockReset();
@@ -1201,7 +1201,7 @@ describe('Tree Basic', () => {
       <Tree itemHeight={10} height={100} treeData={data} onScroll={onScroll} />,
     );
     fireEvent.scroll(container.querySelector('.rc-tree-list-holder'));
-    expect(onScroll).toBeCalled();
+    expect(onScroll).toHaveBeenCalled();
   });
 
   it('should support rootStyle and rootClassName', () => {
@@ -1410,5 +1410,25 @@ describe('Tree Basic', () => {
     expect(title).toHaveStyle(testStyles.itemTitle);
     expect(title).toHaveClass(testClassNames.itemTitle);
     expect(item).toHaveStyle(testStyles.item);
+  });
+
+  it('should not scroll to top when click node and tree is focused', () => {
+    const data = [
+      { key: '0', title: '0' },
+      { key: '1', title: '1' },
+      { key: '2', title: '2' },
+    ];
+    const treeRef = React.createRef<any>();
+    const { container } = render(<Tree ref={treeRef} treeData={data} />);
+
+    const scrollToSpy = jest.spyOn(treeRef.current, 'scrollTo');
+
+    const treeContainer = container.querySelector('.rc-tree-list');
+
+    // Simulate pointer focus without existing selectedKeys
+    fireEvent.mouseDown(treeContainer);
+    fireEvent.focus(treeContainer);
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
   });
 });

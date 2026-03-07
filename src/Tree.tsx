@@ -4,6 +4,7 @@
 import { clsx } from 'clsx';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import warning from '@rc-component/util/lib/warning';
+import raf from '@rc-component/util/lib/raf';
 import * as React from 'react';
 
 import type {
@@ -118,6 +119,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   allowDrop?: AllowDrop<TreeDataType>;
   titleRender?: (node: TreeDataType) => React.ReactNode;
   dropIndicatorRender?: (props: DropIndicatorProps) => React.ReactNode;
+  onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
@@ -312,6 +314,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   currentMouseOverDroppableNodeKey = null;
 
+  focusedByMouse = false;
+  pointerTimer: number | null = null;
+
   listRef = React.createRef<NodeListRef>();
 
   componentDidMount(): void {
@@ -337,6 +342,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   componentWillUnmount() {
     window.removeEventListener('dragend', this.onWindowDragEnd);
+    raf.cancel(this.pointerTimer);
     this.destroyed = true;
   }
 
@@ -1063,11 +1069,21 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     }
   };
 
+  onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
+    const { onMouseDown } = this.props;
+    this.focusedByMouse = true;
+    raf.cancel(this.pointerTimer);
+    this.pointerTimer = raf(() => {
+      this.focusedByMouse = false;
+    });
+    onMouseDown?.(event);
+  };
+
   onFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
     const { onFocus, disabled } = this.props;
     const { activeKey, selectedKeys, flattenNodes } = this.state;
 
-    if (!disabled && activeKey === null) {
+    if (!this.focusedByMouse && !disabled && activeKey === null) {
       const visibleSelectedKey = selectedKeys.find(key => {
         return flattenNodes.some(nodeItem => nodeItem.key === key);
       });
@@ -1521,6 +1537,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             tabIndex={tabIndex}
             activeItem={this.getActiveItem()}
             onFocus={this.onFocus}
+            onMouseDown={this.onMouseDown}
             onBlur={this.onBlur}
             onKeyDown={this.onKeyDown}
             onActiveChange={this.onActiveChange}
