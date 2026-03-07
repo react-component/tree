@@ -1413,6 +1413,7 @@ describe('Tree Basic', () => {
   });
 
   it('should not scroll to top when click node and tree is focused', () => {
+    jest.useFakeTimers();
     const data = [
       { key: '0', title: '0' },
       { key: '1', title: '1' },
@@ -1420,15 +1421,20 @@ describe('Tree Basic', () => {
     ];
     const treeRef = React.createRef<any>();
     const { container } = render(<Tree ref={treeRef} treeData={data} />);
-
-    const scrollToSpy = jest.spyOn(treeRef.current, 'scrollTo');
-
     const treeContainer = container.querySelector('.rc-tree-list');
+    const scrollToSpy = jest.spyOn(treeRef.current, 'scrollTo');
 
     // Simulate pointer focus without existing selectedKeys
     fireEvent.mouseDown(treeContainer);
+    expect(treeRef.current.focusedByMouse).toBe(true);
     fireEvent.focus(treeContainer);
 
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(treeRef.current.focusedByMouse).toBe(false);
     expect(scrollToSpy).not.toHaveBeenCalled();
+    jest.useRealTimers();
   });
 });
