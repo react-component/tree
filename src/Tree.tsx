@@ -4,7 +4,6 @@
 import { clsx } from 'clsx';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 import warning from '@rc-component/util/lib/warning';
-import raf from '@rc-component/util/lib/raf';
 import * as React from 'react';
 
 import type {
@@ -120,6 +119,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   titleRender?: (node: TreeDataType) => React.ReactNode;
   dropIndicatorRender?: (props: DropIndicatorProps) => React.ReactNode;
   onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseUp?: React.MouseEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
@@ -315,7 +315,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   currentMouseOverDroppableNodeKey = null;
 
   focusedByMouse = false;
-  mouseTimer: number | null = null;
 
   listRef = React.createRef<NodeListRef>();
 
@@ -342,7 +341,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   componentWillUnmount() {
     window.removeEventListener('dragend', this.onWindowDragEnd);
-    raf.cancel(this.mouseTimer);
     this.destroyed = true;
   }
 
@@ -1070,13 +1068,15 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
-    const { onMouseDown } = this.props;
     this.focusedByMouse = true;
-    raf.cancel(this.mouseTimer);
-    this.mouseTimer = raf(() => {
-      this.focusedByMouse = false;
-    });
+    const { onMouseDown } = this.props;
     onMouseDown?.(event);
+  };
+
+  onMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
+    this.focusedByMouse = false;
+    const { onMouseUp } = this.props;
+    onMouseUp?.(event);
   };
 
   onFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
@@ -1099,6 +1099,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onBlur: React.FocusEventHandler<HTMLDivElement> = (...args) => {
+    this.focusedByMouse = false;
     const { onBlur } = this.props;
     this.onActiveChange(null);
 
@@ -1538,6 +1539,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             activeItem={this.getActiveItem()}
             onFocus={this.onFocus}
             onMouseDown={this.onMouseDown}
+            onMouseUp={this.onMouseUp}
             onBlur={this.onBlur}
             onKeyDown={this.onKeyDown}
             onActiveChange={this.onActiveChange}

@@ -1413,7 +1413,6 @@ describe('Tree Basic', () => {
   });
 
   it('should not scroll to top when click node and tree is focused', () => {
-    jest.useFakeTimers();
     const data = [
       { key: '0', title: '0' },
       { key: '1', title: '1' },
@@ -1428,13 +1427,10 @@ describe('Tree Basic', () => {
     fireEvent.mouseDown(treeContainer);
     expect(treeRef.current.focusedByMouse).toBe(true);
     fireEvent.focus(treeContainer);
-
-    act(() => {
-      jest.runAllTimers();
-    });
+    fireEvent.mouseUp(treeContainer);
 
     expect(treeRef.current.focusedByMouse).toBe(false);
     expect(scrollToSpy).not.toHaveBeenCalled();
-    jest.useRealTimers();
+    scrollToSpy.mockRestore();
   });
 });

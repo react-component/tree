@@ -85,6 +85,8 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
+  onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseUp?: React.MouseEventHandler<HTMLDivElement>;
   onActiveChange: (key: Key) => void;
 
   onListChangeStart: () => void;
@@ -144,6 +146,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
     onKeyDown,
     onFocus,
     onBlur,
+    onMouseDown,
+    onMouseUp,
     onActiveChange,
 
     onListChangeStart,
@@ -292,6 +296,8 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
         onKeyDown={onKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
         onVisibleChange={originList => {
           // The best match is using `fullList` - `originList` = `restList`
           // and check the `restList` to see if has the MOTION_KEY node
