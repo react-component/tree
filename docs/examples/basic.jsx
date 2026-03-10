@@ -105,6 +105,7 @@ class Demo extends React.Component {
           className="myCls"
           showLine
           checkable
+          height={150}
           defaultExpandAll
           defaultExpandedKeys={this.state.defaultExpandedKeys}
           onExpand={this.onExpand}

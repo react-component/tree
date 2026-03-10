@@ -118,6 +118,8 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   allowDrop?: AllowDrop<TreeDataType>;
   titleRender?: (node: TreeDataType) => React.ReactNode;
   dropIndicatorRender?: (props: DropIndicatorProps) => React.ReactNode;
+  onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseUp?: React.MouseEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
@@ -311,6 +313,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   dragNodeProps: TreeNodeProps<TreeDataType> = null;
 
   currentMouseOverDroppableNodeKey = null;
+
+  focusedByMouse = false;
 
   listRef = React.createRef<NodeListRef>();
 
@@ -1063,11 +1067,23 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     }
   };
 
+  onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
+    this.focusedByMouse = true;
+    const { onMouseDown } = this.props;
+    onMouseDown?.(event);
+  };
+
+  onMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
+    this.focusedByMouse = false;
+    const { onMouseUp } = this.props;
+    onMouseUp?.(event);
+  };
+
   onFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
     const { onFocus, disabled } = this.props;
     const { activeKey, selectedKeys, flattenNodes } = this.state;
 
-    if (!disabled && activeKey === null) {
+    if (!this.focusedByMouse && !disabled && activeKey === null) {
       const visibleSelectedKey = selectedKeys.find(key => {
         return flattenNodes.some(nodeItem => nodeItem.key === key);
       });
@@ -1083,6 +1099,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onBlur: React.FocusEventHandler<HTMLDivElement> = (...args) => {
+    this.focusedByMouse = false;
     const { onBlur } = this.props;
     this.onActiveChange(null);
 
@@ -1521,6 +1538,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             tabIndex={tabIndex}
             activeItem={this.getActiveItem()}
             onFocus={this.onFocus}
+            onMouseDown={this.onMouseDown}
+            onMouseUp={this.onMouseUp}
             onBlur={this.onBlur}
             onKeyDown={this.onKeyDown}
             onActiveChange={this.onActiveChange}
