@@ -1387,11 +1387,13 @@ describe('Tree Basic', () => {
       item: 'test-item',
       itemIcon: 'test-icon',
       itemTitle: 'test-title',
+      itemSwitcher: 'test-switcher',
     };
     const testStyles = {
       item: { background: 'red' },
       itemIcon: { color: 'blue' },
       itemTitle: { color: 'yellow' },
+      itemSwitcher: { width: '32px' },
     };
     const { container } = render(
       <Tree
@@ -1404,12 +1406,15 @@ describe('Tree Basic', () => {
     const item = container.querySelector(`.${testClassNames.item}`);
     const icon = container.querySelector('.rc-tree-iconEle');
     const title = container.querySelector('.rc-tree-title');
+    const switcher = container.querySelector('.rc-tree-switcher');
 
     expect(icon).toHaveStyle(testStyles.itemIcon);
     expect(icon).toHaveClass(testClassNames.itemIcon);
     expect(title).toHaveStyle(testStyles.itemTitle);
     expect(title).toHaveClass(testClassNames.itemTitle);
     expect(item).toHaveStyle(testStyles.item);
+    expect(switcher).toHaveStyle(testStyles.itemSwitcher);
+    expect(switcher).toHaveClass(testClassNames.itemSwitcher);
   });
 
   it('should not scroll to top when click node and tree is focused', () => {
