@@ -83,7 +83,7 @@ export type DraggableConfig = {
 
 export type ExpandAction = false | 'click' | 'doubleClick';
 
-export type SemanticName = 'itemIcon' | 'item' | 'itemTitle';
+export type SemanticName = 'itemIcon' | 'item' | 'itemTitle' | 'itemSwitcher';
 export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls: string;
   className?: string;

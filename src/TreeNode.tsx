@@ -225,7 +225,12 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       const switcherIconDom = renderSwitcherIconDom(true);
       return switcherIconDom !== false ? (
         <span
-          className={clsx(`${context.prefixCls}-switcher`, `${context.prefixCls}-switcher-noop`)}
+          className={clsx(
+            `${context.prefixCls}-switcher`,
+            `${context.prefixCls}-switcher-noop`,
+            treeClassNames?.itemSwitcher,
+          )}
+          style={styles?.itemSwitcher}
         >
           {switcherIconDom}
         </span>
@@ -238,7 +243,9 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
         className={clsx(
           `${context.prefixCls}-switcher`,
           `${context.prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
+          treeClassNames?.itemSwitcher,
         )}
+        style={styles?.itemSwitcher}
       >
         {switcherIconDom}
       </span>
