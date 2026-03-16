@@ -119,7 +119,6 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   titleRender?: (node: TreeDataType) => React.ReactNode;
   dropIndicatorRender?: (props: DropIndicatorProps) => React.ReactNode;
   onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
-  onMouseUp?: React.MouseEventHandler<HTMLDivElement>;
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
@@ -321,6 +320,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   componentDidMount(): void {
     this.destroyed = false;
     this.onUpdated();
+    window.addEventListener('mouseup', this.onGlobalMouseUp);
   }
 
   componentDidUpdate(): void {
@@ -341,6 +341,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   componentWillUnmount() {
     window.removeEventListener('dragend', this.onWindowDragEnd);
+    window.removeEventListener('mouseup', this.onGlobalMouseUp);
     this.destroyed = true;
   }
 
@@ -1073,10 +1074,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     onMouseDown?.(event);
   };
 
-  onMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
+  onGlobalMouseUp = () => {
     this.focusedByMouse = false;
-    const { onMouseUp } = this.props;
-    onMouseUp?.(event);
   };
 
   onFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
@@ -1538,7 +1537,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             activeItem={this.getActiveItem()}
             onFocus={this.onFocus}
             onMouseDown={this.onMouseDown}
-            onMouseUp={this.onMouseUp}
             onBlur={this.onBlur}
             onKeyDown={this.onKeyDown}
             onActiveChange={this.onActiveChange}
