@@ -321,7 +321,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   componentDidMount(): void {
     this.destroyed = false;
     this.onUpdated();
-    window.addEventListener('mouseup', this.onGlobalMouseUp);
   }
 
   componentDidUpdate(): void {
@@ -342,7 +341,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   componentWillUnmount() {
     window.removeEventListener('dragend', this.onWindowDragEnd);
-    window.removeEventListener('mouseup', this.onGlobalMouseUp);
     this.destroyed = true;
   }
 
@@ -1073,10 +1071,6 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     this.focusedByMouse = true;
     const { onMouseDown } = this.props;
     onMouseDown?.(event);
-  };
-
-  onGlobalMouseUp = () => {
-    this.focusedByMouse = false;
   };
 
   onMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
