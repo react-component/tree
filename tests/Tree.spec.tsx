@@ -1438,4 +1438,32 @@ describe('Tree Basic', () => {
     expect(scrollToSpy).not.toHaveBeenCalled();
     scrollToSpy.mockRestore();
   });
+
+  it('should not scroll to top when context menu closes and tree regains focus', () => {
+    const data = Array.from({ length: 20 }, (_, i) => ({
+      key: String(i),
+      title: `Node ${i}`,
+    }));
+    const treeRef = React.createRef<any>();
+    const { container } = render(
+      <Tree ref={treeRef} treeData={data} height={100} itemHeight={20} />,
+    );
+    const treeContainer = container.querySelector('.rc-tree-list');
+    const scrollToSpy = jest.spyOn(treeRef.current, 'scrollTo');
+
+    // User right-clicks a tree node, opening a context menu
+    fireEvent.mouseDown(treeContainer);
+    fireEvent.focus(treeContainer);
+    fireEvent.mouseUp(treeContainer);
+
+    // User clicks a context menu item — the menu closes, causing the tree
+    // to briefly lose then regain focus (mouseDown → blur → focus → mouseUp)
+    fireEvent.mouseDown(treeContainer);
+    fireEvent.blur(treeContainer);
+    fireEvent.focus(treeContainer);
+    fireEvent.mouseUp(treeContainer);
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
+    scrollToSpy.mockRestore();
+  });
 });
