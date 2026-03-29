@@ -11,6 +11,7 @@ import type {
   NodeDragEventParams,
   NodeMouseEventHandler,
   NodeMouseEventParams,
+  TreeContextProps,
 } from './contextTypes';
 import { TreeContext } from './contextTypes';
 import DropIndicator from './DropIndicator';
@@ -71,11 +72,13 @@ export interface AllowDropOptions<TreeDataType extends BasicDataNode = DataNode>
   dropNode: TreeDataType;
   dropPosition: -1 | 0 | 1;
 }
+
 export type AllowDrop<TreeDataType extends BasicDataNode = DataNode> = (
   options: AllowDropOptions<TreeDataType>,
 ) => boolean;
 
 export type DraggableFn = (node: DataNode) => boolean;
+
 export type DraggableConfig = {
   icon?: React.ReactNode | false;
   nodeDraggable?: DraggableFn;
@@ -84,6 +87,7 @@ export type DraggableConfig = {
 export type ExpandAction = false | 'click' | 'doubleClick';
 
 export type SemanticName = 'itemIcon' | 'item' | 'itemTitle' | 'itemSwitcher';
+
 export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls: string;
   className?: string;
@@ -1461,15 +1465,13 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       if (typeof draggable === 'object') {
         draggableConfig = draggable;
       } else if (typeof draggable === 'function') {
-        draggableConfig = {
-          nodeDraggable: draggable,
-        };
+        draggableConfig = { nodeDraggable: draggable };
       } else {
         draggableConfig = {};
       }
     }
 
-    const contextValue = {
+    const contextValue: TreeContextProps<TreeDataType> = {
       styles,
       classNames: treeClassNames,
       prefixCls,
