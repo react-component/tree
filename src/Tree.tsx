@@ -77,6 +77,7 @@ export type AllowDrop<TreeDataType extends BasicDataNode = DataNode> = (
 ) => boolean;
 
 export type DraggableFn = (node: DataNode) => boolean;
+
 export type DraggableConfig = {
   icon?: React.ReactNode | false;
   nodeDraggable?: DraggableFn;
@@ -232,7 +233,7 @@ interface TreeState<TreeDataType extends BasicDataNode = DataNode> {
   fieldNames: FieldNames;
 }
 
-interface TreeRef<TreeDataType extends BasicDataNode = DataNode> {
+export interface TreeRef<TreeDataType extends BasicDataNode = DataNode> {
   scrollTo: ScrollTo;
   focusedByMouse: boolean;
   listRef: React.RefObject<NodeListRef>;
