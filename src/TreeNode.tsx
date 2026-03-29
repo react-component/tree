@@ -43,7 +43,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const nodeId = getId(treeId, eventKey);
 
   const context = React.useContext(TreeContext);
-  const { classNames: treeClassNames, styles } = context || {};
+  const { classNames: treeClassNames, styles } = context;
 
   const unstableContext = React.useContext(UnstableContext);
 

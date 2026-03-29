@@ -1,9 +1,11 @@
 import Tree from './Tree';
 import TreeNode from './TreeNode';
-import type { TreeProps } from './Tree';
+import type { TreeRef, TreeProps } from './Tree';
 import type { TreeNodeProps, BasicDataNode, FieldDataNode } from './interface';
 import { UnstableContext } from './contextTypes';
 
+const TreeExport = Tree;
+
 export { TreeNode, UnstableContext };
-export type { TreeProps, TreeNodeProps, BasicDataNode, FieldDataNode };
-export default Tree;
+export type { TreeRef, TreeProps, TreeNodeProps, BasicDataNode, FieldDataNode };
+export default TreeExport;

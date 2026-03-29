@@ -4,7 +4,7 @@ import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
 import { resetWarned } from '@rc-component/util/lib/warning';
 import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
-import Tree, { TreeNode } from '../src';
+import Tree, { TreeNode, TreeRef } from '../src';
 import { objectMatcher, spyConsole, spyError } from './util';
 import { UnstableContext } from '../src';
 
@@ -1052,7 +1052,7 @@ describe('Tree Basic', () => {
 
     it('work', () => {
       jest.useFakeTimers();
-      const treeRef = React.createRef<any>();
+      const treeRef = React.createRef<TreeRef>();
       render(<Tree ref={treeRef} />);
 
       act(() => {
@@ -1092,7 +1092,7 @@ describe('Tree Basic', () => {
         });
       }
 
-      const treeRef = React.createRef<any>();
+      const treeRef = React.createRef<TreeRef>();
 
       const { container } = render(
         <Tree ref={treeRef} treeData={data} virtual itemHeight={20} height={100} />,
@@ -1423,7 +1423,7 @@ describe('Tree Basic', () => {
       { key: '1', title: '1' },
       { key: '2', title: '2' },
     ];
-    const treeRef = React.createRef<any>();
+    const treeRef = React.createRef<TreeRef<any>>();
     const { container } = render(<Tree ref={treeRef} treeData={data} />);
     const treeContainer = container.querySelector('.rc-tree-list');
     const scrollToSpy = jest.spyOn(treeRef.current, 'scrollTo');
@@ -1444,7 +1444,7 @@ describe('Tree Basic', () => {
       key: String(i),
       title: `Node ${i}`,
     }));
-    const treeRef = React.createRef<any>();
+    const treeRef = React.createRef<TreeRef<any>>();
     const { container } = render(
       <Tree ref={treeRef} treeData={data} height={100} itemHeight={20} />,
     );
@@ -1465,5 +1465,84 @@ describe('Tree Basic', () => {
 
     expect(scrollToSpy).not.toHaveBeenCalled();
     scrollToSpy.mockRestore();
+  });
+
+  it('keeps imperative ref compatibility fields readable and writable', () => {
+    const treeRef = React.createRef<TreeRef>();
+
+    render(<Tree ref={treeRef} treeData={[{ key: '0', title: '0' }]} />);
+
+    expect(treeRef.current.state.flattenNodes[0].key).toBe('0');
+
+    treeRef.current.destroyed = true;
+    expect(treeRef.current.destroyed).toBe(true);
+
+    const delayedDragEnterLogic = { 0: 1 };
+    treeRef.current.delayedDragEnterLogic = delayedDragEnterLogic;
+    expect(treeRef.current.delayedDragEnterLogic).toBe(delayedDragEnterLogic);
+
+    const loadingRetryTimes = { 0: 2 };
+    treeRef.current.loadingRetryTimes = loadingRetryTimes;
+    expect(treeRef.current.loadingRetryTimes).toBe(loadingRetryTimes);
+
+    const dragNodeProps = { eventKey: '0' };
+    treeRef.current.dragNodeProps = dragNodeProps;
+    expect(treeRef.current.dragNodeProps).toBe(dragNodeProps);
+
+    treeRef.current.currentMouseOverDroppableNodeKey = '0';
+    expect(treeRef.current.currentMouseOverDroppableNodeKey).toBe('0');
+
+    treeRef.current.focusedByMouse = true;
+    expect(treeRef.current.focusedByMouse).toBe(true);
+  });
+
+  it('keeps imperative guard paths backward compatible', () => {
+    const loadData = jest.fn(() => Promise.resolve());
+    const onExpand = jest.fn();
+    const onDrop = jest.fn();
+    const treeRef = React.createRef<any>();
+    render(
+      <Tree
+        ref={treeRef}
+        checkable
+        loadedKeys={['0']}
+        loadData={loadData}
+        onExpand={onExpand}
+        onDrop={onDrop}
+        treeData={[{ key: '0', title: '0' }]}
+      />,
+    );
+
+    expect(treeRef.current.onNodeLoad({ key: '0' })).toBeUndefined();
+    expect(loadData).not.toHaveBeenCalled();
+
+    act(() => {
+      treeRef.current.triggerExpandActionExpand(
+        { shiftKey: false, metaKey: false, ctrlKey: false } as any,
+        {
+          key: 'missing',
+          expanded: false,
+          isLeaf: false,
+        },
+      );
+    });
+
+    expect(onExpand).not.toHaveBeenCalled();
+
+    act(() => {
+      treeRef.current.onNodeDrop({} as any, null);
+    });
+
+    expect(onDrop).not.toHaveBeenCalled();
+
+    treeRef.current.state.dropTargetKey = 'missing';
+    treeRef.current.dragNodeProps = { eventKey: '0' };
+
+    act(() => {
+      treeRef.current.onNodeDrop({} as any, null);
+    });
+
+    expect(treeRef.current.dragNodeProps).toBeNull();
+    expect(onDrop).not.toHaveBeenCalled();
   });
 });
