@@ -759,13 +759,12 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     const { onDrop } = this.props;
 
-    this.setState({ dragOverNodeKey: null });
-
+    this.setState({
+      dragOverNodeKey: null,
+    });
     this.cleanDragState();
 
-    if (dropTargetKey === null) {
-      return;
-    }
+    if (dropTargetKey === null) return;
 
     const abstractDropNodeProps = {
       ...getTreeNodeProps(dropTargetKey, this.getTreeNodeRequiredProps()),
@@ -945,7 +944,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
       // If remove, we do it again to correction
       if (!checked) {
-        const keySet = new Set<React.Key>(checkedKeys);
+        const keySet = new Set(checkedKeys);
         keySet.delete(key);
         ({ checkedKeys, halfCheckedKeys } = conductCheck(
           Array.from(keySet),
@@ -963,9 +962,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
       checkedKeys.forEach(checkedKey => {
         const entity = getEntity(keyEntities, checkedKey);
-        if (!entity) {
-          return;
-        }
+        if (!entity) return;
 
         const { node, pos } = entity;
 
