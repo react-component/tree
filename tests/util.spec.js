@@ -2,17 +2,23 @@
 react/no-unused-state, react/prop-types, no-return-assign */
 import Tree, { TreeNode } from '../src';
 import {
+  arrAdd,
+  arrDel,
+  calcSelectedKeys,
   conductExpandParent,
   convertDataToTree,
   getDragChildrenKeys,
   parseCheckedKeys,
 } from '../src/util';
-import { conductCheck } from '../src/utils/conductUtil';
+import { conductCheck, isCheckDisabled } from '../src/utils/conductUtil';
+import { findExpandedKeys, getExpandRange } from '../src/utils/diffUtil';
 import {
   convertDataToEntities,
+  convertNodePropsToEventData,
   convertTreeToData,
   flattenTreeData,
   getTreeNodeProps,
+  isLeafNode,
   traverseDataNodes,
 } from '../src/utils/treeUtil';
 import { spyConsole, spyError } from './util';
@@ -109,6 +115,14 @@ describe('Util', () => {
 
     expect(treeNodes[0].props.value).toBe('0-0');
     expect(treeNodes[0].props.children[0].props.value).toBe('0-0-0');
+  });
+
+  it('convertDataToTree supports single node and default processor', () => {
+    const treeNode = convertDataToTree({ key: 'single', title: 'Single' });
+
+    expect(treeNode).toHaveLength(1);
+    expect(treeNode[0].key).toBe('single');
+    expect(treeNode[0].props.title).toBe('Single');
   });
 
   describe('convertDataToEntities', () => {
@@ -218,6 +232,14 @@ describe('Util', () => {
 
     expect(onProcessFinished).toHaveBeenCalled();
     expect(valueEntities.ttt).toBe(keyEntities.key);
+  });
+
+  it('convertTreeToEntities keeps wrapper when initWrapper returns nothing', () => {
+    const wrapper = convertDataToEntities([{ key: 'test' }], {
+      initWrapper: jest.fn(() => undefined),
+    });
+
+    expect(wrapper.keyEntities.test.key).toBe('test');
   });
 
   // You can remove this test if refactor remove conductCheck function
@@ -452,6 +474,10 @@ describe('Util', () => {
     expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
   });
 
+  it('conductExpandParent ignores missing keys', () => {
+    expect(conductExpandParent(['missing'], {})).toEqual([]);
+  });
+
   it('getDragChildrenKeys', () => {
     const tree = (
       <Tree defaultExpandAll>
@@ -480,6 +506,28 @@ describe('Util', () => {
     expect(errorSpy).toHaveBeenCalledWith('Warning: `checkedKeys` is not an array or an object');
 
     errorSpy.mockRestore();
+  });
+
+  it('parseCheckedKeys handles empty object values', () => {
+    expect(parseCheckedKeys({})).toEqual({
+      checkedKeys: undefined,
+      halfCheckedKeys: undefined,
+    });
+  });
+
+  it('arr utils handle empty input', () => {
+    expect(arrDel(null, 'a')).toEqual([]);
+    expect(arrAdd(undefined, 'a')).toEqual(['a']);
+  });
+
+  it('calcSelectedKeys handles empty controlled value', () => {
+    expect(calcSelectedKeys(undefined, { multiple: false })).toBeUndefined();
+  });
+
+  it('isCheckDisabled covers disableCheckbox and checkable=false', () => {
+    expect(isCheckDisabled({ disableCheckbox: true })).toBe(true);
+    expect(isCheckDisabled({ checkable: false })).toBe(true);
+    expect(isCheckDisabled()).toBe(false);
   });
 
   describe('flatten treeNode', () => {
@@ -618,5 +666,71 @@ describe('Util', () => {
     );
 
     expect(count).toEqual(1);
+  });
+
+  it('traverseDataNodes handles null config', () => {
+    const keys = [];
+
+    traverseDataNodes([{ key: 'light' }], data => keys.push(data.key), null);
+
+    expect(keys).toEqual(['light']);
+  });
+
+  it('diff utils cover default args and tail range', () => {
+    expect(findExpandedKeys()).toEqual({ add: false, key: null });
+    expect(findExpandedKeys(['0', '1'], ['0'])).toEqual({ add: false, key: '1' });
+    expect(findExpandedKeys(['0'], ['1', '2'])).toEqual({ add: true, key: null });
+
+    expect(
+      getExpandRange([{ key: '0' }], [{ key: '0' }, { key: '0-0' }, { key: '0-1' }], '0'),
+    ).toEqual([{ key: '0-0' }, { key: '0-1' }]);
+  });
+
+  it('convertNodePropsToEventData keeps existing props field', () => {
+    const eventData = convertNodePropsToEventData({
+      eventKey: '0',
+      data: { key: '0', props: { legacy: true } },
+    });
+
+    expect(eventData.props).toEqual({ legacy: true });
+  });
+
+  it('isLeafNode handles loaded async leaf case', () => {
+    expect(isLeafNode(undefined, () => Promise.resolve(), false, true)).toBe(true);
+  });
+
+  it('conductCheck tolerates entities without children arrays', () => {
+    const parent = { key: 'parent', node: { key: 'parent' }, level: 0, pos: '0' };
+    const child = {
+      key: 'child',
+      node: { key: 'child' },
+      level: 2,
+      pos: '0-0',
+      parent,
+    };
+
+    const checkedResult = conductCheck(['child'], true, {
+      parent,
+      child,
+    });
+    expect(checkedResult.checkedKeys.sort()).toEqual(['child', 'parent'].sort());
+
+    const uncheckedResult = conductCheck(
+      ['child'],
+      { checked: false, halfCheckedKeys: [] },
+      {
+        parent,
+        child,
+      },
+    );
+    expect(uncheckedResult.checkedKeys).toEqual(['child']);
+  });
+
+  it('traverseDataNodes throws for unsupported externalGetKey types', () => {
+    expect(() =>
+      traverseDataNodes([{ key: 'light' }], () => {}, {
+        externalGetKey: {},
+      }),
+    ).toThrow();
   });
 });

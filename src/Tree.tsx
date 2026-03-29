@@ -298,15 +298,10 @@ const shallowEqual = (objA: object, objB: object) => {
   if (objA === objB) {
     return true;
   }
-
   const keysA = Object.keys(objA);
-  const keysB = Object.keys(objB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  return keysA.every(key => Object.is(objA[key], objB[key]));
+  return (
+    keysA.length === Object.keys(objB).length && keysA.every(key => Object.is(objA[key], objB[key]))
+  );
 };
 
 const mergeState = <TreeDataType extends BasicDataNode = DataNode>(
@@ -604,32 +599,22 @@ const Tree = React.forwardRef(
       loadingKeysSetRef.current.delete(key);
     });
 
-    const setMergedState = React.useCallback(
-      (
-        updater:
-          | Partial<TreeState<TreeDataType>>
-          | ((
-              state: TreeState<TreeDataType>,
-            ) => Partial<TreeState<TreeDataType>> | TreeState<TreeDataType> | null),
-      ) => {
-        setInnerState(prevState => {
-          const syncedState = mergeState(
+    const setMergedState = React.useCallback((patch: Partial<TreeState<TreeDataType>>) => {
+      setInnerState(prevState => {
+        const syncedState = mergeState(
+          prevState,
+          getDerivedStateFromProps(
+            rawPropsRef.current,
+            mergedPropsRef.current,
             prevState,
-            getDerivedStateFromProps(
-              rawPropsRef.current,
-              mergedPropsRef.current,
-              prevState,
-              prevPropsRef.current,
-            ),
-          );
-          const patch = typeof updater === 'function' ? updater(syncedState) : updater;
-          const nextState = mergeState(syncedState, patch);
+            prevPropsRef.current,
+          ),
+        );
+        const nextState = mergeState(syncedState, patch);
 
-          return shallowEqual(syncedState, nextState) ? syncedState : nextState;
-        });
-      },
-      [],
-    );
+        return shallowEqual(syncedState, nextState) ? syncedState : nextState;
+      });
+    }, []);
 
     const scrollTo = React.useCallback<ScrollTo>(scroll => {
       listRef.current?.scrollTo(scroll);
@@ -649,12 +634,12 @@ const Tree = React.forwardRef(
       } = stateRef.current;
 
       return {
-        expandedKeys: currentExpandedKeys || [],
-        selectedKeys: currentSelectedKeys || [],
-        loadedKeys: currentLoadedKeys || [],
-        loadingKeys: currentLoadingKeys || [],
-        checkedKeys: currentCheckedKeys || [],
-        halfCheckedKeys: currentHalfCheckedKeys || [],
+        expandedKeys: currentExpandedKeys,
+        selectedKeys: currentSelectedKeys,
+        loadedKeys: currentLoadedKeys,
+        loadingKeys: currentLoadingKeys,
+        checkedKeys: currentCheckedKeys,
+        halfCheckedKeys: currentHalfCheckedKeys,
         dragOverNodeKey,
         dropPosition,
         keyEntities,
@@ -806,7 +791,7 @@ const Tree = React.forwardRef(
               ),
             ),
             {
-              loadingKeys: arrAdd(prevState.loadingKeys || [], key),
+              loadingKeys: arrAdd(prevState.loadingKeys, key),
             },
           ),
         );
@@ -1031,11 +1016,9 @@ const Tree = React.forwardRef(
 
         // [Legacy] Not found related usage in doc or upper libs
         const selectedNodes = currentSelectedKeys
-          .map(selectedKey => {
-            const entity = getEntity(keyEntities, selectedKey);
-            return entity ? entity.node : null;
-          })
-          .filter(Boolean);
+          .map(selectedKey => getEntity(keyEntities, selectedKey))
+          .filter(Boolean)
+          .map(entity => entity.node);
 
         setUncontrolledState({ selectedKeys: currentSelectedKeys });
 
@@ -1112,16 +1095,13 @@ const Tree = React.forwardRef(
           eventObj.checkedNodesPositions = [];
           eventObj.halfCheckedKeys = nextHalfCheckedKeys;
 
-          nextCheckedKeys.forEach(checkedKey => {
-            const entity = getEntity(keyEntities, checkedKey);
-            if (!entity) {
-              return;
-            }
-
-            const { node, pos } = entity;
-            eventObj.checkedNodes.push(node);
-            eventObj.checkedNodesPositions.push({ node, pos });
-          });
+          nextCheckedKeys
+            .map(checkedKey => getEntity(keyEntities, checkedKey))
+            .filter(Boolean)
+            .forEach(({ node, pos }) => {
+              eventObj.checkedNodes.push(node);
+              eventObj.checkedNodesPositions.push({ node, pos });
+            });
 
           setUncontrolledState({ checkedKeys: nextCheckedKeys }, false, {
             halfCheckedKeys: nextHalfCheckedKeys,
@@ -1175,9 +1155,7 @@ const Tree = React.forwardRef(
         }
 
         dragNodePropsRef.current = null;
-        if (onWindowDragEndRef.current) {
-          window.removeEventListener('dragend', onWindowDragEndRef.current);
-        }
+        window.removeEventListener('dragend', onWindowDragEndRef.current);
       },
       [cleanDragState, setMergedState],
     );
@@ -1188,9 +1166,7 @@ const Tree = React.forwardRef(
           event as unknown as React.DragEvent<HTMLDivElement>,
           dragNodePropsRef.current,
         );
-        if (onWindowDragEndRef.current) {
-          window.removeEventListener('dragend', onWindowDragEndRef.current);
-        }
+        window.removeEventListener('dragend', onWindowDragEndRef.current);
       },
       [onNodeDragEnd],
     );
@@ -1217,9 +1193,7 @@ const Tree = React.forwardRef(
         });
 
         setExpandedKeys(newExpandedKeys);
-        if (onWindowDragEndRef.current) {
-          window.addEventListener('dragend', onWindowDragEndRef.current);
-        }
+        window.addEventListener('dragend', onWindowDragEndRef.current);
 
         mergedPropsRef.current.onDragStart?.({
           event,

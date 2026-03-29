@@ -45,7 +45,7 @@ export function spyError() {
   let errorSpy;
 
   beforeAll(() => {
-    errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    errorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
   });
 
   beforeEach(() => {
