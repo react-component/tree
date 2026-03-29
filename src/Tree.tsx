@@ -11,6 +11,7 @@ import type {
   NodeDragEventParams,
   NodeMouseEventHandler,
   NodeMouseEventParams,
+  TreeContextProps,
 } from './contextTypes';
 import { TreeContext } from './contextTypes';
 import DropIndicator from './DropIndicator';
@@ -71,11 +72,13 @@ export interface AllowDropOptions<TreeDataType extends BasicDataNode = DataNode>
   dropNode: TreeDataType;
   dropPosition: -1 | 0 | 1;
 }
+
 export type AllowDrop<TreeDataType extends BasicDataNode = DataNode> = (
   options: AllowDropOptions<TreeDataType>,
 ) => boolean;
 
 export type DraggableFn = (node: DataNode) => boolean;
+
 export type DraggableConfig = {
   icon?: React.ReactNode | false;
   nodeDraggable?: DraggableFn;
@@ -84,6 +87,7 @@ export type DraggableConfig = {
 export type ExpandAction = false | 'click' | 'doubleClick';
 
 export type SemanticName = 'itemIcon' | 'item' | 'itemTitle' | 'itemSwitcher';
+
 export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
   prefixCls: string;
   className?: string;
@@ -755,12 +759,13 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
     const { onDrop } = this.props;
 
-    this.setState({
-      dragOverNodeKey: null,
-    });
+    this.setState({ dragOverNodeKey: null });
+
     this.cleanDragState();
 
-    if (dropTargetKey === null) return;
+    if (dropTargetKey === null) {
+      return;
+    }
 
     const abstractDropNodeProps = {
       ...getTreeNodeProps(dropTargetKey, this.getTreeNodeRequiredProps()),
@@ -940,7 +945,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
       // If remove, we do it again to correction
       if (!checked) {
-        const keySet = new Set(checkedKeys);
+        const keySet = new Set<React.Key>(checkedKeys);
         keySet.delete(key);
         ({ checkedKeys, halfCheckedKeys } = conductCheck(
           Array.from(keySet),
@@ -958,7 +963,9 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
       checkedKeys.forEach(checkedKey => {
         const entity = getEntity(keyEntities, checkedKey);
-        if (!entity) return;
+        if (!entity) {
+          return;
+        }
 
         const { node, pos } = entity;
 
@@ -1461,15 +1468,13 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       if (typeof draggable === 'object') {
         draggableConfig = draggable;
       } else if (typeof draggable === 'function') {
-        draggableConfig = {
-          nodeDraggable: draggable,
-        };
+        draggableConfig = { nodeDraggable: draggable };
       } else {
         draggableConfig = {};
       }
     }
 
-    const contextValue = {
+    const contextValue: TreeContextProps<TreeDataType> = {
       styles,
       classNames: treeClassNames,
       prefixCls,

@@ -86,6 +86,8 @@ interface NodeListProps<TreeDataType extends BasicDataNode> {
   onFocus?: React.FocusEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
+  onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
+  onScroll?: React.UIEventHandler<HTMLElement>;
   onActiveChange: (key: Key) => void;
 
   onListChangeStart: () => void;
