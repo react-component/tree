@@ -72,7 +72,7 @@
     "glob": "^13.0.3",
     "husky": "^9.1.6",
     "less": "^4.2.1",
-    "lint-staged": "^16.1.2",
+    "lint-staged": "^17.0.2",
     "prettier": "^3.3.3",
     "rc-test": "^7.0.15",
     "react": "^18.2.0",
