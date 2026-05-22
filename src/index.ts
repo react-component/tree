@@ -1,12 +1,13 @@
 import Tree from './Tree';
 import TreeNode from './TreeNode';
-import type { TreeProps } from './Tree';
+import type { ExpandAction, TreeProps } from './Tree';
 import type {
   BasicDataNode,
   DataEntity,
   DataNode,
   EventDataNode,
   FieldDataNode,
+  FieldNames,
   GetCheckDisabled,
   IconType,
   Key,
@@ -14,7 +15,6 @@ import type {
   ScrollTo,
   TreeNodeProps,
 } from './interface';
-import type { ExpandAction } from './Tree';
 import { UnstableContext } from './contextTypes';
 
 export { arrAdd, arrDel, conductExpandParent } from './util';
@@ -28,6 +28,7 @@ export type {
   EventDataNode,
   ExpandAction,
   FieldDataNode,
+  FieldNames,
   GetCheckDisabled,
   IconType,
   Key,
