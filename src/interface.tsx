@@ -1,6 +1,7 @@
 import * as React from 'react';
+import type { ScrollTo } from '@rc-component/virtual-list';
 
-export type { ScrollTo } from '@rc-component/virtual-list/lib/List';
+export type { ScrollTo };
 export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   eventKey?: Key; // Pass by parent `cloneElement`
   prefixCls?: string;
@@ -120,8 +121,10 @@ export interface Entity {
   children?: Entity[];
 }
 
-export interface DataEntity<TreeDataType extends BasicDataNode = DataNode>
-  extends Omit<Entity, 'node' | 'parent' | 'children'> {
+export interface DataEntity<TreeDataType extends BasicDataNode = DataNode> extends Omit<
+  Entity,
+  'node' | 'parent' | 'children'
+> {
   node: TreeDataType;
   nodes: TreeDataType[];
   parent?: DataEntity<TreeDataType>;

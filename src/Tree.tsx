@@ -2,8 +2,7 @@
 // Reference: https://www.w3.org/WAI/ARIA/apg/patterns/treeview
 
 import { clsx } from 'clsx';
-import pickAttrs from '@rc-component/util/lib/pickAttrs';
-import warning from '@rc-component/util/lib/warning';
+import { pickAttrs, warning } from '@rc-component/util';
 import * as React from 'react';
 
 import type {
