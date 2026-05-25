@@ -2,8 +2,7 @@
  * Handle virtual list of the TreeNodes.
  */
 
-import { getId } from '@rc-component/util/lib/hooks/useId';
-import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
+import { getId, useId, useLayoutEffect } from '@rc-component/util';
 import VirtualList, { type ListRef } from '@rc-component/virtual-list';
 import * as React from 'react';
 import MotionTreeNode from './MotionTreeNode';
@@ -18,7 +17,6 @@ import type {
 } from './interface';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps } from './utils/treeUtil';
-import useId from '@rc-component/util/lib/hooks/useId';
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 

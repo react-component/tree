@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
-import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
+import { useLayoutEffect } from '@rc-component/util';
 import * as React from 'react';
 import { TreeContext } from './contextTypes';
 import type { FlattenNode, TreeNodeProps } from './interface';

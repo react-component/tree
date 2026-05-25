@@ -1,7 +1,6 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { getId } from '@rc-component/util/lib/hooks/useId';
-import pickAttrs from '@rc-component/util/lib/pickAttrs';
+import { getId, pickAttrs } from '@rc-component/util';
 import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';

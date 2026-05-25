@@ -47,13 +47,13 @@
   },
   "dependencies": {
     "@rc-component/motion": "^1.0.0",
-    "@rc-component/util": "^1.8.1",
-    "@rc-component/virtual-list": "^1.0.1",
+    "@rc-component/util": "^1.11.1",
+    "@rc-component/virtual-list": "^1.2.0",
     "clsx": "^2.1.1"
   },
   "devDependencies": {
     "@rc-component/dialog": "^1.0.0",
-    "@rc-component/father-plugin": "^2.0.3",
+    "@rc-component/father-plugin": "^2.2.0",
     "@rc-component/np": "^1.0.0",
     "@rc-component/tooltip": "^1.0.0",
     "@rc-component/trigger": "^3.0.0",
