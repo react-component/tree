@@ -252,7 +252,7 @@ describe('Tree Draggable', () => {
       });
     }
 
-    let domSpy;
+    let domSpy: ReturnType<typeof spyElementPrototypes>;
     beforeEach(() => {
       domSpy = spyElementPrototypes(HTMLElement, {
         offsetWidth: {
@@ -281,7 +281,7 @@ describe('Tree Draggable', () => {
   });
 
   describe('new drop logic', () => {
-    let domSpy;
+    let domSpy: ReturnType<typeof spyElementPrototypes>;
     beforeEach(() => {
       domSpy = spyElementPrototypes(HTMLElement, {
         getBoundingClientRect: () => ({
