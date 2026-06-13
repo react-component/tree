@@ -21,6 +21,12 @@ describe('Tree Basic', () => {
 
   it('TreeNode is in Tree', () => {
     expect(TreeNode).toBe(Tree.TreeNode);
+    const { container } = render(
+      <Tree defaultExpandAll>
+        <Tree.TreeNode title="static node" key="static" />
+      </Tree>,
+    );
+    expect(container.querySelector('.rc-tree-title')).toHaveTextContent('static node');
   });
 
   it('renders correctly', () => {
