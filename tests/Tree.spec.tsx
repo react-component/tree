@@ -149,6 +149,18 @@ describe('Tree Basic', () => {
       expect(container.querySelector(`.${OPEN_CLASSNAME}`)).toBeFalsy();
     });
 
+    it('does not expand parent node with default expanded keys when defaultExpandParent is false', () => {
+      const { container } = render(
+        <Tree defaultExpandedKeys={['0-0-0']} defaultExpandParent={false}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>,
+      );
+
+      expect(container.querySelector(`.${OPEN_CLASSNAME}`)).toBeFalsy();
+    });
+
     it('update to expand parent node with autoExpandParent', () => {
       const renderTree = (props?: any) => (
         <Tree expandedKeys={['0-0-0']} defaultExpandParent={false} {...props}>
@@ -775,6 +787,25 @@ describe('Tree Basic', () => {
           selected: false,
           selectedNodes: [],
           nativeEvent: {},
+        }),
+      );
+    });
+
+    it('filters missing selected keys from selected nodes', () => {
+      const handleSelect = jest.fn();
+      const { container } = render(
+        <Tree selectable multiple selectedKeys={['missing']} onSelect={handleSelect}>
+          <TreeNode title="parent 1" key="0-0" />
+        </Tree>,
+      );
+
+      fireEvent.click(container.querySelector('.rc-tree-node-content-wrapper'));
+
+      expect(handleSelect).toHaveBeenCalledWith(
+        ['missing', '0-0'],
+        objectMatcher({
+          selected: true,
+          selectedNodes: [{ title: 'parent 1', key: '0-0' }],
         }),
       );
     });
