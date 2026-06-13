@@ -110,6 +110,18 @@ describe('Tree Draggable', () => {
     expect(event.dragNodesKeys).toEqual(['0-0-0-0']);
   });
 
+  it('does not fire drop event when drop target is empty', () => {
+    const treeRef = React.createRef<any>();
+    const onDrop = jest.fn();
+    render(<Tree ref={treeRef} draggable onDrop={onDrop} />);
+
+    act(() => {
+      treeRef.current.onNodeDrop({} as React.DragEvent<HTMLDivElement>, null);
+    });
+
+    expect(onDrop).not.toHaveBeenCalled();
+  });
+
   it('fires dropEnd event', () => {
     const onDragEnd = jest.fn();
     const { container } = render(createTree({ onDragEnd }));
