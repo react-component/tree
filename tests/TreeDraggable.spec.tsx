@@ -110,6 +110,14 @@ describe('Tree Draggable', () => {
     expect(event.dragNodesKeys).toEqual(['0-0-0-0']);
   });
 
+  it('does not fire drop event without drop target', () => {
+    const onDrop = jest.fn();
+    const { container } = render(createTree({ onDrop }));
+    fireEvent.dragStart(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper')!);
+    fireEvent.drop(container.querySelector('.dropTarget')!);
+    expect(onDrop).not.toHaveBeenCalled();
+  });
+
   it('fires dropEnd event', () => {
     const onDragEnd = jest.fn();
     const { container } = render(createTree({ onDragEnd }));

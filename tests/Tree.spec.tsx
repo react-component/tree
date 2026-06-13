@@ -4,6 +4,7 @@ import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
 import { resetWarned, spyElementPrototypes } from '@rc-component/util';
 import Tree, { TreeNode } from '../src';
+import { TreeContext } from '../src/contextTypes';
 import { objectMatcher, spyConsole, spyError } from './util';
 import { UnstableContext } from '../src';
 
@@ -933,6 +934,35 @@ describe('Tree Basic', () => {
       }),
     );
     expect(then).toHaveBeenCalled();
+  });
+
+  it('does not load a node again while it is loading', () => {
+    const loadData = jest.fn(() => new Promise(() => {}));
+    let triggerLoad: VoidFunction;
+
+    const LoadTrigger: React.FC = () => {
+      const context = React.useContext(TreeContext);
+      React.useEffect(() => {
+        triggerLoad = () => {
+          context.onNodeLoad({ key: '0-0' } as any);
+        };
+      }, [context]);
+
+      return null;
+    };
+
+    const { container } = render(
+      <Tree loadData={loadData}>
+        <TreeNode title={<LoadTrigger />} key="0-0" isLeaf={false} />
+      </Tree>,
+    );
+
+    fireEvent.click(container.querySelector('.rc-tree-switcher')!);
+    act(() => {
+      triggerLoad();
+    });
+
+    expect(loadData).toHaveBeenCalledTimes(1);
   });
 
   it('renders without errors', () => {
