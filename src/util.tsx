@@ -281,11 +281,14 @@ export function calcSelectedKeys(selectedKeys: Key[], props: TreeProps) {
 }
 
 const internalProcessProps = (props: DataNode): any => props;
+
 export function convertDataToTree(
   treeData: DataNode[],
   processor?: { processProps: (prop: DataNode) => any },
 ): NodeElement[] {
-  if (!treeData) return [];
+  if (!treeData) {
+    return [];
+  }
 
   const { processProps = internalProcessProps } = processor || {};
   const list = Array.isArray(treeData) ? treeData : [treeData];

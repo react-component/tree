@@ -21,6 +21,12 @@ describe('Tree Basic', () => {
 
   it('TreeNode is in Tree', () => {
     expect(TreeNode).toBe(Tree.TreeNode);
+    const { container } = render(
+      <Tree defaultExpandAll>
+        <Tree.TreeNode title="static node" key="static" />
+      </Tree>,
+    );
+    expect(container.querySelector('.rc-tree-title')).toHaveTextContent('static node');
   });
 
   it('renders correctly', () => {
@@ -1065,7 +1071,7 @@ describe('Tree Basic', () => {
 
     it('supports autoExpand', () => {
       const treeRef = React.createRef<any>();
-      render(
+      const { container } = render(
         <Tree
           ref={treeRef}
           treeData={[
@@ -1081,7 +1087,7 @@ describe('Tree Basic', () => {
         treeRef.current.scrollTo({ key: 'parent', autoExpand: true });
       });
 
-      expect(treeRef.current.state.expandedKeys).toEqual(['parent']);
+      expect(container.querySelector('.rc-tree-switcher')).toHaveClass(OPEN_CLASSNAME);
     });
   });
 
