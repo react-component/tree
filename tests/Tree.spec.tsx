@@ -935,6 +935,21 @@ describe('Tree Basic', () => {
     expect(then).toHaveBeenCalled();
   });
 
+  it('does not load data when loadData is not provided', () => {
+    const treeRef = React.createRef<any>();
+    render(
+      <Tree ref={treeRef}>
+        <TreeNode title="parent 1" key="0-0" />
+      </Tree>,
+    );
+
+    act(() => {
+      treeRef.current.onNodeLoad({ key: '0-0' });
+    });
+
+    expect(treeRef.current.state.loadingKeys).toEqual([]);
+  });
+
   it('renders without errors', () => {
     expect(() => {
       render(
