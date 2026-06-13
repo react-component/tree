@@ -965,8 +965,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
         const { node, pos } = entity;
 
-        eventObj.checkedNodes.push(node);
-        eventObj.checkedNodesPositions.push({ node, pos });
+        eventObj.checkedNodes?.push(node);
+        eventObj.checkedNodesPositions?.push({ node, pos });
       });
 
       this.setUncontrolledState({ checkedKeys }, false, { halfCheckedKeys });

@@ -1,5 +1,7 @@
-import type { Key, KeyEntities, SafeKey } from '../interface';
+import type { BasicDataNode, Key, KeyEntities, SafeKey } from '../interface';
 
-export default function getEntity<T = any>(keyEntities: KeyEntities<T>, key: Key) {
+const getEntity = <T extends BasicDataNode = any>(keyEntities: KeyEntities<T>, key: Key) => {
   return keyEntities[key as SafeKey];
-}
+};
+
+export default getEntity;
