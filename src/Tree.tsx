@@ -590,9 +590,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           newExpandedKeys = arrAdd(expandedKeys, nodeProps.eventKey);
         }
 
-        if (!this.props.hasOwnProperty('expandedKeys')) {
-          this.setExpandedKeys(newExpandedKeys);
-        }
+        this.setExpandedKeys(newExpandedKeys);
 
         onExpand?.(newExpandedKeys, {
           node: convertNodePropsToEventData<TreeDataType>(nodeProps),
@@ -1135,6 +1133,10 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   // =========================== Expanded ===========================
   /** Set uncontrolled `expandedKeys`. This will also auto update `flattenNodes`. */
   setExpandedKeys = (expandedKeys: Key[]) => {
+    // When `expandedKeys` is controlled, `setUncontrolledState` with `atomic` will be a no-op.
+    if (this.props.hasOwnProperty('expandedKeys')) {
+      return;
+    }
     const { treeData, fieldNames } = this.state;
     const flattenNodes = flattenTreeData<TreeDataType>(treeData, expandedKeys, fieldNames);
     this.setUncontrolledState({ expandedKeys, flattenNodes }, true);
