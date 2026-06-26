@@ -23,7 +23,7 @@ npm install @rc-component/tree
 
 ```tsx
 import Tree from '@rc-component/tree';
-import type { DataNode } from '@rc-component/tree/lib/interface';
+import type { DataNode } from '@rc-component/tree';
 import '@rc-component/tree/assets/index.css';
 
 const treeData: DataNode[] = [
