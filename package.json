@@ -1,7 +1,7 @@
 {
   "name": "@rc-component/tree",
   "version": "1.3.2",
-  "description": "tree ui component for react",
+  "description": "🌲 Tree view component for React",
   "engines": {
     "node": ">=10.x"
   },
@@ -30,17 +30,18 @@
   "module": "./es/index",
   "scripts": {
     "start": "dumi dev",
+    "build": "npm run docs:build",
     "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d dist",
+    "docs:deploy": "gh-pages -d docs-dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
-    "prepare": "husky",
-    "prepublishOnly": "npm run compile && rc-np",
-    "postpublish": "npm run gh-pages",
-    "lint": "eslint src/ --ext .tsx,.ts,.jsx,.js",
+    "deploy": "npm run docs:build && npm run docs:deploy",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "lint": "eslint src --ext .tsx,.ts,.jsx,.js",
+    "tsc": "tsc -p tsconfig.json --noEmit",
     "test": "rc-test",
     "coverage": "rc-test --coverage",
-    "gh-pages": "npm run docs:build && npm run docs:deploy",
-    "now-build": "npm run docs:build"
+    "prepublishOnly": "npm run compile && rc-np",
+    "prepare": "husky"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
@@ -82,5 +83,6 @@
   "peerDependencies": {
     "react": "*",
     "react-dom": "*"
-  }
+  },
+  "types": "./lib/index.d.ts"
 }

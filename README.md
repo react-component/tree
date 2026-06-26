@@ -1,53 +1,48 @@
 # @rc-component/tree
 
-Tree component.
+<div align="center">
+  <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/bmw-prod/ae669a89-0c24-40ff-a91d-2b83497170f6.svg" />
+  <p>Accessible tree view primitives for React, maintained in the Ant Design ecosystem.</p>
+</div>
 
-[![NPM version][npm-image]][npm-url]
-[![npm download][download-image]][download-url]
-[![build status][github-actions-image]][github-actions-url]
-[![Codecov][codecov-image]][codecov-url]
-[![bundle size][bundlephobia-image]][bundlephobia-url]
-[![dumi][dumi-image]][dumi-url]
+[![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
 
-[npm-image]: http://img.shields.io/npm/v/@rc-component/tree.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/@rc-component/tree
-[github-actions-image]: https://github.com/react-component/tree/actions/workflows/main.yml/badge.svg
-[github-actions-url]: https://github.com/react-component/tree/actions/workflows/main.yml
-[codecov-image]: https://img.shields.io/codecov/c/github/react-component/tree/master.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/react-component/tree/
-[david-url]: https://david-dm.org/react-component/tree
-[david-image]: https://david-dm.org/react-component/tree/status.svg?style=flat-square
-[david-dev-url]: https://david-dm.org/react-component/tree?type=dev
-[david-dev-image]: https://david-dm.org/react-component/tree/dev-status.svg?style=flat-square
-[download-image]: https://img.shields.io/npm/dm/@rc-component/tree.svg?style=flat-square
-[download-url]: https://npmjs.org/package/@rc-component/tree
-[bundlephobia-url]: https://bundlephobia.com/result?p=@rc-component/tree
-[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/@rc-component/tree
-[dumi-url]: https://github.com/umijs/dumi
-[dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
+## Highlights
 
-## Screenshots
-
-<img src="https://t.alipayobjects.com/images/T15BpfXn8nXXXXXXXX.png" width="288"/>
-
-## Feature
-
-- Support all popular browsers, including Internet Explorer 9 and above.
-
-## Example
-
-http://localhost:9001/
-
-online example: https://tree.react-component.now.sh/
+- Controlled and uncontrolled expansion, selection, checking, drag and drop, and async loading.
+- Virtual scrolling for large trees through `@rc-component/virtual-list`.
+- TypeScript definitions for tree data, node props, and event payloads.
 
 ## Install
 
-[![@rc-component/tree](https://nodei.co/npm/@rc-component/tree.png)](https://npmjs.org/package/@rc-component/tree)
+```bash
+npm install @rc-component/tree
+```
 
 ## Usage
-> Note: `import "@rc-component/tree/assets/index.css"`
 
-see examples
+```tsx
+import Tree from '@rc-component/tree';
+import type { DataNode } from '@rc-component/tree/lib/interface';
+import '@rc-component/tree/assets/index.css';
+
+const treeData: DataNode[] = [
+  {
+    key: '0',
+    title: 'Documents',
+    children: [{ key: '0-0', title: 'Roadmap' }],
+  },
+];
+
+export default () => (
+  <Tree defaultExpandAll treeData={treeData} onSelect={keys => console.log(keys)} />
+);
+```
+
+## Examples
+
+- Local docs: run `npm start` and open the printed dumi URL.
+- Preview builds are attached to pull requests by Vercel and Surge.
 
 ## API
 
@@ -95,7 +90,7 @@ see examples
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 | virtual | Disable virtual scroll when `false` | boolean | - |
 | allowDrop | Whether to allow drop on node | ({ dragNode, dropNode, dropPosition }) => boolean | - |
-| dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode| - |
+| dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode | - |
 | direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | - |
 | expandAction | Tree open logic, optional: false \| `click` \| `doubleClick` | string \| boolean | `click` |
 
@@ -129,17 +124,22 @@ npm install
 npm start
 ```
 
-## Test Case
+Run checks before sending a pull request:
 
-http://localhost:8018/tests/runner.html?coverage
+```bash
+npm run lint
+npm run tsc
+npm test -- --runInBand
+npm run build
+```
 
-## Coverage
+## Release
 
-http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8018/tests/runner.html?coverage
+Publishers should run `npm publish`. The `prepublishOnly` hook builds the package with Father and then runs `rc-np` for the rc-component release flow.
 
-## License
+## Ecosystem
 
-@rc-component/tree is released under the MIT license.
+This package is part of the React Component organization and is maintained alongside Ant Design. The Ant Design mark above is used only as ecosystem context; the package itself stays framework-level and unstyled except for its bundled assets.
 
 ## Other tree views
 
@@ -147,3 +147,20 @@ http://localhost:8018/node_modules/rc-server/node_modules/node-jscover/lib/front
 - [jqTree](https://mbraak.github.io/jqTree/)
 - [jquery.treeselect](https://travistidwell.com/jquery.treeselect.js/)
 - [Angular Multi Select Tree](https://a5hik.github.io/angular-multi-select-tree/)
+
+## License
+
+@rc-component/tree is released under the MIT license.
+
+[npm-image]: https://img.shields.io/npm/v/@rc-component/tree.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/@rc-component/tree
+[github-actions-image]: https://github.com/react-component/tree/actions/workflows/main.yml/badge.svg
+[github-actions-url]: https://github.com/react-component/tree/actions/workflows/main.yml
+[codecov-image]: https://img.shields.io/codecov/c/github/react-component/tree/master.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/react-component/tree/branch/master
+[download-image]: https://img.shields.io/npm/dm/@rc-component/tree.svg?style=flat-square
+[download-url]: https://npmjs.org/package/@rc-component/tree
+[bundlephobia-url]: https://bundlephobia.com/result?p=@rc-component/tree
+[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/@rc-component/tree
+[dumi-url]: https://github.com/umijs/dumi
+[dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
