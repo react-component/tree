@@ -2,9 +2,14 @@
   <h1>@rc-component/tree</h1>
   <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/bmw-prod/ae669a89-0c24-40ff-a91d-2b83497170f6.svg" />
   <p>Accessible tree view primitives for React, maintained in the Ant Design ecosystem.</p>
+  <p>Part of the <a href="https://ant.design">Ant Design</a> ecosystem.</p>
 </div>
 
+<div align="center">
+
 [![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
+
+</div>
 
 ## Highlights
 
@@ -134,8 +139,11 @@ npm run build
 
 ## Release
 
-Publishers should run `npm publish`. The `prepublishOnly` hook builds the package with Father and then runs `rc-np` for the rc-component release flow.
+```bash
+npm run prepublishOnly
+```
 
+The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
 ## Ecosystem
 
 This package is part of the React Component organization and is maintained alongside Ant Design. The Ant Design mark above is used only as ecosystem context; the package itself stays framework-level and unstyled except for its bundled assets.
@@ -149,7 +157,7 @@ This package is part of the React Component organization and is maintained along
 
 ## License
 
-@rc-component/tree is released under the MIT license.
+@rc-component/tree is released under the [MIT](./LICENSE.md) license.
 
 [npm-image]: https://img.shields.io/npm/v/@rc-component/tree.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@rc-component/tree
