@@ -1,11 +1,11 @@
 <div align="center">
   <h1>@rc-component/tree</h1>
-  <p><sub>Part of the Ant Design ecosystem.</sub></p>
+  <p><sub>Ant Design 生态的一部分。</sub></p>
   <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-  <p>Accessible tree view primitives for React, maintained in the Ant Design ecosystem.</p>
+  <p>🌳 可访问的 React 树形视图基础组件。</p>
 </div>
 
-<p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
+<p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
 
 <div align="center">
@@ -14,19 +14,19 @@
 
 </div>
 
-## Highlights
+## 特性
 
 - Controlled and uncontrolled expansion, selection, checking, drag and drop, and async loading.
 - Virtual scrolling for large trees through `@rc-component/virtual-list`.
 - TypeScript definitions for tree data, node props, and event payloads.
 
-## Install
+## 安装
 
 ```bash
 npm install @rc-component/tree
 ```
 
-## Usage
+## 使用
 
 ```tsx
 import Tree from '@rc-component/tree';
@@ -46,9 +46,9 @@ export default () => (
 );
 ```
 
-## Examples
+## 示例
 
-- Local docs: run `npm start` and open the printed dumi URL.
+- 本地文档：运行 `npm start`，并打开终端输出的 dumi 地址。
 - Preview builds are attached to pull requests by Vercel and Surge.
 
 ## API
@@ -124,7 +124,7 @@ export default () => (
 
 The number of treeNodes can be very large, but when enable `checkable`, it will spend more computing time, so we cached some calculations(e.g. `this.treeNodesStates`), to avoid double computing. But, this bring some restrictions, **when you async load treeNodes, you should render tree like this** `{this.state.treeData.length ? <Tree ...>{this.state.treeData.map(t => <TreeNode ... />)}</Tree> : 'loading tree'}`
 
-## Development
+## 本地开发
 
 ```bash
 npm install
@@ -140,7 +140,7 @@ npm test -- --runInBand
 npm run build
 ```
 
-## Release
+## 发布
 
 ```bash
 npm run prepublishOnly
@@ -149,7 +149,7 @@ npm run prepublishOnly
 The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
 ## Ecosystem
 
-This package is part of the React Component organization and is maintained alongside Ant Design. The Ant Design mark above is used only as ecosystem context; the package itself stays framework-level and unstyled except for its bundled assets.
+该包属于 React Component 组织，并与 Ant Design 一同维护。 上方 Ant Design 标识仅用于说明生态归属；组件本身仍保持框架级、低样式耦合的定位。
 
 ## Other tree views
 
@@ -158,7 +158,7 @@ This package is part of the React Component organization and is maintained along
 - [jquery.treeselect](https://travistidwell.com/jquery.treeselect.js/)
 - [Angular Multi Select Tree](https://a5hik.github.io/angular-multi-select-tree/)
 
-## License
+## 许可证
 
 @rc-component/tree is released under the [MIT](./LICENSE.md) license.
 
