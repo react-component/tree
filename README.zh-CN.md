@@ -1,7 +1,6 @@
 <div align="center">
   <h1>@rc-component/tree</h1>
-  <p><sub>Ant Design 生态的一部分。</sub></p>
-  <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+  <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Ant Design 生态的一部分。</sub></p>
   <p>🌳 可访问的 React 树形视图基础组件。</p>
 </div>
 
@@ -16,9 +15,9 @@
 
 ## 特性
 
-- Controlled and uncontrolled expansion, selection, checking, drag and drop, and async loading.
-- Virtual scrolling for large trees through `@rc-component/virtual-list`.
-- TypeScript definitions for tree data, node props, and event payloads.
+- 受控和不受控的扩展、选择、检查、拖放和异步加载。
+- 通过 `@rc-component/virtual-list` 虚拟滚动大树。
+- 树数据、节点属性和事件负载的 TypeScript 定义。
 
 ## 安装
 
@@ -49,80 +48,80 @@ export default () => (
 ## 示例
 
 - 本地文档：运行 `npm start`，并打开终端输出的 dumi 地址。
-- Preview builds are attached to pull requests by Vercel and Surge.
+- 预览版本附加到 Vercel 和 Surge 的拉取请求中。
 
 ## API
 
-### Tree props
+### Tree 属性
 
-| name | description | type | default |
+| name | description | type | 默认 |
 | --- | --- | --- | --- |
-| autoExpandParent | whether auto expand parent treeNodes | bool | false |
-| checkable | whether support checked | bool/React Node | false |
-| checkedKeys | Controlled checked treeNodes(After setting, defaultCheckedKeys will not work). Note: parent and children nodes are associated, if the parent node's key exists, it all children node will be checked, and vice versa. When set checkable and checkStrictly, it should be an object, which contains checked array and halfChecked array. | String[]/{checked:Array<String>,halfChecked:Array<String>} | [] |
-| checkStrictly | check node precisely, parent and children nodes are not associated | bool | false |
-| className | additional css class of root dom node | String | '' |
-| defaultCheckedKeys | default checked treeNodes | String[] | [] |
+| autoExpandParent | 是否自动展开父树节点 | bool | false |
+| checkable | 是否支持勾选 | 布尔/React节点 | false |
+| checkedKeys | 控制选中的树节点（设置后defaultCheckedKeys将不起作用）。注意：父节点和子节点是关联的，如果父节点的key存在，则所有子节点都会被检查，反之亦然。当设置checkable和checkStrictly时，它应该是一个对象，其中包含checked数组和halfChecked数组。 | String[]/{checked:Array<String>,halfChecked:Array<String>} | [] |
+| checkStrictly | 精确检查节点，父子节点不关联 | bool | false |
+| className | 根 dom 节点的附加 css 类 | String | '' |
+| defaultCheckedKeys | 默认选中的树节点 | String[] | [] |
 | defaultExpandedKeys | expand specific treeNodes | String[] | [] |
 | defaultExpandAll | expand all treeNodes | bool | false |
-| defaultExpandParent | auto expand parent treeNodes when init | bool | true |
-| defaultSelectedKeys | default selected treeNodes | String[] | [] |
-| disabled | whether disabled the tree | bool | false |
-| draggable | whether can drag treeNode. (drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.) | bool \| ({ node }) => boolean | false |
-| expandedKeys | Controlled expand specific treeNodes | String[] | - |
-| filterTreeNode | filter some treeNodes as you need. it should return true | function(node) | - |
-| icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
-| loadedKeys | Mark node is loaded when `loadData` is true | String[] | - |
-| loadData | load data asynchronously and the return value should be a promise | function(node) | - |
-| multiple | whether multiple select | bool | false |
-| prefixCls | prefix class | String | 'rc-tree' |
-| selectable | whether can be selected | bool | true |
-| selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
-| showIcon | whether show icon | bool | true |
-| showLine | whether show line | bool | false |
-| treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array) | array<{key,title,children, [disabled, selectable]}> | - |
-| onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent}) | - |
-| onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node, nativeEvent}) | - |
-| onDragEnd | it execs when fire the tree's dragend event | function({event,node}) | - |
-| onDragEnter | it execs when fire the tree's dragenter event | function({event,node,expandedKeys}) | - |
-| onDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
-| onDragOver | it execs when fire the tree's dragover event | function({event,node}) | - |
-| onDragStart | it execs when fire the tree's dragstart event | function({event,node}) | - |
-| onDrop | it execs when fire the tree's drop event | function({event, node, dragNode, dragNodesKeys}) | - |
-| onLoad | Trigger when a node is loaded. If you set the `loadedKeys`, you must handle `onLoad` to avoid infinity loop | function(loadedKeys, {event, node}) | - |
-| onMouseEnter | call when mouse enter a treeNode | function({event,node}) | - |
-| onMouseLeave | call when mouse leave a treeNode | function({event,node}) | - |
-| onRightClick | select current treeNode and show customized contextmenu | function({event,node}) | - |
-| onSelect | click the treeNode to fire | function(selectedKeys, e:{selected: bool, selectedNodes, node, event, nativeEvent}) | - |
-| switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
-| virtual | Disable virtual scroll when `false` | boolean | - |
-| allowDrop | Whether to allow drop on node | ({ dragNode, dropNode, dropPosition }) => boolean | - |
-| dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode | - |
-| direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | - |
-| expandAction | Tree open logic, optional: false \| `click` \| `doubleClick` | string \| boolean | `click` |
+| defaultExpandParent | 初始化时自动展开父树节点 | bool | true |
+| defaultSelectedKeys | 默认选择的树节点 | String[] | [] |
+| disabled | 是否禁用该树 | bool | false |
+| draggable | 是否可以拖动树节点。 （Internet Explorer 8 及更早版本或 Safari 5.1 及更早版本不支持拖动事件。） | 布尔\| ({ 节点 }) => 布尔值 | false |
+| expandedKeys | 受控展开特定树节点 | String[] | - |
+| filterTreeNode | 根据需要过滤一些树节点。它应该返回 true | 函数（节点） | - |
+| icon | 自定义图标。当您传递组件时，其渲染将接收完整的 TreeNode 道具作为组件道具 | 元素/函数（道具） | - |
+| loadedKeys | 当 `loadData` 为 true 时标记节点被加载 | String[] | - |
+| loadData | 异步加载数据，返回值应该是一个promise | 函数（节点） | - |
+| multiple | 是否多选 | bool | false |
+| prefixCls | 前缀类 | String | 'rc-树' |
+| selectable | 是否可以选择 | bool | true |
+| selectedKeys | 控制选中的树节点（设置后，defaultSelectedKeys将不起作用） | String[] | [] |
+| showIcon | 是否显示图标 | bool | true |
+| showLine | 是否显线 | bool | false |
+| treeData | 树节点数据数组。设置后无需手动构造子 TreeNode。（value 在整个数组中应唯一） | array<{ key, title, children, [disabled, selectable] }> | - |
+| onCheck | 单击树节点/复选框来触发 | 函数（checkedKeys，e：{检查：bool，checkedNodes，节点，事件，nativeEvent}） | - |
+| onExpand | fire on treeNode expand or not | 函数（expandedKeys，{扩展：bool，节点，nativeEvent}） | - |
+| onDragEnd | 当触发树的 Dragend 事件时执行 | 函数（{事件，节点}） | - |
+| onDragEnter | 当触发树的 Dragenter 事件时执行 | 函数（{事件，节点，expandedKeys}） | - |
+| onDragLeave | 当触发树的 Dragleave 事件时执行 | 函数（{事件，节点}） | - |
+| onDragOver | 当触发树的 Dragover 事件时执行 | 函数（{事件，节点}） | - |
+| onDragStart | 当触发树的 Dragstart 事件时执行 | 函数（{事件，节点}） | - |
+| onDrop | 触发树节点放置事件时执行 | function({ event, node, dragNode, dragNodesKeys }) | - |
+| onLoad | 当节点加载时触发。如果设置了 `loadedKeys`，则必须处理 `onLoad` 以避免无限循环 | 函数（loadedKeys，{事件，节点}） | - |
+| onMouseEnter | 当鼠标进入树节点时调用 | 函数（{事件，节点}） | - |
+| onMouseLeave | 当鼠标离开树节点时调用 | 函数（{事件，节点}） | - |
+| onRightClick | 选择当前树节点并显示自定义上下文菜单 | 函数（{事件，节点}） | - |
+| onSelect | 点击树节点时触发 | function(selectedKeys, e: { selected: bool, selectedNodes, node, event, nativeEvent }) | - |
+| switcherIcon | 具体切换器图标。 | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
+| virtual | 当 `false` 时禁用虚拟滚动 | boolean | - |
+| allowDrop | 是否允许在节点上放置 | ({ dragNode, dropNode, dropPosition }) => boolean | - |
+| dropIndicatorRender | 拖动时要渲染的指示器 | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode | - |
+| direction | 树的显示方向，可能会影响拖动行为 | `ltr` \| `rtl` | - |
+| expandAction | 树打开逻辑，可选： false \|  `click` \|  ZXQ代码1QXZ | string \| boolean | `click` |
 
 ### TreeNode props
 
-> note: if you have a lot of TreeNode, like more than 1000,  
-> make the parent node is collapsed by default, will obvious effect, very fast.  
-> Because the children hide TreeNode will not insert into dom.
+> 注意：如果你有很多TreeNode，比如超过1000个，
+> 让父节点默认折叠起来，效果会很明显，速度很快。
+> 因为隐藏在 children 中的 TreeNode 不会插入到 DOM 中。
 
-| name | description | type | default |
+| name | description | type | 默认 |
 | --- | --- | --- | --- |
-| className | additional class to treeNode | String | '' |
-| checkable | control node checkable if Tree is checkable | bool | false |
-| style | set style to treeNode | Object | '' |
-| disabled | whether disabled the treeNode | bool | false |
-| disableCheckbox | whether disable the treeNode' checkbox | bool | false |
-| title | tree/subTree's title | String/element/((data: DataNode) => React.ReactNode) | '---' |
-| key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
-| isLeaf | whether it's leaf node | bool | false |
-| icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
-| switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
+| className | 给treeNode添加一个类 | String | '' |
+| checkable | 如果树可检查，则控制节点可检查 | bool | false |
+| 风格 | 将样式设置为treeNode | Object | '' |
+| disabled | 是否禁用树节点 | bool | false |
+| disableCheckbox | 是否禁用树节点的复选框 | bool | false |
+| title | 树/子树的标题 | 字符串/元素/((数据：DataNode) => React.ReactNode) | '---' |
+| key | 它与树道具的（默认）ExpandedKeys /（默认）CheckedKeys /（默认）SelectedKeys 一起使用。最好设置一下，并且在树的所有treeNodes中必须是唯一的 | String | treeNode's position |
+| isLeaf | 是否是叶子节点 | bool | false |
+| icon | 自定义图标。当您传递组件时，其渲染将接收完整的 TreeNode 道具作为组件道具 | 元素/函数（道具） | - |
+| switcherIcon | 具体切换器图标。 | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 
 ## Note
 
-The number of treeNodes can be very large, but when enable `checkable`, it will spend more computing time, so we cached some calculations(e.g. `this.treeNodesStates`), to avoid double computing. But, this bring some restrictions, **when you async load treeNodes, you should render tree like this** `{this.state.treeData.length ? <Tree ...>{this.state.treeData.map(t => <TreeNode ... />)}</Tree> : 'loading tree'}`
+树节点的数量可以非常大，但是当启用 `checkable` 时，会花费更多的计算时间，因此我们缓存了一些计算（例如 `this.treeNodesStates`），以避免重复计算。但是，这带来了一些限制，**当你异步加载树节点时，你应该像这样渲染树** `{this.state.treeData.length ? <Tree ...>{this.state.treeData.map(t => <TreeNode ... />)}</Tree> : 'loading tree'}`
 
 ## 本地开发
 
@@ -131,7 +130,7 @@ npm install
 npm start
 ```
 
-Run checks before sending a pull request:
+在发送拉取请求之前运行检查：
 
 ```bash
 npm run lint
@@ -146,21 +145,21 @@ npm run build
 npm run prepublishOnly
 ```
 
-The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
+包构建完成后，发布流程由 `@rc-component/np` 通过 `rc-np` 命令处理。
 ## Ecosystem
 
 该包属于 React Component 组织，并与 Ant Design 一同维护。 上方 Ant Design 标识仅用于说明生态归属；组件本身仍保持框架级、低样式耦合的定位。
 
-## Other tree views
+## 其他树视图
 
 - [zTree](http://www.treejs.cn/)
 - [jqTree](https://mbraak.github.io/jqTree/)
 - [jquery.treeselect](https://travistidwell.com/jquery.treeselect.js/)
-- [Angular Multi Select Tree](https://a5hik.github.io/angular-multi-select-tree/)
+- [角度多选树](https://a5hik.github.io/angular-multi-select-tree/)
 
 ## 许可证
 
-@rc-component/tree is released under the [MIT](./LICENSE.md) license.
+@rc-component/tree 基于 [MIT](./LICENSE.md) 许可证发布。
 
 [npm-image]: https://img.shields.io/npm/v/@rc-component/tree.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@rc-component/tree
