@@ -47,8 +47,14 @@ export default () => (
 
 ## Examples
 
-- Local docs: run `npm start` and open the printed dumi URL.
-- Preview builds are attached to pull requests by Vercel and Surge.
+Run the local dumi site:
+
+```bash
+npm install
+npm start
+```
+
+Then open `http://localhost:8000`.
 
 ## API
 
