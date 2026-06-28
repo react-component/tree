@@ -85,7 +85,7 @@
     "react": "*",
     "react-dom": "*"
   },
-  "types": "./lib/index.d.ts",
+  "types": "./es/index.d.ts",
   "publishConfig": {
     "access": "public"
   }
