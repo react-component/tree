@@ -43,3 +43,5 @@ es/
 
 .dumi/tmp*
 .vercel
+.dumi/tmp
+.dumi/tmp-production
