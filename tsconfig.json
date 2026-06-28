@@ -7,40 +7,23 @@
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "types": [
-      "@testing-library/jest-dom",
-      "node",
-      "jest"
-    ],
+    "types": ["@testing-library/jest-dom", "node", "jest"],
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@@/*": [
-        ".dumi/tmp/*"
-      ],
-      "@rc-component/tree": [
-        "src/index.ts"
-      ],
-      "@rc-component/tree/es": [
-        "src"
-      ],
-      "@rc-component/tree/es/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "@@/*": [".dumi/tmp/*"],
+      "@rc-component/tree": ["src/index.ts"],
+      "@rc-component/tree/es": ["src"],
+      "@rc-component/tree/es/*": ["src/*"]
     },
     "ignoreDeprecations": "5.0"
   },
   "include": [
     ".dumirc.ts",
+    ".fatherrc.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx",
     "./docs/**/*.tsx",
     "./tests/**/*.tsx"
   ],
-  "exclude": [
-    "docs-dist",
-    "lib",
-    "es"
-  ]
+  "exclude": ["docs-dist", "lib", "es"]
 }
