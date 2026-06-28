@@ -165,7 +165,7 @@ This package is part of the React Component organization and is maintained along
 
 ## License
 
-@rc-component/tree is released under the [MIT](./LICENSE.md) license.
+@rc-component/tree is released under the [MIT](./LICENSE) license.
 
 [npm-image]: https://img.shields.io/npm/v/@rc-component/tree.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@rc-component/tree
