@@ -117,7 +117,7 @@ npm start
 | disabled | 是否禁用树节点 | bool | false |
 | disableCheckbox | 是否禁用树节点的复选框 | bool | false |
 | title | 树/子树的标题 | String/element/((data: DataNode) => React.ReactNode) | '---' |
-| key | 它与树道具的（默认）ExpandedKeys /（默认）CheckedKeys /（默认）SelectedKeys 一起使用。最好设置一下，并且在树的所有treeNodes中必须是唯一的 | String | treeNode's position |
+| key | 它与树道具的（默认）ExpandedKeys /（默认）CheckedKeys /（默认）SelectedKeys 一起使用。最好设置一下，并且在树的所有treeNodes中必须是唯一的 | String | treeNode 的位置 |
 | isLeaf | 是否是叶子节点 | bool | false |
 | icon | 自定义图标。当您传递组件时，其渲染将接收完整的 TreeNode 道具作为组件道具 | element/Function(props) | - |
 | switcherIcon | 具体切换器图标。 | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
