@@ -7,7 +7,6 @@
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "types": ["@testing-library/jest-dom", "node", "jest"],
     "paths": {
       "@/*": ["src/*"],
       "@@/*": [".dumi/tmp/*"],
@@ -15,9 +14,18 @@
       "@rc-component/tree/es": ["src"],
       "@rc-component/tree/es/*": ["src/*"]
     },
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "6.0",
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "strictFunctionTypes": false,
+    "strict": false,
+    "noImplicitThis": false,
+    "strictBindCallApply": false
   },
   "include": [
+    "react-compat.d.ts",
+    "global.d.ts",
     ".dumirc.ts",
     ".fatherrc.ts",
     "./src/**/*.ts",
