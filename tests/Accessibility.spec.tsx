@@ -1,5 +1,6 @@
+import { fireEvent } from '@testing-library/dom';
 /* eslint-disable no-undef, react/no-multi-comp */
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import Tree, { FieldDataNode } from '../src';
 import { spyConsole } from './util';
