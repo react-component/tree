@@ -2,6 +2,8 @@
 react/no-unused-state, react/prop-types, no-return-assign */
 import Tree, { TreeNode } from '../src';
 import {
+  arrDel,
+  calcSelectedKeys,
   conductExpandParent,
   convertDataToTree,
   getDragChildrenKeys,
@@ -19,6 +21,11 @@ import { spyConsole, spyError } from './util';
 
 describe('Util', () => {
   spyConsole();
+
+  it('handles empty helper inputs', () => {
+    expect(arrDel(null, 'missing')).toEqual([]);
+    expect(calcSelectedKeys(undefined, {})).toBeUndefined();
+  });
 
   it('convertTreeToData - case1', () => {
     const tree = (
@@ -450,6 +457,10 @@ describe('Util', () => {
     const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
     const keys = conductExpandParent(['good'], keyEntities);
     expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
+  });
+
+  it('conductExpandParent ignores missing keys', () => {
+    expect(conductExpandParent(['missing'], {})).toEqual([]);
   });
 
   it('getDragChildrenKeys', () => {

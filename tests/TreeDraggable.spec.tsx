@@ -110,16 +110,20 @@ describe('Tree Draggable', () => {
     expect(event.dragNodesKeys).toEqual(['0-0-0-0']);
   });
 
+  it('does not fire drop event without drop target', () => {
+    const onDrop = jest.fn();
+    const { container } = render(createTree({ onDrop }));
+    fireEvent.dragStart(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper')!);
+    fireEvent.drop(container.querySelector('.dropTarget')!);
+    expect(onDrop).not.toHaveBeenCalled();
+  });
+
   it('fires dropEnd event', () => {
     const onDragEnd = jest.fn();
     const { container } = render(createTree({ onDragEnd }));
-    fireEvent.dragEnd(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'));
+    fireEvent.dragEnd(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper')!);
     const event = onDragEnd.mock.calls[0][0];
-    expect(event.node).toEqual(
-      expect.objectContaining({
-        key: '0-0-0-0',
-      }),
-    );
+    expect(event.node).toEqual(expect.objectContaining({ key: '0-0-0-0' }));
   });
 
   it('do not throw error when drag into another non-drag-able tree', () => {
@@ -182,7 +186,7 @@ describe('Tree Draggable', () => {
       });
     }
 
-    let domSpy;
+    let domSpy: ReturnType<typeof spyElementPrototypes>;
     beforeEach(() => {
       domSpy = spyElementPrototypes(HTMLElement, {
         offsetWidth: {
@@ -211,7 +215,7 @@ describe('Tree Draggable', () => {
   });
 
   describe('new drop logic', () => {
-    let domSpy;
+    let domSpy: ReturnType<typeof spyElementPrototypes>;
     beforeEach(() => {
       domSpy = spyElementPrototypes(HTMLElement, {
         getBoundingClientRect: () => ({
