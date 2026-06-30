@@ -1,5 +1,4 @@
-import { fireEvent } from '@testing-library/dom';
-import { act, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import Tree, { FieldDataNode, TreeNode } from '../src';
 import { TreeContext } from '../src/contextTypes';

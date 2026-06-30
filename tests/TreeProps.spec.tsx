@@ -1,6 +1,5 @@
-import { fireEvent } from '@testing-library/dom';
 /* eslint-disable no-undef, react/no-multi-comp */
-import { act, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { resetWarned } from '@rc-component/util';
 import React from 'react';
 import Tree, { FieldDataNode, TreeNode } from '../src';

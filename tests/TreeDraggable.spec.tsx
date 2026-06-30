@@ -1,7 +1,6 @@
-import { createEvent, fireEvent } from '@testing-library/dom';
 /* eslint-disable no-undef, react/no-multi-comp, no-console,
 react/no-unused-state, react/prop-types, no-return-assign */
-import { act, render } from '@testing-library/react';
+import { act, createEvent, fireEvent, render } from '@testing-library/react';
 import { spyElementPrototypes } from '@rc-component/util';
 import React from 'react';
 import Tree, { FieldDataNode, TreeNode, TreeProps } from '../src';
