@@ -52,7 +52,7 @@ export default () => (
 Run the local dumi site:
 
 ```bash
-ut install
+npm install
 npm start
 ```
 
@@ -134,7 +134,7 @@ The number of treeNodes can be very large, but when enable `checkable`, it will 
 ## Development
 
 ```bash
-ut install
+npm install
 npm start
 ```
 
