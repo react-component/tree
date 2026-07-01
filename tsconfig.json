@@ -13,13 +13,7 @@
       "@rc-component/tree/es": ["./src"],
       "@rc-component/tree/es/*": ["./src/*"]
     },
-    "noImplicitAny": false,
-    "strictNullChecks": false,
-    "strictPropertyInitialization": false,
-    "strictFunctionTypes": false,
     "strict": false,
-    "noImplicitThis": false,
-    "strictBindCallApply": false,
     "module": "ESNext"
   },
   "include": [
