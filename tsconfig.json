@@ -1,23 +1,23 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "moduleResolution": "node",
-    "baseUrl": "./",
+    "moduleResolution": "bundler",
     "jsx": "react",
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "types": ["@testing-library/jest-dom", "node", "jest"],
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": [".dumi/tmp/*"],
-      "@rc-component/tree": ["src/index.ts"],
-      "@rc-component/tree/es": ["src"],
-      "@rc-component/tree/es/*": ["src/*"]
+      "@/*": ["./src/*"],
+      "@@/*": ["./.dumi/tmp/*"],
+      "@rc-component/tree": ["./src/index.ts"],
+      "@rc-component/tree/es": ["./src"],
+      "@rc-component/tree/es/*": ["./src/*"]
     },
-    "ignoreDeprecations": "5.0"
+    "strict": false,
+    "module": "ESNext"
   },
   "include": [
+    "global.d.ts",
     ".dumirc.ts",
     ".fatherrc.ts",
     "./src/**/*.ts",
