@@ -590,9 +590,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
           newExpandedKeys = arrAdd(expandedKeys, nodeProps.eventKey);
         }
 
-        if (!this.props.hasOwnProperty('expandedKeys')) {
-          this.setExpandedKeys(newExpandedKeys);
-        }
+        this.setExpandedKeys(newExpandedKeys);
 
         onExpand?.(newExpandedKeys, {
           node: convertNodePropsToEventData<TreeDataType>(nodeProps),
@@ -667,30 +665,26 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     // Update drag position
 
     if (this.dragNodeProps.eventKey === dropTargetKey && dropLevelOffset === 0) {
-      if (
-        !(
-          this.state.dropPosition === null &&
-          this.state.dropLevelOffset === null &&
-          this.state.dropTargetKey === null &&
-          this.state.dropContainerKey === null &&
-          this.state.dropTargetPos === null &&
-          this.state.dropAllowed === false &&
-          this.state.dragOverNodeKey === null
-        )
-      ) {
+      if (!(
+        this.state.dropPosition === null &&
+        this.state.dropLevelOffset === null &&
+        this.state.dropTargetKey === null &&
+        this.state.dropContainerKey === null &&
+        this.state.dropTargetPos === null &&
+        this.state.dropAllowed === false &&
+        this.state.dragOverNodeKey === null
+      )) {
         this.resetDragState();
       }
-    } else if (
-      !(
-        dropPosition === this.state.dropPosition &&
-        dropLevelOffset === this.state.dropLevelOffset &&
-        dropTargetKey === this.state.dropTargetKey &&
-        dropContainerKey === this.state.dropContainerKey &&
-        dropTargetPos === this.state.dropTargetPos &&
-        dropAllowed === this.state.dropAllowed &&
-        dragOverNodeKey === this.state.dragOverNodeKey
-      )
-    ) {
+    } else if (!(
+      dropPosition === this.state.dropPosition &&
+      dropLevelOffset === this.state.dropLevelOffset &&
+      dropTargetKey === this.state.dropTargetKey &&
+      dropContainerKey === this.state.dropContainerKey &&
+      dropTargetPos === this.state.dropTargetPos &&
+      dropAllowed === this.state.dropAllowed &&
+      dragOverNodeKey === this.state.dragOverNodeKey
+    )) {
       this.setState({
         dropPosition,
         dropLevelOffset,
@@ -1135,6 +1129,10 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   // =========================== Expanded ===========================
   /** Set uncontrolled `expandedKeys`. This will also auto update `flattenNodes`. */
   setExpandedKeys = (expandedKeys: Key[]) => {
+    // When `expandedKeys` is controlled, `setUncontrolledState` with `atomic` will be a no-op.
+    if (this.props.hasOwnProperty('expandedKeys')) {
+      return;
+    }
     const { treeData, fieldNames } = this.state;
     const flattenNodes = flattenTreeData<TreeDataType>(treeData, expandedKeys, fieldNames);
     this.setUncontrolledState({ expandedKeys, flattenNodes }, true);
