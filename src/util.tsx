@@ -329,6 +329,18 @@ export function parseCheckedKeys(keys: Key[] | { checked: Key[]; halfChecked: Ke
   return keyProps;
 }
 
+export function getAncestorKeys(key: Key, keyEntities: KeyEntities): Key[] {
+  const keys: Key[] = [];
+  let entity = getEntity(keyEntities, key)?.parent;
+
+  while (entity) {
+    keys.push(entity.key);
+    entity = entity.parent;
+  }
+
+  return keys.reverse();
+}
+
 /**
  * If user use `autoExpandParent` we should get the list of parent node
  * @param keyList

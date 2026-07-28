@@ -4,6 +4,7 @@ import Tree, { TreeNode } from '../src';
 import {
   conductExpandParent,
   convertDataToTree,
+  getAncestorKeys,
   getDragChildrenKeys,
   parseCheckedKeys,
 } from '../src/util';
@@ -450,6 +451,25 @@ describe('Util', () => {
     const { keyEntities } = convertDataToEntities(convertTreeToData(tree.props.children));
     const keys = conductExpandParent(['good'], keyEntities);
     expect(keys.sort()).toEqual(['bamboo', 'is', 'good'].sort());
+  });
+
+  it('getAncestorKeys returns ancestors from root to direct parent', () => {
+    const { keyEntities } = convertDataToEntities([
+      {
+        key: 'root',
+        disabled: true,
+        children: [
+          {
+            key: 'folder',
+            children: [{ key: 'target' }],
+          },
+        ],
+      },
+    ]);
+
+    expect(getAncestorKeys('target', keyEntities)).toEqual(['root', 'folder']);
+    expect(getAncestorKeys('root', keyEntities)).toEqual([]);
+    expect(getAncestorKeys('missing', keyEntities)).toEqual([]);
   });
 
   it('getDragChildrenKeys', () => {
