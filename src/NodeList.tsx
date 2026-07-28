@@ -48,6 +48,7 @@ const MotionFlattenData: FlattenNode = {
 export interface NodeListRef {
   scrollTo: ScrollTo;
   getIndentWidth: () => number;
+  isKeyInList: (key: Key) => boolean;
 }
 
 interface NodeListProps<TreeDataType extends BasicDataNode> {
@@ -159,12 +160,18 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   // =============================== Ref ================================
   const listRef = React.useRef<ListRef>(null);
   const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
-  React.useImperativeHandle(ref, () => ({
-    scrollTo: scroll => {
-      listRef.current.scrollTo(scroll);
-    },
-    getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
-  }));
+  const mergedDataRef = React.useRef<FlattenNode[]>(data);
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      scrollTo: scroll => {
+        listRef.current.scrollTo(scroll);
+      },
+      getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
+      isKeyInList: key => mergedDataRef.current.some(item => item.key === key),
+    }),
+    [],
+  );
 
   // ============================== Motion ==============================
   const [prevExpandedKeys, setPrevExpandedKeys] = React.useState(expandedKeys);
@@ -244,6 +251,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   }, [dragging]);
 
   const mergedData = motion ? transitionData : data;
+  mergedDataRef.current = mergedData;
 
   const treeNodeRequiredProps = {
     expandedKeys,

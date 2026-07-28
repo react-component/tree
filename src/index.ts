@@ -6,7 +6,9 @@ import type {
   DataNode,
   EventDataNode,
   FieldDataNode,
+  TreeKeyScrollConfig,
   TreeNodeProps,
+  TreeScrollTo,
 } from './interface';
 import { UnstableContext } from './contextTypes';
 
@@ -15,5 +17,12 @@ export { conductCheck } from './utils/conductUtil';
 export { convertDataToEntities, convertTreeToData, fillFieldNames } from './utils/treeUtil';
 export { TreeNode, UnstableContext };
 export type { DataNode, EventDataNode };
-export type { TreeProps, TreeNodeProps, BasicDataNode, FieldDataNode };
+export type {
+  TreeProps,
+  TreeNodeProps,
+  BasicDataNode,
+  FieldDataNode,
+  TreeKeyScrollConfig,
+  TreeScrollTo,
+};
 export default Tree;

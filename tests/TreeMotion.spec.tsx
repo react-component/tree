@@ -118,6 +118,176 @@ describe('Tree Motion', () => {
     expect(onExpand).not.toHaveBeenCalled();
   });
 
+  it('waits for expanded nodes to finish motion before scrolling', () => {
+    const treeRef = React.createRef<any>();
+    render(
+      <Tree
+        ref={treeRef}
+        height={100}
+        itemHeight={20}
+        motion={{
+          motionName: 'bamboo',
+          motionDeadline: 100,
+        }}
+        treeData={[
+          {
+            key: 'root',
+            children: [{ key: 'target' }],
+          },
+        ]}
+      />,
+    );
+    const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+    act(() => {
+      treeRef.current.scrollTo({
+        key: 'target',
+        align: 'top',
+        offset: 8,
+        autoExpand: true,
+      });
+    });
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(scrollToSpy).toHaveBeenCalledWith({
+      key: 'target',
+      align: 'top',
+      offset: 8,
+    });
+  });
+
+  it('waits for controlled expansion motion before scrolling', () => {
+    const treeRef = React.createRef<any>();
+    const renderTree = (expandedKeys: React.Key[]) => (
+      <Tree
+        ref={treeRef}
+        height={100}
+        itemHeight={20}
+        motion={{
+          motionName: 'bamboo',
+          motionDeadline: 100,
+        }}
+        expandedKeys={expandedKeys}
+        treeData={[
+          {
+            key: 'root',
+            children: [{ key: 'target' }],
+          },
+        ]}
+      />
+    );
+    const { rerender } = render(renderTree([]));
+    const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+    rerender(renderTree(treeRef.current.getExpandedKeys('target')));
+    act(() => {
+      treeRef.current.scrollTo({ key: 'target', autoExpand: true });
+    });
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(scrollToSpy).toHaveBeenCalledWith({ key: 'target' });
+  });
+
+  it('does not scroll after unmounting with a pending target', () => {
+    const treeRef = React.createRef<any>();
+    const { unmount } = render(
+      <Tree
+        ref={treeRef}
+        height={100}
+        itemHeight={20}
+        motion={{
+          motionName: 'bamboo',
+          motionDeadline: 100,
+        }}
+        treeData={[
+          {
+            key: 'root',
+            children: [{ key: 'target' }],
+          },
+        ]}
+      />,
+    );
+    const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+    act(() => {
+      treeRef.current.scrollTo({ key: 'target', autoExpand: true });
+    });
+    unmount();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
+  });
+
+  it('cancels a pending scroll when the target is removed', () => {
+    const treeRef = React.createRef<any>();
+    const treeData = [
+      {
+        key: 'root',
+        children: [{ key: 'target' }],
+      },
+    ];
+    const renderTree = (data: typeof treeData) => (
+      <Tree
+        ref={treeRef}
+        height={100}
+        itemHeight={20}
+        motion={{
+          motionName: 'bamboo',
+          motionDeadline: 100,
+        }}
+        treeData={data}
+      />
+    );
+    const { rerender } = render(renderTree(treeData));
+    const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+    act(() => {
+      treeRef.current.scrollTo({ key: 'target', autoExpand: true });
+    });
+    rerender(renderTree([{ key: 'root', children: [] }]));
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    rerender(renderTree(treeData));
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
+  });
+
   describe('MotionTreeNode should always trigger motion end', () => {
     it('with motionNodes', () => {
       const onMotionStart = jest.fn();

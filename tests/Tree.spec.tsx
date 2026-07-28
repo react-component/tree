@@ -1063,6 +1063,348 @@ describe('Tree Basic', () => {
       expect(called).toBeTruthy();
       jest.useRealTimers();
     });
+
+    it('forwards non-key scroll config', () => {
+      const treeRef = React.createRef<any>();
+      render(<Tree ref={treeRef} />);
+      const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+      act(() => {
+        treeRef.current.scrollTo(24);
+        treeRef.current.scrollTo({ top: 12 });
+        treeRef.current.scrollTo(null);
+      });
+
+      expect(scrollToSpy.mock.calls).toEqual([[24], [{ top: 12 }], [null]]);
+    });
+  });
+
+  describe('getExpandedKeys', () => {
+    const treeData = [
+      { key: 'other' },
+      {
+        key: 'root',
+        children: [
+          {
+            key: 'folder',
+            children: [{ key: 'target' }],
+          },
+        ],
+      },
+    ];
+
+    it('preserves current keys and appends ancestors only', () => {
+      const treeRef = React.createRef<any>();
+      render(
+        <Tree
+          ref={treeRef}
+          defaultExpandParent={false}
+          defaultExpandedKeys={['other', 'target']}
+          treeData={treeData}
+        />,
+      );
+
+      const result = treeRef.current.getExpandedKeys('target');
+
+      expect(result).toEqual(['other', 'target', 'root', 'folder']);
+      expect(result).not.toBe(treeRef.current.state.expandedKeys);
+      expect(treeRef.current.state.expandedKeys).toEqual(['other', 'target']);
+    });
+
+    it('returns a copy for a missing target', () => {
+      const treeRef = React.createRef<any>();
+      render(
+        <Tree
+          ref={treeRef}
+          defaultExpandParent={false}
+          defaultExpandedKeys={['other']}
+          treeData={treeData}
+        />,
+      );
+
+      const result = treeRef.current.getExpandedKeys('missing');
+
+      expect(result).toEqual(['other']);
+      expect(result).not.toBe(treeRef.current.state.expandedKeys);
+    });
+
+    it('handles null controlled expandedKeys', () => {
+      const treeRef = React.createRef<any>();
+      render(<Tree ref={treeRef} expandedKeys={null as any} treeData={treeData} />);
+
+      expect(treeRef.current.getExpandedKeys('target')).toEqual(['root', 'folder']);
+    });
+
+    it('does not change controlled expansion or trigger onExpand', () => {
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      render(
+        <Tree ref={treeRef} expandedKeys={['other']} onExpand={onExpand} treeData={treeData} />,
+      );
+
+      expect(treeRef.current.getExpandedKeys('target')).toEqual(['other', 'root', 'folder']);
+      expect(treeRef.current.state.expandedKeys).toEqual(['other']);
+      expect(onExpand).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('scrollTo autoExpand', () => {
+    const errorSpy = spyError();
+    const treeData = [
+      {
+        key: 'root',
+        title: 'Root',
+        children: [
+          {
+            key: 'folder',
+            title: 'Folder',
+            children: [
+              {
+                key: 'target',
+                title: 'Target',
+                children: [{ key: 'leaf', title: 'Leaf' }],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    it('expands ancestors without expanding the target', () => {
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      const { queryByText } = render(
+        <Tree ref={treeRef} motion={null} onExpand={onExpand} treeData={treeData} />,
+      );
+      const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+      expect(queryByText('Target')).toBeNull();
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'target', autoExpand: true });
+      });
+
+      expect(queryByText('Target')).toBeTruthy();
+      expect(queryByText('Leaf')).toBeNull();
+      expect(treeRef.current.state.expandedKeys).toEqual(['root', 'folder']);
+      expect(onExpand.mock.calls.map(([keys]) => keys)).toEqual([['root'], ['root', 'folder']]);
+      expect(onExpand.mock.calls.map(([, info]) => info.node.key)).toEqual(['root', 'folder']);
+      expect(
+        onExpand.mock.calls.every(
+          ([, info]) => info.expanded === true && info.nativeEvent === undefined,
+        ),
+      ).toBe(true);
+      expect(scrollToSpy).toHaveBeenCalledWith({ key: 'target' });
+    });
+
+    it('only expands and reports missing ancestors', () => {
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      render(
+        <Tree
+          ref={treeRef}
+          motion={null}
+          defaultExpandedKeys={['root']}
+          onExpand={onExpand}
+          treeData={treeData}
+        />,
+      );
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'target', autoExpand: true });
+      });
+
+      expect(treeRef.current.state.expandedKeys).toEqual(['root', 'folder']);
+      expect(onExpand).toHaveBeenCalledTimes(1);
+      expect(onExpand).toHaveBeenCalledWith(
+        ['root', 'folder'],
+        expect.objectContaining({
+          expanded: true,
+          nativeEvent: undefined,
+          node: expect.objectContaining({ key: 'folder' }),
+        }),
+      );
+    });
+
+    it('expands disabled ancestors', () => {
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      render(
+        <Tree
+          ref={treeRef}
+          motion={null}
+          onExpand={onExpand}
+          treeData={[
+            {
+              key: 'disabled-root',
+              disabled: true,
+              children: [{ key: 'disabled-target' }],
+            },
+          ]}
+        />,
+      );
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'disabled-target', autoExpand: true });
+      });
+
+      expect(treeRef.current.state.expandedKeys).toEqual(['disabled-root']);
+      expect(onExpand).toHaveBeenCalledWith(
+        ['disabled-root'],
+        expect.objectContaining({
+          expanded: true,
+          node: expect.objectContaining({ disabled: true, key: 'disabled-root' }),
+        }),
+      );
+    });
+
+    it('does nothing when the target does not exist', () => {
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      const loadData = jest.fn();
+      render(
+        <Tree
+          ref={treeRef}
+          motion={null}
+          onExpand={onExpand}
+          loadData={loadData}
+          treeData={treeData}
+        />,
+      );
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'missing', autoExpand: true });
+      });
+
+      expect(treeRef.current.state.expandedKeys).toEqual([]);
+      expect(onExpand).not.toHaveBeenCalled();
+      expect(loadData).not.toHaveBeenCalled();
+    });
+
+    it('keeps auto expansion opt-in', () => {
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      render(<Tree ref={treeRef} motion={null} onExpand={onExpand} treeData={treeData} />);
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'target' });
+      });
+
+      expect(treeRef.current.state.expandedKeys).toEqual([]);
+      expect(onExpand).not.toHaveBeenCalled();
+    });
+
+    it('scrolls directly when the target needs no new ancestors', () => {
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      render(
+        <Tree
+          ref={treeRef}
+          motion={null}
+          defaultExpandedKeys={['root', 'folder']}
+          onExpand={onExpand}
+          treeData={treeData}
+        />,
+      );
+      const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+      act(() => {
+        treeRef.current.scrollTo({
+          key: 'target',
+          align: 'top',
+          offset: 8,
+          autoExpand: true,
+        });
+      });
+
+      expect(scrollToSpy).toHaveBeenCalledWith({ key: 'target', align: 'top', offset: 8 });
+      expect(onExpand).not.toHaveBeenCalled();
+    });
+
+    it('scrolls to a root target without changing expansion', () => {
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      render(<Tree ref={treeRef} motion={null} onExpand={onExpand} treeData={treeData} />);
+      const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'root', autoExpand: true });
+      });
+
+      expect(scrollToSpy).toHaveBeenCalledWith({ key: 'root' });
+      expect(treeRef.current.state.expandedKeys).toEqual([]);
+      expect(onExpand).not.toHaveBeenCalled();
+    });
+
+    it('does not mutate controlled expandedKeys', () => {
+      resetWarned();
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      const renderTree = (expandedKeys: React.Key[]) => (
+        <Tree
+          ref={treeRef}
+          motion={null}
+          expandedKeys={expandedKeys}
+          onExpand={onExpand}
+          treeData={treeData}
+        />
+      );
+      const { rerender } = render(renderTree([]));
+      const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'target', autoExpand: true });
+      });
+
+      expect(treeRef.current.state.expandedKeys).toEqual([]);
+      expect(onExpand).not.toHaveBeenCalled();
+      expect(scrollToSpy).not.toHaveBeenCalled();
+      expect(errorSpy()).toHaveBeenCalledWith(
+        'Warning: `scrollTo` with `autoExpand` cannot update controlled `expandedKeys`. ' +
+          'Call `getExpandedKeys` and update `expandedKeys` before scrolling.',
+      );
+
+      const nextExpandedKeys = treeRef.current.getExpandedKeys('target');
+      rerender(renderTree(nextExpandedKeys));
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'target', autoExpand: true });
+      });
+
+      expect(scrollToSpy).toHaveBeenCalledWith({ key: 'target' });
+      expect(onExpand).not.toHaveBeenCalled();
+    });
+
+    it('keeps expanded paths and only scrolls to the latest target', () => {
+      jest.useFakeTimers();
+      const treeRef = React.createRef<any>();
+      const onExpand = jest.fn();
+      render(
+        <Tree
+          ref={treeRef}
+          motion={null}
+          onExpand={onExpand}
+          treeData={[
+            { key: 'root-a', children: [{ key: 'target-a' }] },
+            { key: 'root-b', children: [{ key: 'target-b' }] },
+          ]}
+        />,
+      );
+      const scrollToSpy = jest.spyOn(treeRef.current.listRef.current, 'scrollTo');
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'target-a', autoExpand: true });
+        treeRef.current.scrollTo({ key: 'target-b', autoExpand: true });
+        jest.runAllTimers();
+      });
+
+      expect(treeRef.current.state.expandedKeys).toEqual(['root-a', 'root-b']);
+      expect(onExpand.mock.calls.map(([keys]) => keys)).toEqual([['root-a'], ['root-a', 'root-b']]);
+      expect(scrollToSpy).toHaveBeenCalledTimes(1);
+      expect(scrollToSpy).toHaveBeenCalledWith({ key: 'target-b' });
+
+      jest.useRealTimers();
+    });
   });
 
   describe('offset should work', () => {

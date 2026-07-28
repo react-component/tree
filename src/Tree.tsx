@@ -26,7 +26,8 @@ import type {
   Key,
   KeyEntities,
   SafeKey,
-  ScrollTo,
+  TreeKeyScrollConfig,
+  TreeScrollTo,
   TreeNodeProps,
 } from './interface';
 import NodeList, { MOTION_KEY, MotionEntity, type NodeListRef } from './NodeList';
@@ -38,6 +39,7 @@ import {
   calcSelectedKeys,
   conductExpandParent,
   getDragChildrenKeys,
+  getAncestorKeys,
   parseCheckedKeys,
   posToArr,
 } from './util';
@@ -134,7 +136,7 @@ export interface TreeProps<TreeDataType extends BasicDataNode = DataNode> {
     info: {
       node: EventDataNode<TreeDataType>;
       expanded: boolean;
-      nativeEvent: MouseEvent;
+      nativeEvent?: MouseEvent;
     },
   ) => void;
   onCheck?: (
@@ -269,6 +271,10 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   loadingRetryTimes: Record<SafeKey, number> = {};
 
+  pendingExpandedKeys: Key[] | null = null;
+
+  pendingScroll: TreeKeyScrollConfig | null = null;
+
   state: TreeState<TreeDataType> = {
     keyEntities: {},
 
@@ -333,6 +339,14 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   onUpdated() {
     const { activeKey, itemScrollOffset = 0 } = this.props;
 
+    if (this.pendingExpandedKeys === this.state.expandedKeys) {
+      this.pendingExpandedKeys = null;
+    }
+
+    if (this.pendingScroll) {
+      this.flushPendingScroll();
+    }
+
     if (activeKey !== undefined && activeKey !== this.state.activeKey) {
       this.setState({ activeKey });
 
@@ -343,6 +357,8 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   }
 
   componentWillUnmount() {
+    this.clearPendingScroll();
+    this.pendingExpandedKeys = null;
     window.removeEventListener('dragend', this.onWindowDragEnd);
     window.removeEventListener('mouseup', this.onGlobalMouseUp);
     this.destroyed = true;
@@ -1126,6 +1142,35 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     };
   };
 
+  getExpandedKeys = (key: Key): Key[] => {
+    const baseKeys = this.pendingExpandedKeys ?? this.state.expandedKeys;
+    const ancestorKeys = getAncestorKeys(key, this.state.keyEntities);
+    const nextKeys = [...baseKeys];
+    const keySet = new Set(nextKeys);
+
+    ancestorKeys.forEach(ancestorKey => {
+      if (!keySet.has(ancestorKey)) {
+        keySet.add(ancestorKey);
+        nextKeys.push(ancestorKey);
+      }
+    });
+
+    return nextKeys;
+  };
+
+  getEventData = (key: Key, expandedKeys: Key[]): EventDataNode<TreeDataType> => {
+    const entity = getEntity(this.state.keyEntities, key);
+    const requiredProps = {
+      ...this.getTreeNodeRequiredProps(),
+      expandedKeys,
+    };
+
+    return convertNodePropsToEventData<TreeDataType>({
+      ...getTreeNodeProps(key, requiredProps),
+      data: entity.node,
+    });
+  };
+
   // =========================== Expanded ===========================
   /** Set uncontrolled `expandedKeys`. This will also auto update `flattenNodes`. */
   setExpandedKeys = (expandedKeys: Key[]) => {
@@ -1203,6 +1248,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       this.setUncontrolledState({
         listChanging: false,
       });
+      this.flushPendingScroll();
     });
   };
 
@@ -1402,8 +1448,90 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     }
   };
 
-  scrollTo: ScrollTo = scroll => {
-    this.listRef.current.scrollTo(scroll);
+  clearPendingScroll = () => {
+    this.pendingScroll = null;
+  };
+
+  flushPendingScroll = () => {
+    const pendingScroll = this.pendingScroll;
+
+    if (!pendingScroll) {
+      return;
+    }
+
+    if (!getEntity(this.state.keyEntities, pendingScroll.key)) {
+      this.pendingScroll = null;
+      return;
+    }
+
+    if (this.listRef.current?.isKeyInList(pendingScroll.key)) {
+      this.pendingScroll = null;
+      this.listRef.current.scrollTo(pendingScroll);
+    }
+  };
+
+  scrollTo: TreeScrollTo = scroll => {
+    this.clearPendingScroll();
+
+    if (!scroll || typeof scroll !== 'object' || !('key' in scroll)) {
+      this.listRef.current.scrollTo(scroll);
+      return;
+    }
+
+    const { autoExpand, ...scrollConfig } = scroll as TreeKeyScrollConfig;
+
+    if (!autoExpand) {
+      this.listRef.current.scrollTo(scrollConfig);
+      return;
+    }
+
+    const { key } = scrollConfig;
+    const { expandedKeys, keyEntities } = this.state;
+    const entity = getEntity(keyEntities, key);
+
+    if (!entity) {
+      return;
+    }
+
+    const baseKeys = this.pendingExpandedKeys ?? expandedKeys;
+    const baseKeySet = new Set(baseKeys);
+    const ancestorKeys = getAncestorKeys(key, keyEntities);
+    const missingAncestorKeys = ancestorKeys.filter(ancestorKey => !baseKeySet.has(ancestorKey));
+
+    if (!missingAncestorKeys.length) {
+      if (this.listRef.current.isKeyInList(key)) {
+        this.listRef.current.scrollTo(scrollConfig);
+      } else {
+        this.pendingScroll = scrollConfig;
+      }
+      return;
+    }
+
+    if (this.props.hasOwnProperty('expandedKeys')) {
+      warning(
+        false,
+        '`scrollTo` with `autoExpand` cannot update controlled `expandedKeys`. ' +
+          'Call `getExpandedKeys` and update `expandedKeys` before scrolling.',
+      );
+      return;
+    }
+
+    const nextExpandedKeys = this.getExpandedKeys(key);
+    this.pendingExpandedKeys = nextExpandedKeys;
+    this.pendingScroll = scrollConfig;
+    this.setExpandedKeys(nextExpandedKeys);
+
+    const { onExpand } = this.props;
+    let callbackExpandedKeys = [...baseKeys];
+
+    missingAncestorKeys.forEach(ancestorKey => {
+      callbackExpandedKeys = arrAdd(callbackExpandedKeys, ancestorKey);
+      onExpand?.(callbackExpandedKeys, {
+        node: this.getEventData(ancestorKey, callbackExpandedKeys),
+        expanded: true,
+        nativeEvent: undefined,
+      });
+    });
   };
 
   render() {

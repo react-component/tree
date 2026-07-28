@@ -1,7 +1,7 @@
 /* eslint-disable no-undef, react/no-multi-comp */
 import React from 'react';
 import { render } from '@testing-library/react';
-import Tree, { BasicDataNode } from '../src';
+import Tree, { BasicDataNode, TreeKeyScrollConfig, TreeScrollTo } from '../src';
 
 describe('Tree.TypeScript', () => {
   it('fieldNames', () => {
@@ -25,5 +25,16 @@ describe('Tree.TypeScript', () => {
         }}
       />,
     );
+  });
+  it('scrollTo autoExpand', () => {
+    const config: TreeKeyScrollConfig = {
+      key: 'target',
+      align: 'auto',
+      offset: () => 8,
+      autoExpand: true,
+    };
+    const scrollTo: TreeScrollTo = () => {};
+
+    scrollTo(config);
   });
 });

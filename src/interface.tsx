@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { ScrollOffset, ScrollTo as VirtualListScrollTo } from '@rc-component/virtual-list';
 
 export type { ScrollTo } from '@rc-component/virtual-list';
 export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
@@ -61,6 +62,17 @@ export type FieldDataNode<T, ChildFieldName extends string = 'children'> = Basic
   Partial<Record<ChildFieldName, FieldDataNode<T, ChildFieldName>[]>>;
 
 export type Key = React.Key;
+
+export interface TreeKeyScrollConfig {
+  key: Key;
+  align?: 'top' | 'bottom' | 'auto';
+  offset?: ScrollOffset;
+  autoExpand?: boolean;
+}
+
+export type TreeScrollTo = (
+  scroll?: Parameters<VirtualListScrollTo>[0] | TreeKeyScrollConfig,
+) => void;
 
 /**
  * Typescript not support `bigint` as index type yet.
