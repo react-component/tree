@@ -89,7 +89,7 @@ npm start
 | showLine | 是否显示连接线 | boolean | false |
 | treeData | 树节点数据数组。设置后无需手动构造子 TreeNode。（value 在整个数组中应唯一） | array<{key,title,children, [disabled, selectable]}> | - |
 | onCheck | 单击树节点/复选框时触发 | function(checkedKeys, e:{checked: boolean, checkedNodes, node, event, nativeEvent}) | - |
-| onExpand | 树节点展开或收起时触发 | function(expandedKeys, {expanded: boolean, node, nativeEvent}) | - |
+| onExpand | 树节点展开或收起时触发 | function(expandedKeys, {expanded: boolean, node, nativeEvent?}) | - |
 | onDragEnd | 触发树节点拖拽结束事件时执行 | function({event,node}) | - |
 | onDragEnter | 触发树节点拖拽进入事件时执行 | function({event,node,expandedKeys}) | - |
 | onDragLeave | 触发树节点拖拽离开事件时执行 | function({event,node}) | - |
@@ -107,6 +107,37 @@ npm start
 | dropIndicatorRender | 拖动时要渲染的指示器 | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode | - |
 | direction | 树的显示方向，可能会影响拖动行为 | `ltr` \| `rtl` | - |
 | expandAction | 树打开逻辑，可选：`false` 或 `click` | string \| boolean | `click` |
+
+### Tree 方法
+
+| 方法 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| getExpandedKeys | 返回一个新数组，其中包含当前展开节点及 `key` 的所有祖先节点。保留已有 key 的顺序，并按根节点到直接父节点的顺序追加缺失祖先；不会主动加入目标节点本身。 | `(key: Key) => Key[]` | - |
+| scrollTo | 滚动到指定偏移、位置、索引或节点。基于 key 滚动时还可通过 `autoExpand` 先展开隐藏的祖先节点。 | `TreeScrollTo` | - |
+
+`TreeScrollTo` 支持已有的虚拟列表滚动参数（`number`、`null`、`{ left?, top? }` 位置或基于索引/key 的目标），并新增以下 key 目标配置：
+
+```ts
+interface TreeKeyScrollConfig {
+  key: React.Key;
+  align?: 'top' | 'bottom' | 'auto';
+  offset?: ScrollOffset;
+  autoExpand?: boolean;
+}
+```
+
+`ScrollOffset` 可以是数字，也可以是一个函数；该函数根据最终滚动对齐方式和节点尺寸信息返回偏移量。
+
+#### 自动展开并滚动
+
+`scrollTo({ key, autoExpand: true })` 是显式开启的能力；`autoExpand` 默认为 `false`。
+
+- 非受控 Tree 会按根节点到目标节点直接父节点的顺序展开缺失祖先。目标节点本身不会被展开，已有展开状态会被保留，禁用的祖先节点也可以被展开。
+- 每个新展开的祖先节点都会按根节点到直接父节点的顺序同步触发一次 `onExpand`。每次回调收到累积的展开 key、`info.expanded: true`，以及 `info.nativeEvent: undefined`。
+- 滚动会等待展开动画结束，并确认目标节点已进入渲染列表后再执行。
+- 目标节点必须已经存在于 `treeData` 中。自动展开不会调用 `loadData`；找不到目标节点时不执行任何操作，如果目标节点在滚动前被移除，则丢弃待执行的滚动。
+- 连续调用会保留先前调用产生的展开状态，但只滚动到最后一次调用的目标；Tree 卸载时会丢弃尚未执行的滚动。
+- 受控 Tree 不会修改 `expandedKeys`。祖先节点尚未展开时，本次调用不执行滚动，并在开发环境输出警告。应先通过 `getExpandedKeys(key)` 计算新的受控值，更新 `expandedKeys`，待新属性完成渲染后再次调用 `scrollTo({ key, autoExpand: true })`。
 
 ### TreeNode props
 

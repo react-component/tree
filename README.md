@@ -89,7 +89,7 @@ Then open `http://localhost:8000`.
 | showLine | whether show line | bool | false |
 | treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (value should be unique across the whole array) | array<{key,title,children, [disabled, selectable]}> | - |
 | onCheck | click the treeNode/checkbox to fire | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, nativeEvent}) | - |
-| onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node, nativeEvent}) | - |
+| onExpand | fire on treeNode expand or not | function(expandedKeys, {expanded: bool, node, nativeEvent?}) | - |
 | onDragEnd | it execs when fire the tree's dragend event | function({event,node}) | - |
 | onDragEnter | it execs when fire the tree's dragenter event | function({event,node,expandedKeys}) | - |
 | onDragLeave | it execs when fire the tree's dragleave event | function({event,node}) | - |
@@ -107,6 +107,37 @@ Then open `http://localhost:8000`.
 | dropIndicatorRender | The indicator to render when dragging | ({ dropPosition, dropLevelOffset, indent: number, prefixCls }) => ReactNode | - |
 | direction | Display direction of the tree, it may affect dragging behavior | `ltr` \| `rtl` | - |
 | expandAction | Tree open logic, optional: false \| `click` \| `doubleClick` | string \| boolean | `click` |
+
+### Tree methods
+
+| name | description | type | default |
+| --- | --- | --- | --- |
+| getExpandedKeys | Return a new array containing the current expanded keys plus every ancestor of `key`. Existing key order is preserved and missing ancestors are appended from the root to the direct parent. The target key itself is not added. | `(key: Key) => Key[]` | - |
+| scrollTo | Scroll to an offset, position, index, or node. Key-based scrolling also accepts `autoExpand` to expand hidden ancestors first. | `TreeScrollTo` | - |
+
+`TreeScrollTo` accepts the existing virtual-list scroll arguments (`number`, `null`, a `{ left?, top? }` position, or an index/key target) and the following key target:
+
+```ts
+interface TreeKeyScrollConfig {
+  key: React.Key;
+  align?: 'top' | 'bottom' | 'auto';
+  offset?: ScrollOffset;
+  autoExpand?: boolean;
+}
+```
+
+`ScrollOffset` is either a number or a function that returns a number from the resolved scroll alignment and item-size information.
+
+#### Auto-expand scrolling
+
+`scrollTo({ key, autoExpand: true })` is opt-in; `autoExpand` defaults to `false`.
+
+- In an uncontrolled Tree, missing ancestors are expanded from the root to the target's direct parent. The target itself is not expanded, existing expanded keys are preserved, and disabled ancestors can still be expanded.
+- Each newly expanded ancestor synchronously triggers one `onExpand` callback in root-to-parent order. Every callback receives the cumulative expanded keys, `info.expanded: true`, and `info.nativeEvent: undefined`.
+- Scrolling waits until expansion motion finishes and the target is present in the rendered list.
+- The target must already exist in `treeData`. Auto-expand scrolling does not call `loadData`; a missing target is a no-op, and a pending scroll is discarded if its target is removed before scrolling.
+- Multiple pending calls preserve expansion from earlier calls, but only the latest target is scrolled to. A pending scroll is discarded when the Tree unmounts.
+- A controlled Tree never changes `expandedKeys`. If ancestors are missing, the call is a no-op and emits a development warning. Use `getExpandedKeys(key)` to calculate the next controlled value, update `expandedKeys`, and call `scrollTo({ key, autoExpand: true })` again after the updated props render.
 
 ### TreeNode props
 
