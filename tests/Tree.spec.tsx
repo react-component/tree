@@ -1063,6 +1063,29 @@ describe('Tree Basic', () => {
       expect(called).toBeTruthy();
       jest.useRealTimers();
     });
+
+    it('supports autoExpand', () => {
+      const treeRef = React.createRef<any>();
+      const { container } = render(
+        <Tree
+          ref={treeRef}
+          treeData={[
+            {
+              key: 'parent',
+              children: [{ key: 'child' }],
+            },
+          ]}
+        />,
+      );
+
+      expect(container.querySelector('.rc-tree-switcher')).not.toHaveClass(OPEN_CLASSNAME);
+
+      act(() => {
+        treeRef.current.scrollTo({ key: 'parent', autoExpand: true });
+      });
+
+      expect(container.querySelector('.rc-tree-switcher')).toHaveClass(OPEN_CLASSNAME);
+    });
   });
 
   describe('offset should work', () => {
