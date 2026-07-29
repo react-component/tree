@@ -1066,7 +1066,7 @@ describe('Tree Basic', () => {
 
     it('supports autoExpand', () => {
       const treeRef = React.createRef<any>();
-      const { container } = render(
+      render(
         <Tree
           ref={treeRef}
           treeData={[
@@ -1078,13 +1078,11 @@ describe('Tree Basic', () => {
         />,
       );
 
-      expect(container.querySelector('.rc-tree-switcher')).not.toHaveClass(OPEN_CLASSNAME);
-
       act(() => {
         treeRef.current.scrollTo({ key: 'parent', autoExpand: true });
       });
 
-      expect(container.querySelector('.rc-tree-switcher')).toHaveClass(OPEN_CLASSNAME);
+      expect(treeRef.current.state.expandedKeys).toEqual(['parent']);
     });
   });
 

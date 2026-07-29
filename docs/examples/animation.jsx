@@ -113,7 +113,7 @@ const Demo = () => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      treeRef.current.scrollTo({ key: '0-9-2' });
+      treeRef.current?.scrollTo({ key: '0-9-2' });
     }, 100);
   }, []);
 
