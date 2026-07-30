@@ -24,3 +24,5 @@ jobs:
           persist-credentials: false
 
       - uses: millionco/react-doctor@0b4f4f4bd248a154e64eb508a48347f71154b3f3
+        with:
+          version: 0.7.4
