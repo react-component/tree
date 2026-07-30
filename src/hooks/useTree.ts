@@ -1,4 +1,4 @@
-import useEvent from '@rc-component/util/lib/hooks/useEvent';
+import { useEvent } from '@rc-component/util';
 import * as React from 'react';
 import type {
   BasicDataNode,
