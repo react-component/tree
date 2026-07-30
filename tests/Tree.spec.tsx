@@ -1485,4 +1485,50 @@ describe('Tree Basic', () => {
     expect(scrollToSpy).not.toHaveBeenCalled();
     scrollToSpy.mockRestore();
   });
+
+  it.each([
+    { description: 'a selected node', treeProps: { selectedKeys: ['1'] } },
+    { description: 'selection disabled', treeProps: { selectable: false } },
+  ])(
+    'should not scroll when an interactive title descendant receives focus with $description',
+    ({ treeProps }) => {
+      const data = Array.from({ length: 20 }, (_, index) => ({
+        key: String(index),
+        title: `Node ${index}`,
+      }));
+      const treeRef = React.createRef<any>();
+      const onFocus = jest.fn();
+      const { getByRole } = render(
+        <Tree
+          ref={treeRef}
+          treeData={data}
+          height={100}
+          itemHeight={20}
+          titleRender={node =>
+            node.key === '0' ? (
+              <select aria-label="Node action">
+                <option>Action</option>
+              </select>
+            ) : (
+              node.title
+            )
+          }
+          onFocus={onFocus}
+          {...treeProps}
+        />,
+      );
+      const select = getByRole('combobox');
+      const scrollToSpy = jest.spyOn(treeRef.current, 'scrollTo');
+
+      fireEvent.mouseDown(select);
+      fireEvent.mouseUp(select);
+      expect(treeRef.current.focusedByMouse).toBe(false);
+
+      fireEvent.focus(select);
+
+      expect(onFocus).toHaveBeenCalledTimes(1);
+      expect(scrollToSpy).not.toHaveBeenCalled();
+      scrollToSpy.mockRestore();
+    },
+  );
 });

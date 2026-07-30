@@ -1076,10 +1076,16 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   };
 
   onFocus: React.FocusEventHandler<HTMLDivElement> = (...args) => {
+    const [event] = args;
     const { onFocus, disabled } = this.props;
     const { activeKey, selectedKeys, flattenNodes } = this.state;
 
-    if (!this.focusedByMouse && !disabled && activeKey === null) {
+    if (
+      event.target === event.currentTarget &&
+      !this.focusedByMouse &&
+      !disabled &&
+      activeKey === null
+    ) {
       const visibleSelectedKey = selectedKeys.find(key => {
         return flattenNodes.some(nodeItem => nodeItem.key === key);
       });
