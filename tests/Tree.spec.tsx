@@ -1052,13 +1052,12 @@ describe('Tree Basic', () => {
     it('work', () => {
       jest.useFakeTimers();
       const treeRef = React.createRef<any>();
-      render(<Tree ref={treeRef} />);
+      render(<Tree ref={treeRef} treeData={[{ key: 'light', title: 'light' }]} />);
 
       act(() => {
         treeRef.current.scrollTo({ key: 'light', align: 'top' });
+        jest.runAllTimers();
       });
-
-      jest.runAllTimers();
 
       expect(called).toBeTruthy();
       jest.useRealTimers();
