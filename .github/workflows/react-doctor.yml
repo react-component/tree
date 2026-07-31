@@ -3,6 +3,8 @@ name: React Doctor
 on:
   pull_request:
     branches: [master]
+  push:
+    branches: [master]
 
 permissions:
   contents: read
@@ -23,6 +25,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: millionco/react-doctor@0b4f4f4bd248a154e64eb508a48347f71154b3f3
+      - uses: millionco/react-doctor@01820bb4fd4d0a4aebcd8df2b2a143a098649cb2
         with:
           version: 0.7.4
