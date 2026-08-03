@@ -88,6 +88,9 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     return context.selectable;
   }, [selectable, context.selectable]);
 
+  // If not checkable and selectable is false, should show disabled style
+  const showDisabledStyle = isDisabled || (!context.checkable && !isSelectable);
+
   const onSelectorClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     // Click trigger before select/check operation
     context.onNodeClick(e, convertNodePropsToEventData(props));
@@ -426,7 +429,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       aria-checked={isCheckable && !isDisabled ? (halfChecked ? 'mixed' : checked) : undefined}
       aria-disabled={isDisabled}
       className={clsx(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
-        [`${context.prefixCls}-treenode-disabled`]: isDisabled,
+        [`${context.prefixCls}-treenode-disabled`]: showDisabledStyle,
         [`${context.prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
         [`${context.prefixCls}-treenode-checkbox-checked`]: checked,
         [`${context.prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
