@@ -27,6 +27,7 @@ pnpm-lock.yaml
 node_modules
 .cache
 dist
+docs-dist
 *.css
 build
 lib
@@ -40,4 +41,7 @@ es/
 .umi-test
 .env.local
 
-.dumi/
+.dumi/tmp*
+.vercel
+.dumi/tmp
+.dumi/tmp-production

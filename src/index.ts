@@ -1,6 +1,8 @@
 import Tree from './Tree';
 import TreeNode from './TreeNode';
 import type { TreeProps } from './Tree';
+import useTree from './hooks/useTree';
+import type { TreeInstance, UseTreeConfig } from './hooks/useTree';
 import type {
   BasicDataNode,
   DataNode,
@@ -13,7 +15,7 @@ import { UnstableContext } from './contextTypes';
 export { arrAdd, arrDel, conductExpandParent } from './util';
 export { conductCheck } from './utils/conductUtil';
 export { convertDataToEntities, convertTreeToData, fillFieldNames } from './utils/treeUtil';
-export { TreeNode, UnstableContext };
+export { TreeNode, UnstableContext, useTree };
 export type { DataNode, EventDataNode };
-export type { TreeProps, TreeNodeProps, BasicDataNode, FieldDataNode };
+export type { TreeProps, TreeNodeProps, BasicDataNode, FieldDataNode, TreeInstance, UseTreeConfig };
 export default Tree;

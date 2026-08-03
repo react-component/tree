@@ -111,9 +111,11 @@ const Demo = () => {
   const treeRef = React.useRef();
   const [enableMotion, setEnableMotion] = React.useState(true);
 
-  setTimeout(() => {
-    treeRef.current.scrollTo({ key: '0-9-2' });
-  }, 100);
+  React.useEffect(() => {
+    setTimeout(() => {
+      treeRef.current?.scrollTo({ key: '0-9-2' });
+    }, 100);
+  }, []);
 
   return (
     <Provider motion={enableMotion}>

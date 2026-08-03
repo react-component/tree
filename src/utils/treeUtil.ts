@@ -204,13 +204,8 @@ export function traverseDataNodes(
   // To avoid too many params, let use config instead of origin param
   config?: TraverseDataNodesConfig | string,
 ) {
-  let mergedConfig: TraverseDataNodesConfig = {};
-  if (typeof config === 'object') {
-    mergedConfig = config;
-  } else {
-    mergedConfig = { externalGetKey: config };
-  }
-  mergedConfig = mergedConfig || {};
+  const mergedConfig: TraverseDataNodesConfig =
+    typeof config === 'object' ? config || {} : { externalGetKey: config };
 
   // Init config
   const { childrenPropName, externalGetKey, fieldNames } = mergedConfig;

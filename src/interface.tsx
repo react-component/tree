@@ -1,6 +1,13 @@
+import type { ScrollTo as VirtualListScrollTo } from '@rc-component/virtual-list';
 import * as React from 'react';
 
-export type { ScrollTo } from '@rc-component/virtual-list';
+type VirtualListScrollConfig = Exclude<NonNullable<Parameters<VirtualListScrollTo>[0]>, number>;
+type ScrollTarget = Extract<VirtualListScrollConfig, { key: React.Key }>;
+type TreeScrollConfig =
+  | (Exclude<VirtualListScrollConfig, ScrollTarget> & { autoExpand?: never })
+  | (ScrollTarget & { autoExpand?: boolean });
+
+export type ScrollTo = (scroll?: number | TreeScrollConfig | null) => void;
 export interface TreeNodeProps<TreeDataType extends BasicDataNode = DataNode> {
   eventKey?: Key; // Pass by parent `cloneElement`
   prefixCls?: string;
