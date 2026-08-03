@@ -119,6 +119,7 @@ npm start
 | style | 设置 TreeNode 样式 | object | '' |
 | disabled | 是否禁用树节点 | boolean | false |
 | disableCheckbox | 是否禁用树节点的复选框 | boolean | false |
+| selectable | 是否可选中 | boolean | true |
 | title | 树/子树的标题 | String/element/((data: DataNode) => React.ReactNode) | '---' |
 | key | 与树的 `(default)ExpandedKeys` / `(default)CheckedKeys` / `(default)SelectedKeys` 一起使用，建议设置，并且在所有 TreeNode 中必须唯一 | string | TreeNode 的位置 |
 | isLeaf | 是否是叶子节点 | boolean | false |

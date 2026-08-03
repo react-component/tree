@@ -166,7 +166,7 @@ describe('TreeNode Props', () => {
     expect(onSelect).not.toHaveBeenCalled();
   });
 
-  it('selectable={false} should show disabled style in non-checkable mode', () => {
+  it('selectable={false} should show unselectable class in non-checkable mode', () => {
     const { container } = render(
       <Tree defaultExpandAll>
         <TreeNode key="normal" title="Normal" />
@@ -184,13 +184,13 @@ describe('TreeNode Props', () => {
       node.textContent?.includes('Disabled'),
     ) as HTMLElement;
 
-    // selectable={false} should have disabled class in non-checkable mode
-    expect(selectableFalseNode).toHaveClass('rc-tree-treenode-disabled');
+    // selectable={false} should have unselectable class in non-checkable mode
+    expect(selectableFalseNode).toHaveClass('rc-tree-treenode-unselectable');
     // disabled node should have disabled class
     expect(disabledNode).toHaveClass('rc-tree-treenode-disabled');
   });
 
-  it('selectable={false} should not show disabled style in checkable mode', () => {
+  it('selectable={false} should not show unselectable class in checkable mode', () => {
     const { container } = render(
       <Tree defaultExpandAll checkable>
         <TreeNode key="normal" title="Normal" />
@@ -198,12 +198,14 @@ describe('TreeNode Props', () => {
       </Tree>,
     );
 
-    const treeNodes = container.querySelectorAll('.rc-tree-treenode');
-    // treeNodes[0] is Normal, treeNodes[1] is Selectable False
-    const selectableFalseNode = treeNodes[1] as HTMLElement;
+    const treeNodes = Array.from(container.querySelectorAll('.rc-tree-treenode'));
+    const selectableFalseNode = treeNodes.find(node =>
+      node.textContent?.includes('Selectable False'),
+    ) as HTMLElement;
 
-    // selectable={false} should NOT have disabled class in checkable mode
-    expect(selectableFalseNode).not.toHaveClass('rc-tree-treenode-disabled');
+    // In checkable mode, selectable={false} should NOT have unselectable class
+    // (checkbox indicates not selectable, no need for unselectable class)
+    expect(selectableFalseNode).not.toHaveClass('rc-tree-treenode-unselectable');
   });
 
   it('unselectable', () => {

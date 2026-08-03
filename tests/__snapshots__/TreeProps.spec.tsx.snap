@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tree Props checkStrictly 1`] = `
 <div
@@ -1803,7 +1803,7 @@ exports[`Tree Props selectable without selectable 1`] = `
           <div
             aria-disabled="false"
             aria-expanded="true"
-            class="rc-tree-treenode rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
+            class="rc-tree-treenode rc-tree-treenode-unselectable rc-tree-treenode-switcher-open rc-tree-treenode-leaf-last"
             draggable="false"
             id="test-id-0-0"
             role="treeitem"
@@ -1831,7 +1831,7 @@ exports[`Tree Props selectable without selectable 1`] = `
           </div>
           <div
             aria-disabled="false"
-            class="rc-tree-treenode rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
+            class="rc-tree-treenode rc-tree-treenode-unselectable rc-tree-treenode-switcher-close rc-tree-treenode-leaf-last rc-tree-treenode-leaf"
             draggable="false"
             id="test-id-0-0-0"
             role="treeitem"

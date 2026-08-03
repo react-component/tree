@@ -83,7 +83,7 @@ Then open `http://localhost:8000`.
 | loadData | load data asynchronously and the return value should be a promise | function(node) | - |
 | multiple | whether multiple select | bool | false |
 | prefixCls | prefix class | String | 'rc-tree' |
-| selectable | whether can be selected. In non-checkable mode, setting to `false` will display disabled gray style | bool | true |
+| selectable | whether can be selected. | bool | true |
 | selectedKeys | Controlled selected treeNodes(After setting, defaultSelectedKeys will not work) | String[] | [] |
 | showIcon | whether show icon | bool | true |
 | showLine | whether show line | bool | false |
@@ -124,7 +124,7 @@ Then open `http://localhost:8000`.
 | title | tree/subTree's title | String/element/((data: DataNode) => React.ReactNode) | '---' |
 | key | it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys. you'd better to set it, and it must be unique in the tree's all treeNodes | String | treeNode's position |
 | isLeaf | whether it's leaf node | bool | false |
-| selectable | whether the treeNode can be selected. In non-checkable mode, setting to `false` will display disabled gray style | bool | true |
+| selectable | whether the treeNode can be selected. | bool | true |
 | icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | element/Function(props) | - |
 | switcherIcon | specific the switcher icon. | ReactNode / (props: TreeNodeAttribute) => ReactNode | - |
 
