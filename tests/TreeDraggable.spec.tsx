@@ -46,6 +46,31 @@ describe('Tree Draggable', () => {
     );
   });
 
+  it('preserves text data set by onDragStart', () => {
+    const data = new Map<string, string>();
+    const dataTransfer = {
+      setData: jest.fn((type: string, value: string) => data.set(type, value)),
+      getData: jest.fn((type: string) => data.get(type) || ''),
+    };
+    const onDragStart = jest.fn(({ event }) => {
+      event.dataTransfer.setData('text/plain', 'custom drag data');
+    });
+    const { container } = render(createTree({ onDragStart }));
+    const treeNode = container.querySelector(
+      '.dragTarget > .rc-tree-node-content-wrapper',
+    ) as HTMLElement;
+    const event = createEvent.dragStart(treeNode);
+    Object.defineProperty(event, 'dataTransfer', { value: dataTransfer });
+
+    fireEvent(treeNode, event);
+
+    expect(dataTransfer.setData.mock.calls).toEqual([
+      ['text/plain', ''],
+      ['text/plain', 'custom drag data'],
+    ]);
+    expect(dataTransfer.getData('text/plain')).toBe('custom drag data');
+  });
+
   it('fires dragEnter event', async () => {
     const onDragEnter = jest.fn();
     const { container } = render(createTree({ onDragEnter }));

@@ -129,7 +129,6 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setDragNodeHighlight(true);
-    context.onNodeDragStart(e, props);
     try {
       // ie throw error
       // firefox-need-it
@@ -137,6 +136,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     } catch {
       // empty
     }
+    context.onNodeDragStart(e, props);
   };
 
   const onDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
