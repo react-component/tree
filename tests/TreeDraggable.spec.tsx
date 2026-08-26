@@ -238,6 +238,50 @@ describe('Tree Draggable', () => {
       const base = dir === 'ltr' ? 1 : -1;
 
       describe(dir, () => {
+        it('drops before the first child of an expanded node', () => {
+          const onDrop = jest.fn();
+          const allowDrop = jest.fn(() => true);
+          const { container } = render(
+            <Tree draggable defaultExpandAll onDrop={onDrop} allowDrop={allowDrop} direction={dir}>
+              <TreeNode key="0-0">
+                <TreeNode key="0-0-0" className="dropTarget" />
+                <TreeNode key="0-0-1" className="dragTarget" />
+              </TreeNode>
+            </Tree>,
+          );
+
+          fireDragEvent(
+            container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'),
+            'dragStart',
+            { clientX: base * 500, clientY: 20 },
+          );
+          fireDragEvent(
+            container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+            'dragEnter',
+            { clientX: base * 500, clientY: 0 },
+          );
+          fireDragEvent(
+            container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'),
+            'dragOver',
+            { clientX: base * 500, clientY: 0 },
+          );
+          fireEvent.drop(container.querySelector('.dropTarget > .rc-tree-node-content-wrapper'));
+
+          expect(onDrop).toHaveBeenCalledWith(
+            expect.objectContaining({
+              node: expect.objectContaining({ key: '0-0-0' }),
+              dropToGap: true,
+              dropPosition: -1,
+            }),
+          );
+          expect(allowDrop).toHaveBeenCalledWith(
+            expect.objectContaining({
+              dropNode: expect.objectContaining({ key: '0-0-0' }),
+              dropPosition: -1,
+            }),
+          );
+        });
+
         it('not allow cross level dnd on expanded nodes', () => {
           const onDrop = jest.fn();
           const { container } = render(
