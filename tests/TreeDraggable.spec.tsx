@@ -99,19 +99,22 @@ describe('Tree Draggable', () => {
 
   it('cancels delayed drag expansion on unmount', () => {
     jest.useFakeTimers();
-    const onExpand = jest.fn();
-    const { container, unmount } = render(createTree({ onExpand }));
+    try {
+      const onExpand = jest.fn();
+      const { container, unmount } = render(createTree({ onExpand }));
 
-    fireEvent.dragStart(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'));
-    fireEvent.dragEnter(container.querySelector('.dropTarget'));
-    unmount();
+      fireEvent.dragStart(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'));
+      fireEvent.dragEnter(container.querySelector('.dropTarget'));
+      unmount();
 
-    act(() => {
-      jest.advanceTimersByTime(800);
-    });
+      act(() => {
+        jest.advanceTimersByTime(800);
+      });
 
-    expect(onExpand).not.toHaveBeenCalled();
-    jest.useRealTimers();
+      expect(onExpand).not.toHaveBeenCalled();
+    } finally {
+      jest.useRealTimers();
+    }
   });
 
   it('fires dragOver event', () => {
