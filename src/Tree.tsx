@@ -343,10 +343,18 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   }
 
   componentWillUnmount() {
+    this.clearDelayedDragEnterLogic();
     window.removeEventListener('dragend', this.onWindowDragEnd);
     window.removeEventListener('mouseup', this.onGlobalMouseUp);
     this.destroyed = true;
   }
+
+  clearDelayedDragEnterLogic = () => {
+    Object.values(this.delayedDragEnterLogic || {}).forEach(timeoutId => {
+      clearTimeout(timeoutId);
+    });
+    this.delayedDragEnterLogic = {};
+  };
 
   static getDerivedStateFromProps(props: TreeProps, prevState: TreeState) {
     const { prevProps } = prevState;
@@ -565,12 +573,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     }
 
     // Side effect for delay drag
-    if (!this.delayedDragEnterLogic) {
-      this.delayedDragEnterLogic = {};
-    }
-    Object.keys(this.delayedDragEnterLogic).forEach(key => {
-      clearTimeout(this.delayedDragEnterLogic[key]);
-    });
+    this.clearDelayedDragEnterLogic();
 
     if (this.dragNodeProps.eventKey !== nodeProps.eventKey) {
       // hoist expand logic here

@@ -97,6 +97,23 @@ describe('Tree Draggable', () => {
     expect(onDragEnter).toHaveBeenCalledTimes(1);
   });
 
+  it('cancels delayed drag expansion on unmount', () => {
+    jest.useFakeTimers();
+    const onExpand = jest.fn();
+    const { container, unmount } = render(createTree({ onExpand }));
+
+    fireEvent.dragStart(container.querySelector('.dragTarget > .rc-tree-node-content-wrapper'));
+    fireEvent.dragEnter(container.querySelector('.dropTarget'));
+    unmount();
+
+    act(() => {
+      jest.advanceTimersByTime(800);
+    });
+
+    expect(onExpand).not.toHaveBeenCalled();
+    jest.useRealTimers();
+  });
+
   it('fires dragOver event', () => {
     const onDragOver = jest.fn();
     const { container } = render(createTree({ onDragOver }));
