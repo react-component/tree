@@ -265,7 +265,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
 
   destroyed: boolean = false;
 
-  delayedDragEnterLogic: Record<SafeKey, number>;
+  delayedDragEnterLogic: Record<SafeKey, number> = {};
 
   loadingRetryTimes: Record<SafeKey, number> = {};
 
@@ -350,7 +350,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
   }
 
   clearDelayedDragEnterLogic = () => {
-    Object.values(this.delayedDragEnterLogic || {}).forEach(timeoutId => {
+    Object.values(this.delayedDragEnterLogic).forEach(timeoutId => {
       clearTimeout(timeoutId);
     });
     this.delayedDragEnterLogic = {};
