@@ -445,6 +445,19 @@ describe('Tree Accessibility', () => {
         />,
       );
       expect(container.querySelector('.rc-tree-treenode-active')).toBeTruthy();
+
+      rerender(
+        <Tree
+          treeData={[
+            {
+              title: 'Parent',
+              key: 'parent',
+            },
+          ]}
+          activeKey={null}
+        />,
+      );
+      expect(container.querySelector('.rc-tree-treenode-active')).toBeFalsy();
     });
 
     it('with fieldNames', () => {

@@ -4,6 +4,7 @@ import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
 import { resetWarned, spyElementPrototypes } from '@rc-component/util';
 import Tree, { TreeNode } from '../src';
+import { TreeContext } from '../src/contextTypes';
 import { objectMatcher, spyConsole, spyError } from './util';
 import { UnstableContext } from '../src';
 
@@ -21,6 +22,12 @@ describe('Tree Basic', () => {
 
   it('TreeNode is in Tree', () => {
     expect(TreeNode).toBe(Tree.TreeNode);
+    const { container } = render(
+      <Tree defaultExpandAll>
+        <Tree.TreeNode title="static node" key="static" />
+      </Tree>,
+    );
+    expect(container.querySelector('.rc-tree-title')).toHaveTextContent('static node');
   });
 
   it('renders correctly', () => {
@@ -139,6 +146,18 @@ describe('Tree Basic', () => {
           </TreeNode>
         </Tree>,
       );
+      expect(container.querySelector(`.${OPEN_CLASSNAME}`)).toBeFalsy();
+    });
+
+    it('does not expand parent node with default expanded keys when defaultExpandParent is false', () => {
+      const { container } = render(
+        <Tree defaultExpandedKeys={['0-0-0']} defaultExpandParent={false}>
+          <TreeNode title="parent 1" key="0-0">
+            <TreeNode title="leaf 1" key="0-0-0" />
+          </TreeNode>
+        </Tree>,
+      );
+
       expect(container.querySelector(`.${OPEN_CLASSNAME}`)).toBeFalsy();
     });
 
@@ -771,6 +790,25 @@ describe('Tree Basic', () => {
         }),
       );
     });
+
+    it('filters missing selected keys from selected nodes', () => {
+      const handleSelect = jest.fn();
+      const { container } = render(
+        <Tree selectable multiple selectedKeys={['missing']} onSelect={handleSelect}>
+          <TreeNode title="parent 1" key="0-0" />
+        </Tree>,
+      );
+
+      fireEvent.click(container.querySelector('.rc-tree-node-content-wrapper'));
+
+      expect(handleSelect).toHaveBeenCalledWith(
+        ['missing', '0-0'],
+        objectMatcher({
+          selected: true,
+          selectedNodes: [{ title: 'parent 1', key: '0-0' }],
+        }),
+      );
+    });
   });
 
   describe('checkable but not selectable', () => {
@@ -929,6 +967,35 @@ describe('Tree Basic', () => {
     expect(then).toHaveBeenCalled();
   });
 
+  it('does not load a node again while it is loading', () => {
+    const loadData = jest.fn(() => new Promise(() => {}));
+    let triggerLoad: VoidFunction;
+
+    const LoadTrigger: React.FC = () => {
+      const context = React.useContext(TreeContext);
+      React.useEffect(() => {
+        triggerLoad = () => {
+          context.onNodeLoad({ key: '0-0' } as any);
+        };
+      }, [context]);
+
+      return null;
+    };
+
+    const { container } = render(
+      <Tree loadData={loadData}>
+        <TreeNode title={<LoadTrigger />} key="0-0" isLeaf={false} />
+      </Tree>,
+    );
+
+    fireEvent.click(container.querySelector('.rc-tree-switcher')!);
+    act(() => {
+      triggerLoad();
+    });
+
+    expect(loadData).toHaveBeenCalledTimes(1);
+  });
+
   it('renders without errors', () => {
     expect(() => {
       render(
@@ -1065,7 +1132,7 @@ describe('Tree Basic', () => {
 
     it('supports autoExpand', () => {
       const treeRef = React.createRef<any>();
-      render(
+      const { container } = render(
         <Tree
           ref={treeRef}
           treeData={[
@@ -1081,7 +1148,7 @@ describe('Tree Basic', () => {
         treeRef.current.scrollTo({ key: 'parent', autoExpand: true });
       });
 
-      expect(treeRef.current.state.expandedKeys).toEqual(['parent']);
+      expect(container.querySelector('.rc-tree-switcher')).toHaveClass(OPEN_CLASSNAME);
     });
   });
 
