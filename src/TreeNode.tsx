@@ -1,6 +1,6 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { getId, pickAttrs } from '@rc-component/util';
+import { getId, isReactRenderable, pickAttrs } from '@rc-component/util';
 import { TreeContext, UnstableContext } from './contextTypes';
 import Indent from './Indent';
 import type { TreeNodeProps } from './interface';
@@ -340,9 +340,9 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     let $icon: React.ReactNode;
 
     if (context.showIcon) {
-      const currentIcon = props.icon || context.icon;
+      const currentIcon = isReactRenderable(props.icon) ? props.icon : context.icon;
 
-      $icon = currentIcon ? (
+      $icon = isReactRenderable(currentIcon) ? (
         <span
           className={clsx(
             treeClassNames?.itemIcon,
