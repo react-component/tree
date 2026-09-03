@@ -161,7 +161,7 @@ const NodeList = React.forwardRef<NodeListRef, NodeListProps<any>>((props, ref) 
   const indentMeasurerRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => ({
     scrollTo: scroll => {
-      listRef.current.scrollTo(scroll);
+      listRef.current?.scrollTo(scroll);
     },
     getIndentWidth: () => indentMeasurerRef.current.offsetWidth,
   }));

@@ -1416,7 +1416,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       this.setExpandedKeys(arrAdd(this.state.expandedKeys, scroll.key));
     }
 
-    this.listRef.current.scrollTo(scroll);
+    this.listRef.current?.scrollTo(scroll);
   };
 
   render() {

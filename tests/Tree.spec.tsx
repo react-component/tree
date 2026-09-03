@@ -1083,6 +1083,26 @@ describe('Tree Basic', () => {
 
       expect(treeRef.current.state.expandedKeys).toEqual(['parent']);
     });
+
+    it('does not crash when focus activation fires before the list ref attaches', async () => {
+      // An autoFocus title focuses during the commit mutation phase, before
+      // NodeList's imperative handle re-attaches in the layout phase. The
+      // bubbled focus triggers activation -> scrollTo on a null listRef.
+      // React rethrows event handler errors globally, so capture window errors.
+      const errors: unknown[] = [];
+      const onWindowError = (e: ErrorEvent) => {
+        errors.push(e.error ?? e.message);
+        e.preventDefault();
+      };
+      window.addEventListener('error', onWindowError);
+      try {
+        render(<Tree treeData={[{ key: 'a', title: <input autoFocus /> }]} />);
+        await delay();
+        expect(errors).toEqual([]);
+      } finally {
+        window.removeEventListener('error', onWindowError);
+      }
+    });
   });
 
   describe('offset should work', () => {
