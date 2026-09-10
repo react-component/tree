@@ -1,6 +1,6 @@
 {
   "name": "@rc-component/tree",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "🌲 Tree view component for React",
   "engines": {
     "node": ">=10.x"
