@@ -408,7 +408,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       needSync('expandedKeys') ||
       (prevProps && needSync('autoExpandParent') && props.expandedKeys !== undefined)
     ) {
-      // Controlled -> uncontrolled resets to empty, same as `useControlledState`
+      // Controlled -> uncontrolled resets to empty
       const expandedKeys = props.expandedKeys ?? [];
       newState.expandedKeys =
         props.autoExpandParent || (!prevProps && props.defaultExpandParent)
