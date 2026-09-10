@@ -1149,10 +1149,66 @@ describe('Tree Basic', () => {
       container.querySelector('.rc-tree-list-holder').querySelectorAll('.rc-tree-treenode'),
     ).toHaveLength(2);
 
+    // Controlled -> uncontrolled resets to empty
     rerender(renderTree({ expandedKeys: undefined }));
+    expect(
+      container.querySelector('.rc-tree-list-holder').querySelectorAll('.rc-tree-treenode'),
+    ).toHaveLength(1);
 
-    // Click should not crash
+    // Now uncontrolled, click should expand
     fireEvent.click(container.querySelector('.rc-tree-switcher'));
+    expect(
+      container.querySelector('.rc-tree-list-holder').querySelectorAll('.rc-tree-treenode'),
+    ).toHaveLength(2);
+  });
+
+  it('controlled -> uncontrolled resets every controlled key prop', () => {
+    const treeData = [{ key: 'p', title: 'p', children: [{ key: 'c', title: 'c' }] }];
+    const renderTree = (props?: any) => (
+      <Tree treeData={treeData} checkable expandedKeys={['p']} {...props} />
+    );
+    const { container, rerender } = render(
+      renderTree({ selectedKeys: ['p'], checkedKeys: ['c'], loadedKeys: ['p'], activeKey: 'p' }),
+    );
+    expect(container.querySelectorAll('.rc-tree-node-selected')).toHaveLength(1);
+    expect(container.querySelectorAll('.rc-tree-checkbox-checked')).toHaveLength(2);
+    expect(container.querySelectorAll('.rc-tree-treenode-active')).toHaveLength(1);
+
+    rerender(
+      renderTree({
+        selectedKeys: undefined,
+        checkedKeys: undefined,
+        loadedKeys: undefined,
+        activeKey: undefined,
+      }),
+    );
+    expect(container.querySelectorAll('.rc-tree-node-selected')).toHaveLength(0);
+    expect(container.querySelectorAll('.rc-tree-checkbox-checked')).toHaveLength(0);
+    expect(container.querySelectorAll('.rc-tree-treenode-active')).toHaveLength(0);
+
+    // Focus after release should not crash on `selectedKeys.find`
+    fireEvent.focus(container.querySelector('[role="tree"]'));
+  });
+
+  it('`undefined` means uncontrolled', () => {
+    const treeData = [{ key: 'p', title: 'p', children: [{ key: 'c', title: 'c' }] }];
+    const nodeCount = (container: HTMLElement) =>
+      container.querySelector('.rc-tree-list-holder').querySelectorAll('.rc-tree-treenode').length;
+
+    const { container: uncontrolled } = render(
+      <Tree treeData={treeData} expandedKeys={undefined} defaultExpandAll />,
+    );
+    expect(nodeCount(uncontrolled)).toBe(2);
+    fireEvent.click(uncontrolled.querySelector('.rc-tree-switcher'));
+    expect(nodeCount(uncontrolled)).toBe(1);
+
+    // An empty array is still controlled, so it wins over `defaultExpandAll`
+    const { container: controlled } = render(
+      <Tree treeData={treeData} expandedKeys={[]} defaultExpandAll />,
+    );
+    expect(nodeCount(controlled)).toBe(1);
+    fireEvent.click(controlled.querySelector('.rc-tree-switcher'));
+    expect(nodeCount(controlled)).toBe(1);
   });
 
   it('controlled should block expanded', () => {

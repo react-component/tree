@@ -262,6 +262,7 @@ describe('Tree Motion', () => {
 
     rerender(
       renderTree({
+        expandedKeys: ['parent'],
         treeData: [
           {
             key: 'parent',
