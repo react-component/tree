@@ -1,5 +1,6 @@
 import { clsx } from 'clsx';
 import * as React from 'react';
+import { areArraysEqual } from './utils/diffUtil';
 
 interface IndentProps {
   prefixCls: string;
@@ -30,4 +31,13 @@ const Indent: React.FC<IndentProps> = ({ prefixCls, level, isStart, isEnd }) => 
   );
 };
 
-export default React.memo(Indent);
+function arePropsEqual(prev: IndentProps, next: IndentProps) {
+  return (
+    prev.prefixCls === next.prefixCls &&
+    prev.level === next.level &&
+    areArraysEqual(prev.isStart, next.isStart) &&
+    areArraysEqual(prev.isEnd, next.isEnd)
+  );
+}
+
+export default React.memo(Indent, arePropsEqual);

@@ -43,3 +43,7 @@ export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], ke
   }
   return longer.slice(longerStartIndex + 1);
 }
+
+export function areArraysEqual(a: any[], b: any[]) {
+  return a.length === b.length && a.every((val, i) => val === b[i]);
+}
