@@ -55,7 +55,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   const isCheckable = React.useMemo<React.ReactNode>(() => {
     // Return false if tree or treeNode is not checkable
-    if (!context.checkable || props.checkable === false) {
+    if (!isReactRenderable(context.checkable) || props.checkable === false) {
       return false;
     }
     return context.checkable;
@@ -73,7 +73,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
     if (isDisabled) {
       return;
     }
-    if (!isCheckable || props.disableCheckbox) {
+    if (!isReactRenderable(isCheckable) || props.disableCheckbox) {
       return;
     }
     context.onNodeCheck(e, convertNodePropsToEventData(props), !checked);
@@ -89,7 +89,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
   }, [selectable, context.selectable]);
 
   // If not checkable and selectable is false, show unselectable class for antd to style
-  const isUnselectable = !context.checkable && !isSelectable;
+  const isUnselectable = !isReactRenderable(context.checkable) && !isSelectable;
 
   const onSelectorClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     // Click trigger before select/check operation
@@ -204,7 +204,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   // ==================== Render: Drag Handler ====================
   const dragHandlerNode = React.useMemo<React.ReactNode>(() => {
-    if (!context.draggable?.icon) {
+    if (!isReactRenderable(context.draggable?.icon)) {
       return null;
     }
     return <span className={`${context.prefixCls}-draggable-icon`}>{context.draggable.icon}</span>;
@@ -212,7 +212,9 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   // ====================== Render: Switcher ======================
   const renderSwitcherIconDom = (isInternalLeaf: boolean) => {
-    const switcherIcon = props.switcherIcon || context.switcherIcon;
+    const switcherIcon = isReactRenderable(props.switcherIcon)
+      ? props.switcherIcon
+      : context.switcherIcon;
     // if switcherIconDom is null, no render switcher span
     if (typeof switcherIcon === 'function') {
       return switcherIcon({ ...props, isLeaf: isInternalLeaf });
@@ -256,7 +258,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
 
   // ====================== Checkbox ======================
   const checkboxNode = React.useMemo<React.ReactNode>(() => {
-    if (!isCheckable) {
+    if (!isReactRenderable(isCheckable)) {
       return null;
     }
 
@@ -426,7 +428,13 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       id={nodeId}
       aria-expanded={memoizedIsLeaf ? undefined : expanded}
       aria-selected={isSelectable && !isDisabled ? selected : undefined}
-      aria-checked={isCheckable && !isDisabled ? (halfChecked ? 'mixed' : checked) : undefined}
+      aria-checked={
+        isReactRenderable(isCheckable) && !isDisabled
+          ? halfChecked
+            ? 'mixed'
+            : checked
+          : undefined
+      }
       aria-disabled={isDisabled}
       className={clsx(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
         [`${context.prefixCls}-treenode-disabled`]: isDisabled,

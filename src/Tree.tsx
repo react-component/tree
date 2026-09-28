@@ -2,7 +2,7 @@
 // Reference: https://www.w3.org/WAI/ARIA/apg/patterns/treeview
 
 import { clsx } from 'clsx';
-import { pickAttrs, warning } from '@rc-component/util';
+import { isReactRenderable, pickAttrs, warning } from '@rc-component/util';
 import * as React from 'react';
 
 import type {
@@ -455,7 +455,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
     }
 
     // ================= checkedKeys =================
-    if (props.checkable) {
+    if (isReactRenderable(props.checkable)) {
       let checkedKeyEntity: { checkedKeys?: Key[]; halfCheckedKeys?: Key[] };
 
       if (needSync('checkedKeys')) {
@@ -1320,12 +1320,15 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
       );
 
       const canCheck =
-        checkable &&
+        isReactRenderable(checkable) &&
         !eventNode.disabled &&
         eventNode.checkable !== false &&
         !eventNode.disableCheckbox;
       const canSelect =
-        !checkable && selectable && !eventNode.disabled && eventNode.selectable !== false;
+        !isReactRenderable(checkable) &&
+        selectable &&
+        !eventNode.disabled &&
+        eventNode.selectable !== false;
 
       switch (event.key) {
         // >>> Expand
@@ -1545,7 +1548,7 @@ class Tree<TreeDataType extends DataNode | BasicDataNode = DataNode> extends Rea
             data={flattenNodes}
             disabled={disabled}
             selectable={selectable}
-            checkable={!!checkable}
+            checkable={isReactRenderable(checkable)}
             motion={motion}
             dragging={draggingNodeKey !== null}
             height={height}
