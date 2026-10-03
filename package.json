@@ -90,8 +90,8 @@
     "typescript-eslint": "^8.62.1"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "types": "./es/index.d.ts",
   "publishConfig": {
