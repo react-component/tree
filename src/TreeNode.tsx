@@ -428,6 +428,7 @@ const TreeNode: React.FC<Readonly<TreeNodeProps>> = props => {
       aria-selected={isSelectable && !isDisabled ? selected : undefined}
       aria-checked={isCheckable && !isDisabled ? (halfChecked ? 'mixed' : checked) : undefined}
       aria-disabled={isDisabled}
+      aria-level={level !== undefined ? level + 1 : undefined}
       className={clsx(className, `${context.prefixCls}-treenode`, treeClassNames?.item, {
         [`${context.prefixCls}-treenode-disabled`]: isDisabled,
         [`${context.prefixCls}-treenode-unselectable`]: isUnselectable,
