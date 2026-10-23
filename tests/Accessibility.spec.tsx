@@ -416,6 +416,27 @@ describe('Tree Accessibility', () => {
       expect(normalNode).toHaveAttribute('aria-checked', 'true');
       expect(disabledNode).not.toHaveAttribute('aria-checked');
     });
+
+    it('treeitem elements should have correct 1-based aria-level', () => {
+      const { getByRole } = render(
+        <Tree
+          defaultExpandedKeys={['parent']}
+          treeData={[
+            {
+              key: 'parent',
+              title: 'Parent Node',
+              children: [{ key: 'child', title: 'Child Node' }],
+            },
+          ]}
+        />,
+      );
+
+      const parentNode = getByRole('treeitem', { name: 'Parent Node' });
+      const childNode = getByRole('treeitem', { name: 'Child Node' });
+
+      expect(parentNode).toHaveAttribute('aria-level', '1');
+      expect(childNode).toHaveAttribute('aria-level', '2');
+    });
   });
 
   describe('activeKey in control', () => {
