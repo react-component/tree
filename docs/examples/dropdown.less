@@ -1,9 +1,9 @@
-
 .demo-dropdown-trigger {
   width: 200px;
   height: 30px;
   overflow-y: auto;
   border: 1px solid #ddd;
+  cursor: pointer;
 }
 .demo-dropdown-tree {
   position: absolute;
@@ -11,7 +11,12 @@
   top: -9999px;
   z-index: 1070;
   display: block;
+  padding: 5px;
   background-color: #fff;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
 
   &-hidden {
     display: none;
@@ -24,7 +29,8 @@
     display: block !important;
   }
 
-  &-slide-up-enter,&-slide-up-appear {
+  &-slide-up-enter,
+  &-slide-up-appear {
     .effect();
     opacity: 0;
     animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
