@@ -115,7 +115,7 @@ class DropdownTree extends React.Component {
     return (
       <Trigger
         prefixCls={prefixCls}
-        ref="trigger"
+        // ref="trigger"
         popupClassName={overlayClassName}
         popupStyle={overlayStyle}
         builtinPlacements={placements}
